@@ -1,0 +1,28 @@
+<div class="_app">
+  <header class="_header">
+    <a class="_home-link"></a>
+    <a class="_menu-link"></a>
+    <form class="_search">
+      <input type="search" class="_search-input" placeholder="Search…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+      <a class="_search-clear"></a>
+      <div class="_search-tag"></div>
+    </form>
+    <h1 class="_logo">
+      <a href="/" class="_nav-link">DevDocs</a>
+    </h1>
+    <nav class="_nav">
+      <a href="/about" class="_nav-link">About</a>
+      <a href="/news" class="_nav-link">News</a>
+      <a href="/help" class="_nav-link">Help</a>
+    </nav>
+  </header>
+  <section class="_sidebar">
+    <div class="_list"></div>
+  </section>
+  <section class="_container">
+    <div class="_content _content-loading"></div>
+  </section>
+</div>
+<% if App.production? %><script>
+var _gauges=[];(function(){var a=document.createElement('script');a.async=true;a.id='gauges-tracker';a.setAttribute('data-site-id','51c15f82613f5d7819000067');a.src='//secure.gaug.es/track.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b)})();
+</script><% end %>

@@ -1,0 +1,20 @@
+module Docs
+  class Underscore < UrlScraper
+    self.name = 'Underscore.js'
+    self.slug = 'underscore'
+    self.type = 'underscore'
+    self.version = '1.5.2'
+    self.base_url = 'http://underscorejs.org'
+
+    html_filters.push 'underscore/clean_html', 'underscore/entries', 'title'
+
+    options[:title] = 'Underscore.js'
+    options[:container] = '#documentation'
+    options[:skip_links] = -> (_) { true }
+
+    options[:attribution] = <<-HTML.strip_heredoc
+      &copy; 2009&ndash;2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors<br>
+      Licensed under the MIT License.
+    HTML
+  end
+end

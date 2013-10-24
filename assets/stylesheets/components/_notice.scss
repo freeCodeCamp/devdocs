@@ -1,0 +1,41 @@
+._notice {
+  position: absolute;
+  z-index: $noticeZ;
+  bottom: 0;
+  left: $sidebarWidth;
+  right: 0;
+  height: 2.5rem;
+  padding: 0 1.25rem;
+  text-shadow: 0 1px rgba(white, .5);
+  background: #faf9e2;
+  box-shadow: inset 0 1px #dddaaa,          // top border
+              inset 0 2px rgba(white, .7),  // top inner glow
+              inset 1px 0 rgba(black, .03); // left inner shadow
+
+  @media #{$mediumScreen} { left: $sidebarMediumWidth; }
+
+  ~ ._container { padding-bottom: 2.5rem; }
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 1.5rem;
+    background-image: -webkit-linear-gradient(top,       rgba(white, 0), rgba(white, .95));
+    background-image:         linear-gradient(to bottom, rgba(white, 0), rgba(white, .95));
+    pointer-events: none;
+  }
+}
+
+._notice-text {
+  display: table-cell;
+  vertical-align: middle;
+  margin: 0;
+  height: 2.5rem;
+  line-height: 1rem;
+  font-size: .875rem;
+}
+
+._notice-link { cursor: pointer; }

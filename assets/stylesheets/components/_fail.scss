@@ -1,0 +1,35 @@
+._fail {
+  position: relative;
+  top: 1.5rem;
+  width: 24rem;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  background: #eaefef;
+  border-radius: 5px;
+  @extend %border-box;
+
+  &:after { // margin
+    content: '';
+    position: relative;
+    top: 3rem;
+    float: left;
+    width: 1px;
+    height: 1px;
+  }
+}
+
+._fail-title {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+._fail-text, ._fail-list {
+  margin: 0 0 1rem;
+  font-size: .875rem;
+}
+
+._fail-text:last-child { margin: 0; }
+
+._fail-link { float: right; }

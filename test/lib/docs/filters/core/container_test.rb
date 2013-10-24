@@ -1,0 +1,63 @@
+require 'test_helper'
+require 'docs'
+
+class ContainerFilterTest < MiniTest::Spec
+  include FilterTestHelper
+  self.filter_class = Docs::ContainerFilter
+
+  before do
+    @body = '<div>Test</div>'
+  end
+
+  context "when context[:container] is a CSS selector" do
+    before { context[:container] = '.main' }
+
+    it "returns the element when it exists" do
+      @body = '<div><div class="main">Main</div></div><div></div>'
+      assert_equal 'Main', filter_output.inner_html
+    end
+
+    it "raises an error when the element doesn't exist" do
+      assert_raises Docs::ContainerFilter::ContainerNotFound do
+        filter.call
+      end
+    end
+  end
+
+  context "when context[:container] is a block" do
+    it "calls the block with itself" do
+      context[:container] = ->(arg) { @arg = arg; nil }
+      filter.call
+      assert_equal filter, @arg
+    end
+
+    context "and the block returns a CSS selector" do
+      before { context[:container] = ->(_) { '.main' } }
+
+      it "returns the element when it exists" do
+        @body = '<div><div class="main">Main</div></div>'
+        assert_equal 'Main', filter_output.inner_html
+      end
+
+      it "raises an error when the element doesn't exist" do
+        assert_raises Docs::ContainerFilter::ContainerNotFound do
+          filter.call
+        end
+      end
+    end
+
+    context "and the block returns nil" do
+      before { context[:container] = ->(_) { nil } }
+
+      it "returns the document" do
+        assert_equal @body, filter_output.inner_html
+      end
+    end
+  end
+
+  context "when context[:container] is nil" do
+    it "returns the document" do
+      assert_equal @body, filter_output.inner_html
+    end
+  end
+end

@@ -1,0 +1,33 @@
+._php {
+  h1 {
+    margin-top: 0;
+    @extend %lined-heading;
+  }
+
+  h3.title { @extend %block-heading; }
+
+  .verinfo {
+    float: right;
+    font-weight: bold;
+  }
+
+  .classsynopsis,
+  .description > .constructorsynopsis,
+  .description > .methodsynopsis,
+  .description > .fieldsynopsis { @extend %note, %note-blue; }
+
+  .classsynopsisinfo_comment { color: $textColorLight; }
+
+  .classsynopsisinfo_comment,
+  .classsynopsis > .constructorsynopsis,
+  .classsynopsis > .methodsynopsis,
+  .classsynopsis > .fieldsynopsis { margin-left: 1em; }
+
+  .phpcode > pre { white-space: normal; }
+
+  blockquote.note { @extend %note; }
+  blockquote.note > p { margin-bottom: 0; }
+
+  div.warning { @extend %note, %note-red; }
+  div.tip { @extend %note, %note-green; }
+}

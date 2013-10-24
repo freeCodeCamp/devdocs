@@ -1,0 +1,34 @@
+._app {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding-top: $headerHeight;
+  overflow: hidden;
+  -webkit-transition: opacity .2s;
+          transition: opacity .2s;
+  @extend %border-box;
+
+  ._booting > & { opacity: 0; }
+}
+
+._booting {
+  opacity: 0;
+  -webkit-transition: opacity .1s .3s;
+          transition: opacity .1s .3s;
+
+  &._loading { opacity: 1; }
+
+  &:before {
+    content: 'Loading…';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    line-height: 1;
+    margin-top: -.75em;
+    font-size: 4rem;
+    color: #ccc;
+    text-align: center;
+    letter-spacing: -.125rem;
+  }
+}

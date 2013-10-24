@@ -1,0 +1,23 @@
+._coffeescript {
+  padding-left: 1rem;
+
+  > h1, > h2 { margin-left: -1rem; }
+  > h2 { @extend %block-heading; }
+
+  code { @extend %label; }
+
+  // CoffeeScript / JavaScript code blocks
+  > .code {
+    margin: 1.5em 0;
+    overflow: hidden;
+
+    > pre {
+      float: left;
+      width: 49%;
+      margin: 0;
+      @extend %border-box;
+
+      &:last-child { float: right; }
+    }
+  }
+}

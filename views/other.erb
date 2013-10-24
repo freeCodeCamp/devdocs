@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="robots" content="noindex">
+  <title>DevDocs</title>
+  <link rel="icon" type="image/x-icon" href="http://maxcdn.devdocs.io/favicon.ico">
+  <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Search DevDocs">
+  <%= stylesheet_tag 'application' %>
+  <%= javascript_tag 'application', asset_host: false %><% unless App.production? %>
+  <%= javascript_tag 'debug' %><% end %>
+  <script>app.DOC = <%= @doc.to_json %>;</script>
+</head>
+<body class="_booting">
+<%= erb :app %></body>
+</html>

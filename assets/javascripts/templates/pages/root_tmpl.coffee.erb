@@ -1,0 +1,77 @@
+app.templates.splash = """
+  <div class="_splash-title">DevDocs</div>
+  <a href="http://www.maxcdn.com" class="_splash-maxcdn">Sponsored by<span class="_maxcdn-logo-bw"> MaxCDN</span></a>
+"""
+
+<% if App.development? %>
+app.templates.intro = """
+  <div class="_intro"><div class="_intro-message">
+    <a class="_intro-hide" data-hide-intro>Stop showing this message</a>
+    <h2 class="_intro-title">Hi there!</h2>
+    <p>Thanks for downloading DevDocs. Here are a few things you should know:
+    <ol class="_intro-list">
+      <li>Your local version of DevDocs will not self-update. Unless you're offline or modifying the code,
+          I recommend using the hosted version at <a href="http://devdocs.io">devdocs.io</a>.
+      <li>Run <code class="_label">thor docs:list</code> to see all available documentations.
+      <li>Run <code class="_label">thor docs:download --all</code> to download/update all documentations.
+      <li>To be notified about new versions, don't forget to subscribe to the <a href="http://eepurl.com/HnLUz">newsletter</a>.
+      <li>The <a href="https://github.com/Thibaut/devdocs/issues">issue tracker</a> is the preferred channel for bug reports and
+          feature requests. For everything else, use the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>.
+      <li>Contributions are welcome. See the <a href="https://github.com/Thibaut/devdocs/blob/master/CONTRIBUTING.md">guidelines</a>.
+      <li>DevDocs is licensed under the terms of the Mozilla Public License v2.0. For more information,
+          see the <a href="https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a> and
+          <a href="https://github.com/Thibaut/devdocs/blob/master/LICENSE">LICENSE</a> files.
+    </ol>
+    <a href="http://www.maxcdn.com" class="_intro-maxcdn">Sponsored by<span class="_maxcdn-logo"> MaxCDN</span></a>
+    <p>That's all. Happy coding!
+  </div></div>
+"""
+<% else %>
+app.templates.intro = """
+  <div class="_intro"><div class="_intro-message">
+    <a class="_intro-hide" data-hide-intro>Stop showing this message</a>
+    <h2 class="_intro-title">Welcome!</h2>
+    <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
+       Here's what you should know before you start:
+    <ol class="_intro-list">
+      <li>To pick your docs, click <a class="_intro-link" data-pick-docs>Select documentation</a> in the bottom left corner
+      <li>You don't have to use your mouse — see the list of <a href="/help#shortcuts">keyboard shortcuts</a>
+      <li>The search supports fuzzy matching (e.g. "bgcp" brings up "background-clip")
+      <li>To search a specific documentation, type its name (or an abbreviation), then Tab
+      <li>You can search using your browser's address bar — <a href="/help#browser_search">learn how</a>
+      <li>DevDocs works on mobile and is available as a <a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
+      <li>For the latest news, subscribe to the <a href="http://eepurl.com/HnLUz">newsletter</a> or follow <a href="https://twitter.com/DevDocs">@DevDocs</a>
+      <li>DevDocs is free and <a href="https://github.com/Thibaut/devdocs">open source</a>
+          <iframe class="_github-btn" src="http://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+    </ol>
+    <a href="http://www.maxcdn.com" class="_intro-maxcdn">Sponsored by<span class="_maxcdn-logo"> MaxCDN</span></a>
+    <p>That's all. Happy coding!
+  </div></div>
+"""
+<% end %>
+
+app.templates.mobileNav = """
+  <nav class="_mobile-nav">
+    <a href="/about" class="_mobile-nav-link">About</a>
+    <a href="/news" class="_mobile-nav-link">News</a>
+    <a href="/help" class="_mobile-nav-link">Help</a>
+  </nav>
+"""
+
+app.templates.mobileIntro = """
+  <div class="_mobile-intro">
+    <h2 class="_intro-title">Welcome!</h2>
+    <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
+       Here's what you should know before you start:
+    <ol class="_intro-list">
+      <li>To pick your docs, click <a data-pick-docs>Select documentation</a> at the bottom of the menu
+      <li>The search supports fuzzy matching (e.g. "bgcp" matches "background-clip")
+      <li>To search a specific documentation, type its name (or an abbreviation), then Space
+      <li>For the latest news, subscribe to the <a href="http://eepurl.com/HnLUz">newsletter</a> or follow <a href="https://twitter.com/DevDocs">@DevDocs</a>
+      <li>DevDocs is <a href="https://github.com/Thibaut/devdocs">open source</a>
+    </ol>
+    <p>That's all. Happy coding!
+    <p class="_intro-maxcdn">Sponsored by <a href="http://www.maxcdn.com" class="_intro-maxcdn-logo">MaxCDN</a></p>
+    <a class="_intro-hide" data-hide-intro>Stop showing this message</a>
+  </div>
+"""

@@ -1,0 +1,25 @@
+._underscore {
+  padding-left: 1rem;
+
+  > h1, > h2, .header { margin-left: -1rem; }
+  > h2 { @extend %block-heading; }
+
+  .header {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 1em;
+  }
+
+  > p[id] { margin-top: 2rem; }
+  > pre { margin-top: 1em; }
+
+  .header + code {
+    margin-left: 1em;
+    @extend %label;
+  }
+
+  .alias {
+    margin-left: 1em;
+    font-style: italic;
+  }
+}

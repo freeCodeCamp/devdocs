@@ -1,0 +1,17 @@
+._angular {
+  > h2 { font-size: 1.125rem; }
+  h3, h4 { font-size: 1rem; }
+
+  .methods {
+    padding-left: 1rem;
+    list-style: none;
+
+    > li > h3:first-child {
+      margin: 0 0 1em -1rem;
+      @extend %block-label, %label-blue;
+    }
+
+    > li + li { margin-top: 2em; }
+    > li > ul { list-style-type: disc; }
+  }
+}

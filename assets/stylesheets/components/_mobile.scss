@@ -1,0 +1,201 @@
+//
+// Mobile overrides
+//
+
+._mobile {
+  font-size: 100%;
+
+  // Layout
+
+  body { -ms-overflow-style: -ms-autohiding-scrollbar; }
+
+  ._app, ._container, ._content { overflow: visible; }
+
+  ._container {
+    margin: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  ._content {
+    position: static;
+    height: auto;
+    margin: 0;
+    padding: .75rem 1rem 2.5rem;
+  }
+
+  ._booting:before, ._content-loading:before {
+    font-size: 3rem;
+    color: #ccc;
+  }
+
+  // Header
+
+  ._header {
+    position: fixed;
+    z-index: $contentZ + 1;
+    border-bottom: 1px solid #b4b7bf;
+    box-shadow: 0 1px rgba(black, .03);
+  }
+
+  ._logo, ._nav { display: none; }
+  ._home-link, ._menu-link { display: block; }
+
+  ._search {
+    float: none;
+    width: auto;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+    border-right: 0;
+
+    &:before { left: .5rem; }
+  }
+
+  ._search-clear { padding-right: 0; }
+  ._search-tag { left: .325rem; }
+
+  // Sidebar
+
+  ._sidebar {
+    position: static;
+    min-height: 100%;
+    overflow: visible;
+    padding-bottom: 2rem;
+    box-shadow: none;
+
+    > ._list { padding-bottom: 0; }
+  }
+
+  ._list, ._sidebar-footer {
+    width: 100%;
+    box-shadow: none;
+  }
+
+  ._list-item { border-right-width: 0; }
+
+  ._list-link { display: none; }
+
+  ._sidebar-footer {
+    position: static;
+    margin-top: .5rem;
+    font-weight: bold;
+
+    &:before { content: none; }
+  }
+
+  ._sidebar-footer-save {
+    margin-top: 1rem;
+    border-bottom: 1px solid #bac6d7;
+  }
+
+  // Notice
+
+  ._notice {
+    position: fixed;
+    left: 0;
+    padding: 0 .5rem;
+
+    &:before { content: none; }
+    ~ ._sidebar { padding-bottom: 4rem; }
+  }
+
+  ._notice-text { font-size: .75em; }
+
+  // Notification
+
+  ._notif { position: fixed; }
+
+  // Table of contents
+
+  ._toc {
+    float: none;
+    max-width: none;
+    margin-left: 0;
+  }
+
+  // Splash
+
+  ._splash-title { margin-top: -.5em; }
+}
+
+//
+// Fix viewport on Windows Phone
+//
+
+@-ms-viewport { width: device-width; }
+@media (orientation: portrait) and (min-device-width: 720px) and (max-device-width: 768px),
+       (orientation: landscape) and (device-width: 1280px) and (max-device-height: 768px) {
+  @-ms-viewport { width: 50%; }
+}
+
+//
+// Header buttons
+//
+
+%mobile-link {
+  display: none;
+  position: relative;
+  float: left;
+  width: 2.5rem;
+  height: 100%;
+
+  &:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -.5rem 0 0 -.5rem;
+    @extend %icon;
+  }
+}
+
+._home-link {
+  @extend %mobile-link;
+
+  &:before { @extend %icon-home; }
+}
+
+._menu-link {
+  float: right;
+  @extend %mobile-link;
+
+  &:before { @extend %icon-menu; }
+}
+
+//
+// Navigation menu
+//
+
+._mobile-nav {
+  margin: .25rem 0 1.25rem;
+  padding: 0;
+  line-height: 2.8;
+  overflow: hidden;
+  @extend %box;
+}
+
+._mobile-nav-link {
+  float: left;
+  width: 33%;
+  text-align: center;
+  font-weight: bold;
+
+  &:nth-child(2n) { width: 34%; }
+}
+
+//
+// Intro
+//
+
+._mobile-intro {
+  > ._intro-list { padding-left: 1.5rem; }
+
+  > ._intro-hide,
+  > ._intro-maxcdn {
+    position: static;
+    float: none;
+    display: block;
+    margin-top: 1.25rem;
+    text-align: center;
+  }
+}

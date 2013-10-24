@@ -1,0 +1,137 @@
+._jquery {
+  //
+  // Index page
+  //
+
+  h2.entry-title {
+    margin: 0 0 1.5rem;
+    font-size: 1rem;
+    font-weight: normal;
+  }
+
+  .entry-summary {
+    margin: -1rem 0 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .post:not(:only-of-type),
+  .page:not(:only-of-type) {
+    width: 50%;
+    float: left;
+
+    &:nth-of-type(2n+1) { clear: both; }
+  }
+
+  //
+  // Article page
+  //
+
+  // Table of contents
+
+  .toc > h4 { font-size: inherit; }
+
+  .toc-list {
+    margin-top: 0;
+    font-weight: bold;
+
+    > li + li { margin-top: 1em; }
+    > li > ul { font-weight: normal; }
+    > li > ul > li + li { margin-top: 0; }
+  }
+
+  // Headings
+
+  .section-title, .entry-wrapper > h3, .underline { @extend %block-heading; }
+
+  .name > .version-details,
+  .section-title > .version-details,
+  .returns,
+  .option-type {
+    float: right;
+    font-weight: bold;
+    margin-left: 1em;
+  }
+
+  // Method signatures
+
+  .signatures {
+    padding: 0;
+    list-style: none;
+  }
+
+  .signature {
+    + .signature { margin-top: 1em; }
+
+    > .name {
+      margin-top: 1em;
+      @extend %block-label, %label-blue;
+    }
+
+    > ul {
+      padding-left: 1em;
+      list-style: none;
+
+      > li + li { margin-top: 1em; }
+      > li > ul { list-style-type: disc; }
+    }
+  }
+
+  // Examples
+
+  .entry-example {
+    > h4 {
+      margin: 2em 0 1.5em;
+      line-height: inherit;
+      font-size: inherit;
+      font-weight: normal;
+    }
+  }
+
+  // Quick nav (jQuery UI)
+
+  #quick-nav {
+    margin-bottom: 2em;
+    max-width: 38em;
+    overflow: hidden;
+    @extend %note, %note-blue;
+
+    > h2 {
+      margin: .25rem 0 1rem;
+      font-size: 1rem;
+
+      > a { float: right; }
+    }
+  }
+
+  .quick-nav-section {
+    width: 33%;
+    float: left;
+
+    > h3 {
+      margin: 0 0 .5em;
+      font-size: inherit;
+    }
+  }
+
+  // Options (jQuery UI)
+
+  .api-item {
+    padding-left: 1rem;
+
+    > h3 {
+      margin-left: -1rem;
+      @extend %block-label, %label-blue;
+    }
+  }
+
+  // Misc
+
+  p > code, li > code { @extend %label; }
+  .warning { @extend %note; }
+
+  .name > a,
+  .version-details > a {
+    color: inherit;
+    @extend %internal-link;
+  }
+}

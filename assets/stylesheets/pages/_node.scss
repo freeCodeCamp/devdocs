@@ -1,0 +1,20 @@
+._node {
+  .api_stability_0, .api_stability_1 { @extend %note, %note-red; }
+  .api_stability_2 { @extend %note, %note-gold; }
+  .api_stability_3, .api_stability_4 { @extend %note, %note-green; }
+  .api_stability_5 { @extend %note, %note-blue; }
+
+  > h2 { @extend %block-heading; }
+
+  > h3 {
+    margin: 2rem 0 1rem;
+    font-size: 1rem;
+  }
+
+  > h2 + h2, > h3 + h3 { margin-top: 0; }
+
+  > p > code, .type {
+    white-space: normal;
+    @extend %label;
+  }
+}

@@ -1,0 +1,143 @@
+//
+// Utilities
+//
+
+%border-box {
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
+}
+
+%user-select-none {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+//
+// Boxes
+//
+
+%box {
+  text-shadow: 0 1px rgba(white, .3);
+  background: #f8f8f8;
+  border: 1px solid;
+  border-color: #d5d5d5 #d5d5d5 #d1d1d1;
+  border-radius: 3px;
+  box-shadow: inset 0 1px rgba(white, .3), // top inner glow
+              0 1px 1px rgba(black, .04);  // drop shadow
+}
+
+%heading-box {
+  text-shadow: 0 1px rgba(white, .3);
+  background: -webkit-linear-gradient(top,       #f7f7fa, #f0f0f2);
+  background:         linear-gradient(to bottom, #f7f7fa, #f0f0f2);
+  border: 1px solid;
+  border-color: #d5d5d5 #d5d5d5 #d1d1d1;
+  border-radius: 3px;
+  box-shadow: inset 0 1px rgba(white, .3),     // top inner glow
+              inset 0 0 0 1px rgba(white, .2), // inner glow
+              0 1px 1px rgba(black, .04);      // drop shadow
+}
+
+%block-heading {
+  line-height: 1.25rem;
+  margin: 2em 0 1em;
+  padding: .5em .75em;
+  font-size: 1rem;
+  overflow: hidden;
+  @extend %heading-box;
+}
+
+//
+// Notes
+//
+
+%note {
+  margin: 1.5rem 0;
+  padding: .5rem .875rem;
+  text-shadow: 0 1px rgba(white, .3);
+  background: #faf9e2;
+  border: 1px solid;
+  border-color: #dddaaa #dddaaa #d7d7a9;
+  border-radius: 3px;
+  box-shadow: inset 0 1px rgba(white, .2),  // top inner glow
+              0 1px 1px rgba(black, .04);   // drop shadow
+}
+
+%note-green {
+  background: #f1faeb;
+  border-color: #b3dba8 #b3dba8 #aed7a5;
+}
+
+%note-blue {
+  background: #f2f2ff;
+  border-color: #c6cde9 #c6cde9 #c3cce7;
+}
+
+%note-gold {
+  background: #fff0aa;
+  border-color: #ddce81 #ddce81 #d9ca7f;
+}
+
+%note-red {
+  background: #fed5d3;
+  border-color: #dc7874 #dc7874 #d47474;
+}
+
+//
+// Labels
+//
+
+%label {
+  margin: 0 1px;
+  padding: 0 .3em 1px;
+  text-shadow: 0 1px rgba(white, .3);
+  background: #f2f2f2;
+  border: 1px solid;
+  border-color: #d2d2d2 #d2d2d2 #ccc;
+  border-radius: 2px;
+  box-shadow: 0 1px rgba(black, .04);
+}
+
+%block-label {
+  display: block;
+  margin: 2em 0 1em;
+  padding-left: .5em;
+  padding-right: .5em;
+  line-height: inherit;
+  font-size: inherit;
+  @extend %label;
+}
+
+%label-blue {
+  background: #d5daff;
+  border-color: #a3a4d4;
+}
+
+%label-yellow {
+  background: #ffdfb2;
+  border-color: #c2a16f;
+}
+
+%label-red {
+  background: #fed5d3;
+  border-color: #dc7874;
+}
+
+//
+// External links
+//
+
+%external-link {
+  &:after {
+    display: inline-block;
+    width: .5rem;
+    height: .4375rem;
+    margin: .125rem 0 0 .0625rem;
+    vertical-align: top;
+    @extend %icon, %icon-link;
+  }
+}
+
+%internal-link:after { content: none !important; }

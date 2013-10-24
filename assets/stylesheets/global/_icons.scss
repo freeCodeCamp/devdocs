@@ -1,0 +1,41 @@
+%icon {
+  content: '';
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  background-image: image-url('icons.png');
+  background-size: 5rem 6rem;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+  %icon { background-image: image-url('icons@2x.png'); }
+}
+
+%icon-dir                   { background-position: 0 0; }
+%icon-search                { background-position: -1rem 0; }
+%icon-link                  { background-position: -2.25rem -.25rem; }
+%icon-clear                 { background-position: -3rem 0; }
+%icon-close-white           { background-position: -4rem 0; }
+%icon-settings              { background-position: 0 -1rem; }
+%icon-check                 { background-position: -1rem -1rem; }
+._icon-http:before          { background-position: -2rem -1rem; }
+._icon-jquery:before        { background-position: -3rem -1rem; }
+._icon-underscore:before    { background-position: -4rem -1rem; }
+._icon-html:before          { background-position: 0 -2rem; }
+._icon-css:before           { background-position: -1rem -2rem; }
+._icon-dom:before           { background-position: -2rem -2rem; }
+._icon-dom_events:before    { background-position: -3rem -2rem; }
+._icon-javascript:before    { background-position: -4rem -2rem; }
+._icon-backbone:before      { background-position: 0 -3rem; }
+._icon-node:before          { background-position: -1rem -3rem; }
+._icon-sass:before          { background-position: -2rem -3rem; }
+._icon-less:before          { background-position: -3rem -3rem; }
+._icon-angular:before       { background-position: -4rem -3rem; }
+._icon-coffeescript:before  { background-position: 0 -4rem; }
+._icon-ember:before         { background-position: -1rem -4rem; }
+%icon-menu                  { background-position: -2rem -4rem; }
+%icon-home                  { background-position: -3rem -4rem; }
+._icon-jqueryui:before      { background-position: -4rem -4rem; }
+._icon-jquerymobile:before  { background-position: 0 -5rem; }
+._icon-lodash:before        { background-position: -1rem -5rem; }
+._icon-php:before           { background-position: -2rem -5rem; }
