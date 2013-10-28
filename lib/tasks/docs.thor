@@ -66,7 +66,7 @@ class DocsCLI < Thor
     end
 
     if Docs.generate(name)
-      Docs.generate_manifest
+      generate_manifest
       puts 'Done'
     else
       puts "Failed!#{' (try running with --debug for more information)' unless options[:debug]}"
@@ -77,7 +77,7 @@ class DocsCLI < Thor
 
   desc 'manifest', 'Create the manifest'
   def manifest
-    Docs.generate_manifest
+    generate_manifest
     puts 'Done'
   end
 
@@ -88,7 +88,7 @@ class DocsCLI < Thor
     docs = options[:all] ? Docs.all : find_docs(names)
     assert_docs(docs)
     download_docs(docs)
-    Docs.generate_manifest
+    generate_manifest
     puts 'Done'
   rescue Docs::DocNotFound => error
     invalid_doc(error.name)
@@ -178,5 +178,9 @@ class DocsCLI < Thor
     else
       puts %(ERROR: can't find "#{doc.name}" documentation files.)
     end
+  end
+
+  def generate_manifest
+    Docs.generate_manifest
   end
 end
