@@ -42,11 +42,7 @@ module Docs
           # "." = class method, "#" = instance method
           separator = '#'
           separator = '.' if self.name == 'Ember' || self.name.split('.').last =~ /\A[a-z]/ || node.at_css('.static')
-
           name.prepend self.name + separator
-
-          # Fix bug in DS.Adapter / "{Array} ids" and "{DS.Model} record"
-          name.sub! %r[\{.+\}\s*], ''
 
           name << '()'     if node['class'].include? 'method'
           name << ' event' if node['class'].include? 'event'

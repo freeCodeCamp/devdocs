@@ -3,7 +3,7 @@ module Docs
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.version = '1.0.0'
+    self.version = '1.1.2'
     self.base_url = 'http://emberjs.com/api/'
 
     html_filters.push 'ember/clean_html', 'ember/entries', 'title'
@@ -40,6 +40,7 @@ module Docs
       classes/Ember.TextSupport.html
       data/classes/DS.AdapterPopulatedRecordArray.html
       data/classes/DS.AttributeChange.html
+      data/classes/DS.DebugAdapter.html
       data/classes/DS.RecordArrayManager.html
       data/classes/DS.RelationshipChange.html
       data/classes/DS.RelationshipChangeAdd.html
