@@ -66,6 +66,7 @@ class DocsCLI < Thor
     end
 
     if Docs.generate(name)
+      Docs.generate_manifest
       puts 'Done'
     else
       puts "Failed!#{' (try running with --debug for more information)' unless options[:debug]}"
