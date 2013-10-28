@@ -2,7 +2,7 @@ module Docs
   class Less
     class EntriesFilter < Docs::EntriesFilter
       SKIP_NAMES = ['Parametric Mixins', 'Mixins With Multiple Parameters',
-        'Media Queries as Variables']
+        'Return Values', 'Unlocking Mixins', 'Media Queries as Variables']
 
       REPLACE_NAMES = {
         'The @arguments variable'                   => '@arguments',

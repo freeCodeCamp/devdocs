@@ -1,7 +1,7 @@
 module Docs
   class Less < UrlScraper
     self.type = 'less'
-    self.version = '1.4.1'
+    self.version = '1.5.0'
     self.base_url = 'http://lesscss.org'
 
     html_filters.push 'less/clean_html', 'less/entries', 'title'
