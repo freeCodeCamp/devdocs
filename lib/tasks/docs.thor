@@ -106,6 +106,12 @@ class DocsCLI < Thor
     invalid_doc(error.name)
   end
 
+  desc 'clean', 'Delete documentation packages'
+  def clean
+    File.delete(*Dir[File.join Docs.store_path, '*.tar.gz'])
+    puts 'Done'
+  end
+
   private
 
   def find_docs(names)

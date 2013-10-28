@@ -102,6 +102,7 @@ thor docs:manifest  # Create the manifest file used by the app
 thor docs:generate  # Generate/scrape a documentation
 thor docs:page      # Generate/scrape a documentation page
 thor docs:package   # Package a documentation for use with docs:download
+thor docs:clean     # Delete documentation packages
 
 # Console
 thor console        # Start a REPL
