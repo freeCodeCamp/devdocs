@@ -5,6 +5,7 @@ gem 'thor'
 gem 'pry', '~> 0.9.12'
 gem 'activesupport', '~> 4.0', require: false
 gem 'yajl-ruby', require: false
+gem 'therubyracer'
 
 group :app do
   gem 'rack'
