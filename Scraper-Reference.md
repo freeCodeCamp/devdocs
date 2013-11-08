@@ -84,7 +84,7 @@ HTML filters are executed first and manipulate a parsed version of the document 
 
 Filter stacks are like sorted sets. They can modified using the following methods:
 
-```
+```ruby
 push(*names)                 # append one or more filters at the end
 insert_before(index, *names) # insert one filter before another (index can be a name)
 insert_after(index, *names)  # insert one filter after another (index can be a name)
