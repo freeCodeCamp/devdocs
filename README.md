@@ -15,13 +15,11 @@ DevDocs is free and open source. If you use it and like it, please consider dona
 
 **Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [License](#copyright--license) · [Questions?](#questions)
 
-**Note:** I'm in the process of writing more documentation. As DevDocs is quite big, it'll take time. Feel free to [contact me directly](mailto:thibaut@devdocs.io) in the meantime.
-
 ## Quick Start
 
 Unless you wish to use DevDocs offline or contribute to the code, I recommend using the hosted version at [devdocs.io](http://devdocs.io). It's up-to-date and requires no setup.
 
-DevDocs is made of two separate pieces of software: a Ruby scraper responsible for generating the documentation files and indexes, and a JavaScript front-end powered by on small Sinatra app.
+DevDocs is made of two separate pieces of software: a Ruby scraper responsible for generating the documentation files and indexes, and a JavaScript front-end powered by a small Sinatra app.
 
 DevDocs requires Ruby 2.0. Once you have it installed, run the following commands:
 
@@ -40,11 +38,11 @@ The `thor docs:download` command is used to download/update individual documenta
 
 ## Vision
 
-DevDocs aims to make reading and searching reference documentation fast, accessible and enjoyable, while aspiring to become the “one stop shop” for all open-source software documentations.
+DevDocs aims to make reading and searching reference documentation fast, accessible and enjoyable. It aspires to become the “one stop shop” for all open-source software documentations.
 
-The app's main goals are to: keep boot and page load times as fast as possible; improve the quality, speed, and order of search results; maximize the use of caching and other performance optimizations; maintain a clean, readable user interface; support full keyboard navigation; reduce “context switch” by using a consistent typography and design across all documentations; reduce clutter by focusing on a specific category of content (API/reference) and indexing only the minimum useful to most developers.
+The app's main goals are to: keep booting and loading times as short as possible; improve the quality, speed, and order of search results; maximize the use of caching and other performance optimizations; maintain a clean, readable user interface; support full keyboard navigation; reduce “context switch” by using a consistent typography and design across all documentations; reduce clutter by focusing on a specific category of content (API/reference) and by indexing only the minimum useful to most developers.
 
-**Note:** DevDocs is neither a programming guide nor a search engine. All content is pulled from third-party sources and the project does not intend to compete with full-text search engines. Its backbone is metadata: each piece of content must be identified by a unique, obvious and short string. Thus, tutorials, guides and other content that don't fit this requirement are outside the scope of the project.
+**Note:** DevDocs is neither a programming guide nor a search engine. All content is pulled from third-party sources and the project doesn't intend to compete with full-text search engines. Its backbone is metadata: each piece of content must be identified by a unique, obvious, and short string. Thus, tutorials, guides and other content that don't fit this requirement are outside the scope of the project.
 
 ## App
 
@@ -52,7 +50,7 @@ The web app is all JavaScript, written in [CoffeeScript](http://coffeescript.org
 
 Many of the code's design decisions were driven by the fact that the app uses XHR to load content directly into the main frame. This includes stripping the original documents of most of their HTML markup (e.g. scripts and stylesheets) to avoid polluting the main frame, and prefixing all CSS class names with an underscore to prevent conflicts.
 
-Another driving factor is the requirement for speed. This is partially solved by maximizing caching (both `applicationCache`, which comes with its own set of constraints, and `localStorage` are used to their full extent), as well as by allowing the user to pick his/her own set of documentations. On the other hand, the search algorithm is currently not very sophisticated because it needs to be fast even searching through 100k entries.
+Another driving factor is performance and the fact that everything happens in the browser. `applicationCache` (which comes with its own set of constraints) and `localStorage` are used to speed up the boot time while memory consumption is kept in check by allowing the user to pick his/her own set of documentations. On the other hand, the search algorithm is currently not very sophisticated because it needs to be fast even searching through 100k entries.
 
 DevDocs being a developer tool, the browser requirements are high:
 
@@ -78,13 +76,15 @@ There are currently two kinds of scrapers: `UrlScraper` which downloads files vi
 Modifications made to each document include:
 * removing stuff, such as the document structure (`<html>`, `<head>`, etc.), comments, empty nodes, etc.
 * fixing links (e.g. to remove duplicates)
-* replacing all external (not copied) URLs with their fully qualified counterpart
-* replacing all internal (copied) URLs with their unqualified and relative counterpart
+* replacing all external (not scraped) URLs with their fully qualified counterpart
+* replacing all internal (scraped) URLs with their unqualified and relative counterpart
 * adding stuff, such as a title and link to the original document
 
-These modifications are applied through a set of filters, with each scraper also applying custom filters specific to the documentation. Each document is also passed through a filter whose task is to figure out its metadata, namely its _name_ and _type_ (category).
+These modifications are applied through a set of filters using the [HTML::Pipeline](https://github.com/jch/html-pipeline) library. Each scraper includes filters specific to its documentation, one of which is tasked with figuring out the pages' metadata.
 
 The end result is a set of normalized HTML partials and a JSON index file. Because the index files are loaded separately by the [app](#app) following the user's preferences, the code also creates a JSON manifest file containing information about the documentations currently available on the system (such as their name, version, update date, etc.).
+
+More information about scrapers and filters is available on the [wiki](https://github.com/Thibaut/devdocs/wiki).
 
 ## Available Commands
 
@@ -121,6 +121,8 @@ thor assets:clean   # Clean old assets
 ## Contributing
 
 Contributions are welcome. Please read the [contributing guidelines](https://github.com/Thibaut/devdocs/blob/master/CONTRIBUTING.md).
+
+DevDocs's own documentation is available on the [wiki](https://github.com/Thibaut/devdocs/wiki).
 
 ## Copyright / License
 
