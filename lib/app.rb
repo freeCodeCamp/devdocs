@@ -118,13 +118,20 @@ class App < Sinatra::Application
     end
   end
 
-  get %r{\A/(.+?)(?=\-|/)} do |doc|
-    return 404 unless @doc = settings.docs[doc]
-    erb :other
-  end
-
   get '/ping' do
     200
+  end
+
+  get %r{\A/(\w+)(\-[\w\-]+)?(/)?(.+)?\z} do |doc, type, slash, rest|
+    return 404 unless @doc = settings.docs[doc]
+
+    if !rest && !slash
+      redirect "/#{doc}#{type}/"
+    elsif rest && rest.end_with?('/')
+      redirect "#{doc}#{type}#{slash}#{rest[0...-1]}"
+    else
+      erb :other
+    end
   end
 
   not_found do
