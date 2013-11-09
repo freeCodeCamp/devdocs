@@ -3,9 +3,9 @@ app.templates.aboutPage = -> """
     <h3 class="_toc-title">Table of Contents</h3>
     <ul class="_toc-list">
       <li><a href="#credits">Credits</a>
-      <li><a href="#thanks">Special Thanks</a>
       <li><a href="#faq">FAQ</a>
       <li><a href="#copyright">Copyright</a>
+      <li><a href="#plugins">Plugins</a>
     </ul>
   </div>
 
@@ -37,7 +37,7 @@ app.templates.aboutPage = -> """
     #{("<tr><td>#{c[0]}<td>&copy; #{c[1]}<td><a href=\"#{c[3]}\">#{c[2]}</a>" for c in credits).join('')}
   </table>
 
-  <h2 class="_lined-heading" id="thanks">Special Thanks</h2>
+  <p><strong>With special thanks to:</strong>
   <ul>
     <li><a href="https://www.heroku.com">Heroku</a> and <a href="http://newrelic.com">New Relic</a> for providing awesome free service
     <li>Daniel Bruce for the <a href="http://www.entypo.com">Entypo</a> pictograms
@@ -64,6 +64,13 @@ app.templates.aboutPage = -> """
     You may obtain a copy of the source code at <a href="https://github.com/Thibaut/devdocs">github.com/Thibaut/devdocs</a>.<br>
     For more information, see the <a href="https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
     and <a href="https://github.com/Thibaut/devdocs/blob/master/LICENSE">LICENSE</a> files.
+
+  <h2 class="_lined-heading" id="plugins">Plugins and Extensions</h2>
+  <ul>
+    <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
+    <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text plugin</a>
+    <li><a href="https://github.com/gruehle/dev-docs-viewer">Brackets extension</a>
+  </ul>
 """
 
 credits = [
