@@ -21,7 +21,7 @@ Unless you wish to use DevDocs offline or contribute to the code, I recommend us
 
 DevDocs is made of two separate pieces of software: a Ruby scraper responsible for generating the documentation files and indexes, and a JavaScript front-end powered by a small Sinatra app.
 
-DevDocs requires Ruby 2.0. Once you have it installed, run the following commands:
+DevDocs requires Ruby 2.0 and a JavaScript runtime supported by [ExecJS](https://github.com/sstephenson/execjs#readme) (included in OS X and Windows; [Node.js](http://nodejs.org/) on Linux). Once you have these installed, run the following commands:
 
 ```
 gem install bundler
@@ -29,7 +29,7 @@ bundle install
 thor docs:download --all
 rackup
 ```
- 
+
 Finally, point your browser at [localhost:9292](http://localhost:9292) (the first request will take a few seconds to compile the assets). You're all set.
 
 The `thor docs:download` command is used to download/update individual documentations (e.g. `thor docs:download html css`), or all at the same time (using the `--all` option). You can see the list of available documentations by running `thor docs:list`.
