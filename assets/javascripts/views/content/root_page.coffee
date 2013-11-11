@@ -23,7 +23,7 @@ class app.views.RootPage extends app.View
     return
 
   isHidden: ->
-    app.doc or app.store.get 'hideIntro'
+    app.isSingleDoc() or app.store.get 'hideIntro'
 
   onRoute: ->
 

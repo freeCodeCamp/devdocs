@@ -16,7 +16,7 @@ class app.views.Sidebar extends app.View
 
     @results = new app.views.Results @search
     @docList = new app.views.DocList
-    @docPicker = new app.views.DocPicker unless app.doc
+    @docPicker = new app.views.DocPicker unless app.isSingleDoc()
 
     app.on 'ready', @showDocList
     $.on document, 'click', @onGlobalClick if @docPicker

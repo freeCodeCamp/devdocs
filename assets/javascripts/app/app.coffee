@@ -145,6 +145,9 @@
                      getComputedStyle(document.querySelector('._header')).backgroundImage isnt 'none'
     catch
 
+  isSingleDoc: ->
+    !!(@DOC or @doc)
+
   isMobile: ->
     # Need to sniff the user agent because some Android and Windows Phone devices don't take
     # resolution (dpi) into account when reporting device width/height.

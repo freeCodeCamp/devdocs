@@ -23,7 +23,7 @@ class app.views.Document extends app.View
     app.router.show '/help#shortcuts'
 
   onEscape: ->
-    if app.doc then window.location = '/' else app.router.show '/'
+    if app.isSingleDoc() then window.location = '/' else app.router.show '/'
 
   onBack: ->
     history.back()
