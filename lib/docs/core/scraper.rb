@@ -14,6 +14,7 @@ module Docs
           autoload_all "docs/filters/#{to_s.demodulize.underscore}", 'filter'
         end
 
+        subclass.root_path = root_path
         subclass.options = options.deep_dup
         subclass.html_filters = html_filters.inheritable_copy
         subclass.text_filters = text_filters.inheritable_copy

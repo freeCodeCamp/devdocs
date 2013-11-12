@@ -33,6 +33,10 @@ class DocsScraperTest < MiniTest::Spec
       assert_equal Scraper.type, subclass.type
     end
 
+    it "sets .root_path" do
+      assert_equal Scraper.root_path, subclass.root_path
+    end
+
     it "duplicates .options" do
       stub(Scraper).options { { test: [] } }
       assert_equal Scraper.options, subclass.options
