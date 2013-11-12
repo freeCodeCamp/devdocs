@@ -61,7 +61,7 @@ Configuration is done via class attributes and divided into three main categorie
   The documents' location. Only URLs _inside_ the `base_url` will be scraped. "inside" more or less means "starting with" except that `/docs` is outside `/doc` (but `/doc/` is inside).  
   Unless `root_path` is set, the root/initial URL is equal to `base_url`.
 
-* `root_path` [String]  
+* `root_path` [String] **(inherited)**  
   The path from the `base_url` of the root URL.
 
 * `dir` [String] **(required, `FileScraper` only)**  
