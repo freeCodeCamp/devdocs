@@ -85,7 +85,7 @@ class app.views.Content extends app.View
     return
 
   scrollToTarget: ->
-    if @routeCtx.hash and el = $.id @routeCtx.hash
+    if @routeCtx.hash and el = @findTargetByHash @routeCtx.hash
       $.scrollToWithImageLock el, @scrollEl, 'top',
         margin: 20 + if @scrollEl is @el then 0 else $.offset(@el).top
       $.highlight el, className: '_highlight'
@@ -149,6 +149,9 @@ class app.views.Content extends app.View
       $.stopEvent(event)
       $.popup(link)
     return
+
+  findTargetByHash: (hash) ->
+    try $.id decodeURIComponent(hash) catch
 
   isExternalUrl: (url) ->
     url?[0..3] is 'http'
