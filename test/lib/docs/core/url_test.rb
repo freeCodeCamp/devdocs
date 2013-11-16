@@ -277,27 +277,109 @@ class DocsUrlTest < MiniTest::Spec
   end
 
   describe "#relative_path_to" do
-    context "when the URL is relative" do
+    context "when the URL is '/'" do
       let :url do
         URL.parse '/'
       end
 
-      it "raises an error with a relative url" do
-        assert_raises(ArgumentError) { url.relative_path_to '/' }
+      it "returns '.' with '/'" do
+        assert_equal '.', url.relative_path_to('/')
       end
 
-      it "raises an error with an absolute url" do
-        assert_raises(ArgumentError) { url.relative_path_to 'http://example.com' }
+      it "returns 'file' with '/file'" do
+        assert_equal 'file', url.relative_path_to('/file')
+      end
+
+      it "returns 'file/' with '/file/'" do
+        assert_equal 'file/', url.relative_path_to('/file/')
+      end
+
+      it "raises an error with 'file'" do
+        assert_raises ArgumentError do
+          url.relative_path_to 'file'
+        end
+      end
+    end
+
+    context "when the URL is '/path/to'" do
+      let :url do
+        URL.parse '/path/to'
+      end
+
+      it "returns '../' with '/'" do
+        assert_equal '../', url.relative_path_to('/')
+      end
+
+      it "returns '../path' with '/path'" do
+        assert_equal '../path', url.relative_path_to('/path')
+      end
+
+      it "returns '.' with '/path/'" do
+        assert_equal '.', url.relative_path_to('/path/')
+      end
+
+      it "returns 'to' with '/path/to'" do
+        assert_equal 'to', url.relative_path_to('/path/to')
+      end
+
+      it "returns '../PATH/to' with '/PATH/to'" do
+        assert_equal '../PATH/to', url.relative_path_to('/PATH/to')
+      end
+
+      it "returns 'to/' with '/path/to/'" do
+        assert_equal 'to/', url.relative_path_to('/path/to/')
+      end
+
+      it "returns 'to/file' with '/path/to/file'" do
+        assert_equal 'to/file', url.relative_path_to('/path/to/file')
+      end
+
+      it "returns 'to/file/' with '/path/to/file/'" do
+        assert_equal 'to/file/', url.relative_path_to('/path/to/file/')
+      end
+    end
+
+    context "when the URL is '/path/to/'" do
+      let :url do
+        URL.parse '/path/to/'
+      end
+
+      it "returns '../../' with ''" do
+        assert_equal '../../', url.relative_path_to('')
+      end
+
+      it "returns '../../' with '/'" do
+        assert_equal '../../', url.relative_path_to('/')
+      end
+
+      it "returns '../../path' with '/path'" do
+        assert_equal '../../path', url.relative_path_to('/path')
+      end
+
+      it "returns '../' with '/path/'" do
+        assert_equal '../', url.relative_path_to('/path/')
+      end
+
+      it "returns '../to' with '/path/to'" do
+        assert_equal '../to', url.relative_path_to('/path/to')
+      end
+
+      it "returns '.' with '/path/to/'" do
+        assert_equal '.', url.relative_path_to('/path/to/')
+      end
+
+      it "returns 'file' with '/path/to/file'" do
+        assert_equal 'file', url.relative_path_to('/path/to/file')
+      end
+
+      it "returns 'file/' with '/path/to/file/'" do
+        assert_equal 'file/', url.relative_path_to('/path/to/file/')
       end
     end
 
     context "when the URL is 'http://example.com'" do
       let :url do
         URL.parse 'http://example.com'
-      end
-
-      it "raises an error with a relative url" do
-        assert_raises(ArgumentError) { url.relative_path_to '/' }
       end
 
       it "returns '.' with 'http://example.com'" do
@@ -308,12 +390,16 @@ class DocsUrlTest < MiniTest::Spec
         assert_equal '.', url.relative_path_to('http://example.com/')
       end
 
-      it "returns 'file' with 'http://example.com/file'" do
-        assert_equal 'file', url.relative_path_to('http://example.com/file')
+      it "returns 'file' with 'http://example.com/file?query#frag'" do
+        assert_equal 'file', url.relative_path_to('http://example.com/file?query#frag')
       end
 
-      it "returns 'file/' with 'http://example.com/file/'" do
-        assert_equal 'file/', url.relative_path_to('http://example.com/file/')
+      it "returns nil with '/file'" do
+        assert_nil url.relative_path_to('/file')
+      end
+
+      it "returns nil with 'file'" do
+        assert_nil url.relative_path_to('file')
       end
 
       it "returns nil with 'https://example.com'" do
@@ -334,97 +420,18 @@ class DocsUrlTest < MiniTest::Spec
         assert_equal '.', url.relative_path_to('http://example.com')
       end
     end
-
-    context "when the URL is 'http://example.com/path/to'" do
-      let :url do
-        URL.parse 'http://example.com/path/to'
-      end
-
-      it "returns '../' with 'http://example.com'" do
-        assert_equal '../', url.relative_path_to('http://example.com')
-      end
-
-      it "returns '../' with 'http://example.com/'" do
-        assert_equal '../', url.relative_path_to('http://example.com/')
-      end
-
-      it "returns '../path' with 'http://example.com/path'" do
-        assert_equal '../path', url.relative_path_to('http://example.com/path')
-      end
-
-      it "returns '.' with 'http://example.com/path/'" do
-        assert_equal '.', url.relative_path_to('http://example.com/path/')
-      end
-
-      it "returns 'to' with 'http://example.com/path/to'" do
-        assert_equal 'to', url.relative_path_to('http://example.com/path/to')
-      end
-
-      it "returns '../PATH/to' with 'http://example.com/PATH/to'" do
-        assert_equal '../PATH/to', url.relative_path_to('http://example.com/PATH/to')
-      end
-
-      it "returns 'to/' with 'http://example.com/path/to/'" do
-        assert_equal 'to/', url.relative_path_to('http://example.com/path/to/')
-      end
-
-      it "returns 'to/file' with 'http://example.com/path/to/file'" do
-        assert_equal 'to/file', url.relative_path_to('http://example.com/path/to/file')
-      end
-
-      it "returns 'to/file/' with 'http://example.com/path/to/file/'" do
-        assert_equal 'to/file/', url.relative_path_to('http://example.com/path/to/file/')
-      end
-    end
-
-    context "when the URL is 'http://example.com/path/to/'" do
-      let :url do
-        URL.parse 'http://example.com/path/to/'
-      end
-
-      it "returns '../../' with 'http://example.com'" do
-        assert_equal '../../', url.relative_path_to('http://example.com')
-      end
-
-      it "returns '../../' with 'http://example.com/'" do
-        assert_equal '../../', url.relative_path_to('http://example.com/')
-      end
-
-      it "returns '../../path' with 'http://example.com/path'" do
-        assert_equal '../../path', url.relative_path_to('http://example.com/path')
-      end
-
-      it "returns '../' with 'http://example.com/path/'" do
-        assert_equal '../', url.relative_path_to('http://example.com/path/')
-      end
-
-      it "returns '../to' with 'http://example.com/path/to'" do
-        assert_equal '../to', url.relative_path_to('http://example.com/path/to')
-      end
-
-      it "returns '.' with 'http://example.com/path/to/'" do
-        assert_equal '.', url.relative_path_to('http://example.com/path/to/')
-      end
-
-      it "returns 'file' with 'http://example.com/path/to/file'" do
-        assert_equal 'file', url.relative_path_to('http://example.com/path/to/file')
-      end
-
-      it "returns 'file/' with 'http://example.com/path/to/file/'" do
-        assert_equal 'file/', url.relative_path_to('http://example.com/path/to/file/')
-      end
-    end
   end
 
   describe "#relative_path_from" do
-    context "when the URL is 'http://example.com/path/file'" do
-      let :url do
-        URL.parse 'http://example.com/path/file'
-      end
+    let :url do
+      URL.new
+    end
 
-      it "returns 'path/file' with 'http://example.com/path'" do
-        assert_equal 'path/file', url.relative_path_from('http://example.com/path')
+    it "returns the given url's #relative_path_to to self" do
+      any_instance_of URL do |instance|
+        stub(instance).relative_path_to(url) { 'path' }
       end
+      assert_equal 'path', url.relative_path_from('url')
     end
   end
 end

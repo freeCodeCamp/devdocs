@@ -86,7 +86,7 @@ module Docs
     end
 
     def relative_path_to(url)
-      assert_absolute self, url = self.class.parse(url)
+      url = self.class.parse(url)
       return unless origin == url.origin
 
       base_dir = Pathname.new(normalized_path)
@@ -106,14 +106,6 @@ module Docs
 
     def relative_path_from(url)
       self.class.parse(url).relative_path_to(self)
-    end
-
-    private
-
-    def assert_absolute(*args)
-      args.each do |url|
-        raise ArgumentError, "Expected absolute URL, got: #{url.to_s}" if url.relative?
-      end
     end
   end
 end
