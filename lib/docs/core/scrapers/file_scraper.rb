@@ -13,6 +13,8 @@ module Docs
 
     self.base_url = 'http://localhost/'
 
+    html_filters.push 'clean_local_urls'
+
     private
 
     def request_one(url)
