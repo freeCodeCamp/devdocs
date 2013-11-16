@@ -139,6 +139,11 @@ credits = [
     'CC BY',
     'http://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Ruby',
+    '1993-2013 Yukihiro Matsumoto',
+    'Ruby',
+    'https://www.ruby-lang.org/en/about/license.txt'
+  ], [
     'Sass',
     '2006-2013 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',

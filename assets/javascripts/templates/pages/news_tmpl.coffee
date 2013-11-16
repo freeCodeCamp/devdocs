@@ -24,7 +24,10 @@ newsItem = (date, news) ->
   result
 
 app.news = [
-  [ 1382572800000, # October 24, 2013
+  [ 1384560000000, # November 16, 2013
+    """ New <a href="/ruby/">Ruby</a> documentation """
+  ], [
+    1382572800000, # October 24, 2013
     """ DevDocs is now <a href="https://github.com/Thibaut/devdocs">open source</a>. """
   ], [
     1381276800000, # October 9, 2013
