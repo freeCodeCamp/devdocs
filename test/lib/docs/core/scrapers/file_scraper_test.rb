@@ -3,8 +3,7 @@ require 'docs'
 
 class FileScraperTest < MiniTest::Spec
   class Scraper < Docs::FileScraper
-    self.dir = '/dir'
-    self.base_url = 'http://example.com'
+    self.dir = '/'
     self.html_filters = Docs::FilterStack.new
     self.text_filters = Docs::FilterStack.new
   end
@@ -17,17 +16,28 @@ class FileScraperTest < MiniTest::Spec
     OpenStruct.new body: 'body', url: Docs::URL.parse(Scraper.base_url)
   end
 
+  describe ".inherited" do
+    it "sets .base_url" do
+      assert_equal Scraper.base_url, Class.new(Scraper).base_url
+    end
+  end
+
   describe "#request_one" do
-    let :url do
-      File.join(Scraper.base_url, 'path')
+    let :path do
+      File.join(Scraper.dir, 'path')
     end
 
     let :result do
-      scraper.send :request_one, url
+      scraper.send :request_one, path
     end
 
     before do
       stub(scraper).read_file
+    end
+
+    it "reads a file" do
+      mock(scraper).read_file(path)
+      result
     end
 
     describe "the returned response object" do
@@ -37,14 +47,9 @@ class FileScraperTest < MiniTest::Spec
       end
 
       it "has a #url" do
-        assert_equal url, result.url.to_s
+        assert_equal path, result.url.to_s
         assert_instance_of Docs::URL, result.url
       end
-    end
-
-    it "reads .dir/path when the url is .base_url/path" do
-      stub(scraper).read_file(File.join(Scraper.dir, 'path')) { 'test' }
-      assert_equal 'test', result.body
     end
   end
 
