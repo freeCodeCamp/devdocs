@@ -35,22 +35,6 @@ module Docs
     html_filters.push 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths'
     text_filters.push 'inner_html', 'clean_text', 'attribution'
 
-    def base_url
-      @base_url ||= URL.parse self.class.base_url
-    end
-
-    def root_url
-      @root_url ||= root_path? ? URL.parse(File.join(base_url.to_s, root_path)) : base_url.normalize
-    end
-
-    def root_path
-      self.class.root_path
-    end
-
-    def root_path?
-      root_path.present? && root_path != '/'
-    end
-
     def build_page(path)
       response = request_one url_for(path)
       result = handle_response(response)
@@ -72,20 +56,41 @@ module Docs
       end
     end
 
-    def options
-      @options ||= self.class.options.deep_dup.tap do |options|
-        options.merge! base_url: base_url, root_path: root_path, root_url: root_url
-        (options[:skip] ||= []).concat ['', '/'] if root_path?
-        if options[:only] || options[:only_patterns]
-          (options[:only] ||= []).concat root_path? ? [root_path] : ['', '/']
-        end
-        options.freeze
-      end
+    def base_url
+      @base_url ||= URL.parse self.class.base_url
+    end
+
+    def root_url
+      @root_url ||= root_path? ? URL.parse(File.join(base_url.to_s, root_path)) : base_url.normalize
+    end
+
+    def root_path
+      self.class.root_path
+    end
+
+    def root_path?
+      root_path.present? && root_path != '/'
     end
 
     def pipeline
       @pipeline ||= ::HTML::Pipeline.new(self.class.filters).tap do |pipeline|
         pipeline.instrumentation_service = Docs
+      end
+    end
+
+    def options
+      @options ||= self.class.options.deep_dup.tap do |options|
+        options.merge! base_url: base_url, root_url: root_url, root_path: root_path
+
+        if root_path?
+          (options[:skip] ||= []).concat ['', '/']
+        end
+
+        if options[:only] || options[:only_patterns]
+          (options[:only] ||= []).concat root_path? ? [root_path] : ['', '/']
+        end
+
+        options.freeze
       end
     end
 
