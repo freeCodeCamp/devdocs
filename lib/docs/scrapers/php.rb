@@ -5,7 +5,7 @@ module Docs
 
     self.name = 'PHP'
     self.type = 'php'
-    self.version = 'up to 5.5.4'
+    self.version = 'up to 5.5.6'
     self.base_url = 'http://www.php.net/manual/en/'
     self.root_path = 'extensions.alphabetical.html'
 
