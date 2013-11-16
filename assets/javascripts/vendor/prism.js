@@ -336,7 +336,7 @@ Token.stringify = function(o, language, parent) {
 // 	return;
 // }
 
-// Get current script and highlight
+// // Get current script and highlight
 // var script = document.getElementsByTagName('script');
 
 // script = script[script.length - 1];
@@ -349,7 +349,7 @@ Token.stringify = function(o, language, parent) {
 // 	}
 // }
 
-})();
+})();;
 Prism.languages.markup = {
 	'comment': /&lt;!--[\w\W]*?-->/g,
 	'prolog': /&lt;\?.+?\?>/,
@@ -390,7 +390,7 @@ Prism.hooks.add('wrap', function(env) {
 	if (env.type === 'entity') {
 		env.attributes['title'] = env.content.replace(/&amp;/, '&');
 	}
-});
+});;
 Prism.languages.css = {
 	'comment': /\/\*[\w\W]*?\*\//g,
 	'atrule': {
@@ -422,22 +422,6 @@ if (Prism.languages.markup) {
 		}
 	});
 };
-Prism.languages.css.selector = {
-	pattern: /[^\{\}\s][^\{\}]*(?=\s*\{)/g,
-	inside: {
-		'pseudo-element': /:(?:after|before|first-letter|first-line|selection)|::[-\w]+/g,
-		'pseudo-class': /:[-\w]+(?:\(.*\))?/g,
-		'class': /\.[-:\.\w]+/g,
-		'id': /#[-:\.\w]+/g
-	}
-};
-
-Prism.languages.insertBefore('css', 'ignore', {
-	'hexcode': /#[\da-f]{3,6}/gi,
-	'entity': /\\[\da-f]{1,8}/gi,
-	'number': /[\d%\.]+/g,
-	'function': /(attr|calc|cross-fade|cycle|element|hsla?|image|lang|linear-gradient|matrix3d|matrix|perspective|radial-gradient|repeating-linear-gradient|repeating-radial-gradient|rgba?|rotatex|rotatey|rotatez|rotate3d|rotate|scalex|scaley|scalez|scale3d|scale|skewx|skewy|skew|steps|translatex|translatey|translatez|translate3d|translate|url|var)/ig
-});
 Prism.languages.clike = {
 	'comment': {
 		pattern: /(^|[^\\])(\/\*[\w\W]*?\*\/|(^|[^:])\/\/.*?(\r?\n|$))/g,
@@ -464,7 +448,7 @@ Prism.languages.clike = {
 	'ignore': /&(lt|gt|amp);/gi,
 	'punctuation': /[{}[\];(),.:]/g
 };
-
+;
 Prism.languages.javascript = Prism.languages.extend('clike', {
 	'keyword': /\b(var|let|if|else|while|do|for|return|in|instanceof|function|new|with|typeof|try|throw|catch|finally|null|break|continue)\b/g,
 	'number': /\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?|NaN|-?Infinity)\b/g
@@ -490,8 +474,8 @@ if (Prism.languages.markup) {
 			}
 		}
 	});
-};
-
+}
+;
 Prism.languages.coffeescript = Prism.languages.extend('javascript', {
 	'block-comment': /([#]{3}\s*\r?\n(.*\s*\r*\n*)\s*?\r?\n[#]{3})/g,
 	'comment': /(\s|^)([#]{1}[^#^\r^\n]{2,}?(\r?\n|$))/g,
@@ -508,3 +492,26 @@ Prism.languages.insertBefore('coffeescript', 'keyword', {
 	},
 	'attr-name': /[_?a-z-|A-Z-]+(\s*:)| @[_?$?a-z-|A-Z-]+(\s*)| /g
 });
+;
+/**
+ * Original by Samuel Flores
+ *
+ * Adds the following new token classes:
+ * 		constant, builtin, variable, symbol, regex
+ */
+Prism.languages.ruby = Prism.languages.extend('clike', {
+	'comment': /#[^\r\n]*(\r?\n|$)/g,
+	'keyword': /\b(alias|and|BEGIN|begin|break|case|class|def|define_method|defined|do|each|else|elsif|END|end|ensure|false|for|if|in|module|new|next|nil|not|or|raise|redo|require|rescue|retry|return|self|super|then|throw|true|undef|unless|until|when|while|yield)\b/g,
+	'builtin': /\b(Array|Bignum|Binding|Class|Continuation|Dir|Exception|FalseClass|File|Stat|File|Fixnum|Fload|Hash|Integer|IO|MatchData|Method|Module|NilClass|Numeric|Object|Proc|Range|Regexp|String|Struct|TMS|Symbol|ThreadGroup|Thread|Time|TrueClass)\b/,
+	'constant': /\b[A-Z][a-zA-Z_0-9]*[?!]?\b/g
+});
+
+Prism.languages.insertBefore('ruby', 'keyword', {
+	'regex': {
+		pattern: /(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\r\n])+\/[gim]{0,3}(?=\s*($|[\r\n,.;})]))/g,
+		lookbehind: true
+	},
+	'variable': /[@$&]+\b[a-zA-Z_][a-zA-Z_0-9]*[?!]?\b/g,
+	'symbol': /:\b[a-zA-Z_][a-zA-Z_0-9]*[?!]?\b/g
+});
+;
