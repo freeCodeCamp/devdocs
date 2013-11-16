@@ -13,7 +13,7 @@ module Docs
     options[:container] = '#apicontent'
     options[:skip] = %w(index.html all.html documentation.html synopsis.html)
 
-    options[:attribution] = <<-HTML.strip_heredoc
+    options[:attribution] = <<-HTML
       &copy; Joyent, Inc. and other Node contributors<br>
       Licensed under the MIT License.
     HTML

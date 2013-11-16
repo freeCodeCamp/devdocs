@@ -13,7 +13,7 @@ module Docs
       <<-HTML.strip_heredoc
       <div class="_attribution">
         <p class="_attribution-p">
-          #{attribution.delete "\n"}<br>
+          #{attribution.strip_heredoc.delete "\n"}<br>
           #{attribution_link}
         </p>
       </div>

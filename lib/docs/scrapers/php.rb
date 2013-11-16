@@ -107,7 +107,7 @@ module Docs
       spl.datastructures.html spl.iterators.html spl.interfaces.html
       spl.exceptions.html spl.files.html spl.misc.html)
 
-    options[:attribution] = <<-HTML.strip_heredoc
+    options[:attribution] = <<-HTML
       &copy; 1997&ndash;2013 The PHP Documentation Group<br>
       Licensed under the Creative Commons Attribution License v3.0 or later.
     HTML

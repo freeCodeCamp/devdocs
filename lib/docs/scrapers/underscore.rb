@@ -12,7 +12,7 @@ module Docs
     options[:container] = '#documentation'
     options[:skip_links] = -> (_) { true }
 
-    options[:attribution] = <<-HTML.strip_heredoc
+    options[:attribution] = <<-HTML
       &copy; 2009&ndash;2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors<br>
       Licensed under the MIT License.
     HTML

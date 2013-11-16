@@ -48,7 +48,7 @@ module Docs
 
     options[:skip_patterns] = [/\._/]
 
-    options[:attribution] = <<-HTML.strip_heredoc
+    options[:attribution] = <<-HTML
       &copy; 2013 Yehuda Katz, Tom Dale and Ember.js contributors<br>
       Licensed under the MIT License.
     HTML

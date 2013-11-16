@@ -10,7 +10,7 @@ module Docs
     options[:container] = 'section'
     options[:skip_links] = -> (_) { true }
 
-    options[:attribution] = <<-HTML.strip_heredoc
+    options[:attribution] = <<-HTML
       &copy; 2009&ndash;2013 Alexis Sellier &amp; The Core Less Team<br>
       Licensed under the Apache License v2.0.
     HTML

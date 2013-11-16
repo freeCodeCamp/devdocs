@@ -11,7 +11,7 @@ module Docs
     options[:trailing_slash] = false
     options[:skip_patterns] = [/category/]
 
-    options[:attribution] = <<-HTML.strip_heredoc
+    options[:attribution] = <<-HTML
       &copy; 2013 The jQuery Foundation<br>
       Licensed under the MIT License.
     HTML

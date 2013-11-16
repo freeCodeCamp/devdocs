@@ -12,7 +12,7 @@ module Docs
     options[:container] = 'h1+div+div'
     options[:skip_links] = -> (_) { true }
 
-    options[:attribution] = <<-HTML.strip_heredoc
+    options[:attribution] = <<-HTML
       &copy; 2012&ndash;2013 The Dojo Foundation<br>
       Licensed under the MIT License.
     HTML

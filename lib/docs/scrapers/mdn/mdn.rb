@@ -10,7 +10,7 @@ module Docs
     text_filters.insert_before 'attribution', 'mdn/contribute_link'
 
     options[:trailing_slash] = false
-    options[:attribution] = <<-HTML.strip_heredoc
+    options[:attribution] = <<-HTML
       &copy; 2013 Mozilla Contributors<br>
       Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.
     HTML

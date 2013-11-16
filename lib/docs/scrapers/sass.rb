@@ -17,7 +17,7 @@ module Docs
       'Sass Functions' if filter.slug == 'Sass/Script/Functions'
     end
 
-    options[:attribution] = <<-HTML.strip_heredoc
+    options[:attribution] = <<-HTML
       &copy; 2006&ndash;2013 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein<br>
       Licensed under the MIT License.
     HTML
