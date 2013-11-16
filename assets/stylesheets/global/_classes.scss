@@ -102,17 +102,17 @@
 
 %block-label {
   display: block;
+  line-height: 1.375rem;
   margin: 2em 0 1em;
   padding-left: .5em;
   padding-right: .5em;
-  line-height: inherit;
   font-size: inherit;
   @extend %label;
 }
 
 %label-blue {
-  background: #d5daff;
-  border-color: #a3a4d4;
+  background: #dbe4ff;
+  border-color: #a8a9e2;
 }
 
 %label-yellow {
