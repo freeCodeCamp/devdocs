@@ -59,7 +59,7 @@ module Docs
     end
 
     def subpath_to(url, options = nil)
-      assert_absolute self, url = self.class.parse(url)
+      url = self.class.parse(url)
       return unless origin == url.origin
 
       base = path

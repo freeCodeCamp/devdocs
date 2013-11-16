@@ -79,17 +79,93 @@ class DocsUrlTest < MiniTest::Spec
   end
 
   describe "#subpath_to" do
-    context "when the URL is relative" do
+    context "when the URL is '/'" do
       let :url do
         URL.parse '/'
       end
 
-      it "raises an error with a relative url" do
-        assert_raises(ArgumentError) { url.subpath_to '/' }
+      it "returns nil with ''" do
+        assert_nil url.subpath_to('')
       end
 
-      it "raises an error with an absolute url" do
-        assert_raises(ArgumentError) { url.subpath_to 'http://example.com' }
+      it "returns '' with '/'" do
+        assert_equal '', url.subpath_to('/')
+      end
+
+      it "returns 'path' with '/path'" do
+        assert_equal 'path', url.subpath_to('/path')
+      end
+
+      it "returns nil with 'path'" do
+        assert_nil url.subpath_to('path')
+      end
+
+      it "returns nil with 'http://example.com/'" do
+        assert_nil url.subpath_to('http://example.com/')
+      end
+    end
+
+    context "when the URL is '/path/to'" do
+      let :url do
+        URL.parse '/path/to'
+      end
+
+      it "returns nil with '/path/'" do
+        assert_nil url.subpath_to('/path/')
+      end
+
+      it "returns '' with '/path/to'" do
+        assert_equal '', url.subpath_to('/path/to')
+      end
+
+      it "returns '/file' with '/path/to/file'" do
+        assert_equal '/file', url.subpath_to('/path/to/file')
+      end
+
+      it "returns nil with 'path/to/file'" do
+        assert_nil url.subpath_to('path/to/file')
+      end
+
+      it "returns nil with '/path/tofile'" do
+        assert_nil url.subpath_to('/path/tofile')
+      end
+
+      it "returns nil with '/PATH/to/file'" do
+        assert_nil url.subpath_to('/PATH/to/file')
+      end
+
+      context "and :ignore_case is true" do
+        it "returns '/file' with '/PATH/to/file'" do
+          assert_equal '/file', url.subpath_to('/PATH/to/file', ignore_case: true)
+        end
+      end
+    end
+
+    context "when the URL is '/path/to/'" do
+      let :url do
+        URL.parse '/path/to/'
+      end
+
+      it "returns nil with '/path/to'" do
+        assert_nil url.subpath_to('/path/to')
+      end
+
+      it "returns 'file' with '/path/to/file'" do
+        assert_equal 'file', url.subpath_to('/path/to/file')
+      end
+    end
+
+    context "when the URL is 'path/to'" do
+      let :url do
+        URL.parse 'path/to'
+      end
+
+      it "returns nil with '/path/to'" do
+        assert_nil url.subpath_to('/path/to')
+      end
+
+      it "returns '/file' with 'path/to/file'" do
+        assert_equal '/file', url.subpath_to('path/to/file')
       end
     end
 
@@ -98,32 +174,12 @@ class DocsUrlTest < MiniTest::Spec
         URL.parse 'http://example.com'
       end
 
-      it "raises an error with a relative url" do
-        assert_raises(ArgumentError) { url.subpath_to '/' }
-      end
-
-      it "returns '' with 'http://example.com'" do
-        assert_equal '', url.subpath_to('http://example.com')
-      end
-
       it "returns '' with 'HTTP://EXAMPLE.COM'" do
         assert_equal '', url.subpath_to('HTTP://EXAMPLE.COM')
       end
 
-      it "returns '/' with 'http://example.com/'" do
-        assert_equal '/', url.subpath_to('http://example.com/')
-      end
-
-      it "returns '/path' with 'http://example.com/path'" do
-        assert_equal '/path', url.subpath_to('http://example.com/path')
-      end
-
-      it "returns '/' with 'http://example.com/?query'" do
-        assert_equal '/', url.subpath_to('http://example.com/?query')
-      end
-
-      it "returns '/' with 'http://example.com/#frag'" do
-        assert_equal '/', url.subpath_to('http://example.com/#frag')
+      it "returns '/path' with 'http://example.com/path?query#frag'" do
+        assert_equal '/path', url.subpath_to('http://example.com/path?query#frag')
       end
 
       it "returns nil with 'https://example.com/'" do
@@ -143,31 +199,11 @@ class DocsUrlTest < MiniTest::Spec
       it "returns nil with 'http://example.com'" do
         assert_equal nil, url.subpath_to('http://example.com')
       end
-
-      it "returns '' with 'http://example.com/'" do
-        assert_equal '', url.subpath_to('http://example.com/')
-      end
     end
 
     context "when the URL is 'http://example.com/path/to'" do
       let :url do
         URL.parse 'http://example.com/path/to'
-      end
-
-      it "returns nil with 'http://example.com'" do
-        assert_nil url.subpath_to('http://example.com')
-      end
-
-      it "returns nil with 'http://example.com/'" do
-        assert_nil url.subpath_to('http://example.com/')
-      end
-
-      it "returns nil with 'http://example.com/path/'" do
-        assert_nil url.subpath_to('http://example.com/path/')
-      end
-
-      it "returns '' with 'http://example.com/path/to'" do
-        assert_equal '', url.subpath_to('http://example.com/path/to')
       end
 
       it "returns '/file' with 'http://example.com/path/to/file'" do
@@ -178,32 +214,8 @@ class DocsUrlTest < MiniTest::Spec
         assert_nil url.subpath_to('http://example.com/path/tofile')
       end
 
-      it "returns nil with 'http://example.com/PATH/to/file'" do
-        assert_nil url.subpath_to('http://example.com/PATH/to/file')
-      end
-
-      context "and :ignore_case is true" do
-        it "returns '/file' with 'http://example.com/PATH/to/file'" do
-          assert_equal '/file', url.subpath_to('http://example.com/PATH/to/file', ignore_case: true)
-        end
-      end
-    end
-
-    context "when the URL is 'http://example.com/path/to/'" do
-      let :url do
-        URL.parse 'http://example.com/path/to/'
-      end
-
-      it "returns nil with 'http://example.com/path/to'" do
-        assert_nil url.subpath_to('http://example.com/path/to')
-      end
-
-      it "returns '' with 'http://example.com/path/to/'" do
-        assert_equal '', url.subpath_to('http://example.com/path/to/')
-      end
-
-      it "returns 'file' with 'http://example.com/path/to/file'" do
-        assert_equal 'file', url.subpath_to('http://example.com/path/to/file')
+      it "returns nil with '/path/to/file'" do
+        assert_nil url.subpath_to('/path/tofile')
       end
     end
   end
