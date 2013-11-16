@@ -1,7 +1,7 @@
 module Docs
   class AttributionFilter < Filter
     def call
-      html << attribution_info if attribution
+      html << attribution_html if attribution
       html
     end
 
@@ -9,19 +9,21 @@ module Docs
       context[:attribution]
     end
 
-    def attribution_url
-      current_url.to_s
-    end
-
-    def attribution_info
+    def attribution_html
       <<-HTML.strip_heredoc
       <div class="_attribution">
         <p class="_attribution-p">
           #{attribution.delete "\n"}<br>
-          <a href="#{attribution_url}" class="_attribution-link">#{attribution_url}</a>
+          #{attribution_link}
         </p>
       </div>
       HTML
+    end
+
+    def attribution_link
+      unless base_url.host == 'localhost'
+        %(<a href="#{current_url}" class="_attribution-link">#{current_url}</a>)
+      end
     end
   end
 end
