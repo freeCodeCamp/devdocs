@@ -10,7 +10,7 @@
 
 ## Overview
 
-Starting from a root url, scrapers recursively follow links that match a set of rules, passing each valid response through a chain of filters before writing the file on the local filesystem. They also create an index of the pages' metadata (determined by one filter), which is dumped into a JSON file at the end.
+Starting from a root URL, scrapers recursively follow links that match a set of rules, passing each valid response through a chain of filters before writing the file on the local filesystem. They also create an index of the pages' metadata (determined by one filter), which is dumped into a JSON file at the end.
 
 Scrapers rely on the following libraries:
 
@@ -18,13 +18,13 @@ Scrapers rely on the following libraries:
 * [HTML::Pipeline](https://github.com/jch/html-pipeline) for applying filters
 * [Nokogiri](http://nokogiri.org/) for parsing HTML
 
-There are currently two kinds of scrapers: [`UrlScraper`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/core/scrapers/url_scraper.rb) which downloads files via HTTP and [`FileScraper`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/core/scrapers/file_scraper.rb) which reads them from the local filesystem. They function almost identically (both use URLs), except that `FileScraper` substitutes the base url with a local path before reading a file.
+There are currently two kinds of scrapers: [`UrlScraper`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/core/scrapers/url_scraper.rb) which downloads files via HTTP and [`FileScraper`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/core/scrapers/file_scraper.rb) which reads them from the local filesystem. They function almost identically (both use URLs), except that `FileScraper` substitutes the base URL with a local path before reading a file. `FileScraper` uses the placeholder `localhost` base URL by default and includes a filter to remove any URL pointing to it at the end.
 
 To be processed, a response must meet the following requirements:
 
 * 200 status code
 * HTML content type
-* effective URL (after redirection) contained in the base url (explained below)
+* effective URL (after redirection) contained in the base URL (explained below)
 
 (`FileScraper` only checks if the file exists and is not empty.)
 
@@ -34,7 +34,7 @@ Each URL is requested only once (case-insensitive).
 
 Configuration is done via class attributes and divided into three main categories:
 
-* [Attributes](https://github.com/Thibaut/devdocs/wiki/Scraper-Reference#attributes) — essential information such as name, version, url, etc.
+* [Attributes](https://github.com/Thibaut/devdocs/wiki/Scraper-Reference#attributes) — essential information such as name, version, URL, etc.
 * [Filter stacks](https://github.com/Thibaut/devdocs/wiki/Scraper-Reference#filter-stacks) — the list of filters that will be applied to each page.
 * [Filter options](https://github.com/Thibaut/devdocs/wiki/Scraper-Reference#filter-options) — the options passed to said filters.
 
@@ -59,6 +59,7 @@ Configuration is done via class attributes and divided into three main categorie
 
 * `base_url` [String] **(required in `UrlScraper`)**  
   The documents' location. Only URLs _inside_ the `base_url` will be scraped. "inside" more or less means "starting with" except that `/docs` is outside `/doc` (but `/doc/` is inside).  
+   `FileScraper`'s default is `localhost`. (Note: any iframe, image, or skipped link pointing to localhost will be removed by the `CleanLocalUrls` filter; the value should be overridden if the documents are available online.)
   Unless `root_path` is set, the root/initial URL is equal to `base_url`.
 
 * `root_path` [String] **(inherited)**  
