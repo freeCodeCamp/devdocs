@@ -59,7 +59,7 @@ Configuration is done via class attributes and divided into three main categorie
 
 * `base_url` [String] **(required in `UrlScraper`)**  
   The documents' location. Only URLs _inside_ the `base_url` will be scraped. "inside" more or less means "starting with" except that `/docs` is outside `/doc` (but `/doc/` is inside).  
-   Defaults to `localhost` in `FileScraper`. (Note: any iframe, image, or skipped link pointing to localhost will be removed by the `CleanLocalUrls` filter; the value should be overridden if the documents are available online.)
+   Defaults to `localhost` in `FileScraper`. _(Note: any iframe, image, or skipped link pointing to localhost will be removed by the `CleanLocalUrls` filter; the value should be overridden if the documents are available online.)_
   Unless `root_path` is set, the root/initial URL is equal to `base_url`.
 
 * `root_path` [String] **(inherited)**  
