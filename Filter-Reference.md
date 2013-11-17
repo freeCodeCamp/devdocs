@@ -77,6 +77,7 @@ The `call` method must return either `doc` or `html`, depending on the type of f
 * [`NormalizeUrlsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/normalize_urls.rb) — replaces all URLs with their fully qualified counterpart
 * [`InternalUrlsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/internal_urls.rb) — detects internal URLs (the ones to scrape) and replaces them with their unqualified, relative counterpart
 * [`NormalizePathsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/normalize_paths.rb) — makes the internal paths consistent (e.g. always end with `.html`)
+* [`CleanLocalUrlsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/clean_local_urls.rb) — removes links, iframes and images pointing to localhost (`FileScraper` only)
 * [`InnerHtmlFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/inner_html.rb) — converts the document to a string
 * [`CleanTextFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/clean_text.rb) — removes empty nodes
 * [`AttributionFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/attribution.rb) — appends the license info and link to the original document
