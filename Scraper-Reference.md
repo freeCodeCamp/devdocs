@@ -57,7 +57,7 @@ Configuration is done via class attributes and divided into three main categorie
 * `version` [String] **(required)**  
   The version of the software at the time the scraper was last run. This is only informational and doesn't affect the scraper's behavior.
 
-* `base_url` [String] **(required)**  
+* `base_url` [String] **(required in `UrlScraper`)**  
   The documents' location. Only URLs _inside_ the `base_url` will be scraped. "inside" more or less means "starting with" except that `/docs` is outside `/doc` (but `/doc/` is inside).  
   Unless `root_path` is set, the root/initial URL is equal to `base_url`.
 
@@ -100,6 +100,7 @@ Default `html_filters`:
 * [`NormalizeUrlsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/normalize_urls.rb) — replaces all URLs with their fully qualified counterpart
 * [`InternalUrlsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/internal_urls.rb) — detects internal URLs (the ones to scrape) and replaces them with their unqualified, relative counterpart
 * [`NormalizePathsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/normalize_paths.rb) — makes the internal paths consistent (e.g. always end with `.html`)
+* [`CleanLocalUrlsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/clean_local_urls.rb) — remove links, iframes and images pointing to localhost (`FileScraper` only)
 
 Default `text_filters`:
 
