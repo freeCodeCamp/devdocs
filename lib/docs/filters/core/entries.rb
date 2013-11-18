@@ -7,7 +7,7 @@ module Docs
 
     def entries
       entries = []
-      entries << default_entry if include_default_entry?
+      entries << default_entry if root_page? || include_default_entry?
       entries.concat(additional_entries)
       build_entries(entries)
     end

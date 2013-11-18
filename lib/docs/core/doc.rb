@@ -34,17 +34,18 @@ module Docs
       end
 
       def index_page(id)
-        if page = new.build_page(id)
+        if (page = new.build_page(id)) && page[:entries].present?
           yield page[:store_path], page[:output]
           index = EntryIndex.new
           index.add page[:entries]
+          index
         end
-        index
       end
 
       def index_pages
         index = EntryIndex.new
         new.build_pages do |page|
+          next if page[:entries].blank?
           yield page[:store_path], page[:output]
           index.add page[:entries]
         end

@@ -129,19 +129,36 @@ class DocsDocTest < MiniTest::Spec
         end
       end
 
-      it "yields the page's :store_path and :output" do
-        doc.index_page('') { |*args| @args = args }
-        assert_equal [page[:store_path], page[:output]], @args
+      context "and it has :entries" do
+        it "yields the page's :store_path and :output" do
+          doc.index_page('') { |*args| @args = args }
+          assert_equal [page[:store_path], page[:output]], @args
+        end
+
+        it "returns an EntryIndex" do
+          assert_instance_of Docs::EntryIndex, doc.index_page('') {}
+        end
+
+        describe "the index" do
+          it "contains the page's entries" do
+            index = doc.index_page('') {}
+            assert_equal page[:entries], index.entries
+          end
+        end
       end
 
-      it "returns an EntryIndex" do
-        assert_instance_of Docs::EntryIndex, doc.index_page('') {}
-      end
+      context "and it doesn't have :entries" do
+        before do
+          page[:entries] = []
+        end
 
-      describe "the index" do
-        it "contains the page's entries" do
-          index = doc.index_page('') {}
-          assert_equal page[:entries], index.entries
+        it "doesn't yield" do
+          doc.index_page('') { |*_| @yield = true }
+          refute @yield
+        end
+
+        it "returns nil" do
+          assert_nil doc.index_page('') {}
         end
       end
     end
@@ -184,21 +201,39 @@ class DocsDocTest < MiniTest::Spec
         end
       end
 
-      it "yields each page's :store_path and :output" do
+      it "yields pages that have :entries" do
         doc.index_pages { |*args| (@args ||= []) << args }
         assert_equal pages.length, @args.length
         assert_equal [page[:store_path], page[:output]], @args.first
       end
 
-      it "returns an EntryIndex" do
-        assert_instance_of Docs::EntryIndex, doc.index_pages {}
+      it "doesn't yield pages that don't have :entries" do
+        pages.first[:entries] = []
+        doc.index_pages { |*args| (@args ||= []) << args }
+        assert_equal pages.length - 1, @args.length
       end
 
-      describe "the index" do
-        it "contains all pages' entries" do
-          index = doc.index_pages {}
-          assert_equal pages.length, index.entries.length
-          assert_includes index.entries, entry
+      describe "and at least one has :entries" do
+        it "returns an EntryIndex" do
+          assert_instance_of Docs::EntryIndex, doc.index_pages {}
+        end
+
+        describe "the index" do
+          it "contains all the pages' entries" do
+            index = doc.index_pages {}
+            assert_equal pages.length, index.entries.length
+            assert_includes index.entries, entry
+          end
+        end
+      end
+
+      context "and none have :entries" do
+        before do
+          pages.each { |page| page[:entries] = [] }
+        end
+
+        it "returns nil" do
+          assert_nil doc.index_pages {}
         end
       end
     end

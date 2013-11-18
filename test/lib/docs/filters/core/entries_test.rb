@@ -26,12 +26,18 @@ class EntriesFilterTest < MiniTest::Spec
 
     it "includes the default entry when #include_default_entry? is true" do
       stub(filter).include_default_entry? { true }
-      assert_equal 1, entries.length
+      refute_empty entries
     end
 
     it "doesn't include the default entry when #include_default_entry? is false" do
       stub(filter).include_default_entry? { false }
       assert_empty entries
+    end
+
+    it "always includes the default entry when #root_page? is true" do
+      stub(filter).include_default_entry? { false }
+      stub(filter).root_page? { true }
+      refute_empty entries
     end
 
     describe "the default entry" do
