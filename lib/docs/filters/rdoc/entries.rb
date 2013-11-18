@@ -23,14 +23,16 @@ module Docs
         return [] if root_page?
         require 'cgi'
 
-        css('.method-detail').map do |node|
+        css('.method-detail').inject [] do |entries, node|
           name = node['id'].dup
           name.sub! %r{\A\w+?\-.}, ''
           name.sub! %r{\A-(?!\d)}, ''
           name.gsub! '-', '%'
           name = CGI.unescape(name)
           name.prepend self.name + (node['id'] =~ /\A\w+-c-/ ? '::' : '#')
-          [name, node['id']]
+
+          entries << [name, node['id']] unless entries.any? { |entry| entry[0] == name }
+          entries
         end
       end
     end

@@ -1,38 +1,24 @@
 module Docs
   class Ruby < Rdoc
     # Generated with:
-    # rdoc \
-    #   --format=darkfish \
-    #   --no-line-numbers \
-    #   --op=rdoc \
-    #   --visibility=public \
+    # find \
     #   *.c \
-    #   lib/**/*.rb \
-    #   lib/*.rb \
-    #   ext/bigdecimal/*.c \
-    #   ext/bigdecimal/lib/*.rb \
-    #   ext/bigdecimal/lib/**/*.rb \
-    #   ext/date/*.c \
-    #   ext/date/lib/*.rb \
-    #   ext/date/lib/**/*.rb \
-    #   ext/digest/*.c \
-    #   ext/digest/**/*.c \
-    #   ext/digest/**/*.rb \
-    #   ext/json/lib/**/*.rb \
-    #   ext/pathname/*.c \
-    #   ext/pathname/lib/*.rb \
-    #   ext/psych/*.c \
-    #   ext/psych/lib/*.rb \
-    #   ext/psych/lib/**/*.rb \
-    #   ext/readline/*.c \
-    #   ext/ripper/*.c \
-    #   ext/ripper/lib/*.rb \
-    #   ext/ripper/lib/**/*.rb \
-    #   ext/socket/*.c \
-    #   ext/socket/lib/*.rb \
-    #   ext/socket/lib/**/*.rb \
-    #   ext/stringio/*.c \
-    #   ext/zlib/*.c
+    #   lib \
+    #   ext/bigdecimal \
+    #   ext/date \
+    #   ext/digest \
+    #   ext/json \
+    #   ext/pathname \
+    #   ext/psych \
+    #   ext/readline \
+    #   ext/ripper \
+    #   ext/socket \
+    #   ext/stringio \
+    #   ext/zlib \
+    #   \( -name '*.c' -or -name '*.rb' \) \
+    #   -not -wholename '*sample/*' \
+    # | xargs \
+    #   rdoc --format=darkfish --no-line-numbers --op=rdoc --visibility=public
 
     self.version = '2.0.0'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby'
@@ -44,36 +30,48 @@ module Docs
     options[:skip] += %w(
       fatal.html
       unknown.html
+      CompositePublisher.html
       Data.html
       E2MM.html
       English.html
       Exception2MessageMapper.html
+      EXCEPTION_TYPE.html
       GServer.html
+      Logging.html
       MakeMakefile.html
       ParallelEach.html
       Requirement.html
+      SshDirPublisher.html
+      SshFilePublisher.html
+      SshFreshDirPublisher.html
+      Sys.html
       YAML/DBM.html)
 
     options[:skip_patterns] = [
       /\AComplex/,
+      /\AJSON\/Ext/,
       /\AGem/,
-      /\AHttpServer/,
+      /\AHTTP/i,
       /\AIRB/,
       /\AMiniTest/i,
+      /\ANet\/(?!HTTP)/,
       /\ANQXML/,
       /\AOpenSSL/,
+      /\AOptionParser\//,
       /\APride/,
+      /\APsych\//,
       /\ARacc/,
       /\ARake/,
       /\ARbConfig/,
       /\ARDoc/,
       /\AREXML/,
       /\ARSS/,
+      /\AShell\//,
+      /\ASocket\//,
       /\ATest/,
       /\AWEBrick/,
       /\AXML/,
-      /\AXMP/
-    ]
+      /\AXMP/]
 
     options[:attribution] = <<-HTML
       Ruby Core &copy; 1993&ndash;2013 Yukihiro Matsumoto<br>
