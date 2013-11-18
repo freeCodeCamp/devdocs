@@ -19,6 +19,10 @@ module Docs
         type
       end
 
+      def include_default_entry?
+        at_css('#description p') || css('.documentation-section').any? { |node| node.content.present? }
+      end
+
       def additional_entries
         return [] if root_page?
         require 'cgi'
@@ -29,9 +33,12 @@ module Docs
           name.sub! %r{\A-(?!\d)}, ''
           name.gsub! '-', '%'
           name = CGI.unescape(name)
-          name.prepend self.name + (node['id'] =~ /\A\w+-c-/ ? '::' : '#')
 
-          entries << [name, node['id']] unless entries.any? { |entry| entry[0] == name }
+          unless name.start_with? '_'
+            name.prepend self.name + (node['id'] =~ /\A\w+-c-/ ? '::' : '#')
+            entries << [name, node['id']] unless entries.any? { |entry| entry[0] == name }
+          end
+
           entries
         end
       end

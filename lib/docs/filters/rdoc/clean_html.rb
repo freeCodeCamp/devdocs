@@ -19,7 +19,7 @@ module Docs
         css('hr').remove
 
         # Remove paragraph/up links
-        css('h1 > span', 'h2 > span', 'h3 > span', 'h4 > span').remove
+        css('h1 > span', 'h2 > span', 'h3 > span', 'h4 > span', 'h5 > span', 'h6 > span').remove
 
         # Move id attributes to headings
         css('.method-detail').each do |node|

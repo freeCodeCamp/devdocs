@@ -3,7 +3,7 @@
   > .description > h2, .section-header { @extend %block-heading; }
   > .description > h2, .section-header, .method-heading { margin-left: -1rem; }
   .description > h1 { font-size: 1rem; }
-  .method-description > h2, h3, h4 { font-size: 1em; }
+  .method-description > h2, h3, h4, h5, h6 { font-size: 1em; }
 
   .method-heading {
     font-weight: bold;

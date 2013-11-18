@@ -29,15 +29,12 @@ module Docs
 
     options[:skip] += %w(
       fatal.html
-      unknown.html
       CompositePublisher.html
       Data.html
       E2MM.html
       English.html
       Exception2MessageMapper.html
-      EXCEPTION_TYPE.html
       GServer.html
-      Logging.html
       MakeMakefile.html
       ParallelEach.html
       Requirement.html
