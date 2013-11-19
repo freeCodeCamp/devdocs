@@ -12,7 +12,7 @@ module Docs
         type = name.dup
 
         unless type.sub! %r{::.*\z}, ''
-          parent = at_css('.meta-parent').try(:content).to_s.strip
+          parent = at_css('.meta-parent').try(:content).to_s
           return 'Errors' if type.end_with?('Error') || parent.end_with?('Error') || parent.end_with?('Exception')
         end
 
