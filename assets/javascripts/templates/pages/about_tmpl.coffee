@@ -144,6 +144,11 @@ credits = [
     'Ruby',
     'https://www.ruby-lang.org/en/about/license.txt'
   ], [
+    'Ruby on Rails',
+    '2004-2013 David Heinemeier Hansson',
+    'MIT',
+    'https://raw.github.com/rails/rails/master/activerecord/MIT-LICENSE'
+  ], [
     'Sass',
     '2006-2013 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',
