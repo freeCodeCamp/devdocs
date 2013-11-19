@@ -8,6 +8,7 @@ class app.views.Sidebar extends app.View
     escape: 'onEscape'
 
   init: ->
+    @addSubview @hover  = new app.views.SidebarHover @el unless $.isTouchScreen()
     @addSubview @search = new app.views.Search
 
     @search
@@ -24,6 +25,7 @@ class app.views.Sidebar extends app.View
 
   show: (view) ->
     unless @view is view
+      @hover?.hide()
       @saveScrollPosition()
       @view?.deactivate()
       @html @view = view

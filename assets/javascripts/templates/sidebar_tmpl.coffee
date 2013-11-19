@@ -12,12 +12,10 @@ templates.sidebarType = (type) ->
   """<a href="#{type.fullPath()}" class="_list-item _list-dir" data-slug="#{type.slug}"><span class="_list-arrow"></span><span class="_list-count">#{type.count}</span>#{type.name}</a>"""
 
 templates.sidebarEntry = (entry) ->
-  name = $.escape(entry.name)
-  """<a href="#{entry.fullPath()}" class="_list-item" title="#{name}">#{name}</a>"""
+  """<a href="#{entry.fullPath()}" class="_list-item _list-hover">#{$.escape entry.name}</a>"""
 
 templates.sidebarResult = (entry) ->
-  name = $.escape(entry.name)
-  """<a href="#{entry.fullPath()}" class="_list-item _list-result _icon-#{entry.doc.slug}" title="#{entry.doc.name}: #{name}">#{name}</a>"""
+  """<a href="#{entry.fullPath()}" class="_list-item _list-hover _list-result _icon-#{entry.doc.slug}">#{$.escape entry.name}</a>"""
 
 templates.sidebarPageLink = (count) ->
   """<span class="_list-item _list-pagelink">Show more… (#{count})</span>"""
