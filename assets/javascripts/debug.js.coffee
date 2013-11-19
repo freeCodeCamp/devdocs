@@ -1,3 +1,5 @@
+return unless console?.time and console.groupCollapsed
+
 #
 # App
 #
