@@ -19,7 +19,7 @@
 #= require_tree ./templates
 
 init = ->
-  document.removeEventListener 'DOMContentLoaded', init
+  document.removeEventListener 'DOMContentLoaded', init, false
   app.init()
 
 document.addEventListener 'DOMContentLoaded', init, false
