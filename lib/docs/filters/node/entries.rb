@@ -68,11 +68,12 @@ module Docs
             next
           end
 
-          # Skip all that start with an uppercase letter ("Example", "How It Works", etc.)
-          next unless name.first.upcase! || name.start_with?('Class Method')
-
           name.gsub! %r{\(.*?\)}, '()'
           name.gsub! %r{\[.+?\]}, '[]'
+          name.sub! 'assert(), ', '' # assert/assert.ok
+
+          # Skip all that start with an uppercase letter ("Example") or include a space ("exports alias")
+          next unless (name.first.upcase! && !name.include?(' ')) || name.start_with?('Class Method')
 
           # Differentiate server classes (http, https, net, etc.)
           name.sub!('server.') { "#{(klass || 'https').sub('.', '_').downcase!}." }
@@ -80,7 +81,6 @@ module Docs
           name.sub!('socket.') { "#{klass.sub('.', '_').downcase!}." }
 
           name.sub! 'Class Method:', ''
-          name.sub! 'assert(), ',    '' # assert/assert.ok
           name.sub! 'buf.',          'buffer.'
           name.sub! 'buf[',          'buffer['
           name.sub! 'child.',        'childprocess.'
