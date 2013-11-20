@@ -40,7 +40,7 @@ class app.views.SidebarHover extends app.View
   position: =>
     if @cursor
       top = $.rect(@cursor).top
-      if top > @offsetTop
+      if top >= @offsetTop
         @clone.style.top = top + 'px'
       else
         @hide()
