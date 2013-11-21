@@ -55,6 +55,9 @@ class app.views.SidebarHover extends app.View
   isTarget: (el) ->
     el.classList.contains @constructor.itemClass
 
+  isSelected: (el) ->
+    el.classList.contains 'active'
+
   isTruncated: (el) ->
     el.scrollWidth >= el.offsetWidth
 
@@ -68,7 +71,7 @@ class app.views.SidebarHover extends app.View
     return
 
   onMouseover: (event) =>
-    if @isTarget(event.target) and @mouseActivated()
+    if @isTarget(event.target) and not @isSelected(event.target) and @mouseActivated()
       @show event.target
     return
 

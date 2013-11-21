@@ -181,6 +181,41 @@
 }
 
 //
+// Search results
+//
+
+._list-result.active {
+  padding-right: 1.75rem;
+
+  > ._list-reveal { display: block; }
+}
+
+._list-reveal {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1.75rem;
+  cursor: pointer;
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 50%;
+    left: .5rem;
+    width: .75rem;
+    height: 1px;
+    background: rgba(white, .9);
+    box-shadow: 0 -3px rgba(white, .9),  // top line
+                0 3px rgba(white, .9),   // bottom line
+                0 -2px rgba(black, .15), // top shadow
+                0 1px rgba(black, .15),  // middle shadow
+                0 4px rgba(black, .15);  // bottom shadow
+  }
+}
+
+//
 // List hover clone
 //
 
@@ -189,6 +224,7 @@
   z-index: $hoverZ;
   left: 0;
   overflow: visible;
+  padding: 0 .75rem;
   background-color: #e5eaf4;
   pointer-events: none;
   -webkit-font-smoothing: subpixel-antialiased;

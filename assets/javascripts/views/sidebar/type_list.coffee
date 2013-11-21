@@ -45,7 +45,7 @@ class app.views.TypeList extends app.View
       delete @lists[type.slug]
     return
 
-  revealEntry: (entry) ->
-    if entry.type
-      @lists[entry.getType().slug]?.revealEntry(entry)
+  paginateTo: (model) ->
+    if model.type
+      @lists[model.getType().slug]?.paginateTo(model)
     return

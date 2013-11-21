@@ -13,7 +13,3 @@ class app.views.EntryList extends app.views.PaginatedList
 
   render: (entries) ->
     @tmpl 'sidebarEntry', entries
-
-  revealEntry: (entry) ->
-    @paginateTo entry
-    return

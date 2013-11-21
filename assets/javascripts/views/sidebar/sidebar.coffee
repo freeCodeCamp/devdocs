@@ -3,6 +3,7 @@ class app.views.Sidebar extends app.View
 
   @events:
     focus: 'onFocus'
+    click: 'onClick'
 
   @shortcuts:
     escape: 'onEscape'
@@ -67,9 +68,11 @@ class app.views.Sidebar extends app.View
     $.scrollTo event.target, @el, 'continuous', bottomGap: 2
     return
 
-  onEscape: =>
-    @showDocList()
-    @scrollToTop()
+  onClick: (event) =>
+    if event.target.hasAttribute? 'data-reset-list'
+      $.stopEvent(event)
+      @showDocList()
+      @docList.reset()
     return
 
   onGlobalClick: (event) =>
@@ -78,4 +81,9 @@ class app.views.Sidebar extends app.View
       @showDocPicker()
     else if @view is @docPicker
       @showDocList() unless $.hasChild @el, event.target
+    return
+
+  onEscape: =>
+    @showDocList()
+    @scrollToTop()
     return

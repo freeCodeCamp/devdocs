@@ -35,6 +35,16 @@ class app.views.DocList extends app.View
       @append @tmpl('sidebarDoc', app.disabledDocs.all(), disabled: true)
     return
 
+  reset: ->
+    @listSelect.deselect()
+    @listFocus?.blur()
+    @listFold.reset()
+
+    if model = app.router.context.type or app.router.context.entry
+      @reveal model
+      @select model
+    return
+
   onOpen: (event) =>
     $.stopEvent(event)
     doc = app.docs.findBy 'slug', event.target.getAttribute('data-slug')
@@ -56,14 +66,15 @@ class app.views.DocList extends app.View
       delete @lists[doc.slug]
     return
 
-  revealType: (type) ->
-    @openDoc type.doc
+  select: (model) ->
+    @listSelect.selectByHref model?.fullPath()
     return
 
-  revealEntry: (entry) ->
-    @openDoc entry.doc
-    @openType entry.getType() if entry.type
-    @lists[entry.doc.slug]?.revealEntry(entry)
+  reveal: (model) ->
+    @openDoc model.doc
+    @openType model.getType() if model.type
+    @paginateTo model
+    @scrollTo model
     return
 
   openDoc: (doc) ->
@@ -74,18 +85,17 @@ class app.views.DocList extends app.View
     @listFold.open @lists[type.doc.slug].find("[data-slug='#{type.slug}']")
     return
 
+  paginateTo: (model) ->
+    @lists[model.doc.slug]?.paginateTo(model)
+    return
+
+  scrollTo: (model) ->
+    $.scrollTo @find("a[href='#{model.fullPath()}']")
+    return
+
   afterRoute: (route, context) =>
     if context.init
-      switch route
-        when 'type'  then @revealType context.type
-        when 'entry' then @revealEntry context.entry
-
-    if route in ['type', 'entry']
-      @listSelect.selectByHref (context.type or context.entry).fullPath()
+      @reset()
     else
-      @listSelect.deselect()
-
-    if context.init
-      $.scrollTo @listSelect.getSelection()
-
+      @select context.type or context.entry
     return
