@@ -9,7 +9,6 @@ class app.views.ListFold extends app.View
   @shortcuts:
     left:   'onLeft'
     right:  'onRight'
-    escape: 'reset'
 
   constructor: (@el) -> super
 
@@ -32,7 +31,7 @@ class app.views.ListFold extends app.View
       @open el
     return
 
-  reset: =>
+  reset: ->
     while el = @findByClass @constructor.activeClass
       @close el
     return

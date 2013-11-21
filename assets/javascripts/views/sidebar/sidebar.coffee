@@ -35,8 +35,9 @@ class app.views.Sidebar extends app.View
       @restoreScrollPosition()
     return
 
-  showDocList: =>
+  showDocList: (reset) =>
     @show @docList
+    @docList.reset() if reset is true
     return
 
   showDocPicker: =>
@@ -71,8 +72,7 @@ class app.views.Sidebar extends app.View
   onClick: (event) =>
     if event.target.hasAttribute? 'data-reset-list'
       $.stopEvent(event)
-      @showDocList()
-      @docList.reset()
+      @showDocList true
     return
 
   onGlobalClick: (event) =>
@@ -84,6 +84,6 @@ class app.views.Sidebar extends app.View
     return
 
   onEscape: =>
-    @showDocList()
+    @showDocList true
     @scrollToTop()
     return
