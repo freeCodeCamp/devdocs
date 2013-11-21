@@ -7,8 +7,9 @@ html {
 }
 
 body {
-  margin: 0;
   height: 100%;
+  margin: 0;
+  overflow: auto;
   font: normal 1em/1.7 $baseFont;
   color: $textColor;
   word-wrap: break-word;
