@@ -154,4 +154,4 @@ class app.views.Content extends app.View
     try $.id decodeURIComponent(hash) catch
 
   isExternalUrl: (url) ->
-    url?[0..3] is 'http'
+    url?[0..4] in ['http:', 'https:']
