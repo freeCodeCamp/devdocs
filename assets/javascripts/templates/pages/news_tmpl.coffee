@@ -24,7 +24,10 @@ newsItem = (date, news) ->
   result
 
 app.news = [
-  [ 1384819200000, # November 19, 2013
+  [ 1385424000000, # November 26, 2013
+    """ New <a href="/python/">Python</a> documentation """
+  ], [
+    1384819200000, # November 19, 2013
     """ New <a href="/rails/">Ruby on Rails</a> documentation """
   ], [
     1384560000000, # November 16, 2013
@@ -35,7 +38,8 @@ app.news = [
   ], [
     1381276800000, # October 9, 2013
     """ DevDocs is now available as a <a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>. """
-  ], [ 1379808000000, # September 22, 2013
+  ], [
+    1379808000000, # September 22, 2013
     """ New <a href="/php/">PHP</a> documentation """
   ], [
     1378425600000, # September 6, 2013

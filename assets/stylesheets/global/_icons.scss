@@ -4,7 +4,7 @@
   width: 1rem;
   height: 1rem;
   background-image: image-url('icons.png');
-  background-size: 5rem 6rem;
+  background-size: 5rem 7rem;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
@@ -41,3 +41,4 @@
 ._icon-php:before           { background-position: -2rem -5rem; }
 ._icon-ruby:before          { background-position: -3rem -5rem; }
 ._icon-rails:before         { background-position: -4rem -5rem; }
+._icon-python:before        { background-position: 0 -6rem; }

@@ -1,0 +1,26 @@
+._sphinx {
+  h2, h3 { @extend %block-heading; }
+  dl:not(.docutils) > dt { @extend %block-label, %label-blue; }
+  dt + dt { margin-top: -.5em; }
+
+  .note, .admonition, .versionadded, .versionchanged, .deprecated-removed { @extend %note; }
+  .deprecated-removed { @extend %note-red; }
+  .versionmodified { font-weight: bold; }
+
+  p > code, li > code { @extend %label; }
+
+  .admonition-title {
+    float: left;
+    margin: 0 .5em 0 0;
+    font-weight: bold;
+
+    &:after { content: ':'; }
+  }
+
+  .admonition > dl {
+    clear: left;
+    margin: 0;
+  }
+
+  ul.simple { margin: 1em 0; }
+}

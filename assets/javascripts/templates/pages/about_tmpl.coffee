@@ -139,6 +139,11 @@ credits = [
     'CC BY',
     'http://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Python',
+    '1990-2013 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
+    'PSFL',
+    'http://docs.python.org/3/license.html'
+  ], [
     'Ruby',
     '1993-2013 Yukihiro Matsumoto',
     'Ruby',
