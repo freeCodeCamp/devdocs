@@ -19,7 +19,7 @@
   &._loading { opacity: 1; }
 
   &:before {
-    content: 'Loading…';
+    content: 'Loading\2026';
     position: absolute;
     top: 50%;
     left: 0;
