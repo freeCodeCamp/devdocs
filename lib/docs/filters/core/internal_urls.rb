@@ -3,7 +3,7 @@ require 'set'
 module Docs
   class InternalUrlsFilter < Filter
     def call
-      internal_urls = Set.new
+      internal_urls = Set.new if follow_links?
 
       css('a').each do |link|
         next if skip_link?(link)
@@ -17,11 +17,15 @@ module Docs
         normalize_internal_url(url, subpath)
 
         link['href'] = internal_path_to(url)
-        internal_urls << url.merge!(fragment: nil).to_s
+        internal_urls << url.merge!(fragment: nil).to_s if internal_urls
       end
 
-      result[:internal_urls] = internal_urls.to_a
+      result[:internal_urls] = (internal_urls || []).to_a
       doc
+    end
+
+    def follow_links?
+      !(context[:follow_links] && context[:follow_links].call(self) == false)
     end
 
     def skip_link?(link)

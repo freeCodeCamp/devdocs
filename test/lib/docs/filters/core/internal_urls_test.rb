@@ -159,6 +159,28 @@ class InternalUrlsFilterTest < MiniTest::Spec
         assert_equal 1, internal_urls.length
       end
     end
+
+    context "when context[:follow_links] is a block" do
+      before do
+        @body = link_to context[:url]
+      end
+
+      it "calls the block with the filter instance" do
+        context[:follow_links] = ->(arg) { @arg = arg; nil }
+        filter.call
+        assert_equal filter, @arg
+      end
+
+      it "is empty when the block returns false" do
+        context[:follow_links] = ->(_) { false }
+        assert_empty internal_urls
+      end
+
+      it "is the default when the block returns true" do
+        context[:follow_links] = ->(_) { true }
+        refute_empty internal_urls
+      end
+    end
   end
 
   context "when the base url is 'example.com'" do
