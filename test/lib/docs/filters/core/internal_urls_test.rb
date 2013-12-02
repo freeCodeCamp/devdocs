@@ -133,28 +133,6 @@ class InternalUrlsFilterTest < MiniTest::Spec
         assert_includes internal_urls, 'http://example.com/'
       end
     end
-
-    context "when context[:follow_links] is a block" do
-      before do
-        @body = link_to context[:url]
-      end
-
-      it "calls the block with the filter instance" do
-        context[:follow_links] = ->(arg) { @arg = arg; nil }
-        filter.call
-        assert_equal filter, @arg
-      end
-
-      it "is empty when the block returns false" do
-        context[:follow_links] = ->(_) { false }
-        assert_empty internal_urls
-      end
-
-      it "is the default when the block returns true" do
-        context[:follow_links] = ->(_) { true }
-        refute_empty internal_urls
-      end
-    end
   end
 
   context "when the base url is 'example.com'" do
@@ -325,13 +303,49 @@ class InternalUrlsFilterTest < MiniTest::Spec
           context[:skip_links] = ->(_) { false }
         end
 
-        it "set :internal_urls" do
+        it "sets :internal_urls" do
           assert internal_urls
         end
 
         it "replaces urls" do
           refute_equal @body, filter_output_string
         end
+      end
+    end
+  end
+
+  context "context[:follow_links] is a block" do
+    before do
+      @body = link_to context[:url]
+    end
+
+    it "calls the block with the filter instance" do
+      context[:follow_links] = ->(arg) { @arg = arg; nil }
+      filter.call
+      assert_equal filter, @arg
+    end
+
+    context "and the block returns false" do
+      before do
+        context[:follow_links] = ->(_) { false }
+      end
+
+      it "doesn't set :internal_urls" do
+        refute internal_urls
+      end
+
+      it "replaces urls" do
+        refute_equal @body, filter_output_string
+      end
+    end
+
+    context "and the block returns true" do
+      before do
+        context[:follow_links] = ->(_) { true }
+      end
+
+      it "sets :internal_urls" do
+        assert internal_urls
       end
     end
   end

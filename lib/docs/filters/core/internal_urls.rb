@@ -20,7 +20,7 @@ module Docs
         internal_urls << url.merge!(fragment: nil).to_s if internal_urls
       end
 
-      result[:internal_urls] = (internal_urls || []).to_a
+      result[:internal_urls] = internal_urls.to_a if internal_urls
       doc
     end
 
