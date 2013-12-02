@@ -110,29 +110,6 @@ class InternalUrlsFilterTest < MiniTest::Spec
       @body = link_to 'http://example.com/dir/file'
       assert_empty internal_urls
     end
-
-    context "when context[:trailing_slash] is true" do
-      it "adds a trailing slash" do
-        context[:trailing_slash] = true
-        @body = link_to 'http://example.com/dir/path'
-        assert_includes internal_urls, 'http://example.com/dir/path/'
-      end
-    end
-
-    context "when context[:trailing_slash] is false" do
-      before { context[:trailing_slash] = false }
-
-      it "removes trailing slashes" do
-        @body = link_to 'http://example.com/dir/path/'
-        assert_includes internal_urls, 'http://example.com/dir/path'
-      end
-
-      it "doesn't remove the leading slash" do
-        context[:base_url] = context[:root_url] = 'http://example.com/'
-        @body = link_to 'http://example.com/'
-        assert_includes internal_urls, 'http://example.com/'
-      end
-    end
   end
 
   context "when the base url is 'example.com'" do
@@ -254,6 +231,46 @@ class InternalUrlsFilterTest < MiniTest::Spec
       it "doesn't replace 'example.com/dir'" do
         @body = link_to 'http://example.com/dir'
         assert_equal @body, filter_output_string
+      end
+    end
+  end
+
+  context "context[:trailing_slash]" do
+    before do
+      @body = link_to('http://example.com/dir/path/') + link_to('http://example.com/dir/path')
+    end
+
+    context "when it is true" do
+      before do
+        context[:trailing_slash] = true
+      end
+
+      it "adds a trailing slash to :internal_urls" do
+        assert_equal ['http://example.com/dir/path/'], internal_urls
+      end
+
+      it "adds a trailing slash to replaced urls" do
+        assert_equal link_to('path/') * 2, filter_output_string
+      end
+    end
+
+    context "when it is false" do
+      before do
+        context[:trailing_slash] = false
+      end
+
+      it "removes the trailing slash from :internal_urls" do
+        assert_equal ['http://example.com/dir/path'], internal_urls
+      end
+
+      it "removes the trailing slash from replaced urls" do
+        assert_equal link_to('path') * 2, filter_output_string
+      end
+
+      it "doesn't remove the leading slash" do
+        url = context[:base_url] = context[:root_url] = 'http://example.com/'
+        @body = link_to(url)
+        assert_equal [url], internal_urls
       end
     end
   end
