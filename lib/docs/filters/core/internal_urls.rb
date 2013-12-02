@@ -25,7 +25,7 @@ module Docs
     end
 
     def skip_links?
-      context[:skip_links] && context[:skip_links].call(self)
+      context[:skip_links].is_a?(Proc) ? context[:skip_links].call(self) : context[:skip_links]
     end
 
     def follow_links?

@@ -10,7 +10,7 @@ module Docs
 
     options[:title] = 'Lo-Dash'
     options[:container] = 'h1+div+div'
-    options[:skip_links] = ->(filter) { true }
+    options[:skip_links] = true
 
     options[:attribution] = <<-HTML
       &copy; 2012&ndash;2013 The Dojo Foundation<br>

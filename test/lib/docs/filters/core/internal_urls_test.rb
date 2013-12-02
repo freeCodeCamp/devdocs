@@ -285,6 +285,20 @@ class InternalUrlsFilterTest < MiniTest::Spec
       @body = link_to context[:url]
     end
 
+    context "when it is true" do
+      before do
+        context[:skip_links] = true
+      end
+
+      it "doesn't set :internal_urls" do
+        refute internal_urls
+      end
+
+      it "doesn't replace urls" do
+        assert_equal @body, filter_output_string
+      end
+    end
+
     context "when it is a block" do
       it "calls the block with the filter instance" do
         context[:skip_links] = ->(arg) { @arg = arg; nil }

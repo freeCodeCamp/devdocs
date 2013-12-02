@@ -10,7 +10,7 @@ module Docs
 
     options[:title] = 'Underscore.js'
     options[:container] = '#documentation'
-    options[:skip_links] = ->(filter) { true }
+    options[:skip_links] = true
 
     options[:attribution] = <<-HTML
       &copy; 2009&ndash;2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors<br>
