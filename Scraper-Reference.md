@@ -124,7 +124,7 @@ More information about how filters work is available on the [Filter Reference](h
 
   - `:container` [String or Proc]  
     A CSS selector of the container element. Everything outside of it will be removed and become unavailable to the other filters. If more than one element match the selector, the first one inside the DOM is used. If no elements match the selector, an error is raised.  
-    If the value is a Proc, it is called repeatedly for each page, with the filter instance as argument, and should return a selector or `nil`.  
+    If the value is a Proc, it is called for each page with the filter instance as argument, and should return a selector or `nil`.  
     The default container is the `<body>` element.  
     _Note: links outside of the container element will not be followed by the scraper. To remove links that should be followed, use a [`CleanHtml`](https://github.com/Thibaut/devdocs/wiki/Filter-Reference#cleanhtmlfilter) filter later in the stack._
 
@@ -146,11 +146,14 @@ More information about how filters work is available on the [Filter Reference](h
 
   Internal URLs are the ones _inside_ the scraper's `base_url` ("inside" more or less means "starting with", except that `/docs` is outside `/doc`). They will be scraped unless excluded by one of the following rules. All internal URLs are converted to relative URLs inside the pages.
 
+  - `:skip_links` [Boolean or Proc]  
+    If `false`, does not convert or follow any internal URL (creating a single-page documentation).  
+    If the value is a Proc, it is called for each page with the filter instance as argument.
+  - `:follow_links` [Proc]  
+    Called for page with the filter instance as argument. If the returned value is `false`, does not add internal URLs to the queue.
   - `:trailing_slash` [Boolean]  
     If `true`, adds a trailing slash to all internal URLs. If `false`, removes it.  
     This is another option used to remove duplicate pages.
-  - `:skip_links` [Proc]  
-    Called with each `<a>` node. If the returned value is `true`, the link is skipped and its URL ignored.
   - `:skip` [Array]  
     Ignores internal URLs whose sub-paths (path from the `base_url`) are in the Array (case-insensitive).
   - `:skip_patterns` [Array]  
