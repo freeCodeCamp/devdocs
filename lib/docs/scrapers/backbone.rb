@@ -10,7 +10,7 @@ module Docs
 
     options[:title] = 'Backbone.js'
     options[:container] = '.container'
-    options[:skip_links] = -> (_) { true }
+    options[:skip_links] = ->(filter) { true }
 
     options[:attribution] = <<-HTML
       &copy; 2010&ndash;2013 Jeremy Ashkenas, DocumentCloud<br>

@@ -3,10 +3,10 @@ require 'set'
 module Docs
   class InternalUrlsFilter < Filter
     def call
+      return doc if skip_links?
       internal_urls = Set.new if follow_links?
 
       css('a').each do |link|
-        next if skip_link?(link)
         next unless url = parse_href(link['href'])
         next unless subpath = subpath_to(url)
 
@@ -24,12 +24,12 @@ module Docs
       doc
     end
 
-    def follow_links?
-      !(context[:follow_links] && context[:follow_links].call(self) == false)
+    def skip_links?
+      context[:skip_links] && context[:skip_links].call(self)
     end
 
-    def skip_link?(link)
-      context[:skip_links] && context[:skip_links].call(link)
+    def follow_links?
+      !(context[:follow_links] && context[:follow_links].call(self) == false)
     end
 
     def parse_href(str)

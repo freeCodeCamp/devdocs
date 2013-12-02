@@ -8,7 +8,7 @@ module Docs
 
     options[:title] = 'LESS'
     options[:container] = 'section'
-    options[:skip_links] = -> (_) { true }
+    options[:skip_links] = ->(filter) { true }
 
     options[:attribution] = <<-HTML
       &copy; 2009&ndash;2013 Alexis Sellier &amp; The Core Less Team<br>

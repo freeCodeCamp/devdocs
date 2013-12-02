@@ -5,16 +5,15 @@ class InternalUrlsFilterTest < MiniTest::Spec
   include FilterTestHelper
   self.filter_class = Docs::InternalUrlsFilter
 
+  before do
+    context[:base_url] = context[:root_url] = context[:url] = 'http://example.com/dir'
+  end
+
+  let :internal_urls do
+    filter_result[:internal_urls]
+  end
+
   describe ":internal_urls" do
-    before do
-      context[:base_url] = context[:root_url] = 'http://example.com/dir'
-      context[:url] = 'http://example.com/dir'
-    end
-
-    let :internal_urls do
-      filter_result[:internal_urls]
-    end
-
     it "is an array" do
       assert_instance_of Array, internal_urls
     end
@@ -132,31 +131,6 @@ class InternalUrlsFilterTest < MiniTest::Spec
         context[:base_url] = context[:root_url] = 'http://example.com/'
         @body = link_to 'http://example.com/'
         assert_includes internal_urls, 'http://example.com/'
-      end
-    end
-
-    context "when context[:skip_links] is a block" do
-      let :block do
-        context[:skip_links] = Proc.new {}
-      end
-
-      it "passes all links to the block" do
-        @body = link_to 'http://example.com'
-        context[:skip_links] = ->(arg) { @arg = arg }
-        internal_urls
-        assert_equal @body, @arg.to_s
-      end
-
-      it "doesn't include urls from links where the block returns true" do
-        @body = link_to 'http://example.com/dir/path'
-        context[:skip_links] = ->(_) { true }
-        assert_empty internal_urls
-      end
-
-      it "includes urls from links where the block returns false" do
-        @body = link_to 'http://example.com/dir/path'
-        context[:skip_links] = ->(_) { false }
-        assert_equal 1, internal_urls.length
       end
     end
 
@@ -302,6 +276,48 @@ class InternalUrlsFilterTest < MiniTest::Spec
       it "doesn't replace 'example.com/dir'" do
         @body = link_to 'http://example.com/dir'
         assert_equal @body, filter_output_string
+      end
+    end
+  end
+
+  context "context[:skip_links]" do
+    before do
+      @body = link_to context[:url]
+    end
+
+    context "when it is a block" do
+      it "calls the block with the filter instance" do
+        context[:skip_links] = ->(arg) { @arg = arg; nil }
+        filter.call
+        assert_equal filter, @arg
+      end
+
+      context "and the block returns true" do
+        before do
+          context[:skip_links] = ->(_) { true }
+        end
+
+        it "doesn't set :internal_urls" do
+          refute internal_urls
+        end
+
+        it "doesn't replace urls" do
+          assert_equal @body, filter_output_string
+        end
+      end
+
+      context "and the block returns false" do
+        before do
+          context[:skip_links] = ->(_) { false }
+        end
+
+        it "set :internal_urls" do
+          assert internal_urls
+        end
+
+        it "replaces urls" do
+          refute_equal @body, filter_output_string
+        end
       end
     end
   end
