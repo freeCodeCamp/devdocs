@@ -1,38 +1,49 @@
-require 'set'
-
 module Docs
   class InternalUrlsFilter < Filter
     def call
-      return doc if skip_links?
-      internal_urls = Set.new if follow_links?
-
-      css('a').each do |link|
-        next unless url = parse_href(link['href'])
-        next unless subpath = subpath_to(url)
-
-        normalize_subpath(subpath)
-
-        next if skip_subpath?(subpath)
-
-        normalize_internal_url(url, subpath)
-
-        link['href'] = internal_path_to(url)
-        internal_urls << url.merge!(fragment: nil).to_s if internal_urls
+      unless skip_links?
+        follow_links? ? update_and_follow_links : update_links
       end
-
-      result[:internal_urls] = internal_urls.to_a if internal_urls
       doc
     end
 
+    def update_links
+      css('a').each do |link|
+        next unless url = to_internal_url(link['href'])
+        link['href'] = internal_path_to(url)
+        yield url if block_given?
+      end
+    end
+
+    def update_and_follow_links
+      urls = result[:internal_urls] = []
+      update_links do |url|
+        urls << url.merge!(fragment: nil).to_s
+      end
+      urls.uniq!
+    end
+
     def skip_links?
-      context[:skip_links].is_a?(Proc) ? context[:skip_links].call(self) : context[:skip_links]
+      if context[:skip_links].is_a? Proc
+        context[:skip_links].call self
+      else
+        context[:skip_links]
+      end
     end
 
     def follow_links?
       !(context[:follow_links] && context[:follow_links].call(self) == false)
     end
 
-    def parse_href(str)
+    def to_internal_url(str)
+      return unless (url = parse_url(str)) && (subpath = subpath_to(url))
+      normalize_subpath(subpath)
+      return if skip_subpath?(subpath)
+      normalize_url(url, subpath)
+      url
+    end
+
+    def parse_url(str)
       str && absolute_url_string?(str) && URL.parse(str)
     rescue URI::InvalidURIError
       nil
@@ -61,9 +72,9 @@ module Docs
       false
     end
 
-    def normalize_internal_url(url, path)
+    def normalize_url(url, subpath)
+      url.merge! path: base_url.path + subpath
       url.normalize!
-      url.merge! path: base_url.path + path
     end
 
     def internal_path_to(url)
