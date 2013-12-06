@@ -1,136 +1,112 @@
 module Docs
   class Php
     class EntriesFilter < Docs::EntriesFilter
-      TYPES = {
-      # [name-begin-with]   => [type]
-        'AMQP'              => 'AMQP',
-        'APCIterator'       => 'APC',
-        'CURL'              => 'cURL',
-        'Date'              => 'Date and Time',
-        'DirectoryIterator' => 'Standard PHP Library',
-        'Directory'         => 'Directories',
-        'DOM'               => 'DOM',
-        'Gearman'           => 'Gearman',
-        'Gmagick'           => 'Gmagick',
-        'Http'              => 'HTTP',
-        'Imagick'           => 'Imagick',
-        'Collator'          => 'Internationalization',
-        'NumberFormatter'   => 'Internationalization',
-        'Locale'            => 'Internationalization',
-        'MessageFormatter'  => 'Internationalization',
-        'Normalizer'        => 'Internationalization',
-        'Intl'              => 'Internationalization',
-        'intl'              => 'Internationalization',
-        'ResourceBundle'    => 'Internationalization',
-        'Spoofchecker'      => 'Internationalization',
-        'Transliterator'    => 'Internationalization',
-        'UConverter'        => 'Internationalization',
-        'grapheme'          => 'Internationalization',
-        'idn'               => 'Internationalization',
-        'Json'              => 'JSON',
-        'mysqli'            => 'mysqli',
-        'OAuth'             => 'OAuth',
-        'PDO'               => 'PDO',
-        'Thread'            => 'pthreads',
-        'Worker'            => 'pthreads',
-        'Stackable'         => 'pthreads',
-        'Mutex'             => 'pthreads',
-        'Cond'              => 'pthreads',
-        'Exception'         => 'Predefined Exceptions',
-        'ErrorException'    => 'Predefined Exceptions',
-        'QuickHash'         => 'QuickHash',
-        'Reflection'        => 'Reflection',
-        'Reflector'         => 'Reflection',
-        'Session'           => 'Sessions',
-        'SimpleXML'         => 'SimpleXML',
-        'Soap'              => 'SOAP',
-        'Solr'              => 'Solr',
-        'Sphinx'            => 'Sphinx',
-        'Spl'               => 'Standard PHP Library',
-        'ArrayObject'       => 'Standard PHP Library',
-        'Countable'         => 'Standard PHP Library',
-        'SQLite3'           => 'SQLite3',
-        'streamWrapper'     => 'Streams',
-        'php_user_filter'   => 'Streams',
-        'tidy'              => 'Tidy',
-        'V8Js'              => 'V8js',
-        'Varnish'           => 'Varnish',
-        'Weakref'           => 'Weak References',
-        'WeakRef'           => 'Weak References',
-        'WeakMap'           => 'Weak References',
-        'XSLTProcessor'     => 'XSLT',
-        'XsltProcessor'     => 'XSLT',
-        'Yaf'               => 'Yaf',
-        'ZipArchive'        => 'Zip' }
+      TYPE_BY_NAME_STARTS_WITH = {
+        'ArrayObject'     => 'SPL',
+        'Cond'            => 'pthreads',
+        'CURL'            => 'cURL',
+        'Date'            => 'Date/Time',
+        'ErrorException'  => 'Predefined Exceptions',
+        'Exception'       => 'Predefined Exceptions',
+        'Json'            => 'JSON',
+        'Http'            => 'HTTP',
+        'Mutex'           => 'pthreads',
+        'php_user_filter' => 'Stream',
+        'Reflector'       => 'Reflection',
+        'Soap'            => 'SOAP',
+        'SplFile'         => 'SPL/File',
+        'SplTempFile'     => 'SPL/File',
+        'Spl'             => 'SPL',
+        'Stackable'       => 'pthreads',
+        'streamWrapper'   => 'Stream',
+        'Thread'          => 'pthreads',
+        'tidy'            => 'Tidy',
+        'Worker'          => 'pthreads',
+        'XsltProcessor'   => 'XSLT',
+        'ZipArchive'      => 'Zip' }
 
-      REPLACE_TYPES = {
-      # [original-type]     => [new-type]
-        'Array'             => 'Arrays',
-        'Bzip2'             => 'bzip2',
-        'Classes/Object'    => 'Classes and Objects',
-        'Date/Time'         => 'Date and Time',
-        'Directory'         => 'Directories',
-        'Exceptions'        => 'Standard PHP Library',
-        'Function handling' => 'Function Handling',
-        'GD and Image'      => 'GD',
-        'Gettext'           => 'gettext',
-        'Inotify'           => 'inotify',
-        'Interfaces'        => 'Standard PHP Library',
-        'Iterators'         => 'Standard PHP Library',
-        'Libevent'          => 'libevent',
-        'Mailparse'         => 'Mail',
-        'Misc.'             => 'Miscellaneous',
-        'Multibyte String'  => 'Multibyte Strings',
-        'PCRE'              => 'Regular Expressions',
-        'PHP Options/Info'  => 'Options and Info',
-        'POSIX Regex'       => 'Regular Expressions',
-        'Program execution' => 'Program Execution',
-        'Session'           => 'Sessions',
-        'Session PgSQL'     => 'PostgreSQL',
-        'SPL'               => 'Standard PHP Library',
-        'Statistic'         => 'Statistics',
-        'Stream'            => 'Streams',
-        'String'            => 'Strings',
-        'Variable handling' => 'Variable Handling',
-        'XMLReader'         => 'XML Reader',
-        'XMLWriter'         => 'XML Writer',
-        'Yaml'              => 'YAML',
-        'Zlib'              => 'zlib' }
-
-      IGNORE_SLUGS = %w(reserved.exceptions reserved.interfaces
-        reserved.variables)
-
-      def include_default_entry?
-        !(slug.start_with?('book') || IGNORE_SLUGS.include?(slug))
+      %w(APC AMQP Directory DOM Gearman Gmagick Imagick mysqli OAuth PDO
+         Reflection Session SimpleXML Solr Sphinx SQLite3 Varnish XSLT Yaf).each do |str|
+        TYPE_BY_NAME_STARTS_WITH[str] = str
       end
 
-      def get_name
-        name = css('> .sect1 > .title', 'h1', 'h2').first.content
+      %w(ArrayAccess Closure Generator Iterator IteratorAggregate Serializable Traversable).each do |str|
+        TYPE_BY_NAME_STARTS_WITH[str] = 'Predefined Interfaces and Classes'
+      end
 
-        if name == 'Exception class for intl errors'
-          'IntlException'
-        else
-          name.sub! 'The ', ''
-          name.sub! ' class', ' (class)'
-          name.sub! ' interface', ' (interface)'
-          name
-        end
+      %w(Collator grapheme idn Intl intl Locale MessageFormatter Normalizer
+         NumberFormatter ResourceBundle Spoofchecker Transliterator UConverter).each do |str|
+        TYPE_BY_NAME_STARTS_WITH[str] = 'Internationalization'
+      end
+
+      %w(Countable OuterIterator RecursiveIterator SeekableIterator ).each do |str|
+        TYPE_BY_NAME_STARTS_WITH[str] = 'SPL/Interfaces'
+      end
+
+      REPLACE_TYPES = {
+        'Exceptions'        => 'SPL/Exceptions',
+        'GD and Image'      => 'Image',
+        'Gmagick'           => 'Image/GraphicsMagick',
+        'Imagick'           => 'Image/ImageMagick',
+        'Interfaces'        => 'SPL/Interfaces',
+        'Iterators'         => 'SPL/Iterators',
+        'mysqli'            => 'Database/MySQL',
+        'PostgreSQL'        => 'Database/PostgreSQL',
+        'Session'           => 'Sessions',
+        'Session PgSQL'     => 'Database/PostgreSQL',
+        'SQLite3'           => 'Database/SQLite',
+        'SQLSRV'            => 'Database/SQL Server',
+        'Stream'            => 'Streams',
+        'Yaml'              => 'YAML' }
+
+      TYPE_GROUPS = {
+        'Classes and Functions' => ['Classes/Object', 'Function handling', 'Predefined Interfaces and Classes', 'runkit'],
+        'Encoding'              => ['Gettext', 'iconv', 'Multibyte String'],
+        'Compression'           => ['Bzip2', 'Zip', 'Zlib'],
+        'Cryptography'          => ['Hash', 'Mcrypt', 'OpenSSL', 'Password Hashing'],
+        'Database'              => ['DBA', 'ODBC', 'PDO'],
+        'Date and Time'         => ['Calendar', 'Date/Time'],
+        'Errors'                => ['Error Handling', 'Predefined Exceptions'],
+        'File System'           => ['Directory', 'Fileinfo', 'Filesystem', 'Inotify'],
+        'HTML'                  => ['DOM', 'Tidy'],
+        'Language'              => ['Control Structures', 'Misc.', 'PHP Options/Info', 'Predefined Variables'],
+        'Mail'                  => ['Mail', 'Mailparse'],
+        'Mathematics'           => ['BC Math', 'Math', 'Statistic'],
+        'Networking'            => ['GeoIP', 'Network', 'Output Control', 'SSH2', 'Socket', 'URL'],
+        'Process Control'       => ['Eio', 'Libevent', 'POSIX', 'Program execution', 'pthreads'],
+        'String'                => ['Ctype', 'PCRE', 'POSIX Regex', 'Taint'],
+        'Variables'             => ['Filter', 'Variable handling'],
+        'XML'                   => ['libxml', 'SimpleXML', 'XML Parser', 'XML-RPC', 'XMLReader', 'XMLWriter', 'XSLT'] }
+
+      def get_name
+        return 'IntlException' if slug == 'class.intlexception'
+        name = css('> .sect1 > .title', 'h1', 'h2').first.content
+        name.sub! 'The ', ''
+        name.sub! ' class', ' (class)'
+        name.sub! ' interface', ' (interface)'
+        name
       end
 
       def get_type
-        if key = TYPES.keys.detect { |t| name.start_with?(t) }
-          TYPES[key]
-        else
-          type = at_css('.up').content.strip
-          type.sub! ' Functions', ''
-          type.sub! ' Obsolete Aliases and', ''
+        type = at_css('.up').content.strip
+        type = 'SPL/Iterators' if type.end_with? 'Iterator'
+        type.sub! ' Functions', ''
 
-          if type.end_with? 'Iterator'
-            'Standard PHP Library'
-          else
-            REPLACE_TYPES[type] || type
+        TYPE_BY_NAME_STARTS_WITH.each_pair do |key, value|
+          break type = value if name.start_with?(key)
+        end
+
+        TYPE_GROUPS.each_pair do |replacement, types|
+          types.each do |t|
+            return replacement if type == t
           end
         end
+
+        REPLACE_TYPES[type] || type
+      end
+
+      def include_default_entry?
+        Php::INDEX_PATHS.exclude?(subpath) && doc.at_css('.reference', '.refentry', '.sect1')
       end
     end
   end
