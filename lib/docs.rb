@@ -2,6 +2,7 @@ require 'bundler/setup'
 Bundler.setup :docs
 
 require 'active_support/core_ext'
+I18n.enforce_available_locales = true
 
 module Docs
   require 'docs/core/autoload_helper'
