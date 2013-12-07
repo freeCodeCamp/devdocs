@@ -1,10 +1,9 @@
 module Docs
   class Html
     class EntriesFilter < Docs::EntriesFilter
-      HTML5 = %w(menuitem)
+      HTML5 = %w(content element menuitem template)
       OBSOLETE = %w(frame frameset hgroup noframes)
-      ADDITIONAL_ENTRIES = {
-        'Heading_Elements' => [%w(h1), %w(h2), %w(h3), %w(h4), %w(h5), %w(h6)] }
+      ADDITIONAL_ENTRIES = { 'Heading_Elements' => (1..6).map { |n| ["h#{n}"] } }
 
       def get_name
         super.downcase
