@@ -104,13 +104,9 @@ module Docs
       end
 
       def include_default_entry?
-        if (node = at_css('.obsolete', '.deprecated')) &&
-           (node.inner_html.include?('removed from the Web') ||
-            node.inner_html.include?('Try to avoid using it'))
-          false
-        else
-          true
-        end
+        !(node = doc.at_css '.overheadIndicator') ||
+        !node.content.include?('not on a standards track') &&
+        !node.content.include?('removed from the Web')
       end
     end
   end

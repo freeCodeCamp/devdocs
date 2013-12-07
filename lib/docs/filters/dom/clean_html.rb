@@ -20,7 +20,12 @@ module Docs
 
         # Remove double heading on SVG pages
         if slug.start_with? 'SVG'
-          at_css('h2:first-child').try(:remove)
+          at_css('h2:first-child').try :remove
+        end
+
+        # Remove <div> wrapping .overheadIndicator
+        css('div > .overheadIndicator:first-child:last-child').each do |node|
+          node.parent.replace(node)
         end
       end
     end

@@ -68,6 +68,7 @@ module Docs
       /\A\/navigator\.id/i,
       /\A\/Settings/,
       /\A\/Telephony/,
+      /\A\/Bluetooth/,
       /UserData/,
       /\A\/Window\.\w+bar/i]
 
