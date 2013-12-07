@@ -1,28 +1,17 @@
 module Docs
   class Javascript
     class EntriesFilter < Docs::EntriesFilter
-      TYPES = %w(Array Boolean Date Function JSON Math Number Object RegExp String)
-
-      ADDITIONAL_ENTRIES = {
-        'operators/arithmetic_operators' => [
-          %w(++ .2B.2B_.28Increment.29),
-          %w(-- --_.28Decrement.29) ],
-        'operators/bitwise_operators' => [
-          %w(& .26_(Bitwise_AND)),
-          %w(| .7C_(Bitwise_OR)),
-          %w(^ .5E_(Bitwise_XOR)),
-          %w(~ .7E_(Bitwise_NOT)),
-          %w(<< <<_(Left_shift)),
-          %w(>> >>_(Sign-propagating_right_shift)),
-          %w(>>> >>>_(Zero-fill_right_shift)) ]}
+      TYPES = %w(Array Boolean Date Function Intl JSON Math Number Object RegExp String)
+      INTL_OBJECTS = %w(Collator DateTimeFormat NumberFormat)
 
       def get_name
         if slug.start_with? 'Global_Objects/'
           name, method = *slug.sub('Global_Objects/', '').split('/')
+          name.prepend 'Intl.' if INTL_OBJECTS.include?(name)
 
           if method
             unless method == method.upcase || method == 'NaN'
-              method = method[0].downcase + method[1..-1] # e.g. Constructor => constructor
+              method = method[0].downcase + method[1..-1] # e.g. Trim => trim
             end
             name << ".#{method}"
           end
@@ -48,16 +37,26 @@ module Docs
           object, method = *slug.sub('Global_Objects/', '').split('/')
           if object.end_with? 'Error'
             'Errors'
+          elsif INTL_OBJECTS.include?(object)
+            'Intl'
           elsif method || TYPES.include?(object)
             object
           else
             'Global Objects'
           end
+        else
+          'Miscellaneous'
         end
       end
 
-      def additional_entries
-        ADDITIONAL_ENTRIES[slug] || []
+      def include_default_entry?
+        node = doc.at_css '.overheadIndicator'
+
+        # Can't use :first-child because #doc is a DocumentFragment
+        return true unless node && node.parent == doc && !node.previous_element
+
+        !node.content.include?('not on a standards track') &&
+        !node.content.include?('removed from the Web')
       end
     end
   end

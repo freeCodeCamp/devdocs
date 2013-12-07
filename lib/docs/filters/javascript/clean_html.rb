@@ -7,15 +7,12 @@ module Docs
       end
 
       def root
-        css(*%w(#About_this_Reference+div #About_this_Reference
-                #Typed_array_constructors+ul #Typed_array_constructors
-                #Internationalization_constructors+ul #Internationalization_constructors
-                #Comments~* #Comments)).remove
+        css(*%w(#About_this_Reference+div #About_this_Reference #Comments~* #Comments)).remove
 
         # Move "Global Objects" lists to the same level as the other ones
         div = at_css '#Global_Objects + div'
         div.css('h3').each { |node| node.name = 'h2' }
-        at_css('#Global_Objects').replace(div)
+        at_css('#Global_Objects').replace(div.children)
 
         # Remove heading links
         css('h2 > a').each do |node|
@@ -25,8 +22,14 @@ module Docs
       end
 
       def other
+        # Remove "style" attribute
         css('.inheritsbox', '.overheadIndicator').each do |node|
           node.remove_attribute 'style'
+        end
+
+        # Remove <div> wrapping .overheadIndicator
+        css('div > .overheadIndicator:first-child:last-child').each do |node|
+          node.parent.replace(node)
         end
       end
     end

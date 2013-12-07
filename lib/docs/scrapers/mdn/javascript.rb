@@ -14,17 +14,11 @@ module Docs
       /Deprecated_Features
       /Deprecated_and_obsolete_features
       /Functions_and_function_scope
-      /Functions_and_function_scope/Strict_mode
       /Global_Objects/Iterator
-      /Global_Objects/Number/toInteger
-      /Global_Objects/ParallelArray
       /Global_Objects/Proxy
-      /Global_Objects/uneval
       /Reserved_Words
       /arrow_functions
       /rest_parameters)
-
-    options[:skip_patterns] = [/Intl/, /Collator/, /DateTimeFormat/, /NumberFormat/]
 
     # Duplicates
     options[:skip].concat %w(
