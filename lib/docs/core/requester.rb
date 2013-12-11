@@ -4,10 +4,10 @@ module Docs
   class Requester < Typhoeus::Hydra
     attr_reader :request_options
 
-    def self.run(url, options = {}, &block)
+    def self.run(urls, options = {}, &block)
       requester = new(options)
       requester.on_response(&block) if block
-      requester.request(url)
+      requester.request(urls)
       requester.run
       requester
     end
@@ -18,11 +18,11 @@ module Docs
       super
     end
 
-    def request(url, options = {}, &block)
-      request = Request.new(url, request_options.merge(options))
-      request.on_complete(&block) if block
-      queue(request)
-      request
+    def request(urls, options = {}, &block)
+      requests = [urls].flatten.map do |url|
+        build_and_queue_request(url, options, &block)
+      end
+      requests.length == 1 ? requests.first : requests
     end
 
     def queue(request)
@@ -37,6 +37,13 @@ module Docs
     end
 
     private
+
+    def build_and_queue_request(url, options, &block)
+      request = Request.new(url, request_options.merge(options))
+      request.on_complete(&block) if block
+      queue(request)
+      request
+    end
 
     def handle_response(response)
       on_response.each do |callback|
