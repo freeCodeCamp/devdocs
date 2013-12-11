@@ -5,6 +5,14 @@ module Docs
     self.version = 'up to 5.5.6'
     self.base_url = 'http://www.php.net/manual/en/'
     self.root_path = 'index.html'
+    self.initial_paths = %w(
+      funcref.html
+      refs.database.html
+      set.mysqlinfo.html
+      language.control-structures.html
+      reserved.exceptions.html
+      reserved.interfaces.html
+      reserved.variables.html)
 
     # Downloaded from php.net/download-docs.php
     self.dir = '/Users/Thibaut/DevDocs/Docs/PHP'
@@ -14,22 +22,7 @@ module Docs
 
     options[:title] = false
     options[:root_title] = 'PHP: Hypertext Preprocessor'
-
-    INDEX_PATHS = %w(
-      index.html
-      funcref.html
-      refs.database.html
-      set.mysqlinfo.html
-      language.control-structures.html
-      reserved.exceptions.html
-      reserved.interfaces.html
-      reserved.variables.html)
-
-    options[:skip_links] = ->(filter) do
-      INDEX_PATHS.exclude?(filter.subpath)
-    end
-
-    options[:only] = INDEX_PATHS.dup
+    options[:skip_links] = ->(filter) { !filter.initial_page? }
 
     options[:only_patterns] = [
       /\Aclass\./,
@@ -49,7 +42,7 @@ module Docs
       sqlite3 sqlsrv ssh2 stats stream strings taint tidy uodbc url var varnish
       xml xmlreader xmlrpc xmlwriter xsl yaf yaml zip zlib)
 
-    options[:only].concat BOOKS.map { |s| "book.#{s}.html" }
+    options[:only] = BOOKS.map { |s| "book.#{s}.html" }
 
     options[:skip] = %w(
       control-structures.intro.html

@@ -106,7 +106,7 @@ module Docs
       end
 
       def include_default_entry?
-        Php::INDEX_PATHS.exclude?(subpath) && doc.at_css('.reference', '.refentry', '.sect1')
+        !initial_page? && doc.at_css('.reference', '.refentry', '.sect1')
       end
     end
   end
