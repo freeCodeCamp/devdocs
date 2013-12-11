@@ -54,27 +54,53 @@ class FileScraperTest < MiniTest::Spec
   end
 
   describe "#request_all" do
-    it "requests the given url and yields the response" do
-      stub(scraper).request_one('url') { 'response' }
-      scraper.send(:request_all, 'url') { |response| @response = response }
-      assert_equal 'response', @response
+    let :urls do
+      %w(one two)
     end
 
-    describe "when the block returns an array" do
-      it "requests and yields the returned urls" do
-        stub(scraper).request_one('one') { 1 }
-        stub(scraper).request_one('two') { 2 }
-        stub(scraper).request_one('three') { 3 }
-        scraper.send :request_all, 'one' do |response|
-          if response == 1
-            ['two']
-          elsif response == 2
-            ['three']
-          else
-            @response = response
-          end
+    it "requests the given url" do
+      mock(scraper).request_one('url')
+      scraper.send(:request_all, 'url') {}
+    end
+
+    it "requests the given urls" do
+      requests = []
+      stub(scraper).request_one { |url| requests << url; nil }
+      scraper.send(:request_all, urls) {}
+      assert_equal urls, requests
+    end
+
+    it "yields the responses" do
+      responses = []
+      stub(scraper).request_one { |url| urls.index(url) }
+      scraper.send(:request_all, urls) { |response| responses << response; nil }
+      assert_equal (0...urls.length).to_a, responses
+    end
+
+    context "when the block returns an array" do
+      let :next_urls do
+        %w(three four)
+      end
+
+      let :all_urls do
+        urls + %w(three four)
+      end
+
+      it "requests the returned urls" do
+        requests = []
+        stub(scraper).request_one { |url| requests << url; url }
+        scraper.send(:request_all, urls) { [next_urls.shift].compact }
+        assert_equal all_urls, requests
+      end
+
+      it "yields their responses" do
+        responses = []
+        stub(scraper).request_one { |url| all_urls.index(url) }
+        scraper.send :request_all, urls do |response|
+          responses << response
+          [next_urls.shift].compact
         end
-        assert_equal 3, @response
+        assert_equal (0...all_urls.length).to_a, responses
       end
     end
   end

@@ -21,8 +21,8 @@ module Docs
       Response.new read_file(file_path_for(url)), URL.parse(url)
     end
 
-    def request_all(url)
-      queue = [url]
+    def request_all(urls)
+      queue = [urls].flatten
       until queue.empty?
         result = yield request_one(queue.shift)
         queue.concat(result) if result.is_a? Array
