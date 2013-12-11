@@ -50,6 +50,10 @@ module Docs
       subpath.blank? || subpath == '/' || subpath == root_path
     end
 
+    def initial_page?
+      root_page? || context[:initial_paths].include?(subpath)
+    end
+
     SCHEME_RGX = /\A[^:\/?#]+:/
 
     def fragment_url_string?(str)

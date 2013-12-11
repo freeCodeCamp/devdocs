@@ -78,6 +78,27 @@ class DocsFilterTest < MiniTest::Spec
     end
   end
 
+  describe "#initial_page?" do
+    before do
+      context[:initial_paths] = ['initial']
+      stub(filter).root_page? { false }
+    end
+
+    it "returns true when #root_page? is true" do
+      stub(filter).root_page? { true }
+      assert filter.initial_page?
+    end
+
+    it "returns true when #subpath is included in :initial_paths" do
+      stub(filter).subpath { 'initial' }
+      assert filter.initial_page?
+    end
+
+    it "returns false otherwise" do
+      refute filter.initial_page?
+    end
+  end
+
   describe "#fragment_url_string?" do
     it "returns false with ''" do
       refute filter.fragment_url_string?('')
