@@ -23,12 +23,12 @@ class DocsRequesterTest < MiniTest::Spec
   end
 
   describe ".new" do
-    it "defaults the :max_concurrency to 5" do
-      assert_equal 5, Docs::Requester.new.max_concurrency
+    it "defaults the :max_concurrency to 20" do
+      assert_equal 20, Docs::Requester.new.max_concurrency
       assert_equal 10, Docs::Requester.new(max_concurrency: 10).max_concurrency
     end
 
-    it "duplicates and stores #request_options" do
+    it "duplicates and stores :request_options" do
       options[:request_options] = { params: 'test' }
       assert_equal options[:request_options], requester.request_options
       refute_same options[:request_options], requester.request_options
@@ -51,7 +51,7 @@ class DocsRequesterTest < MiniTest::Spec
         assert_equal url, request.base_url
       end
 
-      it "has the default request options" do
+      it "has the default :request_options" do
         options[:request_options] = { params: 'test' }
         request = requester.request(url)
         assert_equal 'test', request.options[:params]
