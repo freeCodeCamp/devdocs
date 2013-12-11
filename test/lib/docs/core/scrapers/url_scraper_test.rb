@@ -50,11 +50,11 @@ class DocsUrlScraperTest < MiniTest::Spec
     end
 
     let :result do
-      scraper.send :request_all, 'url', &block
+      scraper.send :request_all, 'urls', &block
     end
 
-    it "runs a Requester with the given url" do
-      mock(Docs::Requester).run 'url', anything
+    it "runs a Requester with the given urls" do
+      mock(Docs::Requester).run 'urls', anything
       result
     end
 
@@ -65,7 +65,7 @@ class DocsUrlScraperTest < MiniTest::Spec
     end
 
     it "runs a Requester with the given block" do
-      mock(Docs::Requester).run.with_any_args { |*args| @block = args.last }
+      stub(Docs::Requester).run { |*args| @block = args.last }
       result
       assert_equal block, @block
     end

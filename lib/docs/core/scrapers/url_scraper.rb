@@ -17,8 +17,8 @@ module Docs
       Request.run url, request_options
     end
 
-    def request_all(url, &block)
-      Requester.run url, request_options: request_options, &block
+    def request_all(urls, &block)
+      Requester.run urls, request_options: request_options, &block
     end
 
     def request_options
