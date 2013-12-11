@@ -4,7 +4,7 @@ require 'html/pipeline'
 module Docs
   class Scraper < Doc
     class << self
-      attr_accessor :base_url, :root_path, :html_filters, :text_filters, :options
+      attr_accessor :base_url, :root_path, :initial_paths, :options, :html_filters, :text_filters
 
       def inherited(subclass)
         super
@@ -15,6 +15,7 @@ module Docs
         end
 
         subclass.root_path = root_path
+        subclass.initial_paths = initial_paths.dup
         subclass.options = options.deep_dup
         subclass.html_filters = html_filters.inheritable_copy
         subclass.text_filters = text_filters.inheritable_copy
@@ -27,10 +28,11 @@ module Docs
 
     include Instrumentable
 
+    self.initial_paths = []
+    self.options = {}
+
     self.html_filters = FilterStack.new
     self.text_filters = FilterStack.new
-
-    self.options = {}
 
     html_filters.push 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths'
     text_filters.push 'inner_html', 'clean_text', 'attribution'
@@ -43,10 +45,10 @@ module Docs
     end
 
     def build_pages
-      requested_urls = Set.new [root_url.to_s.downcase]
-      instrument 'running.scraper', urls: requested_urls.to_a
+      requested_urls = Set.new initial_urls.map(&:downcase)
+      instrument 'running.scraper', urls: initial_urls
 
-      request_all root_url.to_s do |response|
+      request_all initial_urls do |response|
         next unless data = handle_response(response)
         yield data
         next unless data[:internal_urls].present?
@@ -72,6 +74,14 @@ module Docs
       root_path.present? && root_path != '/'
     end
 
+    def initial_paths
+      self.class.initial_paths
+    end
+
+    def initial_urls
+      @initial_urls ||= [root_url.to_s].concat(initial_paths.map(&method(:url_for))).freeze
+    end
+
     def pipeline
       @pipeline ||= ::HTML::Pipeline.new(self.class.filters).tap do |pipeline|
         pipeline.instrumentation_service = Docs
@@ -80,14 +90,15 @@ module Docs
 
     def options
       @options ||= self.class.options.deep_dup.tap do |options|
-        options.merge! base_url: base_url, root_url: root_url, root_path: root_path
+        options.merge! base_url: base_url, root_url: root_url,
+                       root_path: root_path, initial_paths: initial_paths
 
         if root_path?
           (options[:skip] ||= []).concat ['', '/']
         end
 
         if options[:only] || options[:only_patterns]
-          (options[:only] ||= []).concat root_path? ? [root_path] : ['', '/']
+          (options[:only] ||= []).concat initial_paths + (root_path? ? [root_path] : ['', '/'])
         end
 
         options.freeze
