@@ -65,6 +65,10 @@ Configuration is done via class attributes and divided into three main categorie
 * `root_path` [String] **(inherited)**  
   The path from the `base_url` of the root URL.
 
+* `initial_paths` [Array] **(inherited)**  
+  A list of paths (from the `base_url`) to add to the initial queue. Useful for scraping isolated documents.  
+  Defaults to `[]`. _(Note: the `root_path` is added to the array at runtime.)_
+
 * `dir` [String] **(required, `FileScraper` only)**  
   The absolute path where the files are located on the local filesystem.  
   _Note: `FileScraper` works exactly like `UrlScraper` (manipulating the same kind of URLs) except that it substitutes `base_url` with `dir` in order to read files instead of making HTTP requests._
