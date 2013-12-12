@@ -8,6 +8,8 @@ module Docs
       end
     end
 
+    alias_method :running, :queued
+
     def ignore_response(event)
       msg = "Ignore:  #{format_url event.payload[:response].url}"
       msg << " [#{event.payload[:response].code}]" if event.payload[:response].respond_to?(:code)

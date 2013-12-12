@@ -21,10 +21,6 @@ class DocsScraperTest < MiniTest::Spec
     Struct.new(:body, :url).new
   end
 
-  let :processed_response do
-    Hash.new
-  end
-
   describe ".inherited" do
     let :subclass do
       Class.new Scraper
@@ -88,33 +84,40 @@ class DocsScraperTest < MiniTest::Spec
   end
 
   describe "#root_url" do
+    let :root_url do
+      scraper.root_url
+    end
+
     context "when #root_path? is false" do
       before do
         stub(scraper).root_path? { false }
       end
 
-      it "returns a Docs::URL" do
-        assert_instance_of Docs::URL, scraper.root_url
+      it "returns a memoized Docs::URL" do
+        assert_instance_of Docs::URL, root_url
+        assert_same root_url, scraper.root_url
       end
 
-      it "returns the normalized base url" do
+      it "returns the normalized .base_url" do
         stub(Scraper).base_url { 'http://example.com' }
-        assert_equal 'http://example.com/', scraper.root_url.to_s
+        assert_equal 'http://example.com/', root_url.to_s
       end
     end
 
-    context "when .root_path isn't blank" do
+    context "when #root_path? is true" do
       before do
         stub(scraper).root_path? { true }
       end
 
-      it "returns a Docs::URL" do
-        assert_instance_of Docs::URL, scraper.root_url
+      it "returns a memoized Docs::URL" do
+        assert_instance_of Docs::URL, root_url
+        assert_same root_url, scraper.root_url
       end
 
-      it "returns base url + root path" do
+      it "returns .base_url + .root_path" do
         stub(Scraper).base_url { 'http://example.com/path/' }
-        assert_equal 'http://example.com/path/root', scraper.root_url.to_s
+        stub(Scraper).root_path { '/root' }
+        assert_equal 'http://example.com/path/root', root_url.to_s
       end
     end
   end
@@ -201,6 +204,10 @@ class DocsScraperTest < MiniTest::Spec
       Proc.new {}
     end
 
+    let :processed_response do
+      Hash.new
+    end
+
     it "requests the #initial_urls" do
       mock(scraper).request_all(scraper.initial_urls)
       scraper.build_pages(&block)
@@ -224,11 +231,10 @@ class DocsScraperTest < MiniTest::Spec
 
       it "yields the processed response" do
         scraper.build_pages { |arg| @arg = arg }
-        assert @arg
-        assert_equal processed_response, @arg
+        assert_same processed_response, @arg
       end
 
-      context "when response[:internal_urls] is empty" do
+      context "when :internal_urls is empty" do
         before do
           processed_response[:internal_urls] = []
         end
@@ -244,22 +250,21 @@ class DocsScraperTest < MiniTest::Spec
         end
       end
 
-      context "when response[:internal_urls] isn't empty" do
-        let :urls do
+      context "when :internal_urls isn't empty" do
+        let :internal_urls do
           ['Url']
         end
 
         before do
-          processed_response[:internal_urls] = urls
+          processed_response[:internal_urls] = internal_urls
         end
 
         it "requests the urls" do
           scraper.build_pages(&block)
-          assert_equal urls, @next_urls
+          assert_equal internal_urls, @next_urls
         end
 
         it "doesn't request the same url twice irrespective of case" do
-          stub(Scraper).root_path { 'PATH' }
           processed_response[:internal_urls] = scraper.initial_urls.map(&:swapcase)
           scraper.build_pages(&block)
           assert_empty @next_urls
@@ -269,7 +274,7 @@ class DocsScraperTest < MiniTest::Spec
           scraper.build_pages(&block)
           assert scraper.last_instrumentation
           assert_equal 'queued.scraper', scraper.last_instrumentation[:event]
-          assert_equal urls, scraper.last_instrumentation[:payload][:urls]
+          assert_equal internal_urls, scraper.last_instrumentation[:payload][:urls]
         end
       end
     end
@@ -286,34 +291,59 @@ class DocsScraperTest < MiniTest::Spec
 
   describe "#options" do
     let :options do
+      Hash.new
+    end
+
+    let :result do
       scraper.options
     end
 
+    before do
+      stub(Scraper).options { options }
+    end
+
     it "returns a frozen, memoized Hash" do
-      assert_instance_of Hash, options
-      assert options.frozen?
-      assert_same options, scraper.options
+      assert_instance_of Hash, result
+      assert result.frozen?
+      assert_same result, scraper.options
     end
 
     it "includes .options" do
-      stub(Scraper).options { { test: true } }
-      assert options[:test]
+      options[:test] = true
+      assert result[:test]
     end
 
     it "includes #base_url" do
-      assert_equal scraper.base_url, options[:base_url]
+      assert_equal scraper.base_url, result[:base_url]
     end
 
     it "includes #root_url" do
-      assert_equal scraper.root_url, options[:root_url]
+      assert_equal scraper.root_url, result[:root_url]
     end
 
-    it "includes .root_path" do
-      assert_equal '/root', options[:root_path]
+    it "includes #root_path" do
+      assert_equal '/root', result[:root_path]
     end
 
-    it "includes .initial_paths" do
-      assert_equal ['/initial'], options[:initial_paths]
+    it "includes #initial_paths" do
+      assert_equal ['/initial'], result[:initial_paths]
+    end
+
+    it "adds #initial_paths to :only when it is an array" do
+      options[:only] = ['/path']
+      assert_includes result[:only], options[:only].first
+      assert_includes result[:only], '/initial'
+    end
+
+    it "adds #initial_paths to :only when :only_patterns is an array" do
+      options[:only_patterns] = []
+      assert_includes result[:only], '/initial'
+    end
+
+    it "doesn't modify :only in place" do
+      options[:only] = []
+      result
+      assert_empty options[:only]
     end
 
     context "when #root_path? is false" do
@@ -322,42 +352,27 @@ class DocsScraperTest < MiniTest::Spec
       end
 
       it "doesn't modify :skip" do
-        assert_nil options[:skip]
+        options[:skip] = []
+        assert_equal options[:skip], result[:skip]
       end
 
-      context "and :only is an array" do
-        before do
-          stub(Scraper).options { { only: ['/path'] } }
-        end
-
-        it "adds ['', '/']" do
-          assert_includes options[:only], '/path'
-          assert_includes options[:only], ''
-          assert_includes options[:only], '/'
-        end
-
-        it "adds .initial_paths" do
-          assert_includes options[:only], '/initial'
-        end
-
-        it "doesn't modify the array in place" do
-          assert_equal ['/path'], Scraper.options[:only]
-        end
+      it "adds '' and '/' to :only when it is an array" do
+        options[:only] = ['/path']
+        assert_includes result[:only], options[:only].first
+        assert_includes result[:only], ''
+        assert_includes result[:only], '/'
       end
 
-      context "and :only_patterns is an array" do
-        before do
-          stub(Scraper).options { { only_patterns: [] } }
-        end
+      it "adds '' and '/' to :only when :only_patterns is an array" do
+        options[:only_patterns] = []
+        assert_includes result[:only], ''
+        assert_includes result[:only], '/'
+      end
 
-        it "adds ['', '/'] to :only" do
-          assert_includes options[:only], ''
-          assert_includes options[:only], '/'
-        end
-
-        it "adds .initial_paths to :only" do
-          assert_includes options[:only], '/initial'
-        end
+      it "doesn't modify :only in place" do
+        options[:only] = []
+        result
+        assert_empty options[:only]
       end
     end
 
@@ -366,40 +381,33 @@ class DocsScraperTest < MiniTest::Spec
         stub(scraper).root_path? { true }
       end
 
-      context "and :skip is nil" do
-        it "assigns it ['', '/']" do
-          assert_equal ['', '/'], options[:skip]
-        end
+      it "adds '' and '/' to :skip when it is nil" do
+        assert_includes result[:skip], ''
+        assert_includes result[:skip], '/'
       end
 
-      context "and :skip is an array" do
-        before do
-          stub(Scraper).options { { skip: ['/path'] } }
-        end
-
-        it "adds ['', '/']" do
-          assert_includes options[:skip], '/path'
-          assert_includes options[:skip], ''
-          assert_includes options[:skip], '/'
-        end
-
-        it "doesn't modify the array in place" do
-          assert_equal ['/path'], Scraper.options[:skip]
-        end
+      it "adds '' and '/' to :skip when it is an array" do
+        options[:skip] = ['/path']
+        assert_includes result[:skip], options[:skip].first
+        assert_includes result[:skip], ''
+        assert_includes result[:skip], '/'
       end
 
-      context "and :only is an array" do
-        it "adds .root_path" do
-          stub(Scraper).options { { only: [] } }
-          assert_includes options[:only], '/root'
-        end
+      it "doesn't modify :skip in place" do
+        options[:skip] = []
+        result
+        assert_empty options[:skip]
       end
 
-      context "and :only_patterns is an array" do
-        it "adds .root_path to :only" do
-          stub(Scraper).options { { only_patterns: [] } }
-          assert_includes options[:only], '/root'
-        end
+      it "adds #root_path to :only when it is an array" do
+        options[:only] = ['/path']
+        assert_includes result[:only], options[:only].first
+        assert_includes result[:only], '/root'
+      end
+
+      it "adds #root_path to :only when :only_patterns is an array" do
+        options[:only_patterns] = []
+        assert_includes result[:only], '/root'
       end
     end
   end
@@ -484,18 +492,22 @@ class DocsScraperTest < MiniTest::Spec
   end
 
   describe "#pipeline" do
-    it "returns an HTML::Pipeline with .filters" do
+    let :pipeline do
+      scraper.pipeline
+    end
+
+    it "returns a memoized HTML::Pipeline" do
+      assert_instance_of ::HTML::Pipeline, pipeline
+      assert_same pipeline, scraper.pipeline
+    end
+
+    it "returns a pipeline with the filters stored in .filters" do
       stub(Scraper).filters { [1] }
-      assert_instance_of ::HTML::Pipeline, scraper.pipeline
-      assert_equal Scraper.filters, scraper.pipeline.filters
+      assert_equal Scraper.filters, pipeline.filters
     end
 
-    it "is memoized" do
-      assert_same scraper.pipeline, scraper.pipeline
-    end
-
-    it "assigns Docs as the pipeline's instrumentation service" do
-      assert_equal Docs, scraper.pipeline.instrumentation_service
+    it "returns a pipeline with Docs as instrumentation service" do
+      assert_equal Docs, pipeline.instrumentation_service
     end
   end
 end

@@ -45,14 +45,14 @@ module Docs
     end
 
     def build_pages
-      requested_urls = Set.new initial_urls.map(&:downcase)
+      history = Set.new initial_urls.map(&:downcase)
       instrument 'running.scraper', urls: initial_urls
 
       request_all initial_urls do |response|
         next unless data = handle_response(response)
         yield data
         next unless data[:internal_urls].present?
-        next_urls = data[:internal_urls].select { |url| requested_urls.add?(url.downcase) }
+        next_urls = data[:internal_urls].select { |url| history.add?(url.downcase) }
         instrument 'queued.scraper', urls: next_urls
         next_urls
       end
