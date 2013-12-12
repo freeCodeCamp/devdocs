@@ -1,6 +1,6 @@
 # Contributing to DevDocs
 
-Wish to contribute? Great. Please review the following guidelines carefully and always search for existing issues before opening a new one. More time spent managing issues means less time spent improving DevDocs.
+Wish to contribute? Great. Please review the following guidelines carefully and always search for existing issues before opening a new one.
 
 **Table of Contents:**
 
@@ -31,7 +31,7 @@ For general feedback and ideas, please use the [mailing list](https://groups.goo
 
 ## Requesting new documentations
 
-Please do not open issues to request new documentations.  
+Please don't open issues to request new documentations.  
 Use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) where everyone can vote and contributors can get a feel for what is most wished for.
 
 ## Contributing code and features
@@ -54,18 +54,16 @@ See the [wiki](https://github.com/Thibaut/devdocs/wiki) to learn how to add new 
 
 In addition to the [guidelines for contributing code](#contributing-code-and-features), the following guidelines apply to pull requests that add a new documentation:
 
-* Your documentation must come with a clean and official icon, in both 1x and 2x resolutions (16x16 and 32x32 pixels). This is important because icons are the only thing differentiating search results inside the app. If a project doesn't have an official icon, it won't be accepted into DevDocs. Sorry.
-* DevDocs favors quality over quantity. Your documentation should only include API/reference documents that most developers may wish to read semi-regularly. By reducing the number of entries we make it easier to find other, more relevant entries. _(Note: you're more than welcome to submit pull requests removing seldom-used entries from existing documentations.)_
+* Your documentation must come with a clean and official icon, in both 1x and 2x resolutions (16x16 and 32x32 pixels). This is important because icons are the only thing differentiating search results in the UI. If a project doesn't have an official icon, it won't be accepted into DevDocs. Sorry.
+* DevDocs favors quality over quantity. Your documentation should only include API/reference documents that most developers may wish to read semi-regularly. By reducing the number of entries we make it easier to find other, more relevant entries. _(Note: you are more than welcome to submit pull requests removing seldom-used entries from existing documentations.)_
 * Try to remove as much content and HTML markup as possible, particularly content which isn't associated with any entries (e.g. introduction, changelog, etc.).
 * Names must be as short as possible and unique across the documentation.
-* The number of types (categories) must be less than 50.
-* It's ok to leave the CSS up to me.
+* The number of types (categories) should ideally be less than 100.
 * Don't modify the icon sprite. I'll do it after your pull request is merged.
-* Once your documentation is accepted into DevDocs, you'll be expected to maintain it on a regular basis.
 
 ## Updating existing documentations
 
-Please do not submit a pull request updating the version number of a documentation unless you have verified that it can be generated properly using the current code. Because the source will have changed, the code will likely need a few tweaks.
+Please don't submit a pull request updating the version number of a documentation unless you have verified that it can be generated properly using the current code. Because the original content will have changed, the code will likely need to be tweaked.
 
 To ask that an existing documentation be updated, please use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) or the [mailing list](https://groups.google.com/d/forum/devdocs).
 

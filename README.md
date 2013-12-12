@@ -11,7 +11,7 @@ Keep track of development and community news:
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 * Join the [mailing list](https://groups.google.com/d/forum/devdocs)
 
-DevDocs is free and open source. If you use it and like it, please consider donating through [Gittip](https://www.gittip.com/Thibaut/) or [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4PTFAGT7K6QVG). Your support helps sustain the project and is highly appreciated.
+DevDocs is free and open source. If you like it, please consider donating through [Gittip](https://www.gittip.com/Thibaut/) or [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4PTFAGT7K6QVG). Your support helps sustain the project and is highly appreciated.
 
 **Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [License](#copyright--license) · [Questions?](#questions)
 
@@ -19,7 +19,7 @@ DevDocs is free and open source. If you use it and like it, please consider dona
 
 Unless you wish to use DevDocs offline or contribute to the code, I recommend using the hosted version at [devdocs.io](http://devdocs.io). It's up-to-date and requires no setup.
 
-DevDocs is made of two separate pieces of software: a Ruby scraper responsible for generating the documentation files and indexes, and a JavaScript front-end powered by a small Sinatra app.
+DevDocs is made of two separate pieces: a Ruby scraper responsible for generating the documentation files and indexes, and a JavaScript front-end powered by a small Sinatra app.
 
 DevDocs requires Ruby 2.0 and a JavaScript runtime supported by [ExecJS](https://github.com/sstephenson/execjs#readme) (included in OS X and Windows; [Node.js](http://nodejs.org/) on Linux). Once you have these installed, run the following commands:
 
@@ -34,15 +34,15 @@ Finally, point your browser at [localhost:9292](http://localhost:9292) (the firs
 
 The `thor docs:download` command is used to download/update individual documentations (e.g. `thor docs:download html css`), or all at the same time (using the `--all` option). You can see the list of available documentations by running `thor docs:list`.
 
-**Note:** there is currently no update mechanism other than using git to update the code and `thor docs:download` to download the latest version of the docs. To stay informed about new versions, be sure to subscribe to the [newsletter](http://eepurl.com/HnLUz).
+**Note:** there is currently no update mechanism other than using git to update the code and `thor docs:download` to download the latest version of the docs. To stay informed about new releases, be sure to subscribe to the [newsletter](http://eepurl.com/HnLUz).
 
 ## Vision
 
-DevDocs aims to make reading and searching reference documentation fast, accessible and enjoyable. It aspires to become the “one stop shop” for all open-source software documentations.
+DevDocs aims to make reading and searching reference documentation fast, easy and enjoyable.
 
 The app's main goals are to: keep booting and loading times as short as possible; improve the quality, speed, and order of search results; maximize the use of caching and other performance optimizations; maintain a clean, readable user interface; support full keyboard navigation; reduce “context switch” by using a consistent typography and design across all documentations; reduce clutter by focusing on a specific category of content (API/reference) and by indexing only the minimum useful to most developers.
 
-**Note:** DevDocs is neither a programming guide nor a search engine. All content is pulled from third-party sources and the project doesn't intend to compete with full-text search engines. Its backbone is metadata: each piece of content must be identified by a unique, obvious, and short string. Thus, tutorials, guides and other content that don't fit this requirement are outside the scope of the project.
+**Note:** DevDocs is neither a programming guide nor a search engine. All content is pulled from third-party sources and the project doesn't intend to compete with full-text search engines. Its backbone is metadata: each piece of content must be identified by a unique, obvious and short string. Thus, tutorials, guides and other content that don't fit this requirement are outside the scope of the project.
 
 ## App
 
@@ -74,7 +74,7 @@ The scraper is responsible for generating the documentation and index files (met
 There are currently two kinds of scrapers: `UrlScraper` which downloads files via HTTP and `FileScraper` which reads them from the local filesystem. They both make copies of HTML documents, recursively following links that match a given set of rules and applying all sorts of modifications along the way, in addition to building an index of the files and their metadata. Documents are parsed using [Nokogiri](http://nokogiri.org).
 
 Modifications made to each document include:
-* removing stuff, such as the document structure (`<html>`, `<head>`, etc.), comments, empty nodes, etc.
+* removing stuff such as the document structure (`<html>`, `<head>`, etc.), comments, empty nodes, etc.
 * fixing links (e.g. to remove duplicates)
 * replacing all external (not scraped) URLs with their fully qualified counterpart
 * replacing all internal (scraped) URLs with their unqualified and relative counterpart
