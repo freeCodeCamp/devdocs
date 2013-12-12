@@ -70,6 +70,9 @@ The `call` method must return either `doc` or `html`, depending on the type of f
 * `root_page?` [Boolean]  
   Returns `true` if the current page is the root page.
 
+* `initial_page?` [Boolean]  
+  Returns `true` if the current page is the root page or its subpath is one of the scraper's `initial_paths`.
+
 ## Core filters
 
 * [`ContainerFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/container.rb) — changes the root node of the document (remove everything outside)
