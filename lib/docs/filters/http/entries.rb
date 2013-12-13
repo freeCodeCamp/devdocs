@@ -2,7 +2,7 @@ module Docs
   class Http
     class EntriesFilter < Docs::EntriesFilter
       def get_type
-        at_css('h1').content.gsub(/\A\s*HTTP\s+(.+)\s+Definitions\s*\z/, '\1').pluralize
+        at_css('h1').content.sub(/\A\s*HTTP\s+(.+)\s+Definitions\s*\z/, '\1').pluralize
       end
 
       def include_default_entry?

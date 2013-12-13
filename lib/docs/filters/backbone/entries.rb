@@ -8,7 +8,7 @@ module Docs
         css('[id]').each do |node|
           # Module
           if node.name == 'h2'
-            type = node.content.gsub 'Backbone.', ''
+            type = node.content.sub 'Backbone.', ''
             if type.capitalize! # sync, history
               entries << [node.content, node['id'], type]
             end

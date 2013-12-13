@@ -3,7 +3,7 @@ module Docs
     self.namespace = 'html_pipeline'
 
     def call_filter(event)
-      log "Filter: #{event.payload[:filter].gsub('Docs::', '').gsub('Filter', '')} [#{event.duration.round}ms]"
+      log "Filter: #{event.payload[:filter].sub('Docs::', '').sub('Filter', '')} [#{event.duration.round}ms]"
     end
   end
 end

@@ -43,7 +43,7 @@ module Docs
     end
 
     def slug
-      @slug ||= subpath.gsub(/\A\//, '').gsub('.html', '')
+      @slug ||= subpath.sub(/\A\//, '').sub(/\.html\z/, '')
     end
 
     def root_page?

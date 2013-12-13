@@ -33,7 +33,7 @@ module Docs
 
         # Remove "- " before method names
         css('.signature', 'span.overload').each do |node|
-          node.child.content = node.child.content.gsub(/\A\s*-\s*/, '')
+          node.child.content = node.child.content.sub(/\A\s*-\s*/, '')
         end
 
         # Remove links to type classes (e.g. Number)

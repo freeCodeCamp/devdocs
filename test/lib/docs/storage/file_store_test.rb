@@ -124,7 +124,7 @@ class DocsFileStoreTest < MiniTest::Spec
   describe "#each" do
     let :paths do
       paths = []
-      store.each { |path| paths << path.gsub(tmp_path, '') }
+      store.each { |path| paths << path.sub(tmp_path, '') }
       paths
     end
 

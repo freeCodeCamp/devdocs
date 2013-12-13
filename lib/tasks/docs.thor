@@ -17,7 +17,7 @@ class DocsCLI < Thor
     Docs.all.
       map  { |doc| [doc.to_s.demodulize.underscore, doc] }.
       each { |pair| max_length = pair.first.length if pair.first.length > max_length }.
-      each { |pair| puts "#{pair.first.rjust max_length + 1}: #{pair.second.base_url.gsub %r{https?://}, ''}" }
+      each { |pair| puts "#{pair.first.rjust max_length + 1}: #{pair.second.base_url.sub %r{\Ahttps?://}, ''}" }
   end
 
   desc 'page <doc> [path] [--verbose] [--debug]', 'Generate a page (no indexing)'

@@ -17,11 +17,11 @@ module Docs
     end
 
     def format_url(url)
-      url.to_s.gsub %r{https?://}, ''
+      url.to_s.sub %r{\Ahttps?://}, ''
     end
 
     def format_path(path)
-      path.to_s.gsub File.join(File.expand_path('.'), ''), ''
+      path.to_s.sub File.join(File.expand_path('.'), ''), ''
     end
 
     def justify(str)
