@@ -149,6 +149,11 @@ credits = [
     'PSFL',
     'http://docs.python.org/3/license.html'
   ], [
+    'Redis',
+    '2006-2013 Salvatore Sanfilippo and others',
+    'BSD',
+    'https://raw.github.com/antirez/redis/unstable/COPYING'
+  ], [
     'Ruby',
     '1993-2013 Yukihiro Matsumoto',
     'Ruby',

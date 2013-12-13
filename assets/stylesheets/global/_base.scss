@@ -87,7 +87,7 @@ abbr, acronym, dfn {
   border-bottom: 1px dotted $textColor;
 }
 
-pre, code, samp {
+pre, code, samp, %pre {
   font-family: $monoFont;
   font-weight: normal;
   font-style: normal;
@@ -98,7 +98,7 @@ pre, code, samp {
        tab-size: 2;
 }
 
-pre {
+pre, %pre {
   margin: 1.5em 0;
   padding: .375rem .75rem;
   line-height: 1.5;

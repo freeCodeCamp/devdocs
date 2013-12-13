@@ -1,0 +1,44 @@
+._redis {
+  // Index
+
+  > .commands {
+    padding-left: 0;
+    list-style: none;
+
+    > li { margin-bottom: 1em; }
+  }
+
+  .command, .summary { display: block; }
+
+  .args {
+    font-size: .75rem;
+    color: $textColorLight;
+  }
+
+  // Others
+
+  > h2 { @extend %block-heading; }
+  p > code { @extend %label; }
+
+  > .metadata { @extend %note, %note-green; }
+  > .metadata > p { margin: 0; }
+
+  > .example {
+    white-space: normal;
+    @extend %pre;
+
+    > .prompt {
+      float: left;
+      margin-right: .5em;
+      color: $textColorLight;
+    }
+
+    > code {
+      display: block;
+      clear: left;
+      margin-bottom: .5em;
+
+      &:last-child { margin-bottom: 0; }
+    }
+  }
+}
