@@ -99,6 +99,11 @@ credits = [
     'MIT',
     'https://raw.github.com/emberjs/ember.js/master/LICENSE'
   ], [
+    'Git',
+    '2005-2013 Linus Torvalds and others',
+    'GPLv2',
+    'https://raw.github.com/git/git/master/COPYING'
+  ], [
     'HTTP',
     '1999 The Internet Society',
     'Custom',

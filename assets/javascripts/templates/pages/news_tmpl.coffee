@@ -24,7 +24,10 @@ newsItem = (date, news) ->
   result
 
 app.news = [
-  [ 1385424000000, # November 26, 2013
+  [ 1386892800000, # December 13, 2013
+    """ New <a href="/git/">Git</a> documentation """
+  ], [
+    1385424000000, # November 26, 2013
     """ New <a href="/python/">Python</a> documentation """
   ], [
     1384819200000, # November 19, 2013

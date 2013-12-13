@@ -1,0 +1,7 @@
+._git {
+  > h2 { @extend %block-heading; }
+  h3 { font-size: 1rem; }
+  > .callout, > h1 + .sectionbody { @extend %note, %note-green; }
+  code { @extend %label; }
+  em { font-style: normal; }
+}
