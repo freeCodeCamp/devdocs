@@ -1,0 +1,13 @@
+._postgres {
+  padding-left: 1rem;
+
+  h1, h1 ~ p, h2 { margin-left: -1rem; }
+  h2 { @extend %block-heading; }
+
+  .VARIABLELIST dt { @extend %block-label, %label-blue; }
+
+  blockquote.NOTE, blockquote.IMPORTANT { @extend %note; }
+  blockquote.TIP { @extend %note, %note-green; }
+
+  p > code { @extend %label; }
+}
