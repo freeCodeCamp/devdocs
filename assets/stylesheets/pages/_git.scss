@@ -1,7 +1,22 @@
 ._git {
+  padding-left: 1rem;
+
+  > h1,
+  > h2,
+  > .reference-menu,
+  > .callout,
+  > h1 + .sectionbody {
+    margin-left: -1rem;
+  }
+
   > h2 { @extend %block-heading; }
   h3 { font-size: 1rem; }
-  > .callout, > h1 + .sectionbody { @extend %note, %note-green; }
+
+  > .callout,
+  > h1 + .sectionbody {
+    @extend %note, %note-green;
+  }
+
   code { @extend %label; }
   em { font-style: normal; }
 }
