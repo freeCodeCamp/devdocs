@@ -1,4 +1,6 @@
 ._redis {
+  padding-left: 1rem;
+
   // Index
 
   > .commands {
@@ -16,6 +18,9 @@
   }
 
   // Others
+
+  > h1, > h2, > .metadata, > h1 ~ p { margin-left: -1rem; }
+  > h2 ~ p { margin-left: 0; }
 
   > h2 { @extend %block-heading; }
   p > code { @extend %label; }
