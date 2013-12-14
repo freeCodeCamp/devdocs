@@ -60,8 +60,8 @@
   display: block;
   position: relative;
   overflow: hidden;
-  padding: 0 .75rem;
-  line-height: 1.75rem;
+  padding: .25rem .75rem;
+  line-height: 1.25rem;
   font-size: .875rem;
   white-space: nowrap;
   word-wrap: normal;
@@ -99,7 +99,7 @@
 
   &:before {
     float: left;
-    margin: .375rem .625rem 0 0;
+    margin: .125rem .625rem 0 0;
     @extend %icon;
   }
 }
@@ -122,10 +122,10 @@
 
 ._list-dir,
 %_list-dir {
-  line-height: 2rem;
+  line-height: 1.5rem;
   padding-left: 2.25rem;
 
-  &:before { margin-top: .5rem; }
+  &:before { margin-top: .25rem; }
 }
 
 ._list-disabled {
@@ -158,7 +158,7 @@
 ._list-sub {
   > ._list-item { padding-left: 2.75rem; }
   > ._list-item:before { content: none; }
-  > ._list-dir { line-height: 1.75rem; }
+  > ._list-dir { line-height: 1.25rem; }
 
   ._list-arrow {
     left: 1rem;
@@ -224,7 +224,7 @@
   z-index: $hoverZ;
   left: 0;
   overflow: visible;
-  padding: 0 .75rem;
+  padding: .25rem .75rem;
   background-color: #e5eaf4;
   pointer-events: none;
   -webkit-font-smoothing: subpixel-antialiased;

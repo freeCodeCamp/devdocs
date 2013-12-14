@@ -72,7 +72,21 @@
     box-shadow: none;
   }
 
-  ._list-item { border-right-width: 0; }
+  ._list-item {
+    white-space: normal;
+    word-wrap: break-word;
+    border-right-width: 0;
+  }
+
+  ._list-result {
+    padding-left: 2.375rem;
+
+    &:before {
+      position: absolute;
+      top: .25rem;
+      left: .75rem;
+    }
+  }
 
   ._list-link { display: none; }
 
