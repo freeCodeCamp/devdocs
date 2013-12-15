@@ -13,6 +13,7 @@ body {
   font: normal 1em/1.7 $baseFont;
   color: $textColor;
   word-wrap: break-word;
+  overflow-wrap: break-word;
   -webkit-tap-highlight-color: rgba(black, 0);
   -webkit-touch-callout: none;
   -webkit-text-size-adjust: 100%;

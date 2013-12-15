@@ -154,6 +154,7 @@
   white-space: nowrap;
   overflow: hidden;
   word-wrap: normal;
+  overflow-wrap: normal;
 
   &:after {
     content: '';
