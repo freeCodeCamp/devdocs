@@ -15,7 +15,6 @@ class app.views.Search extends app.View
 
   @shortcuts:
     typing: 'autoFocus'
-    escape: 'reset'
 
   @routes:
     root: 'onRoot'
@@ -40,7 +39,7 @@ class app.views.Search extends app.View
     @focus() unless $.isTouchScreen()
     return
 
-  reset: =>
+  reset: ->
     @el.reset()
     @onInput()
     @autoFocus()

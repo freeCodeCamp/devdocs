@@ -37,7 +37,9 @@ class app.views.Sidebar extends app.View
 
   showDocList: (reset) =>
     @show @docList
-    @docList.reset() if reset is true
+    if reset is true
+      @docList.reset()
+      @search.reset()
     return
 
   showDocPicker: =>
