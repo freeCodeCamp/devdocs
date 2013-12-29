@@ -18,7 +18,7 @@ templates.sidebarResult = (entry) ->
   """<a href="#{entry.fullPath()}" class="_list-item _list-hover _list-result _icon-#{entry.doc.slug}"><span class="_list-reveal" data-reset-list title="Reveal in list"></span>#{$.escape entry.name}</a>"""
 
 templates.sidebarPageLink = (count) ->
-  """<span class="_list-item _list-pagelink">Show more… (#{count})</span>"""
+  """<span class="_list-item _list-pagelink">Show more\u2026 (#{count})</span>"""
 
 templates.sidebarLabel = (doc, options = {}) ->
   label = """<label class="_list-item _list-label _icon-#{doc.slug}"""

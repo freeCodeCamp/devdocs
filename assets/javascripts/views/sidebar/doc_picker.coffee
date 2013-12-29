@@ -44,7 +44,7 @@ class app.views.DocPicker extends app.View
     unless @saving
       @saving = true
       app.settings.setDocs @getSelectedDocs()
-      @saveLink.textContent = if app.appCache then 'Downloading…' else 'Saving…'
+      @saveLink.textContent = if app.appCache then 'Downloading\u2026' else 'Saving\u2026'
       app.reload()
     return
 
@@ -65,5 +65,5 @@ class app.views.DocPicker extends app.View
   onAppCacheProgress: (event) =>
     if event.lengthComputable
       percentage = Math.round event.loaded * 100 / event.total
-      @saveLink.textContent = "Downloading… (#{percentage}%)"
+      @saveLink.textContent = "Downloading\u2026 (#{percentage}%)"
     return

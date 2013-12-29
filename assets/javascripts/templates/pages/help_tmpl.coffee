@@ -32,7 +32,7 @@ app.templates.helpPage = """
       DevDocs supports OpenSearch, meaning it can easily be installed as a search engine on most web browsers.
       <ul>
         <li>On Chrome, the setup is done automatically. Simply press <code class="_label">Tab</code> when devdocs.io is autocompleted
-            in the omnibox (to set a custom keyword, click <em>Manage search engines…</em> in Chrome's settings).
+            in the omnibox (to set a custom keyword, click <em>Manage search engines\u2026</em> in Chrome's settings).
         <li>On Firefox, open the search engine list (icon in the search bar) and select <em>Add "DevDocs Search"</em>.
             DevDocs is now available in the search bar. You can also search from the location bar by following
             <a href="https://support.mozilla.org/en-US/kb/search-bar-easily-choose-your-search-engine#w_keywords">these instructions</a>.
