@@ -120,7 +120,7 @@ app.news = [
   ], [
     1372377600000, # June 28, 2013
     """ DevDocs made the front page of Hacker News!
-        Hi everyone — thanks for trying DevDocs.
+        Hi everyone &mdash; thanks for trying DevDocs.
         Please bear with me while I fix bugs and scramble to add more docs.
         This is only v1. There's a lot more to come. """
   ], [

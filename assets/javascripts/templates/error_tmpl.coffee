@@ -39,6 +39,6 @@ app.templates.unsupportedBrowser = """
       If you're unable to upgrade, I apologize.
       I decided to prioritize speed and new features over support for older browsers.
     <p class="_fail-text">
-      — Thibaut <a href="https://twitter.com/DevDocs" class="_fail-link">@DevDocs</a>
+      &mdash; Thibaut <a href="https://twitter.com/DevDocs" class="_fail-link">@DevDocs</a>
   </div>
 """
