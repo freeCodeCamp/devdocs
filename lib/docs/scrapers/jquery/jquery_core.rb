@@ -12,9 +12,8 @@ module Docs
     options[:skip] = %w(/selectors/odd /selectors/even /selectors/event
       /selected /checked)
 
-    options[:fix_urls] = ->(url) do
-      url.sub! '.com/index/', '.com/index/index'
-      url
-    end
+    options[:replace_paths] = {
+      '/index/'             => '/index/index',
+      '/h/deferred.reject/' => '/deferred.reject' }
   end
 end

@@ -110,7 +110,7 @@ credits = [
     'http://www.w3.org/Protocols/rfc2616/rfc2616-sec21.html#sec21'
   ], [
     'jQuery',
-    '2009 Packt Publishing<br>&copy; 2013 jQuery Foundation',
+    '2009 Packt Publishing<br>&copy; 2014 jQuery Foundation',
     'MIT',
     'https://raw.github.com/jquery/api.jquery.com/master/LICENSE-MIT.txt'
   ], [
@@ -120,7 +120,7 @@ credits = [
     'https://raw.github.com/jquery/api.jquerymobile.com/master/LICENSE-MIT.txt'
   ], [
     'jQuery UI',
-    '2013 jQuery Foundation',
+    '2014 jQuery Foundation',
     'MIT',
     'https://raw.github.com/jquery/api.jqueryui.com/master/LICENSE-MIT.txt'
   ], [
