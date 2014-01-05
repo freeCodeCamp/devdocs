@@ -125,7 +125,7 @@ credits = [
     'https://raw.github.com/jquery/api.jqueryui.com/master/LICENSE-MIT.txt'
   ], [
     'Less',
-    '2009-2013 Alexis Sellier &amp; The Core Less Team',
+    '2009-2014 Alexis Sellier &amp; The Core Less Team',
     'Apache v2',
     'https://raw.github.com/less/less.js/master/LICENSE'
   ], [
