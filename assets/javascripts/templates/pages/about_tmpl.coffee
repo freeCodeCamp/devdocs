@@ -115,7 +115,7 @@ credits = [
     'https://raw.github.com/jquery/api.jquery.com/master/LICENSE-MIT.txt'
   ], [
     'jQuery Mobile',
-    '2013 jQuery Foundation',
+    '2014 jQuery Foundation',
     'MIT',
     'https://raw.github.com/jquery/api.jquerymobile.com/master/LICENSE-MIT.txt'
   ], [

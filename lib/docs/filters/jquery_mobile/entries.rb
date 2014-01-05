@@ -2,12 +2,12 @@ module Docs
   class JqueryMobile
     class EntriesFilter < Docs::EntriesFilter
       # Ordered by precedence
-      TYPES = %w(Widgets Events Methods)
+      TYPES = %w(Widgets Events Properties Methods)
 
       def get_name
         name = at_css('h1').content.strip
         name.sub! ' Widget', ''
-        name.gsub!(/ [A-Z]/) { |str| str.downcase! }
+        name.prepend '.' if name.start_with? 'jqm'
         name << ' event' if type == 'Events' && !name.end_with?(' event')
         name
       end
