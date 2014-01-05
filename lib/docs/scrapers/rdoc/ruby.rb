@@ -20,8 +20,9 @@ module Docs
     # | xargs \
     #   rdoc --format=darkfish --no-line-numbers --op=rdoc --visibility=public
 
-    self.version = '2.0.0'
+    self.version = '2.1.0'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby'
+    self.initial_paths = %w(class.html) # not referenced by rdoc
 
     html_filters.replace 'rdoc/entries', 'ruby/entries'
 
@@ -33,19 +34,17 @@ module Docs
       Data.html
       E2MM.html
       English.html
-      Exception2MessageMapper.html
       GServer.html
       MakeMakefile.html
       ParallelEach.html
-      Requirement.html
       SshDirPublisher.html
       SshFilePublisher.html
       SshFreshDirPublisher.html
-      Sys.html
       YAML/DBM.html)
 
     options[:skip_patterns] = [
       /\AComplex/,
+      /\AException2MessageMapper/,
       /\AJSON\/Ext/,
       /\AGem/,
       /\AHTTP/i,
