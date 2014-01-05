@@ -7,7 +7,7 @@ module Docs
       end
 
       def root
-        at_css('.section-header').remove
+        at_css('h3').remove
 
         # Remove skipped items
         css('li > span').each do |node|

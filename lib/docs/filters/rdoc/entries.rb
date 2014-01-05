@@ -20,7 +20,7 @@ module Docs
       end
 
       def include_default_entry?
-        at_css('#description p') || css('.documentation-section').any? { |node| node.content.present? }
+        at_css('> .description p') || css('.documentation-section').any? { |node| node.content.present? }
       end
 
       def additional_entries
