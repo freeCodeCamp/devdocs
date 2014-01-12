@@ -24,7 +24,10 @@ newsItem = (date, news) ->
   result
 
 app.news = [
-  [ 1386979200000, # December 14, 2013
+  [ 1389484800000, # January 12, 2013
+    """ Added <code class="_label">Alt + g</code> shortcut for searching on Google. """
+  ], [
+    1386979200000, # December 14, 2013
     """ New <a href="/postgresql/">PostgreSQL</a> documentation """
   ], [
     1386892800000, # December 13, 2013

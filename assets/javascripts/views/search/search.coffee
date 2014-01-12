@@ -15,6 +15,7 @@ class app.views.Search extends app.View
 
   @shortcuts:
     typing: 'autoFocus'
+    altG: 'google'
 
   @routes:
     root: 'onRoot'
@@ -81,6 +82,12 @@ class app.views.Search extends app.View
   clear: ->
     @removeClass @constructor.activeClass
     @trigger 'clear'
+
+  google: =>
+    if @value
+      $.popup "https://www.google.com/search?q=#{encodeURIComponent @value}"
+      @reset()
+    return
 
   onResults: (results) =>
     @trigger 'results', results, @flags

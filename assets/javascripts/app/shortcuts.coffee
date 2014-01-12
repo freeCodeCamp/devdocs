@@ -101,6 +101,9 @@ class app.Shortcuts
       when 40
         @trigger 'altDown'
         false
+      when 71
+        @trigger 'altG'
+        false
 
   handleKeypressEvent: (event) ->
     if event.which is 63 and not event.target.value
