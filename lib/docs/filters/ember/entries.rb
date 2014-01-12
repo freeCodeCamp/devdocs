@@ -13,12 +13,14 @@ module Docs
       end
 
       def get_type
-        # Group modules together
         if at_css('.api-header').content.include?('Module')
           'Modules'
-        # Group "Ember Data" together
         elsif name.start_with? 'DS'
           'Data'
+        elsif name.start_with? 'RSVP'
+          'RSVP'
+        elsif name.start_with? 'Test'
+          'Test'
         else
           name
         end

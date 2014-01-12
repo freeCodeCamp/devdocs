@@ -95,7 +95,7 @@ credits = [
     'http://creativecommons.org/licenses/by-sa/2.5/'
   ], [
     'Ember.js',
-    '2013 Yehuda Katz, Tom Dale and Ember.js contributors',
+    '2014 Yehuda Katz, Tom Dale and Ember.js contributors',
     'MIT',
     'https://raw.github.com/emberjs/ember.js/master/LICENSE'
   ], [
