@@ -6,6 +6,7 @@ class app.views.Sidebar extends app.View
     click: 'onClick'
 
   @shortcuts:
+    altR: 'onAltR'
     escape: 'onEscape'
 
   init: ->
@@ -83,6 +84,10 @@ class app.views.Sidebar extends app.View
       @showDocPicker()
     else if @view is @docPicker
       @showDocList() unless $.hasChild @el, event.target
+    return
+
+  onAltR: =>
+    @showDocList true
     return
 
   onEscape: =>

@@ -25,7 +25,8 @@ newsItem = (date, news) ->
 
 app.news = [
   [ 1389484800000, # January 12, 2013
-    """ Added <code class="_label">Alt + g</code> shortcut for searching on Google. """
+    """ Added <code class="_label">Alt + g</code> shortcut for searching on Google. """,
+    """ Added <code class="_label">Alt + r</code> shortcut for revealing the current page in the sidebar. """
   ], [
     1386979200000, # December 14, 2013
     """ New <a href="/postgresql/">PostgreSQL</a> documentation """
