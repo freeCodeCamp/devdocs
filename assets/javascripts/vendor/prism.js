@@ -356,7 +356,7 @@ Prism.languages.markup = {
 	'doctype': /&lt;!DOCTYPE.+?>/,
 	'cdata': /&lt;!\[CDATA\[[\w\W]*?]]>/i,
 	'tag': {
-		pattern: /&lt;\/?[\w:-]+\s*(?:\s+[\w:-]+(?:=(?:("|')(\\?[\w\W])*?\1|\w+))?\s*)*\/?>/gi,
+		pattern: /&lt;\/?[\w:-]+\s*(?:\s+[\w:-]+(?:=(?:("|')(\\?[\w\W])*?\1|[^\s'">=]+))?\s*)*\/?>/gi,
 		inside: {
 			'tag': {
 				pattern: /^&lt;\/?[\w:-]+/i,
@@ -390,7 +390,8 @@ Prism.hooks.add('wrap', function(env) {
 	if (env.type === 'entity') {
 		env.attributes['title'] = env.content.replace(/&amp;/, '&');
 	}
-});;
+});
+;
 Prism.languages.css = {
 	'comment': /\/\*[\w\W]*?\*\//g,
 	'atrule': {
@@ -526,8 +527,7 @@ Prism.languages.insertBefore('ruby', 'keyword', {
 		pattern: /(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\r\n])+\/[gim]{0,3}(?=\s*($|[\r\n,.;})]))/g,
 		lookbehind: true
 	},
-	'variable': /[@$&]+\b[a-zA-Z_][a-zA-Z_0-9]*[?!]?\b/g,
+	'variable': /[@$]+\b[a-zA-Z_][a-zA-Z_0-9]*[?!]?\b/g,
 	'symbol': /:\b[a-zA-Z_][a-zA-Z_0-9]*[?!]?\b/g
 });
-
 ;
