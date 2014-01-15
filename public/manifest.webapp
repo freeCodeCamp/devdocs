@@ -1,0 +1,28 @@
+{
+    "version" : "0.0.1",
+    "name" : "devdocs",
+    "launch_path" : "/",
+
+    "installs_allowed_from" : ["*"],
+
+    "developer": {
+        "name": "Thibaut Courouble",
+        "url": "http://devdocs.io"
+    },
+
+    "default_locale": "en",
+
+    "description": "DevDocs combines multiple API documentations in a fast, organized, and searchable interface.",
+
+    "icons": {
+        "16" : "/favicon.ico",
+        "32" : "/favicon.ico",
+        "48" : "/favicon.ico",
+        "60" : "/favicon.ico",
+        "64" : "/favicon.ico",
+        "90" : "/favicon.ico",
+        "120" : "/favicon.ico",
+        "128" : "/favicon.ico",
+        "256" : "/favicon.ico"
+    }
+}
