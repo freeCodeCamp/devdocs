@@ -5,6 +5,8 @@ class App < Sinatra::Application
   Bundler.require environment
   require 'sinatra/cookies'
 
+  Rack::Mime::MIME_TYPES['.webapp'] = 'application/x-web-app-manifest+json'
+
   configure do
     set :sentry_dsn, ENV['SENTRY_DSN']
     set :protection, except: [:frame_options, :xss_header]
