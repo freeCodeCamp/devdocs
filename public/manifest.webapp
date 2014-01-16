@@ -1,28 +1,20 @@
 {
-    "version" : "0.0.1",
-    "name" : "devdocs",
-    "launch_path" : "/",
+  "name": "DevDocs",
+  "description": "All-in-one API Documentation Browser",
+  "version": "1.0.0",
 
-    "installs_allowed_from" : ["*"],
+  "developer": {
+    "name": "Thibaut Courouble",
+    "url": "http://devdocs.io"
+  },
 
-    "developer": {
-        "name": "Thibaut Courouble",
-        "url": "http://devdocs.io"
-    },
+  "default_locale": "en",
+  "installs_allowed_from": ["*"],
+  "chrome": { "navigation": true },
 
-    "default_locale": "en",
-
-    "description": "DevDocs combines multiple API documentations in a fast, organized, and searchable interface.",
-
-    "icons": {
-        "16" : "/favicon.ico",
-        "32" : "/favicon.ico",
-        "48" : "/favicon.ico",
-        "60" : "/favicon.ico",
-        "64" : "/favicon.ico",
-        "90" : "/favicon.ico",
-        "120" : "/favicon.ico",
-        "128" : "/favicon.ico",
-        "256" : "/favicon.ico"
-    }
+  "icons": {
+    "60": "/images/webapp-icon-60.png",
+    "128": "/images/webapp-icon-128.png",
+    "256": "/images/webapp-icon-256.png"
+  }
 }
