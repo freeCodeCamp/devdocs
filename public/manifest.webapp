@@ -13,7 +13,9 @@
   "chrome": { "navigation": true },
 
   "icons": {
+    "32": "/images/webapp-icon-32.png",
     "60": "/images/webapp-icon-60.png",
+    "80": "/images/webapp-icon-80.png",
     "128": "/images/webapp-icon-128.png",
     "256": "/images/webapp-icon-256.png"
   }
