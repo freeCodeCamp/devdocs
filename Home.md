@@ -7,6 +7,7 @@
 ### Plugins and Extensions
 
 * [Chrome web app](https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe)
+* [Firefox web app](https://marketplace.firefox.com/app/devdocs/)
 * [Sublime Text plugin](https://sublime.wbond.net/packages/DevDocs)
 * [Brackets extension](https://github.com/gruehle/dev-docs-viewer)
 * [Fluid](http://fluidapp.com) for turning DevDocs into a real OS X app
