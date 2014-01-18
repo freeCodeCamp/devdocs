@@ -23,10 +23,8 @@ app.templates.aboutPage = -> """
     <li>Follow <a href="https://twitter.com/DevDocs">@DevDocs</a> on Twitter
     <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
   </ul>
-  <p class="_note _note-green">If you use and like DevDocs, please consider donating through
-    <a href="https://www.gittip.com/Thibaut/">Gittip</a> or
-    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4PTFAGT7K6QVG">PayPal</a>.<br>
-    Your support helps sustain the project and is highly appreciated.
+  <p class="_note _note-green">If you like DevDocs, please consider funding the project on
+    <a href="https://www.gittip.com/Thibaut/">Gittip</a>. Thanks!<br>
 
   <h2 class="_lined-heading" id="credits">Credits</h2>
   <table class="_credits">

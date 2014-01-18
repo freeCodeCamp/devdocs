@@ -11,7 +11,7 @@ Keep track of development and community news:
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 * Join the [mailing list](https://groups.google.com/d/forum/devdocs)
 
-DevDocs is free and open source. If you like it, please consider donating through [Gittip](https://www.gittip.com/Thibaut/) or [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4PTFAGT7K6QVG). Your support helps sustain the project and is highly appreciated.
+DevDocs is free and open source. If you like it, please consider funding the project on [Gittip](https://www.gittip.com/Thibaut/). Thanks!
 
 **Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [License](#copyright--license) · [Questions?](#questions)
 
