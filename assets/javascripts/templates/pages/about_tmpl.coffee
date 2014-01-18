@@ -66,6 +66,7 @@ app.templates.aboutPage = -> """
   <h2 class="_lined-heading" id="plugins">Plugins and Extensions</h2>
   <ul>
     <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
+    <li><a href="https://marketplace.firefox.com/app/devdocs/">Firefox web app</a>
     <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text plugin</a>
     <li><a href="https://github.com/gruehle/dev-docs-viewer">Brackets extension</a>
   </ul>
