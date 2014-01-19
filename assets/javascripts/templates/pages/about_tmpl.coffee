@@ -94,6 +94,11 @@ credits = [
     'CC BY-SA',
     'http://creativecommons.org/licenses/by-sa/2.5/'
   ], [
+    'D3.js',
+    '2014 Michael Bostock',
+    'BSD',
+    'https://raw.github.com/mbostock/d3/master/LICENSE'
+  ], [
     'Ember.js',
     '2014 Yehuda Katz, Tom Dale and Ember.js contributors',
     'MIT',

@@ -24,7 +24,10 @@ newsItem = (date, news) ->
   result
 
 app.news = [
-  [ 1390003200000, # January 18, 2013
+  [ 1390089600000, # January 19, 2013
+    """ New <a href="/d3/">D3.js</a> documentation """,
+  ], [
+    1390003200000, # January 18, 2013
     """ DevDocs is now available as a <a href="https://marketplace.firefox.com/app/devdocs/">Firefox web app</a> (currently requires Aurora). """,
   ], [
     1389484800000, # January 12, 2013

@@ -1,0 +1,6 @@
+._d3 {
+  > h2 { @extend %block-heading; }
+  > h3, > h4 { font-size: 1rem; }
+  > h6 { @extend %block-label, %label-blue; }
+  code { @extend %label; }
+}
