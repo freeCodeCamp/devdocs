@@ -33,7 +33,7 @@
 
   browserCheck: ->
     return true if @isSupportedBrowser()
-    @hideLoading()
+    document.body.className = ''
     document.body.innerHTML = app.templates.unsupportedBrowser
     false
 
