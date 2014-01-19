@@ -129,6 +129,11 @@ credits = [
     'MIT',
     'https://raw.github.com/jquery/api.jqueryui.com/master/LICENSE-MIT.txt'
   ], [
+    'Knockout.js',
+    'Steven Sanderson, the Knockout.js team, and other contributors',
+    'MIT',
+    'https://raw.github.com/knockout/knockout/master/LICENSE'
+  ], [
     'Less',
     '2009-2014 Alexis Sellier &amp; The Core Less Team',
     'Apache v2',
