@@ -48,8 +48,7 @@ h1 { font-size: 1.5em; }
 h2 { font-size: 1.375em; }
 h3 { font-size: 1.25em; }
 h4 { font-size: 1.125em; }
-h5 { font-size: 1em; }
-h6 { font-size: .9375em; }
+h5, h6 { font-size: 1em; }
 
 p { margin: 0 0 1em; }
 p:last-child { margin-bottom: 0; }
