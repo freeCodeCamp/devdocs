@@ -131,7 +131,13 @@
 
   // Splash
 
-  ._splash-title { margin-top: -.5em; }
+  ._splash-maxcdn, ._splash-gittip {
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+
+  ._splash-gittip { margin-bottom: 2.25rem; }
 }
 
 //

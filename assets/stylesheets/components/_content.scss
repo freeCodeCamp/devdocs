@@ -53,19 +53,29 @@
   @extend ._booting:before, %user-select-none;
 }
 
-._splash-maxcdn {
+%splash-promo {
   position: absolute;
   bottom: 1.25rem;
-  left: 50%;
-  width: 16rem;
-  margin-left: -8rem;
   line-height: 1rem;
   color: #bbb;
-  text-align: center;
 
   &:hover { color: $linkColor; }
+}
+
+._splash-maxcdn {
+  left: .75rem;
+  @extend %splash-promo;
+
   > ._maxcdn-logo-bw { opacity: .2; }
   &:hover > ._maxcdn-logo-bw { opacity: .5; }
+}
+
+._splash-gittip {
+  right: 1.25rem;
+  @extend %splash-promo;
+
+  > ._gittip-logo-bw { opacity: .35; }
+  &:hover > ._gittip-logo-bw { opacity: .65; }
 }
 
 //
@@ -298,7 +308,7 @@
   display: inline-block;
   vertical-align: top;
   width: 6.25rem;
-  margin-left: .375rem;
+  margin-left: .5rem;
   overflow: hidden;
   text-indent: -20rem;
   background-position: center center;
@@ -321,5 +331,17 @@
 
   @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
     background-image: image-url('maxcdn-bw@2x.png');
+  }
+}
+
+._gittip-logo-bw {
+  width: 4.375rem;
+  margin-left: .375rem;
+  background-size: 4.375rem 1rem;
+  background-image: image-url('gittip-bw.png');
+  @extend %maxcdn-logo;
+
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    background-image: image-url('gittip-bw@2x.png');
   }
 }
