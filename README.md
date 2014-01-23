@@ -59,7 +59,7 @@ DevDocs being a developer tool, the browser requirements are high:
   * Recent version of Firefox
   * Safari 5.1+
   * Opera 12.1+
-  * Interner Explorer 10+
+  * Internet Explorer 10+
 2. On mobile:
   * iOS 6+
   * Android 4.1+
