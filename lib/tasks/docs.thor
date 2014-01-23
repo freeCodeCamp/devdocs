@@ -106,6 +106,17 @@ class DocsCLI < Thor
     invalid_doc(error.name)
   end
 
+  desc 'verify (<doc> <doc>... | --all)', 'Verify documentations'
+  option :all, type: :boolean
+  def verify(*names)
+    docs = options[:all] ? Docs.all : find_docs(names)
+    assert_docs(docs)
+    docs.each(&method(:verify_doc))
+    puts 'Done'
+  rescue Docs::DocNotFound => error
+    invalid_doc(error.name)
+  end
+
   desc 'clean', 'Delete documentation packages'
   def clean
     File.delete(*Dir[File.join Docs.store_path, '*.tar.gz'])
@@ -183,6 +194,43 @@ class DocsCLI < Thor
       FileUtils.rm(tar)
     else
       puts %(ERROR: can't find "#{doc.name}" documentation files.)
+    end
+  end
+
+  DOC_EXT = '.html'
+
+  def is_document?(path)
+    File.file?(path) &&
+      !File.basename(path).start_with?('.') &&
+      File.extname(path).downcase == DOC_EXT
+  end
+
+  def verify_doc(doc)
+    doc_path = File.join Docs.store_path, doc.path
+
+    unless File.exists?(doc_path)
+      puts %(ERROR: can't find "#{doc.name}" documentation files. Please download/scrape it first.)
+      return
+    end
+
+    skip_path = (doc_path.length + 1)..-1
+
+    require 'find'
+    require 'cgi'
+
+    Find.find(doc_path) do |path|
+      next unless is_document?(path)
+
+      Nokogiri::HTML.parse(open(path), 'UTF-8').css('a[href]').each do |a|
+        href = a['href']
+        next unless href !~ %r{\A(?:[^:]+:|#|\?|$)}
+
+        target = File.join(File.dirname(path), CGI.unescape(href).gsub(/[#?].*/, ''))
+
+        unless File.exists?(target) || File.exists?(target + DOC_EXT)
+          puts "#{path[skip_path]} references missing document #{target[skip_path]} (A: #{a.text.strip})"
+        end
+      end
     end
   end
 
