@@ -11,3 +11,4 @@
 * [Sublime Text plugin](https://sublime.wbond.net/packages/DevDocs)
 * [Brackets extension](https://github.com/gruehle/dev-docs-viewer)
 * [Fluid](http://fluidapp.com) for turning DevDocs into a real OS X app
+* [GTK shell / Vim integration](https://github.com/naquad/devdocs-shell)
