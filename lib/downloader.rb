@@ -1,64 +1,124 @@
-require 'typhoeus'
 require 'nokogiri'
-require 'delegate'
+require 'thread'
 require 'fileutils'
+require 'monitor'
 require 'cgi'
 
-class Downloader < SimpleDelegator
-  include Typhoeus
+# Typhoeus has odd behavior either on my platform
+# or at all. Hence rolling out own parallel downloader.
 
-  MAX_QUEUE_SIZE = 20
+# Ruby 2.1.0 has broken Thread::SizedQueue
+# https://bugs.ruby-lang.org/issues/9342
+class SizedQueue
+  attr_accessor :max
 
-  def initialize(*args)
-    super(Hydra.new(*args))
+  def initialize(max)
+     @max = max
+
+     @queue = []
+     @queue.extend(MonitorMixin)
+     @qe = @queue.new_cond
+     @qd = @queue.new_cond
+  end
+
+  def size
+    @queue.synchronize do
+      @queue.size
+    end
+  end
+
+  def enqueue(what)
+    @queue.synchronize do
+      @qd.wait_while { @queue.size >= @max }
+      @queue.push what
+      @qe.signal
+    end
+  end
+
+  def dequeue
+    @queue.synchronize do
+      @qe.wait_while { @queue.empty? }
+      ret = @queue.pop
+      @qd.signal
+      ret
+    end
+  end
+
+  alias :<<      :enqueue
+  alias :push    :enqueue
+  alias :unshift :enqueue
+
+  alias :>>      :dequeue
+  alias :pop     :dequeue
+  alias :shift   :dequeue
+end
+
+class Downloader
+  def initialize(threads = 10, max = 10)
     @counter = 0
+    @req = SizedQueue.new(max)
+    @callbacks = Thread::Queue.new
+    @threads = []
+
+    @threads << Thread.new(&method(:runner))
+
+    block = method(:downloader)
+    threads.times do
+      @threads << Thread.new(&block)
+    end
+  end
+
+  def downloader
+    while r = @req.pop
+      begin
+        open(r[0]) do |f|
+          dname = File.dirname(r[1])
+          FileUtils.mkdir_p(dname) unless File.directory?(dname)
+          File.write(r[1], f.read)
+          @callbacks << r[1..-1] if r[2]
+        end
+      rescue SocketError, OpenURI::HTTPError, Errno::EACCESS, Errno::EEXISTS => e
+        puts "#{r[1]} failed to download: #{e.message}"
+      end
+    end
+  end
+
+  def runner
+    while t = @callbacks.pop
+      t[1].call(t[0])
+    end
   end
 
   def processor(&block)
     @processor = block
   end
 
-  def queue_size
-    queued_requests.size
-  end
-
   def file(src, dst, &block)
-    file = nil
-
-    request = Request.new(src)
-
-    request.on_headers do |response|
-      if response.response_code == 200
-        dname = File.dirname(dst)
-        FileUtils.mkdir_p(dname) unless File.directory?(dname)
-        file = open(dst, 'wb')
-      else
-        failed(src, dst, response)
-      end
-    end
-
-    request.on_body do |chunk|
-      file.write(chunk) if file
-    end
-    
-    request.on_complete do |response|
-      if file
-        file.close
-        block.call(dst) if block
-      end
-    end
-
-    queue request
+    @req << [src, dst, block]
     dst
   end
 
-  def queue(*args, &block)
-    run while queue_size > MAX_QUEUE_SIZE
-    __getobj__.queue *args, &block
+  def wait
+    @callbacks << nil
+    (@threads.size - 1).times { @req << nil }
+    @threads.each(&:join)
   end
 
   def page(src, target)
     file(src, target) { process_page(src, target) }
+  end
+
+  def guess_filename(base_dir, href)
+    tpath = File.join(base_dir, href)
+
+    [
+      [tpath                    , href                   ],
+      ["#{tpath}.html"          , "#{href}.html"         ],
+      ["#{tpath.downcase}"      , "#{href.downcase}"     ],
+      ["#{tpath.downcase}.html" , "#{href.downcase}.html"]
+    ].each {|(x, y)| return y if File.exists?(x)}
+
+    href
   end
 
   def process_page(src, path)
@@ -88,13 +148,7 @@ class Downloader < SimpleDelegator
       href = a['href']
       next if href =~ %r{^(?:[^:]+:|[#?]|$)}
       href = CGI.unescape(href)
-
-      np = File.join(base_dir, href)
-      if File.exists?("#{np}.html")
-        href << '.html'
-      end
-
-      a['href'] = href
+      a['href'] = guess_filename(base_dir, href)
     end
 
     doc.css('style').each do |style|
@@ -166,9 +220,5 @@ class Downloader < SimpleDelegator
       tfile = "#{prefix}_#{rfile}"
       prefix += 1
     end
-  end
-
-  def failed(src, dst, response)
-    puts "#{src} -> #{dst} failed: #{response.status_message}"
   end
 end

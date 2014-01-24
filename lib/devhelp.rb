@@ -25,7 +25,7 @@ class DevHelp
   end
 
   def normalize_url(link)
-    link.gsub(/^([^.]+?)(?=$|#)/, '\1.html\2')
+    link.gsub(/^([^#?]+)(?:\.html)?/, '\1.html')
   end
 
   def build_devhelp(doc, structure)
@@ -43,6 +43,7 @@ class DevHelp
 
   def for_docs(*docs)
     docs.flatten.each(&method(:for_doc))
+    self
   end
 
   def cp_r(src, dst)
@@ -191,7 +192,8 @@ class DevHelp
       select(&method(:is_document?)).
       each {|d| downloader.process_page(nil, d)}
 
-    downloader.run
+    downloader.wait
+    self
   end
 
   def is_document?(p)
