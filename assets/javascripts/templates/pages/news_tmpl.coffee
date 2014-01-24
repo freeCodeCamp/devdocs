@@ -31,8 +31,8 @@ app.news = [
     """ DevDocs is now available as a <a href="https://marketplace.firefox.com/app/devdocs/">Firefox web app</a> (currently requires Aurora). """,
   ], [
     1389484800000, # January 12, 2013
-    """ Added <code class="_label">Alt + g</code> shortcut for searching on Google. """,
-    """ Added <code class="_label">Alt + r</code> shortcut for revealing the current page in the sidebar. """
+    """ Added <code class="_label">alt + g</code> shortcut for searching on Google. """,
+    """ Added <code class="_label">alt + r</code> shortcut for revealing the current page in the sidebar. """
   ], [
     1386979200000, # December 14, 2013
     """ New <a href="/postgresql/">PostgreSQL</a> documentation """
