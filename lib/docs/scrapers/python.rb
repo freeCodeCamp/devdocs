@@ -5,6 +5,7 @@ module Docs
     self.dir = '/Users/Thibaut/DevDocs/Docs/Python' # downloaded from docs.python.org/3/download.html
     self.base_url = 'http://docs.python.org/3/'
     self.root_path = 'library/index.html'
+    self.language = 'python'
 
     html_filters.push 'python/entries', 'python/clean_html'
 

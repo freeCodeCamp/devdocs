@@ -1,0 +1,22 @@
+._devhelp {
+  width: 90%;
+  height: auto !important;
+  margin: 0 auto !important;
+
+  border: none !important;
+  box-shadow: none !important;
+
+  font-family: Arial, sans-serif;
+
+  pre, code, samp, ._redis > .example {
+    font-family: "Lucida Console", "Sans Mono", "Courier New", monospace;
+    font-size: 1.05em;
+  }
+
+  ._content {
+    height: auto !important;
+    margin-left: 0px !important;
+    overflow-y: visible !important;
+    font-size: 1.1em;
+  }
+}

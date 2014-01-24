@@ -6,6 +6,7 @@ module Docs
     self.version = '3.0.0'
     self.base_url = 'http://knockoutjs.com/documentation/'
     self.root_path = 'introduction.html'
+    self.language = 'javascript'
 
     html_filters.push 'knockout/clean_html', 'knockout/entries'
 

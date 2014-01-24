@@ -3,7 +3,7 @@ module Docs
     INDEX_FILENAME = 'index.json'
 
     class << self
-      attr_accessor :name, :slug, :type, :version, :abstract
+      attr_accessor :name, :slug, :type, :version, :abstract, :language
 
       def inherited(subclass)
         subclass.type = type

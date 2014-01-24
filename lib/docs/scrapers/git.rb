@@ -4,6 +4,7 @@ module Docs
     self.version = '1.8.5'
     self.base_url = 'http://git-scm.com/docs'
     self.initial_paths = %w(/git.html)
+    self.language = 'git'
 
     html_filters.push 'git/clean_html', 'git/entries'
 

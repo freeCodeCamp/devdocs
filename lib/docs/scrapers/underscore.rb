@@ -5,6 +5,7 @@ module Docs
     self.type = 'underscore'
     self.version = '1.5.2'
     self.base_url = 'http://underscorejs.org'
+    self.language = 'javascript'
 
     html_filters.push 'underscore/clean_html', 'underscore/entries', 'title'
 

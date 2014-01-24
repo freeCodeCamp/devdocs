@@ -5,6 +5,7 @@ module Docs
     self.type = 'lodash'
     self.version = '2.4.1'
     self.base_url = 'http://lodash.com/docs'
+    self.language = 'javascript'
 
     html_filters.push 'lodash/clean_html', 'lodash/entries', 'title'
 

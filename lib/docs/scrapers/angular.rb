@@ -15,5 +15,6 @@ module Docs
     self.type = 'angular'
     self.version = '1.0.7'
     self.base_url = ''
+    self.language = 'javascript'
   end
 end

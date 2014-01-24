@@ -16,6 +16,7 @@ module Docs
 
     # Downloaded from php.net/download-docs.php
     self.dir = '/Users/Thibaut/DevDocs/Docs/PHP'
+    self.language = 'php'
 
     html_filters.push 'php/internal_urls', 'php/entries', 'php/clean_html', 'title'
     text_filters.push 'php/fix_urls'

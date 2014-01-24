@@ -109,9 +109,42 @@ class DocsCLI < Thor
   desc 'verify (<doc> <doc>... | --all)', 'Verify documentations'
   option :all, type: :boolean
   def verify(*names)
+    require 'find'
+    require 'cgi'
+
     docs = options[:all] ? Docs.all : find_docs(names)
     assert_docs(docs)
     docs.each(&method(:verify_doc))
+    puts 'Done'
+  rescue Docs::DocNotFound => error
+    invalid_doc(error.name)
+  end
+
+  desc 'devhelp-book (<doc> <doc>... | --all)', 'Generate DevHelp book'
+  option :all, type: :boolean
+  option :force, type: :boolean
+  def devhelp_book(*names)
+    require 'app'
+    require 'devhelp'
+
+    unless File.exists?(App.assets_path)
+      AssetsCLI.new.invoke(:compile)
+    end
+
+    docs = options[:all] ? Docs.all : find_docs(names)
+    assert_docs(docs)
+
+    js = File.expand_path('../assets/javascripts/vendor', Docs.root_path)
+
+    DevHelp.new({
+      force: options[:force],
+      base_path: Docs.store_path,
+      devhelp_path: Docs.devhelp_store_path,
+      asset_path: App.assets_path,
+      index: Docs::Doc::INDEX_FILENAME,
+      js: [File.join(js, 'prism.js'), File.join(js, 'prism-invoke.js')]
+    }).for_docs(docs)
+
     puts 'Done'
   rescue Docs::DocNotFound => error
     invalid_doc(error.name)
@@ -214,9 +247,6 @@ class DocsCLI < Thor
     end
 
     skip_path = (doc_path.length + 1)..-1
-
-    require 'find'
-    require 'cgi'
 
     Find.find(doc_path) do |path|
       next unless is_document?(path)

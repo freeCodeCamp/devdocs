@@ -4,6 +4,7 @@ module Docs
     self.type = 'rfc'
     self.base_url = 'http://www.w3.org/Protocols/rfc2616/'
     self.root_path = 'rfc2616.html'
+    self.language = 'http'
 
     html_filters.push 'http/clean_html', 'http/entries'
 

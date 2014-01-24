@@ -5,6 +5,7 @@ module Docs
     self.type = 'ember'
     self.version = '1.3.0'
     self.base_url = 'http://emberjs.com/api/'
+    self.language = 'javascript'
 
     html_filters.push 'ember/clean_html', 'ember/entries', 'title'
 

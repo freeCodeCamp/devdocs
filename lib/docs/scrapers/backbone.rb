@@ -5,6 +5,7 @@ module Docs
     self.type = 'underscore'
     self.version = '1.1.0'
     self.base_url = 'http://backbonejs.org'
+    self.language = 'javascript'
 
     html_filters.push 'backbone/clean_html', 'backbone/entries', 'title'
 

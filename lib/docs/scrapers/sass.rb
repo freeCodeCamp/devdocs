@@ -4,6 +4,7 @@ module Docs
     self.version = '3.2.12'
     self.base_url = 'http://sass-lang.com/docs/yardoc/'
     self.root_path = 'file.SASS_REFERENCE.html'
+    self.language = 'sass'
 
     html_filters.push 'sass/clean_html', 'sass/entries', 'title'
 
