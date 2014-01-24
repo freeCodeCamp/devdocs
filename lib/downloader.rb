@@ -11,6 +11,7 @@ class Downloader < SimpleDelegator
 
   def initialize(*args)
     super(Hydra.new(*args))
+    @counter = 0
   end
 
   def processor(&block)
@@ -53,7 +54,7 @@ class Downloader < SimpleDelegator
 
   def queue(*args, &block)
     run while queue_size > MAX_QUEUE_SIZE
-    __getobj__(*args, &block)
+    __getobj__.queue *args, &block
   end
 
   def page(src, target)
@@ -80,6 +81,20 @@ class Downloader < SimpleDelegator
       when 'img'
         elem['src']  = file(uri, resource_path_for(rdir, uri, 'png'))[skip]
       end
+    end
+
+    base_dir = File.dirname(path)
+    doc.css('a[href]').each do |a|
+      href = a['href']
+      next if href =~ %r{^(?:[^:]+:|[#?]|$)}
+      href = CGI.unescape(href)
+
+      np = File.join(base_dir, href)
+      if File.exists?("#{np}.html")
+        href << '.html'
+      end
+
+      a['href'] = href
     end
 
     doc.css('style').each do |style|
@@ -144,8 +159,6 @@ class Downloader < SimpleDelegator
 
     prefix = 1
     tfile = rfile
-
-    puts rfile
 
     loop do
       path = File.join(dir, tfile)
