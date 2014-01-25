@@ -116,4 +116,4 @@ class app.views.Search extends app.View
       value
 
   getHashValue: ->
-    try (new RegExp "##{SEARCH_PARAM}=(.*)").exec(decodeURIComponent location.hash)?[1] catch
+    try (new RegExp "##{SEARCH_PARAM}=(.*)").exec($.urlDecode location.hash)?[1] catch

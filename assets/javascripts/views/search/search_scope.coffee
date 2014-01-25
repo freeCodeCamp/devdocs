@@ -76,9 +76,9 @@ class app.views.SearchScope extends app.View
 
   extractHashValue: ->
     if value = @getHashValue()
-      newHash = decodeURIComponent(location.hash).replace "##{SEARCH_PARAM}=#{value} ", "##{SEARCH_PARAM}="
+      newHash = $.urlDecode(location.hash).replace "##{SEARCH_PARAM}=#{value} ", "##{SEARCH_PARAM}="
       app.router.replaceHash(newHash)
       value
 
   getHashValue: ->
-    try (new RegExp "^##{SEARCH_PARAM}=(.+?) .").exec(decodeURIComponent location.hash)?[1] catch
+    try (new RegExp "^##{SEARCH_PARAM}=(.+?) .").exec($.urlDecode location.hash)?[1] catch

@@ -260,6 +260,9 @@ ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g
 $.escapeRegexp = (string) ->
   string.replace ESCAPE_REGEXP, "\\$1"
 
+$.urlDecode = (string) ->
+  decodeURIComponent string.replace(/\+/g, '%20')
+
 #
 # Miscellaneous
 #
