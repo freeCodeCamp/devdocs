@@ -1,7 +1,7 @@
 module Docs
   class JqueryCore < Jquery
     self.name = 'jQuery'
-    self.version = 'up to 2.0.3'
+    self.version = 'up to 2.1.0'
     self.base_url = 'http://local.api.jquery.com'
 
     html_filters.insert_before 'jquery/clean_html', 'jquery_core/entries'
