@@ -2,7 +2,7 @@ module Docs
   class JqueryUi < Jquery
     self.name = 'jQuery UI'
     self.slug = 'jqueryui'
-    self.version = '1.10.3'
+    self.version = '1.10.4'
     self.base_url = 'http://local.api.jqueryui.com'
     self.root_path = '/category/all'
 
