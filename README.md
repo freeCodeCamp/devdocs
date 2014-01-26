@@ -34,7 +34,7 @@ Finally, point your browser at [localhost:9292](http://localhost:9292) (the firs
 
 The `thor docs:download` command is used to download/update individual documentations (e.g. `thor docs:download html css`), or all at the same time (using the `--all` option). You can see the list of available documentations by running `thor docs:list`.
 
-**Note:** there is currently no update mechanism other than using git to update the code and `thor docs:download` to download the latest version of the docs. To stay informed about new releases, be sure to subscribe to the [newsletter](http://eepurl.com/HnLUz).
+**Note:** there is currently no update mechanism other than `git pull origin master` to update the code and `thor docs:download` to download the latest version of the docs. To stay informed about new releases, be sure to subscribe to the [newsletter](http://eepurl.com/HnLUz).
 
 ## Vision
 
@@ -74,11 +74,11 @@ The scraper is responsible for generating the documentation and index files (met
 There are currently two kinds of scrapers: `UrlScraper` which downloads files via HTTP and `FileScraper` which reads them from the local filesystem. They both make copies of HTML documents, recursively following links that match a given set of rules and applying all sorts of modifications along the way, in addition to building an index of the files and their metadata. Documents are parsed using [Nokogiri](http://nokogiri.org).
 
 Modifications made to each document include:
-* removing stuff such as the document structure (`<html>`, `<head>`, etc.), comments, empty nodes, etc.
+* removing content such as the document structure (`<html>`, `<head>`, etc.), comments, empty nodes, etc.
 * fixing links (e.g. to remove duplicates)
 * replacing all external (not scraped) URLs with their fully qualified counterpart
 * replacing all internal (scraped) URLs with their unqualified and relative counterpart
-* adding stuff, such as a title and link to the original document
+* adding content, such as a title and link to the original document
 
 These modifications are applied through a set of filters using the [HTML::Pipeline](https://github.com/jch/html-pipeline) library. Each scraper includes filters specific to its documentation, one of which is tasked with figuring out the pages' metadata.
 
