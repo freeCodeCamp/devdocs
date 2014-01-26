@@ -1,8 +1,39 @@
 ._angular {
-  > h2 { font-size: 1.125rem; }
+  h2 { @extend %block-heading; }
+
+  //
+  // Index
+  //
+
+  .nav-header.section {
+    margin: 1.5em 0 1em -2em;
+    list-style: none;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+
+  //
+  // Other
+  //
+
   h3, h4 { font-size: 1rem; }
 
-  .methods {
+  .alert { @extend %note; }
+  .alert-success { @extend %note-green; }
+  .alert-error { @extend %note-red; }
+
+  p > code, li > code, td > code { @extend %label; }
+
+  .view-source, .improve-docs {
+    position: relative;
+    float: right;
+    line-height: 1.7rem;
+    padding-left: 1em;
+    font-size: .875rem;
+    background: white;
+  }
+
+  .defs {
     padding-left: 1rem;
     list-style: none;
 
@@ -12,6 +43,12 @@
     }
 
     > li + li { margin-top: 2em; }
-    > li > ul { list-style-type: disc; }
+
+    h4 {
+      margin: 1em 0 .5em;
+      font-size: 1em;
+    }
+
+    ul { list-style-type: disc; }
   }
 }

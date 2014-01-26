@@ -31,11 +31,16 @@ group :docs do
   gem 'typhoeus'
   gem 'nokogiri', '~> 1.6.0'
   gem 'html-pipeline'
-  gem 'progress_bar'
-  gem 'unix_utils'
+  gem 'progress_bar', require: false
+  gem 'unix_utils', require: false
 end
 
 group :test do
   gem 'minitest'
   gem 'rr', require: false
+end
+
+if ENV['SELENIUM'] == '1'
+  gem 'capybara'
+  gem 'selenium-webdriver'
 end

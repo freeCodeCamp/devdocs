@@ -2,5 +2,6 @@
 
 class app.views.AngularPage extends app.views.BasePage
   afterRender: ->
-    @highlightCode @findAllByClass('prettyprint'), 'javascript'
+    for el in @findAllByTag('pre')
+      @highlightCode el, if el.textContent[0] is '<' then 'markup' else 'javascript'
     return
