@@ -26,8 +26,7 @@ app.templates.unsupportedBrowser = """
     <h1 class="_fail-title">Your browser is unsupported, sorry.</h1>
     <p class="_fail-text">DevDocs is an API documentation browser which supports the following browsers:
     <ul class="_fail-list">
-      <li>Recent version of Chrome
-      <li>Recent version of Firefox
+      <li>Recent versions of Chrome and Firefox
       <li>Safari 5.1+
       <li>Opera 12.1+
       <li>Internet Explorer 10+
@@ -38,6 +37,9 @@ app.templates.unsupportedBrowser = """
     <p class="_fail-text">
       If you're unable to upgrade, I apologize.
       I decided to prioritize speed and new features over support for older browsers.
+    <p class="_fail-text">
+      Note: if you're already using one of the browsers above, check your settings and add-ons.
+      The app uses feature detection, not user agent sniffing.
     <p class="_fail-text">
       &mdash; Thibaut <a href="https://twitter.com/DevDocs" class="_fail-link">@DevDocs</a>
   </div>
