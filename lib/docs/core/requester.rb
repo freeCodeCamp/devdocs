@@ -1,5 +1,3 @@
-require 'typhoeus'
-
 module Docs
   class Requester < Typhoeus::Hydra
     attr_reader :request_options

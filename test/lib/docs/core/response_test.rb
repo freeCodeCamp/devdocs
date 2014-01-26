@@ -1,6 +1,5 @@
 require 'test_helper'
 require 'docs'
-require 'typhoeus'
 
 class DocsResponseTest < MiniTest::Spec
   let :response do

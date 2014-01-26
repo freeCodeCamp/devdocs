@@ -1,5 +1,4 @@
 require 'set'
-require 'html/pipeline'
 
 module Docs
   class Scraper < Doc

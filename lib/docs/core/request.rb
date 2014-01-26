@@ -1,5 +1,3 @@
-require 'typhoeus'
-
 module Docs
   class Request < Typhoeus::Request
     include Instrumentable

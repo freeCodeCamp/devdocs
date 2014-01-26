@@ -1,5 +1,3 @@
-require 'nokogiri'
-
 module Docs
   class Parser
     def initialize(content)

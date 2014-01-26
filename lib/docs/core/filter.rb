@@ -1,5 +1,3 @@
-require 'html/pipeline'
-
 module Docs
   class Filter < ::HTML::Pipeline::Filter
     def css(*args)

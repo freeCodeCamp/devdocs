@@ -1,5 +1,5 @@
 require 'bundler/setup'
-Bundler.setup :docs
+Bundler.require :docs
 
 require 'active_support/core_ext'
 I18n.enforce_available_locales = true
