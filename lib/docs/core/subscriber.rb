@@ -44,7 +44,7 @@ module Docs
       elsif ENV['COLUMNS']
         ENV['COLUMNS'].to_i
       else
-        `stty size`.scan(/\d+/).last.to_i
+        `tput cols`.scan(/\d+/).last.to_i
       end
     rescue
       @terminal_width = nil

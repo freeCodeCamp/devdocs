@@ -6,6 +6,7 @@ module Docs
     self.version = '3.4.1'
     self.base_url = 'https://github.com/mbostock/d3/wiki/'
     self.root_path = 'API-Reference'
+    self.language = 'javascript'
 
     html_filters.push 'd3/clean_html', 'd3/entries'
 

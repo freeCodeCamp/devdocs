@@ -7,6 +7,7 @@ module Docs
     self.base_url = 'http://www.postgresql.org/docs/9.3/static/'
     self.root_path = 'reference.html'
     self.initial_paths = %w(sql.html runtime-config.html charset.html)
+    self.language = 'postgresql'
 
     html_filters.insert_before 'normalize_urls', 'postgresql/clean_nav'
     html_filters.push 'postgresql/clean_html', 'postgresql/entries', 'title'

@@ -3,6 +3,7 @@ module Docs
     self.type = 'less'
     self.version = '1.6.0'
     self.base_url = 'http://lesscss.org'
+    self.language = 'less'
 
     html_filters.push 'less/clean_html', 'less/entries', 'title'
 

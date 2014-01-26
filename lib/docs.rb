@@ -24,6 +24,9 @@ module Docs
   mattr_accessor :store_path
   self.store_path = File.expand_path '../public/docs', @@root_path
 
+  mattr_accessor :devhelp_store_path
+  self.devhelp_store_path = File.expand_path '../public/devhelp', @@root_path
+
   class DocNotFound < NameError; end
 
   def self.all

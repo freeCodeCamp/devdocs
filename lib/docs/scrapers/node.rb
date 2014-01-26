@@ -5,6 +5,7 @@ module Docs
     self.type = 'node'
     self.version = '0.10.25'
     self.base_url = 'http://nodejs.org/api/'
+    self.language = 'javascript'
 
     html_filters.push 'node/clean_html', 'node/entries', 'title'
 
