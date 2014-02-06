@@ -3,7 +3,7 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
 
-        #remove meaningless content
+        #remove irrelevant content
         css('div').each do |node| 
           if node['class'] == "layout-main-header"
             node.remove
@@ -27,21 +27,16 @@ module Docs
             end
           end
 
-        #remove javascript show links
-        css('b').each do |node|
-          if node['class'] == "show"
-            node.remove
-          end
-        end
-
         # Put code blocks in <pre> tags
         css('.code').each do |node|
           node.name = 'pre'
         end
 
-        #remove Hide inherited methods / properties
+        #remove Hide inherited methods / properties and show links
         css('a').each do |node|
           if node['class'] == 'toggle'
+            node.remove
+          elsif node['class'] == 'show'
             node.remove
           end
         end
