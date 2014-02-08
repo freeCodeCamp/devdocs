@@ -44,7 +44,12 @@
     if @isInvalidLocation()
       new app.views.Notif 'InvalidLocation'
     else
-      Raven.config(@config.sentry_dsn).install() if @config.sentry_dsn
+      if @config.sentry_dsn
+        Raven.config @config.sentry_dsn,
+          whitelistUrls: [/devdocs/]
+          includePaths: [/devdocs/]
+          ignoreErrors: [/dpQuery/]
+        .install()
       @previousErrorHandler = onerror
       window.onerror = @onWindowError.bind(@)
     return
