@@ -28,12 +28,12 @@ class app.views.Content extends app.View
     @entryPage  = new app.views.EntryPage
 
     @entryPage
-      .on('loading', @onEntryLoading)
-      .on('loaded', @onEntryLoaded)
+      .on 'loading', @onEntryLoading
+      .on 'loaded', @onEntryLoaded
 
     app
-      .on('ready', @onReady)
-      .on('bootError', @onBootError)
+      .on 'ready', @onReady
+      .on 'bootError', @onBootError
 
     return
 

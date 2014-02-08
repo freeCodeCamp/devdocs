@@ -16,8 +16,8 @@ class app.views.Results extends app.View
     @addSubview @listFocus  = new app.views.ListFocus @el unless $.isTouchScreen()
 
     @search
-      .on('results', @onResults)
-      .on('clear', @onClear)
+      .on 'results', @onResults
+      .on 'clear', @onClear
     return
 
   onResults: (entries, flags) =>

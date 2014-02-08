@@ -61,7 +61,7 @@ class app.views.PaginatedList extends app.View
   paginateTo: (object) ->
     index = @data.indexOf(object)
     if index >= PER_PAGE
-      @paginateNext() for [0...Math.floor(index / PER_PAGE)]
+      @paginateNext() for [0...(index // PER_PAGE)]
     return
 
   hideTopPage: ->

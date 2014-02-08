@@ -23,8 +23,8 @@ class app.views.Mobile extends app.View
     $.on $('._search'), 'touchend', @onTapSearch
 
     app.document.sidebar.search
-      .on('searching', @showSidebar)
-      .on('clear', @hideSidebar)
+      .on 'searching', @showSidebar
+      .on 'clear', @hideSidebar
 
     @activate()
     return

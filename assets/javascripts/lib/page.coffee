@@ -121,7 +121,7 @@ pathtoRegexp = (path, keys) ->
 
   path = "(#{path.join '|'})" if path instanceof Array
   path = path
-    .replace(/\/\(/g, '(?:/')
+    .replace /\/\(/g, '(?:/'
     .replace /(\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?/g, (_, slash = '', format = '', key, capture, optional) ->
       keys.push name: key, optional: !!optional
       str = if optional then '' else slash
@@ -132,8 +132,8 @@ pathtoRegexp = (path, keys) ->
       str += ')'
       str += optional if optional
       str
-    .replace(/([\/.])/g, '\\$1')
-    .replace(/\*/g, '(.*)')
+    .replace /([\/.])/g, '\\$1'
+    .replace /\*/g, '(.*)'
 
   new RegExp "^#{path}$"
 

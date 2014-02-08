@@ -14,8 +14,8 @@ class app.views.Sidebar extends app.View
     @addSubview @search = new app.views.Search
 
     @search
-      .on('searching', @showResults)
-      .on('clear', @showDocList)
+      .on 'searching', @showResults
+      .on 'clear', @showDocList
 
     @results = new app.views.Results @search
     @docList = new app.views.DocList

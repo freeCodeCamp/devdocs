@@ -11,11 +11,11 @@ class app.models.Entry extends app.Model
   searchValue: ->
     @name
       .toLowerCase()
-      .replace('...', ' ')
-      .replace(' event', '')
-      .replace(SEPARATORS_REGEXP, '.')
-      .replace(/\.+/g, '.')
-      .replace(PARANTHESES_REGEXP, '')
+      .replace '...', ' '
+      .replace ' event', ''
+      .replace SEPARATORS_REGEXP, '.'
+      .replace /\.+/g, '.'
+      .replace PARANTHESES_REGEXP, ''
       .trim()
 
   fullPath: ->
