@@ -1,18 +1,21 @@
 module Docs
   class Less < UrlScraper
     self.type = 'less'
-    self.version = '1.6.0'
+    self.version = '1.6.3'
     self.base_url = 'http://lesscss.org'
+    self.root_path = '/features'
+    self.initial_paths = %w(/functions)
 
-    html_filters.push 'less/clean_html', 'less/entries', 'title'
+    html_filters.push 'less/entries', 'less/clean_html', 'title'
 
-    options[:title] = 'LESS'
-    options[:container] = 'section'
-    options[:skip_links] = true
+    options[:title] = 'Less'
+    options[:container] = 'div[role=main]'
+    options[:follow_links] = false
+    options[:trailing_slash] = false
 
     options[:attribution] = <<-HTML
-      &copy; 2009&ndash;2014 Alexis Sellier &amp; The Core Less Team<br>
-      Licensed under the Apache License v2.0.
+      &copy; 2009&ndash;2014 The Core Less Team<br>
+      Licensed under the Creative Commons Attribution License 3.0.
     HTML
   end
 end
