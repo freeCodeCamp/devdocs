@@ -85,7 +85,7 @@ credits = [
     'https://raw.github.com/jashkenas/backbone/master/LICENSE'
   ], [
     'CoffeeScript',
-    '2009-2013 Jeremy Ashkenas',
+    '2009-2014 Jeremy Ashkenas',
     'MIT',
     'https://raw.github.com/jashkenas/coffee-script/master/LICENSE'
   ], [
