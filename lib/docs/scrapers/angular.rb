@@ -3,7 +3,7 @@ module Docs
     self.name = 'Angular.js'
     self.slug = 'angular'
     self.type = 'angular'
-    self.version = '1.2.10'
+    self.version = '1.2.12'
     self.base_url = 'http://docs.angularjs.org/partials/api/'
 
     html_filters.insert_before 'normalize_paths', 'angular/clean_html'
