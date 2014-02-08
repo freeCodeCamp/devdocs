@@ -12,15 +12,14 @@ $.id = (id) ->
   document.getElementById(id)
 
 $.hasChild = (parent, el) ->
-  return unless parent and el
-  loop
+  return unless parent
+  while el
     return true if el is parent
     return if el is document.body
     el = el.parentElement
 
 $.closestLink = (el, parent = document.body) ->
-  return unless el and parent
-  loop
+  while el
     return el if el.tagName is 'A'
     return if el is parent
     el = el.parentElement
