@@ -120,6 +120,10 @@ class App < Sinatra::Application
     end
   end
 
+  get '/search' do
+    redirect "/#q=#{params[:q]}"
+  end
+
   get '/ping' do
     200
   end
