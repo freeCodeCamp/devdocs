@@ -3,7 +3,7 @@ module Docs
     self.name = 'Underscore.js'
     self.slug = 'underscore'
     self.type = 'underscore'
-    self.version = '1.5.2'
+    self.version = '1.6.0'
     self.base_url = 'http://underscorejs.org'
 
     html_filters.push 'underscore/clean_html', 'underscore/entries', 'title'
@@ -13,7 +13,7 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2009&ndash;2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors<br>
+      &copy; 2009&ndash;2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors<br>
       Licensed under the MIT License.
     HTML
   end

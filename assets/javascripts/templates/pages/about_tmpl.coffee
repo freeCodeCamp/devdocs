@@ -185,7 +185,7 @@ credits = [
     'https://raw.github.com/nex3/sass/master/MIT-LICENSE'
   ], [
     'Underscore.js',
-    '2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
+    '2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
     'https://raw.github.com/jashkenas/underscore/master/LICENSE'
   ]
