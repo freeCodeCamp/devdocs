@@ -40,7 +40,7 @@ class app.Router
   doc: (context, next) ->
     if doc = app.docs.findBy('slug', context.params.doc) or app.disabledDocs.findBy('slug', context.params.doc)
       context.doc = doc
-      context.entry = doc.indexEntry()
+      context.entry = doc.toEntry()
       @triggerRoute 'entry'
     else
       next()

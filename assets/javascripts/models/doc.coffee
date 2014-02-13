@@ -30,7 +30,7 @@ class app.models.Doc extends app.Model
   indexUrl: ->
     "#{app.indexHost()}/#{@index_path}"
 
-  indexEntry: ->
+  toEntry: ->
     new app.models.Entry
       doc: @
       name: @name
@@ -40,7 +40,7 @@ class app.models.Doc extends app.Model
     if hash and entry = @entries.findBy 'path', "#{path}##{hash}"
       entry
     else if path is 'index'
-      @indexEntry()
+      @toEntry()
     else
       @entries.findBy 'path', path
 
