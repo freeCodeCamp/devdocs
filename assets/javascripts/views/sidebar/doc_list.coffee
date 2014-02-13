@@ -32,7 +32,8 @@ class app.views.DocList extends app.View
   render: =>
     @html @tmpl('sidebarDoc', app.docs.all())
     unless app.isSingleDoc() or app.settings.hasDocs()
-      @append @tmpl('sidebarDoc', app.disabledDocs.all(), disabled: true)
+      @append @tmpl('sidebarDisabled') +
+              @tmpl('sidebarDoc', app.disabledDocs.all(), disabled: true)
     return
 
   reset: ->

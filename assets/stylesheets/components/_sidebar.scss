@@ -56,6 +56,13 @@
   }
 }
 
+._list-title {
+  margin: 1rem 0 .5rem 2.25rem;
+  font-size: .75rem;
+  color: $textColorLight;
+  text-transform: uppercase;
+}
+
 ._list-item {
   display: block;
   position: relative;
