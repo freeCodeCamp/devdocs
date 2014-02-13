@@ -24,7 +24,10 @@ newsItem = (date, news) ->
   result
 
 app.news = [
-  [ 1390694400000, # January 26, 2013
+  [ 1392163200000, # February 12, 2013
+    """ The root/category pages are now included in the search index (e.g. <a href="/#q=CSS">CSS</a>) """,
+  ], [
+    1390694400000, # January 26, 2013
     """ Updated <a href="/angular/">Angular.js</a> documentation """,
   ], [
     1390089600000, # January 19, 2013
