@@ -24,7 +24,10 @@ newsItem = (date, news) ->
   result
 
 app.news = [
-  [ 1392163200000, # February 12, 2013
+  [ 1392508800000, # February 16, 2013
+    """ New <a href="/moment/">Moment.js</a> documentation """,
+  ], [
+    1392163200000, # February 12, 2013
     """ The root/category pages are now included in the search index (e.g. <a href="/#q=CSS">CSS</a>) """,
   ], [
     1390694400000, # January 26, 2013

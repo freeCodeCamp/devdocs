@@ -144,6 +144,11 @@ credits = [
     'MIT',
     'https://raw.github.com/lodash/lodash/master/LICENSE.txt'
   ], [
+    'Moment.js',
+    '2011-2014 Tim Wood, Iskren Chernev, Moment.js contributors',
+    'MIT',
+    'https://raw.github.com/moment/moment/master/LICENSE'
+  ], [
     'Node.js',
     'Joyent, Inc. and other Node contributors<br>Node.js is a trademark of Joyent, Inc.',
     'MIT',
