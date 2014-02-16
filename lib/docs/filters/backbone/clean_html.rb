@@ -8,11 +8,11 @@ module Docs
         end
 
         # Remove Examples, FAQ, etc.
-        while doc.children.last['id'] != 'examples'
+        while doc.children.last['id'] != 'faq'
           doc.children.last.remove
         end
 
-        css('#examples', '.run').remove
+        css('#faq', '.run').remove
 
         css('tt').each do |node|
           node.name = 'code'
