@@ -3,7 +3,7 @@ module Docs
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.version = '1.3.0'
+    self.version = '1.4.0'
     self.base_url = 'http://emberjs.com/api/'
 
     html_filters.push 'ember/clean_html', 'ember/entries', 'title'
@@ -29,6 +29,7 @@ module Docs
 
     # Private
     options[:skip].concat %w(
+      classes/Ember.ComponentTemplateDeprecation.html
       classes/Ember.Descriptor.html
       classes/Ember.EachProxy.html
       classes/Ember.EventDispatcher.html
@@ -40,6 +41,7 @@ module Docs
       classes/Ember.TextSupport.html
       data/classes/DS.AdapterPopulatedRecordArray.html
       data/classes/DS.AttributeChange.html
+      data/classes/DS.ContainerProxy.html
       data/classes/DS.DebugAdapter.html
       data/classes/DS.RecordArrayManager.html
       data/classes/DS.RelationshipChange.html
