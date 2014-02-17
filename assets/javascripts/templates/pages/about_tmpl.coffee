@@ -105,7 +105,7 @@ credits = [
     'https://raw.github.com/emberjs/ember.js/master/LICENSE'
   ], [
     'Git',
-    '2005-2013 Linus Torvalds and others',
+    '2005-2014 Linus Torvalds and others',
     'GPLv2',
     'https://raw.github.com/git/git/master/COPYING'
   ], [
