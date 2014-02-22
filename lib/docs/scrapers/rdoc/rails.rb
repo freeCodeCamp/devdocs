@@ -18,7 +18,7 @@ module Docs
 
     self.name = 'Ruby on Rails'
     self.slug = 'rails'
-    self.version = '4.0.2'
+    self.version = '4.0.3'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Rails'
 
     html_filters.replace 'rdoc/entries', 'rails/entries'
@@ -89,7 +89,7 @@ module Docs
       /\ASourceAnnotationExtractor/]
 
     options[:attribution] = <<-HTML
-      &copy; 2004&ndash;2013 David Heinemeier Hansson<br>
+      &copy; 2004&ndash;2014 David Heinemeier Hansson<br>
       Licensed under the MIT License.
     HTML
   end
