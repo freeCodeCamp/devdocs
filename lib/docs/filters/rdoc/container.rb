@@ -3,7 +3,7 @@ module Docs
     class ContainerFilter < Filter
       def call
         if root_page?
-          at_css '#classindex-section'
+          at_css 'main'
         else
           container = at_css 'main'
 

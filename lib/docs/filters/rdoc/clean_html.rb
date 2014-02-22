@@ -7,7 +7,7 @@ module Docs
       end
 
       def root
-        at_css('h3').remove
+        css('#methods + ul', 'h1', 'h2', 'li > ul').remove
 
         # Remove skipped items
         css('li > span').each do |node|
