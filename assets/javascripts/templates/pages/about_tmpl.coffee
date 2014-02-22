@@ -175,7 +175,7 @@ credits = [
     'https://raw.github.com/antirez/redis/unstable/COPYING'
   ], [
     'Ruby',
-    '1993-2013 Yukihiro Matsumoto',
+    '1993-2014 Yukihiro Matsumoto',
     'Ruby',
     'https://www.ruby-lang.org/en/about/license.txt'
   ], [

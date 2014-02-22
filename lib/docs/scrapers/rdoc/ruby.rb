@@ -22,7 +22,6 @@ module Docs
 
     self.version = '2.1.0'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby'
-    self.initial_paths = %w(class.html) # not referenced by rdoc
 
     html_filters.replace 'rdoc/entries', 'ruby/entries'
 
@@ -70,7 +69,7 @@ module Docs
       /\AXMP/]
 
     options[:attribution] = <<-HTML
-      Ruby Core &copy; 1993&ndash;2013 Yukihiro Matsumoto<br>
+      Ruby Core &copy; 1993&ndash;2014 Yukihiro Matsumoto<br>
       Licensed under the Ruby License.<br>
       Ruby Standard Library &copy; contributors<br>
       Licensed under their own licenses.
