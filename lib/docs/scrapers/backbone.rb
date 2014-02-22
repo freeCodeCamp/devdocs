@@ -3,7 +3,7 @@ module Docs
     self.name = 'Backbone.js'
     self.slug = 'backbone'
     self.type = 'underscore'
-    self.version = '1.1.1'
+    self.version = '1.1.2'
     self.base_url = 'http://backbonejs.org'
 
     html_filters.push 'backbone/clean_html', 'backbone/entries', 'title'
