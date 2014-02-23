@@ -96,7 +96,7 @@ credits = [
     'https://raw.github.com/jashkenas/coffee-script/master/LICENSE'
   ], [
     'CSS<br>DOM<br>HTML<br>JavaScript',
-    '2005-2013 Mozilla Developer Network and individual contributors',
+    '2005-2013 <a href="https://developer.mozilla.org/en-US/docs/Web" target="_blank">Mozilla Developer Network</a> individual contributors',
     'CC BY-SA',
     'http://creativecommons.org/licenses/by-sa/2.5/'
   ], [
