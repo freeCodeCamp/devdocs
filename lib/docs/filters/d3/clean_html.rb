@@ -30,6 +30,21 @@ module Docs
           node.remove
         end
 
+        # Make headings for function definitions and add "id" attributes
+        css('p > a:first-child').each do |node|
+          next unless node['name'] || node.content == '#'
+          parent = node.parent
+          parent.name = 'h6'
+          parent['id'] = (node['name'] || node['href'].sub(/\A.+#/, '')).sub('wiki-', '')
+          parent.css('a[name]').remove
+          node.remove
+        end
+
+        # Fix internal links
+        css('a[href]').each do |node|
+          node['href'] = node['href'].sub(/#wiki\-(\w+?)\z/, '#\1')
+        end
+
         # Remove code highlighting
         css('.highlight > pre').each do |node|
           node.content = node.content
