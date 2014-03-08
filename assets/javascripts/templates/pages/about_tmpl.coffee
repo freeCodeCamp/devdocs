@@ -69,6 +69,7 @@ app.templates.aboutPage = -> """
     <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
     <li><a href="https://marketplace.firefox.com/app/devdocs/">Firefox web app</a>
     <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text plugin</a>
+    <li><a href="https://atom.io/packages/devdocs">Atom plugin</a>
     <li><a href="https://github.com/gruehle/dev-docs-viewer">Brackets extension</a>
   </ul>
   <p>You can also use <a href="http://fluidapp.com">Fluid</a> to turn DevDocs into a real OS X app, or <a href="https://apps.ubuntu.com/cat/applications/fogger/">Fogger</a> on Ubuntu.
