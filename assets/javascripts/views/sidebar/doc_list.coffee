@@ -91,7 +91,7 @@ class app.views.DocList extends app.View
     return
 
   scrollTo: (model) ->
-    $.scrollTo @find("a[href='#{model.fullPath()}']")
+    $.scrollTo @find("a[href='#{model.fullPath()}']"), null, 'top', margin: 0
     return
 
   afterRoute: (route, context) =>

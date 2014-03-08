@@ -173,7 +173,7 @@ $.scrollTo = (el, parent, position = 'center', options = {}) ->
 
   switch position
     when 'top'
-      parent.scrollTop = top - (options.margin or 20)
+      parent.scrollTop = top - (if options.margin? then options.margin else 20)
     when 'center'
       parent.scrollTop = top - Math.round(parentHeight / 2 - el.offsetHeight / 2)
     when 'continuous'
