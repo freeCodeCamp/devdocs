@@ -12,6 +12,7 @@ module Docs
         'Http'            => 'HTTP',
         'Mutex'           => 'pthreads',
         'php_user_filter' => 'Stream',
+        'Pool'            => 'pthreads',
         'Reflector'       => 'Reflection',
         'Soap'            => 'SOAP',
         'SplFile'         => 'SPL/File',
@@ -25,8 +26,8 @@ module Docs
         'XsltProcessor'   => 'XSLT',
         'ZipArchive'      => 'Zip' }
 
-      %w(APC AMQP Directory DOM Gearman Gmagick Imagick mysqli OAuth PDO
-         Reflection Session SimpleXML Solr Sphinx SQLite3 Varnish XSLT Yaf).each do |str|
+      %w(APC Directory DOM Gearman Gmagick Imagick mysqli OAuth PDO Reflection
+        Session SimpleXML Solr Sphinx SQLite3 Varnish XSLT Yaf).each do |str|
         TYPE_BY_NAME_STARTS_WITH[str] = str
       end
 

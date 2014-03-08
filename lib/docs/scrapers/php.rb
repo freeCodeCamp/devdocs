@@ -2,7 +2,7 @@ module Docs
   class Php < FileScraper
     self.name = 'PHP'
     self.type = 'php'
-    self.version = 'up to 5.5.9'
+    self.version = 'up to 5.5.10'
     self.base_url = 'http://www.php.net/manual/en/'
     self.root_path = 'index.html'
     self.initial_paths = %w(
@@ -32,15 +32,15 @@ module Docs
       /\Areserved\.interfaces/,
       /\Areserved\.variables/]
 
-    BOOKS = %w(amqp apache apc array bc bzip2 calendar classobj ctype curl
-      datetime dba dir dom eio errorfunc exec fileinfo filesystem filter ftp
-      funchand gearman geoip gettext gmagick hash http iconv iisfunc image
-      imagick imap info inotify intl json ldap libevent libxml mail mailparse
-      math mbstring mcrypt memcached misc mysqli network oauth openssl
-      outcontrol password pcre pdo pgsql posix pthreads regex runkit reflection
-      session session-pgsql simplexml soap sockets solr sphinx spl spl-types
-      sqlite3 sqlsrv ssh2 stats stream strings taint tidy uodbc url var varnish
-      xml xmlreader xmlrpc xmlwriter xsl yaf yaml zip zlib)
+    BOOKS = %w(apache apc array bc bzip2 calendar classobj ctype curl datetime
+      dba dir dom eio errorfunc exec fileinfo filesystem filter ftp funchand
+      gearman geoip gettext gmagick hash http iconv iisfunc image imagick imap
+      info inotify intl json ldap libevent libxml mail mailparse math mbstring
+      mcrypt memcached misc mysqli network oauth openssl outcontrol password
+      pcre pdo pgsql posix pthreads regex runkit reflection session
+      session-pgsql simplexml soap sockets solr sphinx spl spl-types sqlite3
+      sqlsrv ssh2 stats stream strings taint tidy uodbc url var varnish xml
+      xmlreader xmlrpc xmlwriter xsl yaf yaml zip zlib)
 
     options[:only] = BOOKS.map { |s| "book.#{s}.html" }
 
