@@ -9,7 +9,8 @@ module Docs
         'json-data'                                       => 'JSON data',
         'extenders'                                       => 'Extending observables',
         'unobtrusive-event-handling'                      => 'Event handling',
-        'fn'                                              => 'Custom functions' }
+        'fn'                                              => 'Custom functions',
+        'ratelimit-observable'                            => 'rateLimit extender' }
 
       def get_name
         return NAME_BY_SLUG[slug] if NAME_BY_SLUG.has_key?(slug)
