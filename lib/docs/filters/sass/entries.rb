@@ -11,7 +11,7 @@ module Docs
         '%foo'               => '%placeholder selector',
         '&'                  => '& parent selector',
         '$'                  => '$ variables',
-        '#{}'                => '#{} interpolation',
+        '`'                  => '#{} interpolation',
         'The !optional Flag' => '!optional'
       }
 
@@ -35,7 +35,7 @@ module Docs
               entries << ['@function', node['id'], '@-Rules and Directives']
             end
 
-            if type.end_with? 'Directives'
+            if type.include? 'Directives'
               type = '@-Rules and Directives'
             elsif type == 'Output Style'
               type = 'Output Styles'
@@ -55,7 +55,7 @@ module Docs
           name.gsub!(/ [A-Z]/) { |str| str.downcase! }
 
           if type == '@-Rules and Directives'
-            next unless name =~ /\A@\w+\z/ || name == '!optional'
+            next unless name =~ /\A@[\w\-]+\z/ || name == '!optional'
           end
 
           entries << [name, node['id'], type]

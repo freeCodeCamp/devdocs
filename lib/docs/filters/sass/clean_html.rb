@@ -20,26 +20,31 @@ module Docs
 
         css('.showSource', '.source_code').remove
 
+        css('div.docstring', 'div.discussion').each do |node|
+          node.before(node.children).remove
+        end
+
         # Remove "See Also"
         css('.see').each do |node|
           node.previous_element.remove
           node.remove
         end
 
-        # Un-indent code blocks
-        css('pre.example').each do |node|
-          node.inner_html = node.inner_html.strip_heredoc
+        # Remove "- ([...])" before method names
+        css('.signature', 'span.overload', 'span.signature').each do |node|
+          next if node.at_css('.overload')
+          node.child.remove while node.child.name != 'strong'
         end
 
-        # Remove "- " before method names
-        css('.signature', 'span.overload').each do |node|
-          node.child.content = node.child.content.sub(/\A\s*-\s*/, '')
+        # Clean up .inline divs
+        css('div.inline').each do |node|
+          node.content = node.content
+          node.name = 'span'
         end
 
         # Remove links to type classes (e.g. Number)
-        css('.type > code > a, .signature > code > a, span.overload > code > a').each do |node|
-          node.before(node.content)
-          node.remove
+        css('.type > code').each do |node|
+          node.before(node.content.sub('Sass::Script::Value::', '').sub('Sass::Script::', '')).remove
         end
       end
     end
