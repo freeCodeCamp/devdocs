@@ -18,6 +18,7 @@ module Docs
 
         css('h1').each do |node|
           name = node.content
+          name = 'Rulesets' if name == 'Passing Rulesets to Mixins'
           entries << [name, node['id']] unless name == 'Overview'
         end
 
@@ -50,7 +51,7 @@ module Docs
         css('.docs-section').each do |section|
           if title = section.at_css('h1')
             type = title.content
-            type.sub! %r{(\w+) Functions}, 'Functions: \1'
+            type.sub! %r{(.+) Functions}, 'Functions: \1'
           end
 
           section.css('h3').each do |node|
