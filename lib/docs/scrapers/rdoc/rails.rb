@@ -4,6 +4,7 @@ module Docs
     # find \
     #   actionmailer \
     #   actionpack \
+    #   actionview \
     #   activemodel \
     #   activerecord \
     #   activesupport \
@@ -18,7 +19,7 @@ module Docs
 
     self.name = 'Ruby on Rails'
     self.slug = 'rails'
-    self.version = '4.0.3'
+    self.version = '4.0.4'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Rails'
 
     html_filters.replace 'rdoc/entries', 'rails/entries'
