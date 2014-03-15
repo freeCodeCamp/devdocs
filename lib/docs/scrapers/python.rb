@@ -1,6 +1,6 @@
 module Docs
   class Python < FileScraper
-    self.version = '3.3.4'
+    self.version = '3.3.5'
     self.type = 'sphinx'
     self.dir = '/Users/Thibaut/DevDocs/Docs/Python' # downloaded from docs.python.org/3/download.html
     self.base_url = 'http://docs.python.org/3/'
