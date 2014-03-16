@@ -1,7 +1,7 @@
 class app.models.Entry extends app.Model
   # Attributes: name, type, path
 
-  SEPARATORS_REGEXP = /\:?\ |#|::/g
+  SEPARATORS_REGEXP = /\:?\ |#|::|->/g
   PARANTHESES_REGEXP = /\(.*?\)$/
 
   constructor: ->
