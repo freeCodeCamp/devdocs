@@ -2,43 +2,28 @@ module Docs
   class Yii
     class CleanHtmlFilter < Filter
       def call
+        at_css('h1').content = 'Yii PHP Framework' if root_page?
 
-        #remove irrelevant content
-        css('div').each do |node| 
-          if node['class'] == "layout-main-header"
-            node.remove
-          elsif node['class'] == "layout-main-submenu"
-            node.remove
-          elsif node['class'] == "layout-main-shortcuts"
-            node.remove
-          elsif node['class'] == "layout-main-footer"
-            node.remove
-          elsif node['class'] == "grid_3 alpha"
-            node.remove
-          elsif node['class'] == "comments"
-            node.remove
-          elsif node['class'] == "api-suggest clearfix"
-            node.remove
-          elsif node['id'] == "comments"
-            node.remove
-          elsif node['id'] == "nav"
-            node.remove
-          else
-            end
-          end
+        css('.api-suggest', '.google-ad', '.g-plusone', '#nav', '#comments').remove
 
-        # Put code blocks in <pre> tags
-        css('.code').each do |node|
-          node.name = 'pre'
+        css('.summary > p > .toggle').each do |node|
+          node.parent.remove
         end
 
-        #remove Hide inherited methods / properties and show links
-        css('a').each do |node|
-          if node['class'] == 'toggle'
-            node.remove
-          elsif node['class'] == 'show'
-            node.remove
-          end
+        css('.signature', '.signature2').each do |node|
+          node.name = 'pre'
+          node.inner_html = node.inner_html.strip
+        end
+
+        css('div.detailHeader').each do |node|
+          node.name = 'h3'
+        end
+
+        css('.sourceCode > .code > code').each do |node|
+          parent = node.parent
+          parent.name = 'pre'
+          node.remove
+          parent.inner_html = node.first_element_child.inner_html.strip
         end
 
         doc

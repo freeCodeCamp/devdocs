@@ -1,0 +1,24 @@
+._yii {
+  h2 { @extend %block-heading; }
+  > h3 { @extend %block-label, %label-blue; }
+
+  .paramNameCol { font-weight: bold; }
+  .signature2 { margin: .4em 0; }
+  .sourceCode { margin-bottom: 1em; }
+  .sourceCode > .code { display: none; }
+
+  .SeeAlso {
+    > h4 {
+      margin-bottom: 1em;
+      font-size: inherit;
+    }
+
+    > ul { margin-top: 0; }
+  }
+
+  .summaryTable td:first-child[rowspan] {
+    border-right: 1px solid #e5e5e5;
+
+    + td { border-left: 0; }
+  }
+}

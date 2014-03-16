@@ -200,5 +200,10 @@ credits = [
     '2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
     'https://raw.github.com/jashkenas/underscore/master/LICENSE'
+  ], [
+    'Yii',
+    '2008-2014 by Yii Software LLC',
+    'BSD',
+    'https://raw.github.com/yiisoft/yii/master/LICENSE'
   ]
 ]
