@@ -1,6 +1,6 @@
 ._path {
   position: absolute;
-  z-index: $noticeZ;
+  z-index: $noticeZ - 1;
   bottom: 0;
   left: $sidebarWidth;
   right: 0;
