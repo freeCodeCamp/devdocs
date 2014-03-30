@@ -30,6 +30,14 @@ module Docs
           node.name = 'code'
         end
 
+        css('div > a > img[alt="About this image"]').each do |node|
+          node.parent.parent.remove
+        end
+
+        css('area[href]').each do |node|
+          node['href'] = node['href'].sub('.html', '')
+        end
+
         doc
       end
     end

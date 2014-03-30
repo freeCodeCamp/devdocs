@@ -39,7 +39,7 @@ app.templates.aboutPage = -> """
   <ul>
     <li><a href="https://www.heroku.com">Heroku</a> and <a href="http://newrelic.com">New Relic</a> for providing awesome free service
     <li>Daniel Bruce for the <a href="http://www.entypo.com">Entypo</a> pictograms
-    <li><a href="http://www.jeremykratz.com/">Jeremy Kratz</a> for the C logo
+    <li><a href="http://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
   </ul>
 
   <h2 class="_lined-heading" id="faq">Questions & Answsers</h2>
@@ -86,7 +86,7 @@ credits = [
     'MIT',
     'https://raw.github.com/jashkenas/backbone/master/LICENSE'
   ], [
-    'C',
+    'C<br>C++',
     'cppreference.com',
     'CC BY-SA',
     'http://en.cppreference.com/w/Cppreference:Copyright/CC-BY-SA'

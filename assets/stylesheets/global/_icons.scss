@@ -4,7 +4,7 @@
   width: 1rem;
   height: 1rem;
   background-image: image-url('icons.png');
-  background-size: 5rem 8rem;
+  background-size: 5rem 9rem;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
@@ -51,3 +51,4 @@
 ._icon-c:before             { background-position: -2rem -7rem; }
 %icon-path                  { background-position: -3rem -7rem; }
 ._icon-yii:before           { background-position: -4rem -7rem; }
+._icon-cpp:before           { background-position: 0 -8rem; }
