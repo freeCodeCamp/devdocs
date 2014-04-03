@@ -13,3 +13,4 @@
 * [Brackets extension](https://github.com/gruehle/dev-docs-viewer)
 * [Fluid](http://fluidapp.com) for turning DevDocs into a real OS X app
 * [GTK shell / Vim integration](https://github.com/naquad/devdocs-shell)
+* [Chrome desktop app](https://github.com/arosemena/DevDocsWrapper)
