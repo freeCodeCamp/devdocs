@@ -83,7 +83,7 @@ class App < Sinatra::Application
     end
 
     def unsupported_browser?
-      browser.ie? && browser.version.to_i <= 9
+      browser.ie? && %w(6 7 8 9).include?(browser.version)
     end
 
     def doc_index_urls
