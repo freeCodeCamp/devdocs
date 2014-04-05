@@ -147,13 +147,20 @@
 
   isSupportedBrowser: ->
     try
-      return true if Function::bind and
-                     history.pushState and
-                     window.matchMedia and
-                     document.body.classList and
-                     document.body.insertAdjacentHTML and
-                     document.createEvent('CustomEvent').defaultPrevented is false and
-                     getComputedStyle(document.querySelector('._header')).backgroundImage isnt 'none'
+      features =
+        bind:               !!Function::bind
+        pushState:          !!history.pushState
+        matchMedia:         !!window.matchMedia
+        classList:          !!document.body.classList
+        insertAdjacentHTML: !!document.body.insertAdjacentHTML
+        defaultPrevented:     document.createEvent('CustomEvent').defaultPrevented is false
+        cssGradients:         getComputedStyle(document.querySelector('._header')).backgroundImage isnt 'none'
+
+      for key, value of features when not value
+        Raven.captureMessage 'unsupported', extra: { feature: key }
+        return false
+
+      true
     catch error
       Raven.captureMessage 'unsupported exception', extra: { error: error, name: error.name, message: error.message }
       false
