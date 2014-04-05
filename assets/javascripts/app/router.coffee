@@ -69,6 +69,7 @@ class app.Router
     return
 
   root: ->
+    window.location = '/' if app.isSingleDoc()
     @triggerRoute 'root'
     return
 
