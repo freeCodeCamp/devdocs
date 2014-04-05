@@ -154,7 +154,9 @@
                      document.body.insertAdjacentHTML and
                      document.createEvent('CustomEvent').defaultPrevented is false and
                      getComputedStyle(document.querySelector('._header')).backgroundImage isnt 'none'
-    catch
+    catch error
+      Raven.captureMessage 'unsupported exception', extra: { error: error, name: error.name, message: error.message }
+      false
 
   isSingleDoc: ->
     !!(@DOC or @doc)
