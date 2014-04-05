@@ -23,6 +23,9 @@
     @document = new app.views.Document
     @mobile = new app.views.Mobile if @isMobile()
 
+    if navigator.userAgent.match /iPad;.*CPU.*OS 7_\d/i
+      document.documentElement.style.height = "#{window.innerHeight}px"
+
     if @DOC
       @bootOne()
     else if @DOCS
