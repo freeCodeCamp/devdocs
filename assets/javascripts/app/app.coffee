@@ -6,8 +6,8 @@
   views:       {}
 
   init: ->
+    try @initErrorTracking() catch
     return unless @browserCheck()
-    @initErrorTracking()
     @showLoading()
 
     @store = new Store
