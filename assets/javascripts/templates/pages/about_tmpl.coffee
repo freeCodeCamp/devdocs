@@ -116,6 +116,11 @@ credits = [
     'GPLv2',
     'https://raw.github.com/git/git/master/COPYING'
   ], [
+    'Go',
+    'Google, Inc.',
+    'CC BY',
+    'http://creativecommons.org/licenses/by/3.0/'
+  ], [
     'HTTP',
     '1999 The Internet Society',
     'Custom',
