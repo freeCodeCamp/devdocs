@@ -157,12 +157,12 @@
         cssGradients:         getComputedStyle(document.querySelector('._header')).backgroundImage isnt 'none'
 
       for key, value of features when not value
-        Raven.captureMessage 'unsupported', extra: { feature: key }
+        Raven.captureMessage "unsupported/#{key}"
         return false
 
       true
     catch error
-      Raven.captureMessage 'unsupported exception', extra: { error: error, name: error.name, message: error.message }
+      Raven.captureMessage 'unsupported/exception', extra: { error: error }
       false
 
   isSingleDoc: ->
