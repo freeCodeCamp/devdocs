@@ -451,7 +451,7 @@ Prism.languages.clike = {
 };
 ;
 Prism.languages.javascript = Prism.languages.extend('clike', {
-	'keyword': /\b(var|let|if|else|while|do|for|return|in|instanceof|function|new|with|typeof|try|throw|catch|finally|null|break|continue)\b/g,
+	'keyword': /\b(var|let|if|else|while|do|for|return|in|instanceof|function|get|set|new|with|typeof|try|throw|catch|finally|null|break|continue|this)\b/g,
 	'number': /\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?|NaN|-?Infinity)\b/g
 });
 
@@ -550,4 +550,14 @@ Prism.languages.insertBefore('ruby', 'keyword', {
 	'variable': /[@$]+\b[a-zA-Z_][a-zA-Z_0-9]*[?!]?\b/g,
 	'symbol': /:\b[a-zA-Z_][a-zA-Z_0-9]*[?!]?\b/g
 });
+;
+Prism.languages.go = Prism.languages.extend('clike', {
+	'keyword': /\b(break|case|chan|const|continue|default|defer|else|fallthrough|for|func|go(to)?|if|import|interface|map|package|range|return|select|struct|switch|type|var)\b/g,
+	'builtin': /\b(bool|byte|complex(64|128)|error|float(32|64)|rune|string|u?int(8|16|32|64|)|uintptr|append|cap|close|complex|copy|delete|imag|len|make|new|panic|print(ln)?|real|recover)\b/g,
+	'boolean': /\b(_|iota|nil|true|false)\b/g,
+	'operator': /([(){}\[\]]|[*\/%^!]=?|\+[=+]?|-[>=-]?|\|[=|]?|>[=>]?|&lt;(&lt;|[=-])?|==?|&amp;(&amp;|=|^=?)?|\.(\.\.)?|[,;]|:=?)/g,
+	'number': /\b(-?(0x[a-f\d]+|(\d+\.?\d*|\.\d+)(e[-+]?\d+)?)i?)\b/ig,
+	'string': /("|'|`)(\\?.|\r|\n)*?\1/g
+});
+delete Prism.languages.go['class-name'];
 ;
