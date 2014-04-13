@@ -12,6 +12,7 @@ class app.views.Content extends app.View
     pageDown: 'scrollPageDown'
     home:     'scrollToTop'
     end:      'scrollToBottom'
+    altTab:   'onAltTab'
 
   @routes:
     before: 'beforeRoute'
@@ -149,6 +150,11 @@ class app.views.Content extends app.View
       $.stopEvent(event)
       $.popup(link)
     return
+
+  onAltTab: (event) =>
+    unless document.activeElement and $.hasChild @el, document.activeElement
+      @findByTag('a').focus()
+      $.stopEvent(event)
 
   findTargetByHash: (hash) ->
     try $.id decodeURIComponent(hash) catch

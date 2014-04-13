@@ -17,6 +17,7 @@
   @media #{$mediumScreen} { left: $sidebarMediumWidth; }
 
   ~ ._container { padding-bottom: 2rem; }
+  a:focus { outline: 0; }
 }
 
 ._path-item {

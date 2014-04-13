@@ -16,6 +16,8 @@
   box-shadow: inset 0 1px rgba(white, .8),  // top inner glow
               inset 0 -1px rgba(white, .3); // bottom inner glow
   @extend %user-select-none;
+
+  a:focus { outline: 0; }
 }
 
 //
