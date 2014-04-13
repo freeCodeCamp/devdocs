@@ -2,7 +2,7 @@ module Docs
   class Php < FileScraper
     self.name = 'PHP'
     self.type = 'php'
-    self.version = 'up to 5.5.10'
+    self.version = 'up to 5.5.11'
     self.base_url = 'http://www.php.net/manual/en/'
     self.root_path = 'index.html'
     self.initial_paths = %w(
