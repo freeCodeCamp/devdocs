@@ -15,13 +15,17 @@ module Docs
         css('#manual-nav a').each_with_object [] do |node, entries|
           case node.content
           when /type\ (\w+)/
-            name = $1
+            name = "#{$1} (#{self.name})"
           when /func\ (?:\(.+\)\ )?(\w+)\(/
-            name = "#{$1}()"
+            name = "#{$1}() (#{self.name})"
             name.prepend "#{$1}." if node['href'] =~ /#(\w+)\.#{$1}/
+          when 'Constants'
+            name = "#{self.name} constants"
+          when 'Variables'
+            name = "#{self.name} variables"
           end
 
-          entries << ["#{name} (#{self.name})", node['href'][1..-1]] if name
+          entries << [name, node['href'][1..-1]] if name
         end
       end
 
