@@ -19,7 +19,7 @@ module Docs
 
     self.name = 'Ruby on Rails'
     self.slug = 'rails'
-    self.version = '4.0.4'
+    self.version = '4.1.0'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Rails'
 
     html_filters.replace 'rdoc/entries', 'rails/entries'
@@ -36,7 +36,6 @@ module Docs
       ActionController/Rescue.html
       ActionController/UrlFor.html
       ActionDispatch/DebugExceptions.htnl
-      ActionDispatch/Http/FilterParameters.html
       ActionDispatch/Http/URL.html
       ActionDispatch/Integration/Runner.html
       ActionDispatch/Integration/Session.html
@@ -47,14 +46,12 @@ module Docs
       ActionDispatch/ShowExceptions.html
       ActionView.html
       ActionView/Context.html
-      ActionView/DependencyTracker/ERBTracker.html
       ActionView/FileSystemResolver.html
       ActionView/FixtureResolver.html
       ActionView/LogSubscriber.html
       ActionView/ModelNaming.html
       ActionView/Template/Handlers/Erubis.html
       ActiveModel.html
-      ActiveModel/Lint/Tests.html
       ActiveRecord.html
       ActiveRecord/DynamicMatchers/Finder.html
       ActiveRecord/Sanitization.html
@@ -68,8 +65,7 @@ module Docs
       ActiveSupport/Testing/ConstantLookup.html
       ActiveSupport/Testing/Declarative.html
       ActiveSupport/Testing/Isolation/Subprocess.html
-      Rails/API/Task.html
-      Rails/ConsoleMethods.html)
+      Rails/API/Task.html)
 
     options[:skip_patterns] = [
       /\AAbstractController\/ViewPaths/,
@@ -79,14 +75,12 @@ module Docs
       /\AActionController\/Test/,
       /\AActionDispatch\/RemoteIp/,
       /\AActionDispatch\/Test/,
-      /\AActionMailer\/DeliveryMethods/,
       /\AActionView\/LookupContext/,
       /\AActionView\/Resolver/,
       /\AActiveRecord\/ConnectionAdapters\/(?!DatabaseStatements|SchemaStatements|Table)/,
       /\AActiveSupport\/JSON\//,
       /\AActiveSupport\/Multibyte\/Unicode\//,
       /\AActiveSupport\/XML/i,
-      /\ALogger/,
       /\ASourceAnnotationExtractor/]
 
     options[:attribution] = <<-HTML
