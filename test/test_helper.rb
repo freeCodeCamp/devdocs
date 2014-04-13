@@ -39,6 +39,6 @@ def rm_tmp
   FileUtils.rm_rf $tmp_path if $tmp_path
 end
 
-MiniTest::Unit.after_tests do
+Minitest.after_run do
   rm_tmp
 end
