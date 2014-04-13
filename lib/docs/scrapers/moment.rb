@@ -3,7 +3,7 @@ module Docs
     self.name = 'Moment.js'
     self.slug = 'moment'
     self.type = 'moment'
-    self.version = '2.5.1'
+    self.version = '2.6.0'
     self.base_url = 'http://momentjs.com/docs/'
 
     html_filters.push 'moment/clean_html', 'moment/entries', 'title'
