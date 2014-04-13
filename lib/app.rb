@@ -40,6 +40,7 @@ class App < Sinatra::Application
   configure :development do
     register Sinatra::Reloader
 
+    require 'active_support/per_thread_registry'
     require 'active_support/cache'
     sprockets.cache = ActiveSupport::Cache.lookup_store :file_store, root.join('tmp', 'cache', 'assets')
 
