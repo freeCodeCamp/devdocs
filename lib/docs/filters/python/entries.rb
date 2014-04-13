@@ -16,7 +16,7 @@ module Docs
       def get_name
         name = at_css('h1').content
         name.sub! %r{\A[\d\.]+ }, ''    # remove list number
-        name.sub! %r{ \u{2014}.+\z}, '' # remove text after em dash
+        name.sub! %r{ [\u{2013}\u{2014}].+\z}, '' # remove text after em/en dash
         name
       end
 
@@ -27,6 +27,8 @@ module Docs
 
         if type == 'The Python Standard Library'
           type = at_css('h1').content
+        elsif type.include?('I/O') || %w(select selectors).include?(name)
+          type = 'Input/ouput'
         elsif type.start_with? '19'
           type = 'Internet Data Handling'
         end
