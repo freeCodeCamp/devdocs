@@ -59,7 +59,10 @@
 }
 
 ._list-title {
-  margin: 1rem 0 .5rem 2.25rem;
+  position: relative;
+  margin: .5rem 0 0;
+  padding-left: 2.25rem;
+  line-height: 2rem;
   font-size: .75rem;
   color: $textColorLight;
   text-transform: uppercase;
@@ -158,7 +161,7 @@
   &:before {
     @extend %icon, %icon-dir;
 
-    .open > & {
+    .open, .open-title > & {
       -webkit-transform: rotate(90deg);
               transform: rotate(90deg);
     }

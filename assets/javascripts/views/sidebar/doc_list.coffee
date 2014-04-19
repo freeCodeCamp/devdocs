@@ -4,9 +4,14 @@ class app.views.DocList extends app.View
   @events:
     open:  'onOpen'
     close: 'onClose'
+    click: 'onClick'
 
   @routes:
     after: 'afterRoute'
+
+  @elements:
+    disabledTitle: '._list-title'
+    disabledList: '._disabled-list'
 
   init: ->
     @lists = {}
@@ -32,11 +37,23 @@ class app.views.DocList extends app.View
   render: =>
     @html @tmpl('sidebarDoc', app.docs.all())
     @renderDisabled() unless app.isSingleDoc() or app.settings.hasDocs()
+    @refreshElements()
     return
 
   renderDisabled: ->
-    @append @tmpl('sidebarDisabled') +
-            @tmpl('sidebarDoc', app.disabledDocs.all(), disabled: true)
+    @append @tmpl('sidebarDisabled')
+    @renderDisabledList()
+    return
+
+  renderDisabledList: ->
+    @append @tmpl('sidebarDisabledList', docs: app.disabledDocs.all())
+    @refreshElements()
+    @disabledTitle.classList.add('open-title')
+    return
+
+  removeDisabledList: ->
+    @disabledList.remove()
+    @disabledTitle.classList.remove('open-title')
     return
 
   reset: ->
@@ -96,6 +113,15 @@ class app.views.DocList extends app.View
   scrollTo: (model) ->
     $.scrollTo @find("a[href='#{model.fullPath()}']"), null, 'top', margin: 0
     return
+
+  onClick: (event) =>
+    return unless @disabledTitle and $.hasChild @disabledTitle, event.target
+    $.stopEvent(event)
+    if @disabledTitle.classList.contains('open-title')
+      @removeDisabledList()
+    else
+      @renderDisabledList()
+
 
   afterRoute: (route, context) =>
     if context.init

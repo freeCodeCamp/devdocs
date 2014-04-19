@@ -27,7 +27,10 @@ templates.sidebarLabel = (doc, options = {}) ->
   label += 'checked' if options.checked
   label +  ">#{doc.name}</label>"
 
-templates.sidebarDisabled = '<h6 class="_list-title">Disabled</h6>'
+templates.sidebarDisabledList = (options) ->
+  """<div class="_disabled-list">#{templates.render 'sidebarDoc', options.docs, disabled: true}</div>"""
+
+templates.sidebarDisabled = '<h6 class="_list-title"><span class="_list-arrow"></span>Disabled</h6>'
 
 templates.sidebarVote = '<a href="https://trello.com/b/6BmTulfx/devdocs-documentation" class="_list-link" target="_blank">Vote for new documentation</a>'
 
