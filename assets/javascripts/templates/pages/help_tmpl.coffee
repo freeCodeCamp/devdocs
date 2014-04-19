@@ -14,9 +14,9 @@ app.templates.helpPage = """
     The search is case-insensitive, ignores spaces, and supports fuzzy matching (for queries longer than two characters).
     For example, searching <code class="_label">bgcp</code> brings up <code class="_label">background-clip</code>.
   <dl>
-    <dt id="doc_search">Searching a specific documentation
+    <dt id="doc_search">Searching a single documentation
     <dd>
-      You can scope the search to a specific documentation by typing its name (or an abbreviation),
+      You can scope the search to a single documentation by typing its name (or an abbreviation),
       and pressing <code class="_label">Tab</code> (<code class="_label">Space</code> on mobile devices).
       For example, to search the JavaScript documentation, enter <code class="_label">javascript</code>
       or <code class="_label">js</code>, then <code class="_label">Tab</code>.<br>
@@ -25,11 +25,11 @@ app.templates.helpPage = """
     <dd>
       The search field can be prefilled from the URL by visiting <a href="/#q=keyword" target="_top">devdocs.io/#q=keyword</a>.
       Characters after <code class="_label">#q=</code> will be used as search string.<br>
-      To search a specific documentation, add its name and a space before the keyword:
+      To search a single documentation, add its name and a space before the keyword:
       <a href="/#q=js%20date" target="_top">devdocs.io/#q=js date</a>.
     <dt id="browser_search">Searching using the address bar
     <dd>
-      DevDocs supports OpenSearch, meaning it can easily be installed as a search engine on most web browsers.
+      DevDocs supports OpenSearch, meaning that it can easily be installed as a search engine on most web browsers.
       <ul>
         <li>On Chrome, the setup is done automatically. Simply press <code class="_label">Tab</code> when devdocs.io is autocompleted
             in the omnibox (to set a custom keyword, click <em>Manage search engines\u2026</em> in Chrome's settings).
@@ -94,5 +94,5 @@ app.templates.helpPage = """
     <dd class="_shortcuts-dd">Show this page
   </dl>
   <p class="_note">
-    <strong>Tip:</strong> If the cursor is no longer in the search field, just press backspace or
+    <strong>Tip:</strong> If the cursor is no longer in the search field, press backspace or
     continue to type and it will refocus the search field and start showing new results. """
