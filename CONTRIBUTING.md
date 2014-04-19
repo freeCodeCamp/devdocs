@@ -48,14 +48,14 @@ Use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) wher
 
 See the [wiki](https://github.com/Thibaut/devdocs/wiki) to learn how to add new documentations.
 
-**Important:** in order to keep things fast and manageable, only the documentation of popular open source projects will be accepted into DevDocs. As more projects find their way in, the required level of popularity will gradually decrease. Additionally, the documentation's license must permit alteration, redistribution, and commercial use of the work. Software vendors that wish to add commercial software documentation to DevDocs may contact me privately.
+**Important:** the documentation's license must permit alteration, redistribution, and commercial use of the work. Software vendors that wish to add commercial software documentation to DevDocs may contact me privately.
 
-**Please open an issue before adding any new documentation.**
+**Please open an issue before adding a new documentation.**
 
 In addition to the [guidelines for contributing code](#contributing-code-and-features), the following guidelines apply to pull requests that add a new documentation:
 
-* Your documentation must come with a clean and official icon, in both 1x and 2x resolutions (16x16 and 32x32 pixels). This is important because icons are the only thing differentiating search results in the UI. If a project doesn't have an official icon, it won't be accepted into DevDocs. Sorry.
-* DevDocs favors quality over quantity. Your documentation should only include API/reference documents that most developers may wish to read semi-regularly. By reducing the number of entries we make it easier to find other, more relevant entries. _(Note: you are more than welcome to submit pull requests removing seldom-used entries from existing documentations.)_
+* Your documentation must come with an official icon, in both 1x and 2x resolutions (16x16 and 32x32 pixels). This is important because icons are the only thing differentiating search results in the UI. If a project doesn't have an official icon, it won't be accepted into DevDocs, sorry.
+* DevDocs favors quality over quantity. Your documentation should only include API/reference documents that most developers may wish to read semi-regularly. By reducing the number of entries we make it easier to find other, more relevant entries. _(Note: you're more than welcome to submit pull requests removing seldom-used entries from existing documentations.)_
 * Try to remove as much content and HTML markup as possible, particularly content which isn't associated with any entries (e.g. introduction, changelog, etc.).
 * Names must be as short as possible and unique across the documentation.
 * The number of types (categories) should ideally be less than 100.
@@ -63,15 +63,15 @@ In addition to the [guidelines for contributing code](#contributing-code-and-fea
 
 ## Updating existing documentations
 
-Please don't submit a pull request updating the version number of a documentation unless you have verified that it can be generated properly using the current code. Because the original content will have changed, the code will likely need to be tweaked.
+Please don't submit a pull request updating the version number of a documentation unless you've verified that it can be generated properly using the current code. Because the original content will have changed, the code will likely need to be tweaked.
 
-To ask that an existing documentation be updated, please use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) or the [mailing list](https://groups.google.com/d/forum/devdocs).
+To ask that an existing documentation be updated, please use the [Trello board](https://trello.com/c/2B0hmW7M/52-request-updates-here) or the [mailing list](https://groups.google.com/d/forum/devdocs).
 
 ## Other contributions
 
 Besides new docs and features, here are other ways you can contribute:
 
-* **Improve words and sentences.** English isn't my first language so if you notice grammatical or usage errors, feel free to submit a pull request — it'll be much appreciated. (Note: American English is the preferred form)
+* **Improve words and sentences.** English isn't my first language so if you notice grammatical or usage errors, feel free to submit a pull request — it'll be much appreciated.
 * **Participate in the issue tracker.** Your opinion matters — feel free to add comments to existing issues. You're also welcome to participate to the [mailing list](https://groups.google.com/d/forum/devdocs).
 
 ## Coding conventions
