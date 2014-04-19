@@ -44,7 +44,7 @@ module Docs
 
         # Remove links to type classes (e.g. Number)
         css('.type > code').each do |node|
-          node.before(node.content.sub('Sass::Script::Value::', '').sub('Sass::Script::', '')).remove
+          node.before(node.content.remove('Sass::Script::Value::').remove('Sass::Script::')).remove
         end
       end
     end

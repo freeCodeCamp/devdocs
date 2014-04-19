@@ -4,7 +4,7 @@ module Docs
       def call
         # Set id attributes on headings
         css('a.target').each do |node|
-          node.next_element['id'] = node['name'].sub(/\A\//, '').sub(/\/\z/, '').gsub('/', '-')
+          node.next_element['id'] = node['name'].remove(/\A\//).remove(/\/\z/).gsub('/', '-')
         end
 
         css('> article', '.prose', 'h2 > a', 'h3 > a', 'pre > code').each do |node|

@@ -31,8 +31,8 @@ module Docs
             name.prepend 'Language#'
           else
             name = node.content.strip
-            name.sub! %r{\s[\d\.]+\z}, '' # remove version number
-            name.sub! %r{\s\(.+\)\z}, ''  # remove parenthesis
+            name.remove! %r{\s[\d\.]+\z} # remove version number
+            name.remove! %r{\s\(.+\)\z}  # remove parenthesis
             name.prepend 'Parse: ' if type == 'Parse'
           end
 

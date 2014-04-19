@@ -3,7 +3,7 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = slug.split(':').last
-        name.sub! %r{\Ang\.}, ''
+        name.remove! %r{\Ang\.}
         name << " (#{subtype})" if subtype == 'directive' || subtype == 'filter'
         name
       end

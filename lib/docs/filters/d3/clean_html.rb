@@ -4,7 +4,7 @@ module Docs
       def call
         # Remove links inside <h2> and add "id" attributes
         css('h2 > a').each do |node|
-          node.parent['id'] = node['name'].sub('wiki-', '') if node['name']
+          node.parent['id'] = node['name'].remove('wiki-') if node['name']
           node.before(node.children).remove
         end
 
@@ -26,7 +26,7 @@ module Docs
           next unless node['name'] || node.content == '#'
           parent = node.parent
           parent.name = 'h6'
-          parent['id'] = (node['name'] || node['href'].sub(/\A.+#/, '')).sub('wiki-', '')
+          parent['id'] = (node['name'] || node['href'].remove(/\A.+#/)).remove('wiki-')
           parent.css('a[name]').remove
           node.remove
         end

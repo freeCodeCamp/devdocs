@@ -18,15 +18,15 @@ module Docs
         if %w(Overview Introduction).include?(name)
           result[:pg_chapter_name]
         else
-          name.sub! ' (Common Table Expressions)', ''
+          name.remove! ' (Common Table Expressions)'
           REPLACE_NAMES[name] || name
         end
       end
 
       def clean_heading_name(name)
-        name.sub! %r{\A[\d\.\s]+}, ''
-        name.sub! 'Using ', ''
-        name.sub! %r{\AThe }, ''
+        name.remove! %r{\A[\d\.\s]+}
+        name.remove! 'Using '
+        name.remove! %r{\AThe }
         name
       end
 
@@ -41,7 +41,7 @@ module Docs
           if type.start_with?('Func') && (match = name.match(/\A(?!Form|Seq|Set|Enum)(.+) Func/))
             "Functions: #{match[1]}"
           else
-            type.sub 'SQL ', ''
+            type.remove 'SQL '
           end
         end
       end
@@ -104,10 +104,10 @@ module Docs
       def get_custom_entries(selector)
         css(selector).inject [] do |entries, node|
           name = node.content
-          name.gsub! %r{\(.*?\)}m, ''
-          name.gsub! %r{\[.*?\]}m, ''
+          name.remove! %r{\(.*?\)}m
+          name.remove! %r{\[.*?\]}m
           name.squeeze! ' '
-          name.sub! %r{\([^\)]*\z}, '' # bug fix: json_populate_record
+          name.remove! %r{\([^\)]*\z} # bug fix: json_populate_record
           name = '||' if name.include? ' || '
           id = name.gsub(/[^a-z0-9\-_]/) { |char| char.ord }
           id = id.parameterize
@@ -129,7 +129,7 @@ module Docs
       end
 
       def additional_entry_prefix
-        type.dup.sub!('Functions: ', '') || self.name
+        type.dup.remove!('Functions: ') || self.name
       end
 
       def skip_additional_entries?

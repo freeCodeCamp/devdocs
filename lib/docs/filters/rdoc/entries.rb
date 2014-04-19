@@ -3,15 +3,15 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = at_css('h1').content.strip
-        name.sub! 'class ', ''
-        name.sub! 'module ', ''
+        name.remove! 'class '
+        name.remove! 'module '
         name
       end
 
       def get_type
         type = name.dup
 
-        unless type.sub! %r{::.*\z}, ''
+        unless type.remove! %r{::.*\z}
           parent = at_css('.meta-parent').try(:content).to_s
           return 'Errors' if type.end_with?('Error') || parent.end_with?('Error') || parent.end_with?('Exception')
         end
@@ -29,8 +29,8 @@ module Docs
 
         css('.method-detail').inject [] do |entries, node|
           name = node['id'].dup
-          name.sub! %r{\A\w+?\-.}, ''
-          name.sub! %r{\A-(?!\d)}, ''
+          name.remove! %r{\A\w+?\-.}
+          name.remove! %r{\A-(?!\d)}
           name.gsub! '-', '%'
           name = CGI.unescape(name)
 

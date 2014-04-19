@@ -19,9 +19,9 @@ module Docs
           name
         else
           name = super
-          name.sub! 'Functions and function scope.', ''
-          name.sub! 'Operators.', ''
-          name.sub! 'Statements.', ''
+          name.remove! 'Functions and function scope.'
+          name.remove! 'Operators.'
+          name.remove! 'Statements.'
           name
         end
       end
@@ -34,7 +34,7 @@ module Docs
         elsif slug.start_with? 'Functions_and_function_scope'
           'Function'
         elsif slug.start_with? 'Global_Objects'
-          object, method = *slug.sub('Global_Objects/', '').split('/')
+          object, method = *slug.remove('Global_Objects/').split('/')
           if object.end_with? 'Error'
             'Errors'
           elsif INTL_OBJECTS.include?(object)

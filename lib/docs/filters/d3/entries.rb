@@ -12,7 +12,7 @@ module Docs
       def additional_entries
         css('h6[id]').inject [] do |entries, node|
           name = node.content
-          name.sub! %r{\(.*\z}, ''
+          name.remove! %r{\(.*\z}
           entries << [name, node['id']] unless name == entries.last.try(:first)
           entries
         end

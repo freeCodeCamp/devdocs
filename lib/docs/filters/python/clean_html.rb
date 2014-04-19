@@ -38,7 +38,7 @@ module Docs
           node.css('a').each do |link|
             link.before(link.children).remove
           end
-          node.child.content = node.child.content.sub @levelRegexp, ''
+          node.child.content = node.child.content.remove @levelRegexp
         end
 
         css('dt').each do |node|

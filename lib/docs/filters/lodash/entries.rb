@@ -6,7 +6,7 @@ module Docs
 
         css('h2').each do |node|
           type = node.content.split.first
-          type.gsub! %r{\W}, '' # remove quotation marks
+          type.remove! %r{\W} # remove quotation marks
 
           node.parent.css('h3').each do |heading|
             name = heading.content

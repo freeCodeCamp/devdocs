@@ -34,7 +34,7 @@ module Docs
     end
 
     def file_path_for(url)
-      File.join self.class.dir, url.sub(base_url.to_s, '')
+      File.join self.class.dir, url.remove(base_url.to_s)
     end
 
     def read_file(path)

@@ -35,7 +35,7 @@ module Docs
         end
 
         css('area[href]').each do |node|
-          node['href'] = node['href'].sub('.html', '')
+          node['href'] = node['href'].remove('.html')
         end
 
         doc

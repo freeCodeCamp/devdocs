@@ -15,8 +15,8 @@ module Docs
 
       def get_name
         name = at_css('h1').content
-        name.sub! %r{\A[\d\.]+ }, ''    # remove list number
-        name.sub! %r{ [\u{2013}\u{2014}].+\z}, '' # remove text after em/en dash
+        name.remove! %r{\A[\d\.]+ } # remove list number
+        name.remove! %r{ [\u{2013}\u{2014}].+\z} # remove text after em/en dash
         name
       end
 
@@ -33,10 +33,10 @@ module Docs
           type = 'Internet Data Handling'
         end
 
-        type.sub! %r{\A\d+\.\s+}, '' # remove list number
-        type.sub! "\u{00b6}", ''     # remove paragraph character
+        type.remove! %r{\A\d+\.\s+} # remove list number
+        type.remove! "\u{00b6}" # remove paragraph character
         type.sub! ' and ', ' & '
-        [' Services', ' Modules', ' Specific', 'Python '].each { |str| type.sub! str, '' }
+        [' Services', ' Modules', ' Specific', 'Python '].each { |str| type.remove!(str) }
 
         REPLACE_TYPES[type] || type
       end
@@ -74,7 +74,7 @@ module Docs
       def clean_id_attributes
         css('.section > .target[id]').each do |node|
           if dt = node.at_css('+ dl > dt')
-            dt['id'] ||= node['id'].sub(/\w+\-/, '')
+            dt['id'] ||= node['id'].remove(/\w+\-/)
           end
           node.remove
         end

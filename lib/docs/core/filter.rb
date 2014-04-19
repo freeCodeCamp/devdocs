@@ -41,7 +41,7 @@ module Docs
     end
 
     def slug
-      @slug ||= subpath.sub(/\A\//, '').sub(/\.html\z/, '')
+      @slug ||= subpath.sub(/\A\//, '').remove(/\.html\z/)
     end
 
     def root_page?

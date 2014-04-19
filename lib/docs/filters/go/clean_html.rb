@@ -18,7 +18,7 @@ module Docs
 
         # Remove triangle character
         css('h2', '.exampleHeading').each do |node|
-          node.content = node.content.sub("\u25BE", '')
+          node.content = node.content.remove("\u25BE")
           node.name = 'h2'
         end
 

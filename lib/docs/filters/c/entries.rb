@@ -15,8 +15,8 @@ module Docs
 
       def get_name
         name = at_css('#firstHeading').content.strip
-        name.sub! 'C keywords: ', ''
-        name.sub! %r{\s\(.+\)}, ''
+        name.remove! 'C keywords: '
+        name.remove! %r{\s\(.+\)}
         name = name.split(',').first
         REPLACE_NAMES[name] || name
       end
@@ -24,8 +24,8 @@ module Docs
       def get_type
         if type = at_css('.t-navbar > div:nth-child(4) > :first-child').try(:content)
           type.strip!
-          type.sub! ' library', ''
-          type.sub! ' utilities', ''
+          type.remove! ' library'
+          type.remove! ' utilities'
           type
         end
       end

@@ -3,7 +3,7 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = at_css('h1').content
-        name.sub! 'Package ', ''
+        name.remove! 'Package '
         name
       end
 

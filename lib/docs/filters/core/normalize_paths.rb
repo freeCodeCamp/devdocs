@@ -21,7 +21,7 @@ module Docs
     end
 
     def normalized_subpath
-      normalize_path subpath.sub(/\A\//, '')
+      normalize_path subpath.remove(/\A\//)
     end
 
     def normalize_href(href)

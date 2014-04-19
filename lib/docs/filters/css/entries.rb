@@ -60,7 +60,7 @@ module Docs
 
       def get_name
         case type
-        when 'Data Types' then "<#{super.gsub(' value', '')}>"
+        when 'Data Types' then "<#{super.remove ' value'}>"
         when 'Functions'  then "#{super}()"
         else super
         end

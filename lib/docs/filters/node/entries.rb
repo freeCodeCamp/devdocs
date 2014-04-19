@@ -54,8 +54,8 @@ module Docs
           end
 
           # Classes
-          if name.sub! 'Class: ', ''
-            name.sub! 'events.', '' # EventEmitter
+          if name.remove! 'Class: '
+            name.remove! 'events.' # EventEmitter
             klass = name
             entries << [name, node['id']]
             next
@@ -70,7 +70,7 @@ module Docs
 
           name.gsub! %r{\(.*?\)}, '()'
           name.gsub! %r{\[.+?\]}, '[]'
-          name.sub! 'assert(), ', '' # assert/assert.ok
+          name.remove! 'assert(), ' # assert/assert.ok
 
           # Skip all that start with an uppercase letter ("Example") or include a space ("exports alias")
           next unless (name.first.upcase! && !name.include?(' ')) || name.start_with?('Class Method')
@@ -80,15 +80,15 @@ module Docs
           # Differentiate socket classes (net, dgram, etc.)
           name.sub!('socket.') { "#{klass.sub('.', '_').downcase!}." }
 
-          name.sub! 'Class Method:', ''
-          name.sub! 'buf.',          'buffer.'
-          name.sub! 'buf[',          'buffer['
-          name.sub! 'child.',        'childprocess.'
-          name.sub! 'decoder.',      'stringdecoder.'
-          name.sub! 'emitter.',      'eventemitter.'
-          name.sub! %r{\Arl\.},      'interface.'
-          name.sub! 'rs.',           'readstream.'
-          name.sub! 'ws.',           'writestream.'
+          name.remove! 'Class Method:'
+          name.sub! 'buf.',     'buffer.'
+          name.sub! 'buf[',     'buffer['
+          name.sub! 'child.',   'childprocess.'
+          name.sub! 'decoder.', 'stringdecoder.'
+          name.sub! 'emitter.', 'eventemitter.'
+          name.sub! %r{\Arl\.}, 'interface.'
+          name.sub! 'rs.',      'readstream.'
+          name.sub! 'ws.',      'writestream.'
 
           # Skip duplicates (listen, connect, etc.)
           unless name == entries[-1].try(:first) || name == entries[-2].try(:first)

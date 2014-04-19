@@ -10,10 +10,10 @@ module Docs
 
       def get_name
         name = at_css('#firstHeading').content.strip
-        name.sub! 'C++ concepts: ', ''
-        name.sub! 'C++ keywords: ', ''
-        name.sub! 'C++ ', ''
-        name.sub! %r{\s\(.+\)}, ''
+        name.remove! 'C++ concepts: '
+        name.remove! 'C++ keywords: '
+        name.remove! 'C++ '
+        name.remove! %r{\s\(.+\)}
         name.sub! %r{\AStandard library header <(.+)>\z}, '\1'
         name = name.split(',').first
         REPLACE_NAMES[name] || name
@@ -24,9 +24,9 @@ module Docs
           'Keywords'
         elsif type = at_css('.t-navbar > div:nth-child(4) > :first-child').try(:content)
           type.strip!
-          type.sub! ' library', ''
-          type.sub! ' utilities', ''
-          type.sub! 'C++ ', ''
+          type.remove! ' library'
+          type.remove! ' utilities'
+          type.remove! 'C++ '
           type.capitalize!
           type
         end
@@ -34,7 +34,7 @@ module Docs
 
       def additional_entries
         return [] unless include_default_entry?
-        names = at_css('#firstHeading').content.gsub(%r{\(.+?\)}, '').split(',')[1..-1]
+        names = at_css('#firstHeading').content.remove(%r{\(.+?\)}).split(',')[1..-1]
         names.each(&:strip!).reject! do |name|
           name.size <= 2 || name == '...' || name =~ /\A[<>]/ || name.start_with?('operator')
         end

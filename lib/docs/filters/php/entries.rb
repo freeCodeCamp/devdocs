@@ -82,7 +82,7 @@ module Docs
       def get_name
         return 'IntlException' if slug == 'class.intlexception'
         name = css('> .sect1 > .title', 'h1', 'h2').first.content
-        name.sub! 'The ', ''
+        name.remove! 'The '
         name.sub! ' class', ' (class)'
         name.sub! ' interface', ' (interface)'
         name
@@ -91,7 +91,7 @@ module Docs
       def get_type
         type = at_css('.up').content.strip
         type = 'SPL/Iterators' if type.end_with? 'Iterator'
-        type.sub! ' Functions', ''
+        type.remove! ' Functions'
 
         TYPE_BY_NAME_STARTS_WITH.each_pair do |key, value|
           break type = value if name.start_with?(key)

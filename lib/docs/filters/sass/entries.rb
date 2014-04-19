@@ -47,7 +47,7 @@ module Docs
           next unless TYPES.include?(type)
 
           name = node.content.strip
-          name.sub! %r{\A.+?: }, ''
+          name.remove! %r{\A.+?: }
 
           next if SKIP_NAMES.include?(name)
 
