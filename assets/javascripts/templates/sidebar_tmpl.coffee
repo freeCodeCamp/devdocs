@@ -30,7 +30,8 @@ templates.sidebarLabel = (doc, options = {}) ->
 templates.sidebarDisabledList = (options) ->
   """<div class="_disabled-list">#{templates.render 'sidebarDoc', options.docs, disabled: true}</div>"""
 
-templates.sidebarDisabled = '<h6 class="_list-title"><span class="_list-arrow"></span>Disabled</h6>'
+templates.sidebarDisabled = (options) ->
+  """<h6 class="_list-title"><span class="_list-arrow"></span>Disabled (#{options.count})</h6>"""
 
 templates.sidebarVote = '<a href="https://trello.com/b/6BmTulfx/devdocs-documentation" class="_list-link" target="_blank">Vote for new documentation</a>'
 

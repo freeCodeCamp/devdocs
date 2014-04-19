@@ -41,7 +41,7 @@ class app.views.DocList extends app.View
     return
 
   renderDisabled: ->
-    @append @tmpl('sidebarDisabled')
+    @append @tmpl('sidebarDisabled', count: app.disabledDocs.size())
     @renderDisabledList()
     return
 
