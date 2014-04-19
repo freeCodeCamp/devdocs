@@ -37,23 +37,32 @@ class app.views.DocList extends app.View
   render: =>
     @html @tmpl('sidebarDoc', app.docs.all())
     @renderDisabled() unless app.isSingleDoc() or app.disabledDocs.size() is 0
-    @refreshElements()
     return
 
   renderDisabled: ->
     @append @tmpl('sidebarDisabled', count: app.disabledDocs.size())
+    @refreshElements()
     @renderDisabledList()
     return
 
   renderDisabledList: ->
+    if (hidden = app.store.get 'hideDisabled') is true
+      @removeDisabledList()
+    else
+      app.store.set 'hideDisabled', false unless hidden is false
+      @appendDisabledList()
+    return
+
+  appendDisabledList: ->
     @append @tmpl('sidebarDisabledList', docs: app.disabledDocs.all())
-    @refreshElements()
     @disabledTitle.classList.add('open-title')
+    @refreshElements()
     return
 
   removeDisabledList: ->
-    @disabledList.remove()
+    @disabledList?.remove()
     @disabledTitle.classList.remove('open-title')
+    @refreshElements()
     return
 
   reset: ->
@@ -117,10 +126,13 @@ class app.views.DocList extends app.View
   onClick: (event) =>
     return unless @disabledTitle and $.hasChild @disabledTitle, event.target
     $.stopEvent(event)
+
     if @disabledTitle.classList.contains('open-title')
       @removeDisabledList()
+      app.store.set 'hideDisabled', true
     else
-      @renderDisabledList()
+      @appendDisabledList()
+      app.store.set 'hideDisabled', false
 
 
   afterRoute: (route, context) =>
