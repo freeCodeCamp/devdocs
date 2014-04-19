@@ -96,10 +96,12 @@ class app.Shortcuts
   handleKeydownAltEvent: (event) ->
     switch event.which
       when 9
-        @trigger 'altTab', event
+        @trigger 'altRight', event
       when 38
         @trigger 'altUp'
         false
+      when 39
+        @trigger 'altRight', event
       when 40
         @trigger 'altDown'
         false
