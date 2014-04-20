@@ -17,7 +17,13 @@
     </nav>
   </header>
   <section class="_sidebar">
-    <div class="_list"></div>
+    <div class="_list">
+      <% unless @doc %>
+      <% App.docs.each do |slug, doc| %>
+      <a href="/<%= slug %>/" class="_list-item _icon-<%= slug %> _list-dir"><span class="_list-arrow"></span><%= doc['name'] %></a>
+      <% end %>
+      <% end %>
+    </div>
   </section>
   <section class="_container">
     <div class="_content _content-loading"></div>
