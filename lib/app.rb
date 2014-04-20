@@ -98,6 +98,10 @@ class App < Sinatra::Application
         result
       end
     end
+
+    def doc_index_page?
+      @doc && request.path == "/#{@doc['slug']}/"
+    end
   end
 
   before do
