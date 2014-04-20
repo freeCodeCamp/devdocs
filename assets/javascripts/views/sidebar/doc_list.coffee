@@ -60,7 +60,7 @@ class app.views.DocList extends app.View
     return
 
   removeDisabledList: ->
-    @disabledList?.remove()
+    $.remove @disabledList if @disabledList
     @disabledTitle.classList.remove('open-title')
     @refreshElements()
     return
