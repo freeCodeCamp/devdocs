@@ -18,6 +18,7 @@ module Docs
         when 'EVAL'         then 'Scripting'
         when 'AUTH'         then 'Connection'
         when 'BGREWRITEAOF' then 'Server'
+        when 'PFADD'        then 'HyperLogLog'
         else 'Miscellaneous'
         end
       end
