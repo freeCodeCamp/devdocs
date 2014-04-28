@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
-  <% if doc_index_page? %><meta name="description" content="<%= @doc['name'] %> reference documentation with fast, fuzzy search, keyboard shortcuts, mobile version, and more."><% else %><meta name="robots" content="noindex"><% end %>
+  <% if doc_index_page? %><meta name="description" content="<%= @doc['name'] %> reference documentation with fast, fuzzy search, keyboard shortcuts, mobile version, offline mode, and more."><% else %><meta name="robots" content="noindex"><% end %>
   <meta name="format-detection" content="telephone=no">
-  <title>DevDocs<%= " &mdash; #{@doc['name']} API Documentation" if doc_index_page? %></title>
+  <title>DevDocs<%= ": Downloadable #{@doc['name']} API Documentation" if doc_index_page? %></title>
   <link rel="icon" type="image/x-icon" href="http://maxcdn.devdocs.io/favicon.ico">
   <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Search DevDocs">
   <%= stylesheet_tag 'application' %>
