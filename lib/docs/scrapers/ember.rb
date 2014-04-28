@@ -3,7 +3,7 @@ module Docs
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.version = '1.5.0'
+    self.version = '1.5.1'
     self.base_url = 'http://emberjs.com/api/'
 
     html_filters.push 'ember/clean_html', 'ember/entries', 'title'
