@@ -162,7 +162,7 @@
   &:before {
     @extend %icon, %icon-dir;
 
-    .open, .open-title > & {
+    .open > &, .open-title > & {
       -webkit-transform: rotate(90deg);
               transform: rotate(90deg);
     }
