@@ -24,7 +24,12 @@ class app.views.Document extends app.View
     app.router.show '/help#shortcuts'
 
   onEscape: ->
-    app.router.show if app.isSingleDoc() then app.doc.fullPath() else '/'
+    path = if !app.isSingleDoc() or location.pathname is app.doc.fullPath()
+      '/'
+    else
+      app.doc.fullPath()
+
+    app.router.show(path)
 
   onBack: ->
     history.back()
