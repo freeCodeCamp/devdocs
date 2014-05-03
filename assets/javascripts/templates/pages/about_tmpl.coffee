@@ -126,6 +126,11 @@ credits = [
     'CC BY',
     'http://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Grunt',
+    '2014 Grunt Team',
+    'MIT',
+    'https://raw.githubusercontent.com/gruntjs/gruntjs.com/master/LICENSE'
+  ], [
     'HTTP',
     '1999 The Internet Society',
     'Custom',
