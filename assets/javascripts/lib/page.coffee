@@ -41,6 +41,7 @@ page.show = (path, state) ->
   currentState = context.state
   page.dispatch(context)
   context.pushState()
+  ga?('send', 'pageview', location.pathname + location.search + location.hash)
   context
 
 page.replace = (path, state, skipDispatch, init) ->
@@ -49,6 +50,7 @@ page.replace = (path, state, skipDispatch, init) ->
   currentState = context.state
   page.dispatch(context) unless skipDispatch
   context.replaceState()
+  ga?('send', 'pageview', location.pathname + location.search + location.hash) unless init
   context
 
 page.dispatch = (context) ->
