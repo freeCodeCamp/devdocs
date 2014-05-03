@@ -111,6 +111,11 @@ credits = [
     'MIT',
     'https://raw.github.com/emberjs/ember.js/master/LICENSE'
   ], [
+    'Express',
+    '2009-2014 TJ Holowaychuk',
+    'MIT',
+    'https://raw.githubusercontent.com/visionmedia/express/master/LICENSE'
+  ], [
     'Git',
     '2005-2014 Linus Torvalds and others',
     'GPLv2',
