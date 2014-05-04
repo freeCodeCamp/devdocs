@@ -1,0 +1,49 @@
+._maxcdn {
+  padding-left: 1rem;
+
+  h1, h2, h3 { margin-left: -1rem; }
+  h2 { @extend %block-heading; }
+  h3 { @extend %block-label, %label-blue; }
+  h4 { font-size: 1em; }
+  p > code { @extend %label; }
+
+  .url {
+    padding: .5rem;
+    white-space: normal;
+    @extend %pre, %note-green;
+  }
+
+  .http_method { @extend %label; }
+
+  .nav-tabs {
+    height: 2rem;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid #ddd;
+
+    > li {
+      float: left;
+      margin: -1px 0;
+
+      > a {
+        display: block;
+        padding: .5rem 1em;
+        line-height: 1rem;
+        margin-right: 2px;
+        border: 1px solid transparent;
+        border-radius: 3px 3px 0 0;
+      }
+
+      &.active > a {
+        color: $textColor;
+        text-decoration: none;
+        background: white;
+        border-color: #ddd #ddd transparent;
+        cursor: default;
+      }
+    }
+  }
+
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+}

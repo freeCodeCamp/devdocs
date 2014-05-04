@@ -166,6 +166,11 @@ credits = [
     'MIT',
     'https://raw.github.com/lodash/lodash/master/LICENSE.txt'
   ], [
+    'MaxCDN',
+    '2014 MaxCDN',
+    'MIT',
+    'https://raw.githubusercontent.com/MaxCDN/api-docs/master/LICENSE'
+  ], [
     'Moment.js',
     '2011-2014 Tim Wood, Iskren Chernev, Moment.js contributors',
     'MIT',
