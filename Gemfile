@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.1'
+ruby '2.1.2'
 
 gem 'thor'
 gem 'pry', '~> 0.9.12'
