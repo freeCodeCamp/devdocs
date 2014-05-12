@@ -7,6 +7,7 @@ $LOAD_PATH.unshift 'lib'
 
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'active_support'
 require 'active_support/core_ext'
 require 'active_support/testing/assertions'
 require 'rr'
