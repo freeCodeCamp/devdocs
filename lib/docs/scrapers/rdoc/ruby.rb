@@ -20,7 +20,7 @@ module Docs
     # | xargs \
     #   rdoc --format=darkfish --no-line-numbers --op=rdoc --visibility=public
 
-    self.version = '2.1.1'
+    self.version = '2.1.2'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby'
 
     html_filters.replace 'rdoc/entries', 'ruby/entries'
