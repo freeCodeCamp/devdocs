@@ -1,7 +1,7 @@
 module Docs
   class Go < UrlScraper
     self.type = 'go'
-    self.version = '1.2.1'
+    self.version = '1.2.2'
     self.base_url = 'http://golang.org/pkg/'
 
     html_filters.push 'go/clean_html', 'go/entries'
