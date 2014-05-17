@@ -2,7 +2,7 @@ module Docs
   class Grunt < UrlScraper
     self.name = 'Grunt'
     self.type = 'grunt'
-    self.version = '0.4.4'
+    self.version = '0.4.5'
     self.base_url = 'http://gruntjs.com/'
     self.root_path = 'getting-started'
     self.initial_paths = %w(api/grunt)
