@@ -17,7 +17,7 @@ class CleanHtmlFilterTest < MiniTest::Spec
 
   it "removes extraneous whitespace" do
     @body = "<p> \nTest <b></b> \n</p> \n<div>\r</div>\n\n "
-    assert_equal '<p> Test <b></b> </p> <div> </div>', filter_output_string
+    assert_equal '<p> Test <b></b> </p> <div> </div> ', filter_output_string
   end
 
   it "doesn't remove whitespace from <pre> and <code> nodes" do
