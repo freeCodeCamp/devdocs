@@ -197,9 +197,9 @@ credits = [
     'http://docs.python.org/3/license.html'
   ], [
     'Redis',
-    '2006-2014 Salvatore Sanfilippo and others',
-    'BSD',
-    'https://raw.github.com/antirez/redis/unstable/COPYING'
+    '2009-2014 Salvatore Sanfilippo',
+    'CC BY-SA',
+    'http://creativecommons.org/licenses/by-sa/4.0/'
   ], [
     'Ruby',
     '1993-2014 Yukihiro Matsumoto',

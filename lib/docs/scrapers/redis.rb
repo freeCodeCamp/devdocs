@@ -12,8 +12,8 @@ module Docs
     options[:follow_links] = ->(filter) { filter.root_page? }
 
     options[:attribution] = <<-HTML
-      &copy; 2006&ndash;2014 Salvatore Sanfilippo and others<br>
-      Licensed under the three clause BSD license.
+      &copy; 2009&ndash;2014 Salvatore Sanfilippo<br>
+      Licensed under the Creative Commons Attribution-ShareAlike License 4.0.
     HTML
   end
 end
