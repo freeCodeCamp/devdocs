@@ -153,7 +153,7 @@ class app.views.Content extends app.View
 
   onAltRight: (event) =>
     unless document.activeElement and $.hasChild @el, document.activeElement
-      @findByTag('a').focus()
+      @findByTag('a')?.focus()
       $.stopEvent(event)
 
   findTargetByHash: (hash) ->
