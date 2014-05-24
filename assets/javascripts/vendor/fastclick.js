@@ -1,7 +1,7 @@
 /**
  * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
  *
- * @version 1.0.1
+ * @version 1.0.2
  * @codingstandard ftlabs-jsv2
  * @copyright The Financial Times Limited [All Rights Reserved]
  * @license MIT License (see LICENSE.txt)
@@ -12,7 +12,7 @@
 
 
 /**
- * Instantiate fast-clicking listeners on the specificed layer.
+ * Instantiate fast-clicking listeners on the specified layer.
  *
  * @constructor
  * @param {Element} layer The layer to listen on
@@ -743,7 +743,7 @@ FastClick.notNeeded = function(layer) {
 					return true;
 				}
 				// Chrome 32 and above with width=device-width or less don't need FastClick
-				if (chromeVersion > 31 && window.innerWidth <= window.screen.width) {
+				if (chromeVersion > 31 && document.documentElement.scrollWidth <= window.outerWidth) {
 					return true;
 				}
 			}
@@ -775,7 +775,7 @@ FastClick.attach = function(layer, options) {
 };
 
 
-if (typeof define !== 'undefined' && define.amd) {
+if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
 
 	// AMD. Register as an anonymous module.
 	define(function() {
