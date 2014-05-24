@@ -10,6 +10,7 @@ module Docs
       #  Array > [Array, nil]
       def get_name_and_type
         if at_css('h1') && at_css('h1').content == 'Haskell Hierarchical Libraries'
+          puts 'ok'
           name = 'Haskell'
           type = nil
         else
@@ -50,19 +51,6 @@ module Docs
         n, t = get_name_and_type()
         t
       end
-
-      # def additional_entries
-      #   css('a').inject [] do |entries, node|
-      #     name = node.content
-      #     id   = node['name']
-      #     if id
-      #       puts id
-      #       entries << [name, id, nil]
-      #     end
-      #     entries
-      #   end
-      # end
-
     end
   end
 end

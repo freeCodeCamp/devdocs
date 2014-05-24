@@ -4,11 +4,7 @@ module Docs
       def call
 
         # remove unwanted elements
-        css('#footer', '#package-header', '#module-header', '#synopsis', '.link', '#table-of-contents', '.show .empty', '.package').remove
-
-        css('pre').each do |node|
-          node.add_css_class('example')
-        end
+        css('#footer', '#package-header', '#module-header', '#synopsis', '.link', '#table-of-contents', '.package').remove
 
         # cpations in tables are h3
         css('table .caption').each do |node|
@@ -20,6 +16,7 @@ module Docs
           node.name = 'h1'
         end
 
+        # section
         css('.top > .caption').each do |node|
           node.name = 'h2'
         end
@@ -34,39 +31,79 @@ module Docs
           node.name = 'h4'
         end
 
+        # ...
         css('.top > .subs > .subs > .subs > .caption').each do |node|
           node.name = 'h5'
         end
 
+        # ......
         css('.top > .subs > .subs > .subs > .subs > .caption').each do |node|
           node.name = 'h6'
         end
 
+        # all pre's are examples
+        css('pre').each do |node|
+          node.add_css_class('example')
+        end
+
         # turn source listing in to pre
         css('.src').each do |node|
-          if node.name == "td"
-            # pre = doc.create_element 'pre'
-            # pre.children = node.children
-            # node.children = [pre]
-          else
+          if node.name != "td"
             node.name = 'pre'
           end
         end
 
-        if at_css('h1') && at_css('h1').content == 'Haskell Hierarchical Libraries'
-          css('h1').remove
+        # check if second column of table is totally empty.
+        # and remove it if it is
+        css('table').each do |table|
+          empty = true
+          table.css('td + td').each do |snd|
+            empty = empty && snd['class'] =~ /empty/
+          end
+          if empty
+            # remove empty column
+            table.css('td + td').remove
+          end
         end
 
+        # move table captions into the tables
+        css(".caption + table").each do |table|
+          caption = table.previous
+          caption.name = "caption"
+          caption.parent = table
+        end
+
+        css(".caption + .show table").each do |table|
+          caption = table.parent.parent.css('.caption')[0]
+          caption.name = 'caption'
+          caption.parent = table
+        end
+
+        # better arguments display:
+        css('.src + .arguments table').each do |table|
+          src = table.parent.previous # the function name
+          row = doc.document.create_element('tr')
+          table.css('tr')[0].before(row)
+          src.parent = row
+          src.name = "th"
+          src['colspan'] = 2
+        end
+
+        # remove root page title
+        if root_page?
+          at_css('h1').remove
+        end
+
+        # add id to links (based on name)
         css('a').each do |node|
           if node['name']
             node['id'] = node['name']
           end
         end
 
-        css('.caption').each do |node|
-          if node.content == 'Arguments'
-            node.remove
-          end
+        # make code in description into proper pre
+        css('dd > code').each do |node|
+          node.name = 'pre'
         end
 
         # add some informational boxes
@@ -86,8 +123,8 @@ module Docs
             # </p>
             if node.previous == nil
               node.add_css_class('complexity')                        # add css class
-              node.name="span"                                         # just make it div
-              node.next.content = node.next.content.gsub(/^. /, "") # remove . if directly after em
+              node.name="span"                                        # just make it div
+              node.next.content = node.next.content.gsub(/^. /, "")   # remove . if directly after em
               node.content = node.content.gsub(/\.$/, "")             # remove trailing . if it's inside em
 
               # reparent the nodes
@@ -100,7 +137,11 @@ module Docs
             end
           elsif node.content =~ /Since: .*/
             # add box to 'Since:' annotations
-            node.add_css_class('added')
+            if node.parent.parent.name == "td"
+              node.parent.parent.add_css_class('added-cell')
+            else
+              node.add_css_class('added')
+            end
           end
         end
 

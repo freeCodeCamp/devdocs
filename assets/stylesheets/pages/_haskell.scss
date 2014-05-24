@@ -4,12 +4,36 @@
   background-repeat: no-repeat;
 }
 
+.empty-table .empty {
+  display: none;
+}
+
+.arguments td.src {
+    background: #faf9e2;
+    width: 30%;
+}
+
+th.src,
 td.src {
   font-family: $monoFont;
   font-weight: normal;
   font-style: normal;
   background: #f8f8f8;
-  width: 20%;
+}
+
+caption {
+  font-weight: bold;
+  text-align: left;
+  font-style: italic;
+  font-size: 1.1em;
+}
+
+// remove margin in descript listing
+dd > pre {
+  @extend %pre;
+  margin: 0;
+  background: #faf9e2;
+  border-color: #dddaaa #dddaaa #d7d7a9;
 }
 
 // warnings are red
@@ -44,18 +68,43 @@ td.src {
   order: 1;
 }
 
+// add box type to "since: ..."
 .added {
     @extend %note;
     @extend %note-gold;
 }
 
-.top {
-    margin-bottom: 3em;
+.added-cell {
+    @extend %note-gold;
 }
 
+.fields h3 {
+  display: none;
+}
+
+// separate types more
+.src {
+    margin-top: 2.5em;
+}
+
+h1 + .top .src,
+h2 + .top .src,
+h3 + .top .src,
+.caption + .top .src {
+  margin-top: 0;
+}
+
+// but not for first type
+h1 + .top,
+h2 + .top,
+h3 + .top,
+h4 + .top {
+  margin-top: 0;
+}
+
+// change color of example code
 .example {
-    -webkit-flex: none;
-    background: #faf9e2;
     border: 1px solid;
+    background: #faf9e2;
     border-color: #dddaaa #dddaaa #d7d7a9;
 }
