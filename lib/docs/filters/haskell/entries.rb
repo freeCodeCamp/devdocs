@@ -51,6 +51,18 @@ module Docs
         t
       end
 
+      # def additional_entries
+      #   css('a').inject [] do |entries, node|
+      #     name = node.content
+      #     id   = node['name']
+      #     if id
+      #       puts id
+      #       entries << [name, id, nil]
+      #     end
+      #     entries
+      #   end
+      # end
+
     end
   end
 end

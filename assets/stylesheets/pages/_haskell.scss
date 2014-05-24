@@ -1,0 +1,61 @@
+._icon-haskell:before {
+  background-image: image-url('/icons/docs/haskell/16.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+td.src {
+  font-family: $monoFont;
+  font-weight: normal;
+  font-style: normal;
+  background: #f8f8f8;
+  width: 20%;
+}
+
+// warnings are red
+.warning {
+    @extend %note;
+    @extend %note-red;
+}
+
+
+// complexity classes are blue boxes
+.with-complexity {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: stretch;
+  flex-direction: row;
+}
+
+.complexity {
+    @extend %note;
+    @extend %note-blue;
+    margin: 0;
+    margin-left: 1em;
+    margin-bottom: 0.75em;
+    font-style: italic;
+    white-space: nowrap;
+    flex-shrink: 0;
+    order:2;
+}
+
+.complexity + span {
+  order: 1;
+}
+
+.added {
+    @extend %note;
+    @extend %note-gold;
+}
+
+.top {
+    margin-bottom: 3em;
+}
+
+.example {
+    -webkit-flex: none;
+    background: #faf9e2;
+    border: 1px solid;
+    border-color: #dddaaa #dddaaa #d7d7a9;
+}
