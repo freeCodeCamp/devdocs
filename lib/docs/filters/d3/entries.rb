@@ -11,8 +11,9 @@ module Docs
 
       def additional_entries
         css('h6[id]').inject [] do |entries, node|
-          name = node.content
+          name = node.content.strip
           name.remove! %r{\(.*\z}
+          name.sub! %r{\A(svg:\w+)\s+.+}, '\1'
           entries << [name, node['id']] unless name == entries.last.try(:first)
           entries
         end
