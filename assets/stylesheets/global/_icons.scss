@@ -4,7 +4,7 @@
   width: 1rem;
   height: 1rem;
   background-image: image-url('icons.png');
-  background-size: 5rem 9rem;
+  background-size: 5rem 10rem;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
@@ -56,3 +56,4 @@
 ._icon-express:before       { background-position: -2rem -8rem; }
 ._icon-grunt:before         { background-position: -3rem -8rem; }
 ._icon-maxcdn:before        { background-position: -4rem -8rem; }
+._icon-laravel:before       { background-position: 0 -9rem; }

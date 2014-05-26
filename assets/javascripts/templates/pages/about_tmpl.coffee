@@ -156,6 +156,11 @@ credits = [
     'MIT',
     'https://raw.github.com/knockout/knockout/master/LICENSE'
   ], [
+    'Laravel',
+    'Taylor Otwell',
+    'MIT',
+    'https://raw.githubusercontent.com/laravel/framework/master/LICENSE.txt'
+  ], [
     'Less',
     '2009-2014 The Core Less Team',
     'CC BY',

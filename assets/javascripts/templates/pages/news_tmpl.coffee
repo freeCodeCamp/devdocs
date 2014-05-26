@@ -24,7 +24,10 @@ newsItem = (date, news) ->
   result
 
 app.news = [
-  [ 1399161600000, # May 4, 2014
+  [ 1400976000000, # May 25, 2014
+    """ New <a href="/laravel/">Laravel</a> documentation """,
+  ], [
+    1399161600000, # May 4, 2014
     """ New <a href="/express/">Express</a>, <a href="/grunt/">Grunt</a>, and <a href="/maxcdn/">MaxCDN</a> documentations """,
   ], [
     1396742400000, # April 6, 2014
