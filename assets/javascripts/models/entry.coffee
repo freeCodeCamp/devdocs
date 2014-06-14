@@ -12,7 +12,7 @@ class app.models.Entry extends app.Model
     @name
       .toLowerCase()
       .replace '...', ' '
-      .replace ' event', ''
+      .replace /\ event$/, ''
       .replace SEPARATORS_REGEXP, '.'
       .replace /\.+/g, '.'
       .replace PARANTHESES_REGEXP, ''
