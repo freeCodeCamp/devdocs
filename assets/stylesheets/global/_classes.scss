@@ -110,6 +110,11 @@
   @extend %label;
 }
 
+%label-green {
+  background: #f1faeb;
+  border-color: #b3dba8 #b3dba8 #aed7a5;
+}
+
 %label-blue {
   background: #dbe4ff;
   border-color: #a8a9e2;

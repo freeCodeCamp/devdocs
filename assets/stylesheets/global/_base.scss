@@ -85,7 +85,7 @@ abbr, acronym, dfn {
   border-bottom: 1px dotted $textColor;
 }
 
-pre, code, samp, %pre {
+pre, code, samp, %pre, %code {
   font-family: $monoFont;
   font-weight: normal;
   font-style: normal;
