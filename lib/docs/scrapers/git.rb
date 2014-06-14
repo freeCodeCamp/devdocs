@@ -1,7 +1,7 @@
 module Docs
   class Git < UrlScraper
     self.type = 'git'
-    self.version = '1.9.3'
+    self.version = '2.0.0'
     self.base_url = 'http://git-scm.com/docs'
     self.initial_paths = %w(/git.html)
 
