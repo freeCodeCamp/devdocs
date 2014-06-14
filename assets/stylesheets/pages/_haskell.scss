@@ -1,121 +1,25 @@
-._icon-haskell:before {
-  background-image: image-url('/icons/docs/haskell/16.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-}
+._haskell {
+  > h2 { @extend %block-heading; }
+  > h3 { @extend %block-label; }
+  h4 { font-size: 1em; }
 
-.empty-table .empty {
-  display: none;
-}
+  .module + .package, p.src > .link { float: right; }
 
-.arguments td.src {
-    background: #faf9e2;
-    width: 30%;
-}
+  .src {
+    white-space: normal;
+    @extend %code;
+  }
+  p.src { @extend %block-label, %label-blue; }
+  dt.src { white-space: normal; }
 
-th.src,
-td.src {
-  font-family: $monoFont;
-  font-weight: normal;
-  font-style: normal;
-  background: #f8f8f8;
-}
+  .top > .subs { margin-left: 2em; }
+  .subs p.src { margin-top: 1em; }
 
-caption {
-  font-weight: bold;
-  text-align: left;
-  font-style: italic;
-  font-size: 1.1em;
-}
+  dt > code, .complexity, .version { @extend %label; }
+  .complexity, .version { @extend %label-green; }
 
-// remove margin in descript listing
-dd > pre {
-  @extend %pre;
-  margin: 0;
-  background: #faf9e2;
-  border-color: #dddaaa #dddaaa #d7d7a9;
-}
+  table { margin: 1em 0; }
+  td > pre { margin: 0; }
 
-// warnings are red
-.warning {
-    @extend %note;
-    @extend %note-red;
-}
-
-
-// complexity classes are blue boxes
-.with-complexity {
-  display: flex;
-  display: -webkit-flex;
-
-  justify-content: space-between;
-  -webkit-justify-content: space-between;
-
-  align-items: flex-start;
-  -webkit-align-items: flex-start;
-
-  align-content: stretch;
-  -webkit-align-content: stretch;
-}
-
-.complexity {
-    @extend %note;
-    @extend %note-blue;
-    margin: 0;
-    margin-left: 1em;
-    margin-bottom: 0.75em;
-    font-style: italic;
-    white-space: nowrap;
-
-    flex-shrink: 0;
-    -webkit-flex-shrink: 0;
-
-    order: 2;
-    -webkit-order: 2;
-}
-
-.complexity + span {
-  order: 1;
-    -webkit-order: 1;
-}
-
-// add box type to "since: ..."
-.added {
-    @extend %note;
-    @extend %note-gold;
-}
-
-.added-cell {
-    @extend %note-gold;
-}
-
-.fields h3 {
-  display: none;
-}
-
-// separate types more
-.src {
-    margin-top: 2.5em;
-}
-
-h1 + .top .src,
-h2 + .top .src,
-h3 + .top .src,
-.caption + .top .src {
-  margin-top: 0;
-}
-
-// but not for first type
-h1 + .top,
-h2 + .top,
-h3 + .top,
-h4 + .top {
-  margin-top: 0;
-}
-
-// change color of example code
-.example {
-    border: 1px solid;
-    background: #faf9e2;
-    border-color: #dddaaa #dddaaa #d7d7a9;
+  .warning { @extend %note; }
 }

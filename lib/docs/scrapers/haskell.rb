@@ -1,24 +1,32 @@
 module Docs
   class Haskell < UrlScraper
     self.name = 'Haskell'
-    self.slug = 'haskell'
     self.type = 'haskell'
     self.version = '7.8.2'
     self.base_url = 'http://www.haskell.org/ghc/docs/7.8.2/html/libraries/'
-    self.initial_paths = ['/index.html']
+    self.root_path = 'index.html'
 
-    html_filters.push 'haskell/entries'
-    html_filters.push 'haskell/clean_html'
-    html_filters.push 'title'
+    html_filters.push 'haskell/entries', 'haskell/clean_html'
 
+    options[:container] = '#content'
 
-    options[:container]     = '#content'
-    options[:skip_patterns] = [/src/, /index/, /haskell2010/, /ghc-/, /Cabal-/]   # skip source listings and index files
+    options[:skip] = %w(
+      hoopl-3.10.0.1/Compiler-Hoopl-Internals.html
+      base-4.7.0.0/Control-Exception-Base.html
+      binary-0.7.1.0/Data-Binary-Get-Internal.html
+      template-haskell-2.9.0.0/Language-Haskell-TH-Lib.html
+      haskell98-2.0.0.3/Prelude.html
+      pretty-1.1.1.1/Text-PrettyPrint.html
+      base-4.7.0.0/Data-OldTypeable-Internal.html
+      base-4.7.0.0/Data-Typeable-Internal.html
+      base-4.7.0.0/GHC-IO-Encoding-Types.html
+      unix-2.7.0.1/System-Posix-Process-Internals.html)
+
+    options[:skip_patterns] = [/src\//, /doc-index/, /haskell2010/, /ghc-/, /Cabal-/]
 
     options[:attribution] = <<-HTML
-      &copy; The University Court of the University of Glasgow.<br>
-      All rights reserved. <a href="http://www.haskell.org/ghc/license">See here for more info</a>
+      &copy; The University of Glasgow and others<br>
+      Licensed under a BSD-style license (see top of the page).
     HTML
-
-    end
+  end
 end

@@ -131,6 +131,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/gruntjs/gruntjs.com/master/LICENSE'
   ], [
+    'Haskell',
+    'The University of Glasgow',
+    'BSD',
+    'http://www.haskell.org/ghc/license'
+  ], [
     'HTTP',
     '1999 The Internet Society',
     'Custom',
