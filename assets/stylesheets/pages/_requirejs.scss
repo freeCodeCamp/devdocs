@@ -1,0 +1,10 @@
+._requirejs {
+  padding-left: 1rem;
+
+  h1, h2, h3, ul.index { margin-left: -1rem; }
+  h2 { @extend %block-heading; }
+  h3 { @extend %block-label, %label-blue; }
+  h4 { font-size: 1em; }
+
+  ul.index ul { margin: .5em 0; }
+}

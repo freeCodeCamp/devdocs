@@ -211,6 +211,11 @@ credits = [
     'CC BY-SA',
     'http://creativecommons.org/licenses/by-sa/4.0/'
   ], [
+    'RequireJS',
+    '2010-2014 The Dojo Foundation',
+    'MIT',
+    'https://raw.githubusercontent.com/jrburke/requirejs/master/LICENSE'
+  ], [
     'Ruby',
     '1993-2014 Yukihiro Matsumoto',
     'Ruby',
