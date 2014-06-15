@@ -69,6 +69,8 @@
     docs = @settings.getDocs()
     for doc in @DOCS
       (if docs.indexOf(doc.slug) >= 0 then @docs else @disabledDocs).add(doc)
+    @docs.sort()
+    @disabledDocs.sort()
     @docs.load @start.bind(@), @onBootError.bind(@), readCache: true, writeCache: true
     delete @DOCS
     return

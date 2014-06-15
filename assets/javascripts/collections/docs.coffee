@@ -1,6 +1,12 @@
 class app.collections.Docs extends app.Collection
   @model: 'Doc'
 
+  sort: ->
+    @models.sort (a, b) ->
+      a = a.name.toLowerCase()
+      b = b.name.toLowerCase()
+      if a < b then -1 else if a > b then 1 else 0
+
   # Load models concurrently.
   # It's not pretty but I didn't want to import a promise library only for this.
   CONCURRENCY = 3
