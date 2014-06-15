@@ -135,6 +135,7 @@ class app.Searcher
   #
 
   index =      # position of the query in the string being matched
+  lastIndex =  # last position of the query in the string being matched
   match =      # regexp match data
   score =      # score for the current match
   separators = # counter
@@ -144,6 +145,14 @@ class app.Searcher
     index = value.indexOf @query
     return unless index >= 0
 
+    lastIndex = value.lastIndexOf @query
+
+    if index isnt lastIndex
+      Math.max(@scoreExactMatch(value, index), @scoreExactMatch(value, lastIndex))
+    else
+      @scoreExactMatch(value, index)
+
+  scoreExactMatch: (value, index) ->
     # Remove one point for each unmatched character.
     score = 100 - (value.length - @queryLength)
 
