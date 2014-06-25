@@ -35,7 +35,7 @@ app.templates.helpPage = """
             in the omnibox (to set a custom keyword, click <em>Manage search engines\u2026</em> in Chrome's settings).
         <li>On Firefox, open the search engine list (icon in the search bar) and select <em>Add "DevDocs Search"</em>.
             DevDocs is now available in the search bar. You can also search from the location bar by following
-            <a href="https://support.mozilla.org/en-US/kb/search-bar-easily-choose-your-search-engine#w_keywords">these instructions</a>.
+            <a href="https://support.mozilla.org/en-US/kb/how-search-from-address-bar">these instructions</a>.
   </dl>
 
   <h2 class="_lined-heading" id="shortcuts">Keyboard Shortcuts</h2>
