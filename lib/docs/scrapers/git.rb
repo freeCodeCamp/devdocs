@@ -1,13 +1,13 @@
 module Docs
   class Git < UrlScraper
     self.type = 'git'
-    self.version = '2.0.0'
+    self.version = '2.0.1'
     self.base_url = 'http://git-scm.com/docs'
     self.initial_paths = %w(/git.html)
 
     html_filters.push 'git/clean_html', 'git/entries'
 
-    options[:container] = ->(filter) { filter.root_page? ? '#main' : '.man-page' }
+    options[:container] = ->(filter) { filter.root_page? ? '#main' : '.man-page, #main' }
     options[:follow_links] = ->(filter) { filter.root_page? }
     options[:only_patterns] = [/\A\/git\-/]
 
