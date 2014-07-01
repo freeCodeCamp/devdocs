@@ -91,6 +91,11 @@ credits = [
     'CC BY-SA',
     'http://en.cppreference.com/w/Cppreference:Copyright/CC-BY-SA'
   ], [
+    'Chai',
+    '2011-2014 Jake Luer',
+    'MIT',
+    'https://github.com/chaijs/chai/blob/master/README.md#license'
+  ], [
     'CoffeeScript',
     '2009-2014 Jeremy Ashkenas',
     'MIT',
