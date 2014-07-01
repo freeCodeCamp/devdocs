@@ -3,10 +3,10 @@ module Docs
     self.name = 'Laravel'
     self.slug = 'laravel'
     self.type = 'laravel'
-    self.version = '4.1.29'
+    self.version = '4.2.0'
     self.base_url = 'http://laravel.com'
     self.root_path = '/docs/introduction'
-    self.initial_paths = %w(/api/4.1/namespaces.html)
+    self.initial_paths = %w(/api/4.2/namespaces.html)
 
     html_filters.push 'laravel/entries', 'laravel/clean_html'
 
@@ -15,7 +15,7 @@ module Docs
     }
 
     options[:only_patterns] = [
-      /\A\/api\/4\.1\//,
+      /\A\/api\/4\.2\//,
       /\A\/docs\//]
 
     options[:skip] = %w(
@@ -24,12 +24,12 @@ module Docs
       /docs/upgrade
       /docs/artisan
       /docs/commands
-      /api/4.1/panel.html
-      /api/4.1/classes.html
-      /api/4.1/interfaces.html
-      /api/4.1/traits.html
-      /api/4.1/doc-index.html
-      /api/4.1/Illuminate.html)
+      /api/4.2/panel.html
+      /api/4.2/classes.html
+      /api/4.2/interfaces.html
+      /api/4.2/traits.html
+      /api/4.2/doc-index.html
+      /api/4.2/Illuminate.html)
 
     options[:attribution] = <<-HTML
       &copy; Taylor Otwell<br>
