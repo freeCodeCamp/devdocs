@@ -2,7 +2,7 @@ module Docs
   class Less
     class EntriesFilter < Docs::EntriesFilter
       def name
-        at_css('h1').content
+        at_css('h2').content
       end
 
       def type
@@ -16,13 +16,13 @@ module Docs
       def language_entries
         entries = []
 
-        css('h1').each do |node|
-          name = node.content
+        css('h2').each do |node|
+          name = node.content.strip
           name = 'Rulesets' if name == 'Passing Rulesets to Mixins'
           entries << [name, node['id']] unless name == 'Overview'
         end
 
-        css('h2[id^="import-options-"]').each do |node|
+        css('h3[id^="import-options-"]').each do |node|
           entries << ["@import #{node.content}", node['id']]
         end
 
@@ -33,9 +33,9 @@ module Docs
           ['@property',         'variables-feature-properties'],
           ['@@var',             'variables-feature-variable-names'],
           [':extend()',         'extend-feature'],
-          [':extend(all)',      'extend-feature-extend-quotallquot'],
-          ['@arguments',        'mixins-parametric-feature-the-codeargumentscode-variable'],
-          ['@rest',             'mixins-parametric-feature-advanced-arguments-and-the-coderestcode-variable'],
+          [':extend(all)',      'extend-feature-extend-all-'],
+          ['@arguments',        'mixins-parametric-feature-the-arguments-variable'],
+          ['@rest',             'mixins-parametric-feature-advanced-arguments-and-the-rest-variable'],
           ['@import',           'import-directives-feature'],
           ['when',              'mixin-guards-feature'],
           ['.loop()',           'loops-feature'],
@@ -48,13 +48,11 @@ module Docs
         entries = []
         type = nil
 
-        css('.docs-section').each do |section|
-          if title = section.at_css('h1')
-            type = title.content
+        css('*').each do |node|
+          if node.name == 'h2'
+            type = node.content
             type.sub! %r{(.+) Functions}, 'Functions: \1'
-          end
-
-          section.css('h3').each do |node|
+          elsif node.name == 'h4'
             entries << [node.content, node['id'], type]
           end
         end

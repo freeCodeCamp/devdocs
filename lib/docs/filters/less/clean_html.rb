@@ -2,13 +2,18 @@ module Docs
   class Less
     class CleanHtmlFilter < Filter
       def call
-        css('.source-link').remove
+        css('.anchor-target').each do |node|
+          node.parent['id'] = node['id']
+          node.remove
+        end
+
+        css('.source-link', 'a[id$="md"]', 'br').remove
 
         css('#functions-overview').each do |node|
           node.ancestors('.docs-section').remove
         end
 
-        css('.docs-section', 'blockquote').each do |node|
+        css('.docs-content', '.docs-section', '.section-content', 'blockquote').each do |node|
           node.before(node.children).remove
         end
 
