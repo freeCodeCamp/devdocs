@@ -236,6 +236,11 @@ credits = [
     'MIT',
     'https://raw.github.com/nex3/sass/master/MIT-LICENSE'
   ], [
+    'Sinon',
+    '2010-2014 Christian Johansen',
+    'BSD',
+    'https://raw.githubusercontent.com/cjohansen/Sinon.JS/master/LICENSE'
+  ], [
     'Underscore.js',
     '2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',

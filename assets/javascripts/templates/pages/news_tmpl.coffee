@@ -25,7 +25,7 @@ newsItem = (date, news) ->
 
 app.news = [
   [ 1404172800000, # July 1, 2014
-    """ New <a href="/chai/">Chai</a> documentation """,
+    """ New <a href="/chai/">Chai</a> and <a href="/sinon/">Sinon</a> documentations """,
   ], [
     1402790400000, # June 15, 2014
     """ New <a href="/requirejs/">RequireJS</a> documentation """,
