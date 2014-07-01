@@ -1,7 +1,7 @@
 module Docs
   class Sass < UrlScraper
     self.type = 'yard'
-    self.version = '3.3.8'
+    self.version = '3.3.9'
     self.base_url = 'http://sass-lang.com/documentation/'
     self.root_path = 'file.SASS_REFERENCE.html'
 
