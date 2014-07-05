@@ -101,6 +101,11 @@ credits = [
     'MIT',
     'https://raw.github.com/jashkenas/coffee-script/master/LICENSE'
   ], [
+    'Cordova',
+    '2012 The Apache Software Foundation',
+    'Apache',
+    'https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE'
+  ], [
     'CSS<br>DOM<br>HTML<br>JavaScript',
     '2005-2013 Mozilla Developer Network and individual contributors',
     'CC BY-SA',

@@ -4,7 +4,7 @@
   width: 1rem;
   height: 1rem;
   background-image: image-url('icons.png');
-  background-size: 5rem 10rem;
+  background-size: 5rem 11rem;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
@@ -61,3 +61,4 @@
 ._icon-requirejs:before     { background-position: -2rem -9rem; }
 ._icon-chai:before          { background-position: -3rem -9rem; }
 ._icon-sinon:before         { background-position: -4rem -9rem; }
+._icon-cordova:before       { background-position: 0 -10rem; }
