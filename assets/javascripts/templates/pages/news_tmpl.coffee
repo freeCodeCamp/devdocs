@@ -6,8 +6,16 @@ app.templates.newsPage = ->
       <div class="_news">#{app.templates.newsList app.news}</div> """
 
 app.templates.newsList = (news) ->
+  year = new Date().getUTCFullYear()
   result = ''
-  result += newsItem new Date(value[0]), value[1..] for value in news
+
+  for value in news
+    date = new Date(value[0])
+    if year isnt date.getUTCFullYear()
+      year = date.getUTCFullYear()
+      result += "<h4>#{year}</h4>"
+    result += newsItem(date, value[1..])
+
   result
 
 MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
