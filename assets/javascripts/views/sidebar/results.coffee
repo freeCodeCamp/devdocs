@@ -33,11 +33,11 @@ class app.views.Results extends app.View
     return
 
   focusFirst: ->
-    @listFocus?.focus @el.firstChild
+    @listFocus?.focus @el.firstElementChild
     return
 
   openFirst: ->
-    @el.firstChild?.click()
+    @el.firstElementChild?.click()
     return
 
   afterRoute: (route, context) =>
