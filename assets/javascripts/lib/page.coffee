@@ -42,6 +42,7 @@ page.show = (path, state) ->
   page.dispatch(context)
   context.pushState()
   ga?('send', 'pageview', location.pathname + location.search + location.hash)
+  _gauges?.push(['track'])
   context
 
 page.replace = (path, state, skipDispatch, init) ->
@@ -51,6 +52,7 @@ page.replace = (path, state, skipDispatch, init) ->
   page.dispatch(context) unless skipDispatch
   context.replaceState()
   ga?('send', 'pageview', location.pathname + location.search + location.hash) unless init
+  _gauges?.push(['track'])
   context
 
 page.dispatch = (context) ->
