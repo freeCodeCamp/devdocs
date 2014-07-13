@@ -8,7 +8,7 @@ module Docs
       def get_name
         name = at_css('.api-header').content.split.first
         # Remove "Ember." prefix if the next character is uppercase
-        name.sub! %r{\AEmber\.([A-Z])}, '\1'
+        name.sub! %r{\AEmber\.([A-Z])(?!EATURES)}, '\1'
         name == 'Handlebars.helpers' ? 'Handlebars Helpers' : name
       end
 
