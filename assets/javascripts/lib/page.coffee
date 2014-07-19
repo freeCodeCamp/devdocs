@@ -41,8 +41,7 @@ page.show = (path, state) ->
   currentState = context.state
   page.dispatch(context)
   context.pushState()
-  ga?('send', 'pageview', location.pathname + location.search + location.hash)
-  _gauges?.push(['track'])
+  track()
   context
 
 page.replace = (path, state, skipDispatch, init) ->
@@ -51,8 +50,7 @@ page.replace = (path, state, skipDispatch, init) ->
   currentState = context.state
   page.dispatch(context) unless skipDispatch
   context.replaceState()
-  ga?('send', 'pageview', location.pathname + location.search + location.hash) unless init
-  _gauges?.push(['track'])
+  track() unless init or skipDispatch
   context
 
 page.dispatch = (context) ->
@@ -163,3 +161,8 @@ onclick = (event) ->
 
 isSameOrigin = (url) ->
   url.indexOf("#{location.protocol}//#{location.hostname}") is 0
+
+track = ->
+  ga?('send', 'pageview', location.pathname + location.search + location.hash)
+  _gauges?.push(['track'])
+  return
