@@ -24,7 +24,7 @@ DevDocs is made of two separate pieces: a Ruby scraper responsible for generatin
 DevDocs requires Ruby 2.1 and a JavaScript runtime supported by [ExecJS](https://github.com/sstephenson/execjs#readme) (included in OS X and Windows; [Node.js](http://nodejs.org/) on Linux). Once you have these installed, run the following commands:
 
 ```
-git clone git@github.com:Thibaut/devdocs.git && cd devdocs
+git clone https://github.com/Thibaut/devdocs.git && cd devdocs
 gem install bundler
 bundle install
 thor docs:download --all
