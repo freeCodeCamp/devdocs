@@ -13,7 +13,7 @@ class app.views.Results extends app.View
 
   init: ->
     @addSubview @listSelect = new app.views.ListSelect @el
-    @addSubview @listFocus  = new app.views.ListFocus @el unless $.isTouchScreen()
+    @addSubview @listFocus  = new app.views.ListFocus @el unless app.isMobile()
 
     @search
       .on 'results', @onResults
