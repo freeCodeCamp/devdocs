@@ -188,6 +188,11 @@ credits = [
     'MIT',
     'https://raw.github.com/lodash/lodash/master/LICENSE.txt'
   ], [
+    'Markdown',
+    '2004 John Gruber',
+    'BSD',
+    'http://daringfireball.net/projects/markdown/license'
+  ], [
     'MaxCDN',
     '2014 MaxCDN',
     'MIT',
