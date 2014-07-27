@@ -12,7 +12,7 @@ class app.views.Content extends app.View
     pageDown: 'scrollPageDown'
     home:     'scrollToTop'
     end:      'scrollToBottom'
-    altRight:   'onAltRight'
+    altF:     'onAltF'
 
   @routes:
     before: 'beforeRoute'
@@ -151,7 +151,7 @@ class app.views.Content extends app.View
       $.popup(link)
     return
 
-  onAltRight: (event) =>
+  onAltF: (event) =>
     unless document.activeElement and $.hasChild @el, document.activeElement
       @findByTag('a')?.focus()
       $.stopEvent(event)

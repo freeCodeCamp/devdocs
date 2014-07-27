@@ -100,11 +100,11 @@ class app.Shortcuts
       when 38
         @trigger 'altUp'
         false
-      when 39
-        @trigger 'altRight', event
       when 40
         @trigger 'altDown'
         false
+      when 70
+        @trigger 'altF', event
       when 71
         @trigger 'altG'
         false
