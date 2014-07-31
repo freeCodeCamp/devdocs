@@ -1,3 +1,8 @@
+# Prevents this error: https://gist.github.com/nitay/0cbf5ccb2bc611f627e5
+# See also: http://stackoverflow.com/questions/694115/why-does-ruby-open-uris-open-return-a-stringio-in-my-unit-test-but-a-fileio-in
+OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
+OpenURI::Buffer.const_set 'StringMax', 0
+
 class DocsCLI < Thor
   include Thor::Actions
 
