@@ -149,8 +149,8 @@ class DocsCLI < Thor
           status = begin
             download_doc(doc)
             'OK'
-          rescue OpenURI::HTTPError => error
-            "FAILED (#{error.message})"
+          rescue => e
+            "FAILED (#{e.class}: #{e.message})"
           end
           puts "(#{i += 1}/#{length}) #{doc.name} #{status}"
         end
