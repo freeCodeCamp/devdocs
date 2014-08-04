@@ -7,7 +7,7 @@ module Docs
       container = container.call self if container.is_a? Proc
 
       if container
-        doc.at_css(container) || raise(ContainerNotFound, "element '#{container}' could not be found in the document")
+        doc.at_css(container) || raise(ContainerNotFound, "element '#{container}' could not be found in the document, url=#{current_url}")
       else
         doc
       end
