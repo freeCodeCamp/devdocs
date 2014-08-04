@@ -118,6 +118,11 @@ credits = [
     'BSD',
     'https://raw.github.com/mbostock/d3/master/LICENSE'
   ], [
+    'Django',
+    'Django Software Foundation and individual contributors',
+    'BSD',
+    'https://raw.githubusercontent.com/django/django/master/LICENSE'
+  ], [
     'Ember.js',
     '2014 Yehuda Katz, Tom Dale and Ember.js contributors',
     'MIT',

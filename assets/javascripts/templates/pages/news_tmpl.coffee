@@ -32,7 +32,10 @@ newsItem = (date, news) ->
   result
 
 app.news = [
-  [ 1406419200000, # July 27, 2014
+  [ 1407110400000, # August 4, 2014
+    """ New <a href="/django/">Django</a> documentation """,
+  ], [
+    1406419200000, # July 27, 2014
     """ New <a href="/markdown/">Markdown</a> documentation """,
   ], [
     1404518400000, # July 5, 2014
