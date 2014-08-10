@@ -1,4 +1,5 @@
-ctrlKey = if navigator.userAgent.indexOf 'Mac OS X' then 'cmd' else 'ctrl'
+ctrlKey = if navigator.userAgent?.indexOf('Mac') >= 0 then 'cmd' else 'ctrl'
+navKey = if navigator.platform?.indexOf('Win') >= 0 then 'alt' else ctrlKey
 
 app.templates.helpPage = """
   <div class="_toc">
@@ -59,8 +60,8 @@ app.templates.helpPage = """
   <h3 class="_shortcuts-title">Navigation</h3>
   <dl class="_shortcuts-dl">
     <dt class="_shortcuts-dt">
-      <code class="_shortcut-code">#{ctrlKey} + &larr;</code>
-      <code class="_shortcut-code">#{ctrlKey} + &rarr;</code>
+      <code class="_shortcut-code">#{navKey} + &larr;</code>
+      <code class="_shortcut-code">#{navKey} + &rarr;</code>
     <dd class="_shortcuts-dd">Go back/forward
     <dt class="_shortcuts-dt">
       <code class="_shortcut-code">alt + &darr;</code>

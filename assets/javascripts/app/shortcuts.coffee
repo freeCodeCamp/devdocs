@@ -2,6 +2,7 @@ class app.Shortcuts
   $.extend @prototype, Events
 
   constructor: ->
+    @isWindows = navigator.platform?.indexOf('Win') >= 0
     @start()
 
   start: ->
@@ -72,14 +73,16 @@ class app.Shortcuts
       when 13
         @trigger 'superEnter'
       when 37
-        @trigger 'superLeft'
-        false
+        unless @isWindows
+          @trigger 'superLeft'
+          false
       when 38
         @trigger 'home'
         false
       when 39
-        @trigger 'superRight'
-        false
+        unless @isWindows
+          @trigger 'superRight'
+          false
       when 40
         @trigger 'end'
         false
@@ -97,9 +100,17 @@ class app.Shortcuts
     switch event.which
       when 9
         @trigger 'altRight', event
+      when 37
+        if @isWindows
+          @trigger 'superLeft'
+          false
       when 38
         @trigger 'altUp'
         false
+      when 39
+        if @isWindows
+          @trigger 'superRight'
+          false
       when 40
         @trigger 'altDown'
         false
