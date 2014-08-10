@@ -3,13 +3,13 @@ module Docs
     self.name = 'Moment.js'
     self.slug = 'moment'
     self.type = 'moment'
-    self.version = '2.7.0'
+    self.version = '2.8.1'
     self.base_url = 'http://momentjs.com/docs/'
 
     html_filters.push 'moment/clean_html', 'moment/entries', 'title'
 
     options[:title] = 'Moment.js'
-    options[:container] = '.docs'
+    options[:container] = '.docs-content'
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
