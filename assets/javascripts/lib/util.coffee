@@ -277,6 +277,12 @@ $.popup = (value) ->
 $.isTouchScreen = ->
   typeof ontouchstart isnt 'undefined'
 
+$.isWindows = ->
+  navigator.platform?.indexOf('Win') >= 0
+
+$.isMac = ->
+  navigator.userAgent?.indexOf('Mac') >= 0
+
 HIGHLIGHT_DEFAULTS =
   className: 'highlight'
   delay: 1000

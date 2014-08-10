@@ -2,7 +2,7 @@ class app.Shortcuts
   $.extend @prototype, Events
 
   constructor: ->
-    @isWindows = navigator.platform?.indexOf('Win') >= 0
+    @isWindows = $.isWindows()
     @start()
 
   start: ->

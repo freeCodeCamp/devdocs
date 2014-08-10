@@ -1,5 +1,5 @@
-ctrlKey = if navigator.userAgent?.indexOf('Mac') >= 0 then 'cmd' else 'ctrl'
-navKey = if navigator.platform?.indexOf('Win') >= 0 then 'alt' else ctrlKey
+ctrlKey = if $.isMac() then 'cmd' else 'ctrl'
+navKey = if $.isWindows() then 'alt' else ctrlKey
 
 app.templates.helpPage = """
   <div class="_toc">
