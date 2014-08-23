@@ -3,7 +3,7 @@ module Docs
     self.name = 'Knockout.js'
     self.slug = 'knockout'
     self.type = 'knockout'
-    self.version = '3.1.0'
+    self.version = '3.2.0'
     self.base_url = 'http://knockoutjs.com/documentation/'
     self.root_path = 'introduction.html'
 
