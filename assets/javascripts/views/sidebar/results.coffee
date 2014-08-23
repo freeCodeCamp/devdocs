@@ -17,6 +17,7 @@ class app.views.Results extends app.View
 
     @search
       .on 'results', @onResults
+      .on 'noresults', @onNoResults
       .on 'clear', @onClear
     return
 
@@ -26,6 +27,10 @@ class app.views.Results extends app.View
 
     if flags.initialResults
       if flags.urlSearch then @openFirst() else @focusFirst()
+    return
+
+  onNoResults: =>
+    @html @tmpl('sidebarNoResults')
     return
 
   onClear: =>

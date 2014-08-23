@@ -229,6 +229,20 @@
   }
 }
 
+._list-noresults {
+  padding: .625rem .75rem;
+  line-height: 1.25rem;
+  font-size: .8125rem;
+  color: $textColorLight;
+}
+
+._list-noresults-note {
+  display: block;
+  margin-top: .375rem;
+}
+
+._list-noresults-link { cursor: pointer; }
+
 //
 // List hover clone
 //

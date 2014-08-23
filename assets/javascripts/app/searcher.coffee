@@ -42,6 +42,7 @@ class app.Searcher
 
   end: ->
     @triggerResults [] unless @totalResults
+    @trigger 'end'
     @free()
     return
 

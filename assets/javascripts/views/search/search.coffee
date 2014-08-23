@@ -25,7 +25,9 @@ class app.views.Search extends app.View
     @addSubview @scope = new app.views.SearchScope @el
 
     @searcher = new app.Searcher
-    @searcher.on 'results', @onResults
+    @searcher
+      .on 'results', @onResults
+      .on 'end', @onEnd
 
     app.on 'ready', @onReady
     $.on window, 'hashchange', @searchUrl
@@ -66,6 +68,7 @@ class app.views.Search extends app.View
     @addClass @constructor.activeClass
     @trigger 'searching'
 
+    @hasResults = null
     @flags = urlSearch: url, initialResults: true
     @searcher.find @scope.getScope().entries.all(), 'text', @value
     return
@@ -90,8 +93,13 @@ class app.views.Search extends app.View
     return
 
   onResults: (results) =>
+    @hasResults = true if results.length
     @trigger 'results', results, @flags
     @flags.initialResults = false
+    return
+
+  onEnd: =>
+    @trigger 'noresults' unless @hasResults
     return
 
   onClick: (event) =>
