@@ -22,6 +22,7 @@ class app.views.Results extends app.View
     return
 
   onResults: (entries, flags) =>
+    @listFocus?.blur() if flags.initialResults
     @empty() if flags.initialResults
     @append @tmpl('sidebarResult', entries)
 
