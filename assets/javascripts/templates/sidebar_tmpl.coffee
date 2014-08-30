@@ -18,8 +18,8 @@ templates.sidebarResult = (entry) ->
   """<a href="#{entry.fullPath()}" class="_list-item _list-hover _list-result _icon-#{entry.doc.slug}"><span class="_list-reveal" data-reset-list title="Reveal in list"></span>#{$.escape entry.name}</a>"""
 
 templates.sidebarNoResults = ->
-  info = if app.isSingleDoc() or app.disabledDocs.isEmpty() then '' else """
-    <span class="_list-noresults-note">Note: documentations must be <a class="_list-noresults-link" data-pick-docs>enabled</a> before they appear in the search.</span>
+  info = if app.isSingleDoc() or !app.disabledDocs.isEmpty() then '' else """
+    <span class="_list-noresults-note">Note: documentations must be <a class="_list-noresults-link" data-pick-docs>enabled</a> to appear in the search.</span>
   """
   """ <div class="_list-noresults">No results. #{info}</div> """
 
