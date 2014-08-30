@@ -15,7 +15,10 @@ module Docs
         end
 
         # Remove Books, Screencasts, etc.
-        css('#scripts ~ *', '#scripts').remove
+        while doc.children.last['id'] != 'scripts'
+          doc.children.last.remove
+        end
+        doc.children.last.remove
 
         # Make proper headings
         css('.header').each do |node|

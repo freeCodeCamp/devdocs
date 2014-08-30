@@ -2,7 +2,7 @@ module Docs
   class Coffeescript < UrlScraper
     self.name = 'CoffeeScript'
     self.type = 'coffeescript'
-    self.version = '1.7.1'
+    self.version = '1.8.0'
     self.base_url = 'http://coffeescript.org'
 
     html_filters.push 'coffeescript/clean_html', 'coffeescript/entries', 'title'
