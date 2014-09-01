@@ -17,7 +17,7 @@ GEM
     coffee-script (2.3.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.7.1)
+    coffee-script-source (1.8.0)
     daemons (1.1.9)
     erubis (2.7.0)
     ethon (0.7.1)
@@ -34,7 +34,7 @@ GEM
     json (1.8.1)
     method_source (0.8.2)
     mini_portile (0.6.0)
-    minitest (5.4.0)
+    minitest (5.4.1)
     multi_json (1.10.1)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
@@ -52,7 +52,7 @@ GEM
     rack-test (0.6.2)
       rack (>= 1.0)
     rr (1.1.2)
-    sass (3.4.1)
+    sass (3.4.2)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
