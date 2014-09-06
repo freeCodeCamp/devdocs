@@ -50,6 +50,7 @@
 ._splash-title {
   color: #ddd;
   cursor: default;
+  opacity: 1;
   @extend ._booting:before, %user-select-none;
 }
 
