@@ -7,8 +7,9 @@ DevDocs combines multiple API documentations in a fast, organized, and searchabl
 
 Keep track of development and community news:
 
-* Subscribe to the [newsletter](http://eepurl.com/HnLUz)
+* Watch the repository on [GitHub](https://github.com/Thibaut/devdocs/subscription)
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
+* Subscribe to the [newsletter](http://eepurl.com/HnLUz)
 * Join the [mailing list](https://groups.google.com/d/forum/devdocs)
 
 DevDocs is free and open source. If you like it, please consider funding the project on [Gratipay](https://gratipay.com/Thibaut/). Thanks!
@@ -35,7 +36,7 @@ Finally, point your browser at [localhost:9292](http://localhost:9292) (the firs
 
 The `thor docs:download` command is used to download/update individual documentations (e.g. `thor docs:download html css`), or all at the same time (using the `--all` option). You can see the list of available documentations by running `thor docs:list`.
 
-**Note:** there is currently no update mechanism other than `git pull origin master` to update the code and `thor docs:download` to download the latest version of the docs. To stay informed about new releases, be sure to subscribe to the [newsletter](http://eepurl.com/HnLUz).
+**Note:** there is currently no update mechanism other than `git pull origin master` to update the code and `thor docs:download` to download the latest version of the docs. To stay informed about new releases, be sure to watch this repository and/or subscribe to the [newsletter](http://eepurl.com/HnLUz).
 
 ## Vision
 
@@ -137,4 +138,4 @@ This software is licensed under the terms of the Mozilla Public License v2.0. Se
 
 ## Questions?
 
-If you have any questions, please feel free to ask on the [mailing list](https://groups.google.com/d/forum/devdocs).
+If you have any questions, please feel free to ask them on the [mailing list](https://groups.google.com/d/forum/devdocs).
