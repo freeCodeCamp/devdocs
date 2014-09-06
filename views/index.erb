@@ -29,6 +29,7 @@
   <%= javascript_tag 'docs' %><% unless App.production? %>
   <%= javascript_tag 'debug' %><% end %>
 </head>
-<body class="_booting">
+<body class="_booting _noscript">
+<noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
 <%= erb :app %></body>
 </html>

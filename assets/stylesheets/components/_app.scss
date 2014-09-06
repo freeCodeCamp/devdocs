@@ -9,6 +9,7 @@
   @extend %border-box;
 
   ._booting > & { opacity: 0; }
+  ._noscript > & { display: none; }
 }
 
 ._booting {
@@ -33,3 +34,5 @@
             transition: opacity .1s .3s;
   }
 }
+
+._noscript { opacity: 1; }

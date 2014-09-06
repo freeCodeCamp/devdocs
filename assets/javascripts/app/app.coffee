@@ -101,6 +101,7 @@
     return
 
   showLoading: ->
+    document.body.classList.remove '_noscript'
     document.body.classList.add '_loading'
     return
 
