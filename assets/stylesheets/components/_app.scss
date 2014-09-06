@@ -13,10 +13,8 @@
 
 ._booting {
   opacity: 0;
-  -webkit-transition: opacity .1s .3s;
-          transition: opacity .1s .3s;
 
-  &._loading { opacity: 1; }
+  &._loading, &._loading:before { opacity: 1; }
 
   &:before {
     content: 'Loading\2026';
@@ -30,5 +28,8 @@
     color: #ccc;
     text-align: center;
     letter-spacing: -.125rem;
+    opacity: 0;
+    -webkit-transition: opacity .1s .3s;
+            transition: opacity .1s .3s;
   }
 }
