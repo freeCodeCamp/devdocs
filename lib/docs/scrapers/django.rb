@@ -2,9 +2,9 @@ module Docs
   class Django < FileScraper
     self.name = 'Django'
     self.type = 'sphinx'
-    self.version = '1.6.6'
+    self.version = '1.7.0'
     self.dir = '/Users/Thibaut/DevDocs/Docs/Django'
-    self.base_url = 'https://docs.djangoproject.com/en/1.6/'
+    self.base_url = 'https://docs.djangoproject.com/en/1.7/'
     self.root_path = 'index.html'
 
     html_filters.push 'django/entries', 'django/clean_html'
