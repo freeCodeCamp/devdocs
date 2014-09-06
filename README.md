@@ -11,7 +11,7 @@ Keep track of development and community news:
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 * Join the [mailing list](https://groups.google.com/d/forum/devdocs)
 
-DevDocs is free and open source. If you like it, please consider funding the project on [Gittip](https://www.gittip.com/Thibaut/). Thanks!
+DevDocs is free and open source. If you like it, please consider funding the project on [Gratipay](https://gratipay.com/Thibaut/). Thanks!
 
 **Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [License](#copyright--license) · [Questions?](#questions)
 

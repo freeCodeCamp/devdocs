@@ -70,12 +70,12 @@
   &:hover > ._maxcdn-logo-bw { opacity: .5; }
 }
 
-._splash-gittip {
+._splash-gratipay {
   right: 1.25rem;
   @extend %splash-promo;
 
-  > ._gittip-logo-bw { opacity: .35; }
-  &:hover > ._gittip-logo-bw { opacity: .65; }
+  > ._gratipay-logo-bw { opacity: .35; }
+  &:hover > ._gratipay-logo-bw { opacity: .65; }
 }
 
 //
@@ -334,14 +334,14 @@
   }
 }
 
-._gittip-logo-bw {
-  width: 4.375rem;
-  margin-left: .375rem;
-  background-size: 4.375rem 1rem;
-  background-image: image-url('gittip-bw.png');
+._gratipay-logo-bw {
+  width: 3.75rem;
+  margin-left: .25rem;
+  background-size: 3.75rem 1rem;
+  background-image: image-url('gratipay-bw.png');
   @extend %maxcdn-logo;
 
   @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
-    background-image: image-url('gittip-bw@2x.png');
+    background-image: image-url('gratipay-bw@2x.png');
   }
 }
