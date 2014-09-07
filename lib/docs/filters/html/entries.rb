@@ -1,7 +1,7 @@
 module Docs
   class Html
     class EntriesFilter < Docs::EntriesFilter
-      HTML5 = %w(content element menuitem template)
+      HTML5 = %w(content element video)
       OBSOLETE = %w(frame frameset hgroup noframes)
       ADDITIONAL_ENTRIES = { 'Heading_Elements' => (1..6).map { |n| ["h#{n}"] } }
 
@@ -14,7 +14,7 @@ module Docs
           'Obsolete'
         else
           spec = css('.standard-table').last.try(:content)
-          if (spec && spec =~ /HTML\s?5/ && spec !~ /HTML\s?4/) || HTML5.include?(slug)
+          if (spec && html5_spec?(spec)) || HTML5.include?(slug)
             'HTML5'
           else
             'Standard'
@@ -28,6 +28,10 @@ module Docs
 
       def additional_entries
         ADDITIONAL_ENTRIES[slug] || []
+      end
+
+      def html5_spec?(spec)
+        (spec =~ /HTML\s?5/ || spec.include?('WHATWG HTML Living Standard')) && spec !~ /HTML\s?4/
       end
     end
   end

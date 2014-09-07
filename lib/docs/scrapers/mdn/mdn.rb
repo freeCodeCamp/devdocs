@@ -11,7 +11,7 @@ module Docs
 
     options[:trailing_slash] = false
     options[:attribution] = <<-HTML
-      &copy; 2013 Mozilla Contributors<br>
+      &copy; 2014 Mozilla Contributors<br>
       Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.
     HTML
 
