@@ -11,15 +11,18 @@ module Docs
         'Geolocation'         => 'Geolocation',
         'Media Capture'       => 'Media',
         'Media Source'        => 'Media',
+        'MediaStream'         => 'MediaRecorder',
         'Navigation Timing'   => 'Navigation Timing',
         'Network Information' => 'Network Information',
         'Web Audio'           => 'Web Audio',
-        'Web Workers'         => 'Web Workers' }
+        'Web Workers'         => 'Web Workers',
+        'WebRTC'              => 'WebRTC' }
 
       TYPE_BY_NAME_STARTS_WITH = {
+        'Audio'               => 'Audio',
         'Canvas'              => 'Canvas',
         'ChildNode'           => 'Node',
-        'console'             => 'Console',
+        'Console'             => 'Console',
         'CSS'                 => 'CSS',
         'document'            => 'Document',
         'DocumentFragment'    => 'DocumentFragment',
@@ -31,12 +34,14 @@ module Docs
         'GlobalEventHandlers' => 'GlobalEventHandlers',
         'history'             => 'History',
         'IDB'                 => 'IndexedDB',
+        'IndexedDB'           => 'IndexedDB',
         'Location'            => 'Location',
         'navigator'           => 'Navigator',
         'Node'                => 'Node',
         'Notification'        => 'Notification',
         'ParentNode'          => 'Node',
         'Range'               => 'Range',
+        'RTC'                 => 'WebRTC',
         'Selection'           => 'Selection',
         'StyleSheet'          => 'CSS',
         'SVG'                 => 'SVG',
@@ -104,9 +109,9 @@ module Docs
       end
 
       def include_default_entry?
-        !(node = doc.at_css '.overheadIndicator') ||
-        !node.content.include?('not on a standards track') &&
-        !node.content.include?('removed from the Web')
+        (node = doc.at_css '.overheadIndicator').nil? ||
+        type == 'Console' ||
+        (node.content.exclude?('not on a standards track') && node.content.exclude?('removed from the Web'))
       end
     end
   end
