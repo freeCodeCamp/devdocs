@@ -366,4 +366,44 @@ class InternalUrlsFilterTest < MiniTest::Spec
       end
     end
   end
+
+  context "context[:skip_link] is a block" do
+    before do
+      @body = link_to context[:url]
+    end
+
+    it "calls the block with each link" do
+      context[:skip_link] = ->(arg) { @arg = arg.try(:to_html); nil }
+      filter.call
+      assert_equal @body, @arg
+    end
+
+    context "and the block returns true" do
+      before do
+        context[:skip_link] = ->(_) { true }
+      end
+
+      it "doesn't include the link's url in :internal_urls" do
+        assert internal_urls.empty?
+      end
+
+      it "doesn't replace the link's url" do
+        assert_equal @body, filter_output_string
+      end
+    end
+
+    context "and the block returns false" do
+      before do
+        context[:skip_link] = ->(_) { false }
+      end
+
+      it "includes the link's url in :internal_urls" do
+        refute internal_urls.empty?
+      end
+
+      it "replaces the link's url" do
+        refute_equal @body, filter_output_string
+      end
+    end
+  end
 end
