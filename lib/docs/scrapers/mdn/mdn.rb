@@ -10,6 +10,9 @@ module Docs
     text_filters.insert_before 'attribution', 'mdn/contribute_link'
 
     options[:trailing_slash] = false
+
+    options[:skip_link] = ->(link) { link['title'].try(:include?, 'hasn\'t been written yet'.freeze) }
+
     options[:attribution] = <<-HTML
       &copy; 2014 Mozilla Contributors<br>
       Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.
