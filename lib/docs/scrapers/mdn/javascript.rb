@@ -17,8 +17,14 @@ module Docs
       /Global_Objects/Iterator
       /Global_Objects/Proxy
       /Reserved_Words
+      /Functions/arguments
       /arrow_functions
-      /rest_parameters)
+      /rest_parameters
+      /default_parameters
+      /Strict_mode
+      /Functions/rest_parameters
+      /Methods_Index
+      /Properties_Index)
 
     # Duplicates
     options[:skip].concat %w(
