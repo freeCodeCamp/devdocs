@@ -55,10 +55,6 @@ class NormalizePathsFilterTest < MiniTest::Spec
     it "returns 'test' with 'test.html'" do
       assert_equal 'test', filter.normalize_path('test.html')
     end
-
-    it "returns 'te-st' with 'te:st'" do
-      assert_equal 'te-st', filter.normalize_path('te:st')
-    end
   end
 
   before do

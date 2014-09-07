@@ -34,7 +34,6 @@ module Docs
 
     def normalize_path(path)
       path = path.downcase
-      path.gsub! ':', '-'
 
       if path == '.'
         'index'
