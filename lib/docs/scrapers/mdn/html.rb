@@ -3,7 +3,7 @@ module Docs
     self.name = 'HTML'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/HTML'
     self.root_path = '/Element'
-    self.initial_paths = %w(/Attributes)
+    self.initial_paths = %w(/Attributes /Link_types)
 
     html_filters.push 'html/clean_html', 'html/entries', 'title'
 
@@ -14,6 +14,8 @@ module Docs
         'Heading Elements'
       elsif filter.slug == 'Attributes'
         'Attributes'
+      elsif filter.slug == 'Link_types'
+        'Link types'
       else
         "<#{filter.default_title}>"
       end

@@ -27,7 +27,7 @@ module Docs
       end
 
       def include_default_entry?
-        !%w(Attributes Element/Heading_Elements).include?(slug)
+        !%w(Attributes Link_types Element/Heading_Elements).include?(slug)
       end
 
       def additional_entries
@@ -37,6 +37,13 @@ module Docs
           css('.standard-table td:first-child').map do |node|
             name = node.content.strip
             id = node.parent['id'] = name.parameterize
+            [name, id, 'Attributes']
+          end
+        elsif slug == 'Link_types'
+          css('.standard-table td:first-child > code').map do |node|
+            name = node.content.strip
+            id = node.parent.parent['id'] = name.parameterize
+            name.prepend 'rel: '
             [name, id, 'Attributes']
           end
         else
