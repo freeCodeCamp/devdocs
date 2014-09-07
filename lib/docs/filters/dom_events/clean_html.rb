@@ -16,7 +16,7 @@ module Docs
         # Remove events we don't want
         css('tr').each do |tr|
           if td = tr.at_css('td:nth-child(3)')
-            tr.remove if td.content =~ /IndexedDB|Media|Audio|SVG|Battery|Gamepad|Sensor/i
+            tr.remove if td.content =~ /SVG|Battery|Gamepad|Sensor/i
           end
         end
       end

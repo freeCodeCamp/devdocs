@@ -7,8 +7,11 @@ module Docs
         'CSS'              => 'CSS',
         'Drag'             => 'Drag & Drop',
         'Focus'            => 'Focus',
+        'Fullscreen'       => 'Fullscreen',
         'HashChange'       => 'History',
+        'IndexedDB'        => 'IndexedDB',
         'Keyboard'         => 'Keyboard',
+        'edia'             => 'Media',
         'Mouse'            => 'Mouse',
         'Offline'          => 'Offline',
         'Orientation'      => 'Device',
@@ -24,6 +27,7 @@ module Docs
         'Transition'       => 'CSS',
         'PageTransition'   => 'History',
         'WebSocket'        => 'WebSocket',
+        'Web Audio'        => 'Web Audio',
         'Web Messaging'    => 'Web Messaging',
         'Wheel'            => 'Mouse',
         'Worker'           => 'Web Workers' }
@@ -33,8 +37,8 @@ module Docs
       LOAD_SLUGS = %w(abort beforeunload DOMContentLoaded error load
         readystatechange unload)
 
-      APPEND_TYPE = %w(Application\ Cache Progress Server\ Sent\ Events
-        WebSocket Web\ Messaging Web\ Workers)
+      APPEND_TYPE = %w(Application\ Cache IndexedDB Progress
+        Server\ Sent\ Events WebSocket Web\ Messaging Web\ Workers)
 
       def get_name
         name = super.split.first
