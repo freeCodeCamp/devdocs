@@ -3,13 +3,17 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       HTML5 = %w(content element video)
       OBSOLETE = %w(frame frameset hgroup noframes)
-      ADDITIONAL_ENTRIES = { 'Heading_Elements' => (1..6).map { |n| ["h#{n}"] } }
+      ADDITIONAL_ENTRIES = { 'Element/Heading_Elements' => (1..6).map { |n| ["h#{n}"] } }
 
       def get_name
-        super.downcase
+        name = super
+        name.remove!('Element.').try(:downcase!)
+        name
       end
 
       def get_type
+        slug = self.slug.remove('Element/')
+
         if at_css('.obsoleteHeader', '.deprecatedHeader', '.nonStandardHeader') || OBSOLETE.include?(slug)
           'Obsolete'
         else
@@ -23,11 +27,21 @@ module Docs
       end
 
       def include_default_entry?
-        slug != 'Heading_Elements'
+        !%w(Attributes Element/Heading_Elements).include?(slug)
       end
 
       def additional_entries
-        ADDITIONAL_ENTRIES[slug] || []
+        return ADDITIONAL_ENTRIES[slug] if ADDITIONAL_ENTRIES.key?(slug)
+
+        if slug == 'Attributes'
+          css('.standard-table td:first-child').map do |node|
+            name = node.content.strip
+            id = node.parent['id'] = name.parameterize
+            [name, id, 'Attributes']
+          end
+        else
+          []
+        end
       end
 
       def html5_spec?(spec)
