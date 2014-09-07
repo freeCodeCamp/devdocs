@@ -10,7 +10,7 @@ class app.views.Sidebar extends app.View
     escape: 'onEscape'
 
   init: ->
-    @addSubview @hover  = new app.views.SidebarHover @el unless $.isTouchScreen()
+    @addSubview @hover  = new app.views.SidebarHover @el unless app.isMobile() or $.isTouchScreen()
     @addSubview @search = new app.views.Search
 
     @search
