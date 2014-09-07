@@ -8,7 +8,6 @@ module Docs
 
     options[:root_title] = 'CSS'
 
-    # Don't want
     options[:skip] = %w(
       /Syntax
       /At-rule
@@ -32,12 +31,15 @@ module Docs
       /Pseudo-classes
       /CSS_values_syntax
       /Media/Visual
-      /block_formatting_context)
+      /block_formatting_context
+      /image()
+      /paged_media)
 
     options[:skip_patterns] = [/\-webkit/, /\-moz/, /Extensions/, /Tools/]
 
-    # Broken / Empty
-    options[:skip].concat %w(/image())
+    options[:replace_paths] = {
+      '/%3Cbasic-shape%3E' => '/basic-shape'
+    }
 
     options[:fix_urls] = ->(url) do
       url.sub! %r{https://developer\.mozilla\.org/en\-US/docs/CSS/([a-z@:])}, "#{Css.base_url}/\\1"
