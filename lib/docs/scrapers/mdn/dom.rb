@@ -24,6 +24,7 @@ module Docs
       /Event/Comparison_of_Event_Targets
       /FMRadio
       /IDBDatabaseException
+      /IndexedDB_API/Using_JavaScript_Generators_in_Firefox
       /NamedNodeMap
       /Node.baseURIObject
       /Node.nodePrincipal
@@ -46,8 +47,7 @@ module Docs
       /window.navigator.removeIdleObserver
       /window.navigator.requestWakeLock
       /window.updateCommands
-      /window.pkcs11
-      /XMLHttpRequest/Using_XMLHttpRequest)
+      /window.pkcs11)
 
     options[:skip_patterns] = [
       /NS/,
@@ -70,10 +70,6 @@ module Docs
       /\A\/Telephony/,
       /\A\/Bluetooth/,
       /\A\/Window\.\w+bar/i,
-      /\A\/CSS_Object_Model\//,
-      /\A\/Web_Audio_API\//,
-      /\A\/IndexedDB_API\//,
-      /\A\/MediaRecorder_API\//,
       /\A\/Apps/,
       /\A\/Contact/,
       /\A\/L10n/,

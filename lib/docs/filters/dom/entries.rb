@@ -19,7 +19,7 @@ module Docs
         'WebRTC'              => 'WebRTC' }
 
       TYPE_BY_NAME_STARTS_WITH = {
-        'Audio'               => 'Audio',
+        'Audio'               => 'Web Audio',
         'Canvas'              => 'Canvas',
         'ChildNode'           => 'Node',
         'Console'             => 'Console',
@@ -34,9 +34,9 @@ module Docs
         'GlobalEventHandlers' => 'GlobalEventHandlers',
         'history'             => 'History',
         'IDB'                 => 'IndexedDB',
-        'IndexedDB'           => 'IndexedDB',
         'Location'            => 'Location',
         'navigator'           => 'Navigator',
+        'MediaQuery'          => 'MediaQuery',
         'Node'                => 'Node',
         'Notification'        => 'Notification',
         'ParentNode'          => 'Node',
@@ -44,6 +44,7 @@ module Docs
         'RTC'                 => 'WebRTC',
         'Selection'           => 'Selection',
         'StyleSheet'          => 'CSS',
+        'Stylesheet'          => 'CSS',
         'SVG'                 => 'SVG',
         'Touch'               => 'Touch',
         'TreeWalker'          => 'TreeWalker',
@@ -53,8 +54,10 @@ module Docs
         'XMLHttpRequest'      => 'XMLHTTPRequest' }
 
       TYPE_BY_NAME_INCLUDES = {
-        'WebGL'  => 'Canvas',
-        'Worker' => 'Web Workers' }
+        'IndexedDB' => 'IndexedDB',
+        'udio'      => 'Web Audio',
+        'WebGL'     => 'Canvas',
+        'Worker'    => 'Web Workers' }
 
       TYPE_BY_NAME_MATCHES = {
         /HTML\w*Element/ => 'Elements' }
@@ -67,8 +70,16 @@ module Docs
         'Web Audio API'                   => 'Web Audio',
         'XMLHTTPRequest'                  => 'XMLHTTPRequest' }
 
+      CLEANUP_NAMES = %w(
+        CSS\ Object\ Model.
+        Web\ Audio\ API.
+        IndexedDB\ API.
+        MediaRecorder\ API.
+        XMLHttpRequest.)
+
       def get_name
         name = super
+        CLEANUP_NAMES.each { |str| name.remove!(str) }
         name.sub! 'Input.', 'HTMLInputElement.'
         name.sub! 'window.navigator', 'navigator'
         # Comment.Comment => Comment.constructor
