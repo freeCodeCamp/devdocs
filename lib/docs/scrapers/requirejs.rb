@@ -2,7 +2,7 @@ module Docs
   class Requirejs < UrlScraper
     self.name = 'RequireJS'
     self.type = 'requirejs'
-    self.version = '2.1.4'
+    self.version = '2.1.15'
     self.base_url = 'http://requirejs.org/docs/'
     self.root_path = 'api.html'
     self.initial_paths = %w(
