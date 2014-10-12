@@ -3,7 +3,7 @@ module Docs
     self.name = 'Node.js'
     self.slug = 'node'
     self.type = 'node'
-    self.version = '0.10.31'
+    self.version = '0.10.32'
     self.base_url = 'http://nodejs.org/api/'
 
     html_filters.push 'node/clean_html', 'node/entries', 'title'
