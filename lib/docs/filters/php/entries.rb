@@ -3,6 +3,7 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       TYPE_BY_NAME_STARTS_WITH = {
         'ArrayObject'     => 'SPL',
+        'Collectable'     => 'pthreads',
         'Cond'            => 'pthreads',
         'CURL'            => 'cURL',
         'Date'            => 'Date/Time',
