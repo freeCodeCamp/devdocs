@@ -22,7 +22,7 @@ Unless you wish to use DevDocs offline or contribute to the code, I recommend us
 
 DevDocs is made of two separate pieces: a Ruby scraper responsible for generating the documentation and index files, and a JavaScript front-end powered by a small Sinatra app.
 
-DevDocs requires Ruby 2.1.2 and a JavaScript runtime supported by [ExecJS](https://github.com/sstephenson/execjs#readme) (included in OS X and Windows; [Node.js](http://nodejs.org/) on Linux). Once you have these installed, run the following commands:
+DevDocs requires Ruby 2.1.3 and a JavaScript runtime supported by [ExecJS](https://github.com/sstephenson/execjs#readme) (included in OS X and Windows; [Node.js](http://nodejs.org/) on Linux). Once you have these installed, run the following commands:
 
 ```
 git clone https://github.com/Thibaut/devdocs.git && cd devdocs
