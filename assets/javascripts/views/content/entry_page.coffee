@@ -84,6 +84,7 @@ class app.views.EntryPage extends app.View
   onError: =>
     @xhr = null
     @render @tmpl('pageLoadError')
+    app.appCache?.update()
     return
 
   cache: ->
