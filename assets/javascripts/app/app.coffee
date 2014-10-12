@@ -1,5 +1,6 @@
 @app =
   $: $
+  $$: $$
   collections: {}
   models:      {}
   templates:   {}
@@ -142,7 +143,7 @@
   isInjectionError: ->
     # Some browser extensions expect the entire web to use jQuery.
     # I gave up trying to fight back.
-    window.$ isnt app.$
+    window.$ isnt app.$ or window.$$ isnt app.$$
 
   isAppError: (error, file) ->
     # Ignore errors from external scripts.
