@@ -4,12 +4,18 @@
 
 ._mobile {
   font-size: 100%;
+  background: white;
 
   // Layout
 
   body { -ms-overflow-style: -ms-autohiding-scrollbar; }
 
   ._app, ._container, ._content { overflow: visible; }
+
+  ._app {
+    max-width: none;
+    box-shadow: none;
+  }
 
   ._container {
     margin: 0;

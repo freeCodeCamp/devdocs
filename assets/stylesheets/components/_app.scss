@@ -1,9 +1,12 @@
 ._app {
   position: relative;
   z-index: 1;
+  max-width: 80rem;
   height: 100%;
   padding-top: $headerHeight;
   overflow: hidden;
+  background: white;
+  box-shadow: 1px 0 #c4c9cc, 1px 0 1px rgba(black, .15);
   -webkit-transition: opacity .2s;
           transition: opacity .2s;
   @extend %border-box;
@@ -26,7 +29,7 @@
     line-height: 1;
     margin-top: -.75em;
     font-size: 4rem;
-    color: #ccc;
+    color: #c8c8c8;
     text-align: center;
     letter-spacing: -.125rem;
     opacity: 0;
