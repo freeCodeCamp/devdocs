@@ -12,9 +12,10 @@ app.templates.notFoundPage = ->
 
 app.templates.pageLoadError = ->
   error """ Oops, that page failed to load. """,
-        """ It may be missing from the server or you could be offline.<br>
+        """ It may be missing from the server (try reloading the app) or you could be offline.<br>
             If you keep seeing this, you're likely behind a proxy or firewall which blocks cross-domain requests. """,
-        """ #{back} &middot; <a href="#" class="_error-link" data-retry>Retry</a> """
+        """ #{back} &middot; <a href="/##{location.pathname}" target="_top" class="_error-link">Reload</a>
+            &middot; <a href="#" class="_error-link" data-retry>Retry</a> """
 
 app.templates.bootError = ->
   error """ Oops, the app failed to load. """,
