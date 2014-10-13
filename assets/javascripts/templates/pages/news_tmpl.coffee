@@ -32,7 +32,10 @@ newsItem = (date, news) ->
   result
 
 app.news = [
-  [ 1410048000000, # September 7, 2014
+  [ 1413158400000, # October 13, 2014
+    """ New <a href="/xpath/">XPath</a> documentation """,
+  ], [
+    1410048000000, # September 7, 2014
     """ Updated the HTML, CSS, JavaScript, and DOM documentations with additional content. """,
   ], [
     1407110400000, # August 4, 2014
