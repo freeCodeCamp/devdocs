@@ -1,8 +1,9 @@
 app.templates.newsPage = ->
   """ <h1 class="_lined-heading">Changelog</h1>
-      <p class="_note">For the latest news and updates,
+      <p class="_note">For the latest news,
         subscribe to the <a href="http://eepurl.com/HnLUz">newsletter</a>
-        or follow <a href="https://twitter.com/DevDocs">@DevDocs</a>.
+        or follow <a href="https://twitter.com/DevDocs">@DevDocs</a>.<br>
+        For development updates, follow the project on <a href="https://github.com/Thibaut/devdocs">GitHub</a>.
       <div class="_news">#{app.templates.newsList app.news}</div> """
 
 app.templates.newsList = (news) ->
