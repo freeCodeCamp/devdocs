@@ -1,0 +1,5 @@
+._nginx {
+  h4 { @extend %block-heading; }
+  .note { @extend %note; }
+  .directive { margin: 2.5em 0 1em; }
+}

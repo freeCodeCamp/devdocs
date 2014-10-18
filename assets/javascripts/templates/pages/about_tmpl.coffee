@@ -208,6 +208,11 @@ credits = [
     'MIT',
     'https://raw.github.com/moment/moment/master/LICENSE'
   ], [
+    'nginx',
+    '2002-2014 Igor Sysoev<br>&copy; 2011-2014 Nginx, Inc.',
+    'BSD',
+    'http://nginx.org/LICENSE'
+  ], [
     'Node.js',
     'Joyent, Inc. and other Node contributors<br>Node.js is a trademark of Joyent, Inc.',
     'MIT',
