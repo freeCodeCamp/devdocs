@@ -3,11 +3,10 @@ module Docs
     self.name = 'Angular.js'
     self.slug = 'angular'
     self.type = 'angular'
-    self.version = '1.2.12'
-    self.base_url = 'http://docs.angularjs.org/partials/api/'
+    self.version = '1.3.0'
+    self.base_url = 'https://code.angularjs.org/1.3.0/docs/partials/api/'
 
-    html_filters.insert_before 'normalize_paths', 'angular/clean_html'
-    html_filters.push 'angular/entries', 'title'
+    html_filters.push 'angular/clean_html', 'angular/entries', 'title'
     text_filters.push 'angular/clean_urls'
 
     options[:title] = false
@@ -15,13 +14,13 @@ module Docs
 
     options[:fix_urls] = ->(url) do
       url.sub! '/partials/api/api/', '/partials/api/'
-      url.sub! '/partials/api/guide/', '/guide/'
+      url.sub! %r{/api/(.+?)/api/}, '/api/'
       url.sub! %r{/partials/api/(.+?)(?<!\.html)(?:\z|(#.*))}, '/partials/api/\1.html\2'
-      url.gsub! '/partials/api/(.+?)\:', '/partials/api/\1%3A'
       url
     end
 
     options[:skip] = %w(ng.html)
+    options[:skip_patterns] = [/\/(function|directive|object|type|provider|service|filter)\.html\z/]
 
     options[:attribution] = <<-HTML
       &copy; 2010&ndash;2014 Google, Inc.<br>
@@ -53,7 +52,7 @@ module Docs
     def get_root_page_body
       require 'capybara'
       Capybara.current_driver = :selenium
-      Capybara.visit('http://docs.angularjs.org/api/')
+      Capybara.visit('https://code.angularjs.org/1.3.0/docs/api')
       Capybara.find('.side-navigation')['innerHTML']
     end
   end

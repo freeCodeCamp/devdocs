@@ -3,5 +3,12 @@
 class app.views.AngularPage extends app.views.BasePage
   afterRender: ->
     for el in @findAllByTag('pre')
-      @highlightCode el, if el.textContent[0] is '<' then 'markup' else 'javascript'
+      lang = if el.classList.contains('lang-html') or el.textContent[0] is '<'
+        'markup'
+      else if el.classList.contains('lang-css')
+        'css'
+      else
+        'javascript'
+      el.setAttribute('class', '')
+      @highlightCode el, lang
     return
