@@ -4,7 +4,7 @@ module Docs
     self.slug = 'lodash'
     self.type = 'lodash'
     self.version = '2.4.1'
-    self.base_url = 'http://lodash.com/docs'
+    self.base_url = 'https://lodash.com/docs'
 
     html_filters.push 'lodash/clean_html', 'lodash/entries', 'title'
 
@@ -13,7 +13,7 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2013 The Dojo Foundation<br>
+      &copy; 2012&ndash;2014 The Dojo Foundation<br>
       Licensed under the MIT License.
     HTML
   end
