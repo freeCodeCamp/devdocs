@@ -157,7 +157,9 @@ class app.views.Content extends app.View
       $.stopEvent(event)
 
   findTargetByHash: (hash) ->
-    try $.id decodeURIComponent(hash) catch
+    el = try $.id decodeURIComponent(hash) catch
+    el or= try $.id(hash) catch
+    el
 
   isExternalUrl: (url) ->
     url?[0..5] in ['http:/', 'https:']
