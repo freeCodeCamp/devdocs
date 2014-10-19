@@ -193,6 +193,11 @@ credits = [
     'MIT',
     'https://raw.github.com/lodash/lodash/master/LICENSE.txt'
   ], [
+    'Marionette.js',
+    '2014 Muted Solutions, LLC',
+    'MIT',
+    'http://mutedsolutions.mit-license.org/'
+  ], [
     'Markdown',
     '2004 John Gruber',
     'BSD',
