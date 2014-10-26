@@ -3,7 +3,7 @@ module Docs
     self.name = 'Marionette.js'
     self.slug = 'marionette'
     self.type = 'marionette'
-    self.version = '2.2.1'
+    self.version = '2.2.2'
     self.base_url = 'http://marionettejs.com/docs/'
     self.root_path = 'current'
 
