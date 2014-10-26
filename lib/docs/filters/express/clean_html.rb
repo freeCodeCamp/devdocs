@@ -2,6 +2,8 @@ module Docs
   class Express
     class CleanHtmlFilter < Filter
       def call
+        at_css('h1').remove
+
         css('section').each do |node|
           node.before(node.children).remove
         end
@@ -10,6 +12,10 @@ module Docs
         css('h2 + a[name]').each do |node|
           node.previous_element['id'] = node['name']
           node.remove
+        end
+
+        css('table[border]').each do |node|
+          node.remove_attribute 'border'
         end
 
         # Remove code highlighting
