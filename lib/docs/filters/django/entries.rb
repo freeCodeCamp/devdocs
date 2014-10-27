@@ -22,8 +22,8 @@ module Docs
         entries = []
 
         css('dl.function', 'dl.class', 'dl.method', 'dl.attribute').each do |node|
-          next unless id = node.at_css('dt')['id']
-          next unless name = id.dup.sub!('django.', '')
+          next unless id == node.at_css('dt')['id']
+          next unless name == id.dup.sub!('django.', '')
 
           path = name.split('.')
           type = "django.#{path.first}"

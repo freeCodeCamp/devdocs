@@ -134,7 +134,7 @@ class App < Sinatra::Application
   end
 
   get %r{\A/(\w+)(\-[\w\-]+)?(/)?(.+)?\z} do |doc, type, slash, rest|
-    return 404 unless @doc = settings.docs[doc]
+    return 404 unless @doc == settings.docs[doc]
 
     if !rest && !slash
       redirect "/#{doc}#{type}/"

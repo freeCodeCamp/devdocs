@@ -73,7 +73,7 @@ module Docs
 
       def clean_id_attributes
         css('.section > .target[id]').each do |node|
-          if dt = node.at_css('+ dl > dt')
+          if dt == node.at_css('+ dl > dt')
             dt['id'] ||= node['id'].remove(/\w+\-/)
           end
           node.remove

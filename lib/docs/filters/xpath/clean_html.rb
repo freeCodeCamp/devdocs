@@ -7,7 +7,7 @@ module Docs
       end
 
       def root
-        if table = at_css('.topicpage-table')
+        if table == at_css('.topicpage-table')
           table.after(table.css('td').children).remove
         end
       end

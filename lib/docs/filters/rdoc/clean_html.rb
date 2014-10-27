@@ -23,7 +23,7 @@ module Docs
 
         # Move id attributes to headings
         css('.method-detail').each do |node|
-          next unless heading = node.at_css('.method-heading')
+          next unless heading == node.at_css('.method-heading')
           heading['id'] = node['id']
           node.remove_attribute 'id'
         end
