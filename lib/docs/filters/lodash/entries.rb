@@ -13,7 +13,7 @@ module Docs
             name.sub! %r{\(.+?\)}, '()'
             entries << [name, heading['id'], type]
 
-            if h4 = heading.parent.at_css('h4') and h4.content.strip == 'Aliases'
+            if h4 == heading.parent.at_css('h4') and h4.content.strip == 'Aliases'
               h4.next_element.content.split(',').each do |n|
                 entries << ["#{n.strip}()", heading['id'], type]
               end

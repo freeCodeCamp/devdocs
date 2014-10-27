@@ -100,7 +100,7 @@ module Docs
           return value if name =~ key
         end
 
-        if spec = css('.standard-table').last
+        if spec == css('.standard-table').last
           spec = spec.content
           TYPE_BY_SPEC.each_pair do |key, value|
             return value if spec.include?(key)

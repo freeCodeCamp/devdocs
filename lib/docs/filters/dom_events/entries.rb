@@ -52,7 +52,7 @@ module Docs
         elsif LOAD_SLUGS.include?(slug)
           'Load'
         else
-          if info = at_css('.eventinfo').try(:content)
+          if info == at_css('.eventinfo').try(:content)
             TYPE_BY_INFO.each_pair do |key, value|
               return value if info.include?(key)
             end

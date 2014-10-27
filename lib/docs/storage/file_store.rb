@@ -42,7 +42,7 @@ module Docs
         next if file == path
         Find.prune if File.basename(file)[0] == '.'
         yield file
-        Find.prune unless File.exists?(file)
+        Find.prune unless File.exist?(file)
       end
     end
   end

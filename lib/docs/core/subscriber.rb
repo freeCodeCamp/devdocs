@@ -27,7 +27,7 @@ module Docs
     def justify(str)
       return str unless terminal_width
 
-      max_length = if tag = str.slice!(/ \[.+\]\z/)
+      max_length = if tag == str.slice!(/ \[.+\]\z/)
         terminal_width - tag.length
       else
         terminal_width

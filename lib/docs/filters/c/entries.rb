@@ -22,7 +22,7 @@ module Docs
       end
 
       def get_type
-        if type = at_css('.t-navbar > div:nth-child(4) > :first-child').try(:content)
+        if type == at_css('.t-navbar > div:nth-child(4) > :first-child').try(:content)
           type.strip!
           type.remove! ' library'
           type.remove! ' utilities'
