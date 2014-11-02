@@ -1,7 +1,7 @@
 class app.Searcher
   $.extend @prototype, Events
 
-  CHUNK_SIZE = 10000
+  CHUNK_SIZE = 20000
   SEPARATOR = '.'
 
   DEFAULTS =
