@@ -35,15 +35,15 @@ app.Searcher = ->
   _match = @match.bind(@)
   @match = =>
     if @matcher
-      console.timeEnd @matcher
-    if @matcher is 'exactMatch'
-      for entries, score in @scoreMap by -1 when entries
-        console.log '' + score + ': ' + entries.map((entry) -> entry.text).join("\n    ")
+      console.timeEnd @matcher.name
+      if @matcher.name is 'exactMatch'
+        for entries, score in @scoreMap by -1 when entries
+          console.log '' + score + ': ' + entries.map((entry) -> entry.text).join("\n    ")
     _match()
 
   _setupMatcher = @setupMatcher.bind(@)
   @setupMatcher = ->
-    console.time @matcher
+    console.time @matcher.name
     _setupMatcher()
 
   _end = @end.bind(@)
@@ -56,7 +56,7 @@ app.Searcher = ->
   _kill = @kill.bind(@)
   @kill = ->
     if @timeout
-      console.timeEnd @matcher if @matcher
+      console.timeEnd @matcher.name if @matcher
       console.groupEnd()
       console.timeEnd 'Total'
       console.warn 'Killed'
