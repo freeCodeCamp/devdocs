@@ -1,4 +1,4 @@
-/*! Raven.js 1.1.13 (a8a61c2) | github.com/getsentry/raven-js */
+/*! Raven.js 1.1.16 (463f68f) | github.com/getsentry/raven-js */
 
 /*
  * Includes TraceKit
@@ -645,8 +645,8 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
             return null;
         }
 
-        var chrome = /^\s*at (?:((?:\[object object\])?\S+(?: \[as \S+\])?) )?\(?((?:file|https?):.*?):(\d+)(?::(\d+))?\)?\s*$/i,
-            gecko = /^\s*(\S*)(?:\((.*?)\))?@((?:file|https?).*?):(\d+)(?::(\d+))?\s*$/i,
+        var chrome = /^\s*at (?:((?:\[object object\])?\S+(?: \[as \S+\])?) )?\(?((?:file|https?|chrome-extension):.*?):(\d+)(?::(\d+))?\)?\s*$/i,
+            gecko = /^\s*(\S*)(?:\((.*?)\))?@((?:file|https?|chrome).*?):(\d+)(?::(\d+))?\s*$/i,
             lines = ex.stack.split('\n'),
             stack = [],
             parts,
@@ -1108,7 +1108,8 @@ var _Raven = window.Raven,
         tags: {},
         extra: {}
     },
-    authQueryString;
+    authQueryString,
+    isRavenInstalled = false;
 
 /*
  * The core Raven singleton
@@ -1116,7 +1117,9 @@ var _Raven = window.Raven,
  * @this {Raven}
  */
 var Raven = {
-    VERSION: '1.1.13',
+    VERSION: '1.1.16',
+
+    debug: true,
 
     /*
      * Allow multiple versions of Raven to be installed.
@@ -1137,6 +1140,10 @@ var Raven = {
      * @return {Raven}
      */
     config: function(dsn, options) {
+        if (globalServer) {
+            logDebug('error', 'Error: Raven has already been configured');
+            return Raven;
+        }
         if (!dsn) return Raven;
 
         var uri = parseDSN(dsn),
@@ -1154,6 +1161,10 @@ var Raven = {
         // this is the result of a script being pulled in from an external domain and CORS.
         globalOptions.ignoreErrors.push('Script error.');
         globalOptions.ignoreErrors.push('Script error');
+
+        // Other variants of external script errors:
+        globalOptions.ignoreErrors.push('Javascript error: Script error on line 0');
+        globalOptions.ignoreErrors.push('Javascript error: Script error. on line 0');
 
         // join regexp rules into one big rule
         globalOptions.ignoreErrors = joinRegExp(globalOptions.ignoreErrors);
@@ -1198,8 +1209,9 @@ var Raven = {
      * @return {Raven}
      */
     install: function() {
-        if (isSetup()) {
+        if (isSetup() && !isRavenInstalled) {
             TraceKit.report.subscribe(handleStackInfo);
+            isRavenInstalled = true;
         }
 
         return Raven;
@@ -1273,7 +1285,7 @@ var Raven = {
 
         // copy over properties of the old function
         for (var property in func) {
-            if (func.hasOwnProperty(property)) {
+            if (hasKey(func, property)) {
                 wrapped[property] = func[property];
             }
         }
@@ -1293,6 +1305,7 @@ var Raven = {
      */
     uninstall: function() {
         TraceKit.report.uninstall();
+        isRavenInstalled = false;
 
         return Raven;
     },
@@ -1305,8 +1318,8 @@ var Raven = {
      * @return {Raven}
      */
     captureException: function(ex, options) {
-        // If a string is passed through, recall as a message
-        if (isString(ex)) return Raven.captureMessage(ex, options);
+        // If not an Error is passed through, recall as a message instead
+        if (!(ex instanceof Error)) return Raven.captureMessage(ex, options);
 
         // Store the raw exception object for potential debugging and introspection
         lastCapturedException = ex;
@@ -1338,7 +1351,7 @@ var Raven = {
         // Fire away!
         send(
             objectMerge({
-                message: msg
+                message: msg + ''  // Make sure it's actually a string
             }, options)
         );
 
@@ -1351,8 +1364,32 @@ var Raven = {
      * @param {object} user An object representing user data [optional]
      * @return {Raven}
      */
-    setUser: function(user) {
+    setUserContext: function(user) {
        globalUser = user;
+
+       return Raven;
+    },
+
+    /*
+     * Set extra attributes to be sent along with the payload.
+     *
+     * @param {object} extra An object representing extra data [optional]
+     * @return {Raven}
+     */
+    setExtraContext: function(extra) {
+       globalOptions.extra = extra || {};
+
+       return Raven;
+    },
+
+    /*
+     * Set tags to be sent along with the payload.
+     *
+     * @param {object} tags An object representing tags [optional]
+     * @return {Raven}
+     */
+    setTagsContext: function(tags) {
+       globalOptions.tags = tags || {};
 
        return Raven;
     },
@@ -1376,6 +1413,8 @@ var Raven = {
     }
 };
 
+Raven.setUser = Raven.setUserContext; // To be deprecated
+
 function triggerEvent(eventType, options) {
     var event, key;
 
@@ -1391,7 +1430,7 @@ function triggerEvent(eventType, options) {
         event.eventType = eventType;
     }
 
-    for (key in options) if (options.hasOwnProperty(key)) {
+    for (key in options) if (hasKey(options, key)) {
         event[key] = options[key];
     }
 
@@ -1468,7 +1507,7 @@ function each(obj, callback) {
 
     if (isUndefined(obj.length)) {
         for (i in obj) {
-            if (obj.hasOwnProperty(i)) {
+            if (hasKey(obj, i)) {
                 callback.call(null, i, obj[i]);
             }
         }
@@ -1541,7 +1580,7 @@ function normalizeFrame(frame) {
         // Now we check for fun, if the function name is Raven or TraceKit
         /(Raven|TraceKit)\./.test(normalized['function']) ||
         // finally, we do a last ditch effort and check for raven.min.js
-        /raven\.(min\.)js$/.test(normalized.filename)
+        /raven\.(min\.)?js$/.test(normalized.filename)
     );
 
     return normalized;
@@ -1589,12 +1628,16 @@ function extractContextFromFrame(frame) {
 function processException(type, message, fileurl, lineno, frames, options) {
     var stacktrace, label, i;
 
+    // In some instances message is not actually a string, no idea why,
+    // so we want to always coerce it to one.
+    message += '';
+
     // Sometimes an exception is getting logged in Sentry as
     // <no message value>
     // This can only mean that the message was falsey since this value
     // is hardcoded into Sentry itself.
     // At this point, if the message is falsey, we bail since it's useless
-    if (!message) return;
+    if (type === 'Error' && !message) return;
 
     if (globalOptions.ignoreErrors.test(message)) return;
 
@@ -1608,7 +1651,8 @@ function processException(type, message, fileurl, lineno, frames, options) {
         stacktrace = {
             frames: [{
                 filename: fileurl,
-                lineno: lineno
+                lineno: lineno,
+                in_app: true
             }]
         };
     }
@@ -1731,9 +1775,7 @@ function makeRequest(data) {
 function isSetup() {
     if (!hasJSON) return false;  // needs JSON support
     if (!globalServer) {
-        if (window.console && console.error) {
-            console.error("Error: Raven has not been configured.");
-        }
+        logDebug('error', 'Error: Raven has not been configured.');
         return false;
     }
     return true;
@@ -1768,6 +1810,12 @@ function uuid4() {
             v = c == 'x' ? r : (r&0x3|0x8);
         return v.toString(16);
     });
+}
+
+function logDebug(level, message) {
+    if (window.console && console[level] && Raven.debug) {
+        console[level](message);
+    }
 }
 
 function afterLoad() {
