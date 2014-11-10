@@ -21,6 +21,10 @@ module Docs
           node.content = node.content.remove(/\(\d\) Manual Page/)
         end
 
+        unless at_css('> h1')
+          doc.child.before("<h1>#{slug}</h1>")
+        end
+
         unless at_css('> h2')
           css('> h3').each do |node|
             node.name = 'h2'
