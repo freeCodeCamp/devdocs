@@ -13,7 +13,7 @@ app.templates.notifError = ->
   textNotif """ Oops, an error occured. """,
             """ Try <a href="javascript:app.reload()">reloading</a>, and if the problem persists,
                 <a href="javascript:app.reset()">resetting the app</a>.<br>
-                I track these errors automatically but feel free to contact me. """
+                You can also report this issue on <a href="https://github.com/Thibaut/devdocs/issues/new" target="_blank">GitHub</a>. """
 
 app.templates.notifInvalidLocation = ->
   textNotif """ DevDocs must be loaded from #{app.config.production_host} """,
