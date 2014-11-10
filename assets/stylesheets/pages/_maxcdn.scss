@@ -19,7 +19,7 @@
     height: 2rem;
     padding: 0;
     list-style: none;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $boxBorder;
 
     > li {
       float: left;
@@ -37,8 +37,8 @@
       &.active > a {
         color: $textColor;
         text-decoration: none;
-        background: white;
-        border-color: #ddd #ddd transparent;
+        background: $contentBackground;
+        border-color: $boxBorder $boxBorder transparent;
         cursor: default;
       }
     }

@@ -38,8 +38,8 @@
     top: 0;
     left: -1em;
     right: 0;
-    background: rgba(white, .95);
-    box-shadow: 0 1em 1em 1em white;
+    background: rgba($contentBackground, .95);
+    box-shadow: 0 1em 1em 1em $contentBackground;
 
     > pre { margin: 0; }
   }

@@ -1,6 +1,6 @@
 ._node {
   .api_stability_0, .api_stability_1 { @extend %note, %note-red; }
-  .api_stability_2 { @extend %note, %note-gold; }
+  .api_stability_2 { @extend %note; }
   .api_stability_3, .api_stability_4 { @extend %note, %note-green; }
   .api_stability_5 { @extend %note, %note-blue; }
 

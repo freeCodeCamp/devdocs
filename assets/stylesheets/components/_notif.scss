@@ -7,16 +7,9 @@
   max-width: 90%;
   padding: .75rem 1rem;
   font-size: .75rem;
-  color: white;
-  text-shadow: 0 1px 1px rgba(black, .4);
-  background: -webkit-linear-gradient(top,       rgba(#3a3a3a, .9), rgba(#202020, .9));
-  background:         linear-gradient(to bottom, rgba(#3a3a3a, .9), rgba(#202020, .9));
-  background-clip: padding-box;
-  border: 1px solid black;
+  color: $notifColor;
+  background: $notifBackground;
   border-radius: .25rem;
-  box-shadow: inset 0 1px rgba(white, .1),     // top inner glow
-              inset 0 0 0 1px rgba(white, .1), // inner glow
-              0 1px 3px rgba(black, .5);       // drop shadow
   transition: opacity .2s;
   opacity: 0;
   cursor: default;
@@ -63,7 +56,7 @@
   > ._news-row {
     line-height: 1.125rem;
     font-size: .6875rem;
-    color: #bbb;
+    color: $notifColorLight;
 
     + ._news-row { margin-top: .75rem; }
   }
@@ -89,9 +82,7 @@
     margin: 0 .25rem;
     padding: 0;
     color: inherit;
-    text-shadow: inherit;
     background: none;
     border: 0;
-    box-shadow: none;
   }
 }

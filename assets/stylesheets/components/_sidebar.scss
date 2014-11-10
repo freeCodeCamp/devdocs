@@ -8,28 +8,26 @@
   top: $headerHeight;
   bottom: 0;
   left: 0;
+  margin-top: 1px;
   overflow-x: hidden;
   overflow-y: scroll;
-  text-shadow: 0 1px rgba(white, .3);
-  background: #e5eaf4;
-  box-shadow: inset 0 1px #b4b7bf,          // top border
-              inset 0 2px rgba(black, .03); // top inner shadow
+  background: $sidebarBackground;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none; // IE 10 doesn't support pointer-events
   @extend %user-select-none;
 
-  &::-webkit-scrollbar { width: 10px; }
+  &::-webkit-scrollbar { -webkit-appearance: none; width: 10px; }
   &::-webkit-scrollbar-button { display: none; }
-  &::-webkit-scrollbar-track { background: white; }
+  &::-webkit-scrollbar-track { background: $contentBackground; }
   &::-webkit-scrollbar-thumb {
-    min-height: 1rem;
-    background: #ccc;
+    min-height: 2rem;
+    background: $scrollbarColor;
     background-clip: padding-box;
-    border: 3px solid white;
+    border: 3px solid $contentBackground;
     border-radius: 5px;
 
     &:active {
-      background-color: #999;
+      background-color: $scrollbarColorHover;
       border-width: 2px;
     }
   }
@@ -46,15 +44,14 @@
   padding: 0;
   list-style: none;
   width: $sidebarWidth;
+  box-shadow: inset -1px 0 $sidebarBorder;
+  @extend %border-box;
 
   @media #{$mediumScreen} { width: $sidebarMediumWidth; }
 
   ._sidebar > & {
     min-height: 100%;
     padding-bottom: 3.5rem;
-    box-shadow: inset -1px 0 #bbc1cc,         // right border
-                inset -2px 0 rgba(white, .2); // right inner glow
-    @extend %border-box;
   }
 }
 
@@ -74,16 +71,15 @@
   position: relative;
   overflow: hidden;
   padding: .25rem .75rem;
-  line-height: 1.25rem;
+  line-height: 1.5rem;
   font-size: .875rem;
   white-space: nowrap;
   word-wrap: normal;
   overflow-wrap: normal;
   text-overflow: ellipsis;
-  text-shadow: 0 1px rgba(white, .3);
-  border: solid transparent;
-  border-width: 1px 1px 1px 0;
   cursor: default;
+  background: $sidebarBackground;
+  box-shadow: inset -1px 0 $sidebarBorder;
 
   &, &:hover {
     color: inherit;
@@ -94,26 +90,21 @@
   &.focus:hover,
   &.active,
   &.active:hover {
-    color: white;
-    text-shadow: 0 1px rgba(black, .2);
-    background: -webkit-linear-gradient(top,       #bfc6dd, #949eb8);
-    background:         linear-gradient(to bottom, #bfc6dd, #949eb8);
-    border-color: #96a1c6 #8e99b7 #7f87a4;
-    box-shadow: inset 0 1px rgba(white, .15),     // top inner glow
-                inset 0 0 0 1px rgba(white, .08), // inner glow
-                0 1px rgba(black, .05);           // drop shadow
+    color: $focusText;
+    background: $focusBackground;
+    box-shadow: inset -1px 0 $focusBorder;
   }
 
   &.active,
   &.active:hover {
-    background: -webkit-linear-gradient(top,       #65b2fb, #3492e9);
-    background:         linear-gradient(to bottom, #65b2fb, #3492e9);
-    border-color: #318ce4 #2b82db #2878c7;
+    color: $selectionText;
+    background: $selectionBackground;
+    box-shadow: inset -1px 0 $selectionBorder;
   }
 
   &:before {
     float: left;
-    margin: .125rem .625rem 0 0;
+    margin: .25rem .625rem 0 0;
     @extend %icon;
   }
 }
@@ -136,10 +127,7 @@
 
 ._list-dir,
 %_list-dir {
-  line-height: 1.5rem;
   padding-left: 2.25rem;
-
-  &:before { margin-top: .25rem; }
 }
 
 ._list-disabled {
@@ -155,9 +143,9 @@
   left: .25rem;
   padding: .5rem;
   cursor: pointer;
-  opacity: .45;
+  opacity: .4;
 
-  &:hover { opacity: .7; }
+  &:hover { opacity: .65; }
 
   &:before {
     @extend %icon, %icon-dir;
@@ -172,11 +160,11 @@
 ._list-sub {
   > ._list-item { padding-left: 2.75rem; }
   > ._list-item:before { content: none; }
-  > ._list-dir { line-height: 1.25rem; }
+  > ._list-dir { line-height: 1.375rem; }
 
   ._list-arrow {
     left: 1rem;
-    padding: .375rem;
+    padding: .4375rem;
   }
 }
 
@@ -220,17 +208,14 @@
     left: .5rem;
     width: .75rem;
     height: 1px;
-    background: rgba(white, .9);
-    box-shadow: 0 -3px rgba(white, .9),  // top line
-                0 3px rgba(white, .9),   // bottom line
-                0 -2px rgba(black, .15), // top shadow
-                0 1px rgba(black, .15),  // middle shadow
-                0 4px rgba(black, .15);  // bottom shadow
+    background: rgba($selectionText, .9);
+    box-shadow: 0 -3px rgba($selectionText, .9), // top line
+                0 3px rgba($selectionText, .9);  // bottom line
   }
 }
 
 ._list-noresults {
-  padding: .625rem .75rem;
+  padding: .5rem .75rem;
   line-height: 1.25rem;
   font-size: .8125rem;
   color: $textColorLight;
@@ -238,7 +223,7 @@
 
 ._list-noresults-note {
   display: block;
-  margin-top: .375rem;
+  margin-top: .25rem;
 }
 
 ._list-noresults-link { cursor: pointer; }
@@ -252,38 +237,20 @@
   z-index: $hoverZ;
   left: 0;
   overflow: visible;
+  min-width: $sidebarWidth;
   padding: .25rem .75rem;
-  background-color: #e5eaf4;
   pointer-events: none;
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
+  @extend %border-box;
+
+  @media #{$mediumScreen} { min-width: $sidebarMediumWidth; }
 
   &:not(._list-result) {
     padding-left: 2.75rem;
 
     &:before { content: none; }
-  }
-
-  &:not(.focus):not(.active):after {
-    content: '';
-    position: absolute;
-    top: -1px;
-    bottom: -1px;
-    left: $sidebarWidth;
-    right: -2px;
-    margin-left: -1px;
-    border: 1px solid #bbc1cc;
-    border-left-width: 0;
-    border-radius: 0 2px 2px 0;
-    box-shadow: inset -1px 0 rgba(white, .15), // right inner glow
-                inset 0 1px rgba(white, .15),  // top inner glow
-                inset 0 -1px rgba(white, .15), // bottom inner glow
-                1px 0 rgba(black, .04),        // right shadow
-                0 1px rgba(black, .04),        // bottom shadow
-                0 -1px rgba(black, .02);       // top shadow
-
-    @media #{$mediumScreen} { left: $sidebarMediumWidth; }
   }
 }
 
@@ -336,9 +303,8 @@
   bottom: 0;
   left: 0;
   width: $sidebarWidth;
-  background: #e5eaf4;
-  box-shadow: inset -1px 0 #bbc1cc,         // right border
-              inset -2px 0 rgba(white, .2); // right inner glow
+  background: $sidebarBackground;
+  box-shadow: inset -1px 0 $sidebarBorder;
 
   @media #{$mediumScreen} { width: $sidebarMediumWidth; }
 
@@ -349,8 +315,8 @@
     left: 0;
     right: 1px;
     height: 1em;
-    background-image: -webkit-linear-gradient(top,       rgba(#e5eaf4, 0), rgba(#e5eaf4, .95));
-    background-image:         linear-gradient(to bottom, rgba(#e5eaf4, 0), rgba(#e5eaf4, .95));
+    background-image: -webkit-linear-gradient(top,       rgba($sidebarBackground, 0), rgba($sidebarBackground, .95));
+    background-image:         linear-gradient(to bottom, rgba($sidebarBackground, 0), rgba($sidebarBackground, .95));
     pointer-events: none;
   }
 }
@@ -384,11 +350,9 @@
 ._sidebar-footer-save {
   margin-right: 1px;
   font-weight: bold;
-  background-image: -webkit-linear-gradient(top,       #fbfbfe, #f5f5f8 50%, #eeeef1 51%, #e8e8ec);
-  background-image:         linear-gradient(to bottom, #fbfbfe, #f5f5f8 50%, #eeeef1 51%, #e8e8ec);
-  box-shadow: inset 0 1px white,               // top inner glow
-              inset 0 0 0 1px rgba(white, .2), // inner glow
-              0 -1px #c4cfde;                  // top border
+  background: $noteGreenBackground;
+  box-shadow: inset 0 1px $noteGreenBorder,
+                    1px 0 $noteGreenBorder;
 
   &:before { @extend %icon-check; }
 }

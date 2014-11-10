@@ -9,7 +9,6 @@
     line-height: inherit;
     background: none;
     border: 0;
-    box-shadow: none;
   }
 
   .t-lines > span { display: block; } // numeric/fenv, string/byte, etc.
@@ -30,7 +29,7 @@
     margin: 1rem 0;
     padding: .375rem;
     font-size: .75rem;
-    border: 1px solid #ccc;
+    border: 1px solid $boxBorder;
     border-radius: 2px;
   }
 }

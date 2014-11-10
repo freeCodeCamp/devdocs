@@ -7,9 +7,6 @@
   z-index: $contentZ;
   height: 100%;
   margin-left: $sidebarWidth;
-  border-top: 1px solid #b4b7bf;
-  box-shadow: inset 0 1px rgba(black, .04), // top inner shadow
-              inset 1px 0 #f4f4f4;          // left inner shadow
   pointer-events: none;
   @extend %border-box;
 
@@ -20,7 +17,7 @@
   position: relative;
   height: 100%;
   overflow-y: scroll;
-  margin-left: 1rem;
+  margin-left: .875rem;
   padding: 1.25rem 1.5rem 0;
   font-size: .875rem;
   pointer-events: auto;
@@ -28,6 +25,8 @@
   @extend %border-box;
 
   -webkit-padding-start: .75rem;
+  -webkit-padding-end: 1rem;
+
   @media (-moz-overlay-scrollbars) { padding-left: .75rem; }
   @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { margin-left: 0; }
 
@@ -36,10 +35,28 @@
     display: block;
     margin-bottom: 1.25rem;
   }
+
+  &::-webkit-scrollbar { -webkit-appearance: none; }
+  &::-webkit-scrollbar:vertical { width: 14px; }
+  &::-webkit-scrollbar:horizontal { height: 14px }
+  &::-webkit-scrollbar-button { display: none; }
+  &::-webkit-scrollbar-track { background: $contentBackground; }
+  &::-webkit-scrollbar-thumb {
+    min-height: 2rem;
+    background: $scrollbarColor;
+    background-clip: padding-box;
+    border: 5px solid $contentBackground;
+    border-radius: 10px;
+
+    &:active {
+      background-color: $scrollbarColorHover;
+      border-width: 4px;
+    }
+  }
 }
 
 ._content-loading:before {
-  color: #e6e6e6;
+  opacity: 1;
   @extend ._booting:before;
 }
 
@@ -48,7 +65,7 @@
 //
 
 ._splash-title {
-  color: #ddd;
+  color: $splashText;
   cursor: default;
   opacity: 1;
   @extend ._booting:before, %user-select-none;
@@ -58,7 +75,7 @@
   position: absolute;
   bottom: 1.25rem;
   line-height: 1rem;
-  color: #bbb;
+  color: $promoText;
 
   &:hover { color: $linkColor; }
 }
@@ -73,6 +90,7 @@
 
 ._splash-gratipay {
   right: 1.25rem;
+  -webkit-margin-end: -.5rem;
   @extend %splash-promo;
 
   > ._gratipay-logo-bw { opacity: .35; }
@@ -175,7 +193,7 @@
     height: 1px;
     line-height: 0;
     margin-left: 1rem;
-    background: #dde3e8;
+    background: $boxBorderLight;
   }
 }
 
@@ -297,7 +315,7 @@
 ._note { @extend %note; }
 ._note-green { @extend %note-green; }
 ._label { @extend %label; }
-._highlight { background: #fffdcd !important; }
+._highlight { background: $highlightBackground !important; }
 
 ._github-btn {
   display: inline-block;

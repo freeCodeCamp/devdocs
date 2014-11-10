@@ -17,7 +17,7 @@
   }
 
   .summaryTable td:first-child[rowspan] {
-    border-right: 1px solid #e5e5e5;
+    border-right: 1px solid $boxBorderLight;
 
     + td { border-left: 0; }
   }

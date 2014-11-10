@@ -55,7 +55,7 @@
   }
 
   .deprecated, .obsolete { @extend %label-red; }
-  .nonStandard, .projectSpecific, .experimental { @extend %label-yellow; }
+  .nonStandard, .projectSpecific, .experimental { @extend %label-orange; }
 
   .htmlelt,
   .cssprop {

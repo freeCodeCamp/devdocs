@@ -19,25 +19,15 @@
 //
 
 %box {
-  text-shadow: 0 1px rgba(white, .3);
-  background: #f8f8f8;
-  border: 1px solid;
-  border-color: #d5d5d5 #d5d5d5 #d1d1d1;
+  background: $boxBackground;
+  border: 1px solid $boxBorder;
   border-radius: 3px;
-  box-shadow: inset 0 1px rgba(white, .3), // top inner glow
-              0 1px 1px rgba(black, .04);  // drop shadow
 }
 
 %heading-box {
-  text-shadow: 0 1px rgba(white, .3);
-  background: -webkit-linear-gradient(top,       #f7f7fa, #f0f0f2);
-  background:         linear-gradient(to bottom, #f7f7fa, #f0f0f2);
-  border: 1px solid;
-  border-color: #d5d5d5 #d5d5d5 #d1d1d1;
+  background: $boxHeaderBackground;
+  border: 1px solid $boxBorder;
   border-radius: 3px;
-  box-shadow: inset 0 1px rgba(white, .3),     // top inner glow
-              inset 0 0 0 1px rgba(white, .2), // inner glow
-              0 1px 1px rgba(black, .04);      // drop shadow
 }
 
 %block-heading {
@@ -56,48 +46,16 @@
 %note {
   margin: 1.5rem 0;
   padding: .5rem .875rem;
-  text-shadow: 0 1px rgba(white, .3);
-  background: #faf9e2;
-  border: 1px solid;
-  border-color: #dddaaa #dddaaa #d7d7a9;
+  background: $noteBackground;
+  border: 1px solid $noteBorder;
   border-radius: 3px;
-  box-shadow: inset 0 1px rgba(white, .2),  // top inner glow
-              0 1px 1px rgba(black, .04);   // drop shadow
 }
-
-%note-green {
-  background: #f1faeb;
-  border-color: #b3dba8 #b3dba8 #aed7a5;
-}
-
-%note-blue {
-  background: #f2f2ff;
-  border-color: #c6cde9 #c6cde9 #c3cce7;
-}
-
-%note-gold {
-  background: #fff0aa;
-  border-color: #ddce81 #ddce81 #d9ca7f;
-}
-
-%note-red {
-  background: #fed5d3;
-  border-color: #dc7874 #dc7874 #d47474;
-}
-
-//
-// Labels
-//
 
 %label {
   margin: 0 1px;
-  padding: 0 .3em 1px;
-  text-shadow: 0 1px rgba(white, .3);
-  background: #f2f2f2;
-  border: 1px solid;
-  border-color: #d2d2d2 #d2d2d2 #ccc;
-  border-radius: 2px;
-  box-shadow: 0 1px rgba(black, .04);
+  padding: 1px 4px 2px;
+  background: $labelBackground;
+  border-radius: 3px;
 }
 
 %block-label {
@@ -107,27 +65,29 @@
   padding-left: .5em;
   padding-right: .5em;
   font-size: inherit;
+  border: 1px solid $boxBorder;
+  border-radius: 2px;
   @extend %label;
 }
 
-%label-green {
-  background: #f1faeb;
-  border-color: #b3dba8 #b3dba8 #aed7a5;
+%note-green, %label-green {
+  background: $noteGreenBackground;
+  border-color: $noteGreenBorder;
 }
 
-%label-blue {
-  background: #dbe4ff;
-  border-color: #a8a9e2;
+%note-blue, %label-blue {
+  background: $noteBlueBackground;
+  border-color: $noteBlueBorder;
 }
 
-%label-yellow {
-  background: #ffdfb2;
-  border-color: #c2a16f;
+%note-orange, %label-orange {
+  background: $noteOrangeBackground;
+  border-color: $noteOrangeBorder;
 }
 
-%label-red {
-  background: #fed5d3;
-  border-color: #dc7874;
+%note-red, %label-red {
+  background: $noteRedBackground;
+  border-color: $noteRedBorder;
 }
 
 //

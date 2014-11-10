@@ -16,7 +16,7 @@
   iframe {
     display: block;
     padding: 1px;
-    border: 1px dotted #ddd;
+    border: 1px dotted $boxBorder;
     border-radius: 3px;
   }
 }
@@ -41,8 +41,7 @@
   display: inline-block;
   margin: 0;
   padding: .25rem .75rem;
-  text-shadow: 0 1px rgba(white, .3);
-  background: #f2f2f2;
+  background: $labelBackground;
   border-radius: 3px;
 }
 

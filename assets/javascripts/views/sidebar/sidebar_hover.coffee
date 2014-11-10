@@ -59,7 +59,7 @@ class app.views.SidebarHover extends app.View
     el.classList.contains 'active'
 
   isTruncated: (el) ->
-    el.scrollWidth >= el.offsetWidth
+    el.scrollWidth > el.offsetWidth
 
   onFocus: (event) =>
     @focusTime = Date.now()

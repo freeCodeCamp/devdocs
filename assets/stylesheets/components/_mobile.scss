@@ -14,7 +14,6 @@
   ._container {
     margin: 0;
     border: 0;
-    box-shadow: none;
   }
 
   ._content {
@@ -24,19 +23,11 @@
     padding: .75rem 1rem 2.5rem;
   }
 
-  ._booting:before, ._content-loading:before {
-    font-size: 3rem;
-    color: #ccc;
-  }
+  ._booting:before, ._content-loading:before { font-size: 3rem; }
 
   // Header
 
-  ._header {
-    position: fixed;
-    z-index: $contentZ + 1;
-    border-bottom: 1px solid #b4b7bf;
-    box-shadow: 0 1px rgba(black, .03);
-  }
+  ._header { position: fixed; }
 
   ._logo, ._nav { display: none; }
   ._home-link, ._menu-link { display: block; }
@@ -52,7 +43,6 @@
     &:before { left: .5rem; }
   }
 
-  ._search-clear { padding-right: 0; }
   ._search-tag { left: .325rem; }
 
   // Sidebar
@@ -62,21 +52,17 @@
     min-height: 100%;
     overflow: visible;
     padding-bottom: 2rem;
-    box-shadow: none;
 
     > ._list { padding-bottom: 0; }
   }
 
-  ._list, ._sidebar-footer {
-    width: 100%;
-    box-shadow: none;
-  }
+  ._list, ._sidebar-footer { width: 100%; }
 
   ._list-item {
     white-space: normal;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    border-right-width: 0;
+    box-shadow: none;
   }
 
   ._list-result {
@@ -101,7 +87,7 @@
 
   ._sidebar-footer-save {
     margin-top: 1rem;
-    border-bottom: 1px solid #bac6d7;
+    box-shadow: 0 1px $noteGreenBorder, 0 -1px $noteGreenBorder;
   }
 
   // Notice
@@ -111,7 +97,6 @@
     left: 0;
     padding: 0 .5rem;
 
-    &:before { content: none; }
     ~ ._sidebar { padding-bottom: 4rem; }
   }
 

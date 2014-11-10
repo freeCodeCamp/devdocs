@@ -49,7 +49,7 @@ class app.views.SearchScope extends app.View
 
     @input.removeAttribute 'placeholder'
     @input.value = @input.value[@input.selectionStart..]
-    @input.style.paddingLeft = @tag.offsetWidth + 6 + 'px'
+    @input.style.paddingLeft = @tag.offsetWidth + 10 + 'px'
     $.trigger @input, 'input'
 
   reset: =>

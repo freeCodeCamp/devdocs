@@ -1,22 +1,80 @@
 $baseFont: 'Open Sans', Helvetica, Arial, sans-serif;
 $monoFont: 'Source Code Pro', 'Inconsolata-g', Consolas, Menlo, monospace;
 
-$textColor: #39393e;
-$textColorLight: #6b6f78;
-$textColorLighter: #9498a6;
+$headerHeight: 3rem;
+$sidebarWidth: 18rem;
+$sidebarMediumWidth: 16rem;
+
+$contentBackground: #fff;
+
+$textColor: #333;
+$textColorLight: #666;
+$textColorLighter: #999;
+
+$inputFocusBorder: #35b5f4;
+
+$focusBackground: #e5e5e5;
+$focusBorder: #d4d4d4;
+$focusText: #000;
+
+$loadingText: #e6e6e6;
+$splashText: #ddd;
+$promoText: #bbb;
+
+$selectionBackground: #398df0;
+$selectionBorder: #196fc2;
+$selectionText: #fff;
+
+$highlightBackground: #fffdcd;
 
 $linkColor: #0082c6;
 $linkColorHover: #0072c5;
 
-$headerHeight: 3rem;
+$headerBackground: #f0f0f0;
+$headerBorder: #d9d9d9;
 
-$sidebarWidth: 18rem;
-$sidebarMediumWidth: 16rem;
+$sidebarBackground: #f9f9f9;
+$sidebarBorder: #e3e3e3;
+
+$scrollbarColor: #d2d2d2;
+$scrollbarColorHover: #aaa;
+
+$pathBackground: $sidebarBackground;
+$pathBorder: $sidebarBorder;
+
+$noticeBackground: #faf9e2;
+$noticeBorder: #e2e2c1;
+
+$boxBackground: #fafafa;
+$boxBorder: #d8d8d8;
+$boxBorderLight: #e5e5e5;
+$boxHeaderBackground: #f5f5f5;
+
+$noteBackground: #f8f8dd;
+$noteBorder: #d3d952;
+
+$noteGreenBackground: #e7f8e1;
+$noteGreenBorder: #89da70;
+
+$noteBlueBackground: #d4f3fd;
+$noteBlueBorder: #94bbeb;
+
+$noteOrangeBackground: #fbe6d1;
+$noteOrangeBorder: #ec8b01;
+
+$noteRedBackground: #fed5d3;
+$noteRedBorder: #dc7874;
+
+$labelBackground: #f4f4f4;
+
+$notifBackground: rgba(#333, .85);
+$notifColor: #fff;
+$notifColorLight: #bbb;
 
 $mediumScreen: '(max-width: 800px)';
 
-$headerZ: 1;
+$contentZ: 1;
 $sidebarZ: 2;
-$contentZ: 3;
+$headerZ: 3;
 $noticeZ: 4;
 $hoverZ: 5;
