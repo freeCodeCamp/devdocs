@@ -3,6 +3,8 @@ class app.models.Entry extends app.Model
 
   SEPARATORS_REGEXP = /\:?\ |#|::|->/g
   PARANTHESES_REGEXP = /\(.*?\)$/
+  EVENT_REGEXP = /\ event$/
+  DOT_REGEXP = /\.+/g
 
   constructor: ->
     super
@@ -12,9 +14,9 @@ class app.models.Entry extends app.Model
     @name
       .toLowerCase()
       .replace '...', ' '
-      .replace /\ event$/, ''
+      .replace EVENT_REGEXP, ''
       .replace SEPARATORS_REGEXP, '.'
-      .replace /\.+/g, '.'
+      .replace DOT_REGEXP, '.'
       .replace PARANTHESES_REGEXP, ''
       .trim()
 
