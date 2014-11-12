@@ -1,0 +1,21 @@
+._phpunit {
+  h1 {
+    margin-top: 0;
+    @extend %lined-heading;
+  }
+
+  h2.title {
+    @extend %block-heading;
+  }
+
+  .programlisting > pre { white-space: normal; }
+
+  .literal {
+    padding: 2px 4px;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+  }
+
+  div.warning { @extend %note, %note-red; }
+}
