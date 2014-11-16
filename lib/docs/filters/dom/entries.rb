@@ -33,6 +33,7 @@ module Docs
         'File'                => 'File',
         'GlobalEventHandlers' => 'GlobalEventHandlers',
         'history'             => 'History',
+        'HTML'                => 'Elements',
         'IDB'                 => 'IndexedDB',
         'Location'            => 'Location',
         'navigator'           => 'Navigator',
@@ -59,8 +60,7 @@ module Docs
         'WebGL'     => 'Canvas',
         'Worker'    => 'Web Workers' }
 
-      TYPE_BY_NAME_MATCHES = {
-        /HTML\w*Element/ => 'Elements' }
+      TYPE_BY_NAME_MATCHES = {}
 
       TYPE_BY_HAS_LINK_TO = {
         'DeviceOrientation specification' => 'Device Orientation',
@@ -75,6 +75,7 @@ module Docs
         Web\ Audio\ API.
         IndexedDB\ API.
         MediaRecorder\ API.
+        Tutorial.
         XMLHttpRequest.)
 
       def get_name
@@ -82,6 +83,7 @@ module Docs
         CLEANUP_NAMES.each { |str| name.remove!(str) }
         name.sub! 'Input.', 'HTMLInputElement.'
         name.sub! 'window.navigator', 'navigator'
+        name.sub! 'API.', 'API: '
         # Comment.Comment => Comment.constructor
         name.sub! %r{\A(\w+)\.\1\z}, '\1.constructor' unless name == 'window.window'
         name

@@ -35,6 +35,7 @@ module Docs
       /TCPServerSocket
       /TCPSocket
       /TypeInfo
+      /Using_the_Browser_API
       /Web_Video_Text_Tracks_Format
       /WifiManager
       /window.controllers
@@ -58,7 +59,10 @@ module Docs
       /gamepad/i,
       /UserData/,
       /\A\/Camera/,
+      /\A\/Data_Store_API/,
+      /\A\/DataStore/,
       /\A\/DeviceStorage/,
+      /\A\/DocumentTouch/,
       /\A\/document\.xml/,
       /\A\/XMLDocument/,
       /\A\/DOMCursor/,
@@ -68,7 +72,7 @@ module Docs
       /\A\/navigator\.id/i,
       /\A\/Settings/,
       /\A\/Telephony/,
-      /\A\/Bluetooth/,
+      /Bluetooth/,
       /\A\/Window\.\w+bar/i,
       /\A\/Apps/,
       /\A\/Contact/,
@@ -95,7 +99,9 @@ module Docs
       /form.elements
       /select.type
       /table.rows
-      /XMLHttpRequest/FormData)
+      /XMLHttpRequest/FormData
+      /Performance.now
+      /Document_Object_Model)
 
     options[:fix_urls] = ->(url) do
       return if url.include?('_') || url.include?('?')
