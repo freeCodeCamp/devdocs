@@ -1,8 +1,9 @@
 module Docs
   class Javascript
     class EntriesFilter < Docs::EntriesFilter
-      TYPES = %w(Array Boolean Date Function Intl JSON Map Math Number Object
-        RegExp Set String Symbol WeakMap WeakSet)
+      TYPES = %w(Array ArrayBuffer Boolean DataView Date Function Intl JSON Map
+        Math Number Object Promise RegExp Set String Symbol TypedArray WeakMap
+        WeakSet)
       INTL_OBJECTS = %w(Collator DateTimeFormat NumberFormat)
 
       def get_name

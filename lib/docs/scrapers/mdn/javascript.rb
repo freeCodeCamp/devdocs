@@ -24,7 +24,8 @@ module Docs
       /Strict_mode
       /Functions/rest_parameters
       /Methods_Index
-      /Properties_Index)
+      /Properties_Index
+      /Strict_mode/Transitioning_to_strict_mode)
 
     # Duplicates
     options[:skip].concat %w(
@@ -38,6 +39,8 @@ module Docs
       url.sub! 'https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference', Javascript.base_url
       url.sub! 'https://developer.mozilla.org/En/Core_JavaScript_1.5_Reference', Javascript.base_url
       url.sub! '/Operators/Special/', '/Operators/'
+      url.sub! 'Destructing_assignment', 'Destructuring_assignment'
+      url.sub! 'Array.prototype.values()', 'values'
       url
     end
   end
