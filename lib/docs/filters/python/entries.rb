@@ -16,7 +16,10 @@ module Docs
       def get_name
         name = at_css('h1').content
         name.remove! %r{\A[\d\.]+ } # remove list number
+        name.remove! "\u{00B6}" # remove pilcrow sign
         name.remove! %r{ [\u{2013}\u{2014}].+\z} # remove text after em/en dash
+        name.remove! 'Built-in'
+        name.strip!
         name
       end
 
@@ -42,11 +45,11 @@ module Docs
       end
 
       def include_default_entry?
-        name !~ /[A-Z]/ && !skip? # skip non-module names
+        !at_css('.body > .section:only-child > .toctree-wrapper:last-child') && !type.in?(%w(Language Superseded))
       end
 
       def additional_entries
-        return [] if root_page? || skip? || name == 'errno'
+        return [] if root_page? || !include_default_entry? || name == 'errno'
         clean_id_attributes
         entries = []
 
@@ -65,10 +68,6 @@ module Docs
         end
 
         entries
-      end
-
-      def skip?
-        type == 'Language'
       end
 
       def clean_id_attributes
