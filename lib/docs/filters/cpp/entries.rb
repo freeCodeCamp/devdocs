@@ -22,6 +22,8 @@ module Docs
       def get_type
         if at_css('#firstHeading').content.include?('C++ keyword')
           'Keywords'
+        elsif subpath.start_with?('experimental')
+          'Experimental libraries'
         elsif type = at_css('.t-navbar > div:nth-child(4) > :first-child').try(:content)
           type.strip!
           type.remove! ' library'

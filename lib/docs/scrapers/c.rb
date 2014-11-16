@@ -14,6 +14,11 @@ module Docs
     options[:root_title] = 'C Programming Language'
     options[:skip] = %w(language/history.html)
 
+    options[:fix_urls] = ->(url) do
+      url.sub! %r{\A.+/http%3A/}, "http://"
+      url
+    end
+
     options[:attribution] = <<-HTML
       &copy; cppreference.com<br>
       Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.

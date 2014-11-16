@@ -1,7 +1,13 @@
 ._c {
   > h2, > h3 { @extend %block-heading; }
   > h4 { @extend %block-label, %label-blue; }
-  > p > code { @extend %label; }
+  .fmbox { @extend %note; }
+  code, .t-mark, .t-mark-rev { @extend %label; }
+
+  .t-mark, .t-mark-rev {
+    white-space: nowrap;
+    @extend %label-green;
+  }
 
   .t-dcl-begin pre {
     margin: 0;
@@ -19,9 +25,19 @@
   }
   .t-sdsc-nopad dl, .t-sdsc-nopad dd { margin: 0; }
 
-  td > h5 {
-    margin: 0;
-    line-height: inherit;
+  td {
+    > h3, > h5 {
+      margin: 0;
+      line-height: inherit;
+    }
+
+    > ul { margin: 0; }
+
+    > .t-dsc-member-div > div { // utility/functional
+      float: left;
+
+      + div { margin-left: .5em; }
+    }
   }
 
   .t-inheritance-diagram {

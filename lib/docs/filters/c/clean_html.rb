@@ -2,13 +2,11 @@ module Docs
   class C
     class CleanHtmlFilter < Filter
       def call
-        if root_page?
-          doc.inner_html = ' '
-          return doc
-        end
+        css('h1').remove if root_page?
 
-        css('#siteSub', '#contentSub', '.printfooter', '.t-navbar', '.editsection', '#toc', '.t-dsc-sep', '.t-dcl-sep',
-            '#catlinks', '.ambox-notice', '.mw-cite-backlink', '.t-sdsc-sep:first-child:last-child').remove
+        css('#siteSub', '#contentSub', '.printfooter', '.t-navbar', '.editsection', '#toc',
+            '.t-dsc-sep', '.t-dcl-sep', '#catlinks', '.ambox-notice', '.mw-cite-backlink',
+            '.t-sdsc-sep:first-child:last-child', '.t-example-live-link').remove
 
         css('#bodyContent', '.mw-content-ltr', 'span[style]').each do |node|
           node.before(node.children).remove
@@ -26,8 +24,14 @@ module Docs
           node.content = ' ' if node.content.empty?
         end
 
-        css('tt').each do |node|
+        css('tt', 'span > span.source-cpp').each do |node|
           node.name = 'code'
+        end
+
+        css('div > span.source-cpp').each do |node|
+          node.name = 'pre'
+          node.inner_html = node.inner_html.gsub('<br>', "\n")
+          node.content = node.content
         end
 
         css('div > a > img[alt="About this image"]').each do |node|
@@ -36,6 +40,11 @@ module Docs
 
         css('area[href]').each do |node|
           node['href'] = node['href'].remove('.html')
+        end
+
+        css('h1 ~ .fmbox').each do |node|
+          node.name = 'div'
+          node.content = node.content
         end
 
         doc
