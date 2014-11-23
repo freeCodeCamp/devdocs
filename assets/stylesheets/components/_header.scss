@@ -113,8 +113,10 @@
 
   &:focus {
     outline: 0;
-    border-color: $inputFocusBorder;
-    box-shadow: 0 0 1px $inputFocusBorder;
+    @if $inputFocusBorder {
+      border-color: $inputFocusBorder;
+      box-shadow: 0 0 1px $inputFocusBorder;
+    }
   }
 }
 

@@ -153,6 +153,7 @@ input {
   margin: 0;
   font-family: inherit;
   font-size: 100%;
+  color: $textColor;
   line-height: normal;
   @extend %border-box;
 }
