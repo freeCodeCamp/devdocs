@@ -84,7 +84,9 @@
     @trigger 'ready'
     @router.start()
     @hideLoading()
-    new app.views.News() unless @doc
+    unless @doc
+      new app.views.News()
+      new app.views.Share()
     @removeEvent 'ready bootError'
     return
 

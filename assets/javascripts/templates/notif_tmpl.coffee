@@ -21,3 +21,11 @@ app.templates.notifInvalidLocation = ->
 
 app.templates.notifNews = (news) ->
   notif 'Changelog', app.templates.newsList(news)
+
+app.templates.notifShare = ->
+  textNotif """ Hi there! """,
+            """ Like DevDocs? Help us reach more developers by sharing the link with your friends, on
+                <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%2C%20quickly%20searchable%20API%20docs%3A" target="_blank">Twitter</a>,
+                <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdevdocs.io" target="_blank">Facebook</a>,
+                <a href="http://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%2C%20quickly%20searchable%20API%20docs&resubmit=true" target="_blank">Reddit</a>,
+                etc.<br>Thanks :)"""
