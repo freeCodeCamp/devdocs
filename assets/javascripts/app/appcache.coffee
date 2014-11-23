@@ -37,6 +37,6 @@ class app.AppCache
     return
 
   onUpdateReady: =>
-    new app.views.Notif 'UpdateReady' unless @reloading
+    new app.views.Notif 'UpdateReady', autoHide: null unless @reloading
     @trigger 'updateready'
     return
