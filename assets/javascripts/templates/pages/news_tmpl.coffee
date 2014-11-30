@@ -33,7 +33,10 @@ newsItem = (date, news) ->
   result
 
 app.news = [
-  [ 1416096000000, # November 16, 2014
+  [ 1417305600000, # November 30, 2014
+    """ New <a href="/phpunit/">PHPUnit</a> documentation """
+  ], [
+    1416096000000, # November 16, 2014
     """ New <a href="/python2/">Python 2</a> documentation """
   ], [
     1415491200000, # November 9, 2014
