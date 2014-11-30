@@ -20,11 +20,11 @@ class app.views.News extends app.views.Notif
     return [] unless time = @getLastReadTime()
 
     for news in app.news
-      break if news[0] <= time
+      break if new Date(news[0]).getTime() <= time
       news
 
   getLastNewsTime: ->
-    app.news[0][0]
+    new Date(app.news[0][0]).getTime()
 
   getLastReadTime: ->
     app.store.get 'news'

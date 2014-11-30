@@ -26,6 +26,9 @@ class App < Sinatra::Application
     set :docs_manifest_path, -> { File.join(docs_path, 'docs.json') }
     set :docs, -> { Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc| [doc['slug'], doc] }] }
 
+    set :news_path, -> { File.join(root, assets_prefix, 'javascripts', 'news.json') }
+    set :news, -> { JSON.parse(File.read(news_path)) }
+
     Dir[docs_path, root.join(assets_prefix, '*/')].each do |path|
       sprockets.append_path(path)
     end

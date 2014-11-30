@@ -1,0 +1,37 @@
+#= depend_on news.json
+
+app.templates.newsPage = ->
+  """ <h1 class="_lined-heading">Changelog</h1>
+      <p class="_note">For the latest news,
+        subscribe to the <a href="http://eepurl.com/HnLUz">newsletter</a>
+        or follow <a href="https://twitter.com/DevDocs">@DevDocs</a>.<br>
+        For development updates, follow the project on <a href="https://github.com/Thibaut/devdocs">GitHub</a>.
+      <div class="_news">#{app.templates.newsList app.news}</div> """
+
+app.templates.newsList = (news) ->
+  year = new Date().getUTCFullYear()
+  result = ''
+
+  for value in news
+    date = new Date(value[0])
+    if year isnt date.getUTCFullYear()
+      year = date.getUTCFullYear()
+      result += "<h4>#{year}</h4>"
+    result += newsItem(date, value[1..])
+
+  result
+
+MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+newsItem = (date, news) ->
+  date = """<span class="_news-date">#{MONTHS[date.getUTCMonth()]} #{date.getUTCDate()}</span>"""
+  result = ''
+
+  for text, i in news
+    text = text.split "\n"
+    title = """<span class="_news-title">#{text.shift()}</span>"""
+    result += """<div class="_news-row">#{if i is 0 then date else ''} #{title} #{text.join '<br>'}</div>"""
+
+  result
+
+app.news = <%= App.news.to_json %>
