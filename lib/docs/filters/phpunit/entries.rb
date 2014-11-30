@@ -1,19 +1,24 @@
 module Docs
   class Phpunit
     class EntriesFilter < Docs::EntriesFilter
-      def additional_entries
-        entries = []
+      def get_name
+        at_css('h1').content
+      end
 
-        if at_css('h1')
-          type = at_css('h1').content.gsub(/Appendix \w+\. /, '')
-
-          css('h2').each do |node|
-            name = node.content
-            id = name.parameterize
-            entries << [name, id, type]
-          end
+      def get_type
+        if name.in?(%w(Assertions Annotations))
+          name
+        else
+          'Guides'
         end
-        entries
+      end
+
+      def additional_entries
+        return [] if type == 'Guides'
+
+        css('h2').map do |node|
+          [node.content, node['id']]
+        end
       end
     end
   end

@@ -2,26 +2,19 @@ module Docs
   class Phpunit < UrlScraper
     self.name = 'PHPUnit'
     self.type = 'phpunit'
-    self.slug = 'phpunit'
     self.version = '4.3'
-    self.base_url = 'https://phpunit.de/manual/4.3/en/'
-    self.initial_paths = %w(appendixes.assertions.html appendixes.annotations.html)
+    self.base_url = "https://phpunit.de/manual/#{version}/en/"
+    self.root_path = 'index.html'
 
-    html_filters.push 'phpunit/entries', 'phpunit/clean_html', 'title'
+    html_filters.push 'phpunit/clean_html', 'phpunit/entries', 'title'
 
-    options[:skip_links] = true
-
+    options[:root_title] = 'PHPUnit'
     options[:title] = false
-    options[:root_title] = "#{self.name} #{self.version}"
 
-    options[:fix_urls] = ->(url) do
-      if self.initial_paths.include? url[/\/([A-z.-]+)#/, 1]
-        url = url[/#(.+)/, 1].downcase
-        url.gsub! /(\w+\.\w+)\.(\w+)/, '\1#\2'
-      end
-      url
-    end
-
+    options[:skip] = %w(
+      appendixes.index.html
+      appendixes.bibliography.html
+      appendixes.copyright.html)
 
     options[:attribution] = <<-HTML
       &copy; 2005&ndash;2014 Sebastian Bergmann<br>

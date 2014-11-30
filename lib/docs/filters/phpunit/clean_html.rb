@@ -7,58 +7,52 @@ module Docs
       end
 
       def root
-        doc.inner_html = <<-HTML
-          <p>PHPUnit is a programmer-oriented testing framework for PHP.<br>
-          It is an instance of the xUnit architecture for unit testing frameworks.</p>
-        HTML
+        doc.inner_html = ' '
       end
 
       def other
-        # set root on appendix
-        @doc = doc.at_css('div.appendix')
+        @doc = doc.at_css('div.appendix, div.chapter')
 
-        # remove attributes 'style'
-        css('*').remove_attr('style')
+        css('.example-break', '.table-break').remove
 
-        # clean titles
-        css('div.titlepage').each do |node|
-          title = node.at_css('.title')
-          case title.name
-          when 'h1'
-            # remove 'Appendix X.' from top title
-            nodetitle = title.content
-            title.content = nodetitle.gsub(/Appendix \w+\. /, '')
-          when 'h2'
-            # set link anchors in entries (title level 2)
-            anchor = Nokogiri::XML::Node.new "a", @doc
-            anchor.content = title.content
-            anchor['id'] = title.content.downcase.gsub(/[^a-z]/, '')
-            title.content = ''
-            anchor.parent = title
-          end
-          node.replace title
+        css('a[id]').each do |node|
+          next unless node.content.blank?
+          node.parent['id'] = node['id']
+          node.remove
         end
 
-        # set anchor for internal references
-        css('p.title').each do |node|
-          anchor = Nokogiri::XML::Node.new "a", @doc
-          anchor.content = node.content
-          anchor['id'] = anchor.content[/\w+ [A-z0-9.]+/].downcase.parameterize
-          node.content = ''
-          anchor.parent = node
+        css('.titlepage').each do |node|
+          title = node.at_css('h1, .title')
+          title.content = title.content.remove(/(Chapter|Appendix)\s+\w+\.\s+/)
+          node.before(title).remove
         end
 
-        # clean internal references
-        css('a').each do |node|
-          page = node['href'][/([A-z.-]+)?#/, 1] if node['href']
-          if page then
-            page  = page + '.html' unless page[/.*\.html/]
-            if Phpunit.initial_paths.include? page
-              node['href'] = node['href'].gsub(/#[A-z.-]+/, '#' + node.content.downcase.parameterize)
-            end
-          end
+        css('.section').each do |node|
+          node.before(node.children).remove
         end
 
+        css('[style], [border], [valign]').each do |node|
+          node.remove_attribute('style')
+          node.remove_attribute('border')
+          node.remove_attribute('valign')
+        end
+
+        css('.warning h3', '.alert h3').each do |node|
+          node.remove if node.content == 'Note'
+        end
+
+        css('p > code.literal:first-child:last-child').each do |node|
+          next if node.previous_sibling && node.previous_sibling.content.present?
+          next if node.next_sibling && node.next_sibling.content.present?
+          node.parent.name = 'pre'
+          node.parent.content = node.content
+        end
+
+        css('pre', '.term').each do |node|
+          node.content = node.content
+        end
+
+        doc
       end
     end
   end
