@@ -136,6 +136,11 @@ class App < Sinatra::Application
     200
   end
 
+  get '/feed' do
+    content_type 'application/atom+xml'
+    settings.news_feed
+  end
+
   get %r{\A/(\w+)(\-[\w\-]+)?(/)?(.+)?\z} do |doc, type, slash, rest|
     return 404 unless @doc = settings.docs[doc]
 
@@ -154,5 +159,47 @@ class App < Sinatra::Application
 
   error do
     send_file File.join(settings.public_folder, '500.html'), status: status
+  end
+
+  configure do
+    require 'rss'
+    feed = RSS::Maker.make('atom') do |maker|
+      maker.channel.id = 'tag:devdocs.io,2014:/feed'
+      maker.channel.title = 'DevDocs'
+      maker.channel.author = 'DevDocs'
+      maker.channel.updated = "#{settings.news.first.first}T14:00:00Z"
+
+      maker.channel.links.new_link do |link|
+        link.rel = 'self'
+        link.href = 'http://devdocs.io/feed.atom'
+        link.type = 'application/atom+xml'
+      end
+
+      maker.channel.links.new_link do |link|
+        link.rel = 'alternate'
+        link.href = 'http://devdocs.io/'
+        link.type = 'text/html'
+      end
+
+      news.each_with_index do |news, i|
+        maker.items.new_item do |item|
+          item.id = "tag:devdocs.io,2014:News/#{settings.news.length - i}"
+          item.title = news[1].split("\n").first.gsub(/<\/?[^>]*>/, '')
+          item.description do |desc|
+            desc.content = news[1..-1].join.gsub("\n", '<br>').gsub('href="/', 'href="http://devdocs.io/')
+            desc.type = 'html'
+          end
+          item.updated = "#{news.first}T14:00:00Z"
+          item.published = "#{news.first}T14:00:00Z"
+          item.links.new_link do |link|
+            link.rel = 'alternate'
+            link.href = 'http://devdocs.io/'
+            link.type = 'text/html'
+          end
+        end
+      end
+    end
+
+    set :news_feed, feed.to_s
   end
 end
