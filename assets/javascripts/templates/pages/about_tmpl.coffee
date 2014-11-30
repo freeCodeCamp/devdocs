@@ -228,6 +228,11 @@ credits = [
     'MIT',
     'https://raw.github.com/joyent/node/master/LICENSE'
   ], [
+    'Nokogiri',
+    '2008-2014 2014 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori Musha',
+    'MIT',
+    'https://github.com/sparklemotion/nokogiri/blob/master/README.rdoc#license'
+  ], [
     'PHP',
     '1997-2014 The PHP Documentation Group',
     'CC BY',
