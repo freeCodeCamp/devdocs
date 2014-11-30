@@ -45,6 +45,7 @@ module Docs
           next if node.previous_sibling && node.previous_sibling.content.present?
           next if node.next_sibling && node.next_sibling.content.present?
           node.parent.name = 'pre'
+          node.parent['class'] = 'programlisting'
           node.parent.content = node.content
         end
 
