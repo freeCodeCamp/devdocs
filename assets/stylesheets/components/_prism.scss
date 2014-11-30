@@ -13,13 +13,19 @@
 .token.property,
 .token.tag,
 .token.boolean,
-.token.number {
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
   color: #905;
 }
 
 .token.selector,
 .token.attr-name,
-.token.string {
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
   color: #5e8e01;
 }
 
@@ -37,15 +43,16 @@
   color: #0070a3;
 }
 
+.token.function {
+  color: #dd4a68;
+}
+
 .token.regex,
-.token.important {
+.token.important,
+.token.variable {
   color: #e90;
 }
 
 .token.important {
   font-weight: bold;
-}
-
-.token.entity {
-  cursor: help;
 }
