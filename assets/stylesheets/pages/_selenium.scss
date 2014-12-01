@@ -1,0 +1,14 @@
+._selenium {
+  h1 {
+    margin-top: 0;
+    @extend %lined-heading;
+  }
+
+  h2 { @extend %block-heading; }
+
+  h3 { @extend %note, %note-green; }
+
+  code { @extend %label; }
+
+  .synopsis { @extend %note, %note-blue; }
+}
