@@ -13,13 +13,16 @@ class app.views.DocPicker extends app.View
   activate: ->
     if super
       @render()
+      @findByTag('input').focus()
       app.appCache?.on 'progress', @onAppCacheProgress
+      $.on @el, 'focus', @onFocus, true
     return
 
   deactivate: ->
     if super
       @empty()
       app.appCache?.off 'progress', @onAppCacheProgress
+      $.off @el, 'focus', @onFocus, true
     return
 
   render: ->
@@ -57,6 +60,9 @@ class app.views.DocPicker extends app.View
       $.stopEvent(event)
       @save()
     return
+
+  onFocus: (event) ->
+    $.scrollTo event.target.parentNode, null, 'continuous', bottomGap: 2
 
   onEnter: =>
     @save()
