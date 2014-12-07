@@ -28,18 +28,18 @@ $.closestLink = (el, parent = document.body) ->
 # Events
 #
 
-$.on = (el, event, callback) ->
+$.on = (el, event, callback, useCapture = false) ->
   if event.indexOf(' ') >= 0
     $.on el, name, callback for name in event.split(' ')
   else
-    el.addEventListener(event, callback)
+    el.addEventListener(event, callback, useCapture)
   return
 
-$.off = (el, event, callback) ->
+$.off = (el, event, callback, useCapture = false) ->
   if event.indexOf(' ') >= 0
     $.off el, name, callback for name in event.split(' ')
   else
-    el.removeEventListener(event, callback)
+    el.removeEventListener(event, callback, useCapture)
   return
 
 $.trigger = (el, type, canBubble = true, cancelable = true) ->
