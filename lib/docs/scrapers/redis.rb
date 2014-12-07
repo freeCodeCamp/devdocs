@@ -1,7 +1,7 @@
 module Docs
   class Redis < UrlScraper
     self.type = 'redis'
-    self.version = 'up to 2.8.17'
+    self.version = 'up to 2.8.18'
     self.base_url = 'http://redis.io/commands'
 
     html_filters.push 'redis/entries', 'redis/clean_html', 'title'
