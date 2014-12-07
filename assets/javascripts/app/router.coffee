@@ -69,8 +69,10 @@ class app.Router
     return
 
   root: ->
-    window.location = '/' if app.isSingleDoc()
-    @triggerRoute 'root'
+    if app.isSingleDoc()
+      setTimeout (-> window.location = '/'), 0
+    else
+      @triggerRoute 'root'
     return
 
   about: (context) ->
