@@ -141,6 +141,18 @@ class App < Sinatra::Application
     settings.news_feed
   end
 
+  get '/s/tw' do
+    redirect 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%2C%20quickly%20searchable%20API%20docs%3A'
+  end
+
+  get '/s/fb' do
+    redirect 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdevdocs.io'
+  end
+
+  get '/s/re' do
+    redirect 'http://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%2C%20quickly%20searchable%20API%20docs&resubmit=true'
+  end
+
   get %r{\A/(\w+)(\-[\w\-]+)?(/)?(.+)?\z} do |doc, type, slash, rest|
     return 404 unless @doc = settings.docs[doc]
 
