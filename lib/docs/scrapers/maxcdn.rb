@@ -2,7 +2,7 @@ module Docs
   class Maxcdn < UrlScraper
     self.name = 'MaxCDN'
     self.type = 'maxcdn'
-    self.base_url = 'http://docs.maxcdn.com/'
+    self.base_url = 'https://docs.maxcdn.com/'
 
     html_filters.push 'maxcdn/clean_html', 'maxcdn/entries'
 
