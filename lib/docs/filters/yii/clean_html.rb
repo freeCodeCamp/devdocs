@@ -2,28 +2,34 @@ module Docs
   class Yii
     class CleanHtmlFilter < Filter
       def call
-        at_css('h1').content = 'Yii PHP Framework' if root_page?
+        css('#nav', '.tool-link', '.toggle').remove
 
-        css('.api-suggest', '.google-ad', '.g-plusone', '#nav', '#comments').remove
-
-        css('.summary > p > .toggle').each do |node|
-          node.parent.remove
+        css('.hashlink[name]').each do |node|
+          node.parent['id'] = node['name']
+          node.remove
         end
 
-        css('.signature', '.signature2').each do |node|
+        css('.detail-header').each do |node|
+          node.name = 'h3'
+          node.child.remove while node.child.content.blank?
+        end
+
+        css('pre').each do |node|
+          node.inner_html = node.inner_html.gsub('<br>', "\n").gsub('&nbsp;', ' ')
+          node.content = node.content
+        end
+
+        css('div.signature').each do |node|
           node.name = 'pre'
           node.inner_html = node.inner_html.strip
         end
 
-        css('div.detailHeader').each do |node|
-          node.name = 'h3'
+        css('.detail-table th').each do |node|
+          node.name = 'td'
         end
 
-        css('.sourceCode > .code > code').each do |node|
-          parent = node.parent
-          parent.name = 'pre'
-          node.remove
-          parent.inner_html = node.first_element_child.inner_html.strip
+        css('.detail-table td.signature').each do |node|
+          node.name = 'th'
         end
 
         doc

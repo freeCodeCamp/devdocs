@@ -1,12 +1,15 @@
 module Docs
   class Yii < UrlScraper
     self.type = 'yii'
-    self.version = '1.1.14'
-    self.base_url = 'http://www.yiiframework.com/doc/api/1.1/'
+    self.version = '2.0.1'
+    self.base_url = 'http://www.yiiframework.com/doc-2.0/'
+    self.root_path = 'index.html'
 
     html_filters.push 'yii/clean_html', 'yii/entries'
 
-    options[:container] = '.grid_9'
+    options[:container] = 'div[role=main]'
+    options[:skip_patterns] = [/\Ayii-apidoc/]
+
     options[:attribution] = <<-HTML
       &copy; 2008&ndash;2014 by Yii Software LLC<br>
       Licensed under the three clause BSD license.

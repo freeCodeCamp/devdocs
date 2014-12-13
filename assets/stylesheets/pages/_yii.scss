@@ -1,24 +1,14 @@
 ._yii {
   h2 { @extend %block-heading; }
-  > h3 { @extend %block-label, %label-blue; }
+  h3 { @extend %block-label, %label-blue; }
+  h4 { font-size: 1em; }
 
-  .paramNameCol { font-weight: bold; }
-  .signature2 { margin: .4em 0; }
-  .sourceCode { margin-bottom: 1em; }
-  .sourceCode > .code { display: none; }
+  blockquote { @extend %note; }
 
-  .SeeAlso {
-    > h4 {
-      margin-bottom: 1em;
-      font-size: inherit;
-    }
-
-    > ul { margin-top: 0; }
+  .detail-header-tag, .detailHeaderTag {
+    float: right;
+    color: $textColorLight;
   }
 
-  .summaryTable td:first-child[rowspan] {
-    border-right: 1px solid $boxBorderLight;
-
-    + td { border-left: 0; }
-  }
+  .param-type-col { white-space: nowrap; }
 }
