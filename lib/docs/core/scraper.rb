@@ -137,7 +137,8 @@ module Docs
     end
 
     def process_response(response)
-      pipeline.call parse(response.body), pipeline_context(response), data = {}
+      data = {}
+      quietly { pipeline.call(parse(response.body), pipeline_context(response), data) }
       data
     end
 
