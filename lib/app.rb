@@ -63,7 +63,7 @@ class App < Sinatra::Application
       root: 'public',
       urls: %w(/assets /docs /images /favicon.ico /robots.txt /opensearch.xml /manifest.webapp),
       header_rules: [
-        [:all,           {'Cache-Control' => 'private, max-age=0'}],
+        [:all,           {'Cache-Control' => 'no-cache, max-age=0'}],
         ['/assets',      {'Cache-Control' => 'public, max-age=604800'}],
         ['/favicon.ico', {'Cache-Control' => 'public, max-age=86400'}],
         ['/images',      {'Cache-Control' => 'public, max-age=86400'}] ]
@@ -96,7 +96,7 @@ class App < Sinatra::Application
 
       cookie.split('/').inject [] do |result, slug|
         if doc = settings.docs[slug]
-          result << File.join('', settings.docs_prefix, doc['index_path'])
+          result << File.join('', settings.docs_prefix, doc['index_path']) + "?#{doc['mtime']}"
         end
         result
       end
@@ -113,7 +113,7 @@ class App < Sinatra::Application
 
   get '/manifest.appcache' do
     content_type 'text/cache-manifest'
-    expires 0, :private
+    expires 0, :'no-cache'
     erb :manifest
   end
 

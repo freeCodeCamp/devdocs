@@ -28,7 +28,7 @@ class app.models.Doc extends app.Model
     "#{app.config.docs_host}#{@fullPath(path)}"
 
   indexUrl: ->
-    "#{app.indexHost()}/#{@index_path}"
+    "#{app.indexHost()}/#{@index_path}?#{@mtime}"
 
   toEntry: ->
     new app.models.Entry
