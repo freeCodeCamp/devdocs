@@ -11,10 +11,12 @@ module Docs
         'Geolocation'         => 'Geolocation',
         'Media Capture'       => 'Media',
         'Media Source'        => 'Media',
-        'MediaStream'         => 'MediaRecorder',
+        'MediaStream'         => 'Media',
         'Navigation Timing'   => 'Navigation Timing',
         'Network Information' => 'Network Information',
+        'Service Workers'     => 'Service Workers',
         'Web Audio'           => 'Web Audio',
+        'Web Storage'         => 'Web Storage',
         'Web Workers'         => 'Web Workers',
         'WebRTC'              => 'WebRTC' }
 
@@ -44,6 +46,7 @@ module Docs
         'Range'               => 'Range',
         'RTC'                 => 'WebRTC',
         'Selection'           => 'Selection',
+        'Storage'             => 'Web Storage',
         'StyleSheet'          => 'CSS',
         'Stylesheet'          => 'CSS',
         'SVG'                 => 'SVG',
@@ -55,10 +58,15 @@ module Docs
         'XMLHttpRequest'      => 'XMLHTTPRequest' }
 
       TYPE_BY_NAME_INCLUDES = {
-        'IndexedDB' => 'IndexedDB',
-        'udio'      => 'Web Audio',
-        'WebGL'     => 'Canvas',
-        'Worker'    => 'Web Workers' }
+        'ImageData'     => 'Canvas',
+        'IndexedDB'     => 'IndexedDB',
+        'MediaStream'   => 'Media',
+        'Path2D'        => 'Canvas',
+        'ServiceWorker' => 'Service Workers',
+        'TextMetrics'   => 'Canvas',
+        'udio'          => 'Web Audio',
+        'WebGL'         => 'Canvas',
+        'Worker'        => 'Web Workers' }
 
       TYPE_BY_NAME_MATCHES = {}
 

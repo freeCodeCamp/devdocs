@@ -21,6 +21,7 @@ module Docs
       end
     end
 
+    options[:skip] = ['/Element/shadow']
     options[:only_patterns] = [/\A\/Element/]
 
     options[:replace_paths] = {

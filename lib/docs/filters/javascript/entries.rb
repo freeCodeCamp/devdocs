@@ -34,7 +34,7 @@ module Docs
           'Statements'
         elsif slug.start_with? 'Operators'
           'Operators'
-        elsif slug.start_with?('Functions_and_function_scope') || slug.start_with?('Functions')
+        elsif slug.start_with?('Functions_and_function_scope') || slug.start_with?('Functions') || slug.include?('GeneratorFunction')
           'Function'
         elsif slug.start_with? 'Global_Objects'
           object, method = *slug.remove('Global_Objects/').split('/')
@@ -59,7 +59,8 @@ module Docs
         return true unless node && node.parent == doc && !node.previous_element
 
         !node.content.include?('not on a standards track') &&
-        !node.content.include?('removed from the Web')
+        !node.content.include?('removed from the Web') &&
+        !node.content.include?('could be removed at any time')
       end
     end
   end

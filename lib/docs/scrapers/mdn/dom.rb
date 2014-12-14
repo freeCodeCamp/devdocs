@@ -118,6 +118,8 @@ module Docs
       url.sub! "#{Dom.base_url}/Selection/",                    "#{Dom.base_url}/Selection."
       url.sub! "#{Dom.base_url}/windowTimers",                  "#{Dom.base_url}/window"
       url.sub! "#{Dom.base_url}/windowEventHandlers",           "#{Dom.base_url}/window"
+      url.sub! %r{\/windowLocalStorage(\.localStorage)?}i,      "/window.localStorage"
+      url.sub! %r{\/windowSessionStorage(\.sessionStorage)?}i,  "/window.sessionStorage"
       url.sub! "#{Dom.base_url}/Screen.",                       "#{Dom.base_url}/window.screen"
       url
     end

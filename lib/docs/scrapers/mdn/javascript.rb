@@ -25,7 +25,9 @@ module Docs
       /Functions/rest_parameters
       /Methods_Index
       /Properties_Index
-      /Strict_mode/Transitioning_to_strict_mode)
+      /Strict_mode/Transitioning_to_strict_mode
+      /Operators/Legacy_generator_function
+      /Statements/Legacy_generator_function)
 
     # Duplicates
     options[:skip].concat %w(

@@ -16,6 +16,12 @@ module Docs
           node.name = 'th'
         end
 
+        css('nobr').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('h2[style]', 'pre[style]').remove_attr('style')
+
         doc
       end
     end
