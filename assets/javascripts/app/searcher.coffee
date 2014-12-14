@@ -13,6 +13,8 @@ fuzzyRegexp = # query fuzzy regexp
 index =       # position of the query in the string being matched
 lastIndex =   # last position of the query in the string being matched
 match =       # regexp match data
+matchIndex =
+matchLength =
 score =       # score for the current match
 separators =  # counter
 i = null      # cursor
@@ -74,16 +76,27 @@ return Math.max 1, score
 `function fuzzyMatch() {`
 return if valueLength <= queryLength or value.indexOf(query) >= 0
 return unless match = fuzzyRegexp.exec(value)
+matchIndex = match.index
+matchLength = match[0].length
+score = scoreFuzzyMatch()
+if match = fuzzyRegexp.exec(value.slice(i = value.lastIndexOf(SEPARATOR) + 1))
+  matchIndex = i + match.index
+  matchLength = match[0].length
+  return Math.max(score, scoreFuzzyMatch())
+else
+  return score
+`}`
 
+`function scoreFuzzyMatch() {`
 # When the match is at the beginning of the string or preceded by a dot.
-if match.index is 0 or value.charAt(match.index - 1) is SEPARATOR
-  return Math.max 66, 100 - match[0].length
+if matchIndex is 0 or value.charAt(matchIndex - 1) is SEPARATOR
+  return Math.max 66, 100 - matchLength
 # When the match is at the end of the string.
-else if match.index + match[0].length is valueLength
-  return Math.max 33, 67 - match[0].length
+else if matchIndex + matchLength is valueLength
+  return Math.max 33, 67 - matchLength
 # When the match is in the middle of the string.
 else
-  return Math.max 1, 34 - match[0].length
+  return Math.max 1, 34 - matchLength
 `}`
 
 #
