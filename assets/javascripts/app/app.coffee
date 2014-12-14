@@ -84,11 +84,17 @@
     @trigger 'ready'
     @router.start()
     @hideLoading()
-    unless @doc
-      new app.views.News()
-      new app.views.Share()
+    @welcomeBack() unless @doc
+
     @removeEvent 'ready bootError'
     return
+
+  welcomeBack: ->
+    @visitCount = @store.get('count') or 0
+    @store.set 'count', ++@visitCount
+    new app.views.Notif 'Share', autoHide: null if @visitCount is 5
+    new app.views.Notif 'Thanks', autoHide: null if @visitCount is 10
+    new app.views.News()
 
   reload: ->
     @docs.clearCache()
