@@ -41,7 +41,7 @@ class app.views.Notif extends app.View
     return
 
   position: ->
-    notifications = $$ ".#{@constructor.className}"
+    notifications = $$ ".#{app.views.Notif.className}"
     if notifications.length
       lastNotif = notifications[notifications.length - 1]
       @el.style.top = lastNotif.offsetTop + lastNotif.offsetHeight + 16 + 'px'
