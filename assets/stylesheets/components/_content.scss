@@ -71,30 +71,24 @@
   @extend ._booting:before, %user-select-none;
 }
 
-%splash-promo {
+._splash-sponsor {
   position: absolute;
+  display: block;
   bottom: 1.25rem;
-  line-height: 1rem;
-  color: $promoText;
+  right: 1rem;
 
-  &:hover { color: $linkColor; }
-}
+  ._logo-thx { opacity: .25; }
+  &:hover ._logo-thx { opacity: .5; }
 
-._splash-maxcdn {
-  left: .75rem;
-  @extend %splash-promo;
+  & + & {
+    left: 1rem;
+    right: auto;
 
-  > ._maxcdn-logo-bw { opacity: .2; }
-  &:hover > ._maxcdn-logo-bw { opacity: .5; }
-}
-
-._splash-gratipay {
-  right: 1.25rem;
-  -webkit-margin-end: -.5rem;
-  @extend %splash-promo;
-
-  > ._gratipay-logo-bw { opacity: .35; }
-  &:hover > ._gratipay-logo-bw { opacity: .65; }
+    ._logo-info {
+      right: auto;
+      left: 0;
+    }
+  }
 }
 
 //
@@ -132,14 +126,20 @@
 
 ._intro-link { cursor: pointer; }
 
-._intro-maxcdn {
+._intro-sponsors {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
   margin: 0;
-  color: $textColorLight;
+  line-height: 1.5rem;
+}
 
-  &:hover { color: $linkColor; }
+._intro-sponsor {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: .5em;
+
+  &:hover { text-decoration: none; }
 }
 
 //
@@ -323,44 +323,63 @@
   margin-left: .25rem;
 }
 
-%maxcdn-logo {
+._logo-thx {
+  position: relative;
   display: inline-block;
   vertical-align: top;
-  width: 6.25rem;
-  margin-left: .5rem;
+  height: 1.5rem;
   overflow: hidden;
   text-indent: -20rem;
   background-position: center center;
   background-repeat: no-repeat;
-  background-size: 6.25rem 1rem;
+}
+
+._logo-info {
+  top: auto;
+  bottom: 100%;
+  right: 0;
+  max-width: 18.25rem;
+  margin-bottom: .75rem;
+  padding: .5rem .75rem;
+  line-height: 1.375rem;
+  pointer-events: none;
+  @extend %notif;
+
+  :hover > & { opacity: 1; }
 }
 
 ._maxcdn-logo {
+  width: 6.25rem;
   background-image: image-url('maxcdn.png');
-  @extend %maxcdn-logo;
+  background-size: 6.25rem 1rem;
 
   @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
     background-image: image-url('maxcdn@2x.png');
   }
 }
 
-._maxcdn-logo-bw {
+._splash-sponsor > ._maxcdn-logo {
   background-image: image-url('maxcdn-bw.png');
-  @extend %maxcdn-logo;
 
   @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
     background-image: image-url('maxcdn-bw@2x.png');
   }
 }
 
-._gratipay-logo-bw {
-  width: 3.75rem;
-  margin-left: .25rem;
-  background-size: 3.75rem 1rem;
-  background-image: image-url('gratipay-bw.png');
-  @extend %maxcdn-logo;
+._shopify-logo {
+  width: 5.5rem;
+  background-image: image-url('shopify.png');
+  background-size: 5.5rem 1.5rem;
 
   @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
-    background-image: image-url('gratipay-bw@2x.png');
+    background-image: image-url('shopify@2x.png');
+  }
+}
+
+._splash-sponsor > ._shopify-logo {
+  background-image: image-url('shopify-bw.png');
+
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    background-image: image-url('shopify-bw@2x.png');
   }
 }

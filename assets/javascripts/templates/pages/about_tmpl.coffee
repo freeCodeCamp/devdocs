@@ -13,7 +13,8 @@ app.templates.aboutPage = -> """
   <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
   <ul>
     <li>Created and maintained by <a href="http://thibaut.me">Thibaut Courouble</a>
-    <li>Sponsored by <a href="http://www.maxcdn.com" title="Content Delivery Network Services">MaxCDN</a>&mdash;content delivery that developers love
+    <li>Made at <a href="http://devdocs.io/s/shopify">Shopify</a> &mdash; one of the best software companies in the world
+    <li>Powered by <a href="http://devdocs.io/s/maxcdn" title="Content Delivery Network Services">MaxCDN</a> &mdash; content delivery that developers love
     <li>Free and <a href="https://github.com/Thibaut/devdocs">open source</a>
         <iframe class="_github-btn" src="http://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
   </ul>

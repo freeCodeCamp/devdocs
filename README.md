@@ -3,7 +3,8 @@
 DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
 
 * Created by [Thibaut Courouble](http://thibaut.me)
-* Sponsored by [MaxCDN](http://www.maxcdn.com)
+* Made at [Shopify](http://devdocs.io/s/shopify)
+* Powered by [MaxCDN](http://devdocs.io/s/maxcdn)
 
 Keep track of development and community news:
 

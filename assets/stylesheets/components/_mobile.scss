@@ -113,16 +113,6 @@
     max-width: none;
     margin-left: 0;
   }
-
-  // Splash
-
-  ._splash-maxcdn, ._splash-gratipay {
-    left: 0;
-    right: 0;
-    text-align: center;
-  }
-
-  ._splash-gratipay { margin-bottom: 2.25rem; }
 }
 
 //
@@ -197,11 +187,13 @@
   > ._intro-list { padding-left: 1.5rem; }
 
   > ._intro-hide,
-  > ._intro-maxcdn {
+  > ._intro-sponsors {
     position: static;
     float: none;
     display: block;
     margin-top: 1.25rem;
     text-align: center;
   }
+
+  ._intro-sponsor { margin: 0 1em; }
 }

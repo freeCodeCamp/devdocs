@@ -136,6 +136,14 @@ class App < Sinatra::Application
     200
   end
 
+  get '/s/maxcdn' do
+    redirect 'https://www.maxcdn.com/?utm_source=devdocs&utm_medium=banner&utm_campaign=devdocs'
+  end
+
+  get '/s/shopify' do
+    redirect 'http://www.shopify.com/careers?utm_source=devdocs&utm_medium=banner&utm_campaign=devdocs'
+  end
+
   get '/feed' do
     content_type 'application/atom+xml'
     settings.news_feed
