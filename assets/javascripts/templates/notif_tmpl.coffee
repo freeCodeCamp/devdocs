@@ -33,6 +33,6 @@ app.templates.notifThanks = ->
             """ <p class="_notif-text">Quick shout-out to our awesome sponsors:
                 <ul class="_notif-list">
                   <li><a href="http://devdocs.io/s/maxcdn" target="_blank">MaxCDN</a> has been supporting DevDocs since day one. They provide CDN solutions that make DevDocs and countless other sites faster.</li>
-                  <li><a href="http://devdocs.io/s/shopify" target="_blank">Shopify</a> is where I spend my weekdays. Interested in working on one of the biggest commerce platform in the world, in a delightful work environment? We're hiring!
+                  <li><a href="http://devdocs.io/s/shopify" target="_blank">Shopify</a> is where I spend my weekdays. Interested in working on one of the biggest commerce platforms in the world, in a delightful work environment? We're hiring!
                 </ul>
                 <p class="_notif-text">Have a great day :) """
