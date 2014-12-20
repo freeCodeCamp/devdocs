@@ -1,0 +1,9 @@
+._rethinkdb {
+  > h2 { @extend %block-heading; }
+  code { @extend %label; }
+
+  .api_command_illustration {
+    float: right;
+    margin: 0 0 1em 1em;
+  }
+}

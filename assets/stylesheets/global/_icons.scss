@@ -4,7 +4,7 @@
   width: 1rem;
   height: 1rem;
   background-image: image-url('icons.png');
-  background-size: 5rem 12rem;
+  background-size: 5rem 13rem;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
@@ -72,3 +72,4 @@
 ._icon-mongoose:before      { background-position: -2rem -11rem; }
 ._icon-phpunit:before       { background-position: -3rem -11rem; }
 ._icon-nokogiri:before      { background-position: -4rem -11rem; }
+._icon-rethinkdb:before     { background-position: 0 -12rem; }

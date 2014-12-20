@@ -264,6 +264,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/jrburke/requirejs/master/LICENSE'
   ], [
+    'RethinkDB',
+    'RethinkDB contributors',
+    'CC BY-SA',
+    'https://raw.githubusercontent.com/rethinkdb/docs/master/LICENSE'
+  ], [
     'Ruby',
     '1993-2014 Yukihiro Matsumoto',
     'Ruby',

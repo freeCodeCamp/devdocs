@@ -1,5 +1,8 @@
 [
-  [ "2014-11-30",
+  [ "2014-12-20",
+    "New <a href=\"/rethinkdb/\">RethinkDB</a> documentation"
+  ], [
+    "2014-11-30",
     "New <a href=\"/phpunit/\">PHPUnit</a> and <a href=\"/nokogiri/\">Nokogiri</a> documentations"
   ], [
     "2014-11-16",
