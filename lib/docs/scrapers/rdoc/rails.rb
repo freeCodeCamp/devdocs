@@ -6,6 +6,7 @@ module Docs
     #   actionpack \
     #   actionview \
     #   activemodel \
+    #   activejob \
     #   activerecord \
     #   activesupport \
     #   railties \
@@ -19,7 +20,7 @@ module Docs
 
     self.name = 'Ruby on Rails'
     self.slug = 'rails'
-    self.version = '4.1.8'
+    self.version = '4.2.0'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Rails'
 
     html_filters.replace 'rdoc/entries', 'rails/entries'
@@ -29,55 +30,40 @@ module Docs
     options[:skip] += %w(
       AbstractController/Callbacks.html
       AbstractController/UrlFor.html
-      ActionController.html
       ActionController/Instrumentation.html
-      ActionController/ModelNaming.html
       ActionController/Rendering.html
-      ActionController/Rescue.html
-      ActionController/UrlFor.html
-      ActionDispatch/DebugExceptions.htnl
+      ActionDispatch/DebugExceptions.html
       ActionDispatch/Http/URL.html
-      ActionDispatch/Integration/Runner.html
-      ActionDispatch/Integration/Session.html
+      ActionDispatch/Journey/Parser.html
       ActionDispatch/Reloader.html
       ActionDispatch/RequestId.html
       ActionDispatch/Routing/HtmlTableFormatter.html
       ActionDispatch/Routing/Mapper.html
+      ActionDispatch/Routing/RouteSet.html
       ActionDispatch/ShowExceptions.html
-      ActionView.html
-      ActionView/Context.html
       ActionView/FileSystemResolver.html
       ActionView/FixtureResolver.html
       ActionView/LogSubscriber.html
-      ActionView/ModelNaming.html
       ActionView/Template/Handlers/Erubis.html
-      ActiveModel.html
-      ActiveRecord.html
+      ActionView/TestCase/Behavior/RenderedViewsCollection.html
       ActiveRecord/DynamicMatchers/Finder.html
       ActiveRecord/Sanitization.html
       ActiveRecord/Tasks/DatabaseTasks.html
-      ActiveSupport.html
       ActiveSupport/Configurable/Configuration.html
       ActiveSupport/Dependencies/WatchStack.html
       ActiveSupport/DescendantsTracker.html
       ActiveSupport/FileUpdateChecker.html
       ActiveSupport/Notifications/Fanout.html
-      ActiveSupport/Testing/ConstantLookup.html
-      ActiveSupport/Testing/Declarative.html
       ActiveSupport/Testing/Isolation/Subprocess.html
       Rails/API/Task.html)
 
     options[:skip_patterns] = [
-      /\AAbstractController\/ViewPaths/,
       /\AActionController\/Caching(?!\/Fragments|\.)/,
-      /\AActionController\/HideActions/,
       /\AActionController\/RequestForgeryProtection\/ProtectionMethods/,
       /\AActionController\/Testing/,
       /\AActionDispatch\/RemoteIp/,
       /\AActionView\/LookupContext/,
       /\AActionView\/Resolver/,
-      /\AActiveRecord\/ConnectionAdapters\/(?!DatabaseStatements|SchemaStatements|Table)/,
-      /\AActiveSupport\/JSON\//,
       /\AActiveSupport\/Multibyte\/Unicode\//,
       /\AActiveSupport\/XML/i,
       /\ASourceAnnotationExtractor/]
