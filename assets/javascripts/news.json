@@ -1,6 +1,6 @@
 [
   [ "2014-12-21",
-    "New <a href=\"/react/\">React</a>, <a href=\"/rethinkdb/\">RethinkDB</a> and <a href=\"/socketio/\">Socket.IO</a> documentations"
+    "New <a href=\"/react/\">React</a>, <a href=\"/rethinkdb/\">RethinkDB</a>, <a href=\"/socketio/\">Socket.IO</a> and <a href=\"/modernizr/\">Modernizr</a> documentations"
   ], [
     "2014-11-30",
     "New <a href=\"/phpunit/\">PHPUnit</a> and <a href=\"/nokogiri/\">Nokogiri</a> documentations"

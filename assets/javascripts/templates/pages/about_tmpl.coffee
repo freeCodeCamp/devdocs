@@ -209,6 +209,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/MaxCDN/api-docs/master/LICENSE'
   ], [
+    'Modernizr',
+    '2009-2014 Modernizr',
+    'MIT',
+    'http://modernizr.com/license/'
+  ], [
     'Moment.js',
     '2011-2014 Tim Wood, Iskren Chernev, Moment.js contributors',
     'MIT',

@@ -1,0 +1,8 @@
+._modernizr {
+  h2 { @extend %block-heading; }
+  h3 { @extend %block-label, %label-blue; }
+  h4 { font-size: 1em; }
+
+  code { @extend %label; }
+  blockquote { @extend %note; }
+}
