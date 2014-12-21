@@ -294,6 +294,11 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/cjohansen/Sinon.JS/master/LICENSE'
   ], [
+    'Socket.io',
+    '2014 Automattic',
+    'MIT',
+    'https://raw.githubusercontent.com/Automattic/socket.io/master/LICENSE'
+  ], [
     'Underscore.js',
     '2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',

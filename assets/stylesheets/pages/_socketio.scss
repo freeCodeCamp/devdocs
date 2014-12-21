@@ -1,0 +1,24 @@
+._socketio {
+  > h2 { @extend %block-heading; }
+  > h3 { @extend %block-label, %label-blue; }
+  > h2, > h3 { clear: both; }
+  h4 { font-size: 1em; }
+
+  .ezcol-one-half {
+    margin: .5em 0 1.5em;
+    float: left;
+    width: 50%;
+    padding-right: .5em;
+    @extend %border-box;
+
+    &.ezcol-last {
+      float: right;
+      padding: 0 0 0 .5em;
+    }
+
+    > h4 { margin: 0 0 1em; }
+    > pre { margin: 1em 0 0; }
+  }
+
+  code { @extend %label; }
+}
