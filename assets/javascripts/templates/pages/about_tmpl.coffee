@@ -89,6 +89,11 @@ credits = [
     'MIT',
     'https://raw.github.com/jashkenas/backbone/master/LICENSE'
   ], [
+    'Bower',
+    '2014 Bower contributors',
+    'CC BY',
+    'https://github.com/bower/bower.github.io/blob/b7b94ad38b72e8fb5dafb20c8ce42835a49cc98f/package.json#L20'
+  ], [
     'C<br>C++',
     'cppreference.com',
     'CC BY-SA',
