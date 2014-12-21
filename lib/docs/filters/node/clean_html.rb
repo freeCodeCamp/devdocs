@@ -8,6 +8,14 @@ module Docs
           node.parent.remove
         end
 
+        css('pre[class*="api_stability"]').each do |node|
+          node.name = 'div'
+        end
+
+        css('pre').each do |node|
+          node.content = node.content
+        end
+
         doc
       end
     end

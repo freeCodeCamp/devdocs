@@ -5,12 +5,8 @@
   .api_stability_5 { @extend %note, %note-blue; }
 
   > h2 { @extend %block-heading; }
-
-  > h3 {
-    margin: 2rem 0 1rem;
-    font-size: 1rem;
-  }
-
+  > h3 { @extend %block-label, %label-blue; }
+  > h4 { @extend %block-label; }
   > h2 + h2, > h3 + h3 { margin-top: 0; }
 
   > p > code, .type {
@@ -18,3 +14,4 @@
     @extend %label;
   }
 }
+

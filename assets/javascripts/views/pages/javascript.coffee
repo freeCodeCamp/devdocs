@@ -23,6 +23,7 @@ app.views.MarionettePage =
 app.views.ModernizrPage =
 app.views.MomentPage =
 app.views.MongoosePage =
+app.views.NodePage =
 app.views.RethinkdbPage =
 app.views.SinonPage =
 app.views.UnderscorePage =
