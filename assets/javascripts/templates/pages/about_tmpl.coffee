@@ -254,6 +254,11 @@ credits = [
     'PSFL',
     'http://docs.python.org/3/license.html'
   ], [
+    'React',
+    '2013-2014 Facebook Inc.',
+    'CC BY',
+    'https://raw.githubusercontent.com/facebook/react/master/LICENSE-docs'
+  ], [
     'Redis',
     '2009-2014 Salvatore Sanfilippo',
     'CC BY-SA',
