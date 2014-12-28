@@ -16,6 +16,8 @@ Dir[File.dirname(__FILE__) + '/support/*.rb'].each do |file|
   autoload File.basename(file, '.rb').camelize, file
 end
 
+ActiveSupport::TestCase.test_order = :random
+
 class MiniTest::Spec
   include ActiveSupport::Testing::Assertions
 
