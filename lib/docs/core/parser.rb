@@ -5,7 +5,7 @@ module Docs
     end
 
     def html
-      @html ||= quietly { document? ? parse_as_document : parse_as_fragment }
+      @html ||= document? ? parse_as_document : parse_as_fragment
     end
 
     private

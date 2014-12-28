@@ -68,7 +68,7 @@ module Docs
 
     def parse_html(html)
       warn "#{self.class.name} is re-parsing the document" unless ENV['RACK_ENV'] == 'test'
-      quietly { super }
+      super
     end
   end
 end
