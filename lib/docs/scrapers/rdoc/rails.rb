@@ -57,7 +57,7 @@ module Docs
       ActiveSupport/Testing/Isolation/Subprocess.html
       Rails/API/Task.html)
 
-    options[:skip_patterns] = [
+    options[:skip_patterns] += [
       /\AActionController\/Caching(?!\/Fragments|\.)/,
       /\AActionController\/RequestForgeryProtection\/ProtectionMethods/,
       /\AActionController\/Testing/,

@@ -2,7 +2,9 @@ module Docs
   class Rdoc
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('h1').content.strip
+        name = at_css('h1, h2').content.strip
+        name.remove! "\u{00B6}" # remove pilcrow sign
+        name.remove! "\u{2191}" # remove up arrow sign
         name.remove! 'class '
         name.remove! 'module '
         name

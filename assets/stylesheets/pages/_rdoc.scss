@@ -1,6 +1,6 @@
 ._rdoc {
   > .description, > .documentation-section { padding-left: 1rem; }
-  > .description > h2, header > h3 { @extend %block-heading; }
+  > .description > h2, header > h3, > h2 { @extend %block-heading; }
   > .description > h2, header > h3, .method-heading { margin-left: -1rem; }
   .description > h1 { font-size: 1rem; }
   .method-description > h2, h3, h4, h5, h6 { font-size: 1em; }

@@ -19,7 +19,9 @@ module Docs
             meta << %(<dt>Included modules:</dt><dd class="meta-includes">#{includes.css('a').map(&:to_html).join(', ')}</dd>)
           end
 
-          container.at_css('h1').after(meta)
+          if parent || includes
+            container.at_css('h1').after(meta)
+          end
 
           container
         end
