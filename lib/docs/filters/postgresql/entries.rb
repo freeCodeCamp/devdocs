@@ -129,7 +129,7 @@ module Docs
       end
 
       def additional_entry_prefix
-        type.dup.remove!('Functions: ') || self.name
+        type.dup.gsub!('Functions: ', '') || self.name
       end
 
       def skip_additional_entries?

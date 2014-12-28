@@ -54,7 +54,7 @@ module Docs
           end
 
           # Classes
-          if name.remove! 'Class: '
+          if name.gsub! 'Class: ', ''
             name.remove! 'events.' # EventEmitter
             klass = name
             entries << [name, node['id']]

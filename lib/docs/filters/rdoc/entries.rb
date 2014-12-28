@@ -11,7 +11,7 @@ module Docs
       def get_type
         type = name.dup
 
-        unless type.remove! %r{::.*\z}
+        unless type.gsub! %r{::.*\z}, ''
           parent = at_css('.meta-parent').try(:content).to_s
           return 'Errors' if type.end_with?('Error') || parent.end_with?('Error') || parent.end_with?('Exception')
         end

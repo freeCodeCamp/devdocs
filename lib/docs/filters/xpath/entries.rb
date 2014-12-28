@@ -4,7 +4,7 @@ module Docs
       def get_name
         name = super
         name.remove!('Axes.')
-        name << '()' if name.remove!('Functions.')
+        name << '()' if name.gsub!('Functions.', '')
         name
       end
 
