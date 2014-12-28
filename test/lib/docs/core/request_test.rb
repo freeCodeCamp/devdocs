@@ -6,7 +6,7 @@ class DocsRequestTest < MiniTest::Spec
     'http://example.com'
   end
 
-  def request(url = url, options = {})
+  def request(url = self.url, options = {})
     Docs::Request.new(url, options).tap do |request|
       request.extend FakeInstrumentation
     end
