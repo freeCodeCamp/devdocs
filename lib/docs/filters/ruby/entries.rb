@@ -17,6 +17,8 @@ module Docs
         'Profiler__'        => 'Profiler',
         'Psych'             => 'YAML',
         'Rinda'             => 'DRb',
+        'SimpleDelegator'   => 'Delegator',
+        'SingleForwardable' => 'Forwardable',
         'SortedSet'         => 'Set',
         'TCPServer'         => 'Socket',
         'TempIO'            => 'Tempfile',
@@ -35,6 +37,9 @@ module Docs
         'Socket' => 'Socket' }
 
       def get_type
+        return 'Language' if guide?
+        return $1 if name =~ /\A(Net\:\:(?:FTP|HTTP|IMAP|SMTP))/
+
         type = super
 
         REPLACE_TYPE_STARTS_WITH.each_pair do |key, value|
@@ -46,6 +51,32 @@ module Docs
         end
 
         REPLACE_TYPE[type] || type
+      end
+
+      def additional_entries
+        return super unless guide?
+
+        if slug == 'syntax/control_expressions_rdoc' || slug == 'syntax/miscellaneous_rdoc'
+          css('h2 > code').each_with_object([]) do |node, entries|
+            name = node.content.strip
+            entries << [name, node.parent['id'], 'Syntax'] unless entries.any? { |e| e[0] == name }
+          end
+        elsif slug == 'globals_rdoc'
+          css('dt').map do |node|
+            name = node['id'] = node.content.strip
+            [name, name, 'Globals']
+          end
+        else
+          []
+        end
+      end
+
+      def include_default_entry?
+        guide? || super
+      end
+
+      def guide?
+        slug =~ /[^\/]+_rdoc/
       end
     end
   end

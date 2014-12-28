@@ -1,59 +1,56 @@
 module Docs
   class Ruby < Rdoc
     # Generated with:
-    # find \
-    #   *.c \
-    #   lib \
-    #   ext/bigdecimal \
-    #   ext/date \
-    #   ext/digest \
-    #   ext/json \
-    #   ext/pathname \
-    #   ext/psych \
-    #   ext/readline \
-    #   ext/ripper \
-    #   ext/socket \
-    #   ext/stringio \
-    #   ext/zlib \
-    #   \( -name '*.c' -or -name '*.rb' \) \
-    #   -not -wholename '*sample/*' \
-    # | xargs \
-    #   rdoc --format=darkfish --no-line-numbers --op=rdoc --visibility=public
+    # rdoc \
+    #   --root . \
+    #   --page-dir doc \
+    #   --encoding=UTF-8 \
+    #   --visibility=public \
+    #   --format=darkfish \
+    #   --no-line-numbers \
+    #   --op html .
 
-    self.version = '2.1.3'
+    self.version = '2.2.0'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby'
 
     html_filters.replace 'rdoc/entries', 'ruby/entries'
 
     options[:root_title] = 'Ruby Programming Language'
+    options[:title] = ->(filter) { filter.slug == 'globals_rdoc' ? 'Globals' : false }
 
     options[:skip] += %w(
-      fatal.html
-      CompositePublisher.html
+      contributing_rdoc.html
+      contributors_rdoc.html
+      dtrace_probes_rdoc.html
+      maintainers_rdoc.html
+      regexp_rdoc.html
+      standard_library_rdoc.html
+      syntax_rdoc.html
       Data.html
-      E2MM.html
       English.html
-      GServer.html
-      MakeMakefile.html
-      ParallelEach.html
-      SshDirPublisher.html
-      SshFilePublisher.html
-      SshFreshDirPublisher.html
-      YAML/DBM.html)
+      Fcntl.html
+      Kconv.html
+      NKF.html
+      OLEProperty.html
+      OptParse.html
+      UnicodeNormalize.html)
 
-    options[:skip_patterns] = [
-      /\AComplex/,
+    options[:skip_patterns] += [
+      /\Alib\//,
+      /\ADEBUGGER__/,
       /\AException2MessageMapper/,
       /\AJSON\/Ext/,
       /\AGem/,
       /\AHTTP/i,
       /\AIRB/,
+      /\AMakeMakefile/i,
       /\AMiniTest/i,
-      /\ANet\/(?!HTTP)/,
       /\ANQXML/,
       /\AOpenSSL/,
       /\AOptionParser\//,
+      /\APrettyPrint/,
       /\APride/,
+      /\AProfiler__/,
       /\APsych\//,
       /\ARacc/,
       /\ARake/,
@@ -65,6 +62,7 @@ module Docs
       /\ASocket\//,
       /\ATest/,
       /\AWEBrick/,
+      /win32/i,
       /\AXML/,
       /\AXMP/]
 
