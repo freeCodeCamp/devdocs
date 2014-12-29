@@ -1,10 +1,9 @@
 module Docs
   class Postgresql
-    class CleanNavFilter < Filter
+    class ExtractMetadataFilter < Filter
       def call
         extract_up_path
         extract_chapter
-        css('.NAVHEADER', '.NAVFOOTER').remove
         doc
       end
 

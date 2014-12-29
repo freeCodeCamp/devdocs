@@ -11,6 +11,10 @@ module Docs
       end
 
       def other
+        @doc = at_css('#docContent')
+
+        css('.NAVHEADER', '.NAVFOOTER').remove
+
         css('a[name]').each do |node|
           node.parent['id'] = node['name']
           node.before(node.children).remove
