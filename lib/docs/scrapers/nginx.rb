@@ -2,7 +2,7 @@ module Docs
   class Nginx < UrlScraper
     self.name = 'nginx'
     self.type = 'nginx'
-    self.version = '1.7.8'
+    self.version = '1.7.9'
     self.base_url = 'http://nginx.org/en/docs/'
 
     html_filters.push 'nginx/clean_html', 'nginx/entries'
