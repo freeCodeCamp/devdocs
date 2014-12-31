@@ -69,10 +69,14 @@ class ManifestTest < MiniTest::Spec
         assert_empty doc.as_json.keys - json.first.keys
       end
 
-      it "adds an :mtime attribute" do
-        mtime = Time.now - 1
-        stub(store).mtime(index_path) { mtime }
-        assert_equal mtime.to_i, manifest.as_json.first[:mtime]
+      it "adds an :mtime attribute with the greatest of the index and db files' mtime" do
+        mtime_index = Time.now - 1
+        mtime_db = Time.now - 2
+        stub(store).mtime(index_path) { mtime_index }
+        stub(store).mtime(db_path) { mtime_db }
+        assert_equal mtime_index.to_i, manifest.as_json.first[:mtime]
+        mtime_index, mtime_db = mtime_db, mtime_index
+        assert_equal mtime_db.to_i, manifest.as_json.first[:mtime]
       end
     end
 

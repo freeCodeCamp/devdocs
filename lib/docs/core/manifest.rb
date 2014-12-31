@@ -15,7 +15,7 @@ module Docs
 
     def as_json
       indexed_docs.map(&:as_json).each do |json|
-        json[:mtime] = @store.mtime(json[:index_path]).to_i
+        json[:mtime] = doc_mtime(json)
       end
     end
 
@@ -29,6 +29,10 @@ module Docs
       @docs.select do |doc|
         @store.exist?(doc.index_path) && @store.exist?(doc.db_path)
       end
+    end
+
+    def doc_mtime(doc)
+      [@store.mtime(doc[:index_path]).to_i, @store.mtime(doc[:db_path]).to_i].max
     end
   end
 end
