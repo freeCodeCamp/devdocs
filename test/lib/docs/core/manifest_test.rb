@@ -43,8 +43,13 @@ class ManifestTest < MiniTest::Spec
       'index_path'
     end
 
+    let :db_path do
+      'db_path'
+    end
+
     before do
       stub(doc).index_path { index_path }
+      stub(doc).db_path { db_path }
     end
 
     it "returns an array" do

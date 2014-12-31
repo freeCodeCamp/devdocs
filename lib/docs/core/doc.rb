@@ -26,12 +26,17 @@ module Docs
         File.join path, INDEX_FILENAME
       end
 
+      def db_path
+        File.join path, DB_FILENAME
+      end
+
       def as_json
         { name: name,
           slug: slug,
           type: type,
           version: version,
-          index_path: index_path }
+          index_path: index_path,
+          db_path: db_path }
       end
 
       def store_page(store, id)

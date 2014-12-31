@@ -87,6 +87,13 @@ class DocsDocTest < MiniTest::Spec
     end
   end
 
+  describe ".db_path" do
+    it "returns .path + ::DB_FILENAME" do
+      stub(doc).path { 'path' }
+      assert_equal File.join('path', Docs::Doc::DB_FILENAME), doc.db_path
+    end
+  end
+
   describe ".new" do
     it "raises an error when .abstract is true" do
       doc.abstract = true
@@ -101,8 +108,8 @@ class DocsDocTest < MiniTest::Spec
       assert_instance_of Hash, doc.as_json
     end
 
-    it "includes the doc's name, slug, type, version and index_path" do
-      %w(name slug type version index_path).each do |attribute|
+    it "includes the doc's name, slug, type, version, index_path and db_path" do
+      %w(name slug type version index_path db_path).each do |attribute|
         eval "stub(doc).#{attribute} { attribute }"
         assert_equal attribute, doc.as_json[attribute.to_sym]
       end
