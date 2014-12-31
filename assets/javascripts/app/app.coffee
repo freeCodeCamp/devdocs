@@ -110,6 +110,7 @@
   reset: ->
     @store.clear()
     @settings.reset()
+    @db.reset()
     @appCache?.update()
     window.location = '/'
     return

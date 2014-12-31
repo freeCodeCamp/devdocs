@@ -108,6 +108,9 @@ class app.DB
 
     txn
 
+  reset: ->
+    try indexedDB?.deleteDatabase(NAME) catch
+
   useIndexedDB: ->
     !app.isSingleDoc() and !!window.indexedDB
 
