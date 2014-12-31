@@ -44,21 +44,22 @@ module Docs
         end
       end
 
-      def index_pages
-        index = EntryIndex.new
-        new.build_pages do |page|
-          next if page[:entries].blank?
-          yield page[:store_path], page[:output]
-          index.add page[:entries]
-        end
-        index.empty? ? nil : index
-      end
-
       def store_pages(store)
-        store.replace path do
-          index = index_pages(&store.method(:write))
-          store.write INDEX_FILENAME, index.to_json if index
-          !!index
+        index = EntryIndex.new
+
+        store.replace(path) do
+          new.build_pages do |page|
+            next unless store_page?(page)
+            store.write page[:store_path], page[:output]
+            index.add page[:entries]
+          end
+
+          if index.present?
+            store.write INDEX_FILENAME, index.to_json
+            true
+          else
+            false
+          end
         end
       end
 

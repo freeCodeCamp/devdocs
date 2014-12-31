@@ -17,10 +17,6 @@ class DocsDocTest < MiniTest::Spec
     Docs::Entry.new
   end
 
-  let :index do
-    Docs::EntryIndex.new
-  end
-
   let :store do
     Docs::NullStore.new
   end
@@ -184,18 +180,18 @@ class DocsDocTest < MiniTest::Spec
     end
   end
 
-  describe ".index_pages" do
+  describe ".store_pages" do
     it "build the pages" do
       any_instance_of(doc) do |instance|
         stub(instance).build_pages { @called = true }
       end
-      doc.index_pages {}
+      doc.store_pages(store) {}
       assert @called
     end
 
     context "when pages are built successfully" do
       let :pages do
-        [page, page.dup]
+        [page.dup, page.dup]
       end
 
       before do
@@ -204,39 +200,51 @@ class DocsDocTest < MiniTest::Spec
         end
       end
 
-      it "yields pages that have :entries" do
-        doc.index_pages { |*args| (@args ||= []) << args }
-        assert_equal pages.length, @args.length
-        assert_equal [page[:store_path], page[:output]], @args.first
-      end
-
-      it "doesn't yield pages that don't have :entries" do
-        pages.first[:entries] = []
-        doc.index_pages { |*args| (@args ||= []) << args }
-        assert_equal pages.length - 1, @args.length
-      end
-
-      describe "and at least one has :entries" do
-        it "returns an EntryIndex" do
-          assert_instance_of Docs::EntryIndex, doc.index_pages {}
+      context "and at least one page has :entries" do
+        it "returns true" do
+          assert doc.store_pages(store)
         end
 
-        describe "the index" do
-          it "contains all the pages' entries" do
-            index = doc.index_pages {}
-            assert_equal pages.length, index.entries.length
-            assert_includes index.entries, entry
+        it "stores a file for each page that has :entries" do
+          pages.first.merge!(entries: [], output: '')
+          mock(store).write(page[:store_path], page[:output])
+          mock(store).write('index.json', anything)
+          doc.store_pages(store)
+        end
+
+        it "stores an index that contains all the pages' entries" do
+          stub(store).write(page[:store_path], page[:output])
+          mock(store).write('index.json', anything) do |path, json|
+            json = JSON.parse(json)
+            assert_equal pages.length, json['entries'].length
+            assert_includes json['entries'], entry.as_json.stringify_keys
           end
+          doc.store_pages(store)
+        end
+
+        it "replaces the .path directory before storing the files" do
+          stub(doc).path { 'path' }
+          stub(store).write { assert false }
+          mock(store).replace('path') do |_, block|
+            stub(store).write
+            block.call
+          end
+          doc.store_pages(store)
         end
       end
 
-      context "and none have :entries" do
+      context "and no pages have :entries" do
         before do
           pages.each { |page| page[:entries] = [] }
         end
 
-        it "returns nil" do
-          assert_nil doc.index_pages {}
+        it "returns false" do
+          refute doc.store_pages(store)
+        end
+
+        it "doesn't store files" do
+          dont_allow(store).write
+          doc.store_pages(store)
         end
       end
     end
@@ -246,57 +254,6 @@ class DocsDocTest < MiniTest::Spec
         any_instance_of(doc) do |instance|
           stub(instance).build_pages
         end
-      end
-
-      it "doesn't yield" do
-        doc.index_pages { |*_| @yield = true }
-        refute @yield
-      end
-
-      it "returns nil" do
-        assert_nil doc.index_pages {}
-      end
-    end
-  end
-
-  describe ".store_pages" do
-    context "when pages are indexed successfully" do
-      before do
-        stub(store).write
-        stub(doc).index_pages do |block|
-          2.times { block.call page[:store_path], page[:output] }
-          index
-        end
-      end
-
-      it "returns true" do
-        assert doc.store_pages(store)
-      end
-
-      it "stores a file for each page" do
-        2.times { mock(store).write(page[:store_path], page[:output]) }
-        doc.store_pages(store)
-      end
-
-      it "stores the index" do
-        mock(store).write('index.json', index.to_json)
-        doc.store_pages(store)
-      end
-
-      it "replaces the .path directory before storing the files" do
-        stub(doc).path { 'path' }
-        stub(store).write { assert false }
-        mock(store).replace('path') do |_, block|
-          stub(store).write
-          block.call
-        end
-        doc.store_pages(store)
-      end
-    end
-
-    context "when no pages are indexed successfully" do
-      before do
-        stub(doc).index_pages { nil }
       end
 
       it "returns false" do
