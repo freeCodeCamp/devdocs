@@ -27,7 +27,7 @@ module Docs
 
     def indexed_docs
       @docs.select do |doc|
-        @store.exist? doc.index_path
+        @store.exist?(doc.index_path) && @store.exist?(doc.db_path)
       end
     end
   end

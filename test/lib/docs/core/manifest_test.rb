@@ -57,9 +57,10 @@ class ManifestTest < MiniTest::Spec
       assert_instance_of Array, manifest.as_json
     end
 
-    context "when the doc has an index" do
+    context "when the doc has an index and a db" do
       before do
         stub(store).exist?(index_path) { true }
+        stub(store).exist?(db_path) { true }
       end
 
       it "includes the doc's JSON representation" do
@@ -77,7 +78,16 @@ class ManifestTest < MiniTest::Spec
 
     context "when the doc doesn't have an index" do
       it "doesn't include the doc" do
+        stub(store).exist?(db_path) { true }
         stub(store).exist?(index_path) { false }
+        assert_empty manifest.as_json
+      end
+    end
+
+    context "when the doc doesn't have a db" do
+      it "doesn't include the doc" do
+        stub(store).exist?(index_path) { true }
+        stub(store).exist?(db_path) { false }
         assert_empty manifest.as_json
       end
     end
