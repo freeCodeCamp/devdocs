@@ -10,7 +10,7 @@ class DocsDocTest < MiniTest::Spec
   end
 
   let :page do
-    { store_path: 'store_path', output: 'output', entries: [entry] }
+    { path: 'path', store_path: 'store_path', output: 'output', entries: [entry] }
   end
 
   let :entry do
@@ -209,15 +209,27 @@ class DocsDocTest < MiniTest::Spec
           pages.first.merge!(entries: [], output: '')
           mock(store).write(page[:store_path], page[:output])
           mock(store).write('index.json', anything)
+          mock(store).write('db.json', anything)
           doc.store_pages(store)
         end
 
         it "stores an index that contains all the pages' entries" do
           stub(store).write(page[:store_path], page[:output])
+          stub(store).write('db.json', anything)
           mock(store).write('index.json', anything) do |path, json|
             json = JSON.parse(json)
             assert_equal pages.length, json['entries'].length
             assert_includes json['entries'], entry.as_json.stringify_keys
+          end
+          doc.store_pages(store)
+        end
+
+        it "stores a db that contains all the pages, indexed by path" do
+          stub(store).write(page[:store_path], page[:output])
+          stub(store).write('index.json', anything)
+          mock(store).write('db.json', anything) do |path, json|
+            json = JSON.parse(json)
+            assert_equal page[:output], json[page[:path]]
           end
           doc.store_pages(store)
         end

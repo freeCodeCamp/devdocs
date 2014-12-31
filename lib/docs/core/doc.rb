@@ -1,6 +1,7 @@
 module Docs
   class Doc
     INDEX_FILENAME = 'index.json'
+    DB_FILENAME = 'db.json'
 
     class << self
       attr_accessor :name, :slug, :type, :version, :abstract
@@ -46,16 +47,19 @@ module Docs
 
       def store_pages(store)
         index = EntryIndex.new
+        pages = PageDb.new
 
         store.replace(path) do
           new.build_pages do |page|
             next unless store_page?(page)
             store.write page[:store_path], page[:output]
             index.add page[:entries]
+            pages.add page[:path], page[:output]
           end
 
           if index.present?
             store.write INDEX_FILENAME, index.to_json
+            store.write DB_FILENAME, pages.to_json
             true
           else
             false
