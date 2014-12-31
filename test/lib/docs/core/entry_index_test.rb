@@ -64,14 +64,18 @@ class DocsEntryIndexTest < MiniTest::Spec
     end
   end
 
-  describe "#empty?" do
-    it "returns true when entries have been added" do
+  describe "#empty? / #blank? / #present?" do
+    it "is #empty? and #blank? when no entries have been added" do
       assert index.empty?
+      assert index.blank?
+      refute index.present?
     end
 
-    it "returns false when an entry has been added" do
+    it "is #present? when an entry has been added" do
       index.add(entry)
       refute index.empty?
+      refute index.blank?
+      assert index.present?
     end
   end
 

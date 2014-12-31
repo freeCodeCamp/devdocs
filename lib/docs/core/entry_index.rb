@@ -21,6 +21,8 @@ module Docs
       @entries.empty?
     end
 
+    alias_method :blank?, :empty?
+
     def length
       @entries.length
     end
