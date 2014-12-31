@@ -4,6 +4,7 @@ class app.Router
   @routes: [
     ['*',              'before'  ]
     ['/',              'root'    ]
+    ['/offline',       'offline' ]
     ['/about',         'about'   ]
     ['/news',          'news'    ]
     ['/help',          'help'    ]
@@ -73,6 +74,10 @@ class app.Router
       setTimeout (-> window.location = '/'), 0
     else
       @triggerRoute 'root'
+    return
+
+  offline: ->
+    @triggerRoute 'offline'
     return
 
   about: (context) ->

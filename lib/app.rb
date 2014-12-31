@@ -122,7 +122,7 @@ class App < Sinatra::Application
     erb :index
   end
 
-  %w(about news help).each do |page|
+  %w(offline about news help).each do |page|
     get "/#{page}" do
       redirect "/#/#{page}", 302
     end

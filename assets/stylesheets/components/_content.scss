@@ -243,6 +243,51 @@
 }
 
 //
+// Doc table
+//
+
+._docs {
+  width: 100%;
+  line-height: 1.5rem;
+
+  th {
+    max-width: 0;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    white-space: nowrap;
+    font-weight: normal;
+
+    &:before {
+      float: left;
+      margin: .25rem .5rem .25rem 0;
+      @extend %icon;
+    }
+  }
+
+  td:last-child { text-align: right; }
+  td > a { cursor: pointer; }
+
+  tr.downloading > td:last-child {
+    > a { display: none; }
+    &:before { content: 'Downloading…' }
+  }
+
+  tr.undownloading > td:last-child {
+    > a { display: none; }
+    &:before { content: 'Deleting…' }
+  }
+
+  tr.error > td:last-child {
+    > a { display: none; }
+
+    &:before {
+      content: 'Error';
+      color: red;
+    }
+  }
+}
+
+//
 // News
 //
 

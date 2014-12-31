@@ -23,10 +23,11 @@ class app.views.Content extends app.View
     @scrollMap = {}
     @scrollStack = []
 
-    @rootPage   = new app.views.RootPage
-    @staticPage = new app.views.StaticPage
-    @typePage   = new app.views.TypePage
-    @entryPage  = new app.views.EntryPage
+    @rootPage    = new app.views.RootPage
+    @staticPage  = new app.views.StaticPage
+    @offlinePage = new app.views.OfflinePage
+    @typePage    = new app.views.TypePage
+    @entryPage   = new app.views.EntryPage
 
     @entryPage
       .on 'loading', @onEntryLoading
@@ -137,6 +138,8 @@ class app.views.Content extends app.View
         @show @entryPage
       when 'type'
         @show @typePage
+      when 'offline'
+        @show @offlinePage
       else
         @show @staticPage
 

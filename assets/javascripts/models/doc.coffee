@@ -27,6 +27,9 @@ class app.models.Doc extends app.Model
   fileUrl: (path) ->
     "#{app.config.docs_host}#{@fullPath(path)}"
 
+  dbUrl: ->
+    "#{app.config.docs_host}/#{@db_path}?#{@mtime}"
+
   indexUrl: ->
     "#{app.indexHost()}/#{@index_path}?#{@mtime}"
 
@@ -83,3 +86,39 @@ class app.models.Doc extends app.Model
   _setCache: (data) ->
     app.store.set @slug, [@mtime, data]
     return
+
+  download: (onSuccess, onError) ->
+    return if @downloading
+    @downloading = true
+
+    error = =>
+      @downloading = null
+      onError()
+
+    success = (data) =>
+      @downloading = null
+      app.db.store @, data, onSuccess, error
+
+    ajax
+      url: @dbUrl()
+      success: success
+      error: error
+    return
+
+  undownload: (onSuccess, onError) ->
+    return if @downloading
+    @downloading = true
+
+    success = =>
+      @downloading = null
+      onSuccess()
+
+    error = =>
+      @downloading = null
+      onError()
+
+    app.db.unstore @, success, error
+
+  getDownloadStatus: (callback) ->
+    app.db.version @, (value) ->
+      callback downloaded: !!value, version: value

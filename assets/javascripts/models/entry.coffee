@@ -41,8 +41,4 @@ class app.models.Entry extends app.Model
     @doc.types.findBy 'name', @type
 
   loadFile: (onSuccess, onError) ->
-    ajax
-      url: @fileUrl()
-      dataType: 'html'
-      success: onSuccess
-      error: onError
+    app.db.load(@, onSuccess, onError)
