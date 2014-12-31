@@ -113,12 +113,12 @@ class DocsDocTest < MiniTest::Spec
     end
   end
 
-  describe ".index_page" do
+  describe ".store_page" do
     it "builds a page" do
       any_instance_of(doc) do |instance|
         stub(instance).build_page('id') { @called = true; nil }
       end
-      doc.index_page('id') {}
+      doc.store_page(store, 'id') {}
       assert @called
     end
 
@@ -130,20 +130,23 @@ class DocsDocTest < MiniTest::Spec
       end
 
       context "and it has :entries" do
-        it "yields the page's :store_path and :output" do
-          doc.index_page('') { |*args| @args = args }
-          assert_equal [page[:store_path], page[:output]], @args
+        it "returns true" do
+          assert doc.store_page(store, 'id')
         end
 
-        it "returns an EntryIndex" do
-          assert_instance_of Docs::EntryIndex, doc.index_page('') {}
+        it "stores a file" do
+          mock(store).write(page[:store_path], page[:output])
+          doc.store_page(store, 'id')
         end
 
-        describe "the index" do
-          it "contains the page's entries" do
-            index = doc.index_page('') {}
-            assert_equal page[:entries], index.entries
+        it "opens the .path directory before storing the file" do
+          stub(doc).path { 'path' }
+          stub(store).write { assert false }
+          mock(store).open('path') do |_, block|
+            stub(store).write
+            block.call
           end
+          doc.store_page(store, 'id')
         end
       end
 
@@ -152,13 +155,13 @@ class DocsDocTest < MiniTest::Spec
           page[:entries] = []
         end
 
-        it "doesn't yield" do
-          doc.index_page('') { |*_| @yield = true }
-          refute @yield
+        it "returns false" do
+          refute doc.store_page(store, 'id')
         end
 
-        it "returns nil" do
-          assert_nil doc.index_page('') {}
+        it "doesn't store a file" do
+          dont_allow(store).write
+          doc.store_page(store, 'id')
         end
       end
     end
@@ -170,13 +173,13 @@ class DocsDocTest < MiniTest::Spec
         end
       end
 
-      it "doesn't yield" do
-        doc.index_page('') { |*_| @yield = true }
-        refute @yield
+      it "returns false" do
+        refute doc.store_page(store, 'id')
       end
 
-      it "returns nil" do
-        assert_nil doc.index_page('') {}
+      it "doesn't store a file" do
+        dont_allow(store).write
+        doc.store_page(store, 'id')
       end
     end
   end
@@ -252,48 +255,6 @@ class DocsDocTest < MiniTest::Spec
 
       it "returns nil" do
         assert_nil doc.index_pages {}
-      end
-    end
-  end
-
-  describe ".store_page" do
-    context "when the page is indexed successfully" do
-      before do
-        stub(doc).index_page('id').yields(page[:store_path], page[:output]) { index }
-      end
-
-      it "returns true" do
-        assert doc.store_page(store, 'id')
-      end
-
-      it "stores a file" do
-        mock(store).write(page[:store_path], page[:output])
-        doc.store_page(store, 'id')
-      end
-
-      it "opens the .path directory before storing the file" do
-        stub(doc).path { 'path' }
-        stub(store).write { assert false }
-        mock(store).open('path') do |_, block|
-          stub(store).write
-          block.call
-        end
-        doc.store_page(store, 'id')
-      end
-    end
-
-    context "when the page isn't indexed successfully" do
-      before do
-        stub(doc).index_page('id') { nil }
-      end
-
-      it "returns false" do
-        refute doc.store_page(store, 'id')
-      end
-
-      it "doesn't store a file" do
-        dont_allow(store).write
-        doc.store_page(store, 'id')
       end
     end
   end

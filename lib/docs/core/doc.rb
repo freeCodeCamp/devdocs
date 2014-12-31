@@ -33,12 +33,14 @@ module Docs
           index_path: index_path }
       end
 
-      def index_page(id)
-        if (page = new.build_page(id)) && page[:entries].present?
-          yield page[:store_path], page[:output]
-          index = EntryIndex.new
-          index.add page[:entries]
-          index
+      def store_page(store, id)
+        store.open(path) do
+          if page = new.build_page(id) and store_page?(page)
+            store.write page[:store_path], page[:output]
+            true
+          else
+            false
+          end
         end
       end
 
@@ -52,19 +54,18 @@ module Docs
         index.empty? ? nil : index
       end
 
-      def store_page(store, id)
-        store.open path do
-          index = index_page(id, &store.method(:write))
-          !!index
-        end
-      end
-
       def store_pages(store)
         store.replace path do
           index = index_pages(&store.method(:write))
           store.write INDEX_FILENAME, index.to_json if index
           !!index
         end
+      end
+
+      private
+
+      def store_page?(page)
+        page[:entries].present?
       end
     end
 
