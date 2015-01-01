@@ -1,6 +1,5 @@
 class app.views.EntryPage extends app.View
   @className: '_page'
-  @loadingClass: '_page-loading'
 
   @events:
     click: 'onClick'
