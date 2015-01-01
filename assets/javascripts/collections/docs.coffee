@@ -34,3 +34,9 @@ class app.collections.Docs extends app.Collection
   clearCache: ->
     doc.clearCache() for doc in @models
     return
+
+  getDownloadStatuses: (callback) ->
+    app.db.versions @models, (statuses) ->
+      for key, value of statuses
+        statuses[key] = downloaded: !!value, version: value
+      callback(statuses)

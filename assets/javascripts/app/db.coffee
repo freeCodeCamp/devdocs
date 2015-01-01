@@ -103,6 +103,26 @@ class app.DB
       return
     return
 
+  versions: (docs, fn) ->
+    @db (db) ->
+      result = {}
+
+      unless db
+        result[doc.slug] = false for doc in docs
+        fn(result)
+        return
+
+      txn = db.transaction ['docs'], 'readonly'
+      txn.oncomplete = -> fn(result)
+      store = txn.objectStore('docs')
+
+      docs.forEach (doc) ->
+        req = store.get(doc.slug)
+        req.onsuccess = -> result[doc.slug] = req.result
+        req.onerror = -> result[doc.slug] = false
+        return
+      return
+
   load: (entry, onSuccess, onError) ->
     if @useIndexedDB and @_db isnt false
       onError = @loadWithXHR.bind(@, entry, onSuccess, onError)
