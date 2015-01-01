@@ -98,7 +98,7 @@ class app.DB
       store = txn.objectStore('docs')
 
       req = store.get(doc.slug)
-      req.onsuccess = -> fn(!!req.result)
+      req.onsuccess = -> fn(req.result)
       req.onerror = -> fn(false)
       return
     return
