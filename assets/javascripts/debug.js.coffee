@@ -13,15 +13,17 @@ app.init = ->
 
 _start = app.start
 app.start = ->
-  _start.call(app, arguments...)
   console.timeEnd 'Load'
-
-_super = app.Searcher
-_proto = app.Searcher.prototype
+  console.time 'Start'
+  _start.call(app, arguments...)
+  console.timeEnd 'Start'
 
 #
 # Searcher
 #
+
+_super = app.Searcher
+_proto = app.Searcher.prototype
 
 app.Searcher = ->
   _super.apply @, arguments
