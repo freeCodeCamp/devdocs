@@ -60,7 +60,9 @@ class app.DB
         return
 
       txn = db.transaction ['docs', doc.slug], 'readwrite'
-      txn.oncomplete = -> if txn.error then onError() else onSuccess()
+      txn.oncomplete = ->
+        if txn.error then onError() else onSuccess()
+        return
 
       store = txn.objectStore(doc.slug)
       store.clear()
@@ -78,7 +80,9 @@ class app.DB
         return
 
       txn = db.transaction ['docs', doc.slug], 'readwrite'
-      txn.oncomplete = -> if txn.error then onError() else onSuccess()
+      txn.oncomplete = ->
+        if txn.error then onError() else onSuccess()
+        return
 
       store = txn.objectStore(doc.slug)
       store.clear()
@@ -154,6 +158,7 @@ class app.DB
 
   reset: ->
     try indexedDB?.deleteDatabase(NAME) catch
+    return
 
   useIndexedDB: ->
     !app.isSingleDoc() and !!window.indexedDB

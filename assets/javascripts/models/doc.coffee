@@ -54,6 +54,7 @@ class app.models.Doc extends app.Model
       @reset data
       onSuccess()
       @_setCache data if options.writeCache
+      return
 
     ajax
       url: @indexUrl()
@@ -70,6 +71,7 @@ class app.models.Doc extends app.Model
     callback = =>
       @reset data
       onSuccess()
+      return
 
     setTimeout callback, 0
     true
@@ -94,10 +96,12 @@ class app.models.Doc extends app.Model
     error = =>
       @downloading = null
       onError()
+      return
 
     success = (data) =>
       @downloading = null
       app.db.store @, data, onSuccess, error
+      return
 
     ajax
       url: @dbUrl()
@@ -112,13 +116,17 @@ class app.models.Doc extends app.Model
     success = =>
       @downloading = null
       onSuccess()
+      return
 
     error = =>
       @downloading = null
       onError()
+      return
 
     app.db.unstore @, success, error
+    return
 
   getDownloadStatus: (callback) ->
     app.db.version @, (value) ->
       callback downloaded: !!value, version: value
+    return
