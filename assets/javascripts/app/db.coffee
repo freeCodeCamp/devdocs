@@ -4,14 +4,23 @@ class app.DB
   constructor: ->
     @useIndexedDB = @useIndexedDB()
 
-  init: (@_callback) ->
-    if @useIndexedDB
-      @initIndexedDB()
-    else
-      @callback()
-    return
+  db: (fn) ->
+    return fn @_db unless @useIndexedDB and @_db is undefined
 
-  initIndexedDB: ->
+    if @callback isnt undefined
+      _callback = @callback
+      @callback = =>
+        _callback()
+        fn @_db
+        return
+      return
+
+    @callback = =>
+      @_db ?= false
+      delete @callback
+      fn @_db
+      return
+
     try
       req = indexedDB.open(NAME, @indexedDBVersion())
       req.onerror = @callback
@@ -21,20 +30,12 @@ class app.DB
       @callback()
     return
 
-  isEnabled: ->
-    !!@db
-
-  callback: =>
-    @_callback?()
-    @_callback = null
-    return
-
   onOpenSuccess: (event) =>
     try
-      @db = event.target.result
-      @db.transaction(['docs', app.docs.all()[0].slug], 'readwrite').abort() # https://bugs.webkit.org/show_bug.cgi?id=136937
+      @_db = event.target.result
+      @_db.transaction(['docs', app.docs.all()[0].slug], 'readwrite').abort() # https://bugs.webkit.org/show_bug.cgi?id=136937
     catch
-      @db = null
+      @_db = false
 
     @callback()
     return
@@ -53,43 +54,61 @@ class app.DB
     return
 
   store: (doc, data, onSuccess, onError) ->
-    txn = @db.transaction ['docs', doc.slug], 'readwrite'
-    txn.oncomplete = -> if txn.error then onError() else onSuccess()
+    @db (db) ->
+      unless db
+        onError()
+        return
 
-    store = txn.objectStore(doc.slug)
-    store.clear()
-    store.add(content, path) for path, content of data
+      txn = db.transaction ['docs', doc.slug], 'readwrite'
+      txn.oncomplete = -> if txn.error then onError() else onSuccess()
 
-    store = txn.objectStore('docs')
-    store.put(doc.mtime, doc.slug)
+      store = txn.objectStore(doc.slug)
+      store.clear()
+      store.add(content, path) for path, content of data
+
+      store = txn.objectStore('docs')
+      store.put(doc.mtime, doc.slug)
+      return
     return
 
   unstore: (doc, onSuccess, onError) ->
-    txn = @db.transaction ['docs', doc.slug], 'readwrite'
-    txn.oncomplete = -> if txn.error then onError() else onSuccess()
+    @db (db) ->
+      unless db
+        onError()
+        return
 
-    store = txn.objectStore(doc.slug)
-    store.clear()
+      txn = db.transaction ['docs', doc.slug], 'readwrite'
+      txn.oncomplete = -> if txn.error then onError() else onSuccess()
 
-    store = txn.objectStore('docs')
-    store.delete(doc.slug)
+      store = txn.objectStore(doc.slug)
+      store.clear()
+
+      store = txn.objectStore('docs')
+      store.delete(doc.slug)
+      return
     return
 
-  version: (doc, callback) ->
-    txn = @db.transaction ['docs'], 'readonly'
-    store = txn.objectStore('docs')
+  version: (doc, fn) ->
+    @db (db) ->
+      unless db
+        fn(false)
+        return
 
-    req = store.get(doc.slug)
-    req.onsuccess = -> callback(!!req.result)
-    req.onerror = -> callback(false)
+      txn = db.transaction ['docs'], 'readonly'
+      store = txn.objectStore('docs')
+
+      req = store.get(doc.slug)
+      req.onsuccess = -> fn(!!req.result)
+      req.onerror = -> fn(false)
+      return
     return
 
   load: (entry, onSuccess, onError) ->
-    if @isEnabled()
+    if @useIndexedDB and @_db isnt false
       onError = @loadWithXHR.bind(@, entry, onSuccess, onError)
-      @loadWithIDB(entry, onSuccess, onError)
+      @loadWithIDB entry, onSuccess, onError
     else
-      @loadWithXHR(entry, onSuccess, onError)
+      @loadWithXHR entry, onSuccess, onError
 
   loadWithXHR: (entry, onSuccess, onError) ->
     ajax
@@ -99,14 +118,19 @@ class app.DB
       error: onError
 
   loadWithIDB: (entry, onSuccess, onError) ->
-    txn = @db.transaction [entry.doc.slug], 'readonly'
-    store = txn.objectStore(entry.doc.slug)
+    @db (db) ->
+      unless db
+        onError()
+        return
 
-    req = store.get(entry.path)
-    req.onsuccess = -> if req.result then onSuccess(req.result) else onError()
-    req.onerror = onError
+      txn = db.transaction [entry.doc.slug], 'readonly'
+      store = txn.objectStore(entry.doc.slug)
 
-    txn
+      req = store.get(entry.path)
+      req.onsuccess = -> if req.result then onSuccess(req.result) else onError()
+      req.onerror = onError
+
+      txn
 
   reset: ->
     try indexedDB?.deleteDatabase(NAME) catch

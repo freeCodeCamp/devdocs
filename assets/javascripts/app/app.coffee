@@ -61,7 +61,7 @@
   bootOne: ->
     @doc = new app.models.Doc @DOC
     @docs.reset [@doc]
-    @doc.load @bootDB.bind(@), @onBootError.bind(@), readCache: true
+    @doc.load @start.bind(@), @onBootError.bind(@), readCache: true
     new app.views.Notice 'singleDoc', @doc
     delete @DOC
     return
@@ -72,21 +72,17 @@
       (if docs.indexOf(doc.slug) >= 0 then @docs else @disabledDocs).add(doc)
     @docs.sort()
     @disabledDocs.sort()
-    @docs.load @bootDB.bind(@), @onBootError.bind(@), readCache: true, writeCache: true
+    @docs.load @start.bind(@), @onBootError.bind(@), readCache: true, writeCache: true
     delete @DOCS
     return
 
-  bootDB: ->
+  start: ->
     for doc in @docs.all()
       @entries.add doc.toEntry()
       @entries.add type.toEntry() for type in doc.types.all()
       @entries.add doc.entries.all()
 
     @db = new app.DB()
-    @db.init(@start.bind(@))
-    return
-
-  start: ->
     @trigger 'ready'
     @router.start()
     @hideLoading()
