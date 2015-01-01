@@ -109,16 +109,14 @@ class app.DB
 
   versions: (docs, fn) ->
     @db (db) ->
-      result = {}
-
       unless db
-        result[doc.slug] = false for doc in docs
-        fn(result)
+        fn(false)
         return
 
       txn = db.transaction ['docs'], 'readonly'
       txn.oncomplete = -> fn(result)
       store = txn.objectStore('docs')
+      result = {}
 
       docs.forEach (doc) ->
         req = store.get(doc.slug)

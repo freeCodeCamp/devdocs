@@ -11,9 +11,12 @@ class app.views.OfflinePage extends app.View
 
   render: ->
     app.docs.getDownloadStatuses (statuses) =>
-      html = ''
-      html += @renderDoc(doc, statuses[doc.slug]) for doc in app.docs.all()
-      @html @tmpl('offlinePage', html)
+      if statuses is false
+        @html @tmpl('offlineError')
+      else
+        html = ''
+        html += @renderDoc(doc, statuses[doc.slug]) for doc in app.docs.all()
+        @html @tmpl('offlinePage', html)
       return
     return
 

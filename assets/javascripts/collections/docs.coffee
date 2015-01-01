@@ -37,6 +37,7 @@ class app.collections.Docs extends app.Collection
 
   getDownloadStatuses: (callback) ->
     app.db.versions @models, (statuses) ->
-      for key, value of statuses
-        statuses[key] = downloaded: !!value, version: value
+      if statuses
+        for key, value of statuses
+          statuses[key] = downloaded: !!value, version: value
       callback(statuses)

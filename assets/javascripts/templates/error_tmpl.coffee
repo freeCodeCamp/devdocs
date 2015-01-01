@@ -22,6 +22,11 @@ app.templates.bootError = ->
         """ Check your Internet connection and try <a href="javascript:location.reload()">reloading</a>.<br>
             If you keep seeing this, you're likely behind a proxy or firewall that blocks cross-domain requests. """
 
+app.templates.offlineError = ->
+  error """ Your browser is unsupported, sorry. """,
+        """ DevDocs uses IndexedDB to cache complete documentations for offline access.<br>
+            Unfortunately your browser either doesn't support IndexedDB, or its implementation is buggy. """
+
 app.templates.unsupportedBrowser = """
   <div class="_fail">
     <h1 class="_fail-title">Your browser is unsupported, sorry.</h1>
