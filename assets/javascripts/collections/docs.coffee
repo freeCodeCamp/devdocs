@@ -35,6 +35,15 @@ class app.collections.Docs extends app.Collection
     doc.clearCache() for doc in @models
     return
 
+  undownload: (callback) ->
+    i = 0
+    next = =>
+      if i < @models.length
+        @models[i++].undownload(next, next)
+      else
+        callback()
+    next()
+
   getDownloadStatuses: (callback) ->
     app.db.versions @models, (statuses) ->
       if statuses

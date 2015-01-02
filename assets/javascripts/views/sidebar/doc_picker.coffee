@@ -46,9 +46,11 @@ class app.views.DocPicker extends app.View
   save: ->
     unless @saving
       @saving = true
-      app.settings.setDocs @getSelectedDocs()
+      docs = @getSelectedDocs()
+      app.settings.setDocs(docs)
       @saveLink.textContent = if app.appCache then 'Downloading\u2026' else 'Saving\u2026'
-      app.reload()
+      disabledDocs = new app.collections.Docs(doc for doc in app.docs.all() when docs.indexOf(doc.slug) is -1)
+      disabledDocs.undownload -> app.reload()
     return
 
   getSelectedDocs: ->
