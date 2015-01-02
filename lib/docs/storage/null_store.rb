@@ -16,6 +16,7 @@ module Docs
     alias_method :delete_file, :nil
     alias_method :file_exist?, :nil
     alias_method :file_mtime, :nil
+    alias_method :file_size, :nil
     alias_method :list_files, :nil
   end
 end

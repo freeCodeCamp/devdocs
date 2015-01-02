@@ -330,6 +330,27 @@ class DocsAbstractStoreTest < MiniTest::Spec
     end
   end
 
+  describe "#size" do
+    it "raises an error with a path outside of #working_path" do
+      @path = '/path'
+      assert_raises InvalidPathError do
+        store.size '../file'
+      end
+    end
+
+    it "returns nil when the file doesn't exist" do
+      stub(store).file_exist?('/file') { false }
+      dont_allow(store).file_size
+      assert_nil store.size('file')
+    end
+
+    it "returns #file_size when the file exists" do
+      stub(store).file_exist?('/file') { true }
+      stub(store).file_size('/file') { 1 }
+      assert_equal 1, store.size('file')
+    end
+  end
+
   describe "#each" do
     it "calls #list_files with #working_path" do
       store.open 'dir'

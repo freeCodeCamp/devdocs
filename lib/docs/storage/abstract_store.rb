@@ -71,6 +71,11 @@ module Docs
       file_mtime(path) if file_exist?(path)
     end
 
+    def size(path)
+      path = expand_path(path)
+      file_size(path) if file_exist?(path)
+    end
+
     def each(&block)
       list_files(working_path, &block)
     end
@@ -106,6 +111,10 @@ module Docs
     end
 
     def file_mtime(path)
+      raise NotImplementedError
+    end
+
+    def file_size(path)
       raise NotImplementedError
     end
 

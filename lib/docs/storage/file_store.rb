@@ -37,6 +37,10 @@ module Docs
       File.mtime(path)
     end
 
+    def file_size(path)
+      File.size(path)
+    end
+
     def list_files(path)
       Find.find path do |file|
         next if file == path
