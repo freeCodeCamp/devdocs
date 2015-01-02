@@ -78,6 +78,11 @@ class ManifestTest < MiniTest::Spec
         mtime_index, mtime_db = mtime_db, mtime_index
         assert_equal mtime_db.to_i, manifest.as_json.first[:mtime]
       end
+
+      it "adds a :db_size attribute" do
+        stub(store).size(db_path) { 42 }
+        assert_equal 42, manifest.as_json.first[:db_size]
+      end
     end
 
     context "when the doc doesn't have an index" do
