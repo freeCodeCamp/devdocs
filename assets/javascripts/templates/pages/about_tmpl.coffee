@@ -45,7 +45,7 @@ app.templates.aboutPage = -> """
     #{("<tr><td>#{c[0]}<td>&copy; #{c[1]}<td><a href=\"#{c[3]}\">#{c[2]}</a>" for c in credits).join('')}
   </table>
 
-  <h2 class="_lined-heading" id="faq">Questions & Answsers</h2>
+  <h2 class="_lined-heading" id="faq">Questions & Answers</h2>
   <dl>
     <dt>Does it work offline?
     <dd>Yes! DevDocs is open source. You can run <a href="https://github.com/Thibaut/devdocs">the code</a> locally on your computer.<br>
