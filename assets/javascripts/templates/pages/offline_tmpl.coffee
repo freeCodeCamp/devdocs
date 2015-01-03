@@ -1,6 +1,14 @@
 app.templates.offlinePage = (docs) -> """
   <h1 class="_lined-heading">Offline Documentation</h1>
-  <table class="_docs">#{docs}</table>
+  <table class="_docs">
+    <tr>
+      <th>Documentation</th>
+      <th class="_docs-size">Size</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+    #{docs}
+  </table>
   <h1 class="_lined-heading">Questions & Answers</h1>
   <dl>
     <dt>How does this work?
@@ -29,11 +37,28 @@ canICloseTheTab = ->
         The current tab will continue to work, though (provided you downloaded all the documentations you want to use beforehand). """
 
 app.templates.offlineDoc = (doc, status) ->
-  html = """<tr data-slug="#{doc.slug}">"""
-  html += """<th class="_icon-#{doc.slug}">#{doc.name}</th>"""
-  html += if status.downloaded
-    """<td><a data-del>Delete</a></td>"""
+  outdated = status.downloaded and status.mtime isnt doc.mtime
+
+  html = """
+    <tr data-slug="#{doc.slug}"#{if outdated then ' class="_highlight"' else ''}>
+      <td class="_docs-name _icon-#{doc.slug}">#{doc.name}</td>
+      <td class="_docs-size">#{Math.ceil(doc.db_size / 100000) / 10} MB</td>
+  """
+
+  html += if !status.downloaded
+    """
+      <td>-</td>
+      <td><a data-dl>Download</a></td>
+    """
+  else if outdated
+    """
+      <td>Outdated</td>
+      <td><a data-dl>Update</a> - <a data-del>Delete</a></td>
+    """
   else
-    """<td><a data-dl>Download</a></td>"""
-  html += """</tr>"""
-  html
+    """
+      <td>Up-to-date</td>
+      <td><a data-del>Delete</a></td>
+    """
+
+  html + '</tr>'

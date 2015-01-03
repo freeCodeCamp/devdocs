@@ -39,25 +39,27 @@ class app.views.OfflinePage extends app.View
     return
 
   onClick: (event) =>
-    if event.target.hasAttribute('data-dl')
+    link = event.target
+
+    if link.hasAttribute('data-dl')
       action = 'download'
-    else if event.target.hasAttribute('data-del')
+    else if link.hasAttribute('data-del')
       action = 'undownload'
 
     if action
       $.stopEvent(event)
-      doc = @docByEl(event.target)
+      doc = @docByEl(link)
       doc[action](@onDownloadSuccess.bind(@, doc), @onDownloadError.bind(@, doc))
-      @docEl(doc).classList.add("#{action}ing")
+      link.parentNode.innerHTML = "#{link.textContent.replace(/e$/, '')}ing…"
     return
 
   onDownloadSuccess: (doc) ->
     doc.getDownloadStatus (status) =>
       @docEl(doc).outerHTML = @renderDoc(doc, status)
+      $.highlight @docEl(doc), className: '_highlight'
     return
 
   onDownloadError: (doc) ->
     el = @docEl(doc)
-    el.className = ''
-    el.classList.add('error')
+    el.lastElementChild.textContent = 'Error'
     return

@@ -128,5 +128,5 @@ class app.models.Doc extends app.Model
 
   getDownloadStatus: (callback) ->
     app.db.version @, (value) ->
-      callback downloaded: !!value, version: value
+      callback downloaded: !!value, mtime: value
     return

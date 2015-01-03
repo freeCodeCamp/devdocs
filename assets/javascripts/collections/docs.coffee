@@ -48,5 +48,5 @@ class app.collections.Docs extends app.Collection
     app.db.versions @models, (statuses) ->
       if statuses
         for key, value of statuses
-          statuses[key] = downloaded: !!value, version: value
+          statuses[key] = downloaded: !!value, mtime: value
       callback(statuses)
