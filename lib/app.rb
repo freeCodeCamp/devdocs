@@ -40,12 +40,14 @@ class App < Sinatra::Application
     end
   end
 
-  configure :development do
-    register Sinatra::Reloader
-
+  configure :test, :development do
     require 'active_support/per_thread_registry'
     require 'active_support/cache'
     sprockets.cache = ActiveSupport::Cache.lookup_store :file_store, root.join('tmp', 'cache', 'assets')
+  end
+
+  configure :development do
+    register Sinatra::Reloader
 
     use BetterErrors::Middleware
     BetterErrors.application_root = File.expand_path('..', __FILE__)

@@ -104,6 +104,7 @@ DEPENDENCIES
   progress_bar
   pry (~> 0.9.12)
   rack
+  rack-test
   rr
   sass
   sinatra

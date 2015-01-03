@@ -38,6 +38,7 @@ end
 group :test do
   gem 'minitest'
   gem 'rr', require: false
+  gem 'rack-test', require: false
 end
 
 if ENV['SELENIUM'] == '1'
