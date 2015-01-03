@@ -105,6 +105,10 @@ class App < Sinatra::Application
     def doc_index_page?
       @doc && request.path == "/#{@doc['slug']}/"
     end
+
+    def query_string_for_redirection
+      request.query_string.empty? ? nil : "?#{request.query_string}"
+    end
   end
 
   before do
@@ -165,9 +169,9 @@ class App < Sinatra::Application
     return 404 unless @doc = settings.docs[doc]
 
     if rest.nil?
-      redirect "/#{doc}#{type}/"
+      redirect "/#{doc}#{type}/#{query_string_for_redirection}"
     elsif rest.length > 1 && rest.end_with?('/')
-      redirect "/#{doc}#{type}#{rest[0...-1]}"
+      redirect "/#{doc}#{type}#{rest[0...-1]}#{query_string_for_redirection}"
     else
       erb :other
     end
