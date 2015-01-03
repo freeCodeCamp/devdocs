@@ -3,44 +3,47 @@ class app.DB
 
   constructor: ->
     @useIndexedDB = @useIndexedDB()
+    @callbacks = []
 
   db: (fn) ->
-    return fn @_db unless @useIndexedDB and @_db is undefined
-
-    if @callback isnt undefined
-      _callback = @callback
-      @callback = =>
-        _callback()
-        fn @_db
-        return
-      return
-
-    @callback = =>
-      @_db ?= false
-      delete @callback
-      fn @_db
-      return
+    return fn() unless @useIndexedDB
+    @callbacks.push(fn)
+    return if @open
 
     try
+      @open = true
       req = indexedDB.open(NAME, @indexedDBVersion())
-      req.onerror = @callback
       req.onsuccess = @onOpenSuccess
+      req.onerror = @onOpenError
       req.onupgradeneeded = @onUpgradeNeeded
     catch
-      @callback()
+      @onOpenError()
     return
 
   onOpenSuccess: (event) =>
     try
-      @_db = event.target.result
-      @_db.transaction(['docs', app.docs.all()[0].slug], 'readwrite').abort() # https://bugs.webkit.org/show_bug.cgi?id=136937
+      db = event.target.result
+      db.transaction(['docs', app.docs.all()[0].slug], 'readwrite').abort() # https://bugs.webkit.org/show_bug.cgi?id=136937
     catch
-      @_db = false
+      try db.close()
+      @onOpenError()
+      return
 
-    @callback()
+    @runCallbacks(db)
+    @open = false
+    db.close()
     return
 
-  onUpgradeNeeded: (event) =>
+  onOpenError: =>
+    @useIndexedDB = @open = false
+    @runCallbacks()
+    return
+
+  runCallbacks: (db) ->
+    fn(db) while fn = @callbacks.shift()
+    return
+
+  onUpgradeNeeded: (event) ->
     db = event.target.result
 
     unless db.objectStoreNames.contains('docs')
@@ -126,7 +129,7 @@ class app.DB
       return
 
   load: (entry, onSuccess, onError) ->
-    if @useIndexedDB and @_db isnt false
+    if @useIndexedDB
       onError = @loadWithXHR.bind(@, entry, onSuccess, onError)
       @loadWithIDB entry, onSuccess, onError
     else
