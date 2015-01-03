@@ -115,6 +115,8 @@ for usage instructions.
 
 # Tests
 thor test:all       # Run all tests
+thor test:docs      # Run "Docs" tests
+thor test:app       # Run "App" tests
 
 # Assets
 thor assets:compile # Compile assets (not required in development mode)
