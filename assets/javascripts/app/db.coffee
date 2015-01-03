@@ -23,7 +23,9 @@ class app.DB
   onOpenSuccess: (event) =>
     try
       db = event.target.result
-      db.transaction(['docs', app.docs.all()[0].slug], 'readwrite').abort() # https://bugs.webkit.org/show_bug.cgi?id=136937
+      unless @checkedBuggyIDB
+        db.transaction(['docs', app.docs.all()[0].slug], 'readwrite').abort() # https://bugs.webkit.org/show_bug.cgi?id=136937
+        @checkedBuggyIDB = true
     catch
       try db.close()
       @onOpenError()
