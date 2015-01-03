@@ -161,13 +161,13 @@ class App < Sinatra::Application
     redirect 'http://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%2C%20quickly%20searchable%20API%20docs&resubmit=true'
   end
 
-  get %r{\A/(\w+)(\-[\w\-]+)?(/)?(.+)?\z} do |doc, type, slash, rest|
+  get %r{\A/(\w+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
     return 404 unless @doc = settings.docs[doc]
 
-    if !rest && !slash
+    if rest.nil?
       redirect "/#{doc}#{type}/"
-    elsif rest && rest.end_with?('/')
-      redirect "#{doc}#{type}#{slash}#{rest[0...-1]}"
+    elsif rest.length > 1 && rest.end_with?('/')
+      redirect "/#{doc}#{type}#{rest[0...-1]}"
     else
       erb :other
     end
