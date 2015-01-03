@@ -144,7 +144,7 @@ class App < Sinatra::Application
     redirect 'http://www.shopify.com/careers?utm_source=devdocs&utm_medium=banner&utm_campaign=devdocs'
   end
 
-  get '/feed' do
+  get %r{\A/feed(?:\.atom)?\z} do
     content_type 'application/atom+xml'
     settings.news_feed
   end
