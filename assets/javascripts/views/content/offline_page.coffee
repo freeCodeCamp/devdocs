@@ -11,6 +11,7 @@ class app.views.OfflinePage extends app.View
 
   render: ->
     app.docs.getDownloadStatuses (statuses) =>
+      return unless @activated
       if statuses is false
         @html @tmpl('offlineError')
       else

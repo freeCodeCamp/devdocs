@@ -40,6 +40,7 @@ class app.views.Content extends app.View
     return
 
   show: (view) ->
+    @hideLoading()
     unless view is @view
       @view?.deactivate()
       @html @view = view

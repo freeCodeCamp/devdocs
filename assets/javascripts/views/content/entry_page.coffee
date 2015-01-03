@@ -24,6 +24,7 @@ class app.views.EntryPage extends app.View
     return
 
   render: (content = '') ->
+    return unless @activated
     @empty()
 
     @subview = new (@subViewClass()) @el, @entry
