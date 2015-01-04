@@ -60,13 +60,14 @@ class app.DB
     return
 
   store: (doc, data, onSuccess, onError) ->
-    @db (db) ->
+    @db (db) =>
       unless db
         onError()
         return
 
       txn = db.transaction ['docs', doc.slug], 'readwrite'
-      txn.oncomplete = ->
+      txn.oncomplete = =>
+        @cachedDocs?[doc.slug] = doc.mtime
         if txn.error then onError() else onSuccess()
         return
 
@@ -80,13 +81,14 @@ class app.DB
     return
 
   unstore: (doc, onSuccess, onError) ->
-    @db (db) ->
+    @db (db) =>
       unless db
         onError()
         return
 
       txn = db.transaction ['docs', doc.slug], 'readwrite'
-      txn.oncomplete = ->
+      txn.oncomplete = =>
+        delete @cachedDocs?[doc.slug]
         if txn.error then onError() else onSuccess()
         return
 
@@ -99,6 +101,10 @@ class app.DB
     return
 
   version: (doc, fn) ->
+    if (version = @cachedVersion(doc))?
+      fn(version)
+      return
+
     @db (db) ->
       unless db
         fn(false)
@@ -113,7 +119,15 @@ class app.DB
       return
     return
 
+  cachedVersion: (doc) ->
+    return unless @cachedDocs
+    @cachedDocs[doc.slug] or false
+
   versions: (docs, fn) ->
+    if versions = @cachedVersions(docs)
+      fn(versions)
+      return
+
     @db (db) ->
       unless db
         fn(false)
@@ -131,8 +145,14 @@ class app.DB
         return
       return
 
+  cachedVersions: (docs) ->
+    return unless @cachedDocs
+    result = {}
+    result[doc.slug] = @cachedVersion(doc) for doc in docs
+    result
+
   load: (entry, onSuccess, onError) ->
-    if @useIndexedDB
+    if @shouldLoadWithIDB(entry)
       onError = @loadWithXHR.bind(@, entry, onSuccess, onError)
       @loadWithIDB entry, onSuccess, onError
     else
@@ -146,7 +166,7 @@ class app.DB
       error: onError
 
   loadWithIDB: (entry, onSuccess, onError) ->
-    @db (db) ->
+    @db (db) =>
       unless db
         onError()
         return
@@ -157,8 +177,25 @@ class app.DB
       req = store.get(entry.path)
       req.onsuccess = -> if req.result then onSuccess(req.result) else onError()
       req.onerror = onError
+      @loadDocsCache(db) unless @cachedDocs
+      return
 
-      txn
+  loadDocsCache: (db) ->
+    @cachedDocs = {}
+
+    txn = db.transaction ['docs'], 'readonly'
+    store = txn.objectStore('docs')
+
+    req = store.openCursor()
+    req.onsuccess = (event) =>
+      return unless cursor = event.target.result
+      @cachedDocs[cursor.key] = cursor.value
+      cursor.continue()
+      return
+    return
+
+  shouldLoadWithIDB: (entry) ->
+    @useIndexedDB and (not @cachedDocs or @cachedDocs[entry.doc.slug])
 
   reset: ->
     try indexedDB?.deleteDatabase(NAME) catch
