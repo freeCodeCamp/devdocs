@@ -23,9 +23,9 @@ app.templates.bootError = ->
             If you keep seeing this, you're likely behind a proxy or firewall that blocks cross-domain requests. """
 
 app.templates.offlineError = ->
-  error """ Your browser is unsupported, sorry. """,
-        """ DevDocs uses IndexedDB to cache complete documentations for offline access.<br>
-            Unfortunately your browser either doesn't support IndexedDB, or its implementation is buggy. """
+  error """ Oops, the database failed to load. """,
+        """ DevDocs requires IndexedDB to cache documentations for offline access.<br>
+            Unfortunately IndexedDB is either not supported in your browser, disabled, or buggy. """
 
 app.templates.unsupportedBrowser = """
   <div class="_fail">
