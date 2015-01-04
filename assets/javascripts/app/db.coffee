@@ -174,7 +174,7 @@ class app.DB
       txn = db.transaction [entry.doc.slug], 'readonly'
       store = txn.objectStore(entry.doc.slug)
 
-      req = store.get(entry.path)
+      req = store.get(entry.dbPath())
       req.onsuccess = -> if req.result then onSuccess(req.result) else onError()
       req.onerror = onError
       @loadDocsCache(db) unless @cachedDocs

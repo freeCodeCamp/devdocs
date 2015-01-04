@@ -23,6 +23,9 @@ class app.models.Entry extends app.Model
   fullPath: ->
     @doc.fullPath if @isIndex() then '' else @path
 
+  dbPath: ->
+    @path.replace /#.*/, ''
+
   filePath: ->
     @doc.fullPath @_filePath()
 
