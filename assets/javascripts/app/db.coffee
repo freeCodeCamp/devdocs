@@ -3,6 +3,7 @@ class app.DB
 
   constructor: ->
     @useIndexedDB = @useIndexedDB()
+    @indexedDBVersion = @indexedDBVersion()
     @callbacks = []
 
   db: (fn) ->
@@ -12,7 +13,7 @@ class app.DB
 
     try
       @open = true
-      req = indexedDB.open(NAME, @indexedDBVersion())
+      req = indexedDB.open(NAME, @indexedDBVersion)
       req.onsuccess = @onOpenSuccess
       req.onerror = @onOpenError
       req.onupgradeneeded = @onUpgradeNeeded
