@@ -39,18 +39,12 @@ class app.views.OfflinePage extends app.View
     return
 
   onClick: (event) =>
-    link = event.target
-
-    if link.hasAttribute('data-dl')
-      action = 'install'
-    else if link.hasAttribute('data-del')
-      action = 'uninstall'
-
-    if action
+    target = event.target
+    if action = target.getAttribute('data-action')
       $.stopEvent(event)
-      doc = @docByEl(link)
+      doc = @docByEl(target)
       doc[action](@onInstallSuccess.bind(@, doc), @onInstallError.bind(@, doc))
-      link.parentNode.innerHTML = "#{link.textContent.replace(/e$/, '')}ing…"
+      target.parentNode.innerHTML = "#{target.textContent.replace(/e$/, '')}ing…"
     return
 
   onInstallSuccess: (doc) ->

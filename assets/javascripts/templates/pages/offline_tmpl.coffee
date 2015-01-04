@@ -48,17 +48,17 @@ app.templates.offlineDoc = (doc, status) ->
   html += if !status.installed
     """
       <td>-</td>
-      <td><a data-dl>Install</a></td>
+      <td><a data-action="install">Install</a></td>
     """
   else if outdated
     """
       <td>Outdated</td>
-      <td><a data-dl>Update</a> - <a data-del>Uninstall</a></td>
+      <td><a data-action="install">Update</a> - <a data-action="uninstall">Uninstall</a></td>
     """
   else
     """
       <td>Up-to-date</td>
-      <td><a data-del>Uninstall</a></td>
+      <td><a data-action="uninstall">Uninstall</a></td>
     """
 
   html + '</tr>'
