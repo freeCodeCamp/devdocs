@@ -35,18 +35,18 @@ class app.collections.Docs extends app.Collection
     doc.clearCache() for doc in @models
     return
 
-  undownload: (callback) ->
+  uninstall: (callback) ->
     i = 0
     next = =>
       if i < @models.length
-        @models[i++].undownload(next, next)
+        @models[i++].uninstall(next, next)
       else
         callback()
     next()
 
-  getDownloadStatuses: (callback) ->
+  getInstallStatuses: (callback) ->
     app.db.versions @models, (statuses) ->
       if statuses
         for key, value of statuses
-          statuses[key] = downloaded: !!value, mtime: value
+          statuses[key] = installed: !!value, mtime: value
       callback(statuses)

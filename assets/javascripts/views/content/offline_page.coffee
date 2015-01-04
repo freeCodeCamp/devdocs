@@ -10,7 +10,7 @@ class app.views.OfflinePage extends app.View
     return
 
   render: ->
-    app.docs.getDownloadStatuses (statuses) =>
+    app.docs.getInstallStatuses (statuses) =>
       return unless @activated
       if statuses is false
         @html @tmpl('offlineError')
@@ -42,24 +42,24 @@ class app.views.OfflinePage extends app.View
     link = event.target
 
     if link.hasAttribute('data-dl')
-      action = 'download'
+      action = 'install'
     else if link.hasAttribute('data-del')
-      action = 'undownload'
+      action = 'uninstall'
 
     if action
       $.stopEvent(event)
       doc = @docByEl(link)
-      doc[action](@onDownloadSuccess.bind(@, doc), @onDownloadError.bind(@, doc))
+      doc[action](@onInstallSuccess.bind(@, doc), @onInstallError.bind(@, doc))
       link.parentNode.innerHTML = "#{link.textContent.replace(/e$/, '')}ing…"
     return
 
-  onDownloadSuccess: (doc) ->
-    doc.getDownloadStatus (status) =>
+  onInstallSuccess: (doc) ->
+    doc.getInstallStatus (status) =>
       @docEl(doc).outerHTML = @renderDoc(doc, status)
       $.highlight @docEl(doc), className: '_highlight'
     return
 
-  onDownloadError: (doc) ->
+  onInstallError: (doc) ->
     el = @docEl(doc)
     el.lastElementChild.textContent = 'Error'
     return

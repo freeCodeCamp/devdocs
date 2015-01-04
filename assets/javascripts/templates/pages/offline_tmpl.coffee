@@ -30,14 +30,14 @@ app.templates.offlinePage = (docs) -> """
 
 canICloseTheTab = ->
   if app.AppCache.isEnabled()
-    """ Yes! Even offline, you can open a new tab, go to <a href="http://devdocs.io">devdocs.io</a>, and everything will work as if you were online (provided you downloaded all the documentations you want to use beforehand).<br>
+    """ Yes! Even offline, you can open a new tab, go to <a href="http://devdocs.io">devdocs.io</a>, and everything will work as if you were online (provided you installed all the documentations you want to use beforehand).<br>
         Note that loading any page other than <a href="http://devdocs.io">devdocs.io</a> directly won't work (due to limitations in AppCache). """
   else
     """ No. Because AppCache is unavailable in your browser (or has been disabled), loading <a href="http://devdocs.io">devdocs.io</a> offline won't work.<br>
-        The current tab will continue to work, though (provided you downloaded all the documentations you want to use beforehand). """
+        The current tab will continue to work, though (provided you installed all the documentations you want to use beforehand). """
 
 app.templates.offlineDoc = (doc, status) ->
-  outdated = status.downloaded and status.mtime isnt doc.mtime
+  outdated = status.installed and status.mtime isnt doc.mtime
 
   html = """
     <tr data-slug="#{doc.slug}"#{if outdated then ' class="_highlight"' else ''}>
@@ -45,20 +45,20 @@ app.templates.offlineDoc = (doc, status) ->
       <td class="_docs-size">#{Math.ceil(doc.db_size / 100000) / 10} MB</td>
   """
 
-  html += if !status.downloaded
+  html += if !status.installed
     """
       <td>-</td>
-      <td><a data-dl>Download</a></td>
+      <td><a data-dl>Install</a></td>
     """
   else if outdated
     """
       <td>Outdated</td>
-      <td><a data-dl>Update</a> - <a data-del>Delete</a></td>
+      <td><a data-dl>Update</a> - <a data-del>Uninstall</a></td>
     """
   else
     """
       <td>Up-to-date</td>
-      <td><a data-del>Delete</a></td>
+      <td><a data-del>Uninstall</a></td>
     """
 
   html + '</tr>'

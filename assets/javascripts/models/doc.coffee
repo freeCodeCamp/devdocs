@@ -89,17 +89,17 @@ class app.models.Doc extends app.Model
     app.store.set @slug, [@mtime, data]
     return
 
-  download: (onSuccess, onError) ->
-    return if @downloading
-    @downloading = true
+  install: (onSuccess, onError) ->
+    return if @installing
+    @installing = true
 
     error = =>
-      @downloading = null
+      @installing = null
       onError()
       return
 
     success = (data) =>
-      @downloading = null
+      @installing = null
       app.db.store @, data, onSuccess, error
       return
 
@@ -109,24 +109,24 @@ class app.models.Doc extends app.Model
       error: error
     return
 
-  undownload: (onSuccess, onError) ->
-    return if @downloading
-    @downloading = true
+  uninstall: (onSuccess, onError) ->
+    return if @installing
+    @installing = true
 
     success = =>
-      @downloading = null
+      @installing = null
       onSuccess()
       return
 
     error = =>
-      @downloading = null
+      @installing = null
       onError()
       return
 
     app.db.unstore @, success, error
     return
 
-  getDownloadStatus: (callback) ->
+  getInstallStatus: (callback) ->
     app.db.version @, (value) ->
-      callback downloaded: !!value, mtime: value
+      callback installed: !!value, mtime: value
     return
