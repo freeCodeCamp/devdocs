@@ -37,7 +37,8 @@ class app.DB
     db.close()
     return
 
-  onOpenError: =>
+  onOpenError: (event) =>
+    event?.preventDefault()
     @useIndexedDB = @open = false
     @runCallbacks()
     return
@@ -114,8 +115,13 @@ class app.DB
       store = txn.objectStore('docs')
 
       req = store.get(doc.slug)
-      req.onsuccess = -> fn(req.result)
-      req.onerror = -> fn(false)
+      req.onsuccess = ->
+        fn(req.result)
+        return
+      req.onerror = (event) ->
+        event.preventDefault()
+        fn(false)
+        return
       return
     return
 
@@ -140,8 +146,13 @@ class app.DB
 
       docs.forEach (doc) ->
         req = store.get(doc.slug)
-        req.onsuccess = -> result[doc.slug] = req.result
-        req.onerror = -> result[doc.slug] = false
+        req.onsuccess = ->
+          result[doc.slug] = req.result
+          return
+        req.onerror = (event) ->
+          event.preventDefault()
+          result[doc.slug] = false
+          return
         return
       return
 
@@ -175,8 +186,13 @@ class app.DB
       store = txn.objectStore(entry.doc.slug)
 
       req = store.get(entry.dbPath())
-      req.onsuccess = -> if req.result then onSuccess(req.result) else onError()
-      req.onerror = onError
+      req.onsuccess = ->
+        if req.result then onSuccess(req.result) else onError()
+        return
+      req.onerror = (event) ->
+        event.preventDefault()
+        onError()
+        return
       @loadDocsCache(db) unless @cachedDocs
       return
 
@@ -191,6 +207,9 @@ class app.DB
       return unless cursor = event.target.result
       @cachedDocs[cursor.key] = cursor.value
       cursor.continue()
+      return
+    req.onerror = (event) ->
+      event.preventDefault()
       return
     return
 
