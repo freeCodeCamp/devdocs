@@ -30,5 +30,5 @@ class app.views.News extends app.views.Notif
     app.settings.get 'news'
 
   markAllAsRead: ->
-    app.settings.set 'news', @getLastNewsTime() + 1
+    app.settings.set 'news', @getLastNewsTime()
     return
