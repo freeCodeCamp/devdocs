@@ -269,6 +269,24 @@
 
 ._docs-size { text-align: right; }
 
+._docs-tools { overflow: hidden; }
+
+._docs-links {
+  float: right;
+  padding: .375rem .125rem;
+  @extend %box;
+}
+
+._docs-link {
+  display: none;
+  vertical-align: top;
+  padding: 0 .75rem;
+  cursor: pointer;
+
+  &._show { display: inline-block; }
+  &._show ~ &._show { border-left: 1px solid $boxBorder; }
+}
+
 //
 // News
 //
