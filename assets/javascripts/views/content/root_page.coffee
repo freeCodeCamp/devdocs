@@ -19,11 +19,11 @@ class app.views.RootPage extends app.View
     return
 
   setHidden: (value) ->
-    app.store.set 'hideIntro', value
+    app.settings.set 'hideIntro', value
     return
 
   isHidden: ->
-    app.isSingleDoc() or app.store.get 'hideIntro'
+    app.isSingleDoc() or app.settings.get 'hideIntro'
 
   onRoute: ->
 

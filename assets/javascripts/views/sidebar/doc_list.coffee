@@ -46,10 +46,10 @@ class app.views.DocList extends app.View
     return
 
   renderDisabledList: ->
-    if (hidden = app.store.get 'hideDisabled') is true
+    if (hidden = app.settings.get 'hideDisabled') is true
       @removeDisabledList()
     else
-      app.store.set 'hideDisabled', false unless hidden is false
+      app.settings.set 'hideDisabled', false unless hidden is false
       @appendDisabledList()
     return
 
@@ -129,10 +129,10 @@ class app.views.DocList extends app.View
 
     if @disabledTitle.classList.contains('open-title')
       @removeDisabledList()
-      app.store.set 'hideDisabled', true
+      app.settings.set 'hideDisabled', true
     else
       @appendDisabledList()
-      app.store.set 'hideDisabled', false
+      app.settings.set 'hideDisabled', false
 
 
   afterRoute: (route, context) =>

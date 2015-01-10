@@ -13,7 +13,7 @@
 
     @store = new Store
     @appCache = new app.AppCache if app.AppCache.isEnabled()
-    @settings = new app.Settings
+    @settings = new app.Settings @store
 
     @docs = new app.collections.Docs
     @disabledDocs = new app.collections.Docs
@@ -91,10 +91,10 @@
     return
 
   welcomeBack: ->
-    @visitCount = @store.get('count') or 0
-    @store.set 'count', ++@visitCount
-    new app.views.Notif 'Share', autoHide: null if @visitCount is 5
-    new app.views.Notif 'Thanks', autoHide: null if @visitCount is 10 or ((n = app.store.get('news')) and n <= 1417305600000)
+    visitCount = @settings.get('count')
+    @settings.set 'count', ++visitCount
+    new app.views.Notif 'Share', autoHide: null if visitCount is 5
+    new app.views.Notif 'Thanks', autoHide: null if visitCount is 10 or ((n = @settings.get('news')) and n <= 1417305600000)
     new app.views.News()
 
   reload: ->

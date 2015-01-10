@@ -27,8 +27,8 @@ class app.views.News extends app.views.Notif
     new Date(app.news[0][0]).getTime()
 
   getLastReadTime: ->
-    app.store.get 'news'
+    app.settings.get 'news'
 
   markAllAsRead: ->
-    app.store.set 'news', @getLastNewsTime() + 1
+    app.settings.set 'news', @getLastNewsTime() + 1
     return
