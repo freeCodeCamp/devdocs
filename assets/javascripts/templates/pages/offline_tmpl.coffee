@@ -3,7 +3,7 @@ app.templates.offlinePage = (docs) -> """
 
   <div class="_docs-tools">
     <div class="_docs-links">
-      <a class="_docs-link" data-action-all="install">Install all</a><a class="_docs-link" data-action-all="update">Update all</a><a class="_docs-link" data-action-all="uninstall">Uninstall all</a>
+      <a class="_docs-link" data-action-all="install">Install all</a><a class="_docs-link" data-action-all="update"><strong>Update all</strong></a><a class="_docs-link" data-action-all="uninstall">Uninstall all</a>
     </div>
   </div>
 
@@ -59,7 +59,7 @@ app.templates.offlineDoc = (doc, status) ->
     """
   else if outdated
     """
-      <td>Outdated</td>
+      <td><strong>Outdated</strong></td>
       <td><a data-action="update">Update</a> - <a data-action="uninstall">Uninstall</a></td>
     """
   else

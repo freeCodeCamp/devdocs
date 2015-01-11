@@ -36,3 +36,7 @@ app.templates.notifThanks = ->
                   <li><a href="http://devdocs.io/s/shopify" target="_blank">Shopify</a> is where I spend my weekdays. Interested in working on one of the biggest commerce platforms in the world, in a delightful work environment? We're hiring!
                 </ul>
                 <p class="_notif-text">Have a great day :) """
+
+app.templates.notifUpdateDocs = ->
+  textNotif """ Documentation updates available. """,
+            """ <a href="/offline">Install them</a> as soon as possible to avoid broken pages. """

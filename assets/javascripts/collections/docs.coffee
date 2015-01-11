@@ -42,7 +42,9 @@ class app.collections.Docs extends app.Collection
         @models[i++].uninstall(next, next)
       else
         callback()
+      return
     next()
+    return
 
   getInstallStatuses: (callback) ->
     app.db.versions @models, (statuses) ->
@@ -50,3 +52,14 @@ class app.collections.Docs extends app.Collection
         for key, value of statuses
           statuses[key] = installed: !!value, mtime: value
       callback(statuses)
+      return
+    return
+
+  checkForUpdates: (callback) ->
+    @getInstallStatuses (statuses) =>
+      i = 0
+      if statuses
+        i += 1 for slug, status of statuses when status.installed and @findBy('slug', slug).mtime isnt status.mtime
+      callback(i)
+      return
+    return

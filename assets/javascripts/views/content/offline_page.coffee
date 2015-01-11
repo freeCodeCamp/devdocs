@@ -45,16 +45,16 @@ class app.views.OfflinePage extends app.View
     return
 
   onClick: (event) =>
-    target = event.target
-    if action = target.getAttribute('data-action')
+    return unless link = $.closestLink(event.target)
+    if action = link.getAttribute('data-action')
       $.stopEvent(event)
-      doc = @docByEl(target)
+      doc = @docByEl(link)
       action = 'install' if action is 'update'
       doc[action](@onInstallSuccess.bind(@, doc), @onInstallError.bind(@, doc))
-      target.parentNode.innerHTML = "#{target.textContent.replace(/e$/, '')}ing…"
-    else if action = target.getAttribute('data-action-all')
+      link.parentNode.innerHTML = "#{link.textContent.replace(/e$/, '')}ing…"
+    else if action = link.getAttribute('data-action-all')
       $.stopEvent(event)
-      link.click() for link in @findAll("a[data-action='#{action}']")
+      el.click() for el in @findAll("a[data-action='#{action}']")
     return
 
   onInstallSuccess: (doc) ->
