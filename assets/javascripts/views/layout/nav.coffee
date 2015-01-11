@@ -18,7 +18,7 @@ class app.views.Nav extends app.View
     return
 
   afterRoute: (route, context) =>
-    if route is 'page'
+    if route in ['page', 'offline']
       @select context.pathname
     else
       @deselect()

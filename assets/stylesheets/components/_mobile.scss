@@ -172,11 +172,9 @@
 
 ._mobile-nav-link {
   float: left;
-  width: 33%;
+  width: 25%;
   text-align: center;
   font-weight: bold;
-
-  &:nth-child(2n) { width: 34%; }
 }
 
 //
