@@ -41,8 +41,11 @@ class app.views.OfflinePage extends app.View
   docEl: (doc) ->
     @find("[data-slug='#{doc.slug}']")
 
-  onRoute: ->
-    @render()
+  onRoute: (route) ->
+    if app.isSingleDoc()
+      window.location = "/#/#{route.path}"
+    else
+      @render()
     return
 
   onClick: (event) =>
