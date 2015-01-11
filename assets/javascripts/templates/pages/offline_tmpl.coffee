@@ -5,6 +5,10 @@ app.templates.offlinePage = (docs) -> """
     <div class="_docs-links">
       <a class="_docs-link" data-action-all="install">Install all</a><a class="_docs-link" data-action-all="update"><strong>Update all</strong></a><a class="_docs-link" data-action-all="uninstall">Uninstall all</a>
     </div>
+    <label class="_docs-label">
+      <input type="checkbox" name="autoUpdate" value="1" #{if app.settings.get('autoUpdate') then 'checked' else ''}>
+      Check for and install updates automatically
+    </label>
   </div>
 
   <table class="_docs">
@@ -44,7 +48,7 @@ canICloseTheTab = ->
         The current tab will continue to work, though (provided you installed all the documentations you want to use beforehand). """
 
 app.templates.offlineDoc = (doc, status) ->
-  outdated = status.installed and status.mtime isnt doc.mtime
+  outdated = doc.isOutdated(status)
 
   html = """
     <tr data-slug="#{doc.slug}"#{if outdated then ' class="_highlight"' else ''}>

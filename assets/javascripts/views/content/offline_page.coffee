@@ -3,6 +3,7 @@ class app.views.OfflinePage extends app.View
 
   @events:
     click: 'onClick'
+    change: 'onChange'
 
   deactivate: ->
     if super
@@ -67,4 +68,9 @@ class app.views.OfflinePage extends app.View
   onInstallError: (doc) ->
     el = @docEl(doc)
     el.lastElementChild.textContent = 'Error'
+    return
+
+  onChange: (event) ->
+    if event.target.name is 'autoUpdate'
+      app.settings.set 'autoUpdate', !!event.target.checked
     return

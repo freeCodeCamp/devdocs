@@ -130,3 +130,6 @@ class app.models.Doc extends app.Model
     app.db.version @, (value) ->
       callback installed: !!value, mtime: value
     return
+
+  isOutdated: (status) ->
+    status.installed and @mtime isnt status.mtime

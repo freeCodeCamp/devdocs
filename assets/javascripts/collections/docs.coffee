@@ -59,7 +59,16 @@ class app.collections.Docs extends app.Collection
     @getInstallStatuses (statuses) =>
       i = 0
       if statuses
-        i += 1 for slug, status of statuses when status.installed and @findBy('slug', slug).mtime isnt status.mtime
+        i += 1 for slug, status of statuses when @findBy('slug', slug).isOutdated(status)
       callback(i)
+      return
+    return
+
+  updateInBackground: ->
+    @getInstallStatuses (statuses) =>
+      return unless statuses
+      for slug, status of statuses
+        doc = @findBy 'slug', slug
+        doc.install($.noop, $.noop) if doc.isOutdated(status)
       return
     return

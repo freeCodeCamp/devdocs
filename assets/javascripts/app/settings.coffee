@@ -7,6 +7,7 @@ class app.Settings
     hideDisabled: false
     hideIntro: false
     news: 0
+    autoUpdate: true
 
   constructor: (@store) ->
     @create() unless @settings = @store.get(SETTINGS_KEY)

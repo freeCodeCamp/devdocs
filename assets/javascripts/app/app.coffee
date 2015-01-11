@@ -99,8 +99,11 @@
     @checkForDocUpdates()
 
   checkForDocUpdates: ->
-    @docs.checkForUpdates (i) ->
-      new app.views.Notif 'UpdateDocs', autoHide: null if i > 0
+    if @settings.get('autoUpdate')
+      @docs.updateInBackground()
+    else
+      @docs.checkForUpdates (i) ->
+        new app.views.Notif 'UpdateDocs', autoHide: null if i > 0
 
   reload: ->
     @docs.clearCache()

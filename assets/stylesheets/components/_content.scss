@@ -248,6 +248,7 @@
 
 ._docs {
   width: 100%;
+  margin-top: .75rem;
   line-height: 1.5rem;
 
   th, td {
@@ -269,7 +270,10 @@
 
 ._docs-size { text-align: right; }
 
-._docs-tools { overflow: hidden; }
+._docs-tools {
+  overflow: hidden;
+  line-height: 1.5rem;
+}
 
 ._docs-links {
   float: right;
@@ -285,6 +289,21 @@
 
   &._show { display: inline-block; }
   &._show ~ &._show { border-left: 1px solid $boxBorder; }
+}
+
+._docs-label {
+  display: block;
+  overflow: hidden;
+  margin: 1px 0;
+  padding: .375rem .5rem;
+
+  > input {
+    display: inline-block;
+    vertical-align: top;
+    margin: .25rem;
+    width: 1rem;
+    height: 1rem;
+  }
 }
 
 //
