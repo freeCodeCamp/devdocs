@@ -22,7 +22,7 @@ MIME_TYPES =
 ajax.defaults =
   async: true
   dataType: 'json'
-  timeout: 30000
+  timeout: 30
   type: 'GET'
   # contentType
   # context
@@ -53,7 +53,7 @@ serializeParams = (params) ->
 applyCallbacks = (xhr, options) ->
   return unless options.async
 
-  xhr.timer = setTimeout onTimeout.bind(undefined, xhr, options), options.timeout
+  xhr.timer = setTimeout onTimeout.bind(undefined, xhr, options), options.timeout * 1000
   xhr.onreadystatechange = ->
     if xhr.readyState is 4
       clearTimeout(xhr.timer)
