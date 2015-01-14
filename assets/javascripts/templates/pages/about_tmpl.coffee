@@ -47,9 +47,6 @@ app.templates.aboutPage = -> """
 
   <h2 class="_lined-heading" id="faq">Questions & Answers</h2>
   <dl>
-    <dt>Does it work offline?
-    <dd>Yes! DevDocs is open source. You can run <a href="https://github.com/Thibaut/devdocs">the code</a> locally on your computer.<br>
-        An offline version that requires no setup is planned for the future.
     <dt>Where can I suggest new docs and features?
     <dd>You can suggest and vote for new docs on the <a href="https://trello.com/b/6BmTulfx/devdocs-documentation">Trello board</a>.<br>
         If you have a specific feature request, add it to the <a href="https://github.com/Thibaut/devdocs/issues">issue tracker</a>.<br>

@@ -1,5 +1,8 @@
 [
-  [ "2014-12-21",
+  [ "2015-01-13",
+    "<a href=\"/offline\">Offline mode</a> has landed!\nIf you notice any bugs, please report them on <a href=\"https://github.com/Thibaut/devdocs/issues\" target=\"_blank\">GitHub</a>."
+  ], [
+    "2014-12-21",
     "New <a href=\"/react/\">React</a>, <a href=\"/rethinkdb/\">RethinkDB</a>, <a href=\"/socketio/\">Socket.IO</a>, <a href=\"/modernizr/\">Modernizr</a> and <a href=\"/bower/\">Bower</a> documentations"
   ], [
     "2014-11-30",
