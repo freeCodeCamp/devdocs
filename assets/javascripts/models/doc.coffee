@@ -107,6 +107,7 @@ class app.models.Doc extends app.Model
       url: @dbUrl()
       success: success
       error: error
+      timeout: 3600
     return
 
   uninstall: (onSuccess, onError) ->
