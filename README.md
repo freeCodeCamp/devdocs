@@ -19,9 +19,9 @@ DevDocs is free and open source. If you like it, please consider funding the pro
 
 ## Quick Start
 
-Unless you wish to use DevDocs offline or contribute to the code, I recommend using the hosted version at [devdocs.io](http://devdocs.io). It's up-to-date and requires no setup.
+Unless you want to contribute to the project, I recommend using the hosted version at [devdocs.io](http://devdocs.io). It's up-to-date and works offline out-of-the-box.
 
-DevDocs is made of two separate pieces: a Ruby scraper responsible for generating the documentation and index files, and a JavaScript front-end powered by a small Sinatra app.
+DevDocs is made of two separate pieces: a Ruby scraper that generates the documentation and index files, and a JavaScript app powered by a small Sinatra app.
 
 DevDocs requires Ruby 2.2.0 and a JavaScript runtime supported by [ExecJS](https://github.com/sstephenson/execjs#readme) (included in OS X and Windows; [Node.js](http://nodejs.org/) on Linux). Once you have these installed, run the following commands:
 
@@ -37,15 +37,15 @@ Finally, point your browser at [localhost:9292](http://localhost:9292) (the firs
 
 The `thor docs:download` command is used to download/update individual documentations (e.g. `thor docs:download html css`), or all at the same time (using the `--all` option). You can see the list of available documentations by running `thor docs:list`.
 
-**Note:** there is currently no update mechanism other than `git pull origin master` to update the code and `thor docs:download` to download the latest version of the docs. To stay informed about new releases, be sure to watch this repository and/or subscribe to the [newsletter](http://eepurl.com/HnLUz).
+**Note:** there is currently no update mechanism other than `git pull origin master` to update the code and `thor docs:download` to download the latest version of the docs. To stay informed about new releases, be sure to [watch](https://github.com/Thibaut/devdocs/subscription) this repository and/or subscribe to the [newsletter](http://eepurl.com/HnLUz).
 
 ## Vision
 
 DevDocs aims to make reading and searching reference documentation fast, easy and enjoyable.
 
-The app's main goals are to: keep boot and load times as short as possible; improve the quality, speed, and order of search results; maximize the use of caching and other performance optimizations; maintain a clean, readable user interface; support full keyboard navigation; reduce “context switch” by using a consistent typography and design across all documentations; reduce clutter by focusing on a specific category of content (API/reference) and by indexing only the minimum useful to most developers.
+The app's main goals are to: keep boot and load times as short as possible; improve the quality, speed, and order of search results; maximize the use of caching and other performance optimizations; maintain a clean, readable user interface; be fully functional offline; support full keyboard navigation; reduce “context switch” by using a consistent typography and design across all documentations; reduce clutter by focusing on a specific category of content (API/reference) and indexing only the minimum useful to most developers.
 
-**Note:** DevDocs is neither a programming guide nor a search engine. All content is pulled from third-party sources and the project doesn't intend to compete with full-text search engines. Its backbone is metadata: each piece of content must be identified by a unique, obvious and short string. Tutorials, guides and other content that don't fit this requirement are outside the scope of the project.
+**Note:** DevDocs is neither a programming guide nor a search engine. All content is pulled from third-party sources and the project doesn't intend to compete with full-text search engines. Its backbone is metadata: each piece of content must be identified by a unique, "obvious" and short string. Tutorials, guides and other content that don't meet this requirement are outside the scope of the project.
 
 ## App
 
@@ -53,7 +53,7 @@ The web app is all JavaScript, written in [CoffeeScript](http://coffeescript.org
 
 Many of the code's design decisions were driven by the fact that the app uses XHR to load content directly into the main frame. This includes stripping the original documents of most of their HTML markup (e.g. scripts and stylesheets) to avoid polluting the main frame, and prefixing all CSS class names with an underscore to prevent conflicts.
 
-Another driving factor is performance and the fact that everything happens in the browser. `applicationCache` (which comes with its own set of constraints) and `localStorage` are used to speed up the boot time, while memory consumption is kept in check by allowing the user to pick his/her own set of documentations. On the other hand, the search algorithm is currently not very sophisticated because it needs to be fast even searching through 100k entries.
+Another driving factor is performance and the fact that everything happens in the browser. `applicationCache` (which comes with its own set of constraints) and `localStorage` are used to speed up the boot time, while memory consumption is kept in check by allowing the user to pick his/her own set of documentations. On the other hand, the search algorithm is currently not very sophisticated because it needs to be fast even searching through 100,000 entries.
 
 DevDocs being a developer tool, the browser requirements are high:
 
@@ -77,6 +77,7 @@ The scraper is responsible for generating the documentation and index files (met
 There are currently two kinds of scrapers: `UrlScraper` which downloads files via HTTP and `FileScraper` which reads them from the local filesystem. They both make copies of HTML documents, recursively following links that match a set of rules and applying all sorts of modifications along the way, in addition to building an index of the files and their metadata. Documents are parsed using [Nokogiri](http://nokogiri.org).
 
 Modifications made to each document include:
+
 * removing content such as the document structure (`<html>`, `<head>`, etc.), comments, empty nodes, etc.
 * fixing links (e.g. to remove duplicates)
 * replacing all external (not scraped) URLs with their fully qualified counterpart
@@ -135,9 +136,9 @@ Copyright 2013-2015 Thibaut Courouble and [other contributors](https://github.co
 
 This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT) and [LICENSE](https://github.com/Thibaut/devdocs/blob/master/LICENSE) files.
 
-**Note:** I consider _DevDocs_ to be a trademark. You may not use the name to endorse or promote products derived from this software without my permission, except as may be necessary to comply with the notice/attribution requirements.
+Please do not use the name DevDocs to endorse or promote products derived from this software without my permission, except as may be necessary to comply with the notice/attribution requirements.
 
-**Additionally**, I wish that any documentation file generated using this software be attributed to DevDocs. Let's be fair to all contributors by not stealing their hard work.
+I also wish that any documentation file generated using this software be attributed to DevDocs. Let's be fair to all contributors by giving credit where credit's due. Thanks!
 
 ## Questions?
 
