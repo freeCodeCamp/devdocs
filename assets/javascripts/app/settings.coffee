@@ -19,7 +19,7 @@ class app.Settings
     return
 
   applyLegacyValues: (settings) ->
-    for key, v of settings when value = @store.get(key)
+    for key, v of settings when (value = @store.get(key))?
       settings[key] = value
       @store.del(key)
     return
