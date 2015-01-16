@@ -28,7 +28,7 @@ class app.views.SearchScope extends app.View
 
   search: (value) ->
     unless @doc
-      @searcher.find app.docs.all(), 'slug', value
+      @searcher.find app.docs.all(), 'text', value
     return
 
   searchUrl: ->

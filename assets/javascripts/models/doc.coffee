@@ -4,6 +4,7 @@ class app.models.Doc extends app.Model
   constructor: ->
     super
     @reset @
+    @text = @name.toLowerCase()
 
   reset: (data) ->
     @resetEntries data.entries
