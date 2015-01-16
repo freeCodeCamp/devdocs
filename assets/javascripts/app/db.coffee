@@ -25,7 +25,7 @@ class app.DB
     try
       db = event.target.result
       unless @checkedBuggyIDB
-        db.transaction(['docs', app.docs.all()[0].slug], 'readwrite').abort() # https://bugs.webkit.org/show_bug.cgi?id=136937
+        @idbTransaction(db, stores: ['docs', app.docs.all()[0].slug], mode: 'readwrite').abort() # https://bugs.webkit.org/show_bug.cgi?id=136937
         @checkedBuggyIDB = true
     catch
       try db.close()
@@ -66,10 +66,14 @@ class app.DB
         onError()
         return
 
-      txn = db.transaction ['docs', doc.slug], 'readwrite'
+      txn = @idbTransaction db, stores: ['docs', doc.slug], mode: 'readwrite', ignoreError: false
       txn.oncomplete = =>
         @cachedDocs?[doc.slug] = doc.mtime
-        if txn.error then onError() else onSuccess()
+        onSuccess()
+        return
+      txn.onerror = (event) ->
+        event.preventDefault()
+        onError(event)
         return
 
       store = txn.objectStore(doc.slug)
@@ -87,10 +91,14 @@ class app.DB
         onError()
         return
 
-      txn = db.transaction ['docs', doc.slug], 'readwrite'
+      txn = @idbTransaction db, stores: ['docs', doc.slug], mode: 'readwrite', ignoreError: false
       txn.oncomplete = =>
         delete @cachedDocs?[doc.slug]
-        if txn.error then onError() else onSuccess()
+        onSuccess()
+        return
+      txn.onerror = (event) ->
+        event.preventDefault()
+        onError(event)
         return
 
       store = txn.objectStore(doc.slug)
@@ -106,12 +114,12 @@ class app.DB
       fn(version)
       return
 
-    @db (db) ->
+    @db (db) =>
       unless db
         fn(false)
         return
 
-      txn = db.transaction ['docs'], 'readonly'
+      txn = @idbTransaction db, stores: ['docs'], mode: 'readonly'
       store = txn.objectStore('docs')
 
       req = store.get(doc.slug)
@@ -134,13 +142,15 @@ class app.DB
       fn(versions)
       return
 
-    @db (db) ->
+    @db (db) =>
       unless db
         fn(false)
         return
 
-      txn = db.transaction ['docs'], 'readonly'
-      txn.oncomplete = -> fn(result)
+      txn = @idbTransaction db, stores: ['docs'], mode: 'readonly'
+      txn.oncomplete = ->
+        fn(result)
+        return
       store = txn.objectStore('docs')
       result = {}
 
@@ -182,7 +192,7 @@ class app.DB
         onError()
         return
 
-      txn = db.transaction [entry.doc.slug], 'readonly'
+      txn = @idbTransaction db, stores: [entry.doc.slug], mode: 'readonly'
       store = txn.objectStore(entry.doc.slug)
 
       req = store.get(entry.dbPath())
@@ -199,7 +209,7 @@ class app.DB
   loadDocsCache: (db) ->
     @cachedDocs = {}
 
-    txn = db.transaction ['docs'], 'readonly'
+    txn = @idbTransaction db, stores: ['docs'], mode: 'readonly'
     store = txn.objectStore('docs')
 
     req = store.openCursor()
@@ -215,6 +225,18 @@ class app.DB
 
   shouldLoadWithIDB: (entry) ->
     @useIndexedDB and (not @cachedDocs or @cachedDocs[entry.doc.slug])
+
+  idbTransaction: (db, options) ->
+    txn = db.transaction(options.stores, options.mode)
+    unless options.ignoreError is false
+      txn.onerror = (event) ->
+        event.preventDefault()
+        return
+    unless options.ignoreAbort is false
+      txn.onabort = (event) ->
+        event.preventDefault()
+        return
+    txn
 
   reset: ->
     try indexedDB?.deleteDatabase(NAME) catch
