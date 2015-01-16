@@ -221,7 +221,10 @@ class app.DB
     return
 
   useIndexedDB: ->
-    !app.isSingleDoc() and !!window.indexedDB
+    try
+      !app.isSingleDoc() and !!window.indexedDB
+    catch
+      false
 
   indexedDBVersion: ->
     if app.config.env is 'production' then app.config.version else Date.now() / 1000
