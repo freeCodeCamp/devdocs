@@ -13,7 +13,7 @@ class app.views.DocPicker extends app.View
   activate: ->
     if super
       @render()
-      @findByTag('input').focus()
+      @findByTag('input')?.focus()
       app.appCache?.on 'progress', @onAppCacheProgress
       $.on @el, 'focus', @onFocus, true
     return
