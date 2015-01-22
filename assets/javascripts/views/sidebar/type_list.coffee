@@ -25,7 +25,9 @@ class app.views.TypeList extends app.View
     return
 
   render: ->
-    @html @tmpl('sidebarType', @doc.types.all())
+    html = ''
+    html += @tmpl('sidebarType', group) for group in @doc.types.groups()
+    @html(html)
 
   onOpen: (event) =>
     $.stopEvent(event)
