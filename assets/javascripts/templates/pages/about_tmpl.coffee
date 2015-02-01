@@ -302,7 +302,7 @@ credits = [
     'https://raw.githubusercontent.com/cjohansen/Sinon.JS/master/LICENSE'
   ], [
     'Socket.io',
-    '2014 Automattic',
+    '2014-2015 Automattic',
     'MIT',
     'https://raw.githubusercontent.com/Automattic/socket.io/master/LICENSE'
   ], [

@@ -3,7 +3,7 @@ module Docs
     self.name = 'Socket.IO'
     self.slug = 'socketio'
     self.type = 'socketio'
-    self.version = '1.2.1'
+    self.version = '1.3.2'
     self.base_url = 'http://socket.io/docs/'
 
     html_filters.push 'socketio/clean_html', 'socketio/entries'
@@ -13,7 +13,7 @@ module Docs
     options[:skip] = %w(faq)
 
     options[:attribution] = <<-HTML
-      &copy; 2014 Automattic<br>
+      &copy; 2014&ndash;2015 Automattic<br>
       Licensed under the MIT License.
     HTML
   end
