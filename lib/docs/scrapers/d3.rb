@@ -3,7 +3,7 @@ module Docs
     self.name = 'D3.js'
     self.slug = 'd3'
     self.type = 'd3'
-    self.version = '3.5.2'
+    self.version = '3.5.3'
     self.base_url = 'https://github.com/mbostock/d3/wiki/'
     self.root_path = 'API-Reference'
 
@@ -36,7 +36,7 @@ module Docs
     options[:skip_patterns] = [/\//]
 
     options[:attribution] = <<-HTML
-      &copy; 2014 Michael Bostock<br>
+      &copy; 2015 Michael Bostock<br>
       Licensed under the BSD License.
     HTML
   end
