@@ -267,7 +267,7 @@ credits = [
     'https://raw.githubusercontent.com/facebook/react/master/LICENSE-docs'
   ], [
     'Redis',
-    '2009-2014 Salvatore Sanfilippo',
+    '2009-2015 Salvatore Sanfilippo',
     'CC BY-SA',
     'http://creativecommons.org/licenses/by-sa/4.0/'
   ], [
