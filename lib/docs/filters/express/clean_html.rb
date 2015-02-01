@@ -2,11 +2,13 @@ module Docs
   class Express
     class CleanHtmlFilter < Filter
       def call
-        at_css('h1').remove
-
         css('section').each do |node|
           node.before(node.children).remove
         end
+
+        doc.child.remove while doc.child.name != 'h1'
+
+        at_css('h1').remove if root_page?
 
         # Put id attributes on headings
         css('h2 + a[name]').each do |node|

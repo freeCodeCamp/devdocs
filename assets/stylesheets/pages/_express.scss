@@ -5,4 +5,6 @@
   h2 { @extend %block-heading; }
   h3 { @extend %block-label, %label-blue; }
   p > code { @extend %label; }
+  .doc-box { @extend %note; }
+  .doc-warn { @extend %note-red; }
 }

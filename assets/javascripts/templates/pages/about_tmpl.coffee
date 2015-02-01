@@ -132,7 +132,7 @@ credits = [
     'https://raw.github.com/emberjs/ember.js/master/LICENSE'
   ], [
     'Express',
-    '2009-2014 TJ Holowaychuk',
+    '2009-2015 TJ Holowaychuk',
     'MIT',
     'https://raw.githubusercontent.com/visionmedia/express/master/LICENSE'
   ], [
