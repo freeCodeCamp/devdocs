@@ -12,7 +12,7 @@ app.templates.notifUpdateReady = ->
 app.templates.notifError = ->
   textNotif """ Oops, an error occured. """,
             """ Try <a href="javascript:app.reload()">reloading</a>, and if the problem persists,
-                <a href="javascript:app.reset()">resetting the app</a>.<br>
+                <a href="javascript:if(confirm('Are you sure you want to reset DevDocs?'))app.reset()">resetting the app</a>.<br>
                 You can also report this issue on <a href="https://github.com/Thibaut/devdocs/issues/new" target="_blank">GitHub</a>. """
 
 app.templates.notifInvalidLocation = ->
