@@ -8,7 +8,6 @@ class app.views.TypePage extends app.View
     return
 
   render: (@type) ->
-    @type = type
     @html @tmpl('typePage', @type)
     return
 
