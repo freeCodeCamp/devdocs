@@ -312,7 +312,7 @@ credits = [
     'https://raw.github.com/jashkenas/underscore/master/LICENSE'
   ], [
     'Yii',
-    '2008-2014 by Yii Software LLC',
+    '2008-2015 by Yii Software LLC',
     'BSD',
     'https://raw.github.com/yiisoft/yii/master/LICENSE'
   ]
