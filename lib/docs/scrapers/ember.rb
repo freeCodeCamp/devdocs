@@ -3,7 +3,7 @@ module Docs
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.version = '1.9.0'
+    self.version = '1.9.1'
     self.base_url = 'http://emberjs.com/api/'
 
     html_filters.push 'ember/clean_html', 'ember/entries', 'title'
@@ -51,7 +51,7 @@ module Docs
     options[:skip_patterns] = [/\._/]
 
     options[:attribution] = <<-HTML
-      &copy; 2014 Yehuda Katz, Tom Dale and Ember.js contributors<br>
+      &copy; 2015 Yehuda Katz, Tom Dale and Ember.js contributors<br>
       Licensed under the MIT License.
     HTML
   end

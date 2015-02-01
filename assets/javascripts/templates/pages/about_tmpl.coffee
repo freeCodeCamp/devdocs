@@ -127,7 +127,7 @@ credits = [
     'https://raw.githubusercontent.com/django/django/master/LICENSE'
   ], [
     'Ember.js',
-    '2014 Yehuda Katz, Tom Dale and Ember.js contributors',
+    '2015 Yehuda Katz, Tom Dale and Ember.js contributors',
     'MIT',
     'https://raw.github.com/emberjs/ember.js/master/LICENSE'
   ], [
