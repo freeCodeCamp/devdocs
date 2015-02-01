@@ -137,7 +137,7 @@ credits = [
     'https://raw.githubusercontent.com/visionmedia/express/master/LICENSE'
   ], [
     'Git',
-    '2005-2014 Linus Torvalds and others',
+    '2005-2015 Linus Torvalds and others',
     'GPLv2',
     'https://raw.github.com/git/git/master/COPYING'
   ], [
