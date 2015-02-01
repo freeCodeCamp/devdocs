@@ -1,7 +1,7 @@
 module Docs
   class Sass < UrlScraper
     self.type = 'yard'
-    self.version = '3.4.7'
+    self.version = '3.4.11'
     self.base_url = 'http://sass-lang.com/documentation/'
     self.root_path = 'file.SASS_REFERENCE.html'
 
@@ -16,7 +16,7 @@ module Docs
     end
 
     options[:attribution] = <<-HTML
-      &copy; 2006&ndash;2014 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein<br>
+      &copy; 2006&ndash;2015 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein<br>
       Licensed under the MIT License.
     HTML
   end

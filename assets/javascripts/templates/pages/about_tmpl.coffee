@@ -292,7 +292,7 @@ credits = [
     'https://raw.github.com/rails/rails/master/activerecord/MIT-LICENSE'
   ], [
     'Sass',
-    '2006-2014 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
+    '2006-2015 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',
     'https://raw.github.com/nex3/sass/master/MIT-LICENSE'
   ], [
