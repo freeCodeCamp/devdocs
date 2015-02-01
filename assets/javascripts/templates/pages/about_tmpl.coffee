@@ -242,7 +242,7 @@ credits = [
     'https://github.com/sparklemotion/nokogiri/blob/master/README.rdoc#license'
   ], [
     'PHP',
-    '1997-2014 The PHP Documentation Group',
+    '1997-2015 The PHP Documentation Group',
     'CC BY',
     'http://creativecommons.org/licenses/by/3.0/'
   ], [

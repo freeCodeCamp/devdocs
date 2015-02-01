@@ -2,7 +2,7 @@ module Docs
   class Php < FileScraper
     self.name = 'PHP'
     self.type = 'php'
-    self.version = 'up to 5.6.2'
+    self.version = 'up to 5.6.5'
     self.base_url = 'http://www.php.net/manual/en/'
     self.root_path = 'index.html'
     self.initial_paths = %w(
@@ -52,7 +52,7 @@ module Docs
     options[:skip_patterns] = [/mysqlnd/]
 
     options[:attribution] = <<-HTML
-      &copy; 1997&ndash;2014 The PHP Documentation Group<br>
+      &copy; 1997&ndash;2015 The PHP Documentation Group<br>
       Licensed under the Creative Commons Attribution License v3.0 or later.
     HTML
   end
