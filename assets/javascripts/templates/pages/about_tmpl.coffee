@@ -102,7 +102,7 @@ credits = [
     'https://github.com/chaijs/chai/blob/master/README.md#license'
   ], [
     'CoffeeScript',
-    '2009-2014 Jeremy Ashkenas',
+    '2009-2015 Jeremy Ashkenas',
     'MIT',
     'https://raw.github.com/jashkenas/coffee-script/master/LICENSE'
   ], [
