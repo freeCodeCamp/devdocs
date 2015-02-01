@@ -10,7 +10,7 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2014 MaxCDN<br>
+      &copy; 2015 MaxCDN<br>
       Licensed under the MIT License.
     HTML
   end

@@ -207,7 +207,7 @@ credits = [
     'http://daringfireball.net/projects/markdown/license'
   ], [
     'MaxCDN',
-    '2014 MaxCDN',
+    '2015 MaxCDN',
     'MIT',
     'https://raw.githubusercontent.com/MaxCDN/api-docs/master/LICENSE'
   ], [
