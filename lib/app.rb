@@ -25,6 +25,7 @@ class App < Sinatra::Application
     set :docs_path, -> { File.join(public_folder, docs_prefix) }
     set :docs_manifest_path, -> { File.join(docs_path, 'docs.json') }
     set :docs, -> { Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc| [doc['slug'], doc] }] }
+    set :default_docs, %w(css dom dom_events html http javascript)
 
     set :news_path, -> { File.join(root, assets_prefix, 'javascripts', 'news.json') }
     set :news, -> { JSON.parse(File.read(news_path)) }
@@ -94,9 +95,14 @@ class App < Sinatra::Application
 
     def doc_index_urls
       cookie = cookies[:docs]
-      return [] if cookie.nil? || cookie.empty?
 
-      cookie.split('/').inject [] do |result, slug|
+      docs = if cookie.nil? || cookie.empty?
+        settings.default_docs
+      else
+        cookie.split('/')
+      end
+
+      docs.inject [] do |result, slug|
         if doc = settings.docs[slug]
           result << File.join('', settings.docs_prefix, doc['index_path']) + "?#{doc['mtime']}"
         end
