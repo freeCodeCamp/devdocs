@@ -96,14 +96,7 @@
     new app.views.Notif 'Share', autoHide: null if visitCount is 5
     new app.views.Notif 'Thanks', autoHide: null if visitCount is 10
     new app.views.News()
-    @checkForDocUpdates()
-
-  checkForDocUpdates: ->
-    if @settings.get('autoUpdate')
-      @docs.updateInBackground()
-    else
-      @docs.checkForUpdates (i) ->
-        new app.views.Notif 'UpdateDocs', autoHide: null if i > 0
+    @updateChecker = new app.UpdateChecker()
 
   reload: ->
     @docs.clearCache()

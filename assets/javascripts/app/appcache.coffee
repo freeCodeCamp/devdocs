@@ -13,9 +13,6 @@ class app.AppCache
     $.on @cache, 'progress', @onProgress
     $.on @cache, 'updateready', @onUpdateReady
 
-    @lastCheck = Date.now()
-    $.on window, 'focus', @checkForUpdate
-
   update: ->
     try @cache.update() catch
     return
@@ -26,17 +23,10 @@ class app.AppCache
     @update()
     return
 
-  checkForUpdate: =>
-    if Date.now() - @lastCheck > 86400e3
-      @lastCheck = Date.now()
-      @update()
-    return
-
   onProgress: (event) =>
     @trigger 'progress', event
     return
 
   onUpdateReady: =>
-    new app.views.Notif 'UpdateReady', autoHide: null unless @reloading
-    @trigger 'updateready'
+    @trigger 'updateready' unless @reloading
     return
