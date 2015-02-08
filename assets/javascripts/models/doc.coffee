@@ -26,7 +26,7 @@ class app.models.Doc extends app.Model
     "/#{@slug}#{path}"
 
   fileUrl: (path) ->
-    "#{app.config.docs_host}#{@fullPath(path)}"
+    "#{app.config.docs_host}#{@fullPath(path)}?#{@mtime}"
 
   dbUrl: ->
     "#{app.config.docs_host}/#{@db_path}?#{@mtime}"
