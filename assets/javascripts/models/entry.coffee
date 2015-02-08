@@ -1,24 +1,11 @@
+#= require app/searcher
+
 class app.models.Entry extends app.Model
   # Attributes: name, type, path
 
-  SEPARATORS_REGEXP = /\:?\ |#|::|->/g
-  PARANTHESES_REGEXP = /\(.*?\)$/
-  EVENT_REGEXP = /\ event$/
-  DOT_REGEXP = /\.+/g
-
   constructor: ->
     super
-    @text = @searchValue()
-
-  searchValue: ->
-    @name
-      .toLowerCase()
-      .replace '...', ' '
-      .replace EVENT_REGEXP, ''
-      .replace SEPARATORS_REGEXP, '.'
-      .replace DOT_REGEXP, '.'
-      .replace PARANTHESES_REGEXP, ''
-      .trim()
+    @text = app.Searcher.normalizeString(@name)
 
   fullPath: ->
     @doc.fullPath if @isIndex() then '' else @path

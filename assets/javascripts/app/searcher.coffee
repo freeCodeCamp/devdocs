@@ -112,6 +112,25 @@ class app.Searcher
     max_results: app.config.max_results
     fuzzy_min_length: 3
 
+  SEPARATORS_REGEXP = /\:?\ |#|::|->/g
+  PARANTHESES_REGEXP = /\(.*?\)$/
+  EVENT_REGEXP = /\ event$/
+  DOT_REGEXP = /\.+/g
+  WHITESPACE_REGEXP = /\s/g
+
+  EMPTY_STRING = ''
+  ELLIPSIS = '...'
+
+  @normalizeString: (string) ->
+    string
+      .toLowerCase()
+      .replace ELLIPSIS, EMPTY_STRING
+      .replace EVENT_REGEXP, EMPTY_STRING
+      .replace SEPARATORS_REGEXP, SEPARATOR
+      .replace DOT_REGEXP, SEPARATOR
+      .replace PARANTHESES_REGEXP, EMPTY_STRING
+      .replace WHITESPACE_REGEXP, EMPTY_STRING
+
   constructor: (options = {}) ->
     @options = $.extend {}, DEFAULTS, options
 
@@ -127,7 +146,7 @@ class app.Searcher
     return
 
   setup: ->
-    query = @query = @normalizeQuery(@query)
+    query = @query = @constructor.normalizeString(@query)
     queryLength = query.length
     @dataLength = @data.length
     @matchers = [exactMatch]
@@ -230,9 +249,6 @@ class app.Searcher
 
   delay: (fn) ->
     @timeout = setTimeout(fn, 1)
-
-  normalizeQuery: (string) ->
-    string.replace(/\s/g, '').toLowerCase()
 
   queryToFuzzyRegexp: (string) ->
     chars = string.split ''
