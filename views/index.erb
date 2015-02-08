@@ -26,7 +26,7 @@
   <link rel="apple-touch-icon" sizes="144x144" href="http://maxcdn.devdocs.io/images/apple-icon-144.png">
   <link rel="apple-touch-icon" sizes="152x152" href="http://maxcdn.devdocs.io/images/apple-icon-152.png">
   <link rel="apple-touch-icon" sizes="160x160" href="http://maxcdn.devdocs.io/images/apple-icon-160.png">
-  <%= stylesheet_tag 'application' %>
+  <link rel="stylesheet" href="<%= main_stylesheet_path %>" data-alt="<%= alternate_stylesheet_path %>">
   <%= javascript_tag 'application', asset_host: false %>
   <%= javascript_tag 'docs' %><% unless App.production? %>
   <%= javascript_tag 'debug' %><% end %>

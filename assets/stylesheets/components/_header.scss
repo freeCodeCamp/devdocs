@@ -98,7 +98,11 @@
     top: 1rem;
     left: 1rem;
     opacity: .4;
-    @extend %icon, %icon-search;
+    @if $style == 'dark' {
+      @extend %icon, %icon-search-white;
+    } @else {
+      @extend %icon, %icon-search;
+    }
   }
 }
 
@@ -132,7 +136,11 @@
   opacity: .3;
 
   &:hover { opacity: .5; }
-  &:before { @extend %icon, %icon-clear; }
+  @if $style == 'dark' {
+    &:before { @extend %icon, %icon-close-white; }
+  } @else {
+    &:before { @extend %icon, %icon-clear; }
+  }
   ._search-active > & { display: block; }
 }
 

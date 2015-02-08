@@ -17,6 +17,14 @@ class app.views.Document extends app.View
     @activate()
     return
 
+  toggleLight: ->
+    css = $('link[rel="stylesheet"][data-alt]')
+    alt = css.getAttribute('data-alt')
+    css.setAttribute('data-alt', css.getAttribute('href'))
+    css.setAttribute('href', alt)
+    app.settings.setDark(alt.indexOf('dark') > 0)
+    return
+
   setTitle: (title) ->
     @el.title = if title then "DevDocs/#{title}" else 'DevDocs'
 

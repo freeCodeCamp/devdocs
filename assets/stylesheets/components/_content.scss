@@ -425,6 +425,11 @@
 ._splash-sponsor > ._maxcdn-logo {
   background-image: image-url('maxcdn-bw.png');
 
+  @if $style == 'dark' {
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+  }
+
   @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
     background-image: image-url('maxcdn-bw@2x.png');
   }
@@ -442,6 +447,11 @@
 
 ._splash-sponsor > ._shopify-logo {
   background-image: image-url('shopify-bw.png');
+
+  @if $style == 'dark' {
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+  }
 
   @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
     background-image: image-url('shopify-bw@2x.png');

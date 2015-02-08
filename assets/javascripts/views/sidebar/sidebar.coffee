@@ -79,6 +79,9 @@ class app.views.Sidebar extends app.View
     if event.target.hasAttribute? 'data-reset-list'
       $.stopEvent(event)
       @reset()
+    else if event.target.hasAttribute? 'data-light'
+      $.stopEvent(event)
+      app.document.toggleLight()
     return
 
   onGlobalClick: (event) =>

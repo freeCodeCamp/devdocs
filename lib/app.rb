@@ -17,7 +17,7 @@ class App < Sinatra::Application
     set :assets_prefix, 'assets'
     set :assets_path, -> { File.join(public_folder, assets_prefix) }
     set :assets_manifest_path, -> { File.join(assets_path, 'manifest.json') }
-    set :assets_compile, %w(*.png docs.js application.js application.css)
+    set :assets_compile, %w(*.png docs.js application.js application.css application-dark.css)
 
     require 'yajl/json_gem'
     set :docs_prefix, 'docs'
@@ -116,6 +116,21 @@ class App < Sinatra::Application
 
     def query_string_for_redirection
       request.query_string.empty? ? nil : "?#{request.query_string}"
+    end
+
+    def main_stylesheet_path
+      stylesheet_paths[cookies[:dark].present? ? :dark : :default]
+    end
+
+    def alternate_stylesheet_path
+      stylesheet_paths[cookies[:dark].present? ? :default : :dark]
+    end
+
+    def stylesheet_paths
+      @stylesheet_paths ||= {
+        default: stylesheet_path('application'),
+        dark: stylesheet_path('application-dark')
+      }
     end
   end
 

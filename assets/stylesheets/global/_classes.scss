@@ -101,7 +101,11 @@
     height: .4375rem;
     margin: .125rem 0 0 .0625rem;
     vertical-align: top;
-    @extend %icon, %icon-link;
+    @if $style == 'dark' {
+      @extend %icon, %icon-link-white;
+    } @else {
+      @extend %icon, %icon-link;
+    }
   }
 }
 

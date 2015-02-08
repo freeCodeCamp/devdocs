@@ -4,7 +4,7 @@
   width: 1rem;
   height: 1rem;
   background-image: image-url('icons.png');
-  background-size: 5rem 13rem;
+  background-size: 5rem 15rem;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
@@ -77,3 +77,10 @@
 ._icon-socketio:before      { background-position: -2rem -12rem; }
 ._icon-modernizr:before     { background-position: -3rem -12rem; }
 ._icon-bower:before         { background-position: -4rem -12rem; }
+%icon-search-white          { background-position: 0 -13rem; }
+%icon-dir-white             { background-position: -1rem -13rem; }
+%icon-link-white            { background-position: -2.25rem -13.25rem; }
+%icon-settings-white        { background-position: -3rem -13rem; }
+%icon-check-white           { background-position: -4rem -13rem; }
+%icon-light                 { background-position: 0 -14rem; }
+%icon-light-white           { background-position: -1rem -14rem; }

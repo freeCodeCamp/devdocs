@@ -51,7 +51,10 @@ templates.sidebarPickerNote = """
 sidebarFooter = (html) -> """<div class="_sidebar-footer">#{html}</div>"""
 
 templates.sidebarSettings = ->
-  sidebarFooter """<a class="_sidebar-footer-link _sidebar-footer-edit" data-pick-docs>Select documentation</a>"""
+  sidebarFooter """
+    <a class="_sidebar-footer-link _sidebar-footer-light" title="Toggle light" data-light></a>
+    <a class="_sidebar-footer-link _sidebar-footer-edit" data-pick-docs>Select documentation</a>
+  """
 
 templates.sidebarSave = ->
   sidebarFooter """<a class="_sidebar-footer-link _sidebar-footer-save">Save</a>"""

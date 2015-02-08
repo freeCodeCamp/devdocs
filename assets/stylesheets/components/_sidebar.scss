@@ -162,7 +162,11 @@
   &:hover { opacity: .65; }
 
   &:before {
-    @extend %icon, %icon-dir;
+    @if $style == 'dark' {
+      @extend %icon, %icon-dir-white;
+    } @else {
+      @extend %icon, %icon-dir;
+    }
 
     .open > &, .open-title > & {
       -webkit-transform: rotate(90deg);
@@ -340,6 +344,7 @@
 ._sidebar-footer-link {
   position: relative;
   display: block;
+  overflow: hidden;
   height: 2.5rem;
   line-height: 1rem;
   padding: .75rem;
@@ -360,7 +365,31 @@
 }
 
 ._sidebar-footer-edit {
-  &:before { @extend %icon-settings; }
+  @if $style == 'dark' {
+    &:before { @extend %icon-settings-white; }
+  } @else {
+    &:before { @extend %icon-settings; }
+  }
+}
+
+._sidebar-footer-light {
+  float: right;
+  width: 2.5rem;
+  padding: 0;
+  opacity: .6;
+
+  &:before {
+    float: none;
+    position: absolute;
+    top: .75rem;
+    left: .75rem;
+
+    @if $style == 'dark' {
+      @extend %icon-light-white;
+    } @else {
+      @extend %icon-light;
+    }
+  }
 }
 
 ._sidebar-footer-save {
@@ -370,5 +399,9 @@
   box-shadow: inset 0 1px $noteGreenBorder,
                     1px 0 $noteGreenBorder;
 
-  &:before { @extend %icon-check; }
+  @if $style == 'dark' {
+    &:before { @extend %icon-check-white; }
+  } @else {
+    &:before { @extend %icon-check; }
+  }
 }
