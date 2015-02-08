@@ -15,6 +15,10 @@ app.templates.notifError = ->
                 <a href="javascript:if(confirm('Are you sure you want to reset DevDocs?'))app.reset()">resetting the app</a>.<br>
                 You can also report this issue on <a href="https://github.com/Thibaut/devdocs/issues/new" target="_blank">GitHub</a>. """
 
+app.templates.notifQuotaExceeded = ->
+  textNotif """ Oops, the offline database has exceeded its size limitation. """,
+            """ Unfortunately this quota can't be detected programmatically, and the database can't be opened while over the quota, so it had to be reset. """
+
 app.templates.notifInvalidLocation = ->
   textNotif """ DevDocs must be loaded from #{app.config.production_host} """,
             """ Otherwise things are likely to break. """

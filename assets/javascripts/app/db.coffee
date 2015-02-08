@@ -8,7 +8,7 @@ class app.DB
 
   db: (fn) ->
     return fn() unless @useIndexedDB
-    @callbacks.push(fn)
+    @callbacks.push(fn) if fn
     return if @open
 
     try
@@ -39,8 +39,15 @@ class app.DB
 
   onOpenError: (event) =>
     event?.preventDefault()
-    @useIndexedDB = @open = false
-    @runCallbacks()
+    @open = false
+
+    if event?.target?.error?.name is 'QuotaExceededError'
+      @reset()
+      @db()
+      app.onQuotaExceeded()
+    else
+      @useIndexedDB = false
+      @runCallbacks()
     return
 
   runCallbacks: (db) ->

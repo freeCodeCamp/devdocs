@@ -132,6 +132,10 @@
     @hideLoading()
     return
 
+  onQuotaExceeded: ->
+    new app.views.Notif 'QuotaExceeded', autoHide: null
+    Raven.captureMessage 'QuotaExceededError'
+
   onWindowError: (args...) ->
     if @isInjectionError args...
       @onInjectionError()
