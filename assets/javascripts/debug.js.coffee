@@ -36,11 +36,7 @@ app.Searcher = ->
 
   _match = @match.bind(@)
   @match = =>
-    if @matcher
-      console.timeEnd @matcher.name
-      if @matcher.name is 'exactMatch'
-        for entries, score in @scoreMap by -1 when entries
-          console.log '' + score + ': ' + entries.map((entry) -> entry.text).join("\n    ")
+    console.timeEnd @matcher.name if @matcher
     _match()
 
   _setupMatcher = @setupMatcher.bind(@)
@@ -51,8 +47,8 @@ app.Searcher = ->
   _end = @end.bind(@)
   @end = ->
     console.log "Results: #{@totalResults}"
-    console.groupEnd()
     console.timeEnd 'Total'
+    console.groupEnd()
     _end()
 
   _kill = @kill.bind(@)
@@ -66,6 +62,7 @@ app.Searcher = ->
 
   return
 
+$.extend(app.Searcher, _super)
 _proto.constructor = app.Searcher
 app.Searcher.prototype = _proto
 
