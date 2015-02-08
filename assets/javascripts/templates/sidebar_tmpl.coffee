@@ -18,10 +18,11 @@ templates.sidebarResult = (entry) ->
   """<a href="#{entry.fullPath()}" class="_list-item _list-hover _list-result _icon-#{entry.doc.slug}"><span class="_list-reveal" data-reset-list title="Reveal in list"></span>#{$.escape entry.name}</a>"""
 
 templates.sidebarNoResults = ->
-  info = if app.isSingleDoc() or app.disabledDocs.isEmpty() then '' else """
-    <span class="_list-noresults-note">Note: documentations must be <a class="_list-noresults-link" data-pick-docs>enabled</a> to appear in the search.</span>
-  """
-  """ <div class="_list-noresults">No results. #{info}</div> """
+  html = """ <div class="_list-note">No results.</div> """
+  html += """
+    <div class="_list-note">Note: documentations must be <a class="_list-note-link" data-pick-docs>enabled</a> to appear in the search.</div>
+  """ unless app.isSingleDoc() or app.disabledDocs.isEmpty()
+  html
 
 templates.sidebarPageLink = (count) ->
   """<span class="_list-item _list-pagelink">Show more\u2026 (#{count})</span>"""
@@ -39,7 +40,10 @@ templates.sidebarDisabledList = (options) ->
 templates.sidebarDisabled = (options) ->
   """<h6 class="_list-title"><span class="_list-arrow"></span>Disabled (#{options.count})</h6>"""
 
-templates.sidebarVote = '<a href="https://trello.com/b/6BmTulfx/devdocs-documentation" class="_list-link" target="_blank">Vote for new documentation</a>'
+templates.sidebarPickerNote = """
+  <div class="_list-note">Tip: for faster and better search results, select only the docs you need.</div>
+  <a href="https://trello.com/b/6BmTulfx/devdocs-documentation" class="_list-link" target="_blank">Vote for new documentation</a>
+  """
 
 sidebarFooter = (html) -> """<div class="_sidebar-footer">#{html}</div>"""
 

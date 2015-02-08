@@ -28,7 +28,7 @@ class app.views.DocPicker extends app.View
   render: ->
     @html @tmpl('sidebarLabel', app.docs.all(), checked: true) +
           @tmpl('sidebarLabel', app.disabledDocs.all()) +
-          @tmpl('sidebarVote') +
+          @tmpl('sidebarPickerNote') +
           @tmpl('sidebarSave')
 
     @refreshElements()

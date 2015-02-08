@@ -214,19 +214,20 @@
   }
 }
 
-._list-noresults {
-  padding: .5rem .75rem;
+//
+// List note
+//
+
+._list-note {
+  margin: .5rem .75rem;
   line-height: 1.25rem;
   font-size: .8125rem;
   color: $textColorLight;
+
+  & + & { margin-top: .25rem; }
 }
 
-._list-noresults-note {
-  display: block;
-  margin-top: .25rem;
-}
-
-._list-noresults-link { cursor: pointer; }
+._list-note-link { cursor: pointer; }
 
 //
 // List hover clone
