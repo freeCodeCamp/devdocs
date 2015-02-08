@@ -12,12 +12,24 @@ module Docs
       end
 
       def api
-        css('#footer', '.location').remove
+        @doc = doc.at_css('#page-content')
+
+        css('.location').remove
 
         # Replace .header with <h1>
-        css('.header > h1').each do |node|
-          node.parent.before(node).remove
+        css('.page-header > h1').each do |node|
           node.content = 'Laravel' if root_page?
+          node.parent.before(node).remove
+        end
+
+        css('.container-fluid').each do |node|
+          node.name = 'table'
+          node.css('.row').each { |n| n.name = 'tr' }
+          node.css('div[class^="col"]').each { |n| n.name = 'td' }
+        end
+
+        css('> div').each do |node|
+          node.before(node.children).remove
         end
 
         # Remove <abbr>
@@ -38,7 +50,7 @@ module Docs
       end
 
       def other
-        @doc = at_css('#docs-content')
+        @doc = at_css('article')
 
         # Clean up headings
         css('h2 > a').each do |node|
