@@ -68,7 +68,7 @@ module Docs
             next
           end
 
-          name.gsub! %r{\(.*?\)}, '()'
+          name.gsub! %r{\(.*?\);?}, '()'
           name.gsub! %r{\[.+?\]}, '[]'
           name.remove! 'assert(), ' # assert/assert.ok
 
