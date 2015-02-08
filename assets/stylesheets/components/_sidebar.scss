@@ -109,16 +109,30 @@
   }
 }
 
-._list-count {
+._list-count, ._list-enable {
   float: right;
   font-size: .75rem;
-  color: $textColorLighter;
-  pointer-events: none;
 
   .focus > &,
   .active > & {
     color: inherit;
   }
+}
+
+._list-count {
+  color: $textColorLighter;
+  pointer-events: none;
+
+  ._list-disabled:hover > & { display: none; }
+}
+
+._list-enable {
+  display: none;
+  color: $linkColor;
+  cursor: pointer;
+
+  &:hover { text-decoration: underline; }
+  ._list-disabled:hover > & { display: block; }
 }
 
 //

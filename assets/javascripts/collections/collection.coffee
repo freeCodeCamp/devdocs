@@ -21,6 +21,10 @@ class app.Collection
       @models.push new (@model())(object)
     return
 
+  remove: (model) ->
+    @models.splice @models.indexOf(model), 1
+    return
+
   size: ->
     @models.length
 

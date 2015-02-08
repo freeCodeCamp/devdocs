@@ -123,17 +123,24 @@ class app.views.DocList extends app.View
     $.scrollTo @find("a[href='#{model.fullPath()}']"), null, 'top', margin: 0
     return
 
-  onClick: (event) =>
-    return unless @disabledTitle and $.hasChild @disabledTitle, event.target
-    $.stopEvent(event)
-
+  toggleDisabled: ->
     if @disabledTitle.classList.contains('open-title')
       @removeDisabledList()
       app.settings.set 'hideDisabled', true
     else
       @appendDisabledList()
       app.settings.set 'hideDisabled', false
+    return
 
+  onClick: (event) =>
+    if @disabledTitle and $.hasChild(@disabledTitle, event.target)
+      $.stopEvent(event)
+      @toggleDisabled()
+    else if slug = event.target.getAttribute('data-enable')
+      $.stopEvent(event)
+      doc = app.disabledDocs.findBy('slug', slug)
+      app.enableDoc(doc, @render, @render)
+    return
 
   afterRoute: (route, context) =>
     if context.init

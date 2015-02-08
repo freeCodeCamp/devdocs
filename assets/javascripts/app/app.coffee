@@ -77,17 +77,32 @@
     return
 
   start: ->
-    for doc in @docs.all()
-      @entries.add doc.toEntry()
-      @entries.add type.toEntry() for type in doc.types.all()
-      @entries.add doc.entries.all()
-
+    @initDoc(doc) for doc in @docs.all()
     @db = new app.DB()
     @trigger 'ready'
     @router.start()
     @hideLoading()
     @welcomeBack() unless @doc
     @removeEvent 'ready bootError'
+    return
+
+  initDoc: (doc) ->
+    @entries.add doc.toEntry()
+    @entries.add type.toEntry() for type in doc.types.all()
+    @entries.add doc.entries.all()
+    return
+
+  enableDoc: (doc, _onSuccess, onError) ->
+    onSuccess = =>
+      @disabledDocs.remove(doc)
+      @docs.add(doc)
+      @docs.sort()
+      @initDoc(doc)
+      @settings.setDocs(doc.slug for doc in @docs.all())
+      _onSuccess()
+      return
+
+    doc.load onSuccess, onError, writeCache: true
     return
 
   welcomeBack: ->
