@@ -162,7 +162,7 @@ class App < Sinatra::Application
   end
 
   get '/s/tw' do
-    redirect 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%2C%20quickly%20searchable%20API%20docs%3A'
+    redirect 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%2C%20offline%20API%20documentation%20browser%3A'
   end
 
   get '/s/fb' do
@@ -170,7 +170,7 @@ class App < Sinatra::Application
   end
 
   get '/s/re' do
-    redirect 'http://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%2C%20quickly%20searchable%20API%20docs&resubmit=true'
+    redirect 'http://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%2C%20offline%20API%20documentation%20browser&resubmit=true'
   end
 
   get %r{\A/(\w+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
