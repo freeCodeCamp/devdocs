@@ -57,7 +57,7 @@ class App < Sinatra::Application
 
   configure :production do
     set :static, false
-    set :docs_host, 'http://docs.devdocs.io'
+    set :docs_host, 'http://maxcdn-docs.devdocs.io'
 
     use Rack::ConditionalGet
     use Rack::ETag
