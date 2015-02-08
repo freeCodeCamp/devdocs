@@ -2,12 +2,11 @@ module Docs
   class Yii
     class CleanHtmlFilter < Filter
       def call
-        css('#nav', '.tool-link', '.toggle').remove
-
         css('.hashlink[name]').each do |node|
           node.parent['id'] = node['name']
-          node.remove
         end
+
+        css('#nav', '.tool-link', '.toggle', '.hashlink').remove
 
         css('.detail-header').each do |node|
           node.name = 'h3'
