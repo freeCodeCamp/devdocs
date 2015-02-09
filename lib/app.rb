@@ -119,11 +119,11 @@ class App < Sinatra::Application
     end
 
     def main_stylesheet_path
-      stylesheet_paths[cookies[:dark].present? ? :dark : :default]
+      stylesheet_paths[cookies[:dark].nil? ? :default : :dark]
     end
 
     def alternate_stylesheet_path
-      stylesheet_paths[cookies[:dark].present? ? :default : :dark]
+      stylesheet_paths[cookies[:dark].nil? ? :dark : :default]
     end
 
     def stylesheet_paths
