@@ -57,6 +57,19 @@ class AppTest < MiniTest::Spec
       assert_includes last_response.body, '/css/index.json'
       assert_includes last_response.body, '/html/index.json'
     end
+
+    it "includes has the word 'light' by default" do
+      get '/manifest.appcache'
+      assert_includes last_response.body, '# light'
+      refute_includes last_response.body, '# dark'
+    end
+
+    it "includes has the word 'dark' when the cookie is set" do
+      set_cookie('dark=1')
+      get '/manifest.appcache'
+      assert_includes last_response.body, '# dark'
+      refute_includes last_response.body, '# light'
+    end
   end
 
   describe "/[doc]" do
