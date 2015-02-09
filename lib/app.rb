@@ -81,6 +81,10 @@ class App < Sinatra::Application
     end
   end
 
+  configure :test do
+    set :docs_manifest_path, -> { File.join(root, 'test', 'files', 'docs.json') }
+  end
+
   helpers do
     include Sinatra::Cookies
     include Sprockets::Helpers
