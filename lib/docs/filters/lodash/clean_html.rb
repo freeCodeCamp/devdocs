@@ -2,6 +2,8 @@ module Docs
   class Lodash
     class CleanHtmlFilter < Filter
       def call
+        @doc = at_css('h1+div+div')
+
         css('h3 + p', 'hr').remove
 
         # Set id attributes on <h3> instead of an empty <a>

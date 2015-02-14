@@ -1,15 +1,14 @@
 module Docs
   class Lodash < UrlScraper
-    self.name = 'Lo-Dash'
+    self.name = 'lodash'
     self.slug = 'lodash'
     self.type = 'lodash'
-    self.version = '3.1.0'
+    self.version = '3.2.0'
     self.base_url = 'https://lodash.com/docs'
 
-    html_filters.push 'lodash/clean_html', 'lodash/entries', 'title'
+    html_filters.push 'lodash/entries', 'lodash/clean_html', 'title'
 
-    options[:title] = 'Lo-Dash'
-    options[:container] = 'h1+div+div'
+    options[:title] = 'lodash'
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML

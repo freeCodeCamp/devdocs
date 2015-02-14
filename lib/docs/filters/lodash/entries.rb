@@ -4,20 +4,13 @@ module Docs
       def additional_entries
         entries = []
 
-        css('h2').each do |node|
-          type = node.content.split.first
-          type.remove! %r{\W} # remove quotation marks
+        css('.toc-container h2').each do |heading|
+          type = heading.content.split.first
 
-          node.parent.css('h3').each do |heading|
-            name = heading.content
-            name.sub! %r{\(.+?\)}, '()'
-            entries << [name, heading['id'], type]
-
-            if h4 = heading.parent.at_css('h4') and h4.content.strip == 'Aliases'
-              h4.next_element.content.split(',').each do |n|
-                entries << ["#{n.strip}()", heading['id'], type]
-              end
-            end
+          heading.parent.css('a').each do |link|
+            name = link.content
+            name = name.remove(/\u{2192}.*/)
+            entries << [name, link['href'].remove('#'), type]
           end
         end
 
