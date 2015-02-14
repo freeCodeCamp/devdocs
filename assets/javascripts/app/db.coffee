@@ -55,7 +55,7 @@ class app.DB
     return
 
   onUpgradeNeeded: (event) ->
-    db = event.target.result
+    return unless db = event.target.result
 
     unless db.objectStoreNames.contains('docs')
       db.createObjectStore('docs')
