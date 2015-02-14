@@ -65,14 +65,11 @@ class app.views.DocList extends app.View
     @refreshElements()
     return
 
-  reset: ->
+  reset: (options = {}) ->
     @listSelect.deselect()
     @listFocus?.blur()
     @listFold.reset()
-
-    if model = app.router.context.type or app.router.context.entry
-      @reveal model
-      @select model
+    @revealCurrent() if options.revealCurrent
     return
 
   onOpen: (event) =>
@@ -107,6 +104,12 @@ class app.views.DocList extends app.View
     @scrollTo model
     return
 
+  revealCurrent: ->
+    if model = app.router.context.type or app.router.context.entry
+      @reveal model
+      @select model
+    return
+
   openDoc: (doc) ->
     @listFold.open @find("[data-slug='#{doc.slug}']")
     return
@@ -139,12 +142,17 @@ class app.views.DocList extends app.View
     else if slug = event.target.getAttribute('data-enable')
       $.stopEvent(event)
       doc = app.disabledDocs.findBy('slug', slug)
-      app.enableDoc(doc, @render, @render)
+      app.enableDoc(doc, @onEnable, @onEnable)
+    return
+
+  onEnable: =>
+    @reset()
+    @render()
     return
 
   afterRoute: (route, context) =>
     if context.init
-      @reset()
+      @reset revealCurrent: true
     else
       @select context.type or context.entry
     return
