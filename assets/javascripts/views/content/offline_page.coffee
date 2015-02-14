@@ -65,17 +65,17 @@ class app.views.OfflinePage extends app.View
     return unless @activated
     doc.getInstallStatus (status) =>
       return unless @activated
-      el = @docEl(doc)
-      el.outerHTML = @renderDoc(doc, status)
-      $.highlight el, className: '_highlight'
-      @refreshLinks()
+      if el = @docEl(doc)
+        el.outerHTML = @renderDoc(doc, status)
+        $.highlight el, className: '_highlight'
+        @refreshLinks()
       return
     return
 
   onInstallError: (doc) ->
     return unless @activated
-    el = @docEl(doc)
-    el.lastElementChild.textContent = 'Error'
+    if el = @docEl(doc)
+      el.lastElementChild.textContent = 'Error'
     return
 
   onChange: (event) ->
