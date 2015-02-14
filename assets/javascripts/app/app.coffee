@@ -52,7 +52,9 @@
         Raven.config @config.sentry_dsn,
           whitelistUrls: [/devdocs/]
           includePaths: [/devdocs/]
-          ignoreErrors: [/dpQuery/]
+          ignoreErrors: [/dpQuery/, /NPObject/]
+          tags:
+            singleDoc: (!!@DOC).toString()
         .install()
       @previousErrorHandler = onerror
       window.onerror = @onWindowError.bind(@)
