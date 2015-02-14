@@ -97,7 +97,7 @@ credits = [
     'http://en.cppreference.com/w/Cppreference:Copyright/CC-BY-SA'
   ], [
     'Chai',
-    '2011-2014 Jake Luer',
+    '2011-2015 Jake Luer',
     'MIT',
     'https://github.com/chaijs/chai/blob/master/README.md#license'
   ], [
