@@ -18,7 +18,7 @@
 .token.symbol,
 .token.deleted {
   @if $style == 'dark' {
-    color: #cf6a4c;
+    color: #eb8160;
   } @else {
     color: #905;
   }
@@ -31,7 +31,7 @@
 .token.builtin,
 .token.inserted {
   @if $style == 'dark' {
-    color: #d0c584;
+    color: #ddcf88;
   } @else {
     color: #5e8e01;
   }
@@ -43,7 +43,7 @@
 .language-css .token.string,
 .style .token.string {
   @if $style == 'dark' {
-    color: #8f9d6a;
+    color: #b1c676;
   } @else {
     color: #a67f59;
   }
@@ -53,7 +53,7 @@
 .token.attr-value,
 .token.keyword {
   @if $style == 'dark' {
-    color: #7587a6;
+    color: #91b3ed;
   } @else {
     color: #0070a3;
   }
@@ -61,7 +61,7 @@
 
 .token.function {
   @if $style == 'dark' {
-    color: #ac885b;
+    color: #ecbd83;
   } @else {
     color: #dd4a68;
   }
