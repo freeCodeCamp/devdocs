@@ -101,6 +101,11 @@ credits = [
     'MIT',
     'https://github.com/chaijs/chai/blob/master/README.md#license'
   ], [
+    'Clojure',
+    'Rich Hickey',
+    'EPL',
+    'https://github.com/clojure/clojure/blob/master/epl-v10.html'
+  ], [
     'CoffeeScript',
     '2009-2015 Jeremy Ashkenas',
     'MIT',

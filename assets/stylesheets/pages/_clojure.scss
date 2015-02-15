@@ -1,0 +1,10 @@
+._clojure {
+  h2:not([id]) { @extend %block-heading; }
+  h2[id], h3 { @extend %block-label, %label-blue; }
+
+  .type {
+    float: right;
+    font-size: .9em;
+    color: $textColorLight;
+  }
+}
