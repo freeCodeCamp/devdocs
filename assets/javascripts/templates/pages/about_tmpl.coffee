@@ -161,6 +161,11 @@ credits = [
     'Custom',
     'http://www.w3.org/Protocols/rfc2616/rfc2616-sec21.html#sec21'
   ], [
+    'io.js',
+    'io.js contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/iojs/io.js/v1.x/LICENSE'
+  ], [
     'jQuery',
     '2009 Packt Publishing<br>&copy; 2014 jQuery Foundation',
     'MIT',
