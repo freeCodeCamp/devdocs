@@ -102,6 +102,7 @@
       @initDoc(doc)
       @settings.setDocs(doc.slug for doc in @docs.all())
       _onSuccess()
+      @appCache?.updateInBackground()
       return
 
     doc.load onSuccess, onError, writeCache: true

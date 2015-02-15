@@ -14,13 +14,18 @@ class app.AppCache
     $.on @cache, 'updateready', @onUpdateReady
 
   update: ->
+    @notifyUpdate = true
+    try @cache.update() catch
+    return
+
+  updateInBackground: ->
+    @notifyUpdate = false
     try @cache.update() catch
     return
 
   reload: ->
-    @reloading = true
     $.on @cache, 'updateready noupdate error', -> window.location = '/'
-    @update()
+    @updateInBackground()
     return
 
   onProgress: (event) =>
@@ -28,5 +33,5 @@ class app.AppCache
     return
 
   onUpdateReady: =>
-    @trigger 'updateready' unless @reloading
+    @trigger 'updateready' if @notifyUpdate
     return

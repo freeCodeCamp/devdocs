@@ -23,6 +23,7 @@ class app.views.Document extends app.View
     css.setAttribute('data-alt', css.getAttribute('href'))
     css.setAttribute('href', alt)
     app.settings.setDark(alt.indexOf('dark') > 0)
+    app.appCache?.updateInBackground()
     return
 
   setTitle: (title) ->
