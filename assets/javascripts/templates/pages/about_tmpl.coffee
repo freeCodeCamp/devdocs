@@ -201,6 +201,11 @@ credits = [
     'MIT',
     'https://raw.github.com/lodash/lodash/master/LICENSE.txt'
   ], [
+    'Lua',
+    '1994–2015 Lua.org, PUC-Rio',
+    'MIT',
+    'http://www.lua.org/license.html'
+  ], [
     'Marionette.js',
     '2014 Muted Solutions, LLC',
     'MIT',
