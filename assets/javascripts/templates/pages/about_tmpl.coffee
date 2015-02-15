@@ -321,6 +321,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/Automattic/socket.io/master/LICENSE'
   ], [
+    'Symfony',
+    '2004-2015 Fabien Potencier',
+    'MIT',
+    'http://symfony.com/doc/current/contributing/code/license.html'
+  ], [
     'Underscore.js',
     '2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
