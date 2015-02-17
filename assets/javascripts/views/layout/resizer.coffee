@@ -20,13 +20,15 @@ class app.views.Resizer extends app.View
   MIN = 250
   MAX = 600
 
-  resize: (newSize) ->
-    return unless newSize > 0
-    newSize = Math.min(Math.max(Math.round(newSize), MIN), MAX)
-    app.settings.setSize(newSize)
-    newSize = "#{newSize}px"
+  resize: (value, save) ->
+    return unless value > 0
+    value = Math.min(Math.max(Math.round(value), MIN), MAX)
+    newSize = "#{value}px"
     @style.innerHTML = @style.innerHTML.replace(new RegExp(@size, 'g'), newSize)
     @size = newSize
+    if save
+      app.settings.setSize(value)
+      app.appCache?.updateInBackground()
     return
 
   onDragStart: (event) =>
@@ -38,9 +40,9 @@ class app.views.Resizer extends app.View
   onDrag: (event) =>
     return if @lastDrag and @lastDrag > Date.now() - 50
     @lastDrag = Date.now()
-    @resize event.clientX
+    @resize(event.clientX, false)
     return
 
   onDragEnd: (event) =>
-    @resize event.screenX - window.screenX
+    @resize(event.screenX - window.screenX, true)
     return

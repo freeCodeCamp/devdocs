@@ -81,6 +81,17 @@ class AppTest < MiniTest::Spec
       assert_includes last_response.body, '# dark'
       refute_includes last_response.body, '# light'
     end
+
+    it "sets default size" do
+      get '/manifest.appcache'
+      assert_includes last_response.body, '18rem'
+    end
+
+    it "sets size from cookie" do
+      set_cookie('size=42')
+      get '/manifest.appcache'
+      assert_includes last_response.body, '42px'
+    end
   end
 
   describe "/[doc]" do
