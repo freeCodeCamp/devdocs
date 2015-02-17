@@ -8,6 +8,7 @@ class app.AppCache
 
   constructor: ->
     @cache = applicationCache
+    @notifyUpdate = true
     @onUpdateReady() if @cache.status is @cache.UPDATEREADY
 
     $.on @cache, 'progress', @onProgress
