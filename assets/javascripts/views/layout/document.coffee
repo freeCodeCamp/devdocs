@@ -10,6 +10,7 @@ class app.views.Document extends app.View
   init: ->
     @addSubview @nav     = new app.views.Nav,
     @addSubview @sidebar = new app.views.Sidebar
+    @addSubview @resizer = new app.views.Resizer if app.views.Resizer.isSupported()
     @addSubview @content = new app.views.Content
     @addSubview @path    = new app.views.Path unless app.isSingleDoc() or app.isMobile()
 

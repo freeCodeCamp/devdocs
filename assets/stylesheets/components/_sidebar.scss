@@ -35,6 +35,17 @@
   a:focus { outline: 0; }
 }
 
+._resizer {
+  position: absolute;
+  z-index: $sidebarZ + 1;
+  top: $headerHeight;
+  bottom: 0;
+  left: $sidebarWidth;
+  margin-left: -2px;
+  width: 3px;
+  cursor: col-resize;
+}
+
 //
 // List
 //

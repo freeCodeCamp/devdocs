@@ -1,5 +1,8 @@
 [
-  [ "2015-02-15",
+  [ "2015-02-16",
+    "The sidebar is now resizable (drag & drop)."
+  ], [
+    "2015-02-15",
     "New <a href=\"/iojs/\">io.js</a>, <a href=\"/symfony/\">Symfony</a>, <a href=\"/clojure/\">Clojure</a>, <a href=\"/lua/\">Lua</a> and <a href=\"/yii1/\">Yii 1.1</a> documentations"
   ], [
     "2015-02-08",

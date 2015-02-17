@@ -20,6 +20,17 @@ class AppTest < MiniTest::Spec
       assert last_response.redirect?
       assert_equal 'http://example.org/', last_response['Location']
     end
+
+    it "sets default size" do
+      get '/'
+      assert_includes last_response.body, 'data-size="18rem"'
+    end
+
+    it "sets size from cookie" do
+      set_cookie('size=42')
+      get '/'
+      assert_includes last_response.body, 'data-size="42px"'
+    end
   end
 
   describe "/[static-page]" do

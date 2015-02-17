@@ -136,6 +136,10 @@ class App < Sinatra::Application
         dark: stylesheet_path('application-dark')
       }
     end
+
+    def size
+      @size ||= cookies[:size].nil? ? '18rem' : "#{cookies[:size]}px"
+    end
   end
 
   before do

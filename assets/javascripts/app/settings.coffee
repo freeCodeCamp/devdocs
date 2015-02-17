@@ -2,6 +2,7 @@ class app.Settings
   SETTINGS_KEY = 'settings'
   DOCS_KEY = 'docs'
   DARK_KEY = 'dark'
+  SIZE_KEY = 'size'
 
   @defaults: ->
     count: 0
@@ -59,8 +60,15 @@ class app.Settings
     catch
     return
 
+  setSize: (value) ->
+    try
+      Cookies.set SIZE_KEY, value, path: '/', expires: 1e8
+    catch
+    return
+
   reset: ->
     try Cookies.expire DOCS_KEY
     try Cookies.expire DARK_KEY
+    try Cookies.expire SIZE_KEY
     try @store.del(SETTINGS_KEY)
     return

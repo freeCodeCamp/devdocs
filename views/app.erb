@@ -44,3 +44,9 @@
   a.src="//secure.gaug.es/track.js";var b=document.getElementsByTagName("script")[0];
   b.parentNode.insertBefore(a,b)}();
 </script><% end %>
+<style data-size="<%= size %>" data-resizer disabled>
+  ._container { margin-left: <%= size %>; }
+  ._search, ._list, ._sidebar-footer { width: <%= size %>; }
+  ._list-hover.clone { min-width: <%= size %>; }
+  ._notice, ._path, ._resizer { left: <%= size %>; }
+</style>
