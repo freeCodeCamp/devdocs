@@ -54,7 +54,7 @@
           includePaths: [/devdocs/]
           ignoreErrors: [/dpQuery/, /NPObject/]
           tags:
-            singleDoc: (!!@DOC).toString()
+            mode: if @DOC then 'single' else 'full'
         .install()
       @previousErrorHandler = onerror
       window.onerror = @onWindowError.bind(@)
