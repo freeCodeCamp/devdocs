@@ -44,7 +44,6 @@ module Docs
       /\AHTTP/i,
       /\AIRB/,
       /\AMakeMakefile/i,
-      /\AMiniTest/i,
       /\ANQXML/,
       /\AOpenSSL/,
       /\AOptionParser\//,
