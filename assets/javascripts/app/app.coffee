@@ -55,6 +55,7 @@
           ignoreErrors: [/dpQuery/, /NPObject/]
           tags:
             mode: if @DOC then 'single' else 'full'
+            iframe: (window.top isnt window).toString()
         .install()
       @previousErrorHandler = onerror
       window.onerror = @onWindowError.bind(@)
