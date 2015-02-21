@@ -10,7 +10,8 @@ module Docs
         'extenders'                                       => 'Extending observables',
         'unobtrusive-event-handling'                      => 'Event handling',
         'fn'                                              => 'Custom functions',
-        'ratelimit-observable'                            => 'rateLimit extender' }
+        'ratelimit-observable'                            => 'rateLimit extender',
+        'component-overview'                              => 'Component' }
 
       def get_name
         return NAME_BY_SLUG[slug] if NAME_BY_SLUG.has_key?(slug)
@@ -22,8 +23,10 @@ module Docs
       end
 
       def get_type
-        if name =~ /observable/i || slug =~ /extender/
+        if name =~ /observable/i || slug =~ /extender/ || slug == 'computed-dependency-tracking'
           'Observables'
+        elsif slug =~ /component/i
+          'Components'
         elsif slug.include?('binding') && !name.end_with?('binding')
           'Binding'
         elsif slug.include? 'binding'
