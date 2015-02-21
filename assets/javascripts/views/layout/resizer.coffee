@@ -34,7 +34,7 @@ class app.views.Resizer extends app.View
   onDragStart: (event) =>
     @style.removeAttribute('disabled')
     event.dataTransfer.effectAllowed = 'link'
-    event.dataTransfer.setData('text/plain', '')
+    event.dataTransfer.setData('Text', '')
     return
 
   onDrag: (event) =>
