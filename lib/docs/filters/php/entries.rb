@@ -27,7 +27,7 @@ module Docs
         'XsltProcessor'   => 'XSLT',
         'ZipArchive'      => 'Zip' }
 
-      %w(APC Directory DOM Gearman Gmagick Imagick mysqli OAuth PDO Reflection
+      %w(APC Directory DOM Event Gearman Gmagick Imagick mysqli OAuth PDO Reflection
         Session SimpleXML Solr Sphinx SQLite3 Varnish XSLT Yaf).each do |str|
         TYPE_BY_NAME_STARTS_WITH[str] = str
       end

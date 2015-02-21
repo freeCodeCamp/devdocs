@@ -2,7 +2,7 @@ module Docs
   class Php < FileScraper
     self.name = 'PHP'
     self.type = 'php'
-    self.version = 'up to 5.6.5'
+    self.version = 'up to 5.6.6'
     self.base_url = 'http://www.php.net/manual/en/'
     self.root_path = 'index.html'
     self.initial_paths = %w(
@@ -33,7 +33,7 @@ module Docs
       /\Areserved\.variables/]
 
     BOOKS = %w(apache apc array bc bzip2 calendar classobj ctype curl datetime
-      dba dir dom eio errorfunc exec fileinfo filesystem filter ftp funchand
+      dba dir dom eio errorfunc event exec fileinfo filesystem filter ftp funchand
       gearman geoip gettext gmagick hash http iconv iisfunc image imagick imap
       info inotify intl json ldap libevent libxml mail mailparse math mbstring
       mcrypt memcached misc mysqli network oauth openssl outcontrol password

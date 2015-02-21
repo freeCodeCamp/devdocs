@@ -23,8 +23,6 @@
   .classsynopsis > .methodsynopsis,
   .classsynopsis > .fieldsynopsis { margin-left: 1em; }
 
-  .phpcode > pre { white-space: normal; }
-
   blockquote.note { @extend %note; }
   blockquote.note > p { margin-bottom: 0; }
 
