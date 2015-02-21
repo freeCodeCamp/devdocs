@@ -327,7 +327,7 @@ credits = [
     'http://symfony.com/doc/current/contributing/code/license.html'
   ], [
     'Underscore.js',
-    '2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
+    '2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
     'https://raw.github.com/jashkenas/underscore/master/LICENSE'
   ], [
