@@ -47,8 +47,9 @@ class app.Shortcuts
       when 27
         @trigger 'escape'
       when 32
-        @trigger 'pageDown'
-        false
+        if not @lastKeypress or @lastKeypress < Date.now() - 1000
+          @trigger 'pageDown'
+          false
       when 33
         @trigger 'pageUp'
       when 34
@@ -127,3 +128,5 @@ class app.Shortcuts
     if event.which is 63 and not event.target.value
       @trigger 'help'
       false
+    else
+      @lastKeypress = Date.now()
