@@ -226,6 +226,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/MaxCDN/api-docs/master/LICENSE'
   ], [
+    'Minitest',
+    'Ryan Davis, seattle.rb',
+    'MIT',
+    'https://raw.githubusercontent.com/seattlerb/minitest/master/README.txt'
+  ], [
     'Modernizr',
     '2009-2014 Modernizr',
     'MIT',

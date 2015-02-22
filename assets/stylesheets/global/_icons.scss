@@ -39,9 +39,10 @@
 ._icon-jquerymobile:before  { background-position: -5rem -2rem; }
 ._icon-lodash:before        { background-position: -6rem -2rem; }
 ._icon-php:before           { background-position: -7rem -2rem; }
-._icon-ruby:before          { background-position: -8rem -2rem; }
+._icon-ruby:before,
+._icon-minitest:before      { background-position: -8rem -2rem; }
 ._icon-rails:before         { background-position: -9rem -2rem; }
-._icon-python:before        { background-position: 0 -3rem; }
+._icon-python:before,
 ._icon-python2:before       { background-position: 0 -3rem; }
 ._icon-git:before           { background-position: -1rem -3rem; }
 ._icon-redis:before         { background-position: -2rem -3rem; }
@@ -51,7 +52,7 @@
 ._icon-moment:before        { background-position: -6rem -3rem; }
 ._icon-c:before             { background-position: -7rem -3rem; }
 %icon-path                  { background-position: -8rem -3rem; }
-._icon-yii:before           { background-position: -9rem -3rem; }
+._icon-yii:before,
 ._icon-yii1:before          { background-position: -9rem -3rem; }
 ._icon-cpp:before           { background-position: 0 -4rem; }
 ._icon-go:before            { background-position: -1rem -4rem; }

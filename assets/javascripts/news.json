@@ -1,5 +1,9 @@
 [
-  [ "2015-02-16",
+  [
+    "2015-02-22",
+    "New <a href=\"/minitest/\">Minitest</a> documentation"
+  ], [
+    "2015-02-16",
     "The sidebar is now resizable (drag & drop)."
   ], [
     "2015-02-15",

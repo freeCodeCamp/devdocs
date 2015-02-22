@@ -10,6 +10,8 @@ module Docs
     options[:title] = false
     options[:skip] = %w(index.html)
     options[:skip_patterns] = [
+      /history/i,
+      /rakefile/i,
       /changelog/i,
       /readme/i,
       /news/i,
