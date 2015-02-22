@@ -35,7 +35,7 @@ class app.Shortcuts
     return
 
   handleKeydownEvent: (event) ->
-    if not event.target.form and 65 <= event.which <= 90
+    if not event.target.form and (48 <= event.which <= 57 or 65 <= event.which <= 90)
       @trigger 'typing'
       return
 
