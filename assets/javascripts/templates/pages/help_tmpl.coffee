@@ -12,7 +12,7 @@ app.templates.helpPage = """
 
   <h2 class="_lined-heading" id="search">Search</h2>
   <p>
-    The search is case-insensitive, ignores spaces, and supports fuzzy matching (for queries longer than two characters).
+    The search is case-insensitive and supports fuzzy matching (for queries longer than two characters).
     For example, searching <code class="_label">bgcp</code> brings up <code class="_label">background-clip</code>.
   <dl>
     <dt id="doc_search">Searching a single documentation
@@ -30,7 +30,7 @@ app.templates.helpPage = """
       <a href="/#q=js%20date" target="_top">devdocs.io/#q=js date</a>.
     <dt id="browser_search">Searching using the address bar
     <dd>
-      DevDocs supports OpenSearch, meaning that it can easily be installed as a search engine on most web browsers.
+      DevDocs supports OpenSearch, meaning it can easily be installed as a search engine on most web browsers.
       <ul>
         <li>On Chrome, the setup is done automatically. Simply press <code class="_label">Tab</code> when devdocs.io is autocompleted
             in the omnibox (to set a custom keyword, click <em>Manage search engines\u2026</em> in Chrome's settings).

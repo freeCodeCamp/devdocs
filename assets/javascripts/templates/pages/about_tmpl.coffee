@@ -13,8 +13,8 @@ app.templates.aboutPage = -> """
   <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
   <ul>
     <li>Created and maintained by <a href="http://thibaut.me">Thibaut Courouble</a>
-    <li>Made at <a href="http://devdocs.io/s/shopify">Shopify</a> &mdash; one of the best software companies in the world
-    <li>Powered by <a href="http://devdocs.io/s/maxcdn" title="Content Delivery Network Services">MaxCDN</a> &mdash; content delivery that developers love
+    <li>Supported by <a href="http://devdocs.io/s/shopify">Shopify</a>
+    <li>Powered by <a href="http://devdocs.io/s/maxcdn" title="Content Delivery Network Services">MaxCDN</a>
     <li>Free and <a href="https://github.com/Thibaut/devdocs">open source</a>
         <iframe class="_github-btn" src="http://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
   </ul>
@@ -24,7 +24,7 @@ app.templates.aboutPage = -> """
     <li>Follow <a href="https://twitter.com/DevDocs">@DevDocs</a> on Twitter
     <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
   </ul>
-  <p class="_note _note-green">If you like DevDocs, please consider funding the project on
+  <p class="_note _note-green">If you like DevDocs, please consider supporting my work on
     <a href="https://gratipay.com/Thibaut/">Gratipay</a>. Thanks!<br>
 
   <h2 class="_lined-heading" id="credits">Credits</h2>
