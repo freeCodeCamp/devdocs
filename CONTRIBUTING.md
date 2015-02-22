@@ -1,6 +1,6 @@
 # Contributing to DevDocs
 
-Wish to contribute? Great. Please review the following guidelines carefully and always search for existing issues before opening a new one.
+Want to contribute? Great. Please review the following guidelines carefully and search for existing issues before opening a new one.
 
 **Table of Contents:**
 
@@ -16,7 +16,7 @@ Wish to contribute? Great. Please review the following guidelines carefully and 
 
 ## Reporting bugs
 
-1. Always update to the most recent master release; the bug may already be fixed.
+1. Update to the most recent master release; the bug may already be fixed.
 2. Search for existing issues; it's possible someone has already encountered this bug.
 3. Try to isolate the problem and include steps to reproduce it.
 4. Share as much information as possible (e.g. browser/OS environment, log output, stack trace, screenshots, etc.).
@@ -24,7 +24,7 @@ Wish to contribute? Great. Please review the following guidelines carefully and 
 ## Requesting new features
 
 1. Search for similar feature requests; someone may have already requested it.
-2. Make sure your feature fits DevDocs's [vision and stated goals](https://github.com/Thibaut/devdocs/blob/master/README.md#vision).
+2. Make sure your feature fits DevDocs's [vision](https://github.com/Thibaut/devdocs/blob/master/README.md#vision).
 3. Provide a clear and detailed explanation of the feature and why it's important to add it.
 
 For general feedback and ideas, please use the [mailing list](https://groups.google.com/d/forum/devdocs).
@@ -37,7 +37,7 @@ Use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) wher
 ## Contributing code and features
 
 1. Search for existing issues; someone may already be working on a similar feature.
-2. Before embarking on any significant pull request, please open an issue describing the changes you intend to make. Otherwise you risk spending a lot of time working on something that I may not want to merge. This also tells other contributors that you're working on the feature.
+2. Before embarking on any significant pull request, please open an issue describing the changes you intend to make. Otherwise you risk spending a lot of time working on something I may not want to merge. This also tells other contributors that you're working on the feature.
 3. Follow the [coding conventions](#coding-conventions).
 4. If you're modifying the Ruby code, include tests and ensure they pass.
 5. Try to keep your pull request small and simple.
@@ -48,14 +48,14 @@ Use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) wher
 
 See the [wiki](https://github.com/Thibaut/devdocs/wiki) to learn how to add new documentations.
 
-**Important:** the documentation's license must permit alteration, redistribution, and commercial use of the work. Software vendors that wish to add commercial software documentation to DevDocs may contact me privately.
+**Important:** the documentation's license must permit alteration, redistribution, and commercial use. Software vendors that wish to add commercial software documentation to DevDocs may contact me privately.
 
 **Please open an issue before adding a new documentation.**
 
 In addition to the [guidelines for contributing code](#contributing-code-and-features), the following guidelines apply to pull requests that add a new documentation:
 
 * Your documentation must come with an official icon, in both 1x and 2x resolutions (16x16 and 32x32 pixels). This is important because icons are the only thing differentiating search results in the UI. If a project doesn't have an official icon, it won't be accepted into DevDocs, sorry.
-* DevDocs favors quality over quantity. Your documentation should only include API/reference documents that most developers may wish to read semi-regularly. By reducing the number of entries we make it easier to find other, more relevant entries. _(Note: you're more than welcome to submit pull requests removing seldom-used entries from existing documentations.)_
+* DevDocs favors quality over quantity. Your documentation should only include documents that most developers may want to read semi-regularly. By reducing the number of entries, we make it easier to find other, more relevant entries.
 * Try to remove as much content and HTML markup as possible, particularly content which isn't associated with any entries (e.g. introduction, changelog, etc.).
 * Names must be as short as possible and unique across the documentation.
 * The number of types (categories) should ideally be less than 100.
@@ -71,7 +71,7 @@ To ask that an existing documentation be updated, please use the [Trello board](
 
 Besides new docs and features, here are other ways you can contribute:
 
-* **Improve words and sentences.** English isn't my first language so if you notice grammatical or usage errors, feel free to submit a pull request — it'll be much appreciated.
+* **Improve our copy.** English isn't my first language so if you notice grammatical or usage errors, feel free to submit a pull request — it'll be much appreciated.
 * **Participate in the issue tracker.** Your opinion matters — feel free to add comments to existing issues. You're also welcome to participate to the [mailing list](https://groups.google.com/d/forum/devdocs).
 
 ## Coding conventions
