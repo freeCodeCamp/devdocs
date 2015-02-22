@@ -2,47 +2,39 @@ module Docs
   class Http
     class CleanHtmlFilter < Filter
       def call
-        root_page? ? root : other
-        doc
-      end
-
-      def root
-        # Change title
-        title = at_css 'h2'
-        title.name = 'h1'
-        title.inner_html = 'Hypertext Transfer Protocol &mdash; HTTP/1.1'
-
-        # Remove "..." following each link
-        css('span').each do |node|
-          node.inner_html = node.first_element_child if node.first_element_child
-        end
-      end
-
-      def other
-        at_css('address').remove
-
-        # Change title
-        title = at_css 'h2'
-        title.name = 'h1'
-        title.at_css('a').remove
-        title.content = "HTTP #{title.content}"
-
-        # Update headings
-        css('h3').each do |node|
-          link = node.at_css('a')
-          node.name = "h#{link.content.count('.') + 1}"
-          node['id'] = link['id']
-          link.remove
+        if root_page?
+          doc.inner_html = '<h1>Hypertext Transfer Protocol</h1>'
+          return doc
         end
 
-        # Merge adjacent <pre> tags and remove indentation
+        doc.child.remove while doc.child.name != 'pre'
+
+        css('span.grey', '.invisible', '.noprint', 'a[href^="#page-"]').remove
+
         css('pre').each do |node|
-          while (sibling = node.next_element) && sibling.name == 'pre'
-            node.inner_html += "\n#{sibling.inner_html}"
-            sibling.remove
-          end
-          node.inner_html = node.inner_html.strip_heredoc
+          content = node.inner_html.remove(/\A(\ *\n)+/).remove(/(\n\ *)+\z/)
+          node.before("\n\n" + content).remove
         end
+
+        css('span[class^="h"]').each do |node|
+          i = node['class'][/\Ah(\d)/, 1].to_i
+          next unless i > 0
+          node.name = "h#{i}"
+          node.inner_html = node.inner_html.strip
+          node.next.content = node.next.content.remove(/\A\n/) if node.next.text?
+        end
+
+        css('.selflink').each do |node|
+          node.parent['id'] = node['name']
+          node.before(node.children).remove
+        end
+
+        html = doc.inner_html.strip
+        html.remove! %r[\.{2,}$]
+        html.gsub! %r[(^\n$){3,}], "\n"
+        doc.inner_html = %(<div class="_rfc-pre">#{html}</div>)
+
+        doc
       end
     end
   end

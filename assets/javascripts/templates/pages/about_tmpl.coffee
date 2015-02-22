@@ -161,11 +161,6 @@ credits = [
     'BSD',
     'http://www.haskell.org/ghc/license'
   ], [
-    'HTTP',
-    '1999 The Internet Society',
-    'Custom',
-    'http://www.w3.org/Protocols/rfc2616/rfc2616-sec21.html#sec21'
-  ], [
     'io.js',
     'io.js contributors',
     'MIT',

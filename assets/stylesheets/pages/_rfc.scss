@@ -1,6 +1,15 @@
-._rfc {
-  padding-left: 1rem;
+._rfc-pre {
+  font-size: .8125rem;
+  min-width: 38rem;
+  @extend %code;
 
-  > h1, > h2 { margin-left: -1rem; }
   > h2 { @extend %block-heading; }
+  > h3 { @extend %block-label, %label-blue; }
+  > h4 { @extend %block-label; }
+  > h3, > h4 { font-size: .875rem; }
+
+  > h1, > h2, > h3, > h4, > h5 {
+    margin: 0;
+    font-family: $baseFont;
+  }
 }

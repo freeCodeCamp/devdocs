@@ -2,13 +2,15 @@ module Docs
   class Http < UrlScraper
     self.name = 'HTTP'
     self.type = 'rfc'
-    self.base_url = 'http://www.w3.org/Protocols/rfc2616/'
-    self.root_path = 'rfc2616.html'
+    self.base_url = 'https://tools.ietf.org/html/'
+    self.initial_paths = %w(rfc2616 rfc7230 rfc7231
+      rfc7232 rfc7233 rfc7234 rfc7235)
 
     html_filters.push 'http/clean_html', 'http/entries'
 
-    options[:only] = %w(rfc2616-sec10.html rfc2616-sec14.html)
-    options[:container] = ->(filter) { '.toc' if filter.root_page? }
-    options[:attribution] = "&copy; 1999 The Internet Society"
+    options[:skip_links] = true
+    options[:attribution] = <<-HTML
+      &copy; document authors. All rights reserved.
+    HTML
   end
 end
