@@ -34,7 +34,7 @@ module Docs
     self.text_filters = FilterStack.new
 
     html_filters.push 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths'
-    text_filters.push 'official_url', 'inner_html', 'clean_text', 'attribution'
+    text_filters.push 'home_url', 'inner_html', 'clean_text', 'attribution'
 
     def build_page(path)
       response = request_one url_for(path)
