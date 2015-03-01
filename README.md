@@ -1,4 +1,4 @@
-# [DevDocs](http://devdocs.io) — Documentation Browser
+# [DevDocs](http://devdocs.io) [![Build Status](https://travis-ci.org/Thibaut/devdocs.svg?branch=master)](https://travis-ci.org/Thibaut/devdocs)
 
 DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
 
