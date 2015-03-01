@@ -17,7 +17,7 @@ class App < Sinatra::Application
     set :assets_prefix, 'assets'
     set :assets_path, -> { File.join(public_folder, assets_prefix) }
     set :assets_manifest_path, -> { File.join(assets_path, 'manifest.json') }
-    set :assets_compile, %w(*.png docs.js application.js application.css application-dark.css)
+    set :assets_compile, %w(*.png docs.js docs.json application.js application.css application-dark.css)
 
     require 'yajl/json_gem'
     set :docs_prefix, 'docs'
@@ -64,7 +64,7 @@ class App < Sinatra::Application
     use Rack::Deflater
     use Rack::Static,
       root: 'public',
-      urls: %w(/assets /docs /images /favicon.ico /robots.txt /opensearch.xml /manifest.webapp),
+      urls: %w(/assets /docs/ /images /favicon.ico /robots.txt /opensearch.xml /manifest.webapp),
       header_rules: [
         [:all,           {'Cache-Control' => 'no-cache, max-age=0'}],
         ['/assets',      {'Cache-Control' => 'public, max-age=604800'}],
@@ -169,6 +169,10 @@ class App < Sinatra::Application
 
   get '/ping' do
     200
+  end
+
+  get '/docs.json' do
+    redirect asset_path('docs.json')
   end
 
   get '/s/maxcdn' do

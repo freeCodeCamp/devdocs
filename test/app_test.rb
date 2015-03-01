@@ -173,6 +173,14 @@ class AppTest < MiniTest::Spec
     end
   end
 
+  describe "/docs.json" do
+    it "returns to the asset path" do
+      get '/docs.json'
+      assert last_response.redirect?
+      assert_equal 'http://example.org/assets/docs.json', last_response['Location']
+    end
+  end
+
   describe "/feed" do
     it "returns an atom feed" do
       get '/feed'
