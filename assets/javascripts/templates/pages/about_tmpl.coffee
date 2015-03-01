@@ -207,7 +207,7 @@ credits = [
     'http://www.lua.org/license.html'
   ], [
     'Marionette.js',
-    '2014 Muted Solutions, LLC',
+    '2015 Muted Solutions, LLC',
     'MIT',
     'http://mutedsolutions.mit-license.org/'
   ], [

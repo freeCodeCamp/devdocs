@@ -4,4 +4,5 @@
   > h1, > h2 { margin-left: -1rem; }
   > h2 { @extend %block-heading; }
   > h3 { @extend %block-label, %label-blue; }
+  blockquote { @extend %note; }
 }

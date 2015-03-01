@@ -8,6 +8,7 @@ module Docs
 
       def root
         at_css('p').remove
+        at_css('h1').content = 'Backbone.Marionette'
       end
 
       def other
