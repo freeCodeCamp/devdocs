@@ -3,7 +3,7 @@ module Docs
     self.name = 'Underscore.js'
     self.slug = 'underscore'
     self.type = 'underscore'
-    self.version = '1.8.1'
+    self.version = '1.8.2'
     self.base_url = 'http://underscorejs.org'
 
     html_filters.push 'underscore/clean_html', 'underscore/entries', 'title'
