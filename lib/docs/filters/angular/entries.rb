@@ -37,6 +37,10 @@ module Docs
 
         entries
       end
+
+      def include_default_entry?
+        !at_css('h1 + .definition-table:last-child')
+      end
     end
   end
 end
