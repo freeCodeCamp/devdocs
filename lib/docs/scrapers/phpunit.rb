@@ -2,7 +2,7 @@ module Docs
   class Phpunit < UrlScraper
     self.name = 'PHPUnit'
     self.type = 'phpunit'
-    self.version = '4.4'
+    self.version = '4.5'
     self.base_url = "https://phpunit.de/manual/#{version}/en/"
     self.root_path = 'index.html'
 
@@ -17,7 +17,7 @@ module Docs
       appendixes.copyright.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2014 Sebastian Bergmann<br>
+      &copy; 2005&ndash;2015 Sebastian Bergmann<br>
       Licensed under the Creative Commons Attribution 3.0 Unported License.
     HTML
   end
