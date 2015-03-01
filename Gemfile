@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.2.0'
 
+gem 'rake'
 gem 'thor'
 gem 'pry', '~> 0.10.0'
 gem 'activesupport', '~> 4.0', require: false

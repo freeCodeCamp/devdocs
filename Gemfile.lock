@@ -51,6 +51,7 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    rake (10.4.2)
     rr (1.1.2)
     sass (3.4.12)
     sinatra (1.4.5)
@@ -105,6 +106,7 @@ DEPENDENCIES
   pry (~> 0.10.0)
   rack
   rack-test
+  rake
   rr
   sass
   sinatra
