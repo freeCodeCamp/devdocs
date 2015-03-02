@@ -35,7 +35,6 @@
   -webkit-font-smoothing: subpixel-antialiased;
 
   & + & { margin-top: 1.5rem; }
-  & + & > ._attribution-link { display: none; }
 }
 
 ._official-link { @extend %external-link; }
