@@ -89,7 +89,7 @@ module Docs
 
     def options
       @options ||= self.class.options.deep_dup.tap do |options|
-        options.merge! base_url: base_url, root_url: root_url,
+        options.merge! base_url: base_url, root_url: root_url, home_url: home_url,
                        root_path: root_path, initial_paths: initial_paths
 
         if root_path?

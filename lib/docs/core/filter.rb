@@ -20,6 +20,10 @@ module Docs
       context[:base_url]
     end
 
+    def home_url
+      context[:home_url]
+    end
+
     def current_url
       context[:url]
     end
