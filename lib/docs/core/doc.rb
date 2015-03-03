@@ -4,7 +4,7 @@ module Docs
     DB_FILENAME = 'db.json'
 
     class << self
-      attr_accessor :name, :slug, :type, :version, :abstract
+      attr_accessor :name, :slug, :type, :version, :abstract, :home_url
 
       def inherited(subclass)
         subclass.type = type
