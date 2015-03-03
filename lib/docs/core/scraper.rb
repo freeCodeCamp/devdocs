@@ -3,7 +3,7 @@ require 'set'
 module Docs
   class Scraper < Doc
     class << self
-      attr_accessor :base_url, :home_url, :root_path, :initial_paths, :options, :html_filters, :text_filters
+      attr_accessor :base_url, :root_path, :initial_paths, :options, :html_filters, :text_filters
 
       def inherited(subclass)
         super
@@ -66,7 +66,7 @@ module Docs
     end
 
     def home_url
-      @home_url ||= URL.parse self.class.home_url
+      @home_url ||= URL.parse self.class.home_url if self.class.home_url
     end
 
     def root_path

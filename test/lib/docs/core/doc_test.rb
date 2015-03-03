@@ -60,6 +60,19 @@ class DocsDocTest < MiniTest::Spec
     end
   end
 
+  describe ".home_url" do
+    it "returns nil" do
+      assert_nil doc.home_url
+    end
+  end
+
+  describe ".home_url=" do
+    it "stores .home_url" do
+      doc.home_url = 'http://www.url.com/doc'
+      assert_equal 'http://www.url.com/doc', doc.home_url
+    end
+  end
+  
   describe ".abstract" do
     it "returns nil" do
       assert_nil doc.abstract
