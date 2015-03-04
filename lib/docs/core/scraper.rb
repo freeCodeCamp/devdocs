@@ -34,7 +34,7 @@ module Docs
     self.text_filters = FilterStack.new
 
     html_filters.push 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths'
-    text_filters.push 'home_url', 'inner_html', 'clean_text', 'attribution'
+    text_filters.push 'inner_html', 'clean_text', 'home_url', 'attribution'
 
     def build_page(path)
       response = request_one url_for(path)
@@ -66,7 +66,7 @@ module Docs
     end
 
     def home_url
-      @home_url ||= URL.parse self.class.home_url if self.class.home_url
+      @home_url ||= self.class.home_url
     end
 
     def root_path
