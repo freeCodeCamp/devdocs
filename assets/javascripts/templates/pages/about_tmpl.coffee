@@ -312,7 +312,7 @@ credits = [
     'https://raw.github.com/nex3/sass/master/MIT-LICENSE'
   ], [
     'Sinon',
-    '2010-2014 Christian Johansen',
+    '2010-2015 Christian Johansen',
     'BSD',
     'https://raw.githubusercontent.com/cjohansen/Sinon.JS/master/LICENSE'
   ], [
