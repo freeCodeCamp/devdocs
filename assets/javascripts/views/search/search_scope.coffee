@@ -26,6 +26,9 @@ class app.views.SearchScope extends app.View
   getScope: ->
     @doc or app
 
+  name: ->
+    @doc?.name
+
   search: (value) ->
     unless @doc
       @searcher.find app.docs.all(), 'text', value

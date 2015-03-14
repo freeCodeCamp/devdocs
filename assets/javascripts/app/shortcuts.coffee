@@ -123,6 +123,9 @@ class app.Shortcuts
       when 82
         @trigger 'altR'
         false
+      when 83
+        @trigger 'altS'
+        false
 
   handleKeypressEvent: (event) ->
     if event.which is 63 and not event.target.value

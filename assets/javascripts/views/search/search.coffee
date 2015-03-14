@@ -16,6 +16,7 @@ class app.views.Search extends app.View
   @shortcuts:
     typing: 'autoFocus'
     altG: 'google'
+    altS: 'stackoverflow'
 
   @routes:
     root: 'onRoot'
@@ -86,10 +87,19 @@ class app.views.Search extends app.View
     @removeClass @constructor.activeClass
     @trigger 'clear'
 
-  google: =>
-    if @value
-      $.popup "https://www.google.com/search?q=#{encodeURIComponent @value}"
+  externalSearch: (url) ->
+    if value = @value
+      value = "#{@scope.name()} #{value}" if @scope.name()
+      $.popup "#{url}#{encodeURIComponent value}"
       @reset()
+    return
+
+  google: =>
+    @externalSearch "https://www.google.com/search?q="
+    return
+
+  stackoverflow: =>
+    @externalSearch "https://stackoverflow.com/search?q="
     return
 
   onResults: (results) =>
