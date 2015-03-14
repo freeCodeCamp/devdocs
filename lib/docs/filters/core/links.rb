@@ -1,7 +1,7 @@
 module Docs
   class LinksFilter < Filter
     def call
-      html.prepend(links_html) if links
+      html.prepend(links_html) if root_page? && links
       html
     end
 
