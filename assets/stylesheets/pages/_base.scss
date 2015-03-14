@@ -18,4 +18,7 @@
   code { @extend %label; }
 }
 
-._lodash { @extend %simple; }
+._lodash,
+._sinon {
+  @extend %simple;
+}
