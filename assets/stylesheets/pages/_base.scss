@@ -1,0 +1,21 @@
+%simple {
+  padding-left: 1rem;
+
+  h1, h2, h3 {
+    position: relative;
+    left: -1rem;
+  }
+  h2 { @extend %block-heading; }
+  h3 { @extend %block-label, %label-blue; }
+  h4 { font-size: inherit; }
+
+  ._mobile & {
+    padding-left: 0;
+
+    h1, h2, h3 { left: 0; }
+  }
+
+  code { @extend %label; }
+}
+
+._lodash { @extend %simple; }

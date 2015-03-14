@@ -28,7 +28,8 @@
         'components/prism',
         'components/mobile';
 
-@import 'pages/angular',
+@import 'pages/base',
+        'pages/angular',
         'pages/bower',
         'pages/c',
         'pages/chai',
@@ -46,7 +47,6 @@
         'pages/grunt',
         'pages/laravel',
         'pages/less',
-        'pages/lodash',
         'pages/lua',
         'pages/marionette',
         'pages/markdown',
