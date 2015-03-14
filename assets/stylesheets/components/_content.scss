@@ -205,15 +205,16 @@
   float: right;
   max-width: 15em;
   margin: .25rem 0 1.5rem 1.5rem;
-  padding: .75rem 1rem;
+  padding: .625rem 1rem;
   @extend %box;
 
   + ._lined-heading { margin-top: 0; }
 }
 
 ._toc-title {
-  margin: 0 0 .75em;
+  margin: 0 0 .5rem;
   font-size: inherit;
+  font-weight: bold;
 }
 
 ._toc-list {
@@ -221,6 +222,8 @@
   padding: 0 1em 0 0;
   list-style: none;
 }
+
+._toc-link { @extend %internal-link; }
 
 //
 // Static page
