@@ -277,7 +277,7 @@ credits = [
     'http://docs.python.org/3/license.html'
   ], [
     'React',
-    '2013-2014 Facebook Inc.',
+    '2013-2015 Facebook Inc.',
     'CC BY',
     'https://raw.githubusercontent.com/facebook/react/master/LICENSE-docs'
   ], [

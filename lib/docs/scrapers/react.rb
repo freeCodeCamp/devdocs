@@ -2,9 +2,13 @@ module Docs
   class React < UrlScraper
     self.name = 'React'
     self.type = 'react'
-    self.version = '0.12.2'
+    self.version = '0.13.0'
     self.base_url = 'http://facebook.github.io/react/docs/'
     self.root_path = 'getting-started.html'
+    self.links = {
+      home: 'http://facebook.github.io/react/',
+      code: 'https://github.com/facebook/react'
+    }
 
     html_filters.push 'react/entries', 'react/clean_html'
 
@@ -13,10 +17,11 @@ module Docs
     options[:skip] = %w(
       videos.html
       complementary-tools.html
-      examples.html)
+      examples.html
+      conferences.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2013&ndash;2014 Facebook Inc.<br>
+      &copy; 2013&ndash;2015 Facebook Inc.<br>
       Licensed under the Creative Commons Attribution 4.0 International Public License.
     HTML
   end
