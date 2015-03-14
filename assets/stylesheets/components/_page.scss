@@ -23,6 +23,23 @@
 }
 
 //
+// Official Website box
+//
+
+._official {
+  clear: both;
+  margin: 2rem 0 1.5rem;
+  font-size: .75rem;
+  color: $textColorLight;
+  text-align: center;
+  -webkit-font-smoothing: subpixel-antialiased;
+
+  & + & { margin-top: 1.5rem; }
+}
+
+._official-link { @extend %external-link; }
+
+//
 // Attribution box
 //
 
