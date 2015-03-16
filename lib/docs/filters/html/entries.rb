@@ -27,7 +27,8 @@ module Docs
       end
 
       def include_default_entry?
-        !%w(Attributes Link_types Element/Heading_Elements).include?(slug)
+        return false if %w(Attributes Link_types Element/Heading_Elements).include?(slug)
+        (node = doc.at_css '.overheadIndicator').nil? || node.content.exclude?('not on a standards track')
       end
 
       def additional_entries
