@@ -117,7 +117,7 @@ credits = [
     'https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE'
   ], [
     'CSS<br>DOM<br>HTML<br>JavaScript<br>SVG<br>XPath',
-    '2005-2014 Mozilla Developer Network and individual contributors',
+    '2005-2015 Mozilla Developer Network and individual contributors',
     'CC BY-SA',
     'http://creativecommons.org/licenses/by-sa/2.5/'
   ], [
