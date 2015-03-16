@@ -35,6 +35,8 @@ module Docs
       /Operators
       /Statements)
 
+    options[:skip_patterns] = [/additional_examples/i, /noSuchMethod/i]
+
     options[:fix_urls] = ->(url) do
       url.sub! 'https://developer.mozilla.org/en-US/docs/JavaScript/Reference',  Javascript.base_url
       url.sub! 'https://developer.mozilla.org/en/JavaScript/Reference',          Javascript.base_url

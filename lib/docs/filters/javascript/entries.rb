@@ -8,14 +8,14 @@ module Docs
 
       def get_name
         if slug.start_with? 'Global_Objects/'
-          name, method = *slug.sub('Global_Objects/', '').split('/')
+          name, method, *rest = *slug.sub('Global_Objects/', '').split('/')
           name.prepend 'Intl.' if INTL_OBJECTS.include?(name)
 
           if method
             unless method == method.upcase || method == 'NaN'
               method = method[0].downcase + method[1..-1] # e.g. Trim => trim
             end
-            name << ".#{method}"
+            name << ".#{([method] + rest).join('.')}"
           end
 
           name
