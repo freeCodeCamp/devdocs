@@ -87,6 +87,7 @@
     @hideLoading()
     @welcomeBack() unless @doc
     @removeEvent 'ready bootError'
+    navigator.mozApps?.getSelf().onsuccess = -> app.mozApp = true
     return
 
   initDoc: (doc) ->
