@@ -221,6 +221,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/MaxCDN/api-docs/master/LICENSE'
   ], [
+    'Meteor',
+    '2011-2015 Meteor Development Group',
+    'MIT',
+    'https://raw.githubusercontent.com/meteor/meteor/master/LICENSE.txt'
+  ], [
     'Minitest',
     'Ryan Davis, seattle.rb',
     'MIT',
