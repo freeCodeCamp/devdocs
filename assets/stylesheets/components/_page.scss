@@ -3,6 +3,8 @@
 //
 
 ._page {
+  position: relative;
+
   > h1 { @extend ._lined-heading; }
   > h1:first-child { margin-top: 0; }
 
@@ -20,6 +22,35 @@
     border: 1px dotted $boxBorder;
     border-radius: 3px;
   }
+}
+
+//
+// Links
+//
+
+._links {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  line-height: 2em;
+  text-align: right;
+
+  + h1 { margin-top: 0; }
+
+  @media (max-width: 1023px) { display: none; }
+}
+
+._links-link {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 .5rem;
+  background: white;
+  @extend %internal-link;
+
+  & + & { margin-left: .75rem; }
+  &:first-child { padding-left: 1rem; }
+  &:last-child { padding-right: 0; }
 }
 
 //

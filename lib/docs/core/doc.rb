@@ -38,7 +38,8 @@ module Docs
           type: type,
           version: version,
           index_path: index_path,
-          db_path: db_path }
+          db_path: db_path,
+          links: links }
       end
 
       def store_page(store, id)

@@ -34,7 +34,7 @@ module Docs
     self.text_filters = FilterStack.new
 
     html_filters.push 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths'
-    text_filters.push 'inner_html', 'clean_text', 'links', 'attribution'
+    text_filters.push 'inner_html', 'clean_text', 'attribution'
 
     def build_page(path)
       response = request_one url_for(path)
@@ -65,10 +65,6 @@ module Docs
       @root_url ||= root_path? ? URL.parse(File.join(base_url.to_s, root_path)) : base_url.normalize
     end
 
-    def links
-      self.class.links
-    end
-
     def root_path
       self.class.root_path
     end
@@ -93,7 +89,7 @@ module Docs
 
     def options
       @options ||= self.class.options.deep_dup.tap do |options|
-        options.merge! base_url: base_url, root_url: root_url, links: links,
+        options.merge! base_url: base_url, root_url: root_url,
                        root_path: root_path, initial_paths: initial_paths
 
         if root_path?
