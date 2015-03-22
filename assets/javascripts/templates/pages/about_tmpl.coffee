@@ -226,6 +226,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/seattlerb/minitest/master/README.txt'
   ], [
+    'Mocha',
+    '2011-2015 TJ Holowaychuk',
+    'MIT',
+    'https://raw.githubusercontent.com/mochajs/mocha/master/LICENSE'
+  ], [
     'Modernizr',
     '2009-2014 Modernizr',
     'MIT',
