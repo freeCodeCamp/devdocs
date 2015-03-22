@@ -25,6 +25,8 @@ module Docs
         at_css('> .description p') || css('.documentation-section').any? { |node| node.content.present? }
       end
 
+      IGNORE_METHODS = %w(version gem_version)
+
       def additional_entries
         return [] if root_page?
         require 'cgi'
@@ -36,7 +38,7 @@ module Docs
           name.gsub! '-', '%'
           name = CGI.unescape(name)
 
-          unless name.start_with? '_'
+          unless name.start_with?('_') || IGNORE_METHODS.include?(name)
             name.prepend self.name + (node['id'] =~ /\A\w+-c-/ ? '::' : '#')
             entries << [name, node['id']] unless entries.any? { |entry| entry[0] == name }
           end

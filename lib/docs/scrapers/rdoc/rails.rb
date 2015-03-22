@@ -1,27 +1,13 @@
 module Docs
   class Rails < Rdoc
-    # Generated with:
-    # find \
-    #   actionmailer \
-    #   actionpack \
-    #   actionview \
-    #   activemodel \
-    #   activejob \
-    #   activerecord \
-    #   activesupport \
-    #   railties \
-    #   -name '*.rb' \
-    #   -not -name 'version.rb' \
-    #   -not -wholename '*generators/*' \
-    #   -not -wholename '*test/*' \
-    #   -not -wholename '*examples/*' \
-    # | xargs \
-    #   rdoc --format=darkfish --no-line-numbers --op=rdoc --visibility=public
-
     self.name = 'Ruby on Rails'
     self.slug = 'rails'
-    self.version = '4.2.0'
+    self.version = '4.2.1'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Rails'
+    self.links = {
+      home: 'http://rubyonrails.org/',
+      code: 'https://github.com/rails/rails'
+    }
 
     html_filters.replace 'rdoc/entries', 'rails/entries'
 
@@ -66,10 +52,13 @@ module Docs
       /\AActionView\/Resolver/,
       /\AActiveSupport\/Multibyte\/Unicode\//,
       /\AActiveSupport\/XML/i,
-      /\ASourceAnnotationExtractor/]
+      /\ASourceAnnotationExtractor/,
+      /\AI18n\/Railtie/,
+      /\ARails\/AppBuilder/,
+      /\ARails\/PluginBuilder/]
 
     options[:attribution] = <<-HTML
-      &copy; 2004&ndash;2014 David Heinemeier Hansson<br>
+      &copy; 2004&ndash;2015 David Heinemeier Hansson<br>
       Licensed under the MIT License.
     HTML
   end
