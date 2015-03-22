@@ -50,7 +50,7 @@ class DocsCLI < Thor
   def generate(name)
     Docs.install_report :store if options[:verbose]
     Docs.install_report :scraper if options[:debug]
-    Docs.install_report :progress_bar if $stdout.tty?
+    Docs.install_report :progress_bar, :doc if $stdout.tty?
 
     unless options[:force]
       puts <<-TEXT.strip_heredoc
