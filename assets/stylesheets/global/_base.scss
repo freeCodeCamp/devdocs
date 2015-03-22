@@ -68,6 +68,7 @@ ol ol ol { list-style-type: lower-roman; }
 
 li + li { margin-top: .25em; }
 li > ul, li > ol, dd > ul, dd > ol { margin: .5em 0; }
+li > p { margin-bottom: .25em; }
 
 dl { margin: 1.5em 0; }
 dt { font-weight: bold; }
@@ -89,6 +90,7 @@ pre, code, samp, %pre, %code {
   font-family: $monoFont;
   font-weight: normal;
   font-style: normal;
+  font-size: .9em;
   color: $textColor;
   white-space: pre-wrap;
   -moz-tab-size: 2;
@@ -101,7 +103,6 @@ pre, %pre {
   padding: .375rem .75rem;
   line-height: 1.5;
   overflow: auto;
-  font-size: .9em;
   @extend %box;
 }
 
