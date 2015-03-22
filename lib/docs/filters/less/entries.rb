@@ -23,7 +23,7 @@ module Docs
         end
 
         css('h3[id^="import-options-"]').each do |node|
-          entries << ["@import #{node.content}", node['id']]
+          entries << ["@import #{node.content}", node['id']] unless node.content =~ /example/i
         end
 
         entries.concat [
@@ -52,7 +52,7 @@ module Docs
           if node.name == 'h2'
             type = node.content
             type.sub! %r{(.+) Functions}, 'Functions: \1'
-          elsif node.name == 'h4'
+          elsif node.name == 'h3'
             entries << [node.content, node['id'], type]
           end
         end

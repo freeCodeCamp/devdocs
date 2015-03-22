@@ -1,10 +1,5 @@
 ._coffeescript {
-  padding-left: 1rem;
-
-  > h1, > h2 { margin-left: -1rem; }
-  > h2 { @extend %block-heading; }
-
-  code { @extend %label; }
+  @extend %simple;
 
   // CoffeeScript / JavaScript code blocks
   > .code {

@@ -1,10 +1,7 @@
 %simple {
   padding-left: 1rem;
 
-  h1, h2, h3 {
-    position: relative;
-    left: -1rem;
-  }
+  h1, h2, h3 { margin-left: -1rem; }
   h2 { @extend %block-heading; }
   h3 { @extend %block-label, %label-blue; }
   h4 { font-size: inherit; }
@@ -12,14 +9,21 @@
   ._mobile & {
     padding-left: 0;
 
-    h1, h2, h3 { left: 0; }
+    h1, h2, h3 { margin-left: 0; }
   }
 
-  code { @extend %label; }
+  p > code, li > code { @extend %label; }
+  blockquote { @extend %note; }
 }
 
+._cordova,
+._grunt,
+._less,
 ._lodash,
-._sinon,
-._mocha {
+._marionette,
+._markdown,
+._mocha,
+._mongoose,
+._sinon {
   @extend %simple;
 }

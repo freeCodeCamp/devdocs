@@ -22,7 +22,7 @@ module Docs
         end
 
         css('h1, h2, h3, h4').each do |node|
-          node.name = node.name.sub(/\d/) { |i| i.to_i + 1 }
+          node.name = node.name.sub(/\d/) { |i| [i.to_i + 1, 3].min }
         end
 
         css('pre').each do |node|

@@ -1,8 +1,0 @@
-._less {
-  padding-left: 1rem;
-
-  > h1, > h2, h3, h4 { margin-left: -1rem; }
-  > h2 { @extend %block-heading; }
-  h3, h4 { @extend %block-label, %label-blue; }
-  code { @extend %label; }
-}

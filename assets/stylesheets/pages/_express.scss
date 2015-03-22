@@ -1,10 +1,6 @@
 ._express {
-  padding-left: 1rem;
+  @extend %simple;
 
-  h1, h2, h3 { margin-left: -1rem; }
-  h2 { @extend %block-heading; }
-  h3 { @extend %block-label, %label-blue; }
-  p > code { @extend %label; }
   .doc-box { @extend %note; }
   .doc-warn { @extend %note-red; }
 }

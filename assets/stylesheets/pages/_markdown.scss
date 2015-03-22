@@ -1,7 +1,0 @@
-._markdown {
-  padding-left: 1rem;
-
-  h1, h2, h3, h1 + ul { margin-left: -1rem; }
-  h2 { @extend %block-heading; }
-  h3 { @extend %block-label, %label-blue; }
-}

@@ -1,7 +1,5 @@
 ._go {
-  padding-left: 1rem;
+  @extend %simple;
 
-  h1, h2, #short-nav, table.dir { margin-left: -1rem; }
-  h2 { @extend %block-heading; }
-  h3 { @extend %block-label, %label-blue; }
+  #short-nav, table.dir { margin-left: -1rem; }
 }
