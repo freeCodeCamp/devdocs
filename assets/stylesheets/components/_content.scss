@@ -208,7 +208,7 @@
   padding: .625rem 1rem;
   @extend %box;
 
-  + h1 { margin-top: 0; }
+  + h1, + ._lined-heading { margin-top: 0; }
 }
 
 ._toc-title {
