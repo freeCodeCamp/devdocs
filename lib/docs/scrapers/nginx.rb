@@ -2,8 +2,12 @@ module Docs
   class Nginx < UrlScraper
     self.name = 'nginx'
     self.type = 'nginx'
-    self.version = '1.7.9'
+    self.version = '1.7.11'
     self.base_url = 'http://nginx.org/en/docs/'
+    self.links = {
+      home: 'http://nginx.org/',
+      code: 'http://hg.nginx.org/nginx'
+    }
 
     html_filters.push 'nginx/clean_html', 'nginx/entries'
 
@@ -17,8 +21,8 @@ module Docs
     options[:skip_patterns] = [/\/faq\//]
 
     options[:attribution] = <<-HTML
-      &copy; 2002-2014 Igor Sysoev<br>
-      &copy; 2011-2014 Nginx, Inc.<br>
+      &copy; 2002-2015 Igor Sysoev<br>
+      &copy; 2011-2015 Nginx, Inc.<br>
       Licensed under the BSD License.
     HTML
   end
