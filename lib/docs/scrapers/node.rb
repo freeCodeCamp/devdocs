@@ -3,8 +3,12 @@ module Docs
     self.name = 'Node.js'
     self.slug = 'node'
     self.type = 'node'
-    self.version = '0.12.0'
-    self.base_url = 'http://nodejs.org/api/'
+    self.version = '0.12.1'
+    self.base_url = 'https://nodejs.org/api/'
+    self.links = {
+      home: 'https://nodejs.org/',
+      code: 'https://github.com/joyent/node'
+    }
 
     html_filters.push 'node/clean_html', 'node/entries', 'title'
 

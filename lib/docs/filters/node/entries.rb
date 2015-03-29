@@ -15,12 +15,6 @@ module Docs
         'UDP / Datagram Sockets' => 'UDP/Datagram',
         'Executing JavaScript'   => 'VM' }
 
-      IGNORE_DEFAULT_ENTRY = %w(globals timers domain buffer)
-
-      def include_default_entry?
-        !IGNORE_DEFAULT_ENTRY.include?(slug)
-      end
-
       def get_name
         REPLACE_NAMES[slug] || slug
       end
