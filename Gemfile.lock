@@ -54,10 +54,10 @@ GEM
     rake (10.4.2)
     rr (1.1.2)
     sass (3.4.13)
-    sinatra (1.4.5)
+    sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
-      tilt (~> 1.3, >= 1.3.4)
+      tilt (>= 1.3, < 3)
     sinatra-contrib (1.4.2)
       backports (>= 2.0)
       multi_json
