@@ -248,12 +248,12 @@
 //
 
 ._list-note {
-  margin: .5rem .75rem;
+  padding: .5rem .75rem;
   line-height: 1.25rem;
   font-size: .8125rem;
   color: $textColorLight;
 
-  & + & { margin-top: .25rem; }
+  & + & { padding-top: 0; }
 }
 
 ._list-note-link { cursor: pointer; }
