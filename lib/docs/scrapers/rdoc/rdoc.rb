@@ -5,7 +5,7 @@ module Docs
     self.root_path = 'table_of_contents.html'
 
     html_filters.replace 'container', 'rdoc/container'
-    html_filters.push 'title', 'rdoc/entries', 'rdoc/clean_html'
+    html_filters.push 'rdoc/entries', 'rdoc/clean_html', 'title'
 
     options[:title] = false
     options[:skip] = %w(index.html)
