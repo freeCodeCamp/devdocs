@@ -89,6 +89,7 @@ class app.views.EntryPage extends app.View
     return
 
   onSuccess: (response) =>
+    return unless @activated
     @xhr = null
     @render @prepareContent(response)
     return
