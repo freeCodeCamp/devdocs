@@ -3,7 +3,7 @@ module Docs
     self.name = 'lodash'
     self.slug = 'lodash'
     self.type = 'lodash'
-    self.version = '3.5.0'
+    self.version = '3.6.0'
     self.base_url = 'https://lodash.com/docs'
     self.links = {
       home: 'https://lodash.com/',
