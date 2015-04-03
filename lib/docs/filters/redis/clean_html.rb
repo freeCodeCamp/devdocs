@@ -4,9 +4,9 @@ module Docs
       def call
         at_css('ul')['class'] = 'commands' if root_page?
 
-        css('nav', 'aside', 'form').remove
+        css('nav', 'aside', 'form', '.anchor-link').remove
 
-        css('> article', 'pre > code').each do |node|
+        css('> article', '.article-main', 'pre > code', '.container').each do |node|
           node.before(node.children).remove
         end
 

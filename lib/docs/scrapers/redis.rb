@@ -1,8 +1,12 @@
 module Docs
   class Redis < UrlScraper
     self.type = 'redis'
-    self.version = 'up to 2.8.19'
+    self.version = 'up to 3.0.0'
     self.base_url = 'http://redis.io/commands'
+    self.links = {
+      home: 'http://redis.io/',
+      code: 'https://github.com/antirez/redis'
+    }
 
     html_filters.push 'redis/entries', 'redis/clean_html', 'title'
 
