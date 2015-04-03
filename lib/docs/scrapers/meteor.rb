@@ -1,7 +1,7 @@
 module Docs
   class Meteor < UrlScraper
     self.type = 'meteor'
-    self.version = '1.0.4'
+    self.version = '1.1.0'
     self.base_url = 'http://docs.meteor.com'
     self.root_path = '/#/full/'
     self.links = {

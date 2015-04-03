@@ -15,6 +15,10 @@ module Docs
           node.content = node.content
         end
 
+        css('a.src-code').each do |node|
+          node.content = 'Source'
+        end
+
         doc
       end
     end

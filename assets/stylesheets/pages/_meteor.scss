@@ -6,10 +6,10 @@
 
   dl.args { margin-left: 1rem; }
 
-  .locus { float: right; }
-  .locus, .type {
+  .locus, .src-code { float: right; }
+  .locus, .type, .src-code {
     margin-left: .5em;
     font-size: .9em;
-    color: $textColorLight;
   }
+  .locus, .type { color: $textColorLight; }
 }
