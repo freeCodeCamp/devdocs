@@ -39,7 +39,7 @@ module Docs
       end
 
       def include_default_entry?
-        at_css('#sidebar a[href="index"]')
+        at_css('#sidebar a[href="index"]') || at_css('h1 ~ .section')
       end
     end
   end
