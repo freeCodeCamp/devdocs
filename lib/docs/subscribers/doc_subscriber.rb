@@ -16,6 +16,10 @@ module Docs
       log_diff before.keys, after.keys
     end
 
+    def info(event)
+      log event.payload[:msg]
+    end
+
     private
 
     def parse_payload(event)

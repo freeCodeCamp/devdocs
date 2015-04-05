@@ -116,7 +116,7 @@ class NormalizeUrlsFilterTest < MiniTest::Spec
     end
 
     it "calls the block with each absolute url" do
-      context[:fix_urls] = ->(arg) { (@args ||= []).push(arg) }
+      context[:fix_urls] = ->(arg) { (@args ||= []).push(arg); nil }
       @body += link_to '/path?#'
       filter.call
       assert_equal ['http://example.com/path?#'] * 2, @args
@@ -137,6 +137,30 @@ class NormalizeUrlsFilterTest < MiniTest::Spec
       @body = link_to '#frag'
       filter.call
       refute @called
+    end
+  end
+
+  context "when context[:redirections] is a hash" do
+    before do
+      @body = link_to 'http://example.com/path?query#frag'
+    end
+
+    it "replaces the path of matching urls, case-insensitive" do
+      @body = link_to('http://example.com/PATH?query#frag') + link_to('http://example.com/path/two')
+      context[:redirections] = { '/path' => '/fixed' }
+      expected = link_to('http://example.com/fixed?query#frag') + link_to('http://example.com/path/two')
+      assert_equal expected, filter_output_string
+    end
+
+    it "does a multi pass with context[:fix_urls]" do
+      @body = link_to('http://example.com/path')
+      context[:fix_urls] = ->(url) do
+        url.sub! 'example.com', 'example.org'
+        url.sub! '/Fixed', '/fixed'
+        url
+      end
+      context[:redirections] = { '/path' => '/Fixed' }
+      assert_equal link_to('http://example.org/fixed'), filter_output_string
     end
   end
 end

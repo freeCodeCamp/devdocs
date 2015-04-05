@@ -100,6 +100,7 @@ module Docs
           (options[:only] ||= []).concat initial_paths + (root_path? ? [root_path] : ['', '/'])
         end
 
+        options.merge!(additional_options) if respond_to?(:additional_options, true)
         options.freeze
       end
     end
