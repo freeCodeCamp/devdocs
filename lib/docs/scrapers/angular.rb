@@ -1,5 +1,7 @@
 module Docs
   class Angular < UrlScraper
+    include StubRootPage
+
     self.name = 'Angular.js'
     self.slug = 'angular'
     self.type = 'angular'
@@ -28,27 +30,7 @@ module Docs
 
     private
 
-    def request_one(url)
-      stub_root_page if url == root_url.to_s
-      super
-    end
-
-    def request_all(urls, &block)
-      stub_root_page
-      super
-    end
-
-    def stub_root_page
-      response = Typhoeus::Response.new(
-        effective_url: root_url.to_s,
-        code: 200,
-        headers: { 'Content-Type' => 'text/html' },
-        body: get_root_page_body)
-
-      Typhoeus.stub(root_url.to_s).and_return(response)
-    end
-
-    def get_root_page_body
+    def root_page_body
       require 'capybara'
       Capybara.current_driver = :selenium
       Capybara.visit("https://code.angularjs.org/#{self.class.version}/docs/api")
