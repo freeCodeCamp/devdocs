@@ -43,10 +43,11 @@ class DocsCLI < Thor
     invalid_doc(name)
   end
 
-  desc 'generate <doc> [--verbose] [--debug] [--force]', 'Generate a documentation'
+  desc 'generate <doc> [--verbose] [--debug] [--force] [--package]', 'Generate a documentation'
   option :verbose, type: :boolean
   option :debug, type: :boolean
   option :force, type: :boolean
+  option :package, type: :boolean
   def generate(name)
     Docs.install_report :store if options[:verbose]
     Docs.install_report :scraper if options[:debug]
@@ -67,6 +68,10 @@ class DocsCLI < Thor
 
     if Docs.generate(name)
       generate_manifest
+      if options[:package]
+        require 'unix_utils'
+        package_doc(Docs.find(name))
+      end
       puts 'Done'
     else
       puts "Failed!#{' (try running with --debug for more information)' unless options[:debug]}"
