@@ -11,7 +11,7 @@ module Docs
 
     options[:trailing_slash] = false
 
-    options[:skip_link] = ->(link) { link['title'].try(:include?, 'hasn\'t been written yet'.freeze) }
+    options[:skip_link] = ->(link) { link['title'].try(:include?, 'written'.freeze) }
 
     options[:attribution] = <<-HTML
       &copy; 2015 Mozilla Contributors<br>

@@ -5,8 +5,11 @@ module Docs
         'Battery Status'      => 'Battery Status',
         'Canvas '             => 'Canvas',
         'CSS Object Model'    => 'CSS',
+        'Cryptography'        => 'Web Cryptography',
         'Device Orientation'  => 'Device Orientation',
         'Encoding'            => 'Encoding',
+        'Encrypted Media Extensions' => 'Encrypted Media',
+        'Fetch'               => 'Fetch',
         'File API'            => 'File',
         'Geolocation'         => 'Geolocation',
         'Media Capture'       => 'Media',
@@ -14,30 +17,35 @@ module Docs
         'MediaStream'         => 'Media',
         'Navigation Timing'   => 'Navigation Timing',
         'Network Information' => 'Network Information',
+        'Push API'            => 'Push',
         'Service Workers'     => 'Service Workers',
+        'Web Animations'      => 'Animation',
         'Web Audio'           => 'Web Audio',
+        'Web Messaging'       => 'Web Messaging',
         'Web Storage'         => 'Web Storage',
         'Web Workers'         => 'Web Workers',
         'WebRTC'              => 'WebRTC' }
 
       TYPE_BY_NAME_STARTS_WITH = {
         'Audio'               => 'Web Audio',
+        'Broadcast'           => 'Broadcast Channel',
         'Canvas'              => 'Canvas',
-        'ChildNode'           => 'Node',
-        'Console'             => 'Console',
         'CSS'                 => 'CSS',
+        'ChildNode'           => 'Node',
+        'console'             => 'Console',
         'document'            => 'Document',
         'DocumentFragment'    => 'DocumentFragment',
         'DOM'                 => 'DOM',
         'element'             => 'Element',
         'event'               => 'Event',
         'Event'               => 'Event',
+        'Fetch'               => 'Fetch',
         'File'                => 'File',
         'GlobalEventHandlers' => 'GlobalEventHandlers',
         'history'             => 'History',
         'HTML'                => 'Elements',
         'IDB'                 => 'IndexedDB',
-        'Location'            => 'Location',
+        'location'            => 'Location',
         'navigator'           => 'Navigator',
         'MediaQuery'          => 'MediaQuery',
         'Node'                => 'Node',
@@ -45,6 +53,7 @@ module Docs
         'ParentNode'          => 'Node',
         'Range'               => 'Range',
         'RTC'                 => 'WebRTC',
+        'screen'              => 'Screen',
         'Selection'           => 'Selection',
         'Storage'             => 'Web Storage',
         'StyleSheet'          => 'CSS',
@@ -54,13 +63,17 @@ module Docs
         'TreeWalker'          => 'TreeWalker',
         'Uint'                => 'Typed Arrays',
         'URL'                 => 'URL',
-        'window'              => 'window',
+        'window'              => 'Window',
+        'Window'              => 'Window',
         'XMLHttpRequest'      => 'XMLHTTPRequest' }
 
       TYPE_BY_NAME_INCLUDES = {
+        'ChildNode'     => 'Node',
+        'Crypto'        => 'Web Cryptography',
         'ImageData'     => 'Canvas',
         'IndexedDB'     => 'IndexedDB',
         'MediaStream'   => 'Media',
+        'NodeList'      => 'Node',
         'Path2D'        => 'Canvas',
         'ServiceWorker' => 'Service Workers',
         'TextMetrics'   => 'Canvas',
@@ -129,10 +142,19 @@ module Docs
         end
       end
 
+      SKIP_CONTENT = [
+        'not on a standards track',
+        'removed from the Web',
+        'not on a current W3C standards track',
+        'This feature is not built into all browsers',
+        'not currently supported in any browser'
+      ]
+
       def include_default_entry?
-        (node = doc.at_css '.overheadIndicator').nil? ||
-        type == 'Console' ||
-        (node.content.exclude?('not on a standards track') && node.content.exclude?('removed from the Web'))
+        return true if type == 'Console'
+        return true unless node = doc.at_css('.overheadIndicator')
+        content = node.content
+        SKIP_CONTENT.none? { |str| content.include?(str) }
       end
     end
   end
