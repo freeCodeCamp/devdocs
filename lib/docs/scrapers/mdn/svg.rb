@@ -2,6 +2,7 @@ module Docs
   class Svg < Mdn
     self.name = 'SVG'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/SVG'
+    self.fix_redirections = true
 
     html_filters.push 'svg/clean_html', 'svg/entries', 'title'
 
@@ -17,11 +18,7 @@ module Docs
       end
     end
 
-    options[:skip] = %w(
-      /Compatibility_sources
-      /FAQ
-      /SVG_animation_with_SMIL
-      /SVG_as_an_Image)
+    options[:skip] = %w(/Compatibility_sources /FAQ)
 
     options[:fix_urls] = ->(url) do
       url.sub! 'https://developer.mozilla.org/en-US/Web/SVG', Svg.base_url

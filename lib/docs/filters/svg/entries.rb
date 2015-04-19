@@ -3,9 +3,9 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = super
-        name.remove!('Element.').try(:downcase!)
-        name.remove!('Attribute.').try(:downcase!)
-        name.remove!('Tutorial.')
+        name.gsub!('Element.', '').try(:downcase!)
+        name.gsub!('Attribute.', '').try(:downcase!)
+        name.gsub!('Tutorial.', '')
         name.gsub!('_', '')
 
         if name.in?(%w(Element Attribute Content\ type))
