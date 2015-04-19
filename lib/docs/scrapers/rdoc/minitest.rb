@@ -2,8 +2,8 @@ module Docs
   class Minitest < Rdoc
     self.name = 'Ruby / Minitest'
     self.slug = 'minitest'
-    self.version = '5.5.1'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Minitest'
+    self.version = '5.6.0'
+    self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Minitest' # rake docs
 
     html_filters.replace 'rdoc/entries', 'minitest/entries'
 
