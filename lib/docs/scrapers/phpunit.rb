@@ -2,7 +2,7 @@ module Docs
   class Phpunit < UrlScraper
     self.name = 'PHPUnit'
     self.type = 'phpunit'
-    self.version = '4.5'
+    self.version = '4.6'
     self.base_url = "https://phpunit.de/manual/#{version}/en/"
     self.root_path = 'index.html'
 
