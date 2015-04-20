@@ -45,7 +45,7 @@
   display: inline-block;
   vertical-align: top;
   padding: 0 .5rem;
-  background: white;
+  background: $contentBackground;
   @extend %internal-link;
 
   & + & { margin-left: .75rem; }
