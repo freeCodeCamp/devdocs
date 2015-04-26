@@ -149,6 +149,10 @@ td {
   + td { border-left: 1px solid $boxBorderLight; }
   tr:last-child > & { border-bottom: 0; }
 
+  > pre:only-child, > p:only-child, > ul:only-child, > ol:only-child {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
   > pre:last-child, > p:last-child, > ul:last-child, > ol:last-child { margin-bottom: 0; }
 }
 
