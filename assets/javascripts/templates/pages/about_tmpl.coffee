@@ -266,6 +266,11 @@ credits = [
     'MIT',
     'https://github.com/sparklemotion/nokogiri/blob/master/README.rdoc#license'
   ], [
+    'npm',
+    'npm, Inc. and Contributors<br>npm is a trademark of npm, Inc.',
+    'npm',
+    'https://raw.githubusercontent.com/npm/npm/master/LICENSE'
+  ], [
     'PHP',
     '1997-2015 The PHP Documentation Group',
     'CC BY',

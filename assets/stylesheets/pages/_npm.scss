@@ -1,0 +1,15 @@
+._npm {
+  @extend %simple;
+
+  .pageColumns {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .faint.heading {
+    font-size: .9em;
+    color: $textColorLight;
+  }
+
+  .youtube-video iframe { width: 420px; height: 315px; }
+}
