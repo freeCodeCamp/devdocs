@@ -81,6 +81,11 @@ credits = [
     'CC BY',
     'http://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Apache HTTP Server',
+    'The Apache Software Foundation',
+    'Apache',
+    'http://www.apache.org/licenses/LICENSE-2.0'
+  ], [
     'Backbone.js',
     '2010-2014 Jeremy Ashkenas, DocumentCloud',
     'MIT',
