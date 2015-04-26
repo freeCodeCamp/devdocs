@@ -2,8 +2,8 @@ module Docs
   class Cordova < UrlScraper
     self.name = 'Cordova'
     self.type = 'cordova'
-    self.version = '4.0.0'
-    self.base_url = 'http://cordova.apache.org/docs/en/4.0.0/'
+    self.version = '5.0.0'
+    self.base_url = 'http://cordova.apache.org/docs/en/5.0.0/'
     self.root_path = 'index.html'
 
     html_filters.push 'cordova/clean_html', 'cordova/entries', 'title'
@@ -14,7 +14,7 @@ module Docs
     options[:skip] = %w(_index.html guide_support_index.md.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2012-2014 The Apache Software Foundation<br>
+      &copy; 2012-2015 The Apache Software Foundation<br>
       Licensed under the Apache License 2.0.
     HTML
   end
