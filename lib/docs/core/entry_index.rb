@@ -6,6 +6,7 @@ module Docs
 
     def initialize
       @entries = []
+      @index = Set.new
       @types = Hash.new { |hash, key| hash[key] = Type.new key }
     end
 
@@ -38,8 +39,10 @@ module Docs
     private
 
     def add_entry(entry)
-      @entries << entry.dup
-      @types[entry.type].count += 1 if entry.type
+      if @index.add?(entry.as_json.to_s)
+        @entries << entry.dup
+        @types[entry.type].count += 1 if entry.type
+      end
     end
 
     def entries_as_json

@@ -3,7 +3,7 @@ require 'docs'
 
 class DocsEntryIndexTest < MiniTest::Spec
   let :entry do
-    Docs::Entry.new 'name', 'type', 'path'
+    Docs::Entry.new 'name', 'path', 'type'
   end
 
   let :index do
@@ -29,7 +29,11 @@ class DocsEntryIndexTest < MiniTest::Spec
     end
 
     it "stores an array of entries" do
-      entries = [entry, entry]
+      entries = [
+        Docs::Entry.new('one', 'path', 'type'),
+        Docs::Entry.new('two', 'path', 'type')
+      ]
+
       index.add(entries)
       assert_equal entries, index.entries
     end
@@ -46,11 +50,17 @@ class DocsEntryIndexTest < MiniTest::Spec
       assert_empty index.types
     end
 
+    it "doesn't store the same entry twice" do
+      2.times { index.add(entry.dup) }
+      assert_equal [entry], index.entries
+    end
+
     it "creates and indexes the type" do
-      entry.type = 'one'; index.add(entry)
-      entry.type = 'two'; 2.times { index.add(entry) }
-      assert_equal ['one', 'two'], index.types.keys
-      assert_instance_of Docs::Type, index.types['one']
+      index.add Docs::Entry.new('one', 'path', 'a')
+      index.add Docs::Entry.new('two', 'path', 'b')
+      index.add Docs::Entry.new('three', 'path', 'b')
+      assert_equal ['a', 'b'], index.types.keys
+      assert_instance_of Docs::Type, index.types['a']
     end
 
     it "doesn't index the nil type" do
@@ -59,8 +69,9 @@ class DocsEntryIndexTest < MiniTest::Spec
     end
 
     it "increments the type's count" do
-      2.times { index.add(entry) }
-      assert_equal 2, index.types[entry.type].count
+      index.add Docs::Entry.new('one', 'path', 'type')
+      index.add Docs::Entry.new('two', 'path', 'type')
+      assert_equal 2, index.types['type'].count
     end
   end
 
@@ -90,8 +101,9 @@ class DocsEntryIndexTest < MiniTest::Spec
       end
 
       it "includes the json representation of the #entries" do
-        index.add [entry, entry]
-        assert_equal [entry.as_json, entry.as_json], index.as_json[:entries]
+        index.add one = Docs::Entry.new('one', 'path', 'type')
+        index.add two = Docs::Entry.new('two', 'path', 'type')
+        assert_equal [one.as_json, two.as_json], index.as_json[:entries]
       end
 
       it "is sorted by name, case-insensitive" do

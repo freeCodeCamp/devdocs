@@ -205,7 +205,10 @@ class DocsDocTest < MiniTest::Spec
 
     context "when pages are built successfully" do
       let :pages do
-        [page.dup, page.dup]
+        [
+          page.deep_dup.tap { |p| page[:entries].first.tap { |e| e.name = 'one' } },
+          page.deep_dup.tap { |p| page[:entries].first.tap { |e| e.name = 'two' } }
+        ]
       end
 
       before do
@@ -233,7 +236,7 @@ class DocsDocTest < MiniTest::Spec
           mock(store).write('index.json', anything) do |path, json|
             json = JSON.parse(json)
             assert_equal pages.length, json['entries'].length
-            assert_includes json['entries'], entry.as_json.stringify_keys
+            assert_includes json['entries'], Docs::Entry.new('one').as_json.stringify_keys
           end
           doc.store_pages(store)
         end
