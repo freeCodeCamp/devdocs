@@ -3,8 +3,11 @@ module Docs
     self.name = 'Cordova'
     self.type = 'cordova'
     self.version = '5.0.0'
-    self.base_url = 'http://cordova.apache.org/docs/en/5.0.0/'
+    self.base_url = "http://cordova.apache.org/docs/en/#{version}/"
     self.root_path = 'index.html'
+    self.links = {
+      home: 'http://cordova.apache.org/'
+    }
 
     html_filters.push 'cordova/clean_html', 'cordova/entries', 'title'
 
