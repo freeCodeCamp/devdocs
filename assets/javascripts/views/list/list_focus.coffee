@@ -108,6 +108,7 @@ class app.views.ListFocus extends app.View
     return
 
   onClick: (event) =>
+    return if event.which isnt 1 or event.metaKey or event.ctrlKey
     if event.target.tagName is 'A'
       @focus event.target
     return

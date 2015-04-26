@@ -52,6 +52,7 @@ class app.views.ListFold extends app.View
     return
 
   onClick: (event) =>
+    return if event.which isnt 1 or event.metaKey or event.ctrlKey
     return unless event.pageY # ignore fabricated clicks
     el = event.target
 

@@ -36,6 +36,7 @@ class app.views.ListSelect extends app.View
     @findByClass @constructor.activeClass
 
   onClick: (event) =>
+    return if event.which isnt 1 or event.metaKey or event.ctrlKey
     if event.target.tagName is 'A'
       @select event.target
     return
