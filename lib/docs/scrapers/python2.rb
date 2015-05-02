@@ -2,7 +2,7 @@ module Docs
   class Python2 < FileScraper
     self.name = 'Python 2'
     self.slug = 'python2'
-    self.version = '2.7.8'
+    self.version = '2.7.9'
     self.type = 'sphinx'
     self.dir = '/Users/Thibaut/DevDocs/Docs/Python2' # downloaded from docs.python.org/2.7/download.html
     self.base_url = 'http://docs.python.org/2.7/'
@@ -22,7 +22,7 @@ module Docs
       library/sunau.html)
 
     options[:attribution] = <<-HTML
-      &copy; 1990&ndash;2014 Python Software Foundation<br>
+      &copy; 1990&ndash;2015 Python Software Foundation<br>
       Licensed under the PSF License.
     HTML
   end

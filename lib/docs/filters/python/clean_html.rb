@@ -51,7 +51,7 @@ module Docs
         end
 
         # Remove code highlighting
-        css('.highlight-python3').each do |node|
+        css('[class*="highlight-python"]').each do |node|
           pre = node.at_css('pre')
           pre.content = pre.content
           pre['class'] = 'python'
