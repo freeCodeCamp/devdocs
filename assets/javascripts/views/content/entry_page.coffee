@@ -1,5 +1,6 @@
 class app.views.EntryPage extends app.View
   @className: '_page'
+  @errorClass: '_page-error'
 
   @events:
     click: 'onClick'
@@ -97,6 +98,7 @@ class app.views.EntryPage extends app.View
   onError: =>
     @xhr = null
     @render @tmpl('pageLoadError')
+    @addClass @constructor.errorClass
     app.appCache?.update()
     return
 
