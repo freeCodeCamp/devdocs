@@ -57,7 +57,7 @@ class App < Sinatra::Application
 
   configure :production do
     set :static, false
-    set :docs_host, 'http://maxcdn-docs.devdocs.io'
+    set :docs_host, 'http://docs.devdocs.io'
 
     use Rack::ConditionalGet
     use Rack::ETag
@@ -76,7 +76,7 @@ class App < Sinatra::Application
 
     Sprockets::Helpers.configure do |config|
       config.digest = true
-      config.asset_host = 'maxcdn.devdocs.io'
+      config.asset_host = 'cdn.devdocs.io'
       config.manifest = Sprockets::Manifest.new(sprockets, assets_manifest_path)
     end
   end
