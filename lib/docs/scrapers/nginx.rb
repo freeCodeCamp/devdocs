@@ -2,7 +2,7 @@ module Docs
   class Nginx < UrlScraper
     self.name = 'nginx'
     self.type = 'nginx'
-    self.version = '1.8.0'
+    self.version = '1.9.0'
     self.base_url = 'http://nginx.org/en/docs/'
     self.links = {
       home: 'http://nginx.org/',
