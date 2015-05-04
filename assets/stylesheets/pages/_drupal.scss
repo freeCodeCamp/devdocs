@@ -1,0 +1,10 @@
+._drupal {
+  h1#page-subtitle {
+    margin-top: 0;
+    @extend %lined-heading;
+  }
+
+  h3 { @extend %block-heading; }
+
+  .signature { @extend %note, %note-blue; }
+}
