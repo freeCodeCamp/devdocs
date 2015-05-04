@@ -38,6 +38,7 @@ class App < Sinatra::Application
       config.environment = sprockets
       config.prefix = "/#{assets_prefix}"
       config.public_path = public_folder
+      config.protocol = :relative
     end
   end
 
@@ -57,7 +58,7 @@ class App < Sinatra::Application
 
   configure :production do
     set :static, false
-    set :docs_host, 'http://docs.devdocs.io'
+    set :docs_host, '//docs.devdocs.io'
 
     use Rack::ConditionalGet
     use Rack::ETag
@@ -180,7 +181,7 @@ class App < Sinatra::Application
   end
 
   get '/s/shopify' do
-    redirect 'http://www.shopify.com/careers?utm_source=devdocs&utm_medium=banner&utm_campaign=devdocs'
+    redirect 'https://www.shopify.com/careers?utm_source=devdocs&utm_medium=banner&utm_campaign=devdocs'
   end
 
   get %r{\A/feed(?:\.atom)?\z} do
