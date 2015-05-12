@@ -3,7 +3,7 @@ templates = app.templates
 templates.sidebarDoc = (doc, options = {}) ->
   link  = """<a href="#{doc.fullPath()}" class="_list-item _icon-#{doc.slug} """
   link += if options.disabled then '_list-disabled' else '_list-dir'
-  link += """" data-slug="#{doc.slug}">"""
+  link += """" data-slug="#{doc.slug}" title="#{doc.name}">"""
   if options.disabled
     link += """<span class="_list-enable" data-enable="#{doc.slug}">Enable</span>"""
   else
