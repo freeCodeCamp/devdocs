@@ -12,6 +12,7 @@ module Docs
         'Fetch'               => 'Fetch',
         'File API'            => 'File',
         'Geolocation'         => 'Geolocation',
+        'Geometry'            => 'Geometry',
         'Media Capture'       => 'Media',
         'Media Source'        => 'Media',
         'MediaStream'         => 'Media',
@@ -24,7 +25,8 @@ module Docs
         'Web Messaging'       => 'Web Messaging',
         'Web Storage'         => 'Web Storage',
         'Web Workers'         => 'Web Workers',
-        'WebRTC'              => 'WebRTC' }
+        'WebRTC'              => 'WebRTC',
+        'WebVR'               => 'WebVR' }
 
       TYPE_BY_NAME_STARTS_WITH = {
         'Audio'               => 'Web Audio',
@@ -51,6 +53,7 @@ module Docs
         'Node'                => 'Node',
         'Notification'        => 'Notification',
         'ParentNode'          => 'Node',
+        'Push'                => 'Push',
         'Range'               => 'Range',
         'RTC'                 => 'WebRTC',
         'screen'              => 'Screen',
@@ -79,6 +82,7 @@ module Docs
         'TextMetrics'   => 'Canvas',
         'udio'          => 'Web Audio',
         'WebGL'         => 'Canvas',
+        'WebVR'         => 'WebVR',
         'Worker'        => 'Web Workers' }
 
       TYPE_BY_NAME_MATCHES = {}

@@ -2,8 +2,8 @@ module Docs
   class Javascript
     class EntriesFilter < Docs::EntriesFilter
       TYPES = %w(Array ArrayBuffer Boolean DataView Date Function Intl JSON Map
-        Math Number Object Promise RegExp Set String Symbol TypedArray WeakMap
-        WeakSet)
+        Math Number Object Promise RegExp Set SIMD String Symbol TypedArray
+        WeakMap WeakSet)
       INTL_OBJECTS = %w(Collator DateTimeFormat NumberFormat)
 
       def get_name
@@ -21,6 +21,7 @@ module Docs
           name
         else
           name = super
+          name.remove! 'Classes.'
           name.remove! 'Functions.'
           name.remove! 'Functions and function scope.'
           name.remove! 'Operators.'
@@ -34,6 +35,8 @@ module Docs
           'Statements'
         elsif slug.start_with? 'Operators'
           'Operators'
+        elsif slug.start_with? 'Classes'
+          'Classes'
         elsif slug.start_with?('Functions_and_function_scope') || slug.start_with?('Functions') || slug.include?('GeneratorFunction')
           'Function'
         elsif slug.start_with? 'Global_Objects'
