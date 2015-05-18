@@ -22,14 +22,18 @@ module Docs
         entries = []
 
         css('h3[id]').each do |node|
-          next if node['id'] == 'index_'
+          id = node['id']
+          next if id == 'index_'
+
+          id.sub!('%24', '$')
+          node['id'] = id
 
           name = node.content.strip
           name.sub! %r{\(.+\)}, '()'
           next if name.include?(' ')
 
           type = name.split(/[#\.\(]/).first
-          entries << [name, node['id'], type]
+          entries << [name, id, type]
         end
 
         entries
