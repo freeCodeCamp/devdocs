@@ -3,8 +3,12 @@ module Docs
     self.name = 'Backbone.js'
     self.slug = 'backbone'
     self.type = 'underscore'
-    self.version = '1.1.2'
+    self.version = '1.2.0'
     self.base_url = 'http://backbonejs.org'
+    self.links = {
+      home: 'http://backbonejs.org/',
+      code: 'https://github.com/jashkenas/backbone'
+    }
 
     html_filters.push 'backbone/clean_html', 'backbone/entries', 'title'
 
@@ -13,7 +17,7 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2014 Jeremy Ashkenas, DocumentCloud<br>
+      &copy; 2010&ndash;2015 Jeremy Ashkenas, DocumentCloud<br>
       Licensed under the MIT License.
     HTML
   end

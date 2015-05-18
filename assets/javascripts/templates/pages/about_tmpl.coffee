@@ -87,7 +87,7 @@ credits = [
     'http://www.apache.org/licenses/LICENSE-2.0'
   ], [
     'Backbone.js',
-    '2010-2014 Jeremy Ashkenas, DocumentCloud',
+    '2010-2015 Jeremy Ashkenas, DocumentCloud',
     'MIT',
     'https://raw.github.com/jashkenas/backbone/master/LICENSE'
   ], [
