@@ -16,7 +16,7 @@ app.templates.aboutPage = -> """
     <li>Supported by <a href="http://devdocs.io/s/shopify">Shopify</a>
     <li>Powered by <a href="http://devdocs.io/s/maxcdn" title="Content Delivery Network Services">MaxCDN</a>
     <li>Free and <a href="https://github.com/Thibaut/devdocs">open source</a>
-        <iframe class="_github-btn" src="http://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+        <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
   </ul>
   <p>To keep up-to-date with the latest development and community news:
   <ul>
