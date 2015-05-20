@@ -173,7 +173,7 @@ class App < Sinatra::Application
   end
 
   get '/docs.json' do
-    redirect asset_path('docs.json')
+    redirect asset_path('docs.json', protocol: 'http')
   end
 
   get '/s/maxcdn' do
