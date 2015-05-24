@@ -53,7 +53,7 @@ class app.views.SidebarHover extends app.View
     clone
 
   isTarget: (el) ->
-    el.classList.contains @constructor.itemClass
+    el?.classList?.contains @constructor.itemClass
 
   isSelected: (el) ->
     el.classList.contains 'active'
