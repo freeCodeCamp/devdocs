@@ -16,6 +16,7 @@ class app.views.Notice extends app.View
     return
 
   show: ->
+    @addClass '_top' if @type is 'disabledDoc'
     @html @tmpl("#{@type}Notice", @args...)
     @prependTo $('._app')
     return
