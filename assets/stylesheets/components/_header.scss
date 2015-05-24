@@ -72,10 +72,12 @@
   margin: 0;
   line-height: inherit;
   font-size: inherit;
+  cursor: default;
 
   > ._nav-link {
     float: none;
-    padding: 0 1rem;
+    margin-left: .75rem;
+    padding: 0 .25rem;
   }
 }
 

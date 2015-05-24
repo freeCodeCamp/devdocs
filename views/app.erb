@@ -8,7 +8,7 @@
       <div class="_search-tag"></div>
     </form>
     <h1 class="_logo">
-      <a href="/" class="_nav-link" title="Offline API Documentation Browser">DevDocs</a>
+      <a href="/" class="_nav-link" title="Offline API Documentation Browser">DevDocs</a><%= "/ #{@doc['name']}" if @doc %>
     </h1>
     <nav class="_nav">
       <a href="/offline" class="_nav-link">Offline</a>
