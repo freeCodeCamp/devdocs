@@ -65,7 +65,7 @@
 ._icon-go:before            { background-position: -1rem -4rem; }
 ._icon-express:before       { background-position: -2rem -4rem; }
 ._icon-grunt:before         { background-position: -3rem -4rem; }
-
+._icon-rust:before          { background-position: -4rem -4rem; @extend %darkIconFix !optional; }
 ._icon-laravel:before       { background-position: -5rem -4rem; }
 ._icon-haskell:before       { background-position: -6rem -4rem; }
 ._icon-requirejs:before     { background-position: -7rem -4rem; }

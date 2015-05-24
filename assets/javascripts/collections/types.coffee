@@ -7,7 +7,7 @@ class app.collections.Types extends app.Collection
       (result[@_groupFor(type)] ||= []).push(type)
     result.filter (e) -> e.length > 0
 
-  GUIDES_RGX = /guide|tutorial|getting\ started/i
+  GUIDES_RGX = /guide|tutorial|reference|getting\ started/i
 
   _groupFor: (type) ->
     if GUIDES_RGX.test(type.name)
