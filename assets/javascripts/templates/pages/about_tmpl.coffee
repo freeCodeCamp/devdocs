@@ -326,6 +326,11 @@ credits = [
     'MIT',
     'https://raw.github.com/rails/rails/master/activerecord/MIT-LICENSE'
   ], [
+    'Rust',
+    '2011-2015 The Rust Project Developers',
+    'MIT',
+    'https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT'
+  ], [
     'Sass',
     '2006-2015 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',
