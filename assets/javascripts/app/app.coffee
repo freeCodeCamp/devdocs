@@ -80,6 +80,8 @@
     return
 
   start: ->
+    @entries.add doc.toEntry() for doc in @docs.all()
+    @entries.add doc.toEntry() for doc in @disabledDocs.all()
     @initDoc(doc) for doc in @docs.all()
     @db = new app.DB()
     @trigger 'ready'
@@ -91,7 +93,6 @@
     return
 
   initDoc: (doc) ->
-    @entries.add doc.toEntry()
     @entries.add type.toEntry() for type in doc.types.all()
     @entries.add doc.entries.all()
     return
