@@ -181,6 +181,22 @@ class AppTest < MiniTest::Spec
     end
   end
 
+  describe "/application.js" do
+    it "returns to the asset path" do
+      get '/application.js'
+      assert last_response.redirect?
+      assert_equal 'http://example.org/assets/application.js', last_response['Location']
+    end
+  end
+
+  describe "/application.css" do
+    it "returns to the asset path" do
+      get '/application.css'
+      assert last_response.redirect?
+      assert_equal 'http://example.org/assets/application.css', last_response['Location']
+    end
+  end
+
   describe "/feed" do
     it "returns an atom feed" do
       get '/feed'

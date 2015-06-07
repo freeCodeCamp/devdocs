@@ -172,8 +172,12 @@ class App < Sinatra::Application
     200
   end
 
-  get '/docs.json' do
-    redirect asset_path('docs.json', protocol: 'http')
+  %w(docs.json application.js application.css).each do |asset|
+    class_eval <<-CODE, __FILE__, __LINE__ + 1
+      get '/#{asset}' do
+        redirect asset_path('#{asset}', protocol: 'http')
+      end
+    CODE
   end
 
   get '/s/maxcdn' do
