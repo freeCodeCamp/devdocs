@@ -95,8 +95,22 @@ class AppTest < MiniTest::Spec
   end
 
   describe "/[doc]" do
-    it "works when the doc exists" do
-      get '/html/'
+    it "renders when the doc exists and isn't enabled" do
+      set_cookie('docs=css')
+      get '/html/', {}, 'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'
+      assert last_response.ok?
+    end
+
+    it "redirects to root when the doc exists and is enabled" do
+      set_cookie('docs=html')
+      get '/html/', {}, 'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'
+      assert last_response.redirect?
+      assert_equal 'http://example.org/#/html/', last_response['Location']
+    end
+
+    it "renders when the doc exists and is enabled, and the request is from Googlebot" do
+      set_cookie('docs=html')
+      get '/html/', {}, 'HTTP_USER_AGENT' => 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
       assert last_response.ok?
     end
 

@@ -98,15 +98,19 @@ class App < Sinatra::Application
       browser.ie? && %w(6 7 8 9).include?(browser.version)
     end
 
-    def doc_index_urls
-      cookie = cookies[:docs]
+    def docs
+      @docs ||= begin
+        cookie = cookies[:docs]
 
-      docs = if cookie.nil? || cookie.empty?
-        settings.default_docs
-      else
-        cookie.split('/')
+        docs = if cookie.nil? || cookie.empty?
+          settings.default_docs
+        else
+          cookie.split('/')
+        end
       end
+    end
 
+    def doc_index_urls
       docs.inject [] do |result, slug|
         if doc = settings.docs[slug]
           result << File.join('', settings.docs_prefix, doc['index_path']) + "?#{doc['mtime']}"
@@ -212,6 +216,8 @@ class App < Sinatra::Application
       redirect "/#{doc}#{type}/#{query_string_for_redirection}"
     elsif rest.length > 1 && rest.end_with?('/')
       redirect "/#{doc}#{type}#{rest[0...-1]}#{query_string_for_redirection}"
+    elsif docs.include?(doc) && browser.modern?
+      redirect "/##{request.path}", 302
     else
       erb :other
     end
