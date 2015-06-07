@@ -58,7 +58,7 @@ app.templates.offlineDoc = (doc, status) ->
       <td class="_docs-size">#{Math.ceil(doc.db_size / 100000) / 10} MB</td>
   """
 
-  html += if !status.installed
+  html += if !(status and status.installed)
     """
       <td>-</td>
       <td><a data-action="install">Install</a></td>

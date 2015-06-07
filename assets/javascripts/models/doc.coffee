@@ -134,4 +134,4 @@ class app.models.Doc extends app.Model
     return
 
   isOutdated: (status) ->
-    status.installed and @mtime isnt status.mtime
+    status and status.installed and @mtime isnt status.mtime
