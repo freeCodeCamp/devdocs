@@ -3,7 +3,7 @@ module Docs
     self.name = 'Backbone.js'
     self.slug = 'backbone'
     self.type = 'underscore'
-    self.version = '1.2.0'
+    self.version = '1.2.1'
     self.base_url = 'http://backbonejs.org'
     self.links = {
       home: 'http://backbonejs.org/',
