@@ -5,7 +5,7 @@
   right: 1rem;
   width: 25rem;
   max-width: 90%;
-  padding: .75rem 1rem;
+  padding: .625rem 1rem;
   font-size: .75rem;
   color: $notifColor;
   background: $notifBackground;
@@ -25,6 +25,12 @@
 }
 
 ._notif-text { margin-bottom: 0; }
+._notif-text + ._notif-text { margin-top: .25rem; }
+
+._notif-info {
+  float: right;
+  color: $textColorLight;
+}
 
 ._notif-link,
 ._notif-link:hover {
@@ -90,4 +96,10 @@
 ._notif-list {
   margin: .5em 0;
   padding-left: 1rem;
+}
+
+._notif-tip {
+  color: $textColor;
+  background: rgba($tipBackground, .95);
+  border: 1px solid $tipBorder;
 }

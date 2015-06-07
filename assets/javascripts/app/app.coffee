@@ -133,6 +133,15 @@
     window.location = '/'
     return
 
+  showTip: (tip) ->
+    return if @isSingleDoc()
+    tips = @settings.get('tips') || []
+    if tips.indexOf(tip) is -1
+      tips.push(tip)
+      @settings.set('tips', tips)
+      new app.views.Tip(tip)
+    return
+
   showLoading: ->
     document.body.classList.remove '_noscript'
     document.body.classList.add '_loading'

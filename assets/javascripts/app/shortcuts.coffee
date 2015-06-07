@@ -15,6 +15,10 @@ class app.Shortcuts
     $.off document, 'keypress', @onKeypress
     return
 
+  showTip: ->
+    app.showTip('KeyNav')
+    @showTip = null
+
   onKeydown: (event) =>
     result = if event.ctrlKey or event.metaKey
       @handleKeydownSuperEvent event unless event.altKey or event.shiftKey
@@ -62,11 +66,13 @@ class app.Shortcuts
         @trigger 'left' unless event.target.value
       when 38
         @trigger 'up'
+        @showTip?()
         false
       when 39
         @trigger 'right' unless event.target.value
       when 40
         @trigger 'down'
+        @showTip?()
         false
 
   handleKeydownSuperEvent: (event) ->
