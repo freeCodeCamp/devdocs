@@ -33,6 +33,7 @@ module Docs
           next if name.include?(' ')
 
           type = name.split(/[#\.\(]/).first
+          next if type.empty?
           entries << [name, id, type]
         end
 
