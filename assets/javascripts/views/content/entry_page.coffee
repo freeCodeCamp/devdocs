@@ -65,7 +65,7 @@ class app.views.EntryPage extends app.View
     app.views["#{docType[0].toUpperCase()}#{docType[1..]}Page"] or app.views.BasePage
 
   getTitle: ->
-    @entry.doc.name + if @entry.isIndex() then '' else "/#{@entry.name}"
+    @entry.doc.name + if @entry.isIndex() then ' documentation' else "/#{@entry.name}"
 
   beforeRoute: =>
     @abort()

@@ -14,7 +14,6 @@ class app.views.Document extends app.View
     @addSubview @content = new app.views.Content
     @addSubview @path    = new app.views.Path unless app.isSingleDoc() or app.isMobile()
 
-    @setTitle()
     @activate()
     return
 
@@ -28,7 +27,7 @@ class app.views.Document extends app.View
     return
 
   setTitle: (title) ->
-    @el.title = if title then "DevDocs / #{title}" else 'DevDocs API Documentation'
+    @el.title = if title then "DevDocs - #{title}" else 'DevDocs API Documentation'
 
   onHelp: ->
     app.router.show '/help#shortcuts'
