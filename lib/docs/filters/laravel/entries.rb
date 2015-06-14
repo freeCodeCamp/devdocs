@@ -13,14 +13,16 @@ module Docs
 
       def get_type
         return 'Guides' unless api_page?
-        type = slug.remove('api/5.0/').remove('Illuminate/').remove(/\/\w+?\z/).gsub('/', '\\')
+        type = slug.remove(%r{api/\d.\d/}).remove('Illuminate/').remove(/\/\w+?\z/).gsub('/', '\\')
 
         if type.end_with?('Console')
           type.split('\\').first
         elsif type.start_with?('Contracts')
           'Contracts'
+        elsif type.start_with?('Database')
+          type.split('\\')[0..2].join('\\')
         else
-          type
+          type.split('\\')[0..1].join('\\')
         end
       end
 
@@ -44,7 +46,7 @@ module Docs
       end
 
       def include_default_entry?
-        subpath != '/api/5.0/classes.html'
+        subpath != '/api/5.1/classes.html'
       end
     end
   end
