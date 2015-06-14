@@ -13,7 +13,7 @@ Keep track of development and community news:
 * Subscribe to the [newsletter](http://eepurl.com/HnLUz)
 * Join the [mailing list](https://groups.google.com/d/forum/devdocs)
 
-DevDocs is free and open source. If you like it, please consider supporting my work on [Gratipay](https://gratipay.com/Thibaut/). Thanks!
+DevDocs is free and open source. If you like it, please consider supporting my work on [Gratipay](https://gratipay.com/devdocs/). Thanks!
 
 **Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [License](#copyright--license) · [Questions?](#questions)
 

@@ -25,7 +25,7 @@ app.templates.aboutPage = -> """
     <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
   </ul>
   <p class="_note _note-green">If you like DevDocs, please consider supporting my work on
-    <a href="https://gratipay.com/Thibaut/">Gratipay</a>. Thanks!<br>
+    <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!<br>
 
   <h2 class="_lined-heading" id="credits">Credits</h2>
 
