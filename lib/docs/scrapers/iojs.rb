@@ -3,7 +3,7 @@ module Docs
     self.name = 'io.js'
     self.slug = 'iojs'
     self.type = 'node'
-    self.version = '2.2.1'
+    self.version = '2.3.0'
     self.base_url = 'https://iojs.org/api/'
     self.links = {
       home: 'https://iojs.org/en/index.html',
