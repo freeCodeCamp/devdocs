@@ -1,0 +1,55 @@
+._webpack {
+  > h2 { @extend %block-heading; }
+  > h3 { @extend %block-label, %label-blue; }
+  > h4 { font-size: 1em; }
+
+  /*
+    Copied from the original webpack css
+    https://webpack.github.io/docs/css/doc.css
+  */
+  code .comment {
+      color: #998;
+      font-style: italic
+  }
+
+  code .keyword {
+      color: #333;
+      font-weight: 700
+  }
+
+  code .number {
+      color: #099
+  }
+
+  code .string {
+      color: #d14
+  }
+
+  code .tag {
+      color: navy;
+      font-weight: 400
+  }
+
+  code .attribute {
+      color: teal
+  }
+
+  code .regexp {
+      color: #009926
+  }
+
+  code .preprocessor {
+      color: #999;
+      font-weight: 700
+  }
+
+  code .deletion {
+      background: #fdd;
+      display: block
+  }
+
+  code .addition {
+      background: #dfd;
+      display: block
+  }
+}
