@@ -1,0 +1,23 @@
+._phaser {
+  h2 { @extend %block-heading; }
+  h4 { @extend %block-label, %label-blue; }
+
+  p > code, li > code, td > code { @extend %label; }
+
+  dt.tag-source {
+    color: #666;
+    font-weight: normal;
+  }
+
+  .deprecated-notice {
+    @extend %note;
+  }
+
+  #docs-index > h3 { @extend %block-label, %label-blue; }
+  #docs > h3 { @extend %block-heading; }
+  #docs > h4 { @extend %block-label, %label-blue; }
+
+  #docs header {
+    display: none;
+  }
+}
