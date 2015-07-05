@@ -3,9 +3,13 @@ module Docs
     self.name = 'Marionette.js'
     self.slug = 'marionette'
     self.type = 'marionette'
-    self.version = '2.4.1'
+    self.version = '2.4.2'
     self.base_url = "http://marionettejs.com/docs/v#{version}/"
     self.root_path = 'index'
+    self.links = {
+      home: 'http://marionettejs.com/',
+      code: 'https://github.com/marionettejs/backbone.marionette'
+    }
 
     html_filters.push 'marionette/clean_html', 'marionette/entries'
 
