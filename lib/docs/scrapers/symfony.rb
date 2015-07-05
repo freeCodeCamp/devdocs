@@ -3,10 +3,14 @@ module Docs
     self.name = 'Symfony'
     self.slug = 'symfony'
     self.type = 'laravel'
-    self.version = '2.6'
-    self.base_url = 'http://api.symfony.com/2.6/'
+    self.version = '2.7'
+    self.base_url = "http://api.symfony.com/#{version}/"
     self.root_path = 'namespaces.html'
     self.initial_paths = %w(classes.html)
+    self.links = {
+      home: 'http://symfony.com/',
+      code: 'https://github.com/symfony/symfony'
+    }
 
     html_filters.push 'symfony/entries', 'symfony/clean_html'
 
