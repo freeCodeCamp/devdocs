@@ -3,7 +3,7 @@ module Docs
     self.name = 'Node.js'
     self.slug = 'node'
     self.type = 'node'
-    self.version = '0.12.3'
+    self.version = '0.12.6'
     self.base_url = 'https://nodejs.org/api/'
     self.links = {
       home: 'https://nodejs.org/',
