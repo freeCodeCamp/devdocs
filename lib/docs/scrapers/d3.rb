@@ -3,9 +3,13 @@ module Docs
     self.name = 'D3.js'
     self.slug = 'd3'
     self.type = 'd3'
-    self.version = '3.5.5'
+    self.version = '3.5.6'
     self.base_url = 'https://github.com/mbostock/d3/wiki/'
     self.root_path = 'API-Reference'
+    self.links = {
+      home: 'http://d3js.org/',
+      code: 'https://github.com/mbostock/d3'
+    }
 
     html_filters.push 'd3/clean_html', 'd3/entries'
 
