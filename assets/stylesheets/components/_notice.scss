@@ -11,7 +11,7 @@
 
   @media #{$mediumScreen} { left: $sidebarMediumWidth; }
 
-  ~ ._container { padding-bottom: 2.5rem; }
+  &:not(._top) ~ ._container { padding-bottom: 2.5rem; }
 
   &._top {
     bottom: auto;
@@ -19,7 +19,7 @@
     margin-top: 1px;
     box-shadow: inset 0 -1px $noticeBorder;
 
-    ~ ._container { padding-bottom: 0; padding-top: 2.5rem; }
+    ~ ._container { padding-top: 2.5rem; }
   }
 }
 
