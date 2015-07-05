@@ -361,6 +361,11 @@ credits = [
     'MIT',
     'https://raw.github.com/jashkenas/underscore/master/LICENSE'
   ], [
+    'Vue.js',
+    '2013-2015 Evan You, Vue.js contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/yyx990803/vue/master/LICENSE'
+  ], [
     'Webpack',
     '2012-2015 Tobias Koppers',
     'MIT',

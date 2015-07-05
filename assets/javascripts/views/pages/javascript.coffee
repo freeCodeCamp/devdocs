@@ -34,4 +34,5 @@ app.views.JavascriptPage
 
 app.views.RequirejsPage =
 app.views.SocketioPage =
+app.views.VuePage =
 app.views.JavascriptWithMarkupCheckPage

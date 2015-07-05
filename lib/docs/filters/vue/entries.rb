@@ -1,16 +1,25 @@
 module Docs
   class Vue
     class EntriesFilter < Docs::EntriesFilter
-      def additional_entries
-        type = nil
+      def get_name
+        at_css('h1').content
+      end
 
-        doc.children.each_with_object [] do |node, entries|
-          if node.name == 'h1'
-            type = node.content.strip
-          elsif node.name == 'h3'
-            name = node.content.strip
-            entries << [name, node['id'], type]
-          end
+      def get_type
+        if slug.start_with?('guide')
+          'Guide'
+        else
+          'API'
+        end
+      end
+
+      def additional_entries
+        return [] if slug.start_with?('guide')
+
+        css('h3').map do |node|
+          name = node.content.strip
+          name.sub! %r{\(.*\)}, '()'
+          [name, node['id'], "API: #{self.name}"]
         end
       end
     end
