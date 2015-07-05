@@ -1,20 +1,15 @@
 module Docs
   class Drupal
     class EntriesFilter < Docs::EntriesFilter
-
       def get_name
-        name = css('#page-subtitle').first.content
-        name.remove! 'function '
+        name = at_css('#page-subtitle').content
+        name.remove! %r{(abstract|public|static|protected|final|function|class)\s+}
         name
       end
 
-      def path
-        Drupal::fixUri(result[:path])
-      end
-
       def get_type
-        type = css('dl[api-related-topics] dt')
-        type.first ? type.first.content : nil
+        type = css('.breadcrumb > a')[1].content.strip
+        type.split('.').first
       end
 
       def include_default_entry?

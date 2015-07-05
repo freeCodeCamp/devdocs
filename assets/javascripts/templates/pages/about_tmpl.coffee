@@ -136,6 +136,11 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/django/django/master/LICENSE'
   ], [
+    'Drupal',
+    '2001-2015 by the original authors<br>Drupal is a registered trademark of Dries Buytaert.',
+    'GPLv2',
+    'https://api.drupal.org/api/drupal/LICENSE.txt'
+  ], [
     'Ember.js',
     '2015 Yehuda Katz, Tom Dale and Ember.js contributors',
     'MIT',
@@ -220,11 +225,6 @@ credits = [
     '2004 John Gruber',
     'BSD',
     'http://daringfireball.net/projects/markdown/license'
-  ], [
-    'MaxCDN',
-    '2015 MaxCDN',
-    'MIT',
-    'https://raw.githubusercontent.com/MaxCDN/api-docs/master/LICENSE'
   ], [
     'Meteor',
     '2011-2015 Meteor Development Group',

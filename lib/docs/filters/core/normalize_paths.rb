@@ -35,6 +35,11 @@ module Docs
     def normalize_path(path)
       path = path.downcase
 
+      if context[:decode_and_clean_paths]
+        path = URI.unescape(path)
+        path.gsub! %r{[!;:]+}, '-'
+      end
+
       if path == '.'
         'index'
       elsif path.end_with? '/'
