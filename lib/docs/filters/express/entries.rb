@@ -28,6 +28,7 @@ module Docs
             next if type == 'Middleware'
             name = node.content.strip
             name.sub! %r{\(.+\)}, '()'
+            next if name == 'Methods' || name == 'Properties'
 
             entries << [name, node['id'], type]
           end
