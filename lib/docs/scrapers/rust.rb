@@ -1,14 +1,13 @@
 module Docs
   class Rust < UrlScraper
     self.type = 'rust'
-    self.version = '1.0.0'
+    self.version = '1.1.0'
     self.base_url = 'http://doc.rust-lang.org/'
     self.root_path = 'book/index.html'
     self.initial_paths = %w(
       reference.html
       collections/index.html
-      std/index.html
-      unicode/index.html)
+      std/index.html)
     self.links = {
       home: 'http://www.rust-lang.org/',
       code: 'https://github.com/rust-lang/rust'
@@ -19,8 +18,7 @@ module Docs
     options[:only_patterns] = [
       /\Abook\//,
       /\Acollections\//,
-      /\Astd\//,
-      /\Aunicode\// ]
+      /\Astd\// ]
 
     options[:skip] = %w(book/README.html)
     options[:skip_patterns] = [/(?<!\.html)\z/]
