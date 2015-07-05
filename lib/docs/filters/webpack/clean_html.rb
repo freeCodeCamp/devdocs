@@ -1,5 +1,5 @@
 module Docs
-  class Webpack 
+  class Webpack
     class CleanHtmlFilter < Filter
       def call
         root_page? ? root : other
@@ -14,32 +14,20 @@ module Docs
         # in devdocs.
         hr_index = doc.children.find_index { |node| node.name == "hr" }
         doc.children[0..hr_index].each(&:remove)
-
-        # Add a page header :)
-        page_header_node = Nokogiri::XML::Node.new "h1", @doc
-        page_header_node.content = "Webpack"
-        @doc.children.first.add_previous_sibling page_header_node
       end
 
 
       def other
         # Re-create the header element
-        page_header = at_css("#wikititle").content.upcase
-        page_header_node = Nokogiri::XML::Node.new "h1", @doc
-        page_header_node.content = page_header
+        at_css("#wiki").child.before("<h1>#{at_css("#wikititle").content}</h1>")
 
-        # Change the scope of the page
         @doc = at_css("#wiki")
 
-        # Add the page header
-        @doc.children.first.add_previous_sibling page_header_node
+        css('.contents', 'a.anchor', 'hr').remove
 
-        # Remove the sidebar links in each page
-        css(".contents").remove
-
-        # Remove all anchors
-        css("a.anchor").remove
-
+        css('pre').each do |node|
+          node.content = node.content
+        end
       end
     end
   end

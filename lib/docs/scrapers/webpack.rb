@@ -1,13 +1,20 @@
 module Docs
   class Webpack < UrlScraper
-    self.name = 'Webpack'
+    self.name = 'webpack'
     self.type = 'webpack'
-    self.version = '1.9'
+    self.version = '1.10'
     self.base_url = 'https://webpack.github.io/docs/'
-    self.root_path = 'index.html'
+    self.links = {
+      home: 'https://webpack.github.io/',
+      code: 'https://github.com/webpack/webpack'
+    }
 
-    html_filters.push 'webpack/entries', 'webpack/clean_html'
+    html_filters.push 'webpack/entries', 'webpack/clean_html', 'title'
 
+    options[:title] = false
+    options[:root_title] = 'webpack'
+
+    options[:skip] = %w(list-of-tutorials.html examples.html changelog.html ideas.html roadmap.html)
 
     options[:attribution] = <<-HTML
       &copy; 2012&ndash;2015 Tobias Koppers<br>

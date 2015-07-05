@@ -102,3 +102,4 @@
 ._icon-npm:before           { background-position: -8rem -7rem; }
 ._icon-apache_http_server:before { background-position: -9rem -7rem; }
 ._icon-drupal:before        { background-position: 0 -8rem; }
+._icon-webpack:before       { background-position: -1rem -8rem; @extend %darkIconFix !optional; }

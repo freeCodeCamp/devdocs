@@ -356,6 +356,11 @@ credits = [
     'MIT',
     'https://raw.github.com/jashkenas/underscore/master/LICENSE'
   ], [
+    'Webpack',
+    '2012-2015 Tobias Koppers',
+    'MIT',
+    'https://raw.githubusercontent.com/webpack/webpack/master/LICENSE'
+  ], [
     'Yii',
     '2008-2015 by Yii Software LLC',
     'BSD',

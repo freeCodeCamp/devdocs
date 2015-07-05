@@ -28,6 +28,7 @@ app.views.NodePage =
 app.views.RethinkdbPage =
 app.views.SinonPage =
 app.views.UnderscorePage =
+app.views.WebpackPage =
 app.views.JavascriptPage
 
 app.views.RequirejsPage =
