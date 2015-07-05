@@ -1,7 +1,5 @@
 module Docs
   class Phaser < UrlScraper
-    self.name = 'Phaser'
-    self.slug = 'phaser'
     self.type = 'phaser'
     self.version = '2.3.0'
     self.base_url = "https://phaser.io/docs/#{version}"

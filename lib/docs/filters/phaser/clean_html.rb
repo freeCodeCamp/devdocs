@@ -2,22 +2,47 @@ module Docs
   class Phaser
     class CleanHtmlFilter < Filter
       def call
-
         title = at_css('h1')
 
         if root_page?
-          doc.children = at_css('#docs-index')
+          @doc = at_css('#docs-index')
 
           # Remove first paragraph (old doc details)
-          doc.at_css('p').remove()
+          at_css('p').remove
+
+          title.content = 'Phaser'
         else
-          doc.children = at_css('#docs')
+          @doc = at_css('#docs')
+
+          # Remove useless markup
+          css('section > article').each do |node|
+            node.parent.replace(node.children)
+          end
+
+          css('dt > h4').each do |node|
+            dt = node.parent
+            dd = dt.next_element
+            dt.before(node).remove
+            dd.before(dd.children).remove
+          end
+
+          css('> div', '> section').each do |node|
+            node.before(node.children).remove
+          end
+
+          css('h3.subsection-title').each do |node|
+            node.name = 'h2'
+          end
+
+          css('h4.name').each do |node|
+            node.name = 'h3'
+          end
 
           # Remove "Jump to" block
-          doc.at_css('table').remove()
+          at_css('table').remove
         end
 
-        doc.child.before title
+        doc.child.before(title)
 
         # Clean code blocks
         css('pre > code').each do |node|

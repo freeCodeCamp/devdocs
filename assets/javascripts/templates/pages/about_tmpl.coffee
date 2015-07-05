@@ -276,6 +276,11 @@ credits = [
     'npm',
     'https://raw.githubusercontent.com/npm/npm/master/LICENSE'
   ], [
+    'Phaser',
+    '2015 Richard Davey, Photon Storm Ltd.',
+    'MIT',
+    'https://raw.githubusercontent.com/photonstorm/phaser/master/license.txt'
+  ], [
     'PHP',
     '1997-2015 The PHP Documentation Group',
     'CC BY',
