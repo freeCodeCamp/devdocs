@@ -1,8 +1,12 @@
 module Docs
   class Go < UrlScraper
     self.type = 'go'
-    self.version = '1.4.1'
-    self.base_url = 'http://golang.org/pkg/'
+    self.version = '1.4.2'
+    self.base_url = 'https://golang.org/pkg/'
+    self.links = {
+      home: 'https://golang.org/',
+      code: 'https://go.googlesource.com/go'
+    }
 
     html_filters.push 'go/clean_html', 'go/entries'
 
