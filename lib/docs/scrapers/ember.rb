@@ -3,7 +3,7 @@ module Docs
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.version = '1.12.0'
+    self.version = '1.13.3'
     self.base_url = 'http://emberjs.com/api/'
     self.links = {
       home: 'http://emberjs.com/',
@@ -20,27 +20,7 @@ module Docs
     end
 
     # Duplicates
-    options[:skip] = %w(
-      classes/String.html
-      data/classes/DS.html)
-
-    # Private
-    options[:skip].concat %w(
-      classes/Backburner.html
-      classes/Ember.ComponentTemplateDeprecation.html
-      classes/Ember.ControllerContentModelAliasDeprecation.html
-      classes/Ember.Descriptor.html
-      classes/Ember.EachProxy.html
-      classes/Ember.EventDispatcher.html
-      classes/Ember.Map.html
-      classes/Ember.MapWithDefault.html
-      classes/Ember.OrderedSet.html
-      classes/Ember.TextSupport.html
-      classes/HandlebarsCompatibleHelper.html
-      classes/Libraries.html
-      data/classes/DS.ContainerProxy.html
-      data/classes/DS.DebugAdapter.html
-      data/classes/DS.RecordArrayManager.html)
+    options[:skip] = %w(classes/String.html data/classes/DS.html)
 
     options[:skip_patterns] = [/\._/]
 

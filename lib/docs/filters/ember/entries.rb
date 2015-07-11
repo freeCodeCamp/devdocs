@@ -1,10 +1,6 @@
 module Docs
   class Ember
     class EntriesFilter < Docs::EntriesFilter
-      def include_default_entry?
-        name != 'Handlebars Helpers'
-      end
-
       def get_name
         name = at_css('.api-header').content.split.first
         # Remove "Ember." prefix if the next character is uppercase
@@ -13,16 +9,22 @@ module Docs
       end
 
       def get_type
+        group = if css('p').any? { |node| node.content.include?('PRIVATE') }
+          'Private'
+        elsif css('p').any? { |node| node.content.include?('DEPRECATED') }
+          'Deprecated'
+        end
+
         if at_css('.api-header').content.include?('Module')
           'Modules'
         elsif name.start_with? 'DS'
-          'Data'
+          group ? "Data (#{group})" : 'Data'
         elsif name.start_with? 'RSVP'
           'RSVP'
         elsif name.start_with? 'Test'
           'Test'
         else
-          name
+          group || name
         end
       end
 
