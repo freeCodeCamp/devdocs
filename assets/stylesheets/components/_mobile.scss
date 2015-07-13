@@ -90,6 +90,22 @@
     box-shadow: 0 1px $noteGreenBorder, 0 -1px $noteGreenBorder;
   }
 
+  // Splash
+
+  ._splash-sponsors { margin-top: 1rem; }
+
+  ._splash-sponsor {
+    position: static;
+
+    ._logo-info {
+      left: 1rem;
+      right: 1rem;
+      width: auto;
+      max-width: none;
+      margin: 0;
+    }
+  }
+
   // Notice
 
   ._notice {
@@ -189,9 +205,9 @@
     position: static;
     float: none;
     display: block;
-    margin-top: 1.25rem;
+    margin-top: .75rem;
     text-align: center;
   }
 
-  ._intro-sponsor { margin: 0 1em; }
+  ._intro-sponsor { margin: .5em .75em; }
 }

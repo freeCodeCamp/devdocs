@@ -1,7 +1,37 @@
-maxcdnLink = (className) -> """
-  <a href="http://devdocs.io/s/maxcdn" class="#{className}">
-    <span class="_logo-thx _maxcdn-logo">MaxCDN</span>
-    <span class="_logo-info">MaxCDN has been supporting DevDocs since day one. They provide CDN solutions that make DevDocs and countless other sites faster.</span>
+jetBrainsLink = (className) ->
+  type = jetBrainsType()
+  path = "/#{type}" if type
+
+  """
+  <a href="http://devdocs.io/s/jetbrains#{path || ''}" class="#{className}">
+    <span class="_logo-thx _jetbrains-logo">JetBrains</span>
+    <span class="_logo-info">#{JETBRAINS_INFO[type || 'default']}</span>
+  </a>
+  """
+
+JETBRAINS_INFO =
+  ruby: 'Developing in Ruby? Boost your productivity with RubyMine, a powerful IDE with smart coding assistance and advanced testing and debugging features.'
+  python: 'Developing in Python? Enjoy productive development with PyCharm, an intelligent Python IDE offering unique coding experience.'
+  c: 'Developing in C? Now benefit from CLion, a C/C++ IDE enhancing your productivity with on-thy-fly static analysis and automated refactorings.'
+  web: 'Doing client-side development? Try WebStorm, an IDE that really understands JavaScript and modern frameworks like AngularJS and boosts your productivity.'
+  default: 'JetBrains makes software development a more productive and enjoyable experience through smart IDEs and code editors.'
+
+jetBrainsType = ->
+  docs = if app.settings then app.settings.getDocs() else []
+
+  if docs.indexOf('ruby') != -1
+    'ruby'
+  else if docs.indexOf('python') != -1 || docs.indexOf('python2') != -1
+    'python'
+  else if docs.indexOf('c') != -1 or docs.indexOf('cpp') != -1
+    'c'
+  else if docs.indexOf('javascript') != -1 or docs.indexOf('jquery') != -1
+    'web'
+
+codeSchoolLink = (className) -> """
+  <a href="http://devdocs.io/s/code-school" class="#{className}">
+    <span class="_logo-thx _code-school-logo">Code School</span>
+    <span class="_logo-info">With more than 45 courses covering JavaScript, HTML/CSS, Ruby, Git, and iOS, Code School pairs experienced instructors with engaging content. Start learning at codeschool.com.</span>
   </a>
 """
 
@@ -12,10 +42,13 @@ shopifyLink = (className) -> """
   </a>
 """
 
-app.templates.splash = """
+app.templates.splash = -> """
   <div class="_splash-title">DevDocs</div>
-  #{maxcdnLink '_splash-sponsor'}
-  #{shopifyLink '_splash-sponsor'}
+  <div class="_splash-sponsors">
+    #{jetBrainsLink '_splash-sponsor'}
+    #{codeSchoolLink '_splash-sponsor'}
+    #{shopifyLink '_splash-sponsor'}
+  </div>
 """
 
 <% if App.development? %>
@@ -39,8 +72,8 @@ app.templates.intro = """
       <li>If you like the app, please consider supporting the project on <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!
     </ol>
     <p class="_intro-sponsors">
-      Thanks to#{shopifyLink '_intro-sponsor'} #{maxcdnLink '_intro-sponsor'}
-    <p>That's all. Happy coding!
+      #{jetBrainsLink '_intro-sponsor'} #{codeSchoolLink '_intro-sponsor'} #{shopifyLink '_intro-sponsor'}
+    <p>Happy coding!
   </div></div>
 """
 <% else %>
@@ -63,8 +96,8 @@ app.templates.intro = """
       <li>If you like the app, please consider supporting the project on <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!
     </ol>
     <p class="_intro-sponsors">
-      Thanks to#{shopifyLink '_intro-sponsor'} #{maxcdnLink '_intro-sponsor'}
-    <p>That's all. Happy coding!
+      #{jetBrainsLink '_intro-sponsor'} #{codeSchoolLink '_intro-sponsor'} #{shopifyLink '_intro-sponsor'}
+    <p>Happy coding!
   </div></div>
 """
 <% end %>
@@ -90,8 +123,8 @@ app.templates.mobileIntro = """
       <li>For the latest news, subscribe to the <a href="http://eepurl.com/HnLUz">newsletter</a> or follow <a href="https://twitter.com/DevDocs">@DevDocs</a>
       <li>DevDocs is <a href="https://github.com/Thibaut/devdocs">open source</a>
     </ol>
-    <p>That's all. Happy coding!
-    <p class="_intro-sponsors">#{shopifyLink '_intro-sponsor'} #{maxcdnLink '_intro-sponsor'}</p>
+    <p>Happy coding!
+    <p class="_intro-sponsors">#{jetBrainsLink '_intro-sponsor'} #{codeSchoolLink '_intro-sponsor'} #{shopifyLink '_intro-sponsor'}</p>
     <a class="_intro-hide" data-hide-intro>Stop showing this message</a>
   </div>
 """

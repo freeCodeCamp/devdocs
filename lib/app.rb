@@ -184,29 +184,29 @@ class App < Sinatra::Application
     CODE
   end
 
-  get '/s/maxcdn' do
-    redirect 'https://www.maxcdn.com/?utm_source=devdocs&utm_medium=banner&utm_campaign=devdocs'
-  end
-
-  get '/s/shopify' do
-    redirect 'https://www.shopify.com/careers?utm_source=devdocs&utm_medium=banner&utm_campaign=devdocs'
+  {
+    '/s/maxcdn'           => 'https://www.maxcdn.com/?utm_source=devdocs&utm_medium=banner&utm_campaign=devdocs',
+    '/s/shopify'          => 'https://www.shopify.com/careers?utm_source=devdocs&utm_medium=banner&utm_campaign=devdocs',
+    '/s/jetbrains'        => 'https://www.jetbrains.com/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
+    '/s/jetbrains/ruby'   => 'https://www.jetbrains.com/ruby/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
+    '/s/jetbrains/python' => 'https://www.jetbrains.com/pycharm/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
+    '/s/jetbrains/c'      => 'https://www.jetbrains.com/clion/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
+    '/s/jetbrains/web'    => 'https://www.jetbrains.com/webstorm/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
+    '/s/code-school'      => 'http://www.codeschool.com/?utm_campaign=devdocs&utm_content=homepage&utm_source=devdocs&utm_medium=sponsorship',
+    '/s/tw'               => 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%2C%20offline%20API%20documentation%20browser%3A',
+    '/s/fb'               => 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%2C%20offline%20API%20documentation%20browser%3A',
+    '/s/re'               => 'http://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%2C%20offline%20API%20documentation%20browser&resubmit=true'
+  }.each do |path, url|
+    class_eval <<-CODE, __FILE__, __LINE__ + 1
+      get '#{path}' do
+        redirect '#{url}'
+      end
+    CODE
   end
 
   get %r{\A/feed(?:\.atom)?\z} do
     content_type 'application/atom+xml'
     settings.news_feed
-  end
-
-  get '/s/tw' do
-    redirect 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%2C%20offline%20API%20documentation%20browser%3A'
-  end
-
-  get '/s/fb' do
-    redirect 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdevdocs.io'
-  end
-
-  get '/s/re' do
-    redirect 'http://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%2C%20offline%20API%20documentation%20browser&resubmit=true'
   end
 
   get %r{\A/(\w+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|

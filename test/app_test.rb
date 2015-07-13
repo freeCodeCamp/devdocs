@@ -225,7 +225,7 @@ class AppTest < MiniTest::Spec
 
   describe "/s/[link]" do
     it "redirects" do
-      %w(maxcdn shopify tw fb re).each do |link|
+      %w(maxcdn shopify code-school jetbrains tw fb re).each do |link|
         get "/s/#{link}"
         assert last_response.redirect?
       end

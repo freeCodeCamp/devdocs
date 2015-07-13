@@ -68,26 +68,32 @@
   color: $splashText;
   cursor: default;
   opacity: 1;
+  margin-top: -1.25em;
   @extend ._booting:before, %user-select-none;
 }
 
-._splash-sponsor {
+._splash-sponsors {
   position: absolute;
-  display: block;
-  bottom: 1.25rem;
-  right: 1rem;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin-top: 1.25rem;
+  text-align: center;
+  line-height: 2rem;
+}
 
-  ._logo-thx { opacity: .25; }
-  &:hover ._logo-thx { opacity: .5; }
+._splash-sponsor {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  margin: .5rem 1.5rem;
 
-  & + & {
-    left: 1rem;
-    right: auto;
+  ._logo-thx { opacity: .3; }
+  &:hover ._logo-thx { opacity: .6; }
 
-    ._logo-info {
-      right: auto;
-      left: 0;
-    }
+  ._logo-info {
+    right: 50%;
+    margin-right: -9rem;
   }
 }
 
@@ -409,33 +415,11 @@
   margin-bottom: .75rem;
   padding: .5rem .75rem;
   line-height: 1.375rem;
+  text-align: left;
   pointer-events: none;
   @extend %notif;
 
   :hover > & { opacity: 1; }
-}
-
-._maxcdn-logo {
-  width: 6.25rem;
-  background-image: image-url('maxcdn.png');
-  background-size: 6.25rem 1rem;
-
-  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
-    background-image: image-url('maxcdn@2x.png');
-  }
-}
-
-._splash-sponsor > ._maxcdn-logo {
-  background-image: image-url('maxcdn-bw.png');
-
-  @if $style == 'dark' {
-    filter: invert(100%);
-    -webkit-filter: invert(100%);
-  }
-
-  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
-    background-image: image-url('maxcdn-bw@2x.png');
-  }
 }
 
 ._shopify-logo {
@@ -458,5 +442,52 @@
 
   @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
     background-image: image-url('shopify-bw@2x.png');
+  }
+}
+
+._jetbrains-logo {
+  top: 1px;
+  width: 5rem;
+  background-image: image-url('jetbrains.png');
+  background-size: 5rem 1.5rem;
+
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    background-image: image-url('jetbrains@2x.png');
+  }
+}
+
+._splash-sponsor > ._jetbrains-logo {
+  background-image: image-url('jetbrains-bw.png');
+
+  @if $style == 'dark' {
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    background-image: image-url('jetbrains-bw@2x.png');
+  }
+}
+
+._code-school-logo {
+  width: 7rem;
+  background-image: image-url('code-school.png');
+  background-size: 7rem 1.25rem;
+
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    background-image: image-url('code-school@2x.png');
+  }
+}
+
+._splash-sponsor > ._code-school-logo {
+  background-image: image-url('code-school-bw.png');
+
+  @if $style == 'dark' {
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    background-image: image-url('code-school-bw@2x.png');
   }
 }

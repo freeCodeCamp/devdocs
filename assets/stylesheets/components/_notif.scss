@@ -55,7 +55,7 @@
   overflow-y: auto;
 
   > ._notif-title {
-    margin: -.125rem 0 1em;
+    margin-bottom: .5rem;
     text-align: center;
   }
 
@@ -63,6 +63,7 @@
     line-height: 1.125rem;
     font-size: .6875rem;
     color: $notifColorLight;
+    margin-bottom: .25rem;
 
     + ._news-row { margin-top: .75rem; }
   }
