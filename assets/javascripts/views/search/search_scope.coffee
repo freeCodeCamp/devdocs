@@ -8,6 +8,9 @@ class app.views.SearchScope extends app.View
   @events:
     keydown: 'onKeydown'
 
+  @routes:
+    after: 'afterRoute'
+
   @shortcuts:
     escape: 'reset'
 
@@ -85,3 +88,8 @@ class app.views.SearchScope extends app.View
 
   getHashValue: ->
     try (new RegExp "^##{SEARCH_PARAM}=(.+?) .").exec($.urlDecode location.hash)?[1] catch
+
+  afterRoute: (name, context) =>
+    if !app.isSingleDoc() and context.init and context.doc
+      @selectDoc(context.doc)
+    return
