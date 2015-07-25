@@ -12,17 +12,21 @@ module Docs
       end
 
       def other
-        css('#source + h2', '#improve', '#source', '.glyphicon').remove
+        css('#source + h2', '#improve', '#source', '.glyphicon', 'p > br').remove
 
         css('pre > code').each do |node|
           node.before(node.children).remove
         end
 
         css('h2', 'h3').each do |node|
-          id = node.content.strip
-          id.downcase!
-          id.remove! %r{['"\/\.:]}
-          id.gsub! %r{[\ _]}, '-'
+          if anchor = node.at_css('a.anchor[name]')
+            id = anchor['name']
+          else
+            id = node.content.strip
+            id.downcase!
+            id.remove! %r{['"\/\.:]}
+            id.gsub! %r{[\ _]}, '-'
+          end
           node['id'] = id
         end
       end
