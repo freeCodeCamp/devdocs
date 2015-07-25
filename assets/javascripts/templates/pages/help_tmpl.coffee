@@ -66,7 +66,10 @@ app.templates.helpPage = """
     <dt class="_shortcuts-dt">
       <code class="_shortcut-code">alt + &darr;</code>
       <code class="_shortcut-code">alt + &uarr;</code>
-    <dd class="_shortcuts-dd">Scroll step by step
+      <br>
+      <code class="_shortcut-code">shift + &darr;</code>
+      <code class="_shortcut-code">shift + &uarr;</code>
+    <dd class="_shortcuts-dd">Scroll step by step<br><br>
     <dt class="_shortcuts-dt">
       <code class="_shortcut-code">space</code>
       <code class="_shortcut-code">shift + space</code>

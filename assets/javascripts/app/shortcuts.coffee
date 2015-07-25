@@ -99,9 +99,18 @@ class app.Shortcuts
       @trigger 'typing'
       return
 
-    if event.which is 32
-      @trigger 'pageUp'
-      false
+    switch event.which
+      when 32
+        @trigger 'pageUp'
+        false
+      when 38
+        unless getSelection()?.toString()
+          @trigger 'altUp'
+          false
+      when 40
+        unless getSelection()?.toString()
+          @trigger 'altDown'
+          false
 
   handleKeydownAltEvent: (event) ->
     switch event.which
