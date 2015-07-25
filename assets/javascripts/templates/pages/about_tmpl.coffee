@@ -30,7 +30,7 @@ app.templates.aboutPage = -> """
 
   <p><strong>Special thanks to:</strong>
   <ul>
-    <li><a href="http://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
+    <li><a href="http://devdocs.io/s/maxcdn">MaxCDN</a> and <a href="http://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
     <li><a href="https://www.heroku.com">Heroku</a> and <a href="http://newrelic.com">New Relic</a> for providing awesome free service
     <li>Daniel Bruce for the <a href="http://www.entypo.com">Entypo</a> pictograms
     <li><a href="http://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
