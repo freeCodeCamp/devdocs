@@ -1,10 +1,10 @@
 module Docs
   class Phaser < UrlScraper
     self.type = 'phaser'
-    self.version = '2.3.0'
-    self.base_url = "https://phaser.io/docs/#{version}"
+    self.version = '2.4.1'
+    self.base_url = "http://phaser.io/docs/#{version}"
     self.links = {
-      home: 'https://phaser.io/',
+      home: 'http://phaser.io/',
       code: 'https://github.com/photonstorm/phaser'
     }
 

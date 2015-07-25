@@ -8,7 +8,7 @@ module Docs
           @doc = at_css('#docs-index')
 
           # Remove first paragraph (old doc details)
-          at_css('p').remove
+          at_css('table').remove
 
           title.content = 'Phaser'
         else
