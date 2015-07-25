@@ -20,6 +20,7 @@ module Docs
         when 'BGREWRITEAOF'     then 'Server'
         when 'PFADD'            then 'HyperLogLog'
         when 'CLUSTER ADDSLOTS' then 'Cluster'
+        when 'GEOADD'           then 'Geo'
         else 'Miscellaneous'
         end
       end
