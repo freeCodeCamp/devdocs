@@ -45,6 +45,8 @@ module Docs
       url.sub! '/Operators/Special/', '/Operators/'
       url.sub! 'Destructing_assignment', 'Destructuring_assignment'
       url.sub! 'Array.prototype.values()', 'values'
+      url.sub! '%2A', '*'
+      url.sub! '%40', '@'
       url
     end
   end

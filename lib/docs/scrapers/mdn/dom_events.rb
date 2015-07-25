@@ -8,6 +8,9 @@ module Docs
     html_filters.push 'dom_events/entries', 'title'
 
     options[:root_title] = 'DOM Events'
+
+    options[:skip] = %w(/MozOrientation)
+
     options[:fix_urls] = ->(url) do
       url.sub! 'https://developer.mozilla.org/en-US/Mozilla_event_reference',      DomEvents.base_url
       url.sub! 'https://developer.mozilla.org/en-US/docs/Mozilla_event_reference', DomEvents.base_url

@@ -23,8 +23,10 @@ module Docs
         'Web Animations'      => 'Animation',
         'Web Audio'           => 'Web Audio',
         'Web Messaging'       => 'Web Messaging',
+        'Web MIDI'            => 'Web MIDI',
         'Web Storage'         => 'Web Storage',
         'Web Workers'         => 'Web Workers',
+        'WebGL'               => 'WebGL',
         'WebRTC'              => 'WebRTC',
         'WebVR'               => 'WebVR' }
 
@@ -64,7 +66,6 @@ module Docs
         'SVG'                 => 'SVG',
         'Touch'               => 'Touch',
         'TreeWalker'          => 'TreeWalker',
-        'Uint'                => 'Typed Arrays',
         'URL'                 => 'URL',
         'window'              => 'Window',
         'Window'              => 'Window',
@@ -81,7 +82,7 @@ module Docs
         'ServiceWorker' => 'Service Workers',
         'TextMetrics'   => 'Canvas',
         'udio'          => 'Web Audio',
-        'WebGL'         => 'Canvas',
+        'WebGL'         => 'WebGL',
         'WebVR'         => 'WebVR',
         'Worker'        => 'Web Workers' }
 
@@ -90,7 +91,6 @@ module Docs
       TYPE_BY_HAS_LINK_TO = {
         'DeviceOrientation specification' => 'Device Orientation',
         'File System API'                 => 'File',
-        'Typed Array'                     => 'Typed Arrays',
         'WebSocket'                       => 'Web Sockets',
         'Web Audio API'                   => 'Web Audio',
         'XMLHTTPRequest'                  => 'XMLHTTPRequest' }

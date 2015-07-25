@@ -76,6 +76,11 @@
         &:after { content: ':'; }
       }
     }
+
+    th, td {
+      background: none;
+      border: 0;
+    }
   }
 
   dt > strong > code, // HTML element attribute

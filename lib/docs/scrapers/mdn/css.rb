@@ -43,6 +43,8 @@ module Docs
 
     options[:fix_urls] = ->(url) do
       url.sub! %r{https://developer\.mozilla\.org/en\-US/docs/CSS/([a-z@:])}, "#{Css.base_url}/\\1"
+      url.sub! '%3A', ':'
+      url.sub! '%40', '@'
       url
     end
   end
