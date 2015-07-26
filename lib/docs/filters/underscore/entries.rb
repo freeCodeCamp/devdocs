@@ -14,7 +14,10 @@ module Docs
 
           # Method
           node.css('.header', '.alias b').each do |header|
+            prefix = header.ancestors('p').first.at_css('code').content[/\A[^\.]+\./].strip
             header.content.split(',').each do |name|
+              name.strip!
+              name.prepend(prefix)
               entries << [name, node['id'], type]
             end
           end
