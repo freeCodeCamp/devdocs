@@ -7,13 +7,16 @@ app.templates.helpPage = """
     <ul class="_toc-list">
       <li><a href="#search">Search</a>
       <li><a href="#shortcuts">Keyboard Shortcuts</a>
+      <li><a href="#abbreviations">Abbreviations</a>
     </ul>
   </div>
 
   <h2 class="_lined-heading" id="search">Search</h2>
   <p>
     The search is case-insensitive and supports fuzzy matching (for queries longer than two characters).
-    For example, searching <code class="_label">bgcp</code> brings up <code class="_label">background-clip</code>.
+    For example, searching <code class="_label">bgcp</code> brings up <code class="_label">background-clip</code>.<br>
+    Abbreviations are also supported (<a href="#abbreviations">full list</a> below).
+    For example, <code class="_label">$</code> is an alias for <code class="_label">jQuery</code>.
   <dl>
     <dt id="doc_search">Searching a single documentation
     <dd>
@@ -102,4 +105,14 @@ app.templates.helpPage = """
   </dl>
   <p class="_note">
     <strong>Tip:</strong> If the cursor is no longer in the search field, press backspace or
-    continue to type and it will refocus the search field and start showing new results. """
+    continue to type and it will refocus the search field and start showing new results.
+
+  <h2 class="_lined-heading" id="abbreviations">Abbreviations</h2>
+  <p>Feel free to suggest new abbreviations on <a href="https://github.com/Thibaut/devdocs/issues/new">GitHub</a>.
+  <table class="_abbreviations">
+    <tr>
+      <th>Word
+      <th>Alias
+    #{("<tr><td>#{key}<td>#{value}" for key, value of app.models.Entry.ALIASES).join('')}
+  </table>
+"""

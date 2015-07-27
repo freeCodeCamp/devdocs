@@ -382,6 +382,12 @@
 }
 
 //
+// Abbreviations
+//
+
+._abbreviations td { @extend %code; }
+
+//
 // Utilities
 //
 

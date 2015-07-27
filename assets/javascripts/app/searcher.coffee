@@ -120,6 +120,7 @@ class app.Searcher
 
   EMPTY_STRING = ''
   ELLIPSIS = '...'
+  STRING = 'string'
 
   @normalizeString: (string) ->
     string
@@ -209,9 +210,15 @@ class app.Searcher
     matcher = @matcher
     for [0...@chunkSize()]
       value = @data[@cursor][@attr]
-      valueLength = value.length
-      if score = matcher()
-        @addResult @data[@cursor], score
+      if value.split # string
+        valueLength = value.length
+        @addResult(@data[@cursor], score) if score = matcher()
+      else # array
+        score = 0
+        for value in @data[@cursor][@attr]
+          valueLength = value.length
+          score = Math.max(score, matcher() || 0)
+        @addResult(@data[@cursor], score) if score > 0
       @cursor++
     return
 

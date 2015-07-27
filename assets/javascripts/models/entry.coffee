@@ -6,6 +6,7 @@ class app.models.Entry extends app.Model
   constructor: ->
     super
     @text = app.Searcher.normalizeString(@name)
+    @text = applyAliases(@text)
 
   fullPath: ->
     @doc.fullPath if @isIndex() then '' else @path
@@ -32,3 +33,27 @@ class app.models.Entry extends app.Model
 
   loadFile: (onSuccess, onError) ->
     app.db.load(@, onSuccess, onError)
+
+  applyAliases = (string) ->
+    if ALIASES.hasOwnProperty(string)
+      return [string, ALIASES[string]]
+    else
+      words = string.split('.')
+      for word, i in words when ALIASES.hasOwnProperty(word)
+        words[i] = ALIASES[word]
+        return [string, words.join('.')]
+    return string
+
+  @ALIASES = ALIASES =
+    'angular.js': 'ng'
+    'backbone': 'bb'
+    'c++': 'cpp'
+    'coffeescript': 'cs'
+    'javascript': 'js'
+    'jquery': '$'
+    'knockout.js': 'ko'
+    'lodash': '_'
+    'markdown': 'md'
+    'postgresql': 'pg'
+    'sass': 'scss'
+    'underscore.js': '_'
