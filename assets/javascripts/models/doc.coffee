@@ -4,7 +4,7 @@ class app.models.Doc extends app.Model
   constructor: ->
     super
     @reset @
-    @text = @name.toLowerCase()
+    @text = @toEntry().text
 
   reset: (data) ->
     @resetEntries data.entries
@@ -35,7 +35,7 @@ class app.models.Doc extends app.Model
     "#{app.indexHost()}/#{@index_path}?#{@mtime}"
 
   toEntry: ->
-    new app.models.Entry
+    @entry ||= new app.models.Entry
       doc: @
       name: @name
       path: 'index'
