@@ -2,40 +2,30 @@ module Docs
   class Q
     class EntriesFilter < Docs::EntriesFilter
       def additional_entries
-        entries = []
+        entry = type = nil
 
-        type = ''
-        entry = []
-        css('h3, h4, em:contains("Alias")').each do |node|
-
-          if node.name == 'h3'
+        css('h3, h4, em:contains("Alias")').each_with_object [] do |node, entries|
+          case node.name
+          when 'h3'
             type = node.content.strip
-
-            if type == "Q.defer()" # Q.defer() is a method, but it also plays a section title role.
-              entries << ['Q.defer', 'qdefer', 'Q.defer()']
-            end
-            next
-          end
-
-          if node.name == 'h4'
-            name = node.content.strip.remove(/\(.*?\).*/)
-            link = node['id']
-            entry = [name, link, type]
-
+            type.remove! %r{\(.+\)}
+            type.remove! ' Methods'
+            type.remove! ' API'
+            entries << [type, node['id'], type] if type == 'Q.defer()'
+          when 'h4'
+            name = node.content.strip
+            name.sub! %r{\(.*?\).*}, '()'
+            id = node['id'] = name.parameterize
+            entry = [name, id, type]
             entries << entry
-            next
+          when 'em'
+            name = node.parent.at_css('code').content
+            name << '()' if entry[0].end_with?('()')
+            dup = entry.dup
+            dup[0] = name
+            entries << dup
           end
-
-          if node.name == 'em' # for the aliases
-            aliasEntry = entry.clone
-            aliasEntry[0] = node.parent.at_css('code').content
-            entries << aliasEntry
-            next
-          end
-
         end
-
-        entries
       end
     end
   end

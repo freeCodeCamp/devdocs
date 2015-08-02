@@ -305,6 +305,11 @@ credits = [
     'PSFL',
     'http://docs.python.org/3/license.html'
   ], [
+    'Q',
+    '2009-2015 Kristopher Michael Kowal and contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/kriskowal/q/v1/LICENSE'
+  ], [
     'React',
     '2013-2015 Facebook Inc.',
     'CC BY',
