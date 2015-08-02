@@ -1,7 +1,10 @@
-._opentsdb .section {
-  > h2 { @extend %block-heading; }
-  > h3 { @extend %block-label, %label-blue; }
-  > h4 { font-size: 1em; }
+._opentsdb {
+  @extend %simple;
 
+  .admonition { @extend %note; }
+  .admonition.warning { @extend %note-orange; }
+  .admonition-title {
+    margin: 0 0 .25rem;
+    font-weight: bold;
+  }
 }
-

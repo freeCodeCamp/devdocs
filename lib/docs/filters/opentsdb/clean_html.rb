@@ -1,13 +1,24 @@
 module Docs
-  class Opentsdb 
+  class Opentsdb
     class CleanHtmlFilter < Filter
       def call
-        # Reset the page scope to the body,
-        # we needed the rest of the page for the entries filter.
-        @doc = at_css(".documentwrapper > .bodywrapper > .body > .section")
+        @doc = at_css('.documentwrapper > .bodywrapper > .body > .section')
 
-        # Remove table borders 
-        css('table').each { |table| table.delete 'border' }
+        css('> .section').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('tt.literal').each do |node|
+          node.name = 'code'
+          node.content = node.content
+        end
+
+        css('div[class*=highlight] .highlight pre').each do |node|
+          node.parent.parent.before(node)
+          node.content = node.content.gsub('    ', '  ')
+        end
+
+        css('table').remove_attr('border')
 
         doc
       end

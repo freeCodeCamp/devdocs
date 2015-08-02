@@ -1,34 +1,24 @@
 module Docs
-  class Opentsdb 
+  class Opentsdb
     class EntriesFilter < Docs::EntriesFilter
-
       def get_name
-        header = css(".section > h1").first
-        return header.content.strip unless header.nil?
+        at_css('.section > h1').content
       end
 
       def get_type
-        return nil if breadcrumbs.length < 2 
-
-        # This is time for a little bit of cheating
-        return breadcrumbs[1] if breadcrumbs.include? "HTTP API"
-
-        breadcrumbs.last
+        if subpath.start_with?('api_http')
+          'HTTP API'
+        elsif slug.end_with?('/index')
+          [breadcrumbs[1], name].compact.join(': ')
+        elsif breadcrumbs.length < 2
+          'Miscellaneous'
+        else
+          breadcrumbs[1..2].join(': ')
+        end
       end
-
-      def additional_entries
-        []
-      end
-
 
       def breadcrumbs
-        nav_links = css(".related").first.css("li")
-        breadcrumbs = nav_links.reject do |node|
-          node['class'] == "right"
-        end
-
-        breadcrumbs.map { |node| node.at_css("a").content }
-          .reject { |link| link.empty? }
+        @breakcrumbs ||= at_css('.related').css('li:not(.right) a').map(&:content).reject(&:blank?)
       end
     end
   end
