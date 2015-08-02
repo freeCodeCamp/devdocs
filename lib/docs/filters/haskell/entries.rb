@@ -2,19 +2,25 @@ module Docs
   class Haskell
     class EntriesFilter < Docs::EntriesFilter
       IGNORE_ENTRIES_PATHS = %w(
-        bytestring-0.10.4.0/Data-ByteString-Lazy.html
-        bytestring-0.10.4.0/Data-ByteString-Char8.html
-        bytestring-0.10.4.0/Data-ByteString-Lazy-Char8.html
-        array-0.5.0.0/Data-Array-IArray.html
-        containers-0.5.5.1/Data-IntMap-Lazy.html
-        containers-0.5.5.1/Data-Map-Lazy.html
-        unix-2.7.0.1/System-Posix-Files-ByteString.html
-        filepath-1.3.0.2/System-FilePath-Windows.html
-        transformers-0.3.0.0/Control-Monad-Trans-RWS-Lazy.html
-        transformers-0.3.0.0/Control-Monad-Trans-Writer-Lazy.html
-        base-4.7.0.0/GHC-Conc-Sync.html
-        base-4.7.0.0/GHC-IO-Encoding-UTF32.html
-        unix-2.7.0.1/System-Posix-Terminal-ByteString.html)
+        Data-ByteString-Lazy.html
+        Data-ByteString-Char8.html
+        Data-ByteString-Lazy-Char8.html
+        Data-Array-IArray.html
+        Data-IntMap-Lazy.html
+        Data-Map-Lazy.html
+        System-Posix-Files-ByteString.html
+        System-FilePath-Windows.html
+        Control-Monad-Trans-RWS-Lazy.html
+        Control-Monad-Trans-State-Lazy.html
+        Control-Monad-Trans-Writer-Lazy.html
+        GHC-Conc-Sync.html
+        GHC-OldList.html
+        GHC-IO-Encoding-UTF32.html
+        System-Posix-Terminal-ByteString.html
+        Text-XHtml-Frameset.html
+        Text-XHtml-Strict.html
+        System-Posix-Process-ByteString.html
+        Data-ByteString-Builder-Prim.html)
 
       def get_name
         at_css('#module-header .caption').content.strip
@@ -33,7 +39,7 @@ module Docs
       end
 
       def additional_entries
-        return [] if IGNORE_ENTRIES_PATHS.include?(subpath)
+        return [] if IGNORE_ENTRIES_PATHS.include?(subpath.split('/').last)
 
         css('#synopsis > ul > li').each_with_object [] do |node, entries|
           link = node.at_css('a')
@@ -41,7 +47,7 @@ module Docs
           name = node.content.strip
           name.remove! %r{\A(?:module|data|newtype|class|type family m|type)\s+}
           name.sub! %r{\A\((.+?)\)}, '\1'
-          name.sub!(/ (?:\:\: (\w+))?.+\z/) { |_| $1 ? " (#{$1})" : '' }
+          name.sub!(/ (?:\:\: (\w+))?.*\z/) { |_| $1 ? " (#{$1})" : '' }
           next if name == self.name
           entries << [name, link['href'].remove('#')]
         end
