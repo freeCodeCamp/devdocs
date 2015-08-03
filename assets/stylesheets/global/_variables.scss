@@ -3,11 +3,13 @@ $monoFont: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 
 $style: 'light';
 
+$maxWidth: 80rem;
 $headerHeight: 3rem;
 $sidebarWidth: 18rem;
 $sidebarMediumWidth: 16rem;
 
 $contentBackground: #fff;
+$documentBackground: #fafafa;
 
 $textColor: #333;
 $textColorLight: #666;
@@ -19,7 +21,7 @@ $focusBackground: #e5e5e5;
 $focusBorder: #d4d4d4;
 $focusText: #000;
 
-$loadingText: #e6e6e6;
+$loadingText: #ccc;
 $splashText: #bbb;
 $promoText: #bbb;
 

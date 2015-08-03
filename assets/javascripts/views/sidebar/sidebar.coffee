@@ -83,6 +83,9 @@ class app.views.Sidebar extends app.View
     else if event.target.hasAttribute? 'data-light'
       $.stopEvent(event)
       app.document.toggleLight()
+    else if event.target.hasAttribute? 'data-layout'
+      $.stopEvent(event)
+      app.document.toggleLayout()
     return
 
   onGlobalClick: (event) =>

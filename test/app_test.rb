@@ -31,6 +31,12 @@ class AppTest < MiniTest::Spec
       get '/'
       assert_includes last_response.body, 'data-size="42px"'
     end
+
+    it "sets layout from cookie" do
+      set_cookie('layout=foo')
+      get '/'
+      assert_includes last_response.body, 'class="_app foo"'
+    end
   end
 
   describe "/[static-page]" do
@@ -91,6 +97,12 @@ class AppTest < MiniTest::Spec
       set_cookie('size=42')
       get '/manifest.appcache'
       assert_includes last_response.body, '42px'
+    end
+
+    it "sets layout from cookie" do
+      set_cookie('layout=foo_layout')
+      get '/manifest.appcache'
+      assert_includes last_response.body, 'foo_layout'
     end
   end
 

@@ -339,6 +339,11 @@
 
   @media #{$mediumScreen} { width: $sidebarMediumWidth; }
 
+  ._max-width & {
+    left: calc(50% - #{$maxWidth} / 2);
+    @media (max-width: #{$maxWidth}) { left: 0; }
+  }
+
   &:before {
     content: '';
     position: absolute;
@@ -358,7 +363,7 @@
   overflow: hidden;
   height: 2.5rem;
   line-height: 1rem;
-  padding: .75rem;
+  padding: .75rem .25rem .75rem .75rem;
   font-size: .875em;
   cursor: pointer;
   @extend %border-box;
@@ -385,15 +390,15 @@
 
 ._sidebar-footer-light {
   float: right;
-  width: 2.5rem;
+  width: 2rem;
   padding: 0;
-  opacity: .6;
+  opacity: .65;
 
   &:before {
     float: none;
     position: absolute;
     top: .75rem;
-    left: .75rem;
+    left: .25rem;
 
     @if $style == 'dark' {
       @extend %icon-light-white;
@@ -401,6 +406,35 @@
       @extend %icon-light;
     }
   }
+}
+
+._sidebar-footer-layout {
+  float: right;
+  width: 2rem;
+  padding: 0;
+  opacity: .65;
+
+  &:before {
+    float: none;
+    position: absolute;
+    top: .75rem;
+    left: .375rem;
+    @if $style == 'dark' {
+      @extend %icon-expand-white;
+    } @else {
+      @extend %icon-expand;
+    }
+
+    ._max-width & {
+      @if $style == 'dark' {
+        @extend %icon-contract-white;
+      } @else {
+        @extend %icon-contract;
+      }
+    }
+  }
+
+  @media (max-width: #{$maxWidth + .1rem}) { display: none; }
 }
 
 ._sidebar-footer-save {

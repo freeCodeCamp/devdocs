@@ -17,10 +17,11 @@ class app.views.Resizer extends app.View
     @size = @style.getAttribute('data-size')
     return
 
-  MIN = 250
+  MIN = 260
   MAX = 600
 
   resize: (value, save) ->
+    value -= app.el.offsetLeft
     return unless value > 0
     value = Math.min(Math.max(Math.round(value), MIN), MAX)
     newSize = "#{value}px"

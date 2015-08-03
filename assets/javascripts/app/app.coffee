@@ -11,6 +11,7 @@
     return unless @browserCheck()
     @showLoading()
 
+    @el = $('._app')
     @store = new Store
     @appCache = new app.AppCache if app.AppCache.isEnabled()
     @settings = new app.Settings @store

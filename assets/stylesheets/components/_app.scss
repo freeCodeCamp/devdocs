@@ -4,12 +4,19 @@
   height: 100%;
   padding-top: $headerHeight;
   overflow: hidden;
+  background: $contentBackground;
   -webkit-transition: opacity .2s;
           transition: opacity .2s;
   @extend %border-box;
 
   ._booting > & { opacity: 0; }
   ._noscript > & { display: none; }
+
+  &._max-width {
+    margin: 0 auto;
+    max-width: $maxWidth;
+    box-shadow: 1px 0 $headerBorder, -1px 0 $headerBorder;
+  }
 }
 
 ._booting {

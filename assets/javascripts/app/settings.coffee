@@ -2,6 +2,7 @@ class app.Settings
   SETTINGS_KEY = 'settings'
   DOCS_KEY = 'docs'
   DARK_KEY = 'dark'
+  LAYOUT_KEY = 'layout'
   SIZE_KEY = 'size'
 
   @defaults: ->
@@ -60,6 +61,15 @@ class app.Settings
     catch
     return
 
+  setLayout: (value) ->
+    try
+      if value
+        Cookies.set LAYOUT_KEY, value, path: '/', expires: 1e8
+      else
+        Cookies.expire LAYOUT_KEY
+    catch
+    return
+
   setSize: (value) ->
     try
       Cookies.set SIZE_KEY, value, path: '/', expires: 1e8
@@ -69,6 +79,7 @@ class app.Settings
   reset: ->
     try Cookies.expire DOCS_KEY
     try Cookies.expire DARK_KEY
+    try Cookies.expire LAYOUT_KEY
     try Cookies.expire SIZE_KEY
     try @store.del(SETTINGS_KEY)
     return

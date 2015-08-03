@@ -1,4 +1,6 @@
 class app.views.Document extends app.View
+  MAX_WIDTH_CLASS = '_max-width'
+
   @el: document
 
   @shortcuts:
@@ -23,6 +25,13 @@ class app.views.Document extends app.View
     css.setAttribute('data-alt', css.getAttribute('href'))
     css.setAttribute('href', alt)
     app.settings.setDark(alt.indexOf('dark') > 0)
+    app.appCache?.updateInBackground()
+    return
+
+  toggleLayout: ->
+    wantsMaxWidth = !app.el.classList.contains(MAX_WIDTH_CLASS)
+    app.el.classList[if wantsMaxWidth then 'add' else 'remove'](MAX_WIDTH_CLASS)
+    app.settings.setLayout(if wantsMaxWidth then MAX_WIDTH_CLASS else false)
     app.appCache?.updateInBackground()
     return
 

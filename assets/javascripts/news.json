@@ -1,5 +1,8 @@
 [
   [
+    "2015-08-03",
+    "Added an icon in the sidebar to constrain the width of the UI (visible when applicable)."
+  ], [
     "2015-08-02",
     "New documentations: <a href=\"/q/\">Q</a> and <a href=\"/opentsdb/\">OpenTSDB</a>"
   ], [

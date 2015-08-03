@@ -1,7 +1,7 @@
 html {
   height: 100%;
   font-size: 100%;
-  background: $contentBackground;
+  background: $documentBackground;
 
   @media #{$mediumScreen} { font-size: 93.75%; }
 }

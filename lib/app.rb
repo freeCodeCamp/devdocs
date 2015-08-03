@@ -146,6 +146,10 @@ class App < Sinatra::Application
       @app_size ||= cookies[:size].nil? ? '18rem' : "#{cookies[:size]}px"
     end
 
+    def app_layout
+      cookies[:layout]
+    end
+
     def app_theme
       @app_theme ||= cookies[:dark].nil? ? 'default' : 'dark'
     end
