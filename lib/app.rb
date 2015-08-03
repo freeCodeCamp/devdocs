@@ -128,11 +128,11 @@ class App < Sinatra::Application
     end
 
     def main_stylesheet_path
-      stylesheet_paths[cookies[:dark].nil? ? :default : :dark]
+      stylesheet_paths[dark_theme? ? :dark : :default]
     end
 
     def alternate_stylesheet_path
-      stylesheet_paths[cookies[:dark].nil? ? :dark : :default]
+      stylesheet_paths[dark_theme? ? :default : :dark]
     end
 
     def stylesheet_paths
@@ -142,8 +142,16 @@ class App < Sinatra::Application
       }
     end
 
-    def size
-      @size ||= cookies[:size].nil? ? '18rem' : "#{cookies[:size]}px"
+    def app_size
+      @app_size ||= cookies[:size].nil? ? '18rem' : "#{cookies[:size]}px"
+    end
+
+    def app_theme
+      @app_theme ||= cookies[:dark].nil? ? 'default' : 'dark'
+    end
+
+    def dark_theme?
+      app_theme == 'dark'
     end
   end
 
