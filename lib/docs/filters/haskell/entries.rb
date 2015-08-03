@@ -38,18 +38,30 @@ module Docs
         end
       end
 
+      ADD_SUB_ENTRIES_KEYWORDS = %w(class module newtype)
+
       def additional_entries
         return [] if IGNORE_ENTRIES_PATHS.include?(subpath.split('/').last)
 
         css('#synopsis > ul > li').each_with_object [] do |node, entries|
           link = node.at_css('a')
-          next unless link['href'].start_with?('#')
           name = node.content.strip
           name.remove! %r{\A(?:module|data|newtype|class|type family m|type)\s+}
           name.sub! %r{\A\((.+?)\)}, '\1'
           name.sub!(/ (?:\:\: (\w+))?.*\z/) { |_| $1 ? " (#{$1})" : '' }
-          next if name == self.name
-          entries << [name, link['href'].remove('#')]
+
+          if ADD_SUB_ENTRIES_KEYWORDS.include?(node.at_css('.keyword').try(:content))
+            node.css('.subs > li').each do |sub_node|
+              sub_link = sub_node.at_css('a')
+              next unless sub_link['href'].start_with?('#')
+              sub_name = sub_node.content.strip
+              sub_name.remove! %r{\s.*}
+              sub_name.prepend "#{name} "
+              entries << [sub_name, sub_link['href'].remove('#')]
+            end
+          end
+
+          entries << [name, link['href'].remove('#')] if link['href'].start_with?('#') && name != self.name
         end
       end
 
