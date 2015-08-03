@@ -76,6 +76,7 @@ class app.views.Sidebar extends app.View
     return
 
   onClick: (event) =>
+    return if event.which isnt 1
     if event.target.hasAttribute? 'data-reset-list'
       $.stopEvent(event)
       @reset()
@@ -85,6 +86,7 @@ class app.views.Sidebar extends app.View
     return
 
   onGlobalClick: (event) =>
+    return if event.which isnt 1
     if event.target.hasAttribute? 'data-pick-docs'
       $.stopEvent(event)
       @showDocPicker()

@@ -58,6 +58,7 @@ class app.views.DocPicker extends app.View
       input.name
 
   onClick: (event) =>
+    return if event.which isnt 1
     if event.target is @saveLink
       $.stopEvent(event)
       @save()
