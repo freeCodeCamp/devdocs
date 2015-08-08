@@ -2,9 +2,9 @@ module Docs
   class React
     class EntriesFilter < Docs::EntriesFilter
       API_SLUGS = %w(
-        top-level-api
-        component-api
-        component-specs
+        docs/top-level-api
+        docs/component-api
+        docs/component-specs
       )
 
       def get_name
