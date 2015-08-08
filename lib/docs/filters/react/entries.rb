@@ -7,6 +7,12 @@ module Docs
         docs/component-specs
       )
 
+      REPLACE_TYPES = {
+        'Quick Start' => 'Guides',
+        'apis' => 'APIs',
+        'components' => 'Components'
+      }
+
       def get_name
         at_css('h1').child.content
       end
@@ -14,7 +20,8 @@ module Docs
       def get_type
         link = at_css('.nav-docs-section .active')
         section = link.ancestors('.nav-docs-section').first
-        section.at_css('h3').content
+        type = section.at_css('h3').content.strip
+        REPLACE_TYPES[type] || type
       end
 
       def additional_entries

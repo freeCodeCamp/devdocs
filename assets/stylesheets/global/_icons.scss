@@ -4,7 +4,7 @@
   width: 1rem;
   height: 1rem;
   background-image: image-url('icons.png');
-  background-size: 10rem 9rem;
+  background-size: 10rem 10rem;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
@@ -111,3 +111,4 @@
 %icon-contract              { background-position: -7rem -8rem; }
 %icon-expand-white          { background-position: -8rem -8rem; }
 %icon-contract-white        { background-position: -9rem -8rem; }
+._icon-react_native:before  { background-position: 0 -9rem; }

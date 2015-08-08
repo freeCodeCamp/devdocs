@@ -1,5 +1,8 @@
 [
   [
+    "2015-08-09",
+    "New documentation: <a href=\"/react_native/\">React Native</a>"
+  ], [
     "2015-08-03",
     "Added an icon in the sidebar to constrain the width of the UI (visible when applicable)."
   ], [

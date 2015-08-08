@@ -12,6 +12,7 @@ module Docs
 
     html_filters.push 'react/entries', 'react/clean_html'
 
+    options[:root_title] = 'React Documentation'
     options[:container] = '.documentationContent'
     options[:only_patterns] = [/\Adocs\//, /\Atips\//]
     options[:skip] = %w(
