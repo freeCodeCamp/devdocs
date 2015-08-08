@@ -135,6 +135,9 @@ module Docs
       else
         instrument 'ignore_response.scraper', response: response
       end
+    rescue => e
+      puts "URL: #{response.url}"
+      raise e
     end
 
     def process_response(response)
