@@ -152,7 +152,7 @@ class app.views.DocList extends app.View
 
   afterRoute: (route, context) =>
     if context.init
-      @reset revealCurrent: true
+      @reset revealCurrent: true if @activated
     else
       @select context.type or context.entry
     return
