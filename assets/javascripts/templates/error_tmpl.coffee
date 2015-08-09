@@ -22,10 +22,19 @@ app.templates.bootError = ->
         """ Check your Internet connection and try <a href="javascript:location.reload()">reloading</a>.<br>
             If you keep seeing this, you're likely behind a proxy or firewall that blocks cross-domain requests. """
 
-app.templates.offlineError = ->
-  error """ Oops, the database failed to load. """,
-        """ DevDocs requires IndexedDB to cache documentations for offline access.<br>
-            Unfortunately IndexedDB is either not supported in your browser, disabled, or buggy. """
+app.templates.offlineError = (reason) ->
+  reason = switch reason
+    when 'not_supported'
+      """ Unfortunately your browser either doesn't support it or does not make it available. """
+    when 'cant_open'
+      """ Although your browser appears to support it, DevDocs couldn't open the database.<br>
+          This could be because you're browsing in private mode and have disallowed offline storage on the domain. """
+    when 'apple'
+      """ Unfortunately Safari's implementation of IndexedDB is <a href="https://bugs.webkit.org/show_bug.cgi?id=136937">badly broken</a>.<br>
+          This message will automatically go away when Apple fix their code. """
+
+  error """ Oops, offline mode is unavailable. """,
+        """ DevDocs requires IndexedDB to cache documentations for offline access.<br>#{reason} """
 
 app.templates.unsupportedBrowser = """
   <div class="_fail">

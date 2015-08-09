@@ -29,6 +29,7 @@ class app.DB
         @checkedBuggyIDB = true
     catch
       try db.close()
+      @reason = 'apple'
       @onOpenError()
       return
 
@@ -47,6 +48,7 @@ class app.DB
       app.onQuotaExceeded()
     else
       @useIndexedDB = false
+      @reason or= 'cant_open'
       @runCallbacks()
     return
 
@@ -251,7 +253,11 @@ class app.DB
 
   useIndexedDB: ->
     try
-      !app.isSingleDoc() and !!window.indexedDB
+      if !app.isSingleDoc() and window.indexedDB
+        true
+      else
+        @reason = 'not_supported'
+        false
     catch
       false
 
