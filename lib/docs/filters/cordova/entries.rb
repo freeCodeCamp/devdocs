@@ -16,7 +16,7 @@ module Docs
       def additional_entries
         return [] unless slug == 'cordova_events_events.md'
 
-        css('h2').map do |node|
+        css('h3').map do |node|
           [node.content, node['id'], 'Events']
         end
       end

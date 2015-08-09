@@ -2,17 +2,12 @@ module Docs
   class Cordova
     class CleanHtmlFilter < Filter
       def call
-        if root_page? || slug == 'cordova_events_events.md'
-          css('h1, h2').each do |node|
-            node.name = node.name.sub(/\d/) { |i| i.to_i + 1 }
-          end
-          at_css('h2').name = 'h1' if slug == 'cordova_events_events.md'
-        end
-
         if root_page?
-          css('li > h3').each do |node|
-            node.name = 'div'
-          end
+          css('h1').each { |node| node.name = 'h2' }
+          css('li > h3').each { |node| node.name = 'div' }
+        elsif slug == 'cordova_events_events.md'
+          css('h1:not(:first-child)').each { |node| node.name = 'h3' }
+          css('h2').each { |node| node.name = 'h4' }
         end
 
         css('hr').remove
