@@ -5,6 +5,8 @@ require 'app'
 class AppTest < MiniTest::Spec
   include Rack::Test::Methods
 
+  MODERN_BROWSER = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'
+
   def app
     App
   end
@@ -40,11 +42,21 @@ class AppTest < MiniTest::Spec
   end
 
   describe "/[static-page]" do
-    it "redirects to /#/[static-page]" do
+    it "redirects to /#/[static-page] by default" do
       %w(offline about news help).each do |page|
-        get "/#{page}"
+        get "/#{page}", {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
         assert last_response.redirect?
         assert_equal "http://example.org/#/#{page}", last_response['Location']
+      end
+    end
+
+    it "redirects via JS cookie when a cookie exists" do
+      %w(offline about news help).each do |page|
+        set_cookie('foo=bar')
+        get "/#{page}", {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
+        assert last_response.redirect?
+        assert_equal 'http://example.org/', last_response['Location']
+        assert last_response['Set-Cookie'].start_with?("initial_path=%2F#{page}; path=/; expires=")
       end
     end
   end
@@ -109,15 +121,16 @@ class AppTest < MiniTest::Spec
   describe "/[doc]" do
     it "renders when the doc exists and isn't enabled" do
       set_cookie('docs=css')
-      get '/html/', {}, 'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'
+      get '/html/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
       assert last_response.ok?
     end
 
-    it "redirects to root when the doc exists and is enabled" do
+    it "redirects via JS cookie when the doc exists and is enabled" do
       set_cookie('docs=html')
-      get '/html/', {}, 'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'
+      get '/html/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
       assert last_response.redirect?
-      assert_equal 'http://example.org/#/html/', last_response['Location']
+      assert_equal 'http://example.org/', last_response['Location']
+      assert last_response['Set-Cookie'].start_with?("initial_path=%2Fhtml%2F; path=/; expires=")
     end
 
     it "renders when the doc exists and is enabled, and the request is from Googlebot" do

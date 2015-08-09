@@ -107,15 +107,22 @@ class app.Router
     if (path = location.pathname.replace /^\/{2,}/g, '/') isnt location.pathname
       page.replace path + location.search + location.hash, null, true
 
-    # When the path is "/#/path", replace it with "/path"
-    if @isRoot() and path = @getInitialPath()
-      page.replace path + location.search, null, true
+    if @isRoot()
+      if path = @getInitialPathFromHash()
+        page.replace path + location.search, null, true
+      else if path = @getInitialPathFromCookie()
+        page.replace path + location.search + location.hash, null, true
     return
 
-  getInitialPath: ->
+  getInitialPathFromHash: ->
     try
       (new RegExp "#/(.+)").exec(decodeURIComponent location.hash)?[1]
     catch
+
+  getInitialPathFromCookie: ->
+    if path = Cookies.get('initial_path')
+      Cookies.expire('initial_path')
+      path
 
   replaceHash: (hash) ->
     page.replace location.pathname + location.search + (hash or ''), null, true

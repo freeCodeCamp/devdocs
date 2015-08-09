@@ -157,6 +157,15 @@ class App < Sinatra::Application
     def dark_theme?
       app_theme == 'dark'
     end
+
+    def redirect_via_js(path) # courtesy of HTML5 App Cache
+      response.set_cookie :initial_path, value: path, expires: Time.now + 15, path: '/'
+      redirect '/', 302
+    end
+
+    def supports_js_redirection?
+      browser.modern? && !cookies.empty?
+    end
   end
 
   before do
@@ -170,13 +179,17 @@ class App < Sinatra::Application
   end
 
   get '/' do
-    return redirect '/' unless request.query_string.empty?
+    return redirect '/' unless request.query_string.empty? # courtesy of HTML5 App Cache
     erb :index
   end
 
   %w(offline about news help).each do |page|
     get "/#{page}" do
-      redirect "/#/#{page}", 302
+      if supports_js_redirection?
+        redirect_via_js "/#{page}"
+      else
+        redirect "/#/#{page}", 302
+      end
     end
   end
 
@@ -228,8 +241,8 @@ class App < Sinatra::Application
       redirect "/#{doc}#{type}/#{query_string_for_redirection}"
     elsif rest.length > 1 && rest.end_with?('/')
       redirect "/#{doc}#{type}#{rest[0...-1]}#{query_string_for_redirection}"
-    elsif docs.include?(doc) && browser.modern?
-      redirect "/##{request.path}", 302
+    elsif docs.include?(doc) && supports_js_redirection?
+      redirect_via_js(request.path)
     else
       erb :other
     end
