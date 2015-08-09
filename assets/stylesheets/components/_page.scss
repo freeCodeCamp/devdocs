@@ -4,6 +4,7 @@
 
 ._page {
   position: relative;
+  min-height: calc(100% - 1.25rem);
 
   &._page-error { position: static; }
 
