@@ -14,6 +14,7 @@ module Docs
 
     options[:root_title] = 'Phalcon'
     options[:only_patterns] = [/reference\//, /api\//]
+    options[:skip_patterns] = [/api\/index/]
 
     options[:attribution] = <<-HTML
       &copy; 2012&ndash;2015 the Phalcon Team<br>
