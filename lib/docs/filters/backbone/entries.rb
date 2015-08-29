@@ -30,8 +30,8 @@ module Docs
           name = node.at_css('.header').content.split.first
 
           # Underscore methods
-          if name == 'Underscore'
-            node.next_element.css('li').each do |li|
+          if name.start_with?('Underscore')
+            node.at_css('~ ul').css('li').each do |li|
               name = [type.downcase, li.at_css('a').content.split.first].join('.')
               id = name.parameterize
               li['id'] = id
