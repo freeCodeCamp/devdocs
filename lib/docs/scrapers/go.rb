@@ -1,7 +1,7 @@
 module Docs
   class Go < UrlScraper
     self.type = 'go'
-    self.version = '1.4.2'
+    self.version = '1.5.0'
     self.base_url = 'https://golang.org/pkg/'
     self.links = {
       home: 'https://golang.org/',
