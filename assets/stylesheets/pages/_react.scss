@@ -5,4 +5,7 @@
 
   code { @extend %label; }
   blockquote { @extend %note; }
+
+  span.platform { float: right; }
+  span.propType, span.platform { font-weight: normal; }
 }
