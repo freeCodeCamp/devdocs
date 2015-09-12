@@ -1,7 +1,7 @@
 module Docs
   class C < FileScraper
     self.type = 'c'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/C/en/c'
+    self.dir = '/Users/Thibaut/DevDocs/Docs/C/c'
     self.base_url = 'http://en.cppreference.com/w/c/'
     self.root_path = 'header.html'
 
@@ -13,6 +13,7 @@ module Docs
     options[:title] = false
     options[:root_title] = 'C Programming Language'
     options[:skip] = %w(language/history.html)
+    options[:skip_patterns] = [/experimental/]
 
     options[:fix_urls] = ->(url) do
       url.sub! %r{\A.+/http%3A/}, "http://"

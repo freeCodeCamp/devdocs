@@ -8,7 +8,7 @@ module Docs
             '.t-dsc-sep', '.t-dcl-sep', '#catlinks', '.ambox-notice', '.mw-cite-backlink',
             '.t-sdsc-sep:first-child:last-child', '.t-example-live-link').remove
 
-        css('#bodyContent', '.mw-content-ltr', 'span[style]').each do |node|
+        css('#bodyContent', '.mw-content-ltr', 'span[style]', 'div[class^="t-ref"]').each do |node|
           node.before(node.children).remove
         end
 
@@ -24,8 +24,9 @@ module Docs
           node.content = ' ' if node.content.empty?
         end
 
-        css('tt', 'span > span.source-cpp').each do |node|
+        css('tt', 'span > span.source-cpp', 'span.t-c').each do |node|
           node.name = 'code'
+          node.content = node.content
         end
 
         css('div > span.source-cpp').each do |node|
