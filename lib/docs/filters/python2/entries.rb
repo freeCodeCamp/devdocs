@@ -49,7 +49,7 @@ module Docs
       end
 
       def include_default_entry?
-        !at_css('.body > .section:only-child > .toctree-wrapper:last-child') && !type.in?(%w(Language Superseded SunOS))
+        !at_css('.body > .section:only-child > .toctree-wrapper:last-child') && !type.in?(%w(Superseded SunOS))
       end
 
       def additional_entries
