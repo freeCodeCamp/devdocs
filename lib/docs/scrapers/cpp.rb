@@ -3,7 +3,7 @@ module Docs
     self.name = 'C++'
     self.slug = 'cpp'
     self.type = 'c'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/C/en/cpp'
+    self.dir = '/Users/Thibaut/DevDocs/Docs/C/cpp'
     self.base_url = 'http://en.cppreference.com/w/cpp/'
     self.root_path = 'header.html'
 
@@ -20,6 +20,7 @@ module Docs
       regex/ecmascript.html
       regex/regex_token_iterator/operator_cmp.html
     )
+    options[:skip_patterns] = [/experimental/]
     options[:only_patterns] = [/\.html\z/]
 
     options[:fix_urls] = ->(url) do
