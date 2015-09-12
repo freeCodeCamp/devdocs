@@ -2,7 +2,7 @@ module Docs
   class Coffeescript < UrlScraper
     self.name = 'CoffeeScript'
     self.type = 'coffeescript'
-    self.version = '1.9.3'
+    self.version = '1.10.0'
     self.base_url = 'http://coffeescript.org'
     self.links = {
       home: 'http://coffeescript.org',
