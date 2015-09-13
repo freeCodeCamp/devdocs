@@ -20,6 +20,7 @@ app.templates.offlinePage = (docs) -> """
     </tr>
     #{docs}
   </table>
+  <p class="_note"><strong>Note:</strong> your browser may delete DevDocs's offline data if your computer is running low on disk space and you haven't used the app in a while. Load this page before going offline to make sure the data is still there.
   <h1 class="_lined-heading">Questions & Answers</h1>
   <dl>
     <dt>How does this work?
@@ -28,7 +29,7 @@ app.templates.offlinePage = (docs) -> """
     <dt>Can I close the tab/browser?
     <dd>#{canICloseTheTab()}
     <dt>What if I don't update a documentation?
-    <dd>You'll see outdated content and some pages will be missing or broken, since the rest of the app (including data for the search and sidebar) uses a different caching mechanism and is updated automatically.<br>
+    <dd>You'll see outdated content and some pages will be missing or broken, since the rest of the app (including data for the search and sidebar) uses a different caching mechanism which is updated automatically.<br>
         Documentation versioning is planned for the future but not yet supported, sorry.
     <dt>I found a bug, where do I report it?
     <dd>In the <a href="https://github.com/Thibaut/devdocs/issues">issue tracker</a>. Thanks!
