@@ -13,7 +13,7 @@ app.templates.aboutPage = -> """
   <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
   <ul>
     <li>Created and maintained by <a href="http://thibaut.me">Thibaut Courouble</a>
-    <li>Supported by <a href="http://devdocs.io/s/jetbrains">JetBrains</a>, <a href="http://devdocs.io/s/code-school">Code School</a> and <a href="http://devdocs.io/s/shopify">Shopify</a>
+    <li>Supported by <a href="http://devdocs.io/s/jetbrains">JetBrains</a> and <a href="http://devdocs.io/s/code-school">Code School</a>
     <li>Free and <a href="https://github.com/Thibaut/devdocs">open source</a>
         <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
   </ul>
@@ -31,6 +31,7 @@ app.templates.aboutPage = -> """
   <p><strong>Special thanks to:</strong>
   <ul>
     <li><a href="http://devdocs.io/s/maxcdn">MaxCDN</a> and <a href="http://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
+    <li><a href="http://devdocs.io/s/shopify">Shopify</a> for supporting DevDocs in the past
     <li><a href="https://www.heroku.com">Heroku</a> and <a href="http://newrelic.com">New Relic</a> for providing awesome free service
     <li>Daniel Bruce for the <a href="http://www.entypo.com">Entypo</a> pictograms
     <li><a href="http://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo

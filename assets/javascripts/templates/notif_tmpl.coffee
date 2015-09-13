@@ -38,7 +38,6 @@ app.templates.notifThanks = ->
                 <ul class="_notif-list">
                   <li><a href="http://devdocs.io/s/jetbrains" target="_blank">JetBrains</a> — We make software development a more productive and enjoyable experience through smart IDEs and code editors.
                   <li><a href="http://devdocs.io/s/code-school" target="_blank">Code School</a> — Learn new skills from the comfort of your own browser. Offering more than 45 courses covering JavaScript, HTML/CSS, Ruby, Git, and iOS for only $29/month.
-                  <li><a href="http://devdocs.io/s/shopify" target="_blank">Shopify</a> — Interested in working on one of the biggest commerce platforms in the world, in a delightful work environment? We're hiring!
                 </ul>
                 <p class="_notif-text">Have a great day :) """
 

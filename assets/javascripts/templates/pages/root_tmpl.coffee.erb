@@ -35,19 +35,11 @@ codeSchoolLink = (className) -> """
   </a>
 """
 
-shopifyLink = (className) -> """
-  <a href="http://devdocs.io/s/shopify" class="#{className}">
-    <span class="_logo-thx _shopify-logo">Shopify</span>
-    <span class="_logo-info">Interested in working on one of the biggest commerce platforms in the world, in a delightful work environment? We're hiring developers, ops engineers, designers&hellip;</span>
-  </a>
-"""
-
 app.templates.splash = -> """
   <div class="_splash-title">DevDocs</div>
   <div class="_splash-sponsors">
     #{jetBrainsLink '_splash-sponsor'}
     #{codeSchoolLink '_splash-sponsor'}
-    #{shopifyLink '_splash-sponsor'}
   </div>
 """
 
@@ -72,7 +64,7 @@ app.templates.intro = """
       <li>If you like the app, please consider supporting the project on <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!
     </ol>
     <p class="_intro-sponsors">
-      #{jetBrainsLink '_intro-sponsor'} #{codeSchoolLink '_intro-sponsor'} #{shopifyLink '_intro-sponsor'}
+      #{jetBrainsLink '_intro-sponsor'} #{codeSchoolLink '_intro-sponsor'}
     <p>Happy coding!
   </div></div>
 """
@@ -96,7 +88,7 @@ app.templates.intro = """
       <li>If you like the app, please consider supporting the project on <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!
     </ol>
     <p class="_intro-sponsors">
-      #{jetBrainsLink '_intro-sponsor'} #{codeSchoolLink '_intro-sponsor'} #{shopifyLink '_intro-sponsor'}
+      #{jetBrainsLink '_intro-sponsor'} #{codeSchoolLink '_intro-sponsor'}
     <p>Happy coding!
   </div></div>
 """
@@ -124,7 +116,7 @@ app.templates.mobileIntro = """
       <li>DevDocs is <a href="https://github.com/Thibaut/devdocs">open source</a>
     </ol>
     <p>Happy coding!
-    <p class="_intro-sponsors">#{jetBrainsLink '_intro-sponsor'} #{codeSchoolLink '_intro-sponsor'} #{shopifyLink '_intro-sponsor'}</p>
+    <p class="_intro-sponsors">#{jetBrainsLink '_intro-sponsor'} #{codeSchoolLink '_intro-sponsor'}</p>
     <a class="_intro-hide" data-hide-intro>Stop showing this message</a>
   </div>
 """
