@@ -280,6 +280,11 @@ credits = [
     'LGPLv2.1',
     'https://raw.githubusercontent.com/OpenTSDB/opentsdb.net/gh-pages/COPYING.LESSER'
   ], [
+    'Phalcon',
+    '2011-2015 Phalcon Framework Team',
+    'CC BY',
+    'https://docs.phalconphp.com/en/latest/reference/license.html'
+  ], [
     'Phaser',
     '2015 Richard Davey, Photon Storm Ltd.',
     'MIT',

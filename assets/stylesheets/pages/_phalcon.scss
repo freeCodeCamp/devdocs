@@ -1,0 +1,8 @@
+._phalcon {
+  @extend %simple;
+
+  h3 > small {
+    float: right;
+    color: $textColorLight;
+  }
+}

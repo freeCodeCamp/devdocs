@@ -4,12 +4,38 @@ module Docs
       def call
         @doc = at_css('.body')
 
-        # Remove unnecessary things
-        css('.headerlink', '#what-is-phalcon', '#other-formats', '#welcome h1', '#welcome p', '#table-of-contents h2').remove
+        if root_page?
+          at_css('h1').content = 'Phalcon'
+        end
 
-        # Add id for constants and methods
-        css('#constants strong', '#methods strong').each do |node|
-          node.parent['id'] = node.content.strip
+        css('#what-is-phalcon', '#other-formats').remove
+
+        css('#methods > p > strong, #constants > p > strong').each do |node|
+          node.parent.name = 'h3'
+          node.parent['id'] = node.content.parameterize
+          node.parent['class'] = 'method-signature'
+          node.parent.inner_html = node.parent.inner_html.sub(/inherited from .*/, '<small>\0</small>')
+        end
+
+        css('.headerlink').each do |node|
+          id = node['href'][1..-1]
+          node.parent['id'] ||= id
+          node.remove
+        end
+
+        css('div[class^="highlight-"]').each do |node|
+          code = node.at_css('pre').content
+          code.remove! %r{\A\s*<\?php\s*} unless code.include?(' ?>')
+          node.content = code
+          node.name = 'pre'
+        end
+
+        css('.section').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('table[border]').each do |node|
+          node.remove_attribute('border')
         end
 
         doc
