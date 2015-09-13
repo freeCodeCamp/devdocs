@@ -262,4 +262,4 @@ class app.DB
       false
 
   indexedDBVersion: ->
-    if app.config.env is 'production' then app.config.version else Date.now() / 1000
+    if app.config.env is 'production' then parseInt(app.config.version, 10) else Date.now() / 1000
