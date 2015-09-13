@@ -45,5 +45,5 @@ class app.views.Resizer extends app.View
     return
 
   onDragEnd: (event) =>
-    @resize(event.screenX - window.screenX, true)
+    @resize(event.clientX or (event.screenX - window.screenX), true)
     return
