@@ -15,3 +15,4 @@
 * [GTK shell / Vim integration](https://github.com/naquad/devdocs-shell)
 * [Chrome desktop app](https://github.com/arosemena/DevDocsWrapper)
 * [Emacs lookup](https://github.com/skeeto/devdocs-lookup)
+* [Alfred Workflow](https://github.com/jeffscottward/DevDocsIO-AlfredWorkflow)
