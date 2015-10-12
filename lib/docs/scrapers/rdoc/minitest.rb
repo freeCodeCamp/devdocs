@@ -2,7 +2,7 @@ module Docs
   class Minitest < Rdoc
     self.name = 'Ruby / Minitest'
     self.slug = 'minitest'
-    self.version = '5.7.0'
+    self.version = '5.8.1'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Minitest' # rake docs
     self.links = {
       code: 'https://github.com/seattlerb/minitest'
