@@ -42,8 +42,7 @@ app.templates.offlinePage = (docs) -> """
 
 canICloseTheTab = ->
   if app.AppCache.isEnabled()
-    """ Yes! Even offline, you can open a new tab, go to <a href="http://devdocs.io">devdocs.io</a>, and everything will work as if you were online (provided you installed all the documentations you want to use beforehand).<br>
-        Note that loading any page other than <a href="http://devdocs.io">devdocs.io</a> directly won't work (due to limitations in AppCache). """
+    """ Yes! Even offline, you can open a new tab, go to <a href="http://devdocs.io">devdocs.io</a>, and everything will work as if you were online (provided you installed all the documentations you want to use beforehand). """
   else if app.mozApp
     """ Yes! Even offline, you can open the app and everything will work as if you were online (provided you installed all the documentations you want to use beforehand). """
   else
