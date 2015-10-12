@@ -112,7 +112,7 @@ class app.Searcher
     max_results: app.config.max_results
     fuzzy_min_length: 3
 
-  SEPARATORS_REGEXP = /\:?\ |#|::|->/g
+  SEPARATORS_REGEXP = /\:?\ |#|::|->|\$(?=\w)/g
   INFO_PARANTHESES_REGEXP = /\(\w+?\)$/
   EMPTY_PARANTHESES_REGEXP = /\(\)/
   EVENT_REGEXP = /\ event$/
