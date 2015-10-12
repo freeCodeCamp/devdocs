@@ -113,7 +113,8 @@ class app.Searcher
     fuzzy_min_length: 3
 
   SEPARATORS_REGEXP = /\:?\ |#|::|->/g
-  PARANTHESES_REGEXP = /\(\w.*?\)$/
+  INFO_PARANTHESES_REGEXP = /\(\w+?\)$/
+  EMPTY_PARANTHESES_REGEXP = /\(\)/
   EVENT_REGEXP = /\ event$/
   DOT_REGEXP = /\.+/g
   WHITESPACE_REGEXP = /\s/g
@@ -129,7 +130,8 @@ class app.Searcher
       .replace EVENT_REGEXP, EMPTY_STRING
       .replace SEPARATORS_REGEXP, SEPARATOR
       .replace DOT_REGEXP, SEPARATOR
-      .replace PARANTHESES_REGEXP, EMPTY_STRING
+      .replace INFO_PARANTHESES_REGEXP, EMPTY_STRING
+      .replace EMPTY_PARANTHESES_REGEXP, EMPTY_STRING
       .replace WHITESPACE_REGEXP, EMPTY_STRING
 
   constructor: (options = {}) ->
