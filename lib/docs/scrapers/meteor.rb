@@ -3,7 +3,7 @@ module Docs
     include StubRootPage
 
     self.type = 'meteor'
-    self.version = '1.1.0'
+    self.version = '1.2.0'
     self.base_url = 'http://docs.meteor.com'
     self.root_path = '/#/full/'
     self.links = {
