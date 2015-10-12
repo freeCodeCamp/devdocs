@@ -2,8 +2,7 @@ module Docs
   class Bower
     class EntriesFilter < Docs::EntriesFilter
       ENTRIES_TYPE_BY_SLUG = {
-        'api'    => 'Commands',
-        'config' => '.bowerrc'
+        'api' => 'Commands'
       }
 
       def get_name
@@ -17,7 +16,7 @@ module Docs
       def additional_entries
         return [] unless type = ENTRIES_TYPE_BY_SLUG[slug]
 
-        css('#bowerrc-specification + ul a', '#commands + p + ul a').map do |node|
+        css('#commands + p + ul a').map do |node|
           [node.content, node['href'].remove('#'), type]
         end
       end

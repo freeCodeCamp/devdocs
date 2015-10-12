@@ -2,7 +2,7 @@ module Docs
   class Bower
     class CleanHtmlFilter < Filter
       def call
-        title = at_css('.page-title')
+        title = at_css('.page-title, .main h1')
         @doc = at_css('.main')
         doc.child.before(title)
 
