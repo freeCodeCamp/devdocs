@@ -6,12 +6,12 @@ module Docs
           node.content = node.content
         end
 
-        css('> div', '> section').each do |node|
+        css('sub').each do |node|
           node.before(node.children).remove
         end
 
-        css('h3, h4').each do |node|
-          node.name = node.name.sub(/\d/) { |i| i.to_i - 1 }
+        css('td:nth-child(2)').each do |node|
+          node.name = node.previous_element.name = 'th'
         end
 
         doc
