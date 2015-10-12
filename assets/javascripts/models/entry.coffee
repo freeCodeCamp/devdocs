@@ -55,5 +55,6 @@ class app.models.Entry extends app.Model
     'lodash': '_'
     'markdown': 'md'
     'postgresql': 'pg'
+    'python': 'py'
     'sass': 'scss'
     'underscore.js': '_'
