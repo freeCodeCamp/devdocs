@@ -48,13 +48,11 @@ Use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) wher
 
 See the [wiki](https://github.com/Thibaut/devdocs/wiki) to learn how to add new documentations.
 
-**Important:** the documentation's license must permit alteration, redistribution, and commercial use. Software vendors that wish to add commercial software documentation to DevDocs may contact me privately.
-
-**Please open an issue before adding a new documentation.**
+**Important:** the documentation's license must permit alteration, redistribution, and commercial use.
 
 In addition to the [guidelines for contributing code](#contributing-code-and-features), the following guidelines apply to pull requests that add a new documentation:
 
-* Your documentation must come with an official icon, in both 1x and 2x resolutions (16x16 and 32x32 pixels). This is important because icons are the only thing differentiating search results in the UI. If a project doesn't have an official icon, it won't be accepted into DevDocs, sorry.
+* Your documentation must come with an official icon, in both 1x and 2x resolutions (16x16 and 32x32 pixels). This is important because icons are the only thing differentiating search results in the UI.
 * DevDocs favors quality over quantity. Your documentation should only include documents that most developers may want to read semi-regularly. By reducing the number of entries, we make it easier to find other, more relevant entries.
 * Try to remove as much content and HTML markup as possible, particularly content which isn't associated with any entries (e.g. introduction, changelog, etc.).
 * Names must be as short as possible and unique across the documentation.
