@@ -1,7 +1,7 @@
 module Docs
   class Drupal < UrlScraper
     self.type = 'drupal'
-    self.version = '7.38'
+    self.version = '7.40'
     self.base_url = 'https://api.drupal.org/api/drupal/'
     self.initial_paths = %w(groups groups?page=1)
     self.links = {
