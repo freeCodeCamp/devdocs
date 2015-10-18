@@ -3,7 +3,7 @@ jetBrainsLink = (className) ->
   path = "/#{type}" if type
 
   """
-  <a href="http://devdocs.io/s/jetbrains#{path || ''}" class="#{className}">
+  <a href="http://out.devdocs.io/s/jetbrains#{path || ''}" class="#{className}">
     <span class="_logo-thx _jetbrains-logo">JetBrains</span>
     <span class="_logo-info">#{JETBRAINS_INFO[type || 'default']}</span>
   </a>
@@ -29,7 +29,7 @@ jetBrainsType = ->
     'web'
 
 codeSchoolLink = (className) -> """
-  <a href="http://devdocs.io/s/code-school" class="#{className}">
+  <a href="http://out.devdocs.io/s/code-school" class="#{className}">
     <span class="_logo-thx _code-school-logo">Code School</span>
     <span class="_logo-info">With more than 45 courses covering JavaScript, HTML/CSS, Ruby, Git, and iOS, Code School pairs experienced instructors with engaging content. Start learning at codeschool.com.</span>
   </a>

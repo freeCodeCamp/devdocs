@@ -3,7 +3,7 @@
 DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
 
 * Created by [Thibaut Courouble](http://thibaut.me)
-* Supported by [JetBrains](http://devdocs.io/s/jetbrains) and [Code School](http://devdocs.io/s/code-school)
+* Supported by [JetBrains](http://out.devdocs.io/s/jetbrains) and [Code School](http://out.devdocs.io/s/code-school)
 
 Keep track of development and community news:
 

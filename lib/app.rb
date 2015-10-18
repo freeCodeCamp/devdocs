@@ -172,6 +172,15 @@ class App < Sinatra::Application
     halt erb :unsupported if unsupported_browser?
   end
 
+  OUT_HOST = 'out.devdocs.io'.freeze
+
+  before do
+    if request.host == OUT_HOST && !request.path.start_with?('/s/')
+      query_string = "?#{request.query_string}" unless request.query_string.empty?
+      redirect "http://devdocs.io#{request.path}#{query_string}", 302
+    end
+  end
+
   get '/manifest.appcache' do
     content_type 'text/cache-manifest'
     expires 0, :'no-cache'
