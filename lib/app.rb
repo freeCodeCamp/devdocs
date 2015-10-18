@@ -4,6 +4,7 @@ Bundler.require :app
 class App < Sinatra::Application
   Bundler.require environment
   require 'sinatra/cookies'
+  require 'tilt/erubis'
 
   Rack::Mime::MIME_TYPES['.webapp'] = 'application/x-web-app-manifest+json'
 
@@ -94,15 +95,17 @@ class App < Sinatra::Application
       @browser ||= Browser.new ua: request.user_agent
     end
 
+    UNSUPPORTED_IE_VERSIONS = %w(6 7 8 9).freeze
+
     def unsupported_browser?
-      browser.ie? && %w(6 7 8 9).include?(browser.version)
+      browser.ie? && UNSUPPORTED_IE_VERSIONS.include?(browser.version)
     end
 
     def docs
       @docs ||= begin
         cookie = cookies[:docs]
 
-        docs = if cookie.nil? || cookie.empty?
+        if cookie.nil? || cookie.empty?
           settings.default_docs
         else
           cookie.split('/')
@@ -111,11 +114,10 @@ class App < Sinatra::Application
     end
 
     def doc_index_urls
-      docs.inject [] do |result, slug|
+      docs.each_with_object [] do |slug, result|
         if doc = settings.docs[slug]
           result << File.join('', settings.docs_prefix, doc['index_path']) + "?#{doc['mtime']}"
         end
-        result
       end
     end
 
