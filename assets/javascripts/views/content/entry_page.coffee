@@ -24,18 +24,18 @@ class app.views.EntryPage extends app.View
     @trigger 'loading'
     return
 
-  render: (content = '') ->
+  render: (content = '', fromCache = false) ->
     return unless @activated
     @empty()
 
     @subview = new (@subViewClass()) @el, @entry
-    @subview.render(content)
+    @subview.render(content, fromCache)
 
     if app.disabledDocs.findBy 'slug', @entry.doc.slug
       @hiddenView = new app.views.HiddenPage @el, @entry
 
     @trigger 'loaded'
-    @delay @addClipboardLinks
+    @delay @addClipboardLinks unless fromCache
     return
 
   CLIPBOARD_LINK = '<a class="_pre-clip" title="Copy to clipboard"></a>'
@@ -122,7 +122,7 @@ class app.views.EntryPage extends app.View
 
   restore: ->
     if @cacheMap[path = @entry.filePath()]
-      @render @cacheMap[path]
+      @render @cacheMap[path], true
       true
 
   onClick: (event) =>

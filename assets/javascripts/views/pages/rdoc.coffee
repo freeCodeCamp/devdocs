@@ -4,7 +4,7 @@ class app.views.RdocPage extends app.views.BasePage
   @events:
     click: 'onClick'
 
-  afterRender: ->
+  prepare: ->
     @highlightCode @findAll('pre.ruby'), 'ruby'
     @highlightCode @findAll('pre.c'), 'clike'
     return

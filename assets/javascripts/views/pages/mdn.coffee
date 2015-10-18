@@ -5,7 +5,7 @@ class app.views.MdnPage extends app.views.BasePage
 
   LANGUAGE_REGEXP = /brush: ?(\w+)/
 
-  afterRender: ->
+  prepare: ->
     for el in @findAll 'pre[class^="brush"]'
       language = el.className.match(LANGUAGE_REGEXP)[1]
         .replace('html', 'markup')

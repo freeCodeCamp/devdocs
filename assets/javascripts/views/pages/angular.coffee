@@ -1,7 +1,7 @@
 #= require views/pages/base
 
 class app.views.AngularPage extends app.views.BasePage
-  afterRender: ->
+  prepare: ->
     for el in @findAllByTag('pre')
       lang = if el.classList.contains('lang-html') or el.textContent[0] is '<'
         'markup'

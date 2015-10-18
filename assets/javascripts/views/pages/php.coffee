@@ -1,6 +1,6 @@
 #= require views/pages/base
 
 class app.views.PhpPage extends app.views.BasePage
-  afterRender: ->
+  prepare: ->
     @highlightCode @findAllByClass('phpcode'), 'php'
     return

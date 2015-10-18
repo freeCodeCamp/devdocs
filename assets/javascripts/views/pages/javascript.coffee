@@ -1,12 +1,12 @@
 #= require views/pages/base
 
 class app.views.JavascriptPage extends app.views.BasePage
-  afterRender: ->
+  prepare: ->
     @highlightCode @findAllByTag('pre'), 'javascript'
     return
 
 class app.views.JavascriptWithMarkupCheckPage extends app.views.BasePage
-  afterRender: ->
+  prepare: ->
     for el in @findAllByTag('pre')
       language = if el.textContent.match(/^\s*</)
         'markup'

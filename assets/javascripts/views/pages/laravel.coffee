@@ -1,6 +1,6 @@
 #= require views/pages/base
 
 class app.views.LaravelPage extends app.views.BasePage
-  afterRender: ->
+  prepare: ->
     @highlightCode @findAllByTag('pre'), 'php'
     return

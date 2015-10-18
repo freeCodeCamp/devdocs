@@ -1,7 +1,7 @@
 #= require views/pages/base
 
 class app.views.EmberPage extends app.views.BasePage
-  afterRender: ->
+  prepare: ->
     for el in @findAllByTag 'pre'
       language = if el.classList.contains 'javascript'
         'javascript'
