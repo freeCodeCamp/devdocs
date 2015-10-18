@@ -27,20 +27,22 @@ class app.views.EntryPage extends app.View
   render: (content = '', fromCache = false) ->
     return unless @activated
     @empty()
-
     @subview = new (@subViewClass()) @el, @entry
-    @subview.render(content, fromCache)
+
+    $.batchUpdate @el, =>
+      @subview.render(content, fromCache)
+      @addClipboardLinks() unless fromCache
+      return
 
     if app.disabledDocs.findBy 'slug', @entry.doc.slug
       @hiddenView = new app.views.HiddenPage @el, @entry
 
     @trigger 'loaded'
-    @delay @addClipboardLinks unless fromCache
     return
 
   CLIPBOARD_LINK = '<a class="_pre-clip" title="Copy to clipboard"></a>'
 
-  addClipboardLinks: =>
+  addClipboardLinks: ->
     for el in @findAllByTag('pre')
       el.insertAdjacentHTML('afterbegin', CLIPBOARD_LINK)
     return
