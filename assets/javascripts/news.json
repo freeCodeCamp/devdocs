@@ -1,5 +1,8 @@
 [
   [
+    "2015-10-18",
+    "Added a \"Copy to clipboard\" button inside each code block."
+  ], [
     "2015-09-13",
     "New documentation: <a href=\"/phalcon/\">Phalcon</a>"
   ], [

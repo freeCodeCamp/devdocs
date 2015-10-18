@@ -292,3 +292,18 @@ $.highlight = (el, options = {}) ->
   el.classList.add(options.className)
   setTimeout (-> el.classList.remove(options.className)), options.delay
   return
+
+$.copyToClipboard = (string) ->
+  textarea = document.createElement('textarea')
+  textarea.style.position = 'fixed'
+  textarea.style.opacity = 0
+  textarea.value = string
+  document.body.appendChild(textarea)
+  try
+    textarea.select()
+    result = !!document.execCommand('copy')
+  catch
+    result = false
+  finally
+    document.body.removeChild(textarea)
+  result

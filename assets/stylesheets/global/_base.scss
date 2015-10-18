@@ -99,8 +99,9 @@ pre, code, samp, %pre, %code {
 }
 
 pre, %pre {
+  position: relative;
   margin: 1.5em 0;
-  padding: .375rem .75rem;
+  padding: .375rem .625rem;
   line-height: 1.5;
   overflow: auto;
   @extend %box;

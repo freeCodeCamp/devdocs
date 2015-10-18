@@ -35,6 +35,14 @@ class app.views.EntryPage extends app.View
       @hiddenView = new app.views.HiddenPage @el, @entry
 
     @trigger 'loaded'
+    @delay @addClipboardLinks
+    return
+
+  CLIPBOARD_LINK = '<a class="_pre-clip" title="Copy to clipboard"></a>'
+
+  addClipboardLinks: =>
+    for el in @findAllByTag('pre')
+      el.insertAdjacentHTML('afterbegin', CLIPBOARD_LINK)
     return
 
   LINKS =
@@ -118,7 +126,12 @@ class app.views.EntryPage extends app.View
       true
 
   onClick: (event) =>
-    if event.target.hasAttribute 'data-retry'
+    target = event.target
+    if target.hasAttribute 'data-retry'
       $.stopEvent(event)
       @load()
+    else if target.classList.contains '_pre-clip'
+      $.stopEvent(event)
+      target.classList.add if $.copyToClipboard(target.parentNode.textContent) then '_pre-clip-success' else '_pre-clip-error'
+      setTimeout (-> target.className = '_pre-clip'), 2000
     return

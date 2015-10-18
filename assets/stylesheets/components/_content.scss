@@ -396,6 +396,34 @@
 ._label { @extend %label; }
 ._highlight { background: $highlightBackground !important; }
 
+._pre-clip {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: .5;
+  padding: .375rem;
+  cursor: pointer;
+
+  pre:hover > & { display: block; }
+  &:hover { opacity: 1; }
+
+  @if $style == 'dark' {
+    &:before { @extend %icon, %icon-clipboard-white; }
+  } @else {
+    &:before { @extend %icon, %icon-clipboard; }
+  }
+
+  &._pre-clip-success, &._pre-clip-error {
+    &:before { display: none; }
+    &:after {
+      content: 'Copied';
+      padding-right: .25rem;
+    }
+  }
+  &._pre-clip-error:after { content: 'Error'; }
+}
+
 ._github-btn {
   display: inline-block;
   vertical-align: text-top;
