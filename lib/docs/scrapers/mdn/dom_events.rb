@@ -10,6 +10,7 @@ module Docs
     options[:root_title] = 'DOM Events'
 
     options[:skip] = %w(/MozOrientation)
+    options[:skip_patterns] = [/\A\/moz/i]
 
     options[:fix_urls] = ->(url) do
       url.sub! 'https://developer.mozilla.org/en-US/Mozilla_event_reference',      DomEvents.base_url

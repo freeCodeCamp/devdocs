@@ -3,12 +3,15 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       TYPE_BY_INFO = {
         'applicationCache' => 'Application Cache',
+        'Battery'          => 'Battery',
         'Clipboard'        => 'Clipboard',
         'CSS'              => 'CSS',
         'Drag'             => 'Drag & Drop',
         'Focus'            => 'Focus',
         'Fullscreen'       => 'Fullscreen',
+        'Gamepad'          => 'Gamepad',
         'HashChange'       => 'History',
+        'IDB'              => 'IndexedDB',
         'IndexedDB'        => 'IndexedDB',
         'Keyboard'         => 'Keyboard',
         'edia'             => 'Media',
@@ -16,6 +19,7 @@ module Docs
         'Offline'          => 'Offline',
         'Orientation'      => 'Device',
         'Sensor'           => 'Device',
+        'SVG'              => 'SVG',
         'Page Visibility'  => 'Page Visibility',
         'Pointer'          => 'Mouse',
         'PopState'         => 'History',
@@ -29,6 +33,7 @@ module Docs
         'WebSocket'        => 'WebSocket',
         'Web Audio'        => 'Web Audio',
         'Web Messaging'    => 'Web Messaging',
+        'WebRTC'           => 'WebRTC',
         'Wheel'            => 'Mouse',
         'Worker'           => 'Web Workers' }
 
@@ -60,6 +65,10 @@ module Docs
 
           'Miscellaneous'
         end
+      end
+
+      def include_default_entry?
+        !doc.content.include?('Firefox OS specific')
       end
     end
   end

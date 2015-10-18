@@ -4,6 +4,7 @@ module Docs
       TYPE_BY_SPEC = {
         'Battery Status'      => 'Battery Status',
         'Canvas '             => 'Canvas',
+        'CSS Font Loading'    => 'CSS',
         'CSS Object Model'    => 'CSS',
         'Cryptography'        => 'Web Cryptography',
         'Device Orientation'  => 'Device Orientation',
@@ -19,6 +20,8 @@ module Docs
         'Navigation Timing'   => 'Navigation Timing',
         'Network Information' => 'Network Information',
         'Push API'            => 'Push',
+        'Shadow DOM'          => 'Shadow DOM',
+        'Server-Sent Events'  => 'Server-Sent Events',
         'Service Workers'     => 'Service Workers',
         'Web Animations'      => 'Animation',
         'Web Audio'           => 'Web Audio',
@@ -64,6 +67,8 @@ module Docs
         'StyleSheet'          => 'CSS',
         'Stylesheet'          => 'CSS',
         'SVG'                 => 'SVG',
+        'timing'              => 'Navigation Timing',
+        'Timing'              => 'Navigation Timing',
         'Touch'               => 'Touch',
         'TreeWalker'          => 'TreeWalker',
         'URL'                 => 'URL',
@@ -74,15 +79,22 @@ module Docs
       TYPE_BY_NAME_INCLUDES = {
         'ChildNode'     => 'Node',
         'Crypto'        => 'Web Cryptography',
+        'FormData'      => 'XMLHTTPRequest',
+        'ImageBitmap'   => 'Canvas',
         'ImageData'     => 'Canvas',
         'IndexedDB'     => 'IndexedDB',
+        'Media Source'  => 'Media',
         'MediaStream'   => 'Media',
         'NodeList'      => 'Node',
         'Path2D'        => 'Canvas',
+        'Server-sent'   => 'Server-Sent Events',
         'ServiceWorker' => 'Service Workers',
         'TextMetrics'   => 'Canvas',
         'udio'          => 'Web Audio',
+        'WebSocket'     => 'Web Sockets',
         'WebGL'         => 'WebGL',
+        'WEBGL'         => 'WebGL',
+        'WebRTC'        => 'WebRTC',
         'WebVR'         => 'WebVR',
         'Worker'        => 'Web Workers' }
 
@@ -111,6 +123,7 @@ module Docs
         name.sub! 'API.', 'API: '
         # Comment.Comment => Comment.constructor
         name.sub! %r{\A(\w+)\.\1\z}, '\1.constructor' unless name == 'window.window'
+        name.prepend 'XMLHttpRequest.' if slug.start_with?('XMLHttpRequest/') && !name.start_with?('XMLHttpRequest')
         name
       end
 
@@ -159,6 +172,28 @@ module Docs
         return true unless node = doc.at_css('.overheadIndicator')
         content = node.content
         SKIP_CONTENT.none? { |str| content.include?(str) }
+      end
+
+      def additional_entries
+        entries = []
+
+        if slug == 'history' || slug == 'XMLHttpRequest'
+          css('dt a[title*="not yet been written"]').each do |node|
+            next if node.parent.at_css('.obsolete')
+            name = node.content.sub('History', 'history')
+            id = node.parent['id'] = name.parameterize
+            entries << [name, id]
+          end
+        end
+
+        if slug == 'XMLHttpRequest'
+          css('h2[id="Methods_2"] ~ h3').each do |node|
+            break if node.content == 'Non-standard methods'
+            entries << ["#{name}.#{node.content}", node['id']]
+          end
+        end
+
+        entries
       end
     end
   end

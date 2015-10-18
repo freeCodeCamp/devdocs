@@ -9,9 +9,6 @@ module Docs
         linear-gradient radial-gradient repeating-linear-gradient
         repeating-radial-gradient var)
 
-      PSEUDO_ELEMENT_SLUGS = %w(::after ::before ::first-letter ::first-line
-        ::selection)
-
       VALUE_SLUGS = %w(auto inherit initial none normal unset)
 
       ADDITIONAL_ENTRIES = {
@@ -39,6 +36,7 @@ module Docs
         'transform-function' => [
           %w(matrix() matrix() Functions),
           %w(matrix3d() matrix3d() Functions),
+          %w(perspective() perspective() Functions),
           %w(rotate() rotate() Functions),
           %w(rotate3d() rotate3d() Functions),
           %w(rotateX() rotateX() Functions),
@@ -60,18 +58,21 @@ module Docs
 
       def get_name
         case type
-        when 'Data Types' then "<#{super.remove ' value'}>"
-        when 'Functions'  then "#{super}()"
+        when 'Data Types'    then "<#{super.remove ' value'}>"
+        when 'Functions'     then "#{super}()"
+        when 'Miscellaneous' then slug.to_s.gsub('_', ' ').gsub('/', ': ')
         else super
         end
       end
 
       def get_type
-        if slug.end_with? 'selectors'
+        if slug.end_with?('selectors')
           'Selectors'
-        elsif slug.start_with? ':'
-          PSEUDO_ELEMENT_SLUGS.include?(slug) ? 'Pseudo-elements' : 'Pseudo-classes'
-        elsif slug.start_with? '@'
+        elsif slug.start_with?('::')
+          'Pseudo-elements'
+        elsif slug.start_with?(':')
+          'Pseudo-classes'
+        elsif slug.start_with?('@')
           'At-rules'
         elsif DATA_TYPE_SLUGS.include?(slug)
           'Data Types'
@@ -79,6 +80,8 @@ module Docs
           'Functions'
         elsif VALUE_SLUGS.include?(slug)
           'Values'
+        elsif slug =~ /\A[a-z]+_/i
+          'Miscellaneous'
         else
           'Properties'
         end

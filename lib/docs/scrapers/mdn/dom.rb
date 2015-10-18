@@ -54,7 +54,7 @@ module Docs
       /\A\/InstallTrigger/,
       /\A\/Entity/,
       /\A\/Settings/,
-      /\A\/Telephony/,
+      /telephony/i,
       /\A\/NFC_API/,
       /\A\/Window\/\w+bar/i,
       /\A\/Apps/,
