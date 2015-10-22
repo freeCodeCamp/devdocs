@@ -1,0 +1,4 @@
+._elixir {
+  @extend %simple;
+  h3 { @extend %block-label; }
+}
