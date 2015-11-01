@@ -34,7 +34,8 @@
 ._icon-dom_events:before    { background-position: -3rem -1rem; }
 ._icon-javascript:before    { background-position: -4rem -1rem; }
 ._icon-backbone:before      { background-position: -5rem -1rem; @extend %darkIconFix !optional; }
-._icon-node:before          { background-position: -6rem -1rem; }
+._icon-node:before,
+._icon-node_lts:before      { background-position: -6rem -1rem; }
 ._icon-sass:before          { background-position: -7rem -1rem; }
 ._icon-less:before          { background-position: -8rem -1rem; }
 ._icon-angular:before       { background-position: -9rem -1rem; }
