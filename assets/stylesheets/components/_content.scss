@@ -456,30 +456,6 @@
   :hover > & { opacity: 1; }
 }
 
-._jetbrains-logo {
-  top: 1px;
-  width: 5rem;
-  background-image: image-url('jetbrains.png');
-  background-size: 5rem 1.5rem;
-
-  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
-    background-image: image-url('jetbrains@2x.png');
-  }
-}
-
-._splash-sponsor > ._jetbrains-logo {
-  background-image: image-url('jetbrains-bw.png');
-
-  @if $style == 'dark' {
-    filter: invert(100%);
-    -webkit-filter: invert(100%);
-  }
-
-  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
-    background-image: image-url('jetbrains-bw@2x.png');
-  }
-}
-
 ._code-school-logo {
   width: 7rem;
   background-image: image-url('code-school.png');
