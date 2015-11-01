@@ -2,7 +2,7 @@ module Docs
   class Modernizr < UrlScraper
     self.name = 'Modernizr'
     self.type = 'modernizr'
-    self.version = '3.1.0'
+    self.version = '3.2.0'
     self.base_url = 'https://modernizr.com/docs/'
 
     html_filters.push 'modernizr/entries', 'modernizr/clean_html', 'title'
