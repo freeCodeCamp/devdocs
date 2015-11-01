@@ -264,7 +264,7 @@ credits = [
     'Node.js',
     'Joyent, Inc. and other Node contributors<br>Node.js is a trademark of Joyent, Inc.',
     'MIT',
-    'https://raw.github.com/joyent/node/master/LICENSE'
+    'https://raw.githubusercontent.com/nodejs/node/master/LICENSE'
   ], [
     'Nokogiri',
     '2008-2014 2014 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori Musha',
