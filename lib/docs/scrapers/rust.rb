@@ -1,7 +1,7 @@
 module Docs
   class Rust < UrlScraper
     self.type = 'rust'
-    self.version = '1.3.0'
+    self.version = '1.4.0'
     self.base_url = 'http://doc.rust-lang.org/'
     self.root_path = 'book/index.html'
     self.initial_paths = %w(
