@@ -145,6 +145,11 @@ credits = [
     'MIT',
     'https://raw.github.com/emberjs/ember.js/master/LICENSE'
   ], [
+    'Elixir',
+    '2012 Plataformatec',
+    'Apache',
+    'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
+  ], [
     'Express',
     '2009-2015 TJ Holowaychuk',
     'MIT',

@@ -116,3 +116,4 @@
 ._icon-phalcon:before       { background-position: -1rem -9rem; }
 %icon-clipboard             { background-position: -2rem -9rem; }
 %icon-clipboard-white       { background-position: -3rem -9rem; }
+._icon-elixir:before        { background-position: -4rem -9rem; @extend %darkIconFix !optional; }

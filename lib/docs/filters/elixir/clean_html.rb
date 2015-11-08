@@ -2,45 +2,32 @@ module Docs
   class Elixir
     class CleanHtmlFilter < Filter
       def call
+        at_css('footer', '.view-source').remove
 
-        # Strip h1 content
-        css('h1').each do |node|
-          node.content = node.content.strip
-        end
-
-        # Make subtitles smaller
-        css('h2').each do |node|
+        css('section section.docstring h2').each do |node|
           node.name = 'h4'
         end
 
-        # Remove footer
-        at_css('footer').remove
+        css('h1 .hover-link', '.detail-link').each do |node|
+          node.parent['id'] = node['href'].remove('#')
+          node.remove
+        end
 
-        # Remove behaviour after module name
-        css('h1').each do |node|
-          if !(node.has_attribute?('id'))
-            node.content = node.content.split(" ")[0]
+        css('.details-list').each do |list|
+          type = list['id'].remove(/s\z/)
+          list.css('.detail-header').each do |node|
+            node.name = 'h3'
+            node['class'] += " #{type}"
           end
         end
 
-        # Remove links from summary headings
-        css('.summary > h4 > a').each do |node|
-          node.delete('href')
-        end
+        css('.summary h2').each { |node| node.parent.before(node) }
+        css('.summary').each { |node| node.name = 'dl' }
+        css('.summary-signature').each { |node| node.name = 'dt' }
+        css('.summary-synopsis').each { |node| node.name = 'dd' }
 
-        # Add elixir class to each pre for syntax highlighting
-        css('pre').each do |node|
-          node['class'] = "elixir"
-        end
-
-        # Rewrite .detail -> .method-detail
-        css('.detail').each do |node|
-          node['class'] = "method-detail"
-        end
-
-        # Change .detail-header to h3
-        css('.detail-header .signature').each do |node|
-          node.name = 'h3'
+        css('section', 'div:not(.type-detail)', 'h2 a').each do |node|
+          node.before(node.children).remove
         end
 
         doc

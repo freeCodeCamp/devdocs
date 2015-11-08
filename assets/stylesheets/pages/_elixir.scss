@@ -1,4 +1,7 @@
 ._elixir {
   @extend %simple;
-  h3 { @extend %block-label; }
+
+  .type-detail { margin-bottom: 2em; }
+  .type-detail pre { margin-left: -1rem; }
+  ._mobile & .type-detail pre { margin-left: 0; }
 }

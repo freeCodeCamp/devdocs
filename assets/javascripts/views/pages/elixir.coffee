@@ -2,5 +2,5 @@
 
 class app.views.ElixirPage extends app.views.BasePage
   prepare: ->
-    @highlightCode @findAll('pre.elixir'), 'elixir'
+    @highlightCode @findAllByTag('pre'), 'elixir'
     return
