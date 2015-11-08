@@ -2,14 +2,12 @@ module Docs
   class Vagrant
     class CleanHtmlFilter < Filter
       def call
-        if root_page?
-          doc.children = css('h1, .category')
-          return doc
-        end
+        @doc = at_css('.page-contents .span8')
 
-        css('nav', '.sidebar', 'footer').remove
+        css('hr').remove
 
-        css('.wrapper', '.page', '.container', '.row', '.page-contents', '.span8').each do |node|
+        css('pre > code').each do |node|
+          node.parent['class'] = node['class']
           node.before(node.children).remove
         end
 

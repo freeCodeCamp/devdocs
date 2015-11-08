@@ -380,6 +380,11 @@ credits = [
     'MIT',
     'https://raw.github.com/jashkenas/underscore/master/LICENSE'
   ], [
+    'Vagrant',
+    '2010-2015 Mitchell Hashimoto',
+    'MIT',
+    'https://raw.githubusercontent.com/mitchellh/vagrant/master/LICENSE'
+  ], [
     'Vue.js',
     '2013-2015 Evan You, Vue.js contributors',
     'MIT',

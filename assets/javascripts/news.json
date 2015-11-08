@@ -1,7 +1,7 @@
 [
   [
     "2015-11-08",
-    "New documentation: <a href=\"/elixir/\">Elixir</a>"
+    "New documentations: <a href=\"/elixir/\">Elixir</a> and <a href=\"/vagrant/\">Vagrant</a>"
   ], [
     "2015-10-18",
     "Added a \"Copy to clipboard\" button inside each code block."

@@ -3,59 +3,32 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         if slug.start_with?('push/')
-          if at_css('h2')
-            name = at_css('h2').content.strip
-          else
-            name = at_css('h1').content.strip
-          end
-          name
-        else
-          name = at_css('h1').content.strip
-          name
+          name = at_css('h2').try(:content)
+        elsif slug.start_with?('cli/')
+          name = at_css('h1 + p > strong > code').try(:content).try(:[], /\s*vagrant\s+[\w\-]+/)
         end
+
+        name || at_css('h1').content
       end
 
       def get_type
-        if slug.start_with?('why-vagrant')
-          'Why Vagrant?'
-        elsif slug.start_with?('installation')
-          'Installation'
-        elsif slug.start_with?('getting-started')
-          'Getting Started'
-        elsif slug.start_with?('cli')
-          'Command-Line Interface'
-        elsif slug.start_with?('share')
-          'Vagrant Share'
-        elsif slug.start_with?('vagrantfile')
-          'Vagrantfile'
-        elsif slug.start_with?('boxes')
-          'Boxes'
-        elsif slug.start_with?('provisioning')
-          'Provisioning'
-        elsif slug.start_with?('networking')
-          'Networking'
-        elsif slug.start_with?('synced-folders')
-          'Synced Folders'
-        elsif slug.start_with?('multi-machine')
-          'Multi-Machine'
-        elsif slug.start_with?('providers')
-          'Providers'
-        elsif slug.start_with?('plugins')
-          'Plugins'
-        elsif slug.start_with?('push')
-          'Push'
-        elsif slug.start_with?('other')
-          'Other'
-        elsif slug.start_with?('vmware')
-          'VMware'
-        elsif slug.start_with?('docker')
-          'Docker'
-        elsif slug.start_with?('virtualbox')
-          'VirtualBox'
-        elsif slug.start_with?('hyperv')
-          'Hyper-V'
+        at_css('.sidebar-nav li.current').content
+      end
+
+      def additional_entries
+        case at_css('h1 + p > strong > code').try(:content)
+        when /config\./
+          h2 = nil
+          css('.page-contents .span8 > *').each_with_object [] do |node, entries|
+            if node.name == 'h2'
+              h2 = node.content
+            elsif h2 == 'Available Settings' && (code = node.at_css('code')) && (name = code.content) && name.start_with?('config.')
+              id = code.parent['id'] = name.parameterize
+              entries << [name, id, 'Config']
+            end
+          end
         else
-          'Overview'
+          []
         end
       end
     end
