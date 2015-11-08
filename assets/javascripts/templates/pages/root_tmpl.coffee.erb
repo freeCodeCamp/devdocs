@@ -1,14 +1,4 @@
-codeSchoolLink = (className) -> """
-  <a href="http://out.devdocs.io/s/code-school" class="#{className}">
-    <span class="_logo-thx _code-school-logo">Code School</span>
-    <span class="_logo-info">With more than 45 courses covering JavaScript, HTML/CSS, Ruby, Git, and iOS, Code School pairs experienced instructors with engaging content. Start learning at codeschool.com.</span>
-  </a>
-"""
-
-app.templates.splash = -> """
-  <div class="_splash-title">DevDocs</div>
-  <div class="_splash-sponsors">#{codeSchoolLink '_splash-sponsor'}</div>
-"""
+app.templates.splash = """<div class="_splash-title">DevDocs</div>"""
 
 <% if App.development? %>
 app.templates.intro = """
@@ -30,7 +20,6 @@ app.templates.intro = """
           <a href="https://github.com/Thibaut/devdocs/blob/master/LICENSE">LICENSE</a> files.
       <li>If you like the app, please consider supporting the project on <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!
     </ol>
-    <p class="_intro-sponsors">#{codeSchoolLink '_intro-sponsor'}
     <p>Happy coding!
   </div></div>
 """
@@ -53,7 +42,6 @@ app.templates.intro = """
           <iframe class="_github-btn" src="//ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
       <li>If you like the app, please consider supporting the project on <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!
     </ol>
-    <p class="_intro-sponsors">#{codeSchoolLink '_intro-sponsor'}
     <p>Happy coding!
   </div></div>
 """
@@ -81,7 +69,6 @@ app.templates.mobileIntro = """
       <li>DevDocs is <a href="https://github.com/Thibaut/devdocs">open source</a>
     </ol>
     <p>Happy coding!
-    <p class="_intro-sponsors">#{codeSchoolLink '_intro-sponsor'}</p>
     <a class="_intro-hide" data-hide-intro>Stop showing this message</a>
   </div>
 """

@@ -116,7 +116,6 @@
     visitCount = @settings.get('count')
     @settings.set 'count', ++visitCount
     new app.views.Notif 'Share', autoHide: null if visitCount is 5
-    new app.views.Notif 'Thanks', autoHide: null if visitCount is 10
     new app.views.News()
     @updateChecker = new app.UpdateChecker()
 
