@@ -13,7 +13,6 @@ app.templates.aboutPage = -> """
   <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
   <ul>
     <li>Created and maintained by <a href="http://thibaut.me">Thibaut Courouble</a>
-    <li>Supported by <a href="http://out.devdocs.io/s/jetbrains">JetBrains</a> and <a href="http://out.devdocs.io/s/code-school">Code School</a>
     <li>Free and <a href="https://github.com/Thibaut/devdocs">open source</a>
         <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
   </ul>
@@ -31,7 +30,7 @@ app.templates.aboutPage = -> """
   <p><strong>Special thanks to:</strong>
   <ul>
     <li><a href="http://out.devdocs.io/s/maxcdn">MaxCDN</a> and <a href="http://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
-    <li><a href="http://out.devdocs.io/s/shopify">Shopify</a> for supporting DevDocs in the past
+    <li><a href="http://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="http://out.devdocs.io/s/shopify">Shopify</a>, <a href="http://out.devdocs.io/s/jetbrains">JetBrains</a> and <a href="http://out.devdocs.io/s/code-school">Code School</a> for sponsoring DevDocs in the past
     <li><a href="https://www.heroku.com">Heroku</a> and <a href="http://newrelic.com">New Relic</a> for providing awesome free service
     <li>Daniel Bruce for the <a href="http://www.entypo.com">Entypo</a> pictograms
     <li><a href="http://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
@@ -145,6 +144,11 @@ credits = [
     '2015 Yehuda Katz, Tom Dale and Ember.js contributors',
     'MIT',
     'https://raw.github.com/emberjs/ember.js/master/LICENSE'
+  ], [
+    'Elixir',
+    '2012 Plataformatec',
+    'Apache',
+    'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
   ], [
     'Express',
     '2009-2015 TJ Holowaychuk',
@@ -264,7 +268,7 @@ credits = [
     'Node.js',
     'Joyent, Inc. and other Node contributors<br>Node.js is a trademark of Joyent, Inc.',
     'MIT',
-    'https://raw.github.com/joyent/node/master/LICENSE'
+    'https://raw.githubusercontent.com/nodejs/node/master/LICENSE'
   ], [
     'Nokogiri',
     '2008-2014 2014 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori Musha',
@@ -375,6 +379,11 @@ credits = [
     '2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
     'https://raw.github.com/jashkenas/underscore/master/LICENSE'
+  ], [
+    'Vagrant',
+    '2010-2015 Mitchell Hashimoto',
+    'MIT',
+    'https://raw.githubusercontent.com/mitchellh/vagrant/master/LICENSE'
   ], [
     'Vue.js',
     '2013-2015 Evan You, Vue.js contributors',

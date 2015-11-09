@@ -6,7 +6,7 @@ module Docs
 
         at_css('h1').content = 'Vue.js' if root_page?
 
-        css('#demo').remove
+        css('.demo', '.guide-links', '.footer').remove
 
         # Remove code highlighting
         css('figure').each do |node|

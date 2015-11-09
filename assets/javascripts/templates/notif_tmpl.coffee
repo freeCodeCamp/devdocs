@@ -32,15 +32,6 @@ app.templates.notifShare = ->
                 <a href="http://out.devdocs.io/s/tw" target="_blank">Twitter</a>, <a href="http://out.devdocs.io/s/fb" target="_blank">Facebook</a>,
                 <a href="http://out.devdocs.io/s/re" target="_blank">Reddit</a>, etc.<br>Thanks :) """
 
-app.templates.notifThanks = ->
-  textNotif """ Hi there! """,
-            """ <p class="_notif-text">Like DevDocs? Check out these awesome companies who are making it possible:
-                <ul class="_notif-list">
-                  <li><a href="http://out.devdocs.io/s/jetbrains" target="_blank">JetBrains</a> — We make software development a more productive and enjoyable experience through smart IDEs and code editors.
-                  <li><a href="http://out.devdocs.io/s/code-school" target="_blank">Code School</a> — Learn new skills from the comfort of your own browser. Offering more than 45 courses covering JavaScript, HTML/CSS, Ruby, Git, and iOS for only $29/month.
-                </ul>
-                <p class="_notif-text">Have a great day :) """
-
 app.templates.notifUpdateDocs = ->
   textNotif """ Documentation updates available. """,
             """ <a href="/offline">Install them</a> as soon as possible to avoid broken pages. """

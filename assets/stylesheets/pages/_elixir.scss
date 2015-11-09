@@ -1,0 +1,7 @@
+._elixir {
+  @extend %simple;
+
+  .type-detail { margin-bottom: 2em; }
+  .type-detail pre { margin-left: -1rem; }
+  ._mobile & .type-detail pre { margin-left: 0; }
+}
