@@ -58,11 +58,23 @@ class DocsUrlScraperTest < MiniTest::Spec
       result
     end
 
+    it "runs a Requester with .headers as :request_options" do
+      stub(Scraper).headers { { testheader: true } }
+      mock(Docs::Requester).run anything, satisfy { |options| options[:request_options][:headers][:testheader] }
+      result
+    end
+
+    it "runs a Requester with default .headers as :request_options" do
+      mock(Docs::Requester).run anything, satisfy { |options| options[:request_options][:headers]["User-Agent"] }
+      result
+    end
+
     it "runs a Requester with .params as :request_options" do
       stub(Scraper).params { { test: true } }
       mock(Docs::Requester).run anything, satisfy { |options| options[:request_options][:params][:test] }
       result
     end
+
 
     it "runs a Requester with the given block" do
       stub(Docs::Requester).run { |*args| @block = args.last }

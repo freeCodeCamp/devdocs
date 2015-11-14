@@ -2,8 +2,15 @@ module Docs
   class Dojo
     class CleanHtmlFilter < Filter
       def call
-        # TODO: Probably needs a little more cleanup but should do for the moment
         css('script').remove
+
+        css('.version').remove
+
+        #Remove links which are broken on the methods
+        doc.css(".functionIcon a").each do |a|
+            a.replace a.content
+        end
+
         doc
       end
     end

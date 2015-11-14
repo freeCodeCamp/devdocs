@@ -4,7 +4,13 @@ module Docs
     self.slug = 'dojo'
     self.type = 'dojo'
     self.version = '1.10'
-    self.base_url = 'http://dojotoolkit.org/api/1.10/' #tree.json
+    self.base_url = 'http://dojotoolkit.org/api/1.10/'
+
+    # This is a cut down list of the actually paths taken from the tree.json api on the dojo site
+    # Dojo used javascript and xhr requests to allow users to browse it's documentation so it can't
+    # be scrapped by just following links from the base page. This list was generating with a little
+    # bash and then cut down in order to remove a lot of the more unused documentation e.g. kernel,
+    # main, dnd and some others
     self.initial_paths = %w(
       dojo/AdapterRegistry
       dojo/aspect
@@ -17,65 +23,18 @@ module Docs
       dojo/_base/config.modulePaths
       dojo/_base/connect
       dojo/_base/declare
-      dojo/_base/declare.__DeclareCreatedObject
       dojo/_base/Deferred
       dojo/_base/event
       dojo/_base/fx
       dojo/_base/html
       dojo/_base/json
       dojo/_base/kernel
-      dojo/_base/kernel.back
-      dojo/_base/kernel.cldr
-      dojo/_base/kernel.colors
-      dojo/_base/kernel.config
-      dojo/_base/kernel.contentHandlers
-      dojo/_base/kernel._contentHandlers
-      dojo/_base/kernel.currency
-      dojo/_base/kernel.data
-      dojo/_base/kernel.date
-      dojo/_base/kernel.dijit
-      dojo/_base/kernel.dnd
-      dojo/_base/kernel.doc
-      dojo/_base/kernel.dojox
-      dojo/_base/kernel.fx
-      dojo/_base/kernel.gears
-      dojo/_base/kernel.global
-      dojo/_base/kernel._hasResource
-      dojo/_base/kernel.html
-      dojo/_base/kernel.i18n
-      dojo/_base/kernel.io
-      dojo/_base/kernel.__IoArgs
-      dojo/_base/kernel.__IoCallbackArgs
-      dojo/_base/kernel.__IoPublish
-      dojo/_base/kernel.keys
-      dojo/_base/kernel.mouseButtons
-      dojo/_base/kernel._nodeDataCache
-      dojo/_base/kernel.number
-      dojo/_base/kernel.regexp
-      dojo/_base/kernel.rpc
-      dojo/_base/kernel.scopeMap
-      dojo/_base/kernel.Stateful
-      dojo/_base/kernel.store
-      dojo/_base/kernel.string
-      dojo/_base/kernel.tests
-      dojo/_base/kernel.touch
-      dojo/_base/kernel.version
-      dojo/_base/kernel.window
-      dojo/_base/kernel.__XhrArgs
       dojo/_base/lang
       dojo/_base/loader
       dojo/_base/NodeList
       dojo/_base/query
       dojo/_base/sniff
       dojo/_base/unload
-      dojo/_base/url
-      dojo/_base/url.authority
-      dojo/_base/url.fragment
-      dojo/_base/url.password
-      dojo/_base/url.port
-      dojo/_base/url.query
-      dojo/_base/url.scheme
-      dojo/_base/url.user
       dojo/_base/window
       dojo/_base/window.doc
       dojo/_base/window.global
@@ -88,8 +47,6 @@ module Docs
       dojo/colors
       dojo/cookie
       dojo/currency
-      dojo/currency.__FormatOptions
-      dojo/currency.__ParseOptions
       dojo/data/api/Identity
       dojo/data/api/Item
       dojo/data/api/Notification
@@ -104,33 +61,10 @@ module Docs
       dojo/data/util/sorter
       dojo/date
       dojo/date/locale
-      dojo/date/locale.__FormatOptions
       dojo/date/stamp
       dojo/debounce
       dojo/Deferred
       dojo/DeferredList
-      dojo/dnd/autoscroll
-      dojo/dnd/autoscroll._validNodes
-      dojo/dnd/autoscroll._validOverflow
-      dojo/dnd/AutoSource
-      dojo/dnd/Avatar
-      dojo/dnd/common
-      dojo/dnd/common._defaultCreatorNodes
-      dojo/dnd/common._empty
-      dojo/dnd/Container
-      dojo/dnd/Container.__ContainerArgs
-      dojo/dnd/Manager
-      dojo/dnd/move
-      dojo/dnd/Moveable
-      dojo/dnd/Moveable.__MoveableArgs
-      dojo/dnd/move.boxConstrainedMoveable
-      dojo/dnd/move.constrainedMoveable
-      dojo/dnd/move.parentConstrainedMoveable
-      dojo/dnd/Mover
-      dojo/dnd/Selector
-      dojo/dnd/Source
-      dojo/dnd/Target
-      dojo/dnd/TimedMoveable
       dojo/dom
       dojo/dom-attr
       dojo/dom-class
@@ -146,7 +80,6 @@ module Docs
       dojo/errors/RequestError
       dojo/errors/RequestTimeoutError
       dojo/Evented
-      dojo/_firebug/firebug
       dojo/fx
       dojo/fx/easing
       dojo/fx.easing
@@ -168,44 +101,6 @@ module Docs
       dojo/keys
       dojo/loadInit
       dojo/main
-      dojo/main.back
-      dojo/main.cldr
-      dojo/main.colors
-      dojo/main.config
-      dojo/main.contentHandlers
-      dojo/main._contentHandlers
-      dojo/main.currency
-      dojo/main.data
-      dojo/main.date
-      dojo/main.dijit
-      dojo/main.dnd
-      dojo/main.doc
-      dojo/main.dojox
-      dojo/main.fx
-      dojo/main.gears
-      dojo/main.global
-      dojo/main._hasResource
-      dojo/main.html
-      dojo/main.i18n
-      dojo/main.io
-      dojo/main.__IoArgs
-      dojo/main.__IoCallbackArgs
-      dojo/main.__IoPublish
-      dojo/main.keys
-      dojo/main.mouseButtons
-      dojo/main._nodeDataCache
-      dojo/main.number
-      dojo/main.regexp
-      dojo/main.rpc
-      dojo/main.scopeMap
-      dojo/main.Stateful
-      dojo/main.store
-      dojo/main.string
-      dojo/main.tests
-      dojo/main.touch
-      dojo/main.version
-      dojo/main.window
-      dojo/main.__XhrArgs
       dojo/mouse
       dojo/node
       dojo/NodeList
@@ -217,12 +112,6 @@ module Docs
       dojo/NodeList._nodeDataCache
       dojo/NodeList-traverse
       dojo/number
-      dojo/number.__FormatAbsoluteOptions
-      dojo/number.__FormatOptions
-      dojo/number.__IntegerRegexpFlags
-      dojo/number.__ParseOptions
-      dojo/number.__RealNumberRegexpFlags
-      dojo/number.__RegexpOptions
       dojo/on
       dojo/on/asyncEventListener
       dojo/on/debounce
@@ -237,32 +126,16 @@ module Docs
       dojo/ready
       dojo/regexp
       dojo/request
-      dojo/request.__BaseOptions
       dojo/request/default
       dojo/request/handlers
       dojo/request/iframe
-      dojo/request/iframe.__BaseOptions
-      dojo/request/iframe.__MethodOptions
-      dojo/request/iframe.__Options
-      dojo/request.__MethodOptions
       dojo/request/node
-      dojo/request/node.__BaseOptions
-      dojo/request/node.__MethodOptions
-      dojo/request/node.__Options
       dojo/request/notify
-      dojo/request.__Options
-      dojo/request.__Promise
       dojo/request/registry
       dojo/request/script
-      dojo/request/script.__BaseOptions
-      dojo/request/script.__MethodOptions
-      dojo/request/script.__Options
       dojo/request/util
       dojo/request/watch
       dojo/request/xhr
-      dojo/request/xhr.__BaseOptions
-      dojo/request/xhr.__MethodOptions
-      dojo/request/xhr.__Options
       dojo/require
       dojo/robot
       dojo/robot._runsemaphore
@@ -299,6 +172,11 @@ module Docs
       dojo/uacss
       dojo/when
       dojo/window)
+    # Add the rest of the url to the path
+    self.initial_paths = self.initial_paths.map { |l| l + ".html?xhr=true" }
+    # Dojo expects all the requests to be xhrs or it redirects you back to the docs home page
+    # where it uses js to call the backend based on the URL so you get the appropriate documentation
+    self.headers = { 'User-Agent' => 'devdocs.io' , 'X-Requested-With' => 'XMLHttpRequest'  }
     self.links = {
       home: 'http://dojotoolkit.org',
       code: 'https://github.com/dojo/dojo'
@@ -306,7 +184,11 @@ module Docs
 
     html_filters.push 'dojo/clean_html', 'dojo/entries'
 
+    # Don't use default selector on xhrs as no body or html document exists
+    options[:container] = ->(filter) { filter.root_page? ? '#content' : false }
+    options[:follow_links] = false
     options[:skip_links] = true
+    options[:only] = self.initial_paths
 
     options[:attribution] = <<-HTML
       The Dojo Toolkit is Copyright &copy; 2005&ndash;2013 <br>
