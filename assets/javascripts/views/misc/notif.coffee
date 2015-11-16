@@ -48,7 +48,7 @@ class app.views.Notif extends app.View
     return
 
   onClick: (event) =>
-    unless event.target.tagName is 'A'
+    if event.target.tagName isnt 'A' or event.target.classList.contains('_notif-close')
       $.stopEvent(event)
       @hide()
     return
