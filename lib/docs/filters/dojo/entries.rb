@@ -6,7 +6,9 @@ module Docs
       end
 
       def get_type
-        name
+        list_of_names = name.split(/\/|\./)
+        list_of_names.pop
+        list_of_names.join("/")
       end
     end
   end
