@@ -16,6 +16,7 @@ module Docs
       /document/documentURIObject
       /document/loadOverlay
       /document/tooltipNode
+      /Document/cookie/Simple_document.cookie_framework
       /DOMErrorHandler
       /DOMLocator
       /DOMObject

@@ -16,6 +16,7 @@ module Docs
         'Keyboard'         => 'Keyboard',
         'edia'             => 'Media',
         'Mouse'            => 'Mouse',
+        'Notification'     => 'Notification',
         'Offline'          => 'Offline',
         'Orientation'      => 'Device',
         'Sensor'           => 'Device',
@@ -23,9 +24,11 @@ module Docs
         'Page Visibility'  => 'Page Visibility',
         'Pointer'          => 'Mouse',
         'PopState'         => 'History',
+        'Push'             => 'Push',
         'Progress'         => 'Progress',
         'Proximity'        => 'Device',
         'Server Sent'      => 'Server Sent Events',
+        'Speech'           => 'Web Speech',
         'Storage'          => 'Web Storage',
         'Touch'            => 'Touch',
         'Transition'       => 'CSS',
@@ -57,7 +60,7 @@ module Docs
         elsif LOAD_SLUGS.include?(slug)
           'Load'
         else
-          if info = at_css('.eventinfo').try(:content)
+          if info = at_css('.eventinfo, .properties').try(:content)
             TYPE_BY_INFO.each_pair do |key, value|
               return value if info.include?(key)
             end
