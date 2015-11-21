@@ -40,10 +40,15 @@ class app.views.Resizer extends app.View
 
   onDrag: (event) =>
     return if @lastDrag and @lastDrag > Date.now() - 50
+    value = event.pageX
     @lastDrag = Date.now()
-    @resize(event.pageX, false)
+    @lastDragValue = value
+    @resize(value, false)
     return
 
   onDragEnd: (event) =>
-    @resize(event.pageX or (event.screenX - window.screenX), true)
+    value = event.pageX or (event.screenX - window.screenX)
+    if @lastDragValue and not (@lastDragValue - 5 < value < @lastDragValue + 5) # https://github.com/Thibaut/devdocs/issues/265
+      value = @lastDragValue
+    @resize(value, true)
     return
