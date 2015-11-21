@@ -2,7 +2,7 @@ module Docs
   class Npm < UrlScraper
     self.name = 'npm'
     self.type = 'npm'
-    self.version = '3.3.6'
+    self.version = '3.4.1'
     self.base_url = 'https://docs.npmjs.com/'
     self.links = {
       home: 'https://www.npmjs.com/',
@@ -15,7 +15,7 @@ module Docs
     options[:title] = false
     options[:root_title] = 'npm'
 
-    options[:skip] = %w(all)
+    options[:skip] = %w(all misc/index)
     options[:skip_patterns] = [
       /\Aenterprise/,
       /\Acompany/,
