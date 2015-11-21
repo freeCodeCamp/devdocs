@@ -2,14 +2,17 @@ module Docs
   class UrlScraper < Scraper
     class << self
       attr_accessor :params
+      attr_accessor :headers
 
       def inherited(subclass)
         super
         subclass.params = params.deep_dup
+        subclass.headers = headers.deep_dup
       end
     end
 
     self.params = {}
+    self.headers = { 'User-Agent' => 'devdocs.io' }
 
     private
 
@@ -22,7 +25,7 @@ module Docs
     end
 
     def request_options
-      { params: self.class.params }
+      { params: self.class.params, headers: self.class.headers }
     end
 
     def process_response?(response)
