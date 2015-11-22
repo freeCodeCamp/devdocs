@@ -6,7 +6,11 @@ module Docs
     end
 
     def attribution
-      context[:attribution]
+      if context[:attribution].is_a?(String)
+        context[:attribution]
+      else
+        context[:attribution].call(self)
+      end
     end
 
     def attribution_html
