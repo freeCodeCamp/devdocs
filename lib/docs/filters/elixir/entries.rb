@@ -12,7 +12,11 @@ module Docs
         when 'protocol'
           'Protocols'
         else
-          name.split('.').first
+          if name.start_with?('Phoenix')
+            name.split('.')[0..2].join('.')
+          else
+            name.split('.').first
+          end
         end
       end
 
@@ -29,11 +33,16 @@ module Docs
 
           unless node.parent['class'].end_with?('macro') || self.name.start_with?('Kernel')
             name.prepend "#{self.name}."
-            name << " (#{id.split('/').last})"
           end
+
+          name << " (#{id.split('/').last})" if id =~ /\/\d+\z/
 
           [name, id]
         end
+      end
+
+      def include_default_entry?
+        !slug.end_with?('extra-api-reference')
       end
     end
   end

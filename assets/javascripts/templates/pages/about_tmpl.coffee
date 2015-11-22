@@ -300,6 +300,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/photonstorm/phaser/master/license.txt'
   ], [
+    'Phoenix',
+    '2014 Chris McCord',
+    'MIT',
+    'https://raw.githubusercontent.com/phoenixframework/phoenix/master/LICENSE.md'
+  ], [
     'PHP',
     '1997-2015 The PHP Documentation Group',
     'CC BY',
