@@ -18,8 +18,8 @@ module Docs
       end
 
       def get_type
-        link = at_css('.nav-docs-section .active')
-        section = link.ancestors('.nav-docs-section').first
+        link = at_css('.nav-docs-section .active, .toc .active')
+        section = link.ancestors('.nav-docs-section, section').first
         type = section.at_css('h3').content.strip
         type = REPLACE_TYPES[type] || type
         type += ": #{name}" if type == 'Components'

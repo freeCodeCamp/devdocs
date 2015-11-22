@@ -2,7 +2,7 @@ module Docs
   class React
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.inner-content')
+        @doc = at_css('.inner-content, article.withtoc')
 
         if root_page?
           at_css('h1').content = context[:root_title]
@@ -16,8 +16,12 @@ module Docs
 
         css('.highlight').each do |node|
           node.name = 'pre'
-          node['data-lang'] = node.at_css('[data-lang]')['data-lang']
+          node['data-lang'] = node.at_css('[data-lang]').try(:[], 'data-lang') || 'js'
           node.content = node.content
+        end
+
+        css('table.highlighttable').each do |node|
+          node.replace(node.at_css('pre.highlight'))
         end
 
         css('.prism').each do |node|
