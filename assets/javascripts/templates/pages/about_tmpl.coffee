@@ -135,6 +135,11 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/django/django/master/LICENSE'
   ], [
+    'Dojo',
+    '2005-2015 The Dojo Foundation',
+    'BSD + AFL',
+    'http://dojotoolkit.org/license.html'
+  ], [
     'Drupal',
     '2001-2015 by the original authors<br>Drupal is a registered trademark of Dries Buytaert.',
     'GPLv2',

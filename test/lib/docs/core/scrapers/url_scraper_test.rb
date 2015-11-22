@@ -75,7 +75,6 @@ class DocsUrlScraperTest < MiniTest::Spec
       result
     end
 
-
     it "runs a Requester with the given block" do
       stub(Docs::Requester).run { |*args| @block = args.last }
       result
