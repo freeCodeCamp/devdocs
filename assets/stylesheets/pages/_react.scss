@@ -3,7 +3,7 @@
   > h3 { @extend %block-label, %label-blue; }
   > h4 { @extend %block-label; }
 
-  p code { @extend %label; }
+  p code, li code { @extend %label; }
   blockquote { @extend %note; }
 
   span.platform { float: right; }

@@ -41,6 +41,14 @@ module Docs
           node.before(node.children).remove
         end
 
+        css('a pre').each do |node|
+          node.name = 'code'
+        end
+
+        css('a[target]').each do |node|
+          node.remove_attribute('target')
+        end
+
         doc
       end
     end

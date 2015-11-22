@@ -37,7 +37,9 @@ module Docs
             [name, id, type]
           end
         else
-          css('.props > .prop > .propTitle').each_with_object([]) do |node, entries|
+          entries = []
+
+          css('.props > .prop > .propTitle').each do |node| # react-native
             name = node.children.find(&:text?).try(:content)
             next if name.blank?
             sep = node.content.include?('static') ? '.' : '#'
@@ -46,6 +48,19 @@ module Docs
             id = node.at_css('.anchor')['name']
             entries << [name, id]
           end
+
+          css('.apiIndex a pre').each do |node| # relay
+            next unless node.parent['href'].start_with?('#')
+            id = node.parent['href'].remove('#')
+            name = node.content.strip
+            sep = name.start_with?('static') ? '.' : '#'
+            name.remove! %r{(abstract|static) }
+            name.sub! %r{\(.*\)}, '()'
+            name.prepend(self.name + sep)
+            entries << [name, id]
+          end
+
+          entries
         end
       end
     end
