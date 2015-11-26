@@ -1,0 +1,16 @@
+._cakephp {
+  h2 { @extend %block-heading; }
+
+  h3 { @extend %block-label, %label-blue; }
+
+  h3 > a { float: right; }
+
+  h3 > a,
+  span.label,
+  span.php-keyword1 {
+    font-weight: normal;
+  }
+
+  .tree > dd { margin-left: 0px; }
+  .list { margin-left: 20px; }
+}
