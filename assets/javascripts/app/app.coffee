@@ -100,6 +100,7 @@
     return
 
   enableDoc: (doc, _onSuccess, onError) ->
+    return if @docs.contains(doc)
     onSuccess = =>
       @disabledDocs.remove(doc)
       @docs.add(doc)

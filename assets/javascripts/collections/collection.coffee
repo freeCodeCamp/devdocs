@@ -38,6 +38,9 @@ class app.Collection
   all: ->
     @models
 
+  contains: (model) ->
+    @models.indexOf(model) >= 0
+
   findBy: (attr, value) ->
     for model in @models
       return model if model[attr] is value
