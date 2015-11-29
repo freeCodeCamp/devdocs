@@ -93,6 +93,7 @@ pre, code, samp, %pre, %code {
   font-size: .9em;
   color: $textColor;
   white-space: pre-wrap;
+  direction: ltr;
   -moz-tab-size: 2;
     -o-tab-size: 2;
        tab-size: 2;
