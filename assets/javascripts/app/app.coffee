@@ -1,6 +1,7 @@
 @app =
-  $: $
-  $$: $$
+  _$: $
+  _$$: $$
+  _page: page
   collections: {}
   models:      {}
   templates:   {}
@@ -53,7 +54,7 @@
         Raven.config @config.sentry_dsn,
           whitelistUrls: [/devdocs/]
           includePaths: [/devdocs/]
-          ignoreErrors: [/dpQuery/, /NPObject/]
+          ignoreErrors: [/dpQuery/, /NPObject/, /NS_ERROR/, /^null$/]
           tags:
             mode: if @DOC then 'single' else 'full'
             iframe: (window.top isnt window).toString()
@@ -163,6 +164,8 @@
     return
 
   onQuotaExceeded: ->
+    return if @quotaExceeded
+    @quotaExceeded = true
     new app.views.Notif 'QuotaExceeded', autoHide: null
     Raven.captureMessage 'QuotaExceededError'
 
@@ -188,7 +191,7 @@
   isInjectionError: ->
     # Some browser extensions expect the entire web to use jQuery.
     # I gave up trying to fight back.
-    window.$ isnt app.$ or window.$$ isnt app.$$
+    window.$ isnt app._$ or window.$$ isnt app._$$ or window.page isnt app._page
 
   isAppError: (error, file) ->
     # Ignore errors from external scripts.
