@@ -19,6 +19,17 @@ DevDocs is free and open source. If you like it, please consider supporting my w
 
 Unless you wish to contribute to the project, I recommend using the hosted version at [devdocs.io](http://devdocs.io). It's up-to-date and works offline out-of-the-box.
 
+Alternatively, DevDocs may be started as a Docker container:
+
+```
+# First, build the image
+git clone https://github.com/Thibaut/devdocs.git && cd devdocs
+docker build -t thibaut/devdocs .
+
+# Finally, start a DevDocs container (access http://localhost:9292)
+docker run --name devdocs -d -p 9292:9292 thibaut/devdocs
+```
+
 DevDocs is made of two separate pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
 DevDocs requires Ruby 2.2.2, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/sstephenson/execjs#readme) (included in OS X and Windows; [Node.js](http://nodejs.org/) on Linux). Once you have these installed, run the following commands:
@@ -36,6 +47,17 @@ Finally, point your browser at [localhost:9292](http://localhost:9292) (the firs
 The `thor docs:download` command is used to download/update individual documentations (e.g. `thor docs:download html css`), or all at the same time (using the `--all` option). You can see the list of available documentations by running `thor docs:list`.
 
 **Note:** there is currently no update mechanism other than `git pull origin master` to update the code and `thor docs:download` to download the latest version of the docs. To stay informed about new releases, be sure to [watch](https://github.com/Thibaut/devdocs/subscription) this repository and/or subscribe to the [newsletter](http://eepurl.com/HnLUz).
+
+Alternatively, DevDocs may be started as a Docker container:
+
+```
+# First, build the image
+git clone https://github.com/Thibaut/devdocs.git && cd devdocs
+docker build -t thibaut/devdocs .
+
+# Finally, start a DevDocs container (access http://localhost:9292)
+docker run --name devdocs -d -p 9292:9292 thibaut/devdocs
+```
 
 ## Vision
 
