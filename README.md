@@ -37,6 +37,17 @@ The `thor docs:download` command is used to download/update individual documenta
 
 **Note:** there is currently no update mechanism other than `git pull origin master` to update the code and `thor docs:download` to download the latest version of the docs. To stay informed about new releases, be sure to [watch](https://github.com/Thibaut/devdocs/subscription) this repository and/or subscribe to the [newsletter](http://eepurl.com/HnLUz).
 
+Alternatively, DevDocs may be started as a Docker container:
+
+```
+# First, build the image
+git clone https://github.com/Thibaut/devdocs.git && cd devdocs
+docker build -t thibaut/devdocs .
+
+# Finally, start a DevDocs container (access http://localhost:9292)
+docker run --name devdocs -d -p 9292:9292 thibaut/devdocs
+```
+
 ## Vision
 
 DevDocs aims to make reading and searching reference documentation fast, easy and enjoyable.
