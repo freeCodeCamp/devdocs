@@ -17,7 +17,7 @@ class app.views.Sidebar extends app.View
       .on 'searching', @showResults
       .on 'clear', @showDocList
 
-    @results = new app.views.Results @search
+    @results = new app.views.Results @, @search
     @docList = new app.views.DocList
     @docPicker = new app.views.DocPicker unless app.isSingleDoc()
 
@@ -105,3 +105,7 @@ class app.views.Sidebar extends app.View
     @reset()
     @scrollToTop()
     return
+
+  onDocEnabled: ->
+    @docList.onEnabled()
+    @reset()

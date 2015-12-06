@@ -18,7 +18,11 @@ templates.sidebarEntry = (entry) ->
   """<a href="#{entry.fullPath()}" class="_list-item _list-hover">#{$.escape entry.name}</a>"""
 
 templates.sidebarResult = (entry) ->
-  """<a href="#{entry.fullPath()}" class="_list-item _list-hover _list-result _icon-#{entry.doc.slug}"><span class="_list-reveal" data-reset-list title="Reveal in list"></span>#{$.escape entry.name}</a>"""
+  addon = if entry.isIndex() and app.disabledDocs.contains(entry.doc)
+    """<span class="_list-enable" data-enable="#{entry.doc.slug}">Enable</span>"""
+  else
+    """<span class="_list-reveal" data-reset-list title="Reveal in list"></span>"""
+  """<a href="#{entry.fullPath()}" class="_list-item _list-hover _list-result _icon-#{entry.doc.slug}">#{addon}#{$.escape entry.name}</a>"""
 
 templates.sidebarNoResults = ->
   html = """ <div class="_list-note">No results.</div> """

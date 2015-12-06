@@ -1,10 +1,13 @@
 class app.views.Results extends app.View
   @className: '_list'
 
+  @events:
+    click: 'onClick'
+
   @routes:
     after: 'afterRoute'
 
-  constructor: (@search) -> super
+  constructor: (@sidebar, @search) -> super
 
   deactivate: ->
     if super
@@ -46,9 +49,20 @@ class app.views.Results extends app.View
     @el.firstElementChild?.click()
     return
 
+  onDocEnabled: (doc) ->
+    app.router.show(doc.fullPath())
+    @sidebar.onDocEnabled()
+
   afterRoute: (route, context) =>
     if route is 'entry'
       @listSelect.selectByHref context.entry.fullPath()
     else
       @listSelect.deselect()
     return
+
+  onClick: (event) =>
+    return if event.which isnt 1
+    if slug = event.target.getAttribute('data-enable')
+      $.stopEvent(event)
+      doc = app.disabledDocs.findBy('slug', slug)
+      app.enableDoc(doc, @onDocEnabled.bind(@, doc), $.noop)
