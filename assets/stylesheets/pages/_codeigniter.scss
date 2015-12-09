@@ -1,0 +1,6 @@
+._codeigniter {
+  @extend %sphinx;
+
+  .important { @extend %note-orange; }
+  .warning { @extend %note-red; }
+}
