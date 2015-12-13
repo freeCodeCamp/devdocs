@@ -29,6 +29,28 @@ class DocsResponseTest < MiniTest::Spec
     end
   end
 
+  describe "#error?" do
+    it "returns false when the code is 200" do
+      options.code = 200
+      refute response.error?
+    end
+
+    it "returns false when the code is 404" do
+      options.code = 404
+      refute response.error?
+    end
+
+    it "returns true when the code is 400" do
+      options.code = 400
+      assert response.error?
+    end
+
+    it "returns true when the code is 500" do
+      options.code = 500
+      assert response.error?
+    end
+  end
+
   describe "#empty?" do
     it "returns true when the body is empty" do
       options.body = ''

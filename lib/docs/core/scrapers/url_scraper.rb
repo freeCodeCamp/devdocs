@@ -29,6 +29,10 @@ module Docs
     end
 
     def process_response?(response)
+      if response.error?
+        raise "Error status code (#{response.code}): #{response.url}"
+      end
+
       response.success? && response.html? && base_url.contains?(response.effective_url)
     end
 

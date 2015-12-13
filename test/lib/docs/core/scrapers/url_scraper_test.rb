@@ -89,11 +89,16 @@ class DocsUrlScraperTest < MiniTest::Spec
 
   describe "#process_response?" do
     let :response do
-      OpenStruct.new success?: true, html?: true, effective_url: scraper.root_url
+      OpenStruct.new success?: true, html?: true, effective_url: scraper.root_url, error?: false
     end
 
     let :result do
       scraper.send :process_response?, response
+    end
+
+    it "raises when the response is an error" do
+      response.send 'error?=', true
+      assert_raises(RuntimeError) { result }
     end
 
     it "returns false when the response isn't successful" do

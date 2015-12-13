@@ -4,6 +4,10 @@ module Docs
       code == 200
     end
 
+    def error?
+      code != 404 && code >= 400 && code <= 599
+    end
+
     def empty?
       body.empty?
     end
