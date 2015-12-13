@@ -44,7 +44,7 @@ module Docs
             next if name.blank?
             sep = node.content.include?('static') ? '.' : '#'
             name.prepend(self.name + sep)
-            name << '()' if node.css('.propType').last.content.start_with?('(')
+            name << '()' if (n = node.css('.propType').last) && n.content.start_with?('(')
             id = node.at_css('.anchor')['name']
             entries << [name, id]
           end
