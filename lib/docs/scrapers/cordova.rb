@@ -2,7 +2,7 @@ module Docs
   class Cordova < UrlScraper
     self.name = 'Cordova'
     self.type = 'cordova'
-    self.version = '5.1.1'
+    self.version = '5.4.0'
     self.base_url = "http://cordova.apache.org/docs/en/#{version}/"
     self.root_path = 'index.html'
     self.links = {
@@ -11,10 +11,10 @@ module Docs
 
     html_filters.push 'cordova/clean_html', 'cordova/entries', 'title'
 
-    options[:container] = ->(filter) { filter.root_page? ? '#home' : '#content' }
+    options[:container] = ->(filter) { filter.root_page? ? '#home' : '#page-toc-source' }
     options[:title] = false
     options[:root_title] = 'Apache Cordova'
-    options[:skip] = %w(_index.html guide_support_index.md.html)
+    options[:skip] = %w(page_index.html)
 
     options[:attribution] = <<-HTML
       &copy; 2012-2015 The Apache Software Foundation<br>

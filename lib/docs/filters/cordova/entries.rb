@@ -6,18 +6,12 @@ module Docs
       end
 
       def get_type
-        if subpath.start_with?('guide_platforms')
+        if subpath.start_with?('guide/platforms')
           name[/Amazon\ Fire\ OS|Android|BlackBerry|Firefox OS|iOS|Windows/] || 'Platform Guides'
+        elsif subpath.start_with?('cordova/events')
+          'Events'
         else
           'Guides'
-        end
-      end
-
-      def additional_entries
-        return [] unless slug == 'cordova_events_events.md'
-
-        css('h3').map do |node|
-          [node.content, node['id'], 'Events']
         end
       end
     end

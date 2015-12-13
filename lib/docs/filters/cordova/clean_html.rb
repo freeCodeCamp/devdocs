@@ -4,10 +4,7 @@ module Docs
       def call
         if root_page?
           css('h1').each { |node| node.name = 'h2' }
-          css('li > h3').each { |node| node.name = 'div' }
-        elsif slug == 'cordova_events_events.md'
-          css('h1:not(:first-child)').each { |node| node.name = 'h3' }
-          css('h2').each { |node| node.name = 'h4' }
+          css('li > h2').each { |node| node.name = 'div' }
         end
 
         css('hr').remove
