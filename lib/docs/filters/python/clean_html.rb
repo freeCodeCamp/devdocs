@@ -2,7 +2,11 @@ module Docs
   class Python
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css '.body > .section'
+        @doc = at_css '.body'
+
+        css('> .section').each do |node|
+          node.before(node.children).remove
+        end
 
         # Clean inline code elements
 
@@ -30,8 +34,12 @@ module Docs
 
         # Clean headings
 
-        at_css('h1').tap do |node|
-          node.content = node.content.sub!(/\A[\d\.]+/) { |str| @levelRegexp = /\A#{str}/; '' }
+        css('h1').each do |node|
+          node.content = node.content.sub!(/\A[\d\.]+/) do |str|
+            rgx = /\A#{str}/
+            @levelRegexp = @levelRegexp ? Regexp.union(@levelRegexp, rgx) : rgx
+            ''
+          end
         end
 
         css('h2', 'h3', 'h4').each do |node|
