@@ -39,6 +39,10 @@ module Docs
           node.name = 'pre'
         end
 
+        css('td[style]').each do |node|
+          node.remove_attribute('style')
+        end
+
         doc
       end
     end
