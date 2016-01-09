@@ -5,7 +5,7 @@ module Docs
     self.name = 'Angular.js'
     self.slug = 'angular'
     self.type = 'angular'
-    self.version = '1.4.7'
+    self.version = '1.4.8'
     self.base_url = "https://code.angularjs.org/#{version}/docs/partials/api/"
 
     html_filters.push 'angular/clean_html', 'angular/entries', 'title'
@@ -24,8 +24,8 @@ module Docs
     options[:skip] = %w(ng.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2015 Google, Inc.<br>
-      Licensed under the Creative Commons Attribution License 3.0.
+      &copy; 2010&ndash;2016 Google, Inc.<br>
+      Licensed under the Creative Commons Attribution License 4.0.
     HTML
 
     private
