@@ -1,7 +1,7 @@
 module Docs
   class Relay < React
     self.type = 'react'
-    self.version = '0.5'
+    self.version = '0.6'
     self.base_url = 'https://facebook.github.io/relay/docs/'
     self.root_path = 'getting-started.html'
     self.links = {
@@ -14,7 +14,7 @@ module Docs
     options[:skip] = %w(videos.html graphql-further-reading.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2013&ndash;2015 Facebook Inc.<br>
+      &copy; 2013&ndash;2016 Facebook Inc.<br>
       Licensed under the BSD License.
     HTML
   end
