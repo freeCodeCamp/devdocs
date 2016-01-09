@@ -20,6 +20,7 @@ module Docs
         when /config\./
           h2 = nil
           css('.page-contents .span8 > *').each_with_object [] do |node, entries|
+            next if node.name == 'pre'
             if node.name == 'h2'
               h2 = node.content
             elsif h2 == 'Available Settings' && (code = node.at_css('code')) && (name = code.content) && name.start_with?('config.')
