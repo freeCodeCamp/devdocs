@@ -126,7 +126,7 @@ credits = [
     'http://creativecommons.org/licenses/by-sa/2.5/'
   ], [
     'D3.js',
-    '2015 Michael Bostock',
+    '2010-2016 Michael Bostock',
     'BSD',
     'https://raw.github.com/mbostock/d3/master/LICENSE'
   ], [
