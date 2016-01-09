@@ -1,7 +1,7 @@
 module Docs
   class Git < UrlScraper
     self.type = 'git'
-    self.version = '2.6.1'
+    self.version = '2.7.0'
     self.base_url = 'http://git-scm.com/docs'
     self.initial_paths = %w(/git.html)
     self.links = {
@@ -16,7 +16,7 @@ module Docs
     options[:only_patterns] = [/\A\/git\-/]
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2015 Linus Torvalds and others<br>
+      &copy; 2005&ndash;2016 Linus Torvalds and others<br>
       Licensed under the GNU General Public License version 2.
     HTML
   end
