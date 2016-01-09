@@ -92,7 +92,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport (~> 4.0)
+  activesupport (~> 4.2)
   better_errors
   browser
   coffee-script
