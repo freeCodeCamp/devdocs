@@ -81,7 +81,7 @@ credits = [
     'http://creativecommons.org/licenses/by/4.0/'
   ], [
     'Apache HTTP Server',
-    'The Apache Software Foundation',
+    '2016 The Apache Software Foundation',
     'Apache',
     'http://www.apache.org/licenses/LICENSE-2.0'
   ], [
