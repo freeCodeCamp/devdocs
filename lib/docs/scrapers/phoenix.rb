@@ -1,13 +1,13 @@
 module Docs
   class Phoenix < Elixir
     self.type = 'elixir'
-    self.version = '1.0.3'
+    self.version = '1.1.2'
     self.base_url = 'http://hexdocs.pm/'
     self.root_path = 'phoenix/Phoenix.html'
     self.initial_paths = %w(
-      phoenix/extra-api-reference.html
-      ecto/extra-api-reference.html
-      phoenix_html/extra-api-reference.html
+      phoenix/api-reference.html
+      ecto/api-reference.html
+      phoenix_html/api-reference.html
       plug/extra-api-reference.html)
     self.links = {
       home: 'http://www.phoenixframework.org',
