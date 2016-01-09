@@ -2,7 +2,7 @@ module Docs
   class React < UrlScraper
     self.name = 'React'
     self.type = 'react'
-    self.version = '0.14.2'
+    self.version = '0.14.6'
     self.base_url = 'https://facebook.github.io/react/'
     self.root_path = 'docs/getting-started.html'
     self.links = {
@@ -24,7 +24,7 @@ module Docs
       tips/introduction.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2013&ndash;2015 Facebook Inc.<br>
+      &copy; 2013&ndash;2016 Facebook Inc.<br>
       Licensed under the Creative Commons Attribution 4.0 International Public License.
     HTML
   end

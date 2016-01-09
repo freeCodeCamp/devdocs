@@ -331,7 +331,7 @@ credits = [
     'https://raw.githubusercontent.com/kriskowal/q/v1/LICENSE'
   ], [
     'React, React Native, Flow, Relay',
-    '2013-2015 Facebook Inc.',
+    '2013-2016 Facebook Inc.',
     'CC BY',
     'https://raw.githubusercontent.com/facebook/react/master/LICENSE-docs'
   ], [
