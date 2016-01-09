@@ -42,7 +42,7 @@ module Docs
       end
 
       def include_default_entry?
-        !slug.end_with?('extra-api-reference')
+        !slug.end_with?('api-reference')
       end
     end
   end

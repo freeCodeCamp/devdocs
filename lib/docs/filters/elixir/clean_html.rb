@@ -2,7 +2,7 @@ module Docs
   class Elixir
     class CleanHtmlFilter < Filter
       def call
-        at_css('footer', '.view-source').remove
+        css('footer', '.view-source', 'h1 .visible-xs').remove
 
         css('section section.docstring h2').each do |node|
           node.name = 'h4'
