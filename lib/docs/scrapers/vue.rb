@@ -3,7 +3,7 @@ module Docs
     self.name = 'Vue.js'
     self.slug = 'vue'
     self.type = 'vue'
-    self.version = '1.0.7'
+    self.version = '1.0.13'
     self.base_url = 'http://vuejs.org'
     self.root_path = '/guide/index.html'
     self.initial_paths = %w(/api/index.html)
@@ -17,7 +17,7 @@ module Docs
     options[:only_patterns] = [/\/guide\//, /\/api\//]
 
     options[:attribution] = <<-HTML
-      &copy; 2013&ndash;2015 Evan You, Vue.js contributors<br>
+      &copy; 2013&ndash;2016 Evan You, Vue.js contributors<br>
       Licensed under the MIT License.
     HTML
   end
