@@ -46,7 +46,7 @@ module Docs
       end
 
       def include_default_entry?
-        subpath != '/api/5.1/classes.html'
+        subpath != '/api/5.2/classes.html'
       end
     end
   end

@@ -3,12 +3,12 @@ module Docs
     self.name = 'Laravel'
     self.slug = 'laravel'
     self.type = 'laravel'
-    self.version = '5.1.1'
-    self.base_url = 'http://laravel.com'
-    self.root_path = '/api/5.1/index.html'
-    self.initial_paths = %w(/docs/5.1/installation /api/5.1/classes.html)
+    self.version = '5.2.0'
+    self.base_url = 'https://laravel.com'
+    self.root_path = '/api/5.2/index.html'
+    self.initial_paths = %w(/docs/5.2/installation /api/5.2/classes.html)
     self.links = {
-      home: 'http://laravel.com/',
+      home: 'https://laravel.com/',
       code: 'https://github.com/laravel/laravel'
     }
 
@@ -19,24 +19,25 @@ module Docs
     }
 
     options[:only_patterns] = [
-      /\A\/api\/5\.1\//,
-      /\A\/docs\/5\.1\//]
+      /\A\/api\/5\.2\//,
+      /\A\/docs\/5\.2\//]
 
     options[:skip] = %w(
-      /docs/5.1/quick
-      /docs/5.1/releases
-      /docs/5.1/artisan
-      /docs/5.1/commands
-      /api/5.1/panel.html
-      /api/5.1/namespaces.html
-      /api/5.1/interfaces.html
-      /api/5.1/traits.html
-      /api/5.1/doc-index.html
-      /api/5.1/Illuminate.html
-      /api/5.1/search.html)
+      /docs/5.2/quick
+      /docs/5.2/releases
+      /docs/5.2/artisan
+      /docs/5.2/commands
+      /api/5.2/.html
+      /api/5.2/panel.html
+      /api/5.2/namespaces.html
+      /api/5.2/interfaces.html
+      /api/5.2/traits.html
+      /api/5.2/doc-index.html
+      /api/5.2/Illuminate.html
+      /api/5.2/search.html)
 
     options[:fix_urls] = ->(url) do
-      url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/5.1/"
+      url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/5.2/"
       url
     end
 
