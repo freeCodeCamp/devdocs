@@ -57,7 +57,7 @@ app.templates.aboutPage = -> """
 
   <h2 class="_lined-heading" id="copyright">Copyright and License</h2>
   <p class="_note">
-    <strong>Copyright 2013&ndash;2015 Thibaut Courouble and <a href="https://github.com/Thibaut/devdocs/graphs/contributors">other contributors</a></strong><br>
+    <strong>Copyright 2013&ndash;2016 Thibaut Courouble and <a href="https://github.com/Thibaut/devdocs/graphs/contributors">other contributors</a></strong><br>
     This software is licensed under the terms of the Mozilla Public License v2.0.<br>
     You may obtain a copy of the source code at <a href="https://github.com/Thibaut/devdocs">github.com/Thibaut/devdocs</a>.<br>
     For more information, see the <a href="https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
