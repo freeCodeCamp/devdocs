@@ -1,7 +1,7 @@
 module Docs
   class Less < UrlScraper
     self.type = 'less'
-    self.version = '2.5.3'
+    self.release = '2.5.3'
     self.base_url = 'http://lesscss.org'
     self.root_path = '/features'
     self.initial_paths = %w(/functions)

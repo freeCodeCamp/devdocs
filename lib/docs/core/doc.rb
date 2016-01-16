@@ -6,7 +6,7 @@ module Docs
     class << self
       include Instrumentable
 
-      attr_accessor :name, :slug, :type, :version, :abstract, :links
+      attr_accessor :name, :slug, :type, :release, :abstract, :links
 
       def inherited(subclass)
         subclass.type = type
@@ -36,7 +36,7 @@ module Docs
         { name: name,
           slug: slug,
           type: type,
-          version: version,
+          release: release,
           index_path: index_path,
           db_path: db_path,
           links: links }

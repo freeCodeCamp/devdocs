@@ -53,10 +53,10 @@ class DocsDocTest < MiniTest::Spec
     end
   end
 
-  describe ".version=" do
-    it "stores .version" do
-      doc.version = '1'
-      assert_equal '1', doc.version
+  describe ".release=" do
+    it "stores .release" do
+      doc.release = '1'
+      assert_equal '1', doc.release
     end
   end
 
@@ -115,8 +115,8 @@ class DocsDocTest < MiniTest::Spec
       assert_instance_of Hash, doc.as_json
     end
 
-    it "includes the doc's name, slug, type, version, index_path and db_path" do
-      %w(name slug type version index_path db_path links).each do |attribute|
+    it "includes the doc's name, slug, type, release, index_path and db_path" do
+      %w(name slug type release index_path db_path links).each do |attribute|
         eval "stub(doc).#{attribute} { attribute }"
         assert_equal attribute, doc.as_json[attribute.to_sym]
       end

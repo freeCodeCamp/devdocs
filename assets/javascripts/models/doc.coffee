@@ -1,5 +1,5 @@
 class app.models.Doc extends app.Model
-  # Attributes: name, slug, type, version, index_path, db_path, db_size, mtime, links
+  # Attributes: name, slug, type, release, index_path, db_path, db_size, mtime, links
 
   constructor: ->
     super

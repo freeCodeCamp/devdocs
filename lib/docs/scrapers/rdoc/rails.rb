@@ -2,7 +2,7 @@ module Docs
   class Rails < Rdoc
     self.name = 'Ruby on Rails'
     self.slug = 'rails'
-    self.version = '4.2.3'
+    self.release = '4.2.3'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Rails'
     self.links = {
       home: 'http://rubyonrails.org/',

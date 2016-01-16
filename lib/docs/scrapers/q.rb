@@ -2,7 +2,7 @@ module Docs
   class Q < UrlScraper
     self.name = 'Q'
     self.type = 'q'
-    self.version = '1.4.1'
+    self.release = '1.4.1'
     self.base_url = 'https://github.com/kriskowal/q/wiki/'
     self.root_path = 'API-Reference'
     self.links = {

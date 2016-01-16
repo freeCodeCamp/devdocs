@@ -1,7 +1,7 @@
 module Docs
   class Lua < UrlScraper
     self.type = 'lua'
-    self.version = '5.3'
+    self.release = '5.3'
     self.base_url = 'http://www.lua.org/manual/5.3/'
     self.root_path = 'manual.html'
 

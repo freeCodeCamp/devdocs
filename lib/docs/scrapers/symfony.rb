@@ -3,8 +3,8 @@ module Docs
     self.name = 'Symfony'
     self.slug = 'symfony'
     self.type = 'laravel'
-    self.version = '2.7'
-    self.base_url = "http://api.symfony.com/#{version}/"
+    self.release = '2.7'
+    self.base_url = "http://api.symfony.com/#{release}/"
     self.root_path = 'namespaces.html'
     self.initial_paths = %w(classes.html)
     self.links = {

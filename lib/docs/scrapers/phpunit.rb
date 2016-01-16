@@ -2,8 +2,8 @@ module Docs
   class Phpunit < UrlScraper
     self.name = 'PHPUnit'
     self.type = 'phpunit'
-    self.version = '5.1'
-    self.base_url = "https://phpunit.de/manual/#{version}/en/"
+    self.release = '5.1'
+    self.base_url = "https://phpunit.de/manual/#{release}/en/"
     self.root_path = 'index.html'
     self.links = {
       home: 'https://phpunit.de/',

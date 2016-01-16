@@ -2,8 +2,8 @@ module Docs
   class Haskell < UrlScraper
     self.name = 'Haskell'
     self.type = 'haskell'
-    self.version = '7.10.3'
-    self.base_url = "https://downloads.haskell.org/~ghc/#{version}/docs/html/libraries/"
+    self.release = '7.10.3'
+    self.base_url = "https://downloads.haskell.org/~ghc/#{release}/docs/html/libraries/"
     self.root_path = 'index.html'
 
     html_filters.push 'haskell/entries', 'haskell/clean_html'

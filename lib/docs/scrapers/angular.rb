@@ -5,8 +5,8 @@ module Docs
     self.name = 'Angular.js'
     self.slug = 'angular'
     self.type = 'angular'
-    self.version = '1.4.8'
-    self.base_url = "https://code.angularjs.org/#{version}/docs/partials/api/"
+    self.release = '1.4.8'
+    self.base_url = "https://code.angularjs.org/#{release}/docs/partials/api/"
 
     html_filters.push 'angular/clean_html', 'angular/entries', 'title'
     text_filters.push 'angular/clean_urls'
@@ -33,7 +33,7 @@ module Docs
     def root_page_body
       require 'capybara'
       Capybara.current_driver = :selenium
-      Capybara.visit("https://code.angularjs.org/#{self.class.version}/docs/api")
+      Capybara.visit("https://code.angularjs.org/#{self.class.release}/docs/api")
       Capybara.find('.side-navigation')['innerHTML']
     end
   end

@@ -2,7 +2,7 @@ module Docs
   class JqueryMobile < Jquery
     self.name = 'jQuery Mobile'
     self.slug = 'jquerymobile'
-    self.version = '1.4.0'
+    self.release = '1.4.0'
     self.base_url = 'http://local.api.jquerymobile.com'
     self.root_path = '/category/all'
 

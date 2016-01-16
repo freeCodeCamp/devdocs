@@ -10,7 +10,7 @@ module Docs
     #   --no-line-numbers \
     #   --op html .
 
-    self.version = '2.2.1'
+    self.release = '2.2.1'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby'
     self.links = {
       home: 'https://www.ruby-lang.org/',

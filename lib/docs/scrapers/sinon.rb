@@ -2,7 +2,7 @@ module Docs
   class Sinon < UrlScraper
     self.name = 'Sinon'
     self.type = 'sinon'
-    self.version = '1.17.1'
+    self.release = '1.17.1'
     self.base_url = 'http://sinonjs.org/docs/'
     self.links = {
       home: 'http://sinonjs.org/',

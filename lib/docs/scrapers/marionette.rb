@@ -3,8 +3,8 @@ module Docs
     self.name = 'Marionette.js'
     self.slug = 'marionette'
     self.type = 'marionette'
-    self.version = '2.4.3'
-    self.base_url = "http://marionettejs.com/docs/v#{version}/"
+    self.release = '2.4.3'
+    self.base_url = "http://marionettejs.com/docs/v#{release}/"
     self.root_path = 'index'
     self.links = {
       home: 'http://marionettejs.com/',

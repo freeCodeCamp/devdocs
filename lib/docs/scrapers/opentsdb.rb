@@ -2,7 +2,7 @@ module Docs
   class Opentsdb < UrlScraper
     self.name = 'OpenTSDB'
     self.type = 'opentsdb'
-    self.version = '2.1.0'
+    self.release = '2.1.0'
     self.base_url = 'http://opentsdb.net/docs/build/html/'
     self.root_path = 'index.html'
     self.links = {

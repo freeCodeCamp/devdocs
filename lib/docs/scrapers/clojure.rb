@@ -1,7 +1,7 @@
 module Docs
   class Clojure < UrlScraper
     self.type = 'clojure'
-    self.version = '1.7'
+    self.release = '1.7'
     self.base_url = 'http://clojure.github.io/clojure/'
     self.root_path = 'api-index.html'
 

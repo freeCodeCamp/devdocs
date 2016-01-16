@@ -5,8 +5,8 @@ module Docs
     include StubRootPage
 
     self.type = 'dojo'
-    self.version = '1.10'
-    self.base_url = "http://dojotoolkit.org/api/#{version}/"
+    self.release = '1.10'
+    self.base_url = "http://dojotoolkit.org/api/#{release}/"
 
     # Dojo expects all the requests to be xhrs or it redirects you back to the docs home page
     # where it uses js to call the backend based on the URL so you get the appropriate documentation

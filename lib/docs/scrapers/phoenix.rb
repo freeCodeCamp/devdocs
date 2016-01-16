@@ -1,7 +1,7 @@
 module Docs
   class Phoenix < Elixir
     self.type = 'elixir'
-    self.version = '1.1.2'
+    self.release = '1.1.2'
     self.base_url = 'http://hexdocs.pm/'
     self.root_path = 'phoenix/Phoenix.html'
     self.initial_paths = %w(

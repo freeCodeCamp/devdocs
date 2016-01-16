@@ -3,7 +3,7 @@ module Docs
     self.name = 'Laravel'
     self.slug = 'laravel'
     self.type = 'laravel'
-    self.version = '5.2.0'
+    self.release = '5.2.0'
     self.base_url = 'https://laravel.com'
     self.root_path = '/api/5.2/index.html'
     self.initial_paths = %w(/docs/5.2/installation /api/5.2/classes.html)

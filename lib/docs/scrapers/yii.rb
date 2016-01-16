@@ -1,7 +1,7 @@
 module Docs
   class Yii < UrlScraper
     self.type = 'yii'
-    self.version = '2.0.2'
+    self.release = '2.0.2'
     self.base_url = 'http://www.yiiframework.com/doc-2.0/'
     self.root_path = 'index.html'
 

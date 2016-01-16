@@ -2,8 +2,8 @@ module Docs
   class Postgresql < UrlScraper
     self.name = 'PostgreSQL'
     self.type = 'postgres'
-    self.version = '9.4'
-    self.base_url = "http://www.postgresql.org/docs/#{version}/static/"
+    self.release = '9.4'
+    self.base_url = "http://www.postgresql.org/docs/#{release}/static/"
     self.root_path = 'reference.html'
     self.initial_paths = %w(sql.html admin.html)
 

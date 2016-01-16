@@ -3,7 +3,7 @@ module Docs
     self.name = 'Yii 1'
     self.slug = 'yii1'
     self.type = 'yii'
-    self.version = '1.1.16'
+    self.release = '1.1.16'
     self.base_url = 'http://www.yiiframework.com/doc/api/1.1/'
 
     html_filters.push 'yii1/clean_html', 'yii1/entries'

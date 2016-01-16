@@ -8,7 +8,7 @@ templates.sidebarDoc = (doc, options = {}) ->
     link += """<span class="_list-enable" data-enable="#{doc.slug}">Enable</span>"""
   else
     link += """<span class="_list-arrow"></span>"""
-  link += """<span class="_list-count">#{doc.version}</span>""" if doc.version
+  link += """<span class="_list-count">#{doc.release}</span>""" if doc.release
   link +  "#{doc.name}</a>"
 
 templates.sidebarType = (type) ->

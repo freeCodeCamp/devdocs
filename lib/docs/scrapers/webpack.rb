@@ -2,7 +2,7 @@ module Docs
   class Webpack < UrlScraper
     self.name = 'webpack'
     self.type = 'webpack'
-    self.version = '1.12'
+    self.release = '1.12'
     self.base_url = 'https://webpack.github.io/docs/'
     self.links = {
       home: 'https://webpack.github.io/',

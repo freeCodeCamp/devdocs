@@ -3,7 +3,7 @@ module Docs
     self.name = 'D3.js'
     self.slug = 'd3'
     self.type = 'd3'
-    self.version = '3.5.12'
+    self.release = '3.5.12'
     self.base_url = 'https://github.com/mbostock/d3/wiki/'
     self.root_path = 'API-Reference'
     self.links = {
