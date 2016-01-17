@@ -1,8 +1,10 @@
 app.config =
+  db_filename: 'db.json'
   default_docs: <%= App.default_docs.to_json %>
   docs_host: '<%= App.docs_host %>'
   env: '<%= App.environment %>'
   history_cache_size: 10
+  index_filename: 'index.json'
   index_path: '/<%= App.docs_prefix %>'
   max_results: 50
   production_host: 'devdocs.io'

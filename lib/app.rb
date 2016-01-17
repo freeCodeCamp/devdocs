@@ -118,7 +118,7 @@ class App < Sinatra::Application
     def doc_index_urls
       docs.each_with_object [] do |slug, result|
         if doc = settings.docs[slug]
-          result << File.join('', settings.docs_prefix, doc['index_path']) + "?#{doc['mtime']}"
+          result << File.join('', settings.docs_prefix, slug, 'index.json') + "?#{doc['mtime']}"
         end
       end
     end

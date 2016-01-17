@@ -1,5 +1,5 @@
 class app.models.Doc extends app.Model
-  # Attributes: name, slug, type, release, index_path, db_path, db_size, mtime, links
+  # Attributes: name, slug, type, release, db_size, mtime, links
 
   constructor: ->
     super
@@ -29,10 +29,10 @@ class app.models.Doc extends app.Model
     "#{app.config.docs_host}#{@fullPath(path)}?#{@mtime}"
 
   dbUrl: ->
-    "#{app.config.docs_host}/#{@db_path}?#{@mtime}"
+    "#{app.config.docs_host}/#{@slug}/#{app.config.db_filename}?#{@mtime}"
 
   indexUrl: ->
-    "#{app.indexHost()}/#{@index_path}?#{@mtime}"
+    "#{app.indexHost()}/#{@slug}/#{app.config.index_filename}?#{@mtime}"
 
   toEntry: ->
     @entry ||= new app.models.Entry

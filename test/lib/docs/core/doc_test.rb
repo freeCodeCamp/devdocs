@@ -115,8 +115,8 @@ class DocsDocTest < MiniTest::Spec
       assert_instance_of Hash, doc.as_json
     end
 
-    it "includes the doc's name, slug, type, release, index_path and db_path" do
-      %w(name slug type release index_path db_path links).each do |attribute|
+    it "includes the doc's name, slug, type, and release" do
+      %w(name slug type release links).each do |attribute|
         eval "stub(doc).#{attribute} { attribute }"
         assert_equal attribute, doc.as_json[attribute.to_sym]
       end

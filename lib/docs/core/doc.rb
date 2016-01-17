@@ -37,8 +37,6 @@ module Docs
           slug: slug,
           type: type,
           release: release,
-          index_path: index_path,
-          db_path: db_path,
           links: links }
       end
 
