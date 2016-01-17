@@ -39,7 +39,7 @@ class app.Router
     return
 
   doc: (context, next) ->
-    if doc = app.docs.findBy('slug', context.params.doc) or app.disabledDocs.findBy('slug', context.params.doc)
+    if doc = app.docs.findBySlug(context.params.doc) or app.disabledDocs.findBySlug(context.params.doc)
       context.doc = doc
       context.entry = doc.toEntry()
       @triggerRoute 'entry'
@@ -48,7 +48,7 @@ class app.Router
     return
 
   type: (context, next) ->
-    doc = app.docs.findBy 'slug', context.params.doc
+    doc = app.docs.findBySlug(context.params.doc)
 
     if type = doc?.types.findBy 'slug', context.params.type
       context.doc = doc
@@ -59,7 +59,7 @@ class app.Router
     return
 
   entry: (context, next) ->
-    doc = app.docs.findBy 'slug', context.params.doc
+    doc = app.docs.findBySlug(context.params.doc)
 
     if entry = doc?.findEntryByPathAndHash(context.params.path, context.hash)
       context.doc = doc

@@ -44,12 +44,30 @@ class DocsDocTest < MiniTest::Spec
     it "returns 'doc' when the class is Docs::Doc" do
       assert_equal 'doc', Docs::Doc.slug
     end
+
+    it "returns 'doc~v42' when the class is Docs::Doc and its #version is '42'" do
+      stub(Docs::Doc).version { '42' }
+      assert_equal 'doc~v42', Docs::Doc.slug
+    end
+
+    it "returns 'foo~v42' when #slug has been set to 'foo' and #version to '42'" do
+      doc.slug = 'foo'
+      doc.version = '42'
+      assert_equal 'foo~v42', doc.slug
+    end
   end
 
   describe ".slug=" do
     it "stores .slug" do
       doc.slug = 'test'
       assert_equal 'test', doc.slug
+    end
+  end
+
+  describe ".version=" do
+    it "stores .version as a string" do
+      doc.version = 4815162342
+      assert_equal '4815162342', doc.version
     end
   end
 
@@ -294,6 +312,39 @@ class DocsDocTest < MiniTest::Spec
       it "doesn't store files" do
         dont_allow(store).write
         doc.store_pages(store)
+      end
+    end
+  end
+
+  describe ".versions" do
+    it "returns [self] if no versions have been created" do
+      assert_equal [doc], doc.versions
+    end
+  end
+
+  describe ".version" do
+    context "with no args" do
+      it "returns @version by default" do
+        doc.version = 'v'
+        assert_equal 'v', doc.version
+      end
+    end
+
+    context "with args" do
+      it "creates a version subclass" do
+        version = doc.version('4') { self.release = '8'}
+
+        assert_equal [version], doc.versions
+
+        assert_nil doc.version
+        assert_nil doc.release
+        refute doc.version?
+
+        assert version.version?
+        assert_equal '4', version.version
+        assert_equal '8', version.release
+        assert_equal 'name', version.name
+        assert_equal 'type', version.type
       end
     end
   end

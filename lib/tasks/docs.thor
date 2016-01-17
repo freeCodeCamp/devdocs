@@ -16,11 +16,13 @@ class DocsCLI < Thor
     max_length = 0
     Docs.all.
       map  { |doc| [doc.to_s.demodulize.underscore, doc] }.
-      each { |pair| max_length = pair.first.length if pair.first.length > max_length }.
-      each { |pair| puts "#{pair.first.rjust max_length + 1}: #{pair.second.base_url.remove %r{\Ahttps?://}}" }
+      to_h.
+      each { |name, doc| max_length = name.length if name.length > max_length }.
+      each { |name, doc| puts "#{name.rjust max_length + 1}: #{doc.versions.map { |v| v.release || '-' }.join(', ')}" }
   end
 
-  desc 'page <doc> [path] [--verbose] [--debug]', 'Generate a page (no indexing)'
+  desc 'page <doc> [path] [--version] [--verbose] [--debug]', 'Generate a page (no indexing)'
+  option :version, type: :string
   option :verbose, type: :boolean
   option :debug, type: :boolean
   def page(name, path = '')
@@ -34,16 +36,17 @@ class DocsCLI < Thor
       Docs.install_report :filter, :request
     end
 
-    if Docs.generate_page(name, path)
+    if Docs.generate_page(name, options[:version], path)
       puts 'Done'
     else
       puts "Failed!#{' (try running with --debug for more information)' unless options[:debug]}"
     end
-  rescue Docs::DocNotFound
-    invalid_doc(name)
+  rescue Docs::DocNotFound => error
+    handle_doc_not_found_error(error)
   end
 
-  desc 'generate <doc> [--verbose] [--debug] [--force] [--package]', 'Generate a documentation'
+  desc 'generate <doc> [--version] [--verbose] [--debug] [--force] [--package]', 'Generate a documentation'
+  option :version, type: :string
   option :verbose, type: :boolean
   option :debug, type: :boolean
   option :force, type: :boolean
@@ -66,18 +69,18 @@ class DocsCLI < Thor
       return unless yes? 'Proceed? (y/n)'
     end
 
-    if Docs.generate(name)
+    if Docs.generate(name, options[:version])
       generate_manifest
       if options[:package]
         require 'unix_utils'
-        package_doc(Docs.find(name))
+        package_doc(Docs.find(name, options[:version]))
       end
       puts 'Done'
     else
       puts "Failed!#{' (try running with --debug for more information)' unless options[:debug]}"
     end
-  rescue Docs::DocNotFound
-    invalid_doc(name)
+  rescue Docs::DocNotFound => error
+    handle_doc_not_found_error(error)
   end
 
   desc 'manifest', 'Create the manifest'
@@ -86,7 +89,7 @@ class DocsCLI < Thor
     puts 'Done'
   end
 
-  desc 'download (<doc> <doc>... | --all)', 'Download documentations'
+  desc 'download (<doc> <doc@version>... | --all)', 'Download documentations'
   option :all, type: :boolean
   def download(*names)
     require 'unix_utils'
@@ -96,10 +99,10 @@ class DocsCLI < Thor
     generate_manifest
     puts 'Done'
   rescue Docs::DocNotFound => error
-    invalid_doc(error.name)
+    handle_doc_not_found_error(error)
   end
 
-  desc 'package (<doc> <doc>... | --all)', 'Package documentations'
+  desc 'package (<doc> <doc@version>... | --all)', 'Package documentations'
   option :all, type: :boolean
   def package(*names)
     require 'unix_utils'
@@ -108,7 +111,7 @@ class DocsCLI < Thor
     docs.each(&method(:package_doc))
     puts 'Done'
   rescue Docs::DocNotFound => error
-    invalid_doc(error.name)
+    handle_doc_not_found_error(error)
   end
 
   desc 'clean', 'Delete documentation packages'
@@ -121,7 +124,8 @@ class DocsCLI < Thor
 
   def find_docs(names)
     names.map do |name|
-      Docs.find(name)
+      name, version = name.split('@')
+      Docs.find(name, version)
     end
   end
 
@@ -133,9 +137,9 @@ class DocsCLI < Thor
     end
   end
 
-  def invalid_doc(name)
-    puts %(ERROR: invalid doc "#{name}".)
-    puts 'Run "thor docs:list" to see the list of docs.'
+  def handle_doc_not_found_error(error)
+    puts %(ERROR: #{error}.)
+    puts 'Run "thor docs:list" to see the list of docs and versions.'
   end
 
   def download_docs(docs)

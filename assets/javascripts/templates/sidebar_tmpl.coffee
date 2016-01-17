@@ -1,7 +1,7 @@
 templates = app.templates
 
 templates.sidebarDoc = (doc, options = {}) ->
-  link  = """<a href="#{doc.fullPath()}" class="_list-item _icon-#{doc.slug} """
+  link  = """<a href="#{doc.fullPath()}" class="_list-item _icon-#{doc.icon} """
   link += if options.disabled then '_list-disabled' else '_list-dir'
   link += """" data-slug="#{doc.slug}" title="#{doc.name}">"""
   if options.disabled
@@ -22,7 +22,7 @@ templates.sidebarResult = (entry) ->
     """<span class="_list-enable" data-enable="#{entry.doc.slug}">Enable</span>"""
   else
     """<span class="_list-reveal" data-reset-list title="Reveal in list"></span>"""
-  """<a href="#{entry.fullPath()}" class="_list-item _list-hover _list-result _icon-#{entry.doc.slug}">#{addon}#{$.escape entry.name}</a>"""
+  """<a href="#{entry.fullPath()}" class="_list-item _list-hover _list-result _icon-#{entry.doc.icon}">#{addon}#{$.escape entry.name}</a>"""
 
 templates.sidebarNoResults = ->
   html = """ <div class="_list-note">No results.</div> """
@@ -35,11 +35,13 @@ templates.sidebarPageLink = (count) ->
   """<span class="_list-item _list-pagelink">Show more\u2026 (#{count})</span>"""
 
 templates.sidebarLabel = (doc, options = {}) ->
-  label = """<label class="_list-item _list-label _icon-#{doc.slug}"""
+  label = """<label class="_list-item _list-label _icon-#{doc.icon}"""
   label += ' _list-label-off' unless options.checked
   label += """"><input type="checkbox" name="#{doc.slug}" class="_list-checkbox" """
   label += 'checked' if options.checked
-  label +  ">#{doc.name}</label>"
+  label += ">#{doc.name}"
+  label += " (#{doc.version})" if doc.version
+  label + "</label>"
 
 templates.sidebarDisabledList = (options) ->
   """<div class="_disabled-list">#{templates.render 'sidebarDoc', options.docs, disabled: true}</div>"""

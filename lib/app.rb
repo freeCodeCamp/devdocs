@@ -115,6 +115,23 @@ class App < Sinatra::Application
       end
     end
 
+    def find_doc(slug)
+      settings.docs[slug] || begin
+        slug = "#{slug}~v"
+        settings.docs.each do |_slug, _doc|
+          return _doc if _slug.start_with?(slug)
+        end
+        nil
+      end
+    end
+
+    def user_has_docs?(slug)
+      docs.include?(slug) || begin
+        slug = "#{slug}~v"
+        docs.any? { |_slug| _slug.start_with?(slug) }
+      end
+    end
+
     def doc_index_urls
       docs.each_with_object [] do |slug, result|
         if doc = settings.docs[slug]
@@ -247,14 +264,14 @@ class App < Sinatra::Application
     settings.news_feed
   end
 
-  get %r{\A/(\w+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
-    return 404 unless @doc = settings.docs[doc]
+  get %r{\A/([\w~\.]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
+    return 404 unless @doc = find_doc(doc)
 
     if rest.nil?
       redirect "/#{doc}#{type}/#{query_string_for_redirection}"
     elsif rest.length > 1 && rest.end_with?('/')
       redirect "/#{doc}#{type}#{rest[0...-1]}#{query_string_for_redirection}"
-    elsif docs.include?(doc) && supports_js_redirection?
+    elsif user_has_docs?(doc) && supports_js_redirection?
       redirect_via_js(request.path)
     else
       erb :other

@@ -75,6 +75,7 @@
     docs = @settings.getDocs()
     for doc in @DOCS
       (if docs.indexOf(doc.slug) >= 0 then @docs else @disabledDocs).add(doc)
+    @migrateDocs()
     @docs.sort()
     @disabledDocs.sort()
     @docs.load @start.bind(@), @onBootError.bind(@), readCache: true, writeCache: true
@@ -99,6 +100,15 @@
     @entries.add doc.entries.all()
     return
 
+  migrateDocs: ->
+    for slug in @settings.getDocs() when not @docs.findBy('slug', slug)
+      needsSaving = true
+      if doc = @disabledDocs.findBy('slug_without_version', slug)
+        @disabledDocs.remove(doc)
+        @docs.add(doc)
+
+    @saveDocs() if needsSaving
+
   enableDoc: (doc, _onSuccess, onError) ->
     return if @docs.contains(doc)
     onSuccess = =>
@@ -106,13 +116,16 @@
       @docs.add(doc)
       @docs.sort()
       @initDoc(doc)
-      @settings.setDocs(doc.slug for doc in @docs.all())
+      @saveDocs()
       _onSuccess()
-      @appCache?.updateInBackground()
       return
 
     doc.load onSuccess, onError, writeCache: true
     return
+
+  saveDocs: ->
+    @settings.setDocs(doc.slug for doc in @docs.all())
+    @appCache?.updateInBackground()
 
   welcomeBack: ->
     visitCount = @settings.get('count')

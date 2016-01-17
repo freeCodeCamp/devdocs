@@ -1,6 +1,6 @@
 module Docs
   class Python
-    class EntriesFilter < Docs::EntriesFilter
+    class EntriesV3Filter < Docs::EntriesFilter
       REPLACE_TYPES = {
         'Cryptographic'                           => 'Cryptography',
         'Custom Interpreters'                     => 'Interpreters',

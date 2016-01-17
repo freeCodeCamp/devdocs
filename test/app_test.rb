@@ -80,11 +80,18 @@ class AppTest < MiniTest::Spec
     end
 
     it "works with cookie" do
-      set_cookie('docs=css/html')
+      set_cookie('docs=css/html~v5')
       get '/manifest.appcache'
       assert last_response.ok?
-      assert_includes last_response.body, '/css/index.json'
-      assert_includes last_response.body, '/html/index.json'
+      assert_includes last_response.body, '/css/index.json?1420139788'
+      assert_includes last_response.body, '/html~v5/index.json?1420139791'
+    end
+
+    it "ignores invalid docs in the cookie" do
+      set_cookie('docs=foo')
+      get '/manifest.appcache'
+      assert last_response.ok?
+      refute_includes last_response.body, 'foo'
     end
 
     it "has the word 'default' when no 'dark' cookie is set" do
@@ -120,13 +127,26 @@ class AppTest < MiniTest::Spec
 
   describe "/[doc]" do
     it "renders when the doc exists and isn't enabled" do
-      set_cookie('docs=css')
-      get '/html/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
+      set_cookie('docs=html~v5')
+      get '/html~v4/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
       assert last_response.ok?
     end
 
     it "redirects via JS cookie when the doc exists and is enabled" do
-      set_cookie('docs=html')
+      set_cookie('docs=html~v5')
+      get '/html~v5/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
+      assert last_response.redirect?
+      assert_equal 'http://example.org/', last_response['Location']
+      assert last_response['Set-Cookie'].start_with?("initial_path=%2Fhtml%7Ev5%2F; path=/; expires=")
+    end
+
+    it "renders when the doc exists, has no version in the path, and isn't enabled" do
+      get '/html/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
+      assert last_response.ok?
+    end
+
+    it "redirects via JS cookie when the doc exists, has no version in the path, and a version is enabled" do
+      set_cookie('docs=html~v5')
       get '/html/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
       assert last_response.redirect?
       assert_equal 'http://example.org/', last_response['Location']
@@ -140,7 +160,7 @@ class AppTest < MiniTest::Spec
     end
 
     it "returns 404 when the doc doesn't exist" do
-      get '/foo/'
+      get '/html~v6/'
       assert last_response.not_found?
     end
 
@@ -157,42 +177,49 @@ class AppTest < MiniTest::Spec
 
   describe "/[doc]-[type]" do
     it "works when the doc exists" do
+      get '/html~v4-foo-bar_42/'
+      assert last_response.ok?
+      assert_includes last_response.body, 'app.DOC = {"name":"HTML","slug":"html~v4"'
+    end
+
+    it "works when the doc has no version in the path and a version exists" do
       get '/html-foo-bar_42/'
       assert last_response.ok?
+      assert_includes last_response.body, 'app.DOC = {"name":"HTML","slug":"html~v5"'
     end
 
     it "returns 404 when the type is blank" do
-      get '/html-/'
+      get '/css-/'
       assert last_response.not_found?
     end
 
     it "returns 404 when the type is not alpha-numeric" do
-      get '/html-foo:bar/'
+      get '/css-foo:bar/'
       assert last_response.not_found?
     end
 
     it "returns 404 when the doc doesn't exist" do
-      get '/foo-bar/'
+      get '/html~v6-bar/'
       assert last_response.not_found?
     end
 
     it "redirects with trailing slash" do
-      get '/html-foo'
+      get '/css-foo'
       assert last_response.redirect?
-      assert_equal 'http://example.org/html-foo/', last_response['Location']
+      assert_equal 'http://example.org/css-foo/', last_response['Location']
 
-      get '/html-foo', bar: 'baz'
+      get '/css-foo', bar: 'baz'
       assert last_response.redirect?
-      assert_equal 'http://example.org/html-foo/?bar=baz', last_response['Location']
+      assert_equal 'http://example.org/css-foo/?bar=baz', last_response['Location']
     end
   end
 
   describe "/[doc+type]/[path]" do
     it "works when the doc exists" do
-      get '/html/foo'
+      get '/css/foo'
       assert last_response.ok?
 
-      get '/html-bar/foo'
+      get '/css-bar/foo'
       assert last_response.ok?
     end
 
@@ -202,13 +229,13 @@ class AppTest < MiniTest::Spec
     end
 
     it "redirects without trailing slash" do
-      get '/html/foo/'
+      get '/css/foo/'
       assert last_response.redirect?
-      assert_equal 'http://example.org/html/foo', last_response['Location']
+      assert_equal 'http://example.org/css/foo', last_response['Location']
 
-      get '/html/foo/', bar: 'baz'
+      get '/css/foo/', bar: 'baz'
       assert last_response.redirect?
-      assert_equal 'http://example.org/html/foo?bar=baz', last_response['Location']
+      assert_equal 'http://example.org/css/foo?bar=baz', last_response['Location']
     end
   end
 

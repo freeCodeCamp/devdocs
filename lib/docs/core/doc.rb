@@ -12,12 +12,39 @@ module Docs
         subclass.type = type
       end
 
+      def version(version = nil, &block)
+        return @version if version.nil?
+
+        klass = Class.new(self)
+        klass.class_exec(&block)
+        klass.name = name
+        klass.slug = slug
+        klass.version = version
+        klass.links = links
+        @versions ||= []
+        @versions << klass
+        klass
+      end
+
+      def version=(value)
+        @version = value.to_s
+      end
+
+      def versions
+        @versions.presence || [self]
+      end
+
+      def version?
+        version.present?
+      end
+
       def name
         @name || super.try(:demodulize)
       end
 
       def slug
-        @slug || name.try(:downcase)
+        slug = @slug || name.try(:downcase)
+        version? ? "#{slug}~v#{version}" : slug
       end
 
       def path

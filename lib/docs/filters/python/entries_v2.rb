@@ -1,6 +1,6 @@
 module Docs
-  class Python2
-    class EntriesFilter < Docs::EntriesFilter
+  class Python
+    class EntriesV2Filter < Docs::EntriesFilter
       REPLACE_TYPES = {
         'compiler package'                        => 'Compiler',
         'Cryptographic'                           => 'Cryptography',

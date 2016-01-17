@@ -21,7 +21,7 @@
     <div class="_list">
       <% unless @doc %>
       <% App.docs.each do |slug, doc| %>
-      <a href="/<%= slug %>/" class="_list-item _icon-<%= slug %> _list-dir"><span class="_list-arrow"></span><%= doc['name'] %></a>
+      <a href="/<%= slug %>/" class="_list-item"><span class="_list-arrow"></span><%= doc['name'] %></a>
       <% end %>
       <% end %>
     </div>

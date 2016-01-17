@@ -1,12 +1,7 @@
 module Docs
   class Python < FileScraper
-    self.release = '3.5.1'
     self.type = 'sphinx'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/Python' # downloaded from docs.python.org/3/download.html
-    self.base_url = 'http://docs.python.org/3/'
     self.root_path = 'library/index.html'
-
-    html_filters.push 'python/entries', 'python/clean_html'
 
     options[:only_patterns] = [/\Alibrary\//]
 
@@ -23,5 +18,21 @@ module Docs
       &copy; 1990&ndash;2015 Python Software Foundation<br>
       Licensed under the PSF License.
     HTML
+
+    version '3.5' do
+      self.release = '3.5.1'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/Python35' # docs.python.org/3.5/download.html
+      self.base_url = 'https://docs.python.org/3.5/'
+
+      html_filters.push 'python/entries_v3', 'python/clean_html'
+    end
+
+    version '2.7' do
+      self.release = '2.7.10'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/Python27' # docs.python.org/2.7/download.html
+      self.base_url = 'https://docs.python.org/2.7/'
+
+      html_filters.push 'python/entries_v2', 'python/clean_html'
+    end
   end
 end

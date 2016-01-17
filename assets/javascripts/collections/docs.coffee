@@ -1,6 +1,9 @@
 class app.collections.Docs extends app.Collection
   @model: 'Doc'
 
+  findBySlug: (slug) ->
+    @findBy('slug', slug) or @findBy('slug_without_version', slug)
+
   sort: ->
     @models.sort (a, b) ->
       a = a.name.toLowerCase()

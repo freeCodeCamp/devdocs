@@ -4,6 +4,8 @@ class app.models.Doc extends app.Model
   constructor: ->
     super
     @reset @
+    [@slug_without_version, @version] = @slug.split('~v')
+    @icon = @slug_without_version
     @text = @toEntry().text
 
   reset: (data) ->

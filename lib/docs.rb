@@ -31,31 +31,44 @@ module Docs
     Dir["#{root_path}/docs/scrapers/**/*.rb"].
       map { |file| File.basename(file, '.rb') }.
       sort!.
-      map(&method(:find)).
+      map { |name| const_get(name.camelize) }.
       reject(&:abstract)
   end
 
-  def self.find(name)
+  def self.all_versions
+    all.flat_map(&:versions)
+  end
+
+  def self.find(name, version)
     const = name.camelize
-    const_get(const)
+    doc = const_get(const)
+
+    if version.present?
+      doc = doc.versions.find { |klass| klass.version == version }
+      raise DocNotFound.new(%(could not find version "#{version}" for doc "#{name}"), name) unless doc
+    else
+      doc = doc.versions.first
+    end
+
+    doc
   rescue NameError => error
     if error.name.to_s == const
-      raise DocNotFound.new("failed to locate doc class '#{name}'", name)
+      raise DocNotFound.new(%(could not find doc "#{name}"), name)
     else
       raise error
     end
   end
 
-  def self.generate_page(name, page_id)
-    find(name).store_page(store, page_id)
+  def self.generate_page(name, version, page_id)
+    find(name, version).store_page(store, page_id)
   end
 
-  def self.generate(name)
-    find(name).store_pages(store)
+  def self.generate(name, version)
+    find(name, version).store_pages(store)
   end
 
   def self.generate_manifest
-    Manifest.new(store, all).store
+    Manifest.new(store, all_versions).store
   end
 
   def self.store
