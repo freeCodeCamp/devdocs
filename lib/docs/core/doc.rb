@@ -33,11 +33,10 @@ module Docs
       end
 
       def as_json
-        { name: name,
-          slug: slug,
-          type: type,
-          release: release,
-          links: links }
+        json = { name: name, slug: slug, type: type }
+        json[:links] = links if links.present?
+        json[:release] = release if release.present?
+        json
       end
 
       def store_page(store, id)

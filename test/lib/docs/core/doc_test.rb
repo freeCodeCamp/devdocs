@@ -116,6 +116,8 @@ class DocsDocTest < MiniTest::Spec
     end
 
     it "includes the doc's name, slug, type, and release" do
+      assert_equal %i(name slug type), doc.as_json.keys
+
       %w(name slug type release links).each do |attribute|
         eval "stub(doc).#{attribute} { attribute }"
         assert_equal attribute, doc.as_json[attribute.to_sym]
