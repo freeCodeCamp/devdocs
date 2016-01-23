@@ -150,7 +150,7 @@
 // List hierarchy
 //
 
-._list-dir,
+._list-dir:not(._list-rdir),
 %_list-dir {
   padding-left: 2.25rem;
 }
@@ -172,6 +172,11 @@
 
   &:hover { opacity: .65; }
 
+  ._list-rdir > & {
+    left: auto;
+    right: .25rem;
+  }
+
   &:before {
     @if $style == 'dark' {
       @extend %icon, %icon-dir-white;
@@ -187,7 +192,11 @@
 }
 
 ._list-sub {
-  > ._list-item { padding-left: 2.75rem; }
+  display: none;
+
+  .open + & { display: block; }
+  > ._list-item { padding-left: 2.375rem; }
+  > ._list-dir, > ._list-sub > ._list-item { padding-left: 2.75rem; }
   > ._list-item:before { content: none; }
   > ._list-dir { line-height: 1.375rem; }
 
@@ -288,30 +297,22 @@
 // List picker
 //
 
+._list-picker {
+  opacity: 0;
+  transition: .2s;
+
+  &._in { opacity: 1; }
+  ._list-item { cursor: pointer; }
+  ._list-sub > ._list-item { padding-left: 2.375rem; }
+}
+
 ._list-checkbox {
   position: absolute;
   top: .5rem;
-  right: -1rem;
+  right: .75rem;
   width: 1rem;
   height: 1rem;
   transition: .2s;
-}
-
-._list-label {
-  cursor: pointer;
-  transition: .2s;
-  @extend %_list-dir;
-
-  ._in > & { padding-left: .75rem; }
-  ._in > & > ._list-checkbox { right: .5rem }
-}
-
-._list-label-off {
-  opacity: 0;
-  padding-left: .75rem;
-
-  ._in > & { opacity: 1; }
-  > ._list-checkbox { right: .5rem; }
 }
 
 ._list-link {

@@ -35,13 +35,18 @@ templates.sidebarPageLink = (count) ->
   """<span class="_list-item _list-pagelink">Show more\u2026 (#{count})</span>"""
 
 templates.sidebarLabel = (doc, options = {}) ->
-  label = """<label class="_list-item _list-label _icon-#{doc.icon}"""
-  label += ' _list-label-off' unless options.checked
+  label = """<label class="_list-item"""
+  label += " _icon-#{doc.icon}" unless doc.version
   label += """"><input type="checkbox" name="#{doc.slug}" class="_list-checkbox" """
-  label += 'checked' if options.checked
+  label += "checked" if options.checked
   label += ">#{doc.name}"
-  label += " (#{doc.version})" if doc.version
+  label += " #{doc.version}" if doc.version
   label + "</label>"
+
+templates.sidebarVersionedDoc = (doc, versions, options = {}) ->
+  html = """<div class="_list-item _list-dir _list-rdir _icon-#{doc.icon}"""
+  html += " open" if options.open
+  html + """"><span class="_list-arrow"></span>#{doc.name}</div><div class="_list _list-sub">#{versions}</div>"""
 
 templates.sidebarDisabledList = (options) ->
   """<div class="_disabled-list">#{templates.render 'sidebarDoc', options.docs, disabled: true}</div>"""

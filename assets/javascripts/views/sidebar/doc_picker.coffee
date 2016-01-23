@@ -1,5 +1,5 @@
 class app.views.DocPicker extends app.View
-  @className: '_list'
+  @className: '_list _list-picker'
 
   @elements:
     saveLink: '._sidebar-footer-save'
@@ -9,6 +9,10 @@ class app.views.DocPicker extends app.View
 
   @shortcuts:
     enter: 'onEnter'
+
+  init: ->
+    @addSubview @listFold = new app.views.ListFold(@el, toggleOnclick: true)
+    return
 
   activate: ->
     if super
@@ -26,17 +30,35 @@ class app.views.DocPicker extends app.View
     return
 
   render: ->
-    @html @tmpl('sidebarLabel', app.docs.all(), checked: true) +
-          @tmpl('sidebarLabel', app.disabledDocs.all()) +
-          @tmpl('sidebarPickerNote') +
-          @tmpl('sidebarSave')
+    html = ''
+    docs = app.docs.all().concat(app.disabledDocs.all()...)
 
+    while doc = docs.shift()
+      if doc.version
+        [docs, versions] = @extractVersions(docs, doc)
+        html += @tmpl('sidebarVersionedDoc', doc, @renderVersions(versions), open: app.docs.contains(doc))
+      else
+        html += @tmpl('sidebarLabel', doc, checked: app.docs.contains(doc))
+
+    @html html + @tmpl('sidebarPickerNote') + @tmpl('sidebarSave')
     @refreshElements()
 
     @delay -> # trigger animation
       @el.offsetWidth
       @addClass '_in'
     return
+
+  renderVersions: (docs) ->
+    html = ''
+    html += @tmpl('sidebarLabel', doc, checked: app.docs.contains(doc)) for doc in docs
+    html
+
+  extractVersions: (originalDocs, version) ->
+    docs = []
+    versions = [version]
+    for doc in originalDocs
+      (if doc.name is version.name then versions else docs).push(doc)
+    [docs, versions]
 
   empty: ->
     @resetClass()

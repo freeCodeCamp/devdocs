@@ -10,7 +10,7 @@ class app.views.ListFold extends app.View
     left:   'onLeft'
     right:  'onRight'
 
-  constructor: (@el) -> super
+  constructor: (@el, @options = {}) -> super
 
   open: (el) ->
     if el and not el.classList.contains @constructor.activeClass
@@ -60,5 +60,5 @@ class app.views.ListFold extends app.View
       $.stopEvent(event)
       @toggle el.parentElement
     else if el.classList.contains @constructor.targetClass
-      @open el
+      if @options.toggleOnclick then @toggle(el) else @open(el)
     return
