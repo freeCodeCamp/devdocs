@@ -51,11 +51,10 @@ canICloseTheTab = ->
 
 app.templates.offlineDoc = (doc, status) ->
   outdated = doc.isOutdated(status)
-  version = if doc.version then " (#{doc.version})" else ''
 
   html = """
     <tr data-slug="#{doc.slug}"#{if outdated then ' class="_highlight"' else ''}>
-      <td class="_docs-name _icon-#{doc.icon}">#{doc.name}#{version}</td>
+      <td class="_docs-name _icon-#{doc.icon}">#{doc.fullName}</td>
       <td class="_docs-size">#{Math.ceil(doc.db_size / 100000) / 10} MB</td>
   """
 

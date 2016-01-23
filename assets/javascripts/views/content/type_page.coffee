@@ -12,7 +12,7 @@ class app.views.TypePage extends app.View
     return
 
   getTitle: ->
-    "#{@type.doc.name}/#{@type.name}"
+    "#{@type.doc.fullName} / #{@type.name}"
 
   onRoute: (context) ->
     @render context.type

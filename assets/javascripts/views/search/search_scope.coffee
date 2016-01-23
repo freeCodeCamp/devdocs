@@ -50,7 +50,7 @@ class app.views.SearchScope extends app.View
   selectDoc: (doc) ->
     @doc = doc
 
-    @tag.textContent = doc.name
+    @tag.textContent = doc.fullName
     @tag.style.display = 'block'
 
     @input.removeAttribute 'placeholder'

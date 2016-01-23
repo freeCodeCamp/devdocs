@@ -3,7 +3,7 @@ templates = app.templates
 templates.sidebarDoc = (doc, options = {}) ->
   link  = """<a href="#{doc.fullPath()}" class="_list-item _icon-#{doc.icon} """
   link += if options.disabled then '_list-disabled' else '_list-dir'
-  link += """" data-slug="#{doc.slug}" title="#{doc.name} #{doc.version || ''}">"""
+  link += """" data-slug="#{doc.slug}" title="#{doc.fullName}">"""
   if options.disabled
     link += """<span class="_list-enable" data-enable="#{doc.slug}">Enable</span>"""
   else
@@ -41,9 +41,7 @@ templates.sidebarLabel = (doc, options = {}) ->
   label += " _icon-#{doc.icon}" unless doc.version
   label += """"><input type="checkbox" name="#{doc.slug}" class="_list-checkbox" """
   label += "checked" if options.checked
-  label += ">#{doc.name}"
-  label += " #{doc.version}" if doc.version
-  label + "</label>"
+  label + ">#{doc.fullName}</label>"
 
 templates.sidebarVersionedDoc = (doc, versions, options = {}) ->
   html = """<div class="_list-item _list-dir _list-rdir _icon-#{doc.icon}"""

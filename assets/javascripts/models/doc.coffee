@@ -5,6 +5,7 @@ class app.models.Doc extends app.Model
     super
     @reset @
     [@slug_without_version, @version] = @slug.split('~v')
+    @fullName = "#{@name}" + if @version then " #{@version}" else ''
     @icon = @slug_without_version
     @text = @toEntry().text
 
@@ -39,7 +40,7 @@ class app.models.Doc extends app.Model
   toEntry: ->
     @entry ||= new app.models.Entry
       doc: @
-      name: @name
+      name: @fullName
       path: 'index'
 
   findEntryByPathAndHash: (path, hash) ->
