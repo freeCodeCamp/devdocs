@@ -3,7 +3,7 @@ class app.DB
 
   constructor: ->
     @useIndexedDB = @useIndexedDB()
-    @indexedDBVersion = @indexedDBVersion()
+    @appVersion = @appVersion()
     @callbacks = []
 
   db: (fn) ->
@@ -13,7 +13,7 @@ class app.DB
 
     try
       @open = true
-      req = indexedDB.open(NAME, @indexedDBVersion)
+      req = indexedDB.open(NAME, @schemaVersion())
       req.onsuccess = @onOpenSuccess
       req.onerror = @onOpenError
       req.onupgradeneeded = @onUpgradeNeeded
@@ -59,14 +59,16 @@ class app.DB
   onUpgradeNeeded: (event) ->
     return unless db = event.target.result
 
-    unless db.objectStoreNames.contains('docs')
+    objectStoreNames = $.makeArray(db.objectStoreNames)
+
+    unless $.arrayDelete(objectStoreNames, 'docs')
       db.createObjectStore('docs')
 
-    for doc in app.docs.all() when not db.objectStoreNames.contains(doc.slug)
+    for doc in app.docs.all() when not $.arrayDelete(objectStoreNames, doc.slug)
       db.createObjectStore(doc.slug)
 
-    for doc in app.disabledDocs.all() when not db.objectStoreNames.contains(doc.slug)
-      db.createObjectStore(doc.slug)
+    for name in objectStoreNames
+      db.deleteObjectStore(name)
     return
 
   store: (doc, data, onSuccess, onError) ->
@@ -201,6 +203,11 @@ class app.DB
         onError()
         return
 
+      unless db.objectStoreNames.contains(entry.doc.slug)
+        onError()
+        @loadDocsCache(db)
+        return
+
       txn = @idbTransaction db, stores: [entry.doc.slug], mode: 'readonly'
       store = txn.objectStore(entry.doc.slug)
 
@@ -212,10 +219,11 @@ class app.DB
         event.preventDefault()
         onError()
         return
-      @loadDocsCache(db) unless @cachedDocs
+      @loadDocsCache(db)
       return
 
   loadDocsCache: (db) ->
+    return if @cachedDocs
     @cachedDocs = {}
 
     txn = @idbTransaction db, stores: ['docs'], mode: 'readonly'
@@ -261,5 +269,15 @@ class app.DB
     catch
       false
 
-  indexedDBVersion: ->
-    if app.config.env is 'production' then parseInt(app.config.version, 10) else Date.now() / 1000
+  migrate: ->
+    app.settings.set('schema', @userVersion() + 1)
+    return
+
+  schemaVersion: ->
+    @appVersion * 10 + @userVersion()
+
+  userVersion: ->
+    app.settings.get('schema')
+
+  appVersion: ->
+    if app.config.env is 'production' then parseInt(app.config.version, 10) else Math.floor(Date.now() / 1000)

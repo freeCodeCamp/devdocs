@@ -239,6 +239,14 @@ $.makeArray = (object) ->
   else
     Array::slice.apply(object)
 
+$.arrayDelete = (array, object) ->
+  index = array.indexOf(object)
+  if index >= 0
+    array.splice(index, 1)
+    true
+  else
+    false
+
 # Returns true if the object is an array or a collection of DOM elements.
 $.isCollection = (object) ->
   Array.isArray(object) or typeof object?.item is 'function'

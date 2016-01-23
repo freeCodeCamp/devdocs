@@ -5,18 +5,19 @@ class app.Settings
   LAYOUT_KEY = 'layout'
   SIZE_KEY = 'size'
 
-  @defaults: ->
+  @defaults:
     count: 0
     hideDisabled: false
     hideIntro: false
     news: 0
     autoUpdate: true
+    schema: 0
 
   constructor: (@store) ->
     @create() unless @settings = @store.get(SETTINGS_KEY)
 
   create: ->
-    @settings = @constructor.defaults()
+    @settings = $.extend({}, @constructor.defaults)
     @applyLegacyValues @settings
     @save()
     return
@@ -35,7 +36,7 @@ class app.Settings
     @save()
 
   get: (key) ->
-    @settings[key]
+    @settings[key] ? @constructor.defaults[key]
 
   hasDocs: ->
     try !!Cookies.get DOCS_KEY

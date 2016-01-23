@@ -16,6 +16,7 @@
     @store = new Store
     @appCache = new app.AppCache if app.AppCache.isEnabled()
     @settings = new app.Settings @store
+    @db = new app.DB()
 
     @docs = new app.collections.Docs
     @disabledDocs = new app.collections.Docs
@@ -86,7 +87,6 @@
     @entries.add doc.toEntry() for doc in @docs.all()
     @entries.add doc.toEntry() for doc in @disabledDocs.all()
     @initDoc(doc) for doc in @docs.all()
-    @db = new app.DB()
     @trigger 'ready'
     @router.start()
     @hideLoading()
@@ -125,6 +125,7 @@
 
   saveDocs: ->
     @settings.setDocs(doc.slug for doc in @docs.all())
+    @db.migrate()
     @appCache?.updateInBackground()
 
   welcomeBack: ->

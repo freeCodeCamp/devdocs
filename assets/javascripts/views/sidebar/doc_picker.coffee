@@ -50,7 +50,9 @@ class app.views.DocPicker extends app.View
       app.settings.setDocs(docs)
       @saveLink.textContent = if app.appCache then 'Downloading\u2026' else 'Saving\u2026'
       disabledDocs = new app.collections.Docs(doc for doc in app.docs.all() when docs.indexOf(doc.slug) is -1)
-      disabledDocs.uninstall -> app.reload()
+      disabledDocs.uninstall ->
+        app.db.migrate()
+        app.reload()
     return
 
   getSelectedDocs: ->
