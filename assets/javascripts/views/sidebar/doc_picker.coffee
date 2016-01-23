@@ -11,7 +11,7 @@ class app.views.DocPicker extends app.View
     enter: 'onEnter'
 
   init: ->
-    @addSubview @listFold = new app.views.ListFold(@el, toggleOnclick: true)
+    @addSubview @listFold = new app.views.ListFold(@el)
     return
 
   activate: ->

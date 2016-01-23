@@ -38,7 +38,10 @@ class app.views.ListFocus extends app.View
         $.click(next)
         @findNext cursor
       else if next.tagName is 'DIV' # sub-list
-        @findFirst(next) or @findNext(next)
+        if cursor.className.indexOf('open') >= 0
+          @findFirst(next) or @findNext(next)
+        else
+          @findNext(next)
       else if next.tagName is 'H6' # title
         @findNext(next)
     else if cursor.parentElement isnt @el
@@ -61,7 +64,10 @@ class app.views.ListFocus extends app.View
         $.click(prev)
         @findPrev cursor
       else if prev.tagName is 'DIV' # sub-list
-        @findLast(prev) or @findPrev(prev)
+        if prev.previousSibling.className.indexOf('open') >= 0
+          @findLast(prev) or @findPrev(prev)
+        else
+          @findPrev(prev)
       else if prev.tagName is 'H6' # title
         @findPrev(prev)
     else if cursor.parentElement isnt @el

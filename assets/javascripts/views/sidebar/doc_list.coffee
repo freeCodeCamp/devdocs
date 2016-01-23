@@ -54,7 +54,21 @@ class app.views.DocList extends app.View
     return
 
   appendDisabledList: ->
-    @append @tmpl('sidebarDisabledList', docs: app.disabledDocs.all())
+    html = ''
+    docs = [].concat(app.disabledDocs.all()...)
+
+    while doc = docs.shift()
+      if doc.version
+        versions = ''
+        loop
+          versions += @tmpl('sidebarDoc', doc, disabled: true)
+          break if docs[0].name isnt doc.name
+          doc = docs.shift()
+        html += @tmpl('sidebarDisabledVersionedDoc', doc, versions)
+      else
+        html += @tmpl('sidebarDoc', doc, disabled: true)
+
+    @append @tmpl('sidebarDisabledList', html)
     @disabledTitle.classList.add('open-title')
     @refreshElements()
     return

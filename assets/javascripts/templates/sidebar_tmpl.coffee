@@ -3,13 +3,15 @@ templates = app.templates
 templates.sidebarDoc = (doc, options = {}) ->
   link  = """<a href="#{doc.fullPath()}" class="_list-item _icon-#{doc.icon} """
   link += if options.disabled then '_list-disabled' else '_list-dir'
-  link += """" data-slug="#{doc.slug}" title="#{doc.name}">"""
+  link += """" data-slug="#{doc.slug}" title="#{doc.name} #{doc.version || ''}">"""
   if options.disabled
     link += """<span class="_list-enable" data-enable="#{doc.slug}">Enable</span>"""
   else
     link += """<span class="_list-arrow"></span>"""
   link += """<span class="_list-count">#{doc.release}</span>""" if doc.release
-  link +  "#{doc.name}</a>"
+  link += "#{doc.name}"
+  link += " #{doc.version}" if options.disabled and doc.version
+  link + "</a>"
 
 templates.sidebarType = (type) ->
   """<a href="#{type.fullPath()}" class="_list-item _list-dir" data-slug="#{type.slug}"><span class="_list-arrow"></span><span class="_list-count">#{type.count}</span>#{type.name}</a>"""
@@ -48,11 +50,14 @@ templates.sidebarVersionedDoc = (doc, versions, options = {}) ->
   html += " open" if options.open
   html + """"><span class="_list-arrow"></span>#{doc.name}</div><div class="_list _list-sub">#{versions}</div>"""
 
-templates.sidebarDisabledList = (options) ->
-  """<div class="_disabled-list">#{templates.render 'sidebarDoc', options.docs, disabled: true}</div>"""
-
 templates.sidebarDisabled = (options) ->
   """<h6 class="_list-title"><span class="_list-arrow"></span>Disabled (#{options.count})</h6>"""
+
+templates.sidebarDisabledList = (html) ->
+  """<div class="_disabled-list">#{html}</div>"""
+
+templates.sidebarDisabledVersionedDoc = (doc, versions) ->
+  """<a class="_list-item _list-dir _icon-#{doc.icon} _list-disabled"><span class="_list-arrow"></span>#{doc.name}</a><div class="_list _list-sub">#{versions}</div>"""
 
 templates.sidebarPickerNote = """
   <div class="_list-note">Tip: for faster and better search results, select only the docs you need.</div>
