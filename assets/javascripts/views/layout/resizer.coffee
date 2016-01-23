@@ -47,7 +47,7 @@ class app.views.Resizer extends app.View
     return
 
   onDragEnd: (event) =>
-    value = event.pageX or (event.screenX - window.screenX)
+    value = event.pageX or (event.screenX - window.innerWidth)
     if @lastDragValue and not (@lastDragValue - 5 < value < @lastDragValue + 5) # https://github.com/Thibaut/devdocs/issues/265
       value = @lastDragValue
     @resize(value, true)
