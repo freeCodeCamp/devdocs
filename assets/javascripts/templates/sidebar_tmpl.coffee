@@ -9,22 +9,23 @@ templates.sidebarDoc = (doc, options = {}) ->
   else
     link += """<span class="_list-arrow"></span>"""
   link += """<span class="_list-count">#{doc.release}</span>""" if doc.release
-  link += "#{doc.name}"
+  link += """<span class="_list-text">#{doc.name}"""
   link += " #{doc.version}" if options.disabled and doc.version
-  link + "</a>"
+  link + "</span></a>"
 
 templates.sidebarType = (type) ->
-  """<a href="#{type.fullPath()}" class="_list-item _list-dir" data-slug="#{type.slug}"><span class="_list-arrow"></span><span class="_list-count">#{type.count}</span>#{type.name}</a>"""
+  """<a href="#{type.fullPath()}" class="_list-item _list-dir" data-slug="#{type.slug}"><span class="_list-arrow"></span><span class="_list-count">#{type.count}</span><span class="_list-text">#{type.name}</span></a>"""
 
 templates.sidebarEntry = (entry) ->
   """<a href="#{entry.fullPath()}" class="_list-item _list-hover">#{$.escape entry.name}</a>"""
 
 templates.sidebarResult = (entry) ->
-  addon = if entry.isIndex() and app.disabledDocs.contains(entry.doc)
+  addons = if entry.isIndex() and app.disabledDocs.contains(entry.doc)
     """<span class="_list-enable" data-enable="#{entry.doc.slug}">Enable</span>"""
   else
     """<span class="_list-reveal" data-reset-list title="Reveal in list"></span>"""
-  """<a href="#{entry.fullPath()}" class="_list-item _list-hover _list-result _icon-#{entry.doc.icon}">#{addon}#{$.escape entry.name}</a>"""
+  addons += """<span class="_list-count">#{entry.doc.version}</span>""" if entry.doc.version
+  """<a href="#{entry.fullPath()}" class="_list-item _list-hover _list-result _icon-#{entry.doc.icon}">#{addons}<span class="_list-text">#{$.escape entry.name}</span></a>"""
 
 templates.sidebarNoResults = ->
   html = """ <div class="_list-note">No results.</div> """
@@ -41,7 +42,7 @@ templates.sidebarLabel = (doc, options = {}) ->
   label += " _icon-#{doc.icon}" unless doc.version
   label += """"><input type="checkbox" name="#{doc.slug}" class="_list-checkbox" """
   label += "checked" if options.checked
-  label + ">#{doc.fullName}</label>"
+  label + """><span class="_list-text">#{doc.fullName}</span></label>"""
 
 templates.sidebarVersionedDoc = (doc, versions, options = {}) ->
   html = """<div class="_list-item _list-dir _list-rdir _icon-#{doc.icon}"""

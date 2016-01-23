@@ -80,14 +80,9 @@
 ._list-item {
   display: block;
   position: relative;
-  overflow: hidden;
   padding: .25rem .75rem;
   line-height: 1.5rem;
   font-size: .875rem;
-  white-space: nowrap;
-  word-wrap: normal;
-  overflow-wrap: normal;
-  text-overflow: ellipsis;
   cursor: default;
   background: $sidebarBackground;
   box-shadow: inset -1px 0 $sidebarBorder;
@@ -120,9 +115,23 @@
   }
 }
 
+._list-item, ._list-text {
+  overflow: hidden;
+  white-space: nowrap;
+  word-wrap: normal;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+}
+
+._list-text {
+  display: block;
+  pointer-events: none;
+}
+
 ._list-count, ._list-enable {
   float: right;
   font-size: .75rem;
+  margin-left: .375rem;
 
   .focus > &,
   .active > & {
@@ -229,6 +238,7 @@
   padding-right: 1.75rem;
 
   > ._list-reveal { display: block; }
+  > ._list-count { display: none; }
 }
 
 ._list-reveal {
@@ -237,14 +247,14 @@
   top: 0;
   bottom: 0;
   right: 0;
-  width: 1.75rem;
+  width: 2rem;
   cursor: pointer;
 
   &:before {
     content: '';
     position: absolute;
     bottom: 50%;
-    left: .5rem;
+    left: .75rem;
     width: .75rem;
     height: 1px;
     background: rgba($selectionText, .9);
@@ -274,9 +284,9 @@
 
 ._list-hover.clone {
   position: fixed;
+  overflow: visible;
   z-index: $hoverZ;
   left: 0;
-  overflow: visible;
   min-width: $sidebarWidth;
   padding: .25rem .75rem;
   pointer-events: none;
@@ -287,11 +297,15 @@
 
   @media #{$mediumScreen} { min-width: $sidebarMediumWidth; }
 
+  > ._list-text { display: inline; }
+
   &:not(._list-result) {
     padding-left: 2.75rem;
 
     &:before { content: none; }
   }
+
+  ._list-reveal, ._list-enable { display: none; }
 }
 
 //

@@ -24,7 +24,7 @@ class app.views.SidebarHover extends app.View
   show: (el) ->
     unless el is @cursor
       @hide()
-      if @isTarget(el) and @isTruncated(el)
+      if @isTarget(el) and @isTruncated(el.lastElementChild or el)
         @cursor = el
         @clone = @makeClone @cursor
         $.append document.body, @clone
@@ -48,8 +48,7 @@ class app.views.SidebarHover extends app.View
     return
 
   makeClone: (el) ->
-    clone = el.cloneNode()
-    clone.textContent = el.textContent
+    clone = el.cloneNode(true)
     clone.classList.add 'clone'
     clone
 
