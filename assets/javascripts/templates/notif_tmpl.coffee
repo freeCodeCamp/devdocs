@@ -26,6 +26,15 @@ app.templates.notifInvalidLocation = ->
 app.templates.notifNews = (news) ->
   notif 'Changelog', """<div class="_notif-content _notif-news">#{app.templates.newsList(news, years: false)}</div>"""
 
+app.templates.notifUpdates = (docs) ->
+  html = """<ul class="_notif-content _notif-list">"""
+  for doc in docs
+    html += "<li>#{doc.name}"
+    html += " (#{doc.release})" if doc.release
+    html += "</li>"
+  html += "</ul>"
+  notif 'Updates', html
+
 app.templates.notifShare = ->
   textNotif """ Hi there! """,
             """ Like DevDocs? Help us reach more developers by sharing the link with your friends, on

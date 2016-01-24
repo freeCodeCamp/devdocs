@@ -133,6 +133,7 @@
     @settings.set 'count', ++visitCount
     new app.views.Notif 'Share', autoHide: null if visitCount is 5
     new app.views.News()
+    new app.views.Updates()
     @updateChecker = new app.UpdateChecker()
 
   reload: ->
