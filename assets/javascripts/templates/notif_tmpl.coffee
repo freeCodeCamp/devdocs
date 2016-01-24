@@ -24,7 +24,7 @@ app.templates.notifInvalidLocation = ->
             """ Otherwise things are likely to break. """
 
 app.templates.notifNews = (news) ->
-  notif 'Changelog', app.templates.newsList(news)
+  notif 'Changelog', """<div class="_notif-content _notif-news">#{app.templates.newsList(news, years: false)}</div>"""
 
 app.templates.notifShare = ->
   textNotif """ Hi there! """,
