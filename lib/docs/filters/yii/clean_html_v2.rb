@@ -1,6 +1,6 @@
 module Docs
   class Yii
-    class CleanHtmlFilter < Filter
+    class CleanHtmlV2Filter < Filter
       def call
         css('.hashlink[name]').each do |node|
           node.parent['id'] = node['name']

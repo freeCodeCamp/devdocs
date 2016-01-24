@@ -1,6 +1,6 @@
 module Docs
-  class Yii1
-    class EntriesFilter < Docs::EntriesFilter
+  class Yii
+    class EntriesV1Filter < Docs::EntriesFilter
       def get_name
         at_css('h1').content.strip
       end

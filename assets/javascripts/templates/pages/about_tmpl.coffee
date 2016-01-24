@@ -406,8 +406,8 @@ credits = [
     'https://raw.githubusercontent.com/webpack/webpack/master/LICENSE'
   ], [
     'Yii',
-    '2008-2015 by Yii Software LLC',
+    '2008-2016 by Yii Software LLC',
     'BSD',
-    'https://raw.github.com/yiisoft/yii/master/LICENSE'
+    'https://raw.githubusercontent.com/yiisoft/yii/master/LICENSE'
   ]
 ]

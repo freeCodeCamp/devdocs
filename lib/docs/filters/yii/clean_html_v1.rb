@@ -1,6 +1,6 @@
 module Docs
-  class Yii1
-    class CleanHtmlFilter < Filter
+  class Yii
+    class CleanHtmlV1Filter < Filter
       def call
         at_css('h1').content = 'Yii PHP Framework' if root_page?
 
