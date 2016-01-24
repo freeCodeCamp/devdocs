@@ -54,7 +54,7 @@ class App < Sinatra::Application
   configure :test, :development do
     require 'active_support/per_thread_registry'
     require 'active_support/cache'
-    sprockets.cache = ActiveSupport::Cache.lookup_store :file_store, root.join('tmp', 'cache', 'assets')
+    sprockets.cache = ActiveSupport::Cache.lookup_store :file_store, root.join('tmp', 'cache', 'assets', environment.to_s)
   end
 
   configure :development do
