@@ -94,11 +94,21 @@ class DocsCLI < Thor
     puts 'Done'
   end
 
-  desc 'download (<doc> <doc@version>... | --all)', 'Download documentations'
+  desc 'download (<doc> <doc@version>... | --default | --installed)', 'Download documentations'
+  option :default, type: :boolean
+  option :installed, type: :boolean
   option :all, type: :boolean
   def download(*names)
     require 'unix_utils'
-    docs = options[:all] ? Docs.all : find_docs(names)
+    docs = if options[:default]
+      Docs.defaults
+    elsif options[:installed]
+      Docs.installed
+    elsif options[:all]
+      Docs.all_versions
+    else
+      find_docs(names)
+    end
     assert_docs(docs)
     download_docs(docs)
     generate_manifest
@@ -136,7 +146,7 @@ class DocsCLI < Thor
   def assert_docs(docs)
     if docs.empty?
       puts 'ERROR: called with no arguments.'
-      puts 'Run "thor docs:list" for usage patterns.'
+      puts 'Run "thor list" for usage patterns.'
       exit
     end
   end
@@ -154,6 +164,7 @@ class DocsCLI < Thor
 
     require 'thread'
     length = docs.length
+    mutex = Mutex.new
     i = 0
 
     (1..4).map do
@@ -165,7 +176,7 @@ class DocsCLI < Thor
           rescue => e
             "FAILED (#{e.class}: #{e.message})"
           end
-          puts "(#{i += 1}/#{length}) #{doc.name} #{status}"
+          mutex.synchronize { puts "(#{i += 1}/#{length}) #{doc.name}#{ " #{doc.version}" if doc.version} #{status}" }
         end
       end
     end.map(&:join)

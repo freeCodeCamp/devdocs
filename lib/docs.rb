@@ -39,7 +39,19 @@ module Docs
     all.flat_map(&:versions)
   end
 
-  def self.find(name, version)
+  def self.defaults
+    %w(css dom dom_events html http javascript).map(&method(:find))
+  end
+
+  def self.installed
+    Dir["#{store_path}/**/index.json"].
+      map { |file| file[%r{/([^/]*)/index\.json\z}, 1] }.
+      sort!.
+      map { |path| all_versions.find { |doc| doc.path == path } }.
+      compact
+  end
+
+  def self.find(name, version = nil)
     const = name.camelize
     doc = const_get(const)
 
