@@ -62,7 +62,7 @@ class app.views.DocList extends app.View
         versions = ''
         loop
           versions += @tmpl('sidebarDoc', doc, disabled: true)
-          break if docs[0].name isnt doc.name
+          break if docs[0]?.name isnt doc.name
           doc = docs.shift()
         html += @tmpl('sidebarDisabledVersionedDoc', doc, versions)
       else
