@@ -1,10 +1,10 @@
 class app.models.Doc extends app.Model
-  # Attributes: name, slug, type, release, db_size, mtime, links
+  # Attributes: name, slug, type, version, release, db_size, mtime, links
 
   constructor: ->
     super
     @reset @
-    [@slug_without_version, @version] = @slug.split('~v')
+    @slug_without_version = @slug.split('~v')[0]
     @fullName = "#{@name}" + if @version then " #{@version}" else ''
     @icon = @slug_without_version
     @text = @toEntry().text

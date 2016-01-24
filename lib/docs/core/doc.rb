@@ -66,6 +66,7 @@ module Docs
       def as_json
         json = { name: name, slug: slug, type: type }
         json[:links] = links if links.present?
+        json[:version] = version if version.present?
         json[:release] = release if release.present?
         json
       end
