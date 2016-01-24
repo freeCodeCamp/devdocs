@@ -280,4 +280,4 @@ class app.DB
     app.settings.get('schema')
 
   appVersion: ->
-    if app.config.env is 'production' then parseInt(app.config.version, 10) else Math.floor(Date.now() / 1000)
+    if app.config.env is 'production' then app.config.version else Math.floor(Date.now() / 1000)
