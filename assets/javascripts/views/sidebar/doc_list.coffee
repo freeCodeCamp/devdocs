@@ -58,7 +58,7 @@ class app.views.DocList extends app.View
     docs = [].concat(app.disabledDocs.all()...)
 
     while doc = docs.shift()
-      if doc.version
+      if doc.version?
         versions = ''
         loop
           versions += @tmpl('sidebarDoc', doc, disabled: true)

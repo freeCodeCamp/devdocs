@@ -34,7 +34,7 @@ class app.views.DocPicker extends app.View
     docs = app.docs.all().concat(app.disabledDocs.all()...)
 
     while doc = docs.shift()
-      if doc.version
+      if doc.version?
         [docs, versions] = @extractVersions(docs, doc)
         html += @tmpl('sidebarVersionedDoc', doc, @renderVersions(versions), open: app.docs.contains(doc))
       else

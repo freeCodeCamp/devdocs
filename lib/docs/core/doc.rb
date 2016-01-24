@@ -13,7 +13,7 @@ module Docs
       end
 
       def version(version = nil, &block)
-        return @version if version.nil?
+        return @version unless block_given?
 
         klass = Class.new(self)
         klass.class_exec(&block)
@@ -48,7 +48,7 @@ module Docs
 
       def slug
         slug = @slug || name.try(:downcase)
-        version? ? "#{slug}~#{version}" : slug
+        version? ? "#{slug}~#{version.downcase.gsub(/[^a-z0-9\_\.]/, '_')}" : slug
       end
 
       def path
@@ -66,7 +66,7 @@ module Docs
       def as_json
         json = { name: name, slug: slug, type: type }
         json[:links] = links if links.present?
-        json[:version] = version if version.present?
+        json[:version] = version if version.present? || defined?(@version)
         json[:release] = release if release.present?
         json
       end

@@ -45,9 +45,9 @@ class DocsDocTest < MiniTest::Spec
       assert_equal 'doc', Docs::Doc.slug
     end
 
-    it "returns 'doc~42' when the class is Docs::Doc and its #version is '42'" do
-      stub(Docs::Doc).version { '42' }
-      assert_equal 'doc~42', Docs::Doc.slug
+    it "returns 'doc~4.2_lts' when the class is Docs::Doc and its #version is '42 LTS'" do
+      stub(Docs::Doc).version { '4.2 LTS' }
+      assert_equal 'doc~4.2_lts', Docs::Doc.slug
     end
 
     it "returns 'foo~42' when #slug has been set to 'foo' and #version to '42'" do
@@ -140,6 +140,12 @@ class DocsDocTest < MiniTest::Spec
         eval "stub(doc).#{attribute} { attribute }"
         assert_equal attribute, doc.as_json[attribute.to_sym]
       end
+    end
+
+    it "includes the doc's version when it's defined and nil" do
+      refute doc.as_json.key?(:version)
+      doc.version = nil
+      assert doc.as_json.key?(:version)
     end
   end
 
