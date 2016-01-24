@@ -102,11 +102,10 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   end
 
-  desc 'package (<doc> <doc@version>... | --all)', 'Package documentations'
-  option :all, type: :boolean
+  desc 'package <doc> <doc@version>...', 'Package documentations'
   def package(*names)
     require 'unix_utils'
-    docs = options[:all] ? Docs.all : find_docs(names)
+    docs = find_docs(names)
     assert_docs(docs)
     docs.each(&method(:package_doc))
     puts 'Done'
