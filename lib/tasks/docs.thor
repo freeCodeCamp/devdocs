@@ -13,12 +13,17 @@ class DocsCLI < Thor
 
   desc 'list', 'List available documentations'
   def list
-    max_length = 0
-    Docs.all.
-      map  { |doc| [doc.to_s.demodulize.underscore, doc] }.
-      to_h.
-      each { |name, doc| max_length = name.length if name.length > max_length }.
-      each { |name, doc| puts "#{name.rjust max_length + 1}: #{doc.versions.map { |v| v.release || '-' }.join(', ')}" }
+    output = Docs.all.flat_map do |doc|
+      name = doc.to_s.demodulize.underscore
+      if doc.versioned?
+        doc.versions.map { |_doc| "#{name}@#{_doc.version}" }
+      else
+        name
+      end
+    end.join("\n")
+
+    require 'tty-pager'
+    TTY::Pager.new.page(output)
   end
 
   desc 'page <doc> [path] [--version] [--verbose] [--debug]', 'Generate a page (no indexing)'

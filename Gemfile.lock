@@ -78,6 +78,12 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.2)
+    tty-pager (0.3.0)
+      tty-screen (~> 0.4.0)
+      tty-which (~> 0.1.0)
+      verse (~> 0.4.0)
+    tty-screen (0.4.3)
+    tty-which (0.1.0)
     typhoeus (0.8.0)
       ethon (>= 0.8.0)
     tzinfo (1.2.2)
@@ -85,7 +91,10 @@ GEM
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unicode_utils (1.4.0)
     unix_utils (0.0.15)
+    verse (0.4.0)
+      unicode_utils (~> 1.4.0)
     yajl-ruby (1.2.1)
 
 PLATFORMS
@@ -113,7 +122,11 @@ DEPENDENCIES
   sprockets-helpers
   thin
   thor
+  tty-pager
   typhoeus
   uglifier
   unix_utils
   yajl-ruby
+
+BUNDLED WITH
+   1.11.2

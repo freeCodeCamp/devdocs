@@ -38,6 +38,10 @@ module Docs
         version.present?
       end
 
+      def versioned?
+        @versions.presence
+      end
+
       def name
         @name || super.try(:demodulize)
       end
