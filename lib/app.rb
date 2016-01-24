@@ -32,6 +32,7 @@ class App < Sinatra::Application
       Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc|
         doc['full_name'] = doc['name'].dup
         doc['full_name'] << " #{doc['version']}" if doc['version']
+        doc['slug_without_version'] = doc['slug'].split('~').first
         [doc['slug'], doc]
       }]
     }
@@ -123,9 +124,8 @@ class App < Sinatra::Application
 
     def find_doc(slug)
       settings.docs[slug] || begin
-        slug = "#{slug}~"
-        settings.docs.each do |_slug, _doc|
-          return _doc if _slug.start_with?(slug)
+        settings.docs.each do |_, doc|
+          return doc if doc['slug_without_version'] == slug
         end
         nil
       end
@@ -147,7 +147,7 @@ class App < Sinatra::Application
     end
 
     def doc_index_page?
-      @doc && request.path == "/#{@doc['slug']}/"
+      @doc && (request.path == "/#{@doc['slug']}/" || request.path == "/#{@doc['slug_without_version']}/")
     end
 
     def query_string_for_redirection
