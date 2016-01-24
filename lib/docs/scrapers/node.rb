@@ -3,8 +3,6 @@ module Docs
     self.name = 'Node.js'
     self.slug = 'node'
     self.type = 'node'
-    self.release = '5.4.0'
-    self.base_url = 'https://nodejs.org/api/'
     self.links = {
       home: 'https://nodejs.org/',
       code: 'https://github.com/nodejs/node'
@@ -23,5 +21,15 @@ module Docs
       Node.js is a trademark of Joyent, Inc. and is used with its permission.<br>
       We are not endorsed by or affiliated with Joyent.
     HTML
+
+    version do
+      self.release = '5.5.0'
+      self.base_url = 'https://nodejs.org/api/'
+    end
+
+    version '4.2 LTS' do
+      self.release = '4.2.6'
+      self.base_url = "https://nodejs.org/dist/v#{release}/docs/api/"
+    end
   end
 end
