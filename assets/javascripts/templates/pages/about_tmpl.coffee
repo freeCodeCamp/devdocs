@@ -361,7 +361,7 @@ credits = [
     'https://raw.github.com/rails/rails/master/activerecord/MIT-LICENSE'
   ], [
     'Rust',
-    '2011-2015 The Rust Project Developers',
+    '2016 The Rust Project Developers',
     'MIT',
     'https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT'
   ], [
