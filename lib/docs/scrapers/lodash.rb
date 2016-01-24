@@ -3,8 +3,6 @@ module Docs
     self.name = 'lodash'
     self.slug = 'lodash'
     self.type = 'lodash'
-    self.release = '3.10.0'
-    self.base_url = 'https://lodash.com/docs'
     self.links = {
       home: 'https://lodash.com/',
       code: 'https://github.com/lodash/lodash/'
@@ -16,8 +14,18 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2015 The Dojo Foundation<br>
+      &copy; 2012&ndash;2016 The Dojo Foundation<br>
       Licensed under the MIT License.
     HTML
+
+    version '4' do
+      self.release = '4.0.0'
+      self.base_url = 'https://lodash.com/docs'
+    end
+
+    version '3' do
+      self.release = '3.10.0'
+      self.base_url = 'https://lodash.com/docs' # OUT-OF-DATE
+    end
   end
 end

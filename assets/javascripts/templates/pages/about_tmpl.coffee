@@ -216,7 +216,7 @@ credits = [
     'http://creativecommons.org/licenses/by/3.0/'
   ], [
     'Lo-Dash',
-    '2012-2015 The Dojo Foundation',
+    '2012-2016 The Dojo Foundation',
     'MIT',
     'https://raw.github.com/lodash/lodash/master/LICENSE.txt'
   ], [
