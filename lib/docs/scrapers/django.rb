@@ -2,9 +2,6 @@ module Docs
   class Django < FileScraper
     self.name = 'Django'
     self.type = 'sphinx'
-    self.release = '1.8.6'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/Django'
-    self.base_url = 'https://docs.djangoproject.com/en/1.8/'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://www.djangoproject.com/',
@@ -36,5 +33,17 @@ module Docs
       &copy; Django Software Foundation and individual contributors<br>
       Licensed under the BSD License.
     HTML
+
+    version '1.9' do
+      self.release = '1.9.1'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/Django19'
+      self.base_url = 'https://docs.djangoproject.com/en/1.9/'
+    end
+
+    version '1.8' do
+      self.release = '1.8.8'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/Django18'
+      self.base_url = 'https://docs.djangoproject.com/en/1.8/'
+    end
   end
 end
