@@ -24,7 +24,7 @@ templates.sidebarResult = (entry) ->
     """<span class="_list-enable" data-enable="#{entry.doc.slug}">Enable</span>"""
   else
     """<span class="_list-reveal" data-reset-list title="Reveal in list"></span>"""
-  addons += """<span class="_list-count">#{entry.doc.version}</span>""" if entry.doc.version
+  addons += """<span class="_list-count">#{entry.doc.version}</span>""" if entry.doc.version and not entry.isIndex()
   """<a href="#{entry.fullPath()}" class="_list-item _list-hover _list-result _icon-#{entry.doc.icon}">#{addons}<span class="_list-text">#{$.escape entry.name}</span></a>"""
 
 templates.sidebarNoResults = ->
