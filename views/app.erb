@@ -8,7 +8,7 @@
       <div class="_search-tag"></div>
     </form>
     <h1 class="_logo">
-      <a href="/" class="_nav-link" title="Offline API Documentation Browser">DevDocs</a><%= "/ #{@doc['name']}" if @doc %>
+      <a href="/" class="_nav-link" title="Offline API Documentation Browser">DevDocs</a><%= "/ #{@doc['full_name']}" if @doc %>
     </h1>
     <nav class="_nav">
       <a href="/offline" class="_nav-link">Offline</a>
@@ -21,7 +21,7 @@
     <div class="_list">
       <% unless @doc %>
       <% App.docs.each do |slug, doc| %>
-      <a href="/<%= slug %>/" class="_list-item"><span class="_list-arrow"></span><%= doc['name'] %></a>
+      <a href="/<%= slug %>/" class="_list-item"><span class="_list-arrow"></span><%= doc['full_name'] %></a>
       <% end %>
       <% end %>
     </div>

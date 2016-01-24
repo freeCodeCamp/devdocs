@@ -27,8 +27,14 @@ class App < Sinatra::Application
     set :docs_host, -> { File.join('', docs_prefix) }
     set :docs_path, -> { File.join(public_folder, docs_prefix) }
     set :docs_manifest_path, -> { File.join(docs_path, 'docs.json') }
-    set :docs, -> { Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc| [doc['slug'], doc] }] }
     set :default_docs, %w(css dom dom_events html http javascript)
+    set :docs, -> {
+      Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc|
+        doc['full_name'] = doc['name'].dup
+        doc['full_name'] << " #{doc['version']}" if doc['version']
+        [doc['slug'], doc]
+      }]
+    }
 
     set :news_path, -> { File.join(root, assets_prefix, 'javascripts', 'news.json') }
     set :news, -> { JSON.parse(File.read(news_path)) }
