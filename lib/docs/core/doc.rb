@@ -48,7 +48,7 @@ module Docs
 
       def slug
         slug = @slug || name.try(:downcase)
-        version? ? "#{slug}~v#{version}" : slug
+        version? ? "#{slug}~#{version}" : slug
       end
 
       def path

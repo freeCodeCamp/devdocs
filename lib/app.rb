@@ -123,7 +123,7 @@ class App < Sinatra::Application
 
     def find_doc(slug)
       settings.docs[slug] || begin
-        slug = "#{slug}~v"
+        slug = "#{slug}~"
         settings.docs.each do |_slug, _doc|
           return _doc if _slug.start_with?(slug)
         end
@@ -133,7 +133,7 @@ class App < Sinatra::Application
 
     def user_has_docs?(slug)
       docs.include?(slug) || begin
-        slug = "#{slug}~v"
+        slug = "#{slug}~"
         docs.any? { |_slug| _slug.start_with?(slug) }
       end
     end

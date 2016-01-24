@@ -80,11 +80,11 @@ class AppTest < MiniTest::Spec
     end
 
     it "works with cookie" do
-      set_cookie('docs=css/html~v5')
+      set_cookie('docs=css/html~5')
       get '/manifest.appcache'
       assert last_response.ok?
       assert_includes last_response.body, '/css/index.json?1420139788'
-      assert_includes last_response.body, '/html~v5/index.json?1420139791'
+      assert_includes last_response.body, '/html~5/index.json?1420139791'
     end
 
     it "ignores invalid docs in the cookie" do
@@ -127,17 +127,17 @@ class AppTest < MiniTest::Spec
 
   describe "/[doc]" do
     it "renders when the doc exists and isn't enabled" do
-      set_cookie('docs=html~v5')
-      get '/html~v4/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
+      set_cookie('docs=html~5')
+      get '/html~4/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
       assert last_response.ok?
     end
 
     it "redirects via JS cookie when the doc exists and is enabled" do
-      set_cookie('docs=html~v5')
-      get '/html~v5/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
+      set_cookie('docs=html~5')
+      get '/html~5/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
       assert last_response.redirect?
       assert_equal 'http://example.org/', last_response['Location']
-      assert last_response['Set-Cookie'].start_with?("initial_path=%2Fhtml%7Ev5%2F; path=/; expires=")
+      assert last_response['Set-Cookie'].start_with?("initial_path=%2Fhtml%7E5%2F; path=/; expires=")
     end
 
     it "renders when the doc exists, has no version in the path, and isn't enabled" do
@@ -146,7 +146,7 @@ class AppTest < MiniTest::Spec
     end
 
     it "redirects via JS cookie when the doc exists, has no version in the path, and a version is enabled" do
-      set_cookie('docs=html~v5')
+      set_cookie('docs=html~5')
       get '/html/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
       assert last_response.redirect?
       assert_equal 'http://example.org/', last_response['Location']
@@ -160,7 +160,7 @@ class AppTest < MiniTest::Spec
     end
 
     it "returns 404 when the doc doesn't exist" do
-      get '/html~v6/'
+      get '/html~6/'
       assert last_response.not_found?
     end
 
@@ -177,15 +177,15 @@ class AppTest < MiniTest::Spec
 
   describe "/[doc]-[type]" do
     it "works when the doc exists" do
-      get '/html~v4-foo-bar_42/'
+      get '/html~4-foo-bar_42/'
       assert last_response.ok?
-      assert_includes last_response.body, 'app.DOC = {"name":"HTML","slug":"html~v4"'
+      assert_includes last_response.body, 'app.DOC = {"name":"HTML","slug":"html~4"'
     end
 
     it "works when the doc has no version in the path and a version exists" do
       get '/html-foo-bar_42/'
       assert last_response.ok?
-      assert_includes last_response.body, 'app.DOC = {"name":"HTML","slug":"html~v5"'
+      assert_includes last_response.body, 'app.DOC = {"name":"HTML","slug":"html~5"'
     end
 
     it "returns 404 when the type is blank" do
@@ -199,7 +199,7 @@ class AppTest < MiniTest::Spec
     end
 
     it "returns 404 when the doc doesn't exist" do
-      get '/html~v6-bar/'
+      get '/html~6-bar/'
       assert last_response.not_found?
     end
 

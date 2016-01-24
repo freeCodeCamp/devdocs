@@ -45,15 +45,15 @@ class DocsDocTest < MiniTest::Spec
       assert_equal 'doc', Docs::Doc.slug
     end
 
-    it "returns 'doc~v42' when the class is Docs::Doc and its #version is '42'" do
+    it "returns 'doc~42' when the class is Docs::Doc and its #version is '42'" do
       stub(Docs::Doc).version { '42' }
-      assert_equal 'doc~v42', Docs::Doc.slug
+      assert_equal 'doc~42', Docs::Doc.slug
     end
 
-    it "returns 'foo~v42' when #slug has been set to 'foo' and #version to '42'" do
+    it "returns 'foo~42' when #slug has been set to 'foo' and #version to '42'" do
       doc.slug = 'foo'
       doc.version = '42'
-      assert_equal 'foo~v42', doc.slug
+      assert_equal 'foo~42', doc.slug
     end
   end
 
