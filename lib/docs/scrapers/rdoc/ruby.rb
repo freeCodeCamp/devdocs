@@ -1,17 +1,17 @@
 module Docs
   class Ruby < Rdoc
     # Generated with:
-    # rdoc \
-    #   --root . \
-    #   --page-dir doc \
-    #   --encoding=UTF-8 \
-    #   --visibility=public \
-    #   --format=darkfish \
-    #   --no-line-numbers \
-    #   --op html .
+    #   ./configure && make html
+    # or:
+    #   rdoc \
+    #     --root . \
+    #     --page-dir doc \
+    #     --encoding=UTF-8 \
+    #     --visibility=public \
+    #     --format=darkfish \
+    #     --no-line-numbers \
+    #     --op html .
 
-    self.release = '2.2.1'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby'
     self.links = {
       home: 'https://www.ruby-lang.org/',
       code: 'https://github.com/ruby/ruby'
@@ -30,6 +30,8 @@ module Docs
       regexp_rdoc.html
       standard_library_rdoc.html
       syntax_rdoc.html
+      extension_rdoc.html
+      extension_ja_rdoc.html
       Data.html
       English.html
       Fcntl.html
@@ -69,10 +71,20 @@ module Docs
       /\AXMP/]
 
     options[:attribution] = <<-HTML
-      Ruby Core &copy; 1993&ndash;2015 Yukihiro Matsumoto<br>
+      Ruby Core &copy; 1993&ndash;2016 Yukihiro Matsumoto<br>
       Licensed under the Ruby License.<br>
       Ruby Standard Library &copy; contributors<br>
       Licensed under their own licenses.
     HTML
+
+    version '2.2' do
+      self.release = '2.2.4'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby22'
+    end
+
+    version '2.3' do
+      self.release = '2.3.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby23'
+    end
   end
 end
