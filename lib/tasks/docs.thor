@@ -134,6 +134,19 @@ class DocsCLI < Thor
     puts 'Done'
   end
 
+  desc 'upload', '[private]'
+  option :dryrun, type: :boolean
+  def upload(*names)
+    docs = find_docs(names)
+    assert_docs(docs)
+    docs.each do |doc|
+      puts "Syncing #{doc.path}..."
+      cmd = "aws s3 sync #{File.join(Docs.store_path, doc.path)} s3://docs.devdocs.io/#{doc.path} --delete"
+      cmd << ' --dryrun' if options[:dryrun]
+      system(cmd)
+    end
+  end
+
   private
 
   def find_docs(names)
