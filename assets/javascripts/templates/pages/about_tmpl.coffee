@@ -381,7 +381,7 @@ credits = [
     'https://raw.githubusercontent.com/Automattic/socket.io/master/LICENSE'
   ], [
     'Symfony',
-    '2004-2015 Fabien Potencier',
+    '2004-2016 Fabien Potencier',
     'MIT',
     'http://symfony.com/doc/current/contributing/code/license.html'
   ], [

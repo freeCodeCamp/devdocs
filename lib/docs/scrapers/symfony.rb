@@ -3,8 +3,6 @@ module Docs
     self.name = 'Symfony'
     self.slug = 'symfony'
     self.type = 'laravel'
-    self.release = '2.7'
-    self.base_url = "http://api.symfony.com/#{release}/"
     self.root_path = 'namespaces.html'
     self.initial_paths = %w(classes.html)
     self.links = {
@@ -24,8 +22,23 @@ module Docs
       Symfony.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2004&ndash;2015 Fabien Potencier<br>
+      &copy; 2004&ndash;2016 Fabien Potencier<br>
       Licensed under the MIT License.
     HTML
+
+    version '3.0' do
+      self.release = '3.0.1'
+      self.base_url = "http://api.symfony.com/#{version}/"
+    end
+
+    version '2.8' do
+      self.release = '2.8.2'
+      self.base_url = "http://api.symfony.com/#{version}/"
+    end
+
+    version '2.7' do
+      self.release = '2.7.9'
+      self.base_url = "http://api.symfony.com/#{version}/"
+    end
   end
 end
