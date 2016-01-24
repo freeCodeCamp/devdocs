@@ -3,7 +3,7 @@ module Docs
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.release = '2.2.0'
+    self.release = '2.3.0'
     self.base_url = 'http://emberjs.com/api/'
     self.links = {
       home: 'http://emberjs.com/',
@@ -25,7 +25,7 @@ module Docs
     options[:skip_patterns] = [/\._/]
 
     options[:attribution] = <<-HTML
-      &copy; 2015 Yehuda Katz, Tom Dale and Ember.js contributors<br>
+      &copy; 2016 Yehuda Katz, Tom Dale and Ember.js contributors<br>
       Licensed under the MIT License.
     HTML
   end
