@@ -338,7 +338,7 @@ class DocsDocTest < MiniTest::Spec
 
     context "with args" do
       it "creates a version subclass" do
-        version = doc.version('4') { self.release = '8'}
+        version = doc.version('4') { self.release = '8'; self.links = ["https://#{self.version}"] }
 
         assert_equal [version], doc.versions
 
@@ -351,6 +351,7 @@ class DocsDocTest < MiniTest::Spec
         assert_equal '8', version.release
         assert_equal 'name', version.name
         assert_equal 'type', version.type
+        assert_equal ['https://4'], version.links
       end
     end
   end

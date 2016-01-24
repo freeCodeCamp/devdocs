@@ -16,11 +16,11 @@ module Docs
         return @version unless block_given?
 
         klass = Class.new(self)
-        klass.class_exec(&block)
         klass.name = name
         klass.slug = slug
         klass.version = version
         klass.links = links
+        klass.class_exec(&block)
         @versions ||= []
         @versions << klass
         klass
