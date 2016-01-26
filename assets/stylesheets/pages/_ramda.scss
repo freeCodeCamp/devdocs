@@ -1,0 +1,33 @@
+._ramda {
+  @extend %simple;
+  code { @extend %code; }
+  h2 + div > code { @extend %block-label, %label-blue; }
+
+  h2 {
+    small {
+      font-size: small;
+      float: right;
+    }
+  }
+
+  .see a { @extend %label; }
+
+  .params {
+    .type {
+      font-style: italic;
+      text-transform: capitalize;
+      margin-right: 0.35em;
+      &::before { content: '<'; }
+      &::after { content: '>'; }
+    }
+    .panel-body {
+      margin-bottom: 1.5em;
+      .type {
+        padding: 0 0 0 2em;
+      }
+      .description > p {
+        display: inline-block;
+      }
+    }
+  }
+}
