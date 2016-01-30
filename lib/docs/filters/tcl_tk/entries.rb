@@ -1,56 +1,43 @@
 module Docs
   class TclTk
     class EntriesFilter < Docs::EntriesFilter
-      #def additional_entries
-      #  type = nil
-      #end
-
-      def split_slug
-        slug.sub! /\.html?/, ''
-        return *slug.split('/')
-      end
-
       TYPE_MAP = {
+        'UserCmd' => 'Applications',
         'TclCmd' => 'Tcl',
         'TkCmd' => 'Tk',
-        'ItclCmd' => 'incr',
-	'SqliteCmd' => 'tdbc',
-	'TdbcCmd' => 'tdbc',
-	'TdbcmysqlCmd' => 'tdbc',
-	'TdbcodbcCmd' => 'tdbc',
-	'TdbcpostgresCmd' => 'tdbc',
-	'TdbcsqliteCmd' => 'tdbc',
-	'ThreadCmd' => 'Thread',
-        'UserCmd' => 'App'
+        'ItclCmd' => '[incr Tcl]',
+        'SqliteCmd' => 'TDBC',
+        'TdbcCmd' => 'TDBC',
+        'TdbcmysqlCmd' => 'TDBC',
+        'TdbcodbcCmd' => 'TDBC',
+        'TdbcpostgresCmd' => 'TDBC',
+        'TdbcsqliteCmd' => 'TDBC',
+        'ThreadCmd' => 'Thread'
       }
 
-      def get_type
-        type, name = split_slug
-        type = TYPE_MAP[type] || type
-	if name == 'contents' then
-	    type = nil
-	end
-        type
+      def get_name
+        if slug == 'contents.htm'
+          TYPE_MAP[slug.split('/').first]
+        else
+          slug.split('/').last.remove('.htm')
+        end
       end
 
-      def get_name
-        type, name = split_slug
-        name
+      def get_type
+        return nil if name == 'contents'
+        TYPE_MAP.fetch(slug.split('/').first)
       end
 
       def additional_entries
-        type, name = split_slug
-        if type != 'TclCmd' || name != 'library' then
-          return []
+        css('> dl.command > dt > a[name]:not([href])', '> dl.commands > dt > a[name]:not([href])').each_with_object [] do |node, entries|
+          name = node.at_xpath("./b[not(text()='#{self.name}')]").try(:content)
+          next unless name
+          name.strip!
+          name.remove! %r{\A:+}
+          name.prepend "#{self.name}: " unless name =~ /#{self.name}[:\s]/ || name =~ /#{self.name.gsub('_', '::')}[:\s]/
+          next if entries.any? { |entry| entry[0] == name }
+          entries << [name, node['name']]
         end
-        # special rule for library page which contains multiple commands at once
-        entries = []
-        css('a > b').each do |node|
-          text = node.content.strip
-          id = node.parent['href'].sub /^.*#(.*)$/, '\\1'
-          entries << [text, id, TYPE_MAP[type]]
-        end
-        return entries
       end
     end
   end

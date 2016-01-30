@@ -1,19 +1,5 @@
 ._tcl_tk {
-    /* make content listing more compact */
-    .description {
-	margin: 0;
-	> dd {
-	    margin: 0;
-	}
-    }
-    dl {
-	margin: 0;
-    }
-    .copy {
-        /* per page copyright */
-        white-space: pre;
-        font-size: 80%;
-        border-top: 1px solid #6A6A6A;
-        margin-top: 2em;
-    }
+  @extend %simple;
+
+  dl { margin: .5em 0; }
 }

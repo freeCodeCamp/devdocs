@@ -2,41 +2,28 @@ module Docs
   class TclTk < UrlScraper
     self.name = 'Tcl/Tk'
     self.type = 'tcl_tk'
-    self.slug = 'tcl'
-    self.version = '8.6'
-    # test URL:
-    self.base_url = 'http://localhost/tcl/'
-    # real URL:
-    #self.base_url = 'http://www.tcl.tk/man/tcl/'
+    self.slug = 'tcl_tk'
+    self.release = '8.6'
+    self.base_url = 'https://www.tcl.tk/man/tcl/'
     self.root_path = 'contents.htm'
 
-    html_filters.push 'tcl_tk/clean_html', 'tcl_tk/entries'
+    html_filters.push 'tcl_tk/entries', 'tcl_tk/clean_html', 'title'
 
-    options[:skip_links] = false
-
+    options[:root_title] = 'Tcl/Tk Documentation'
     options[:trailing_slash] = false
-    options[:skip] = ['siteinfo.htm']
+    options[:skip] = %w(siteinfo.htm)
     options[:skip_patterns] = [
-	# ignore keyword list pages
-	/^Keywords\//,
-	# ignore C-API, only required for extension developers
-	/^TclLib\//,
-	/^TkLib\//,
-	/^ItclLib\//,
-	/^TdbcLib\//
+      # ignore keyword list pages
+      /\AKeywords\//,
+      # ignore C-API, only required for extension developers
+      /\ATclLib\//,
+      /\ATkLib\//,
+      /\AItclLib\//,
+      /\ATdbcLib\//
     ]
 
-    # TODO can't figure out howto convert .htm => .html in filenames
-    # to save as "xyz.html" instead of "xyz.htm.html"
-    #options[:fix_urls] = ->(url) do
-    #  url.sub! /\.htm($|#)/, '.html\\1'
-    #  url
-    #end
-
-    # Each Page contains a specific list of copyrights, only add the
-    # overall license link
     options[:attribution] = <<-HTML
-      Licensed under <a href="http://tcl.tk/software/tcltk/license.html">Tcl/Tk Terms</a>
+      Licensed under <a href="http://tcl.tk/software/tcltk/license.html">Tcl/Tk terms</a>
     HTML
   end
 end

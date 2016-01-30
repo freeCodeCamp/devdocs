@@ -385,6 +385,11 @@ credits = [
     'MIT',
     'http://symfony.com/doc/current/contributing/code/license.html'
   ], [
+    'Tcl/Tk',
+    'The Regents of the University of California, Sun Microsystems, Inc., Scriptics Corporation, and other parties',
+    'Tcl/Tk',
+    'http://tcl.tk/software/tcltk/license.html'
+  ], [
     'Underscore.js',
     '2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
