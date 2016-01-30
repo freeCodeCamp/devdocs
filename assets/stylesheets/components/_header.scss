@@ -126,6 +126,11 @@
       box-shadow: 0 0 1px $inputFocusBorder;
     }
   }
+
+  &[disabled] {
+    background: $sidebarBackground;
+    cursor: not-allowed;
+  }
 }
 
 ._search-clear {

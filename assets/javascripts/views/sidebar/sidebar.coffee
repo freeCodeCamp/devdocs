@@ -34,6 +34,7 @@ class app.views.Sidebar extends app.View
       @append @tmpl('sidebarSettings') if @view is @docList and @docPicker
       @view.activate()
       @restoreScrollPosition()
+      if view is @docPicker then @search.disable() else @search.enable()
     return
 
   showDocList: (reset) =>
