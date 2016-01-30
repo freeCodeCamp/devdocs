@@ -18,6 +18,8 @@ module Docs
     end
 
     def normalize_url(str)
+      str.strip!
+      str.gsub!(' ', '%20')
       url = to_absolute_url(str)
 
       while new_url = fix_url(url)

@@ -44,6 +44,11 @@ class NormalizeUrlsFilterTest < MiniTest::Spec
     assert_equal link_to('#'), filter_output_string
   end
 
+  it "repairs un-encoded spaces" do
+    @body = link_to 'http://example.com/#foo bar '
+    assert_equal link_to('http://example.com/#foo%20bar'), filter_output_string
+  end
+
   it "retains query strings" do
     @body = link_to'path?query'
     assert_equal link_to('http://example.com/dir/path?query'), filter_output_string
