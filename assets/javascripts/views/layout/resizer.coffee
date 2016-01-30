@@ -40,6 +40,7 @@ class app.views.Resizer extends app.View
 
   onDrag: (event) =>
     value = event.pageX
+    return unless value > 0
     @lastDragValue = value
     return if @lastDrag and @lastDrag > Date.now() - 50
     @lastDrag = Date.now()
