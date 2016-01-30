@@ -68,7 +68,7 @@ class app.DB
       db.createObjectStore(doc.slug)
 
     for name in objectStoreNames
-      db.deleteObjectStore(name)
+      try db.deleteObjectStore(name)
     return
 
   store: (doc, data, onSuccess, onError) ->
