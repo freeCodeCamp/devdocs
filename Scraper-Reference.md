@@ -54,7 +54,7 @@ Configuration is done via class attributes and divided into three main categorie
   Defines the CSS class name (`_[type]`) and custom JavaScript class (`app.views.[Type]Page`) that will be added/loaded on each page. Documentations sharing a similar structure (e.g. generated with the same tool or originating from the same website) should use the same `type` to avoid duplicating the CSS and JS.  
   Must include lowercase letters only.
 
-* `version` [String] **(required)**  
+* `release` [String] **(required)**  
   The version of the software at the time the scraper was last run. This is only informational and doesn't affect the scraper's behavior.
 
 * `base_url` [String] **(required in `UrlScraper`)**  
