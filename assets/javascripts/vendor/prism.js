@@ -1,4 +1,4 @@
-/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript+c+cpp+coffeescript+ruby+elixir+php+python+rust */
+/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript+c+cpp+coffeescript+ruby+elixir+lua+php+python+rust */
 var _self = (typeof window !== 'undefined')
 	? window   // if in browser
 	: (
@@ -16,7 +16,7 @@ var _self = (typeof window !== 'undefined')
 var Prism = (function(){
 
 // Private helper vars
-var lang = /\blang(?:uage)?-(?!\*)(\w+)\b/i;
+var lang = /\blang(?:uage)?-(\w+)\b/i;
 
 var _ = _self.Prism = {
 	util: {
@@ -82,19 +82,19 @@ var _ = _self.Prism = {
 		insertBefore: function (inside, before, insert, root) {
 			root = root || _.languages;
 			var grammar = root[inside];
-
+			
 			if (arguments.length == 2) {
 				insert = arguments[1];
-
+				
 				for (var newToken in insert) {
 					if (insert.hasOwnProperty(newToken)) {
 						grammar[newToken] = insert[newToken];
 					}
 				}
-
+				
 				return grammar;
 			}
-
+			
 			var ret = {};
 
 			for (var token in grammar) {
@@ -114,7 +114,7 @@ var _ = _self.Prism = {
 					ret[token] = grammar[token];
 				}
 			}
-
+			
 			// Update references in other language definitions
 			_.languages.DFS(_.languages, function(key, value) {
 				if (value === root[inside] && key != inside) {
@@ -126,23 +126,26 @@ var _ = _self.Prism = {
 		},
 
 		// Traverse a language definition with Depth First Search
-		DFS: function(o, callback, type) {
+		DFS: function(o, callback, type, visited) {
+			visited = visited || {};
 			for (var i in o) {
 				if (o.hasOwnProperty(i)) {
 					callback.call(o, i, o[i], type || i);
 
-					if (_.util.type(o[i]) === 'Object') {
-						_.languages.DFS(o[i], callback);
+					if (_.util.type(o[i]) === 'Object' && !visited[o[i]]) {
+						visited[o[i]] = true;
+						_.languages.DFS(o[i], callback, null, visited);
 					}
-					else if (_.util.type(o[i]) === 'Array') {
-						_.languages.DFS(o[i], callback, i);
+					else if (_.util.type(o[i]) === 'Array' && !visited[o[i]]) {
+						visited[o[i]] = true;
+						_.languages.DFS(o[i], callback, i, visited);
 					}
 				}
 			}
 		}
 	},
 	plugins: {},
-
+	
 	highlightAll: function(async, callback) {
 		var elements = document.querySelectorAll('code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code');
 
@@ -190,28 +193,28 @@ var _ = _self.Prism = {
 
 		_.hooks.run('before-highlight', env);
 
-		// if (async && _self.Worker) {
-		// 	var worker = new Worker(_.filename);
+		if (async && _self.Worker) {
+			var worker = new Worker(_.filename);
 
-		// 	worker.onmessage = function(evt) {
-		// 		env.highlightedCode = evt.data;
+			worker.onmessage = function(evt) {
+				env.highlightedCode = evt.data;
 
-		// 		_.hooks.run('before-insert', env);
+				_.hooks.run('before-insert', env);
 
-		// 		env.element.innerHTML = env.highlightedCode;
+				env.element.innerHTML = env.highlightedCode;
 
-		// 		callback && callback.call(env.element);
-		// 		_.hooks.run('after-highlight', env);
-		// 		_.hooks.run('complete', env);
-		// 	};
+				callback && callback.call(env.element);
+				_.hooks.run('after-highlight', env);
+				_.hooks.run('complete', env);
+			};
 
-		// 	worker.postMessage(JSON.stringify({
-		// 		language: env.language,
-		// 		code: env.code,
-		// 		immediateClose: true
-		// 	}));
-		// }
-		// else {
+			worker.postMessage(JSON.stringify({
+				language: env.language,
+				code: env.code,
+				immediateClose: true
+			}));
+		}
+		else {
 			env.highlightedCode = _.highlight(env.code, env.grammar, env.language);
 
 			_.hooks.run('before-insert', env);
@@ -222,7 +225,7 @@ var _ = _self.Prism = {
 
 			_.hooks.run('after-highlight', env);
 			_.hooks.run('complete', env);
-		// }
+		}
 	},
 
 	highlight: function (text, grammar, language) {
@@ -387,39 +390,37 @@ Token.stringify = function(o, language, parent) {
 
 };
 
-// if (!_self.document) {
-// 	if (!_self.addEventListener) {
-// 		// in Node.js
-// 		return _self.Prism;
-// 	}
-//  	// In worker
-// 	_self.addEventListener('message', function(evt) {
-// 		var message = JSON.parse(evt.data),
-// 		    lang = message.language,
-// 		    code = message.code,
-// 		    immediateClose = message.immediateClose;
+if (!_self.document) {
+	if (!_self.addEventListener) {
+		// in Node.js
+		return _self.Prism;
+	}
+ 	// In worker
+	_self.addEventListener('message', function(evt) {
+		var message = JSON.parse(evt.data),
+		    lang = message.language,
+		    code = message.code,
+		    immediateClose = message.immediateClose;
 
-// 		_self.postMessage(_.highlight(code, _.languages[lang], lang));
-// 		if (immediateClose) {
-// 			_self.close();
-// 		}
-// 	}, false);
+		_self.postMessage(_.highlight(code, _.languages[lang], lang));
+		if (immediateClose) {
+			_self.close();
+		}
+	}, false);
 
-// 	return _self.Prism;
-// }
+	return _self.Prism;
+}
 
-// // Get current script and highlight
-// var script = document.getElementsByTagName('script');
+//Get current script and highlight
+var script = document.currentScript || [].slice.call(document.getElementsByTagName("script")).pop();
 
-// script = script[script.length - 1];
+if (script) {
+	_.filename = script.src;
 
-// if (script) {
-// 	_.filename = script.src;
-
-// 	if (document.addEventListener && !script.hasAttribute('data-manual')) {
-// 		document.addEventListener('DOMContentLoaded', _.highlightAll);
-// 	}
-// }
+	if (document.addEventListener && !script.hasAttribute('data-manual')) {
+		document.addEventListener('DOMContentLoaded', _.highlightAll);
+	}
+}
 
 return _self.Prism;
 
@@ -510,7 +511,7 @@ if (Prism.languages.markup) {
 			alias: 'language-css'
 		}
 	});
-
+	
 	Prism.languages.insertBefore('inside', 'attr-value', {
 		'style-attr': {
 			pattern: /\s*style=("|').*?\1/i,
@@ -931,6 +932,23 @@ Prism.languages.elixir.string.forEach(function(o) {
 });
 
 
+Prism.languages.lua = {
+	'comment': /^#!.+|--(?:\[(=*)\[[\s\S]*?\]\1\]|.*)/m,
+	// \z may be used to skip the following space
+	'string': /(["'])(?:(?!\1)[^\\\r\n]|\\z(?:\r\n|\s)|\\(?:\r\n|[\s\S]))*\1|\[(=*)\[[\s\S]*?\]\2\]/,
+	'number': /\b0x[a-f\d]+\.?[a-f\d]*(?:p[+-]?\d+)?\b|\b\d+(?:\.\B|\.?\d*(?:e[+-]?\d+)?\b)|\B\.\d+(?:e[+-]?\d+)?\b/i,
+	'keyword': /\b(?:and|break|do|else|elseif|end|false|for|function|goto|if|in|local|nil|not|or|repeat|return|then|true|until|while)\b/,
+	'function': /(?!\d)\w+(?=\s*(?:[({]))/,
+	'operator': [
+		/[-+*%^&|#]|\/\/?|<[<=]?|>[>=]?|[=~]=?/,
+		{
+			// Match ".." but don't break "..."
+			pattern: /(^|[^.])\.\.(?!\.)/,
+			lookbehind: true
+		}
+	],
+	'punctuation': /[\[\](){},;]|\.+|:+/
+};
 /**
  * Original by Aaron Harun: http://aahacreative.com/2012/07/31/php-syntax-highlighting-prism/
  * Modified by Miles Johnson: http://milesj.me
