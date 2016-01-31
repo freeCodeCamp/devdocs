@@ -153,6 +153,7 @@
 
   &:hover { text-decoration: underline; }
   ._list-disabled:hover > &, ._list-result > & { display: block; }
+  ._list-result.active > & { margin-right: -1rem; }
 }
 
 //
