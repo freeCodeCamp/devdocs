@@ -1,40 +1,43 @@
 module Docs
   class Erlang < FileScraper
-    self.version = '18.1'
     self.type = 'erlang'
-    self.dir = File.expand_path('~/devdocs/erlang')
-    self.base_url = 'http://www.erlang.org/doc/'
     self.root_path = 'doc/index.html'
     self.links = {
-      home: 'http://erlang.org/'
+      home: 'https://www.erlang.org/',
+      code: 'https://github.com/erlang/otp'
     }
 
+    html_filters.insert_after 'container', 'erlang/pre_clean_html'
     html_filters.push 'erlang/entries', 'erlang/clean_html'
 
-    # The folder structure of the offline documentation
-    # differs from the online structure. We need
-    # to replace the attribution filter to generate the
-    # right attribution_link
-    text_filters.replace 'attribution', 'erlang/attribution'
+    options[:only_patterns] = [/\Alib/]
 
-    # Do not scrape these unnecessary links
     options[:skip_patterns] = [
-      /\.pdf$/,
-      /users_guide\.html$/,
-      /release_notes\.html$/,
-      /\/html\/.*_app\.html$/,
-      /\/html\/unicode_usage\.html$/,
-      /\/html\/io_protocol\.html$/
+      /pdf/,
+      /release_notes/,
+      /result/,
+      /java/,
+      /\/html\/.*_app\.html\z/,
+      /_examples\.html\z/,
+      /\Alib\/edoc/,
+      /\Alib\/erl_docgen/,
+      /\Alib\/hipe/,
+      /\Alib\/ose/,
+      /\Alib\/test_server/,
+      /\Alib\/jinterface/,
+      /\Alib\/wx/,
+      /\Alib\/ic/,
+      /\Alib\/Cos/i
     ]
 
-    options[:title] = false
-
-    # Scrape stdlib documentation only
-    options[:only_patterns] = [/stdlib/]
-
     options[:attribution] = <<-HTML
-      Copyright &copy; 1999-2015 Ericsson AB<br>
+      &copy; 1999&ndash;2015 Ericsson AB<br>
       Licensed under the Apache License, Version 2.0.
     HTML
+
+    version '18' do
+      self.release = '18.2'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/Erlang18'
+    end
   end
 end

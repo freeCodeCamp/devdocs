@@ -1,14 +1,8 @@
-.REFBODY {
-  margin-bottom: 20px;
-}
-.REFBODY+p {
-  margin-top: 30px;
-  margin-bottom: 5px;
-}
-.function-name {
-  font-family: $monoFont;
-  display: block;
-  margin: 0;
-  min-height: none;
-  font-weight: bold;
+._erlang {
+  @extend %simple;
+
+  h3.code { @extend %code; }
+  .note { @extend %note; }
+  .warning { @extend %note, %note-red; }
+  .note .label, .warning .label { font-weight: bold; }
 }

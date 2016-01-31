@@ -155,6 +155,11 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
   ], [
+    'Erlang',
+    '1999-2015 Ericsson AB',
+    'Apache',
+    'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
+  ], [
     'Express',
     '2009-2015 TJ Holowaychuk',
     'MIT',

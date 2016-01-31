@@ -1,7 +1,7 @@
 [
   [
     "2016-01-31",
-    "New documentation: <a href=\"/tcl_tk/\">Tcl/Tk</a>"
+    "New documentations: <a href=\"/erlang/\">Erlang</a> and <a href=\"/tcl_tk/\">Tcl/Tk</a>"
   ], [
     "2016-01-24",
     "&ldquo;Multi-version support&rdquo; has landed!\nClick <a href=\"#\" data-pick-docs>Select documentation</a> to pick which versions to use. More versions will be added in the coming weeks.\nIf you notice any bugs, please report them on <a href=\"https://github.com/Thibaut/devdocs/issues\" target=\"_blank\">GitHub</a>."
