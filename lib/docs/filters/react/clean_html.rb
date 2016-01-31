@@ -10,6 +10,12 @@ module Docs
 
         css('.docs-prevnext', '.hash-link', '.edit-page-link', '.edit-github').remove
 
+        css('table h1', 'table h2', 'table h3').each do |node|
+          table = node
+          table = table.parent until table.name == 'table'
+          table.replace(node)
+        end
+
         css('a.anchor').each do |node|
           node.parent['id'] = node['name']
         end

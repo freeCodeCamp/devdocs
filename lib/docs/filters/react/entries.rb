@@ -14,7 +14,7 @@ module Docs
       }
 
       def get_name
-        at_css('h1').child.content
+        at_css('h1').children.select(&:text?).map(&:content).join.strip
       end
 
       def get_type
