@@ -49,6 +49,7 @@ class app.models.Entry extends app.Model
     'backbone': 'bb'
     'c++': 'cpp'
     'coffeescript': 'cs'
+    'elixir': 'ex'
     'javascript': 'js'
     'jquery': '$'
     'knockout.js': 'ko'
