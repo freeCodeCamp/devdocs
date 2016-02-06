@@ -78,17 +78,17 @@ credits = [
   [ 'Angular.js',
     '2010-2016 Google, Inc.',
     'CC BY',
-    'http://creativecommons.org/licenses/by/4.0/'
+    'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Apache HTTP Server',
     '2016 The Apache Software Foundation',
     'Apache',
-    'http://www.apache.org/licenses/LICENSE-2.0'
+    'https://www.apache.org/licenses/LICENSE-2.0'
   ], [
     'Backbone.js',
     '2010-2015 Jeremy Ashkenas, DocumentCloud',
     'MIT',
-    'https://raw.github.com/jashkenas/backbone/master/LICENSE'
+    'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
   ], [
     'Bower',
     '2015 Bower contributors',
@@ -113,7 +113,7 @@ credits = [
     'CoffeeScript',
     '2009-2015 Jeremy Ashkenas',
     'MIT',
-    'https://raw.github.com/jashkenas/coffee-script/master/LICENSE'
+    'https://raw.githubusercontent.com/jashkenas/coffee-script/master/LICENSE'
   ], [
     'Cordova',
     '2012-2015 The Apache Software Foundation',
@@ -123,12 +123,12 @@ credits = [
     'CSS<br>DOM<br>HTML<br>JavaScript<br>SVG<br>XPath',
     '2005-2015 Mozilla Developer Network and individual contributors',
     'CC BY-SA',
-    'http://creativecommons.org/licenses/by-sa/2.5/'
+    'https://creativecommons.org/licenses/by-sa/2.5/'
   ], [
     'D3.js',
     '2010-2016 Michael Bostock',
     'BSD',
-    'https://raw.github.com/mbostock/d3/master/LICENSE'
+    'https://raw.githubusercontent.com/mbostock/d3/master/LICENSE'
   ], [
     'Django',
     'Django Software Foundation and individual contributors',
@@ -148,7 +148,7 @@ credits = [
     'Ember.js',
     '2016 Yehuda Katz, Tom Dale and Ember.js contributors',
     'MIT',
-    'https://raw.github.com/emberjs/ember.js/master/LICENSE'
+    'https://raw.githubusercontent.com/emberjs/ember.js/master/LICENSE'
   ], [
     'Elixir',
     '2012 Plataformatec',
@@ -168,12 +168,12 @@ credits = [
     'Git',
     '2005-2016 Linus Torvalds and others',
     'GPLv2',
-    'https://raw.github.com/git/git/master/COPYING'
+    'https://raw.githubusercontent.com/git/git/master/COPYING'
   ], [
     'Go',
     'Google, Inc.',
     'CC BY',
-    'http://creativecommons.org/licenses/by/3.0/'
+    'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Grunt',
     '2014 Grunt Team',
@@ -183,7 +183,7 @@ credits = [
     'Haskell',
     'The University of Glasgow',
     'BSD',
-    'http://www.haskell.org/ghc/license'
+    'https://www.haskell.org/ghc/license'
   ], [
     'io.js',
     'io.js contributors',
@@ -193,22 +193,22 @@ credits = [
     'jQuery',
     '2009 Packt Publishing<br>&copy; 2014 jQuery Foundation',
     'MIT',
-    'https://raw.github.com/jquery/api.jquery.com/master/LICENSE-MIT.txt'
+    'https://raw.githubusercontent.com/jquery/api.jquery.com/master/LICENSE.txt'
   ], [
     'jQuery Mobile',
     '2014 jQuery Foundation',
     'MIT',
-    'https://raw.github.com/jquery/api.jquerymobile.com/master/LICENSE-MIT.txt'
+    'https://raw.githubusercontent.com/jquery/api.jquerymobile.com/master/LICENSE.txt'
   ], [
     'jQuery UI',
     '2014 jQuery Foundation',
     'MIT',
-    'https://raw.github.com/jquery/api.jqueryui.com/master/LICENSE-MIT.txt'
+    'https://raw.githubusercontent.com/jquery/api.jqueryui.com/master/LICENSE.txt'
   ], [
     'Knockout.js',
     'Steven Sanderson, the Knockout.js team, and other contributors',
     'MIT',
-    'https://raw.github.com/knockout/knockout/master/LICENSE'
+    'https://raw.githubusercontent.com/knockout/knockout/master/LICENSE'
   ], [
     'Laravel',
     'Taylor Otwell',
@@ -218,12 +218,12 @@ credits = [
     'Less',
     '2009-2015 The Core Less Team',
     'CC BY',
-    'http://creativecommons.org/licenses/by/3.0/'
+    'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Lo-Dash',
     '2012-2016 The Dojo Foundation',
     'MIT',
-    'https://raw.github.com/lodash/lodash/master/LICENSE.txt'
+    'https://raw.githubusercontent.com/lodash/lodash/master/LICENSE.txt'
   ], [
     'Lua',
     '1994–2015 Lua.org, PUC-Rio',
@@ -238,7 +238,7 @@ credits = [
     'Markdown',
     '2004 John Gruber',
     'BSD',
-    'http://daringfireball.net/projects/markdown/license'
+    'https://daringfireball.net/projects/markdown/license'
   ], [
     'Meteor',
     '2011-2015 Meteor Development Group',
@@ -248,7 +248,7 @@ credits = [
     'Minitest',
     'Ryan Davis, seattle.rb',
     'MIT',
-    'https://raw.githubusercontent.com/seattlerb/minitest/master/README.txt'
+    'https://github.com/seattlerb/minitest/blob/master/README.rdoc#license'
   ], [
     'Mocha',
     '2011-2015 TJ Holowaychuk',
@@ -258,12 +258,12 @@ credits = [
     'Modernizr',
     '2009-2014 Modernizr',
     'MIT',
-    'http://modernizr.com/license/'
+    'https://modernizr.com/license/'
   ], [
     'Moment.js',
     '2011-2016 Tim Wood, Iskren Chernev, Moment.js contributors',
     'MIT',
-    'https://raw.github.com/moment/moment/master/LICENSE'
+    'https://raw.githubusercontent.com/moment/moment/master/LICENSE'
   ], [
     'Mongoose',
     '2010 LearnBoost',
@@ -283,7 +283,7 @@ credits = [
     'Nokogiri',
     '2008-2014 2014 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori Musha',
     'MIT',
-    'https://github.com/sparklemotion/nokogiri/blob/master/README.rdoc#license'
+    'https://raw.githubusercontent.com/sparklemotion/nokogiri/master/LICENSE.txt'
   ], [
     'npm',
     'npm, Inc. and Contributors<br>npm is a trademark of npm, Inc.',
@@ -313,12 +313,12 @@ credits = [
     'PHP',
     '1997-2015 The PHP Documentation Group',
     'CC BY',
-    'http://creativecommons.org/licenses/by/3.0/'
+    'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'PHPUnit',
     '2005-2015 Sebastian Bergmann',
     'CC BY',
-    'http://creativecommons.org/licenses/by/3.0/'
+    'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'PostgreSQL',
     '1996-2013 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
@@ -328,7 +328,7 @@ credits = [
     'Python',
     '1990-2015 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
     'PSFL',
-    'http://docs.python.org/3/license.html'
+    'https://docs.python.org/3/license.html'
   ], [
     'Q',
     '2009-2015 Kristopher Michael Kowal and contributors',
@@ -343,7 +343,7 @@ credits = [
     'Redis',
     '2009-2016 Salvatore Sanfilippo',
     'CC BY-SA',
-    'http://creativecommons.org/licenses/by-sa/4.0/'
+    'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
     'RequireJS',
     '2010-2014 The Dojo Foundation',
@@ -363,7 +363,7 @@ credits = [
     'Ruby on Rails',
     '2004-2015 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.',
     'MIT',
-    'https://raw.github.com/rails/rails/master/activerecord/MIT-LICENSE'
+    'https://raw.githubusercontent.com/rails/rails/master/activerecord/MIT-LICENSE'
   ], [
     'Rust',
     '2016 The Rust Project Developers',
@@ -373,7 +373,7 @@ credits = [
     'Sass',
     '2006-2015 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',
-    'https://raw.github.com/nex3/sass/master/MIT-LICENSE'
+    'https://raw.githubusercontent.com/nex3/sass/master/MIT-LICENSE'
   ], [
     'Sinon',
     '2010-2015 Christian Johansen',
@@ -388,7 +388,7 @@ credits = [
     'Symfony',
     '2004-2016 Fabien Potencier',
     'MIT',
-    'http://symfony.com/doc/current/contributing/code/license.html'
+    'https://symfony.com/doc/current/contributing/code/license.html'
   ], [
     'Tcl/Tk',
     'The Regents of the University of California, Sun Microsystems, Inc., Scriptics Corporation, and other parties',
@@ -398,7 +398,7 @@ credits = [
     'Underscore.js',
     '2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
-    'https://raw.github.com/jashkenas/underscore/master/LICENSE'
+    'https://raw.githubusercontent.com/jashkenas/underscore/master/LICENSE'
   ], [
     'Vagrant',
     '2010-2015 Mitchell Hashimoto',
