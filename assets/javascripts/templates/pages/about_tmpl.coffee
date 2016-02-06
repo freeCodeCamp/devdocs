@@ -116,7 +116,7 @@ credits = [
     'https://raw.githubusercontent.com/jashkenas/coffee-script/master/LICENSE'
   ], [
     'Cordova',
-    '2012-2015 The Apache Software Foundation',
+    '2012-2016 The Apache Software Foundation',
     'Apache',
     'https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE'
   ], [
