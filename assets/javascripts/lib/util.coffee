@@ -111,9 +111,9 @@ $.after = (el, value) ->
 
 $.remove = (value) ->
   if $.isCollection(value)
-    el.parentElement.removeChild(el) for el in $.makeArray(value)
+    el.parentElement?.removeChild(el) for el in $.makeArray(value)
   else
-    value.parentElement.removeChild(value)
+    value.parentElement?.removeChild(value)
   return
 
 $.empty = (el) ->
