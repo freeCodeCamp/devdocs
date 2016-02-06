@@ -90,7 +90,7 @@ class Context
     return
 
   replaceState: ->
-    history.replaceState @state, '', @path
+    try history.replaceState @state, '', @path # NS_ERROR_FAILURE in Firefox
     return
 
 class Route
