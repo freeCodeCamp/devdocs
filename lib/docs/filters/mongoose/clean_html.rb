@@ -13,6 +13,11 @@ module Docs
             node.previous_element.replace("<h2>#{node.previous_element.to_html}</h2>")
           end
         else
+          css('h2:empty + p').each do |node| # /customschematypes.html
+            node.previous_element.content = node.content
+            node.remove
+          end
+
           at_css('h2').name = 'h1'
 
           css('h3').each do |node|
