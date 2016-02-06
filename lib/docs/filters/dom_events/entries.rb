@@ -49,8 +49,8 @@ module Docs
         Server\ Sent\ Events WebSocket Web\ Messaging Web\ Workers)
 
       def get_name
-        name = super.split.first
-        name << " (#{type})" if APPEND_TYPE.include?(type)
+        name = super
+        name = "#{name.split.first} (#{type})" if APPEND_TYPE.include?(type)
         name
       end
 

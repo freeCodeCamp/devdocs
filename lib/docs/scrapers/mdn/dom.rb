@@ -30,7 +30,8 @@ module Docs
       /window/getAttention
       /window/messageManager
       /window/updateCommands
-      /window/pkcs11)
+      /window/pkcs11
+      /OES_texture_float)
 
     options[:skip_patterns] = [
       /NS/,

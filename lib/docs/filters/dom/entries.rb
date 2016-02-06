@@ -14,13 +14,16 @@ module Docs
         'File API'            => 'File',
         'Geolocation'         => 'Geolocation',
         'Geometry'            => 'Geometry',
+        'High Resolution Time' => 'Web Performance',
         'Media Capture'       => 'Media',
         'Media Source'        => 'Media',
         'MediaStream'         => 'Media',
-        'Navigation Timing'   => 'Navigation Timing',
+        'Navigation Timing'   => 'Web Performance',
         'Network Information' => 'Network Information',
+        'Performance Timeline' => 'Web Performance',
         'Pointer Events'      => 'Pointer Events',
         'Push API'            => 'Push',
+        'Presentation API'    => 'Presentation',
         'Shadow DOM'          => 'Shadow DOM',
         'Server-Sent Events'  => 'Server-Sent Events',
         'Service Workers'     => 'Service Workers',
@@ -54,6 +57,7 @@ module Docs
         'File'                => 'File',
         'GlobalEventHandlers' => 'GlobalEventHandlers',
         'history'             => 'History',
+        'HTML Drag'           => 'Drag & Drop',
         'HTML'                => 'Elements',
         'IDB'                 => 'IndexedDB',
         'location'            => 'Location',
@@ -62,8 +66,10 @@ module Docs
         'Node'                => 'Node',
         'Notification'        => 'Notification',
         'ParentNode'          => 'Node',
+        'Performance'         => 'Web Performance',
         'Push'                => 'Push',
         'Range'               => 'Range',
+        'Resource Timing'     => 'Web Performance',
         'RTC'                 => 'WebRTC',
         'screen'              => 'Screen',
         'Selection'           => 'Selection',
@@ -71,8 +77,8 @@ module Docs
         'StyleSheet'          => 'CSS',
         'Stylesheet'          => 'CSS',
         'SVG'                 => 'SVG',
-        'timing'              => 'Navigation Timing',
-        'Timing'              => 'Navigation Timing',
+        'timing'              => 'Web Performance',
+        'Timing'              => 'Web Performance',
         'Touch'               => 'Touch Events',
         'TreeWalker'          => 'TreeWalker',
         'URL'                 => 'URL',
@@ -95,8 +101,9 @@ module Docs
         'Pointer'       => 'Pointer Events',
         'Server-sent'   => 'Server-Sent Events',
         'ServiceWorker' => 'Service Workers',
+        'Speech'        => 'Web Speech',
         'TextMetrics'   => 'Canvas',
-        'timing'        => 'Navigation Timing',
+        'timing'        => 'Web Performance',
         'udio'          => 'Web Audio',
         'WebSocket'     => 'Web Sockets',
         'WebGL'         => 'WebGL',
@@ -177,6 +184,8 @@ module Docs
       def include_default_entry?
         return true if type == 'Console'
         return true unless node = doc.at_css('.overheadIndicator')
+        node = node.parent while node.parent != doc
+        return true if node.previous_element.try(:name).in?(%w(h2 h3))
         content = node.content
         SKIP_CONTENT.none? { |str| content.include?(str) }
       end
