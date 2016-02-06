@@ -13,6 +13,17 @@ module Docs
       end
 
       def other
+        css('span > .icon-thumbs-down-alt:first-child:last-child').each do |node|
+          node.parent.replace('deprecated')
+        end
+
+        css('span > .icon-trash:first-child:last-child').each do |node|
+          node.parent.replace('deleted')
+        end
+
+        css('span > .icon-warning-sign:first-child:last-child').each do |node|
+          node.parent.replace('non standard')
+        end
       end
     end
   end
