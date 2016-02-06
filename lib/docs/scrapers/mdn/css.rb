@@ -35,6 +35,8 @@ module Docs
       /image()
       /paged_media)
 
+    options[:skip] += %w(/mq-boolean) # bug
+
     options[:skip_patterns] = [/\-webkit/, /\-moz/, /Extensions/, /Tools/]
 
     options[:replace_paths] = {
