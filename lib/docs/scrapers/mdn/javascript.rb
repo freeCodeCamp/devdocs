@@ -12,7 +12,6 @@ module Docs
       /About
       /Code_comments
       /Deprecated_Features
-      /Deprecated_and_obsolete_features
       /Functions_and_function_scope
       /Global_Objects/Iterator
       /Global_Objects/Proxy
@@ -35,7 +34,11 @@ module Docs
       /Operators
       /Statements)
 
-    options[:skip_patterns] = [/additional_examples/i, /noSuchMethod/i]
+    options[:skip_patterns] = [
+      /additional_examples/i,
+      /noSuchMethod/i,
+      /Deprecated_and_obsolete_features/
+    ]
 
     options[:fix_urls] = ->(url) do
       url.sub! 'https://developer.mozilla.org/en-US/docs/JavaScript/Reference',  Javascript.base_url

@@ -7,7 +7,8 @@ module Docs
         '.breadcrumbs',      # (e.g. CSS/animation)
         '.Quick_links',      # (e.g. CSS/animation)
         '.todo',
-        '.draftHeader']
+        '.draftHeader',
+        '.hidden']
 
       def call
         css(*REMOVE_NODES).remove

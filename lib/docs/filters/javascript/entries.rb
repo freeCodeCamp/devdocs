@@ -1,21 +1,31 @@
 module Docs
   class Javascript
     class EntriesFilter < Docs::EntriesFilter
-      TYPES = %w(Array ArrayBuffer Boolean DataView Date Function Intl JSON Map
-        Math Number Object Promise RegExp Set SIMD String Symbol TypedArray
-        WeakMap WeakSet)
+      TYPES = %w(Array ArrayBuffer Atomics Boolean DataView Date Function
+        Generator Intl JSON Map Math Number Object Promise Reflect RegExp
+        Set SharedArrayBuffer SIMD String Symbol TypedArray WeakMap WeakSet)
       INTL_OBJECTS = %w(Collator DateTimeFormat NumberFormat)
 
       def get_name
         if slug.start_with? 'Global_Objects/'
           name, method, *rest = *slug.sub('Global_Objects/', '').split('/')
           name.prepend 'Intl.' if INTL_OBJECTS.include?(name)
+          name.prepend 'SIMD.' if html.include?("SIMD.#{name}")
 
           if method
             unless method == method.upcase || method == 'NaN'
               method = method[0].downcase + method[1..-1] # e.g. Trim => trim
             end
             name << ".#{([method] + rest).join('.')}"
+          end
+
+          if name.exclude?('.prototype')
+            path = name.split('.')
+            if ((node = at_css('.syntaxbox') || at_css('code')) && node.content =~ /(?:\s|\A)[a-z\_][a-zA-Z\_]+\.#{path.last}/) ||
+               ((node = at_css('.standard-table')) && node.content =~ /\.prototype[\[\.]#{path.last}/)
+              path[-2] = path[-2][0].downcase + path[-2][1..-1]
+              name = path.join('.')
+            end
           end
 
           name
@@ -45,6 +55,8 @@ module Docs
             'Errors'
           elsif INTL_OBJECTS.include?(object)
             'Intl'
+          elsif name.start_with?('SIMD')
+            'SIMD'
           elsif method || TYPES.include?(object)
             object
           else
