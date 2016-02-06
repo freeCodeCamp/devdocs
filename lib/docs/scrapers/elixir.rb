@@ -2,7 +2,7 @@ module Docs
   class Elixir < UrlScraper
     self.name = 'Elixir'
     self.type = 'elixir'
-    self.release = '1.2.0'
+    self.release = '1.2.2'
     self.base_url = 'http://elixir-lang.org/docs/stable/'
     self.root_path = 'elixir/api-reference.html'
     self.initial_paths = %w(
@@ -24,7 +24,7 @@ module Docs
     options[:root_title] = 'Elixir'
 
     options[:attribution] = <<-HTML
-      &copy; 2012 Plataformatec<br>
+      &copy; 2012&ndash;2016 Plataformatec<br>
       Licensed under the Apache License, Version 2.0.
     HTML
   end
