@@ -1,4 +1,4 @@
-/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript+c+cpp+coffeescript+ruby+elixir+php+python+rust */
+/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript+c+cpp+coffeescript+ruby+elixir+go+php+python+rust */
 var _self = (typeof window !== 'undefined')
 	? window   // if in browser
 	: (
@@ -16,7 +16,8 @@ var _self = (typeof window !== 'undefined')
 var Prism = (function(){
 
 // Private helper vars
-var lang = /\blang(?:uage)?-(?!\*)(\w+)\b/i;
+var lang = /\blang(?:uage)?-(\w+)\b/i;
+var uniqueId = 0;
 
 var _ = _self.Prism = {
 	util: {
@@ -32,6 +33,13 @@ var _ = _self.Prism = {
 
 		type: function (o) {
 			return Object.prototype.toString.call(o).match(/\[object (\w+)\]/)[1];
+		},
+
+		objId: function (obj) {
+			if (!obj['__id']) {
+				Object.defineProperty(obj, '__id', { value: ++uniqueId });
+			}
+			return obj['__id'];
 		},
 
 		// Deep clone a language definition (e.g. to extend it)
@@ -126,16 +134,19 @@ var _ = _self.Prism = {
 		},
 
 		// Traverse a language definition with Depth First Search
-		DFS: function(o, callback, type) {
+		DFS: function(o, callback, type, visited) {
+			visited = visited || {};
 			for (var i in o) {
 				if (o.hasOwnProperty(i)) {
 					callback.call(o, i, o[i], type || i);
 
-					if (_.util.type(o[i]) === 'Object') {
-						_.languages.DFS(o[i], callback);
+					if (_.util.type(o[i]) === 'Object' && !visited[_.util.objId(o[i])]) {
+						visited[_.util.objId(o[i])] = true;
+						_.languages.DFS(o[i], callback, null, visited);
 					}
-					else if (_.util.type(o[i]) === 'Array') {
-						_.languages.DFS(o[i], callback, i);
+					else if (_.util.type(o[i]) === 'Array' && !visited[_.util.objId(o[i])]) {
+						visited[_.util.objId(o[i])] = true;
+						_.languages.DFS(o[i], callback, i, visited);
 					}
 				}
 			}
@@ -408,10 +419,8 @@ Token.stringify = function(o, language, parent) {
 // 	return _self.Prism;
 // }
 
-// // Get current script and highlight
-// var script = document.getElementsByTagName('script');
-
-// script = script[script.length - 1];
+// //Get current script and highlight
+// var script = document.currentScript || [].slice.call(document.getElementsByTagName("script")).pop();
 
 // if (script) {
 // 	_.filename = script.src;
@@ -930,6 +939,16 @@ Prism.languages.elixir.string.forEach(function(o) {
 	};
 });
 
+
+Prism.languages.go = Prism.languages.extend('clike', {
+	'keyword': /\b(break|case|chan|const|continue|default|defer|else|fallthrough|for|func|go(to)?|if|import|interface|map|package|range|return|select|struct|switch|type|var)\b/,
+	'builtin': /\b(bool|byte|complex(64|128)|error|float(32|64)|rune|string|u?int(8|16|32|64|)|uintptr|append|cap|close|complex|copy|delete|imag|len|make|new|panic|print(ln)?|real|recover)\b/,
+	'boolean': /\b(_|iota|nil|true|false)\b/,
+	'operator': /[*\/%^!=]=?|\+[=+]?|-[=-]?|\|[=|]?|&(?:=|&|\^=?)?|>(?:>=?|=)?|<(?:<=?|=|-)?|:=|\.\.\./,
+	'number': /\b(-?(0x[a-f\d]+|(\d+\.?\d*|\.\d+)(e[-+]?\d+)?)i?)\b/i,
+	'string': /("|'|`)(\\?.|\r|\n)*?\1/
+});
+delete Prism.languages.go['class-name'];
 
 /**
  * Original by Aaron Harun: http://aahacreative.com/2012/07/31/php-syntax-highlighting-prism/
