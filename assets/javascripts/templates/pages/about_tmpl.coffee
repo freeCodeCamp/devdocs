@@ -191,17 +191,17 @@ credits = [
     'https://raw.githubusercontent.com/iojs/io.js/v1.x/LICENSE'
   ], [
     'jQuery',
-    '2009 Packt Publishing<br>&copy; 2014 jQuery Foundation',
+    'Packt Publishing<br>&copy; jQuery Foundation and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/jquery/api.jquery.com/master/LICENSE.txt'
   ], [
     'jQuery Mobile',
-    '2014 jQuery Foundation',
+    'jQuery Foundation and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/jquery/api.jquerymobile.com/master/LICENSE.txt'
   ], [
     'jQuery UI',
-    '2014 jQuery Foundation',
+    'jQuery Foundation and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/jquery/api.jqueryui.com/master/LICENSE.txt'
   ], [

@@ -4,7 +4,6 @@ module Docs
     self.type = 'jquery'
 
     html_filters.push 'jquery/clean_html', 'title'
-    text_filters.push 'jquery/clean_urls'
 
     options[:title] = false
     options[:container] = '#content'
@@ -12,7 +11,7 @@ module Docs
     options[:skip_patterns] = [/category/]
 
     options[:attribution] = <<-HTML
-      &copy; 2014 The jQuery Foundation<br>
+      &copy; The jQuery Foundation and other contributors<br>
       Licensed under the MIT License.
     HTML
   end

@@ -9,6 +9,7 @@ module Docs
       def get_name
         name = at_css('h1').content.strip
         name.gsub!(/ [A-Z]/) { |str| str.downcase! }
+        name.gsub! %r{[“”]}, '"'
         name
       end
 
