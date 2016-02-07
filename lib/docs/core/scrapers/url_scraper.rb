@@ -42,11 +42,9 @@ module Docs
       end
 
       module ClassMethods
-        attr_accessor :fix_redirections
         attr_reader :redirections
 
         def store_pages(store)
-          return super unless fix_redirections
           instrument 'info.doc', msg: 'Fetching redirections...'
           with_redirections do
             instrument 'info.doc', msg: 'Building pages...'
@@ -84,17 +82,6 @@ module Docs
       def additional_options
         { redirections: self.class.redirections }
       end
-
-      def with_filters(*filters)
-        stack = FilterStack.new
-        stack.push(*filters)
-        pipeline.instance_variable_set :@filters, stack.to_a.freeze
-        yield
-      ensure
-        @pipeline = nil
-      end
     end
-
-    include FixRedirectionsBehavior
   end
 end

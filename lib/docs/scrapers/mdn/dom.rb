@@ -1,8 +1,9 @@
 module Docs
   class Dom < Mdn
+    include FixRedirectionsBehavior
+
     self.name = 'DOM'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/API'
-    self.fix_redirections = true
 
     html_filters.push 'dom/clean_html', 'dom/entries', 'title'
 

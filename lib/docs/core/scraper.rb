@@ -154,6 +154,15 @@ module Docs
       Parser.new(string).html
     end
 
+    def with_filters(*filters)
+      stack = FilterStack.new
+      stack.push(*filters)
+      pipeline.instance_variable_set :@filters, stack.to_a.freeze
+      yield
+    ensure
+      @pipeline = nil
+    end
+
     module StubRootPage
       private
 
