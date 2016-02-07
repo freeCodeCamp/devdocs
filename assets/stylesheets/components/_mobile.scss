@@ -28,7 +28,10 @@
 
   // Header
 
-  ._header { position: fixed; }
+  ._header {
+    position: fixed;
+    max-width: 100vw;
+  }
 
   ._logo, ._nav { display: none; }
   ._home-link, ._menu-link { display: block; }
