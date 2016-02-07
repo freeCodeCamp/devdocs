@@ -311,7 +311,7 @@ credits = [
     'https://raw.githubusercontent.com/phoenixframework/phoenix/master/LICENSE.md'
   ], [
     'PHP',
-    '1997-2015 The PHP Documentation Group',
+    '1997-2016 The PHP Documentation Group',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [

@@ -4,6 +4,7 @@
     @extend %lined-heading;
   }
 
+  h2 { @extend %block-heading; }
   h3.title { @extend %block-heading; }
 
   .verinfo {

@@ -25,6 +25,7 @@ module Docs
         'tidy'            => 'Tidy',
         'Worker'          => 'pthreads',
         'XsltProcessor'   => 'XSLT',
+        'Yar'             => 'Yar',
         'ZipArchive'      => 'Zip' }
 
       %w(APC Directory DOM Event Gearman Gmagick Imagick mysqli OAuth PDO Reflection
@@ -46,13 +47,16 @@ module Docs
       end
 
       REPLACE_TYPES = {
+        'Error'             => 'Errors',
         'Exceptions'        => 'SPL/Exceptions',
+        'finfo'             => 'File System',
         'GD and Image'      => 'Image',
         'Gmagick'           => 'Image/GraphicsMagick',
         'Imagick'           => 'Image/ImageMagick',
         'Interfaces'        => 'SPL/Interfaces',
         'Iterators'         => 'SPL/Iterators',
         'mysqli'            => 'Database/MySQL',
+        'PCRE Patterns'     => 'PCRE Reference',
         'PostgreSQL'        => 'Database/PostgreSQL',
         'Session'           => 'Sessions',
         'Session PgSQL'     => 'Database/PostgreSQL',
@@ -62,7 +66,7 @@ module Docs
         'Yaml'              => 'YAML' }
 
       TYPE_GROUPS = {
-        'Classes and Functions' => ['Classes/Object', 'Function handling', 'Predefined Interfaces and Classes', 'runkit'],
+        'Classes and Functions' => ['Classes/Object', 'Function handling', 'Predefined Interfaces and Classes', 'runkit', 'Throwable'],
         'Encoding'              => ['Gettext', 'iconv', 'Multibyte String'],
         'Compression'           => ['Bzip2', 'Zip', 'Zlib'],
         'Cryptography'          => ['Hash', 'Mcrypt', 'OpenSSL', 'Password Hashing'],
@@ -90,6 +94,9 @@ module Docs
       end
 
       def get_type
+        return 'Language Reference' if subpath.start_with?('language.')
+        return 'PCRE Reference' if subpath.start_with?('regexp.')
+
         type = at_css('.up').content.strip
         type = 'SPL/Iterators' if type.end_with? 'Iterator'
         type.remove! ' Functions'
@@ -108,7 +115,7 @@ module Docs
       end
 
       def include_default_entry?
-        !initial_page? && doc.at_css('.reference', '.refentry', '.sect1')
+        !initial_page? && doc.at_css('.reference', '.refentry', '.sect1', '.simpara', '.para')
       end
     end
   end

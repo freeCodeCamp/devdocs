@@ -186,5 +186,66 @@ module Docs
         Typhoeus.stub(root_url.to_s).and_return(response)
       end
     end
+
+    module FixInternalUrlsBehavior
+      def self.included(base)
+        base.extend ClassMethods
+      end
+
+      module ClassMethods
+        attr_reader :internal_urls
+
+        def store_pages(store)
+          instrument 'info.doc', msg: 'Building internal urls...'
+          with_internal_urls do
+            instrument 'info.doc', msg: 'Building pages...'
+            super
+          end
+        end
+
+        private
+
+        def with_internal_urls
+          @internal_urls = new.fetch_internal_urls
+          yield
+        ensure
+          @internal_urls = nil
+        end
+      end
+
+      def fetch_internal_urls
+        result = []
+        build_pages do |page|
+          result << base_url.subpath_to(page[:response_url]) if page[:entries].present?
+        end
+        result
+      end
+
+      def initial_urls
+        return super unless self.class.internal_urls
+        @initial_urls ||= self.class.internal_urls.map(&method(:url_for)).freeze
+      end
+
+      private
+
+      def additional_options
+        if self.class.internal_urls
+          {
+            only: self.class.internal_urls.to_set,
+            only_patterns: nil,
+            skip: nil,
+            skip_patterns: nil,
+            skip_links: nil,
+            fixed_internal_urls: true
+          }
+        else
+          {}
+        end
+      end
+
+      def process_response(response)
+        super.merge! response_url: response.url
+      end
+    end
   end
 end

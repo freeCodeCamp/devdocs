@@ -2,9 +2,12 @@ module Docs
   class Php
     class InternalUrlsFilter < Filter
       def call
+        return doc if context[:fixed_internal_urls]
+
         if subpath.start_with?('book.') || subpath.start_with?('class.')
           result[:internal_urls] = internal_urls
         end
+
         doc
       end
 
