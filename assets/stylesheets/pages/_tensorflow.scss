@@ -1,0 +1,12 @@
+._tensorflow {
+  h2, h3, h4 { @extend %block-heading, %label-blue; }
+  p > code, li > code { @extend %label; }
+
+  // These are used for lists of arguments and return values in the docs.
+  b > code {
+    @extend %label;
+    background-color: initial;
+    font-weight: 500;
+    font-size: 1.1em;
+  }
+}
