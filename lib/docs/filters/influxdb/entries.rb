@@ -11,7 +11,7 @@ module Docs
         # the url, we are asumming that the url pattern is
         # category/page or category
         path = current_url.relative_path_from(base_url)
-        path.split('/').first.titleize
+        "InfluxDB: #{path.split('/').first.titleize}"
       end
 
     end
