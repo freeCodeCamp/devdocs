@@ -321,7 +321,7 @@ credits = [
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'PostgreSQL',
-    '1996-2013 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
+    '1996-2016 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
     'http://www.postgresql.org/about/licence/'
   ], [

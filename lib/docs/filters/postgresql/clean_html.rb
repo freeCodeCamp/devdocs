@@ -20,7 +20,7 @@ module Docs
           node.before(node.children).remove
         end
 
-        css('div.SECT1', 'pre > kbd', 'tt > code', 'h1 > tt').each do |node|
+        css('div.SECT1', 'pre > kbd', 'tt > code', 'h1 > tt', '> .CHAPTER').each do |node|
           node.before(node.children).remove
         end
 

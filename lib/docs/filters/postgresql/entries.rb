@@ -23,7 +23,21 @@ module Docs
         'High Availability, Load Balancing, and Replication' => 'High Availability',
         'Monitoring Database Activity' => 'Monitoring',
         'Monitoring Disk Usage' => 'Monitoring',
-        'Reliability and the Write-Ahead Log' => 'Write-Ahead Log' }
+        'Reliability and the Write-Ahead Log' => 'Write-Ahead Log',
+        'Overview of PostgreSQL Internals' => 'Internals',
+        'System Catalogs' => 'Internals: Catalogs',
+        'How the Planner Uses Statistics' => 'Internals',
+        'Index Access Method Interface Definition' => 'Index Access Method',
+        'Database Physical Storage' => 'Physical Storage' }
+
+      INTERNAL_TYPES = [
+        'Genetic Query Optimizer',
+        'Index Access Method',
+        'GiST Indexes',
+        'SP-GiST Indexes',
+        'GIN Indexes',
+        'BRIN Indexes',
+        'Physical Storage' ]
 
       def base_name
         @base_name ||= clean_heading_name(at_css('h1').content)
@@ -32,8 +46,8 @@ module Docs
       def get_name
         if %w(Overview Introduction).include?(base_name)
           result[:pg_chapter_name]
-        elsif PREPEND_TYPES.include?(type)
-          "#{type}: #{base_name}"
+        elsif PREPEND_TYPES.include?(type) || type.start_with?('Internals')
+          "#{type.remove('Internals: ')}: #{base_name}"
         else
           REPLACE_NAMES[base_name] || base_name
         end
@@ -50,8 +64,10 @@ module Docs
           if type.start_with?('Func') && (match = base_name.match(/\A(?!Form|Seq|Set|Enum)(.+) Func/))
             "Functions: #{match[1]}"
           else
-            type.remove! 'SQL '
-            REPLACE_TYPES[type] || type
+            type.remove! %r{\ASQL }
+            type = REPLACE_TYPES[type] || type
+            type = "Internals: #{type}" if INTERNAL_TYPES.include?(type)
+            type
           end
         end
       end
@@ -60,6 +76,7 @@ module Docs
         return [] if skip_additional_entries?
         return config_additional_entries if type && type.include?('Configuration')
         return data_types_additional_entries if type == 'Data Types'
+        return command_additional_entries if type == 'Commands'
         return get_heading_entries('h3[id]') if slug == 'functions-xml'
 
         entries = get_heading_entries('h2[id]')
@@ -81,6 +98,7 @@ module Docs
         else
           if type && type.start_with?('Functions')
             entries.concat get_custom_entries('> .TABLE td:first-child > code:first-child')
+            entries.concat get_custom_entries('> .TABLE td:first-child > p > code:first-child')
             entries.concat %w(IS NULL BETWEEN DISTINCT\ FROM).map { |name| ["#{self.name}: #{name}"] } if slug == 'functions-comparison'
           end
         end
@@ -107,8 +125,18 @@ module Docs
         get_custom_entries(selector)
       end
 
+      def command_additional_entries
+        css('.REFSECT2[id^="SQL"]').each_with_object([]) do |node, entries|
+          next unless heading = node.at_css('h3')
+          next unless heading.content.strip =~ /[A-Z_\-]+ Clause/
+          name = heading.at_css('.LITERAL').content
+          name.prepend "#{self.name} ... "
+          entries << [name, node['id']]
+        end
+      end
+
       def include_default_entry?
-        !initial_page? && !at_css('.TOC')
+        !initial_page? && !at_css('.TOC') && type
       end
 
       SKIP_ENTRIES_SLUGS = [
@@ -128,10 +156,12 @@ module Docs
         'Monitoring' ]
 
       def skip_additional_entries?
-        SKIP_ENTRIES_SLUGS.include?(slug) || SKIP_ENTRIES_TYPES.include?(type)
+        return true unless type
+        SKIP_ENTRIES_SLUGS.include?(slug) || SKIP_ENTRIES_TYPES.include?(type) || type.start_with?('Internals')
       end
 
       def clean_heading_name(name)
+        name.remove! 'Chapter '
         name.remove! %r{\A[\d\.\s]+}
         name.remove! 'Using '
         name.remove! %r{\AThe }

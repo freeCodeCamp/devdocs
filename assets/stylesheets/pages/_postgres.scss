@@ -10,4 +10,5 @@
   blockquote.TIP { @extend %note, %note-green; }
 
   p > code { @extend %label; }
+  p.c2 { font-weight: bold; }
 }

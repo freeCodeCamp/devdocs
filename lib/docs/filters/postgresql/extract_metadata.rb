@@ -17,7 +17,7 @@ module Docs
         return unless text = at_css('.NAVHEADER td[align="center"]').content
         return unless match = text.match(/\AChapter (\d+)\. (.+)\z/)
         result[:pg_chapter] = match[1].to_i
-        result[:pg_chapter_name] = match[2]
+        result[:pg_chapter_name] = match[2].strip
       end
     end
   end
