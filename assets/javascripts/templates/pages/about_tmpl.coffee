@@ -316,7 +316,7 @@ credits = [
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'PHPUnit',
-    '2005-2015 Sebastian Bergmann',
+    '2005-2016 Sebastian Bergmann',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
