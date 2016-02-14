@@ -8,6 +8,7 @@ module Docs
       def inherited(subclass)
         super
         subclass.base_url = base_url
+        subclass.dir = dir
       end
     end
 

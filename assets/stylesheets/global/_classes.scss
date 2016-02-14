@@ -70,6 +70,11 @@
   @extend %label;
 }
 
+%label-yellow {
+  background: $noteBackground;
+  border-color: $noteBorder;
+}
+
 %note-green, %label-green {
   background: $noteGreenBackground;
   border-color: $noteGreenBorder;

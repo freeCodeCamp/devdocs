@@ -1,16 +1,17 @@
 ._cakephp {
-  h2 { @extend %block-heading; }
+  @extend %simple;
 
-  h3 { @extend %block-label, %label-blue; }
+  h3 > .source { float: right; }
+  h3 > a, span.label, span.php-keyword1 { font-weight: normal; }
 
-  h3 > a { float: right; }
-
-  h3 > a,
-  span.label,
-  span.php-keyword1 {
-    font-weight: normal;
+  h4 {
+    margin: 1.5em 0;
+    @extend %block-label;
   }
 
-  .tree > dd { margin-left: 0px; }
-  .list { margin-left: 20px; }
+  dl { margin: 1em 0; }
+
+  .info { @extend %note; }
+  code { @extend %label; }
+  p > .label, dt > .label { @extend %label, %label-yellow; }
 }
