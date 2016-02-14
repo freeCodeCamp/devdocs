@@ -271,6 +271,7 @@ class App < Sinatra::Application
   end
 
   get %r{\A/([\w~\.]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
+    return redirect "/node#{type}#{rest}" if doc == 'iojs'
     return 404 unless @doc = find_doc(doc)
 
     if rest.nil?

@@ -190,11 +190,6 @@ credits = [
     'BSD',
     'https://www.haskell.org/ghc/license'
   ], [
-    'io.js',
-    'io.js contributors',
-    'MIT',
-    'https://raw.githubusercontent.com/iojs/io.js/v1.x/LICENSE'
-  ], [
     'jQuery',
     'Packt Publishing<br>&copy; jQuery Foundation and other contributors',
     'MIT',
