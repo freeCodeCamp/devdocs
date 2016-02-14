@@ -35,7 +35,7 @@ class app.views.Resizer extends app.View
     @style.removeAttribute('disabled')
     event.dataTransfer.effectAllowed = 'link'
     event.dataTransfer.setData('Text', '')
-    window.addEventListener("dragover", @onDrag);
+    $.on(window, 'dragover', @onDrag)
     return
 
   onDrag: (event) =>
@@ -48,7 +48,7 @@ class app.views.Resizer extends app.View
     return
 
   onDragEnd: (event) =>
-    window.removeEventListener("dragover", @onDrag);
+    $.off(window, 'dragover', @onDrag)
     value = event.pageX or (event.screenX - window.screenX)
     if @lastDragValue and not (@lastDragValue - 5 < value < @lastDragValue + 5) # https://github.com/Thibaut/devdocs/issues/265
       value = @lastDragValue
