@@ -3,6 +3,9 @@
 class app.views.Updates extends app.views.Notif
   @className += ' _notif-news'
 
+  @defautOptions:
+    autoHide: 30000
+
   init: ->
     @updatedDocs = @getUpdatedDocs()
     @show() if @updatedDocs.length

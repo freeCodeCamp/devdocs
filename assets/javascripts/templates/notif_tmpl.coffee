@@ -1,5 +1,5 @@
 notif = (title, html) ->
-  html = html.replace /<a/g, '<a class="_notif-link"'
+  html = html.replace /<a /g, '<a class="_notif-link" '
   """<h5 class="_notif-title">#{title}</h5>#{html}<a href="#" class="_notif-close"></a>"""
 
 textNotif = (title, message) ->

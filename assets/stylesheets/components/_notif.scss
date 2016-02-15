@@ -29,13 +29,14 @@
 
 ._notif-info {
   float: right;
-  color: $textColorLight;
+  color: $notifColorLight;
 }
 
 ._notif-link,
 ._notif-link:hover {
   color: inherit;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 ._notif-close {
@@ -114,6 +115,7 @@
 }
 
 ._notif-list {
+  margin: 0;
   padding-left: 1rem;
 }
 
@@ -121,4 +123,6 @@
   color: $textColor;
   background: rgba($tipBackground, .95);
   border: 1px solid $tipBorder;
+
+  ._notif-info { color: $textColorLight; }
 }

@@ -4,7 +4,7 @@ class app.views.News extends app.views.Notif
   @className += ' _notif-news'
 
   @defautOptions:
-    autoHide: null
+    autoHide: 30000
 
   init: ->
     @unreadNews = @getUnreadNews()
