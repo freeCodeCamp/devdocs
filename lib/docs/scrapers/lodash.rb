@@ -19,7 +19,7 @@ module Docs
     HTML
 
     version '4' do
-      self.release = '4.2.1'
+      self.release = '4.3.0'
       self.base_url = 'https://lodash.com/docs'
     end
 
