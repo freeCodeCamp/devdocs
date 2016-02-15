@@ -26,14 +26,27 @@ app.templates.notifInvalidLocation = ->
 app.templates.notifNews = (news) ->
   notif 'Changelog', """<div class="_notif-content _notif-news">#{app.templates.newsList(news, years: false)}</div>"""
 
-app.templates.notifUpdates = (docs) ->
-  html = """<ul class="_notif-content _notif-list">"""
-  for doc in docs
-    html += "<li>#{doc.name}"
-    html += " (#{doc.release})" if doc.release
-    html += "</li>"
-  html += "</ul>"
-  notif 'Updates', html
+app.templates.notifUpdates = (docs, disabledDocs) ->
+  html = '<div class="_notif-content _notif-news">'
+
+  if docs.length > 0
+    html += '<div class="_news-row">'
+    html += '<ul class="_notif-list">'
+    for doc in docs
+      html += "<li>#{doc.name}"
+      html += " <code>&rarr;</code> #{doc.release}" if doc.release
+    html += '</ul></div>'
+
+  if disabledDocs.length > 0
+    html += '<div class="_news-row"><p class="_news-title">Disabled:'
+    html += '<ul class="_notif-list">'
+    for doc in disabledDocs
+      html += "<li>#{doc.name}"
+      html += " <code>&rarr;</code> #{doc.release}" if doc.release
+      html += """<span class="_notif-info"><a data-pick-docs>Enable</a></span>"""
+    html += '</ul></div>'
+
+  notif 'Updates', "#{html}</div>"
 
 app.templates.notifShare = ->
   textNotif """ Hi there! """,
