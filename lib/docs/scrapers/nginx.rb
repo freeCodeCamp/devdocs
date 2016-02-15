@@ -2,7 +2,7 @@ module Docs
   class Nginx < UrlScraper
     self.name = 'nginx'
     self.type = 'nginx'
-    self.release = '1.9.9'
+    self.release = '1.9.11'
     self.base_url = 'http://nginx.org/en/docs/'
     self.links = {
       home: 'http://nginx.org/',
@@ -21,8 +21,8 @@ module Docs
     options[:skip_patterns] = [/\/faq\//]
 
     options[:attribution] = <<-HTML
-      &copy; 2002-2015 Igor Sysoev<br>
-      &copy; 2011-2015 Nginx, Inc.<br>
+      &copy; 2002-2016 Igor Sysoev<br>
+      &copy; 2011-2016 Nginx, Inc.<br>
       Licensed under the BSD License.
     HTML
   end
