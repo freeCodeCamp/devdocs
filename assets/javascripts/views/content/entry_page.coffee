@@ -71,8 +71,7 @@ class app.views.EntryPage extends app.View
     return
 
   subViewClass: ->
-    docType = @entry.doc.type
-    app.views["#{docType[0].toUpperCase()}#{docType[1..]}Page"] or app.views.BasePage
+    app.views["#{$.classify(@entry.doc.type)}Page"] or app.views.BasePage
 
   getTitle: ->
     @entry.doc.fullName + if @entry.isIndex() then ' documentation' else " / #{@entry.name}"

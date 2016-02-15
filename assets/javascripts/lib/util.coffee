@@ -272,6 +272,12 @@ $.escapeRegexp = (string) ->
 $.urlDecode = (string) ->
   decodeURIComponent string.replace(/\+/g, '%20')
 
+$.classify = (string) ->
+  string = string.split('_')
+  for substr, i in string
+    string[i] = substr[0].toUpperCase() + substr[1..]
+  string.join('')
+
 #
 # Miscellaneous
 #
