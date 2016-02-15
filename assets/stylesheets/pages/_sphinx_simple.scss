@@ -1,4 +1,4 @@
-._opentsdb {
+._sphinx_simple {
   @extend %simple;
 
   .admonition { @extend %note; }
@@ -7,4 +7,6 @@
     margin: 0 0 .25rem;
     font-weight: bold;
   }
+
+  code { @extend %label; }
 }

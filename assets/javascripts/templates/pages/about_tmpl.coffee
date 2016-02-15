@@ -110,6 +110,11 @@ credits = [
     'MIT',
     'https://github.com/chaijs/chai/blob/master/README.md#license'
   ], [
+    'Chef&trade;',
+    'Chef Software, Inc.',
+    'CC BY',
+    'https://raw.githubusercontent.com/chef/chef-web-docs-2016/master/LICENSE'
+  ], [
     'Clojure',
     'Rich Hickey',
     'EPL',

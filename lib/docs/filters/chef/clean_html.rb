@@ -2,7 +2,33 @@ module Docs
   class Chef
     class CleanHtmlFilter < Filter
       def call
-        css('h1 a', 'h2 a', 'h3 a','div.footer').remove
+        @doc = at_css('div[role="main"]')
+
+        css('.headerlink').remove
+
+        css('em', 'div.align-center', 'a[href$=".svg"]').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('.section').each do |node|
+          node.first_element_child['id'] = node['id'] if node['id']
+          node.before(node.children).remove
+        end
+
+        css('tt').each do |node|
+          node.content = node.content.strip
+          node.name = 'code'
+        end
+
+        css('table[border]').each do |node|
+          node.remove_attribute('border')
+        end
+
+        css('div[class^="highlight-"]').each do |node|
+          node.content = node.content.strip
+          node.name = 'pre'
+        end
+
         doc
       end
     end

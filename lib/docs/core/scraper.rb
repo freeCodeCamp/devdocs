@@ -13,6 +13,7 @@ module Docs
           autoload_all "docs/filters/#{to_s.demodulize.underscore}", 'filter'
         end
 
+        subclass.base_url = base_url
         subclass.root_path = root_path
         subclass.initial_paths = initial_paths.dup
         subclass.options = options.deep_dup
