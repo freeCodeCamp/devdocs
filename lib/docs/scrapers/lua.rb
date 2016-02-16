@@ -1,8 +1,6 @@
 module Docs
   class Lua < UrlScraper
     self.type = 'lua'
-    self.release = '5.3'
-    self.base_url = 'http://www.lua.org/manual/5.3/'
     self.root_path = 'manual.html'
 
     html_filters.push 'lua/clean_html', 'lua/entries'
@@ -13,5 +11,20 @@ module Docs
       &copy; 1994&ndash;2015 Lua.org, PUC-Rio.<br>
       Licensed under the MIT License.
     HTML
+
+    version '5.1' do
+      self.release = '5.1'
+      self.base_url = 'http://www.lua.org/manual/5.1/'
+    end
+
+    version '5.2' do
+      self.release = '5.2'
+      self.base_url = 'http://www.lua.org/manual/5.2/'
+    end
+
+    version '5.3' do
+      self.release = '5.3'
+      self.base_url = 'http://www.lua.org/manual/5.3/'
+    end
   end
 end
