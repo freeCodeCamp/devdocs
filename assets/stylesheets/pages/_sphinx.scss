@@ -1,4 +1,4 @@
-._sphinx {
+%sphinx {
   h2, h3 { @extend %block-heading; }
   dl:not(.docutils) > dt { @extend %block-label, %label-blue; }
   dt + dt { margin-top: -.5em; }
@@ -23,4 +23,8 @@
   }
 
   ul.simple { margin: 1em 0; }
+}
+
+._sphinx {
+  @extend %sphinx
 }
