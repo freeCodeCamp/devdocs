@@ -42,23 +42,22 @@ module Docs
       end
 
       def get_type
-        if HIDE_SLUGS.include?(slug) then
+        if HIDE_SLUGS.include?(slug)
           type = nil
         else
           akey = slug.split('_').first
-          type = TYPES.has_key?(akey) ? TYPES[akey]: 'Modules Reference'
+          type = TYPES.key?(akey) ? TYPES[akey] : 'Modules Reference'
         end
         type
       end
 
       def additional_entries
-        return []
+        []
       end
 
       def include_default_entry?
-        return true
+        true
       end
-
     end
   end
 end
