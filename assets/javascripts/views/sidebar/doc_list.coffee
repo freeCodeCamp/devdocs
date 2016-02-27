@@ -114,8 +114,13 @@ class app.views.DocList extends app.View
   reveal: (model) ->
     @openDoc model.doc
     @openType model.getType() if model.type
+    @focus model
     @paginateTo model
     @scrollTo model
+    return
+
+  focus: (model) ->
+    @listFocus.focus @find("a[href='#{model.fullPath()}']")
     return
 
   revealCurrent: ->
@@ -126,6 +131,10 @@ class app.views.DocList extends app.View
 
   openDoc: (doc) ->
     @listFold.open @find("[data-slug='#{doc.slug}']")
+    return
+
+  closeDoc: (doc) ->
+    @listFold.close @find("[data-slug='#{doc.slug}']")
     return
 
   openType: (type) ->

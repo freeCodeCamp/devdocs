@@ -94,6 +94,7 @@ class app.views.Search extends app.View
   clear: ->
     @removeClass @constructor.activeClass
     @trigger 'clear'
+    return
 
   externalSearch: (url) ->
     if value = @value

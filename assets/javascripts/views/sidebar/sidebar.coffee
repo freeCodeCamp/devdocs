@@ -16,6 +16,8 @@ class app.views.Sidebar extends app.View
     @search
       .on 'searching', @showResults
       .on 'clear', @showDocList
+    .scope
+      .on 'change', @onScopeChange
 
     @results = new app.views.Results @, @search
     @docList = new app.views.DocList
@@ -54,6 +56,12 @@ class app.views.Sidebar extends app.View
 
   reset: ->
     @showDocList true
+    return
+
+  onScopeChange: (newDoc, previousDoc) =>
+    @docList.closeDoc(previousDoc) if previousDoc
+    if newDoc then @docList.reveal(newDoc.toEntry()) else @scrollToTop()
+    return
 
   saveScrollPosition: ->
     if @view is @docList
