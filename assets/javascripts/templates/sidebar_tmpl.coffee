@@ -56,7 +56,7 @@ templates.sidebarDisabledList = (html) ->
   """<div class="_disabled-list">#{html}</div>"""
 
 templates.sidebarDisabledVersionedDoc = (doc, versions) ->
-  """<a class="_list-item _list-dir _icon-#{doc.icon} _list-disabled"><span class="_list-arrow"></span>#{doc.name}</a><div class="_list _list-sub">#{versions}</div>"""
+  """<a class="_list-item _list-dir _icon-#{doc.icon} _list-disabled" data-slug="#{doc.slug_without_version}"><span class="_list-arrow"></span>#{doc.name}</a><div class="_list _list-sub">#{versions}</div>"""
 
 templates.sidebarPickerNote = """
   <div class="_list-note">Tip: for faster and better search results, select only the docs you need.</div>

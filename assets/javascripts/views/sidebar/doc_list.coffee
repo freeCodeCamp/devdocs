@@ -130,6 +130,7 @@ class app.views.DocList extends app.View
     return
 
   openDoc: (doc) ->
+    @listFold.open @find("[data-slug='#{doc.slug_without_version}']") if app.disabledDocs.contains(doc) and doc.version
     @listFold.open @find("[data-slug='#{doc.slug}']")
     return
 
