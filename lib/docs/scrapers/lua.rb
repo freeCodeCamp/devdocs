@@ -12,9 +12,9 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    version '5.1' do
-      self.release = '5.1'
-      self.base_url = 'http://www.lua.org/manual/5.1/'
+    version '5.3' do
+      self.release = '5.3'
+      self.base_url = 'http://www.lua.org/manual/5.3/'
     end
 
     version '5.2' do
@@ -22,9 +22,9 @@ module Docs
       self.base_url = 'http://www.lua.org/manual/5.2/'
     end
 
-    version '5.3' do
-      self.release = '5.3'
-      self.base_url = 'http://www.lua.org/manual/5.3/'
+    version '5.1' do
+      self.release = '5.1'
+      self.base_url = 'http://www.lua.org/manual/5.1/'
     end
   end
 end
