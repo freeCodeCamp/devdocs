@@ -65,7 +65,7 @@ class app.DB
       db.createObjectStore('docs')
 
     for doc in app.docs.all() when not $.arrayDelete(objectStoreNames, doc.slug)
-      db.createObjectStore(doc.slug)
+      try db.createObjectStore(doc.slug)
 
     for name in objectStoreNames
       try db.deleteObjectStore(name)
