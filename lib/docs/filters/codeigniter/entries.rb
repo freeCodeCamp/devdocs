@@ -26,9 +26,10 @@ module Docs
           entries << [class_name, class_id]
 
           node.css('.method').each do |n|
+            next unless n.at_css('dt[id]')
             name = n.at_css('.descname').content
             name = "#{class_name}::#{name}()"
-            id = node.at_css('dt[id]')['id']
+            id = n.at_css('dt[id]')['id']
             entries << [name, id]
           end
         end
