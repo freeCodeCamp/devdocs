@@ -285,6 +285,11 @@ credits = [
     'BSD',
     'http://nginx.org/LICENSE'
   ], [
+    'nginx / Lua Module',
+    '2009-2016 Xiaozhe Wang (chaoslawful)<br>&copy; 2009-2016 Yichun "agentzh" Zhang (章亦春), CloudFlare Inc.',
+    'BSD',
+    'https://github.com/openresty/lua-nginx-module#copyright-and-license'
+  ], [
     'Node.js',
     'Joyent, Inc. and other Node contributors<br>Node.js is a trademark of Joyent, Inc.',
     'MIT',
