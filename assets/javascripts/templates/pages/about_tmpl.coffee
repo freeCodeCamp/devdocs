@@ -120,6 +120,11 @@ credits = [
     'EPL',
     'https://github.com/clojure/clojure/blob/master/epl-v10.html'
   ], [
+    'CodeIgniter',
+    '2014-2016 British Columbia Institute of Technology',
+    'MIT',
+    'https://raw.githubusercontent.com/bcit-ci/CodeIgniter/develop/license.txt'
+  ], [
     'CoffeeScript',
     '2009-2015 Jeremy Ashkenas',
     'MIT',

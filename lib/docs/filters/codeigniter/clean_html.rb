@@ -8,16 +8,22 @@ module Docs
           node.content = node.content
         end
 
+        css('div[class^="highlight-"]').each do |node|
+          node.content = node.content.strip
+          node.name = 'pre'
+          node['class'] = 'php' if node['class'].include?('highlight-ci')
+        end
+
         css('table').each do |node|
           node.remove_attribute 'border'
         end
 
-        css('.section > h2', '.section > h3', '.section > h4', '.section > h5').each do |node|
-          node['id'] = node.parent['id']
-          node.parent.remove_attribute 'id'
+        css('.section').each do |node|
+          node.first_element_child['id'] = node['id'] if node['id']
+          node.before(node.children).remove
         end
 
-        doc.children
+        doc
       end
     end
   end

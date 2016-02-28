@@ -1,38 +1,43 @@
 module Docs
   class Codeigniter
     class EntriesFilter < Docs::EntriesFilter
-      def include_default_entry?
-        not slug.ends_with? 'index'
-      end
-
       def get_name
         at_css('h1').content.strip
       end
 
       def get_type
-        slug.split('/')[0].capitalize
+        type = slug.split('/').first.capitalize
+
+        if type.in? %w(Tutorial Installation Overview General)
+          type.prepend 'User guide: '
+        elsif type.in? %w(Libraries Helpers)
+          type = name.remove %r{\ (?:Helper|Class|Classes|Library|Driver)\z}
+        end
+
+        type
       end
 
       def additional_entries
         entries = []
 
-        css('.class').each do |c_node|
-          c_name = c_node.at_css('dt > .descname').content
-          c_id = c_node.at_css('dt')['id']
-          entries << [c_name, c_id, get_type]
+        css('.class').each do |node|
+          class_name = node.at_css('dt > .descname').content
+          class_id = node.at_css('dt[id]')['id']
+          entries << [class_name, class_id]
 
-          c_node.css('.method').each do |node|
-            m_name = node.at_css('.descname').content
-            name = c_name + '::' + m_name + '()'
-            id = node.at_css('dt')['id']
-            entries << [name, id, get_type]
+          node.css('.method').each do |n|
+            name = n.at_css('.descname').content
+            name = "#{class_name}::#{name}()"
+            id = node.at_css('dt[id]')['id']
+            entries << [name, id]
           end
         end
 
         css('.function').each do |node|
-          name = node.at_css('.descname').content + '()'
-          id = node.at_css('dt')['id']
-          entries << [name, id, get_type]
+          name = "#{node.at_css('.descname').content}()"
+          id = node.at_css('dt[id]')['id']
+          type = self.type.start_with?('User guide') ? 'Functions' : self.type
+          entries << [name, id, type]
         end
 
         entries

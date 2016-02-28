@@ -4,7 +4,8 @@
   dt + dt { margin-top: -.5em; }
 
   .note, .admonition, .versionadded, .versionchanged, .deprecated-removed { @extend %note; }
-  .deprecated-removed { @extend %note-red; }
+  .important { @extend %note-orange; }
+  .warning, .deprecated-removed { @extend %note-red; }
   .versionmodified { font-weight: bold; }
 
   p > code, li > code { @extend %label; }
@@ -26,5 +27,5 @@
 }
 
 ._sphinx {
-  @extend %sphinx
+  @extend %sphinx;
 }
