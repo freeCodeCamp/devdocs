@@ -200,6 +200,11 @@ credits = [
     'BSD',
     'https://www.haskell.org/ghc/license'
   ], [
+    'InfluxData',
+    '2015 InfluxData, Inc.',
+    'MIT',
+    'https://github.com/influxdata/docs.influxdata.com/blob/master/LICENSE'
+  ], [
     'jQuery',
     'Packt Publishing<br>&copy; jQuery Foundation and other contributors',
     'MIT',
