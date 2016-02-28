@@ -16,8 +16,9 @@ module Docs
 
       def get_name
         name = at_css('.title-frame h1').content
-        name.remove!('Phaser.')
-        name.remove!('PIXI.')
+        name.remove! %r{\A\w+: }
+        name.remove! 'Phaser.'
+        name.remove! 'PIXI.'
         name
       end
 
@@ -40,6 +41,7 @@ module Docs
       end
 
       def additional_entries
+        return [] if self.name == 'KeyCode'
         entries = []
 
         %w(members methods).each do |type|
@@ -47,7 +49,8 @@ module Docs
             sig = node.at_css('.type-signature')
             next if node.parent.parent.at_css('.inherited-from') || (sig && sig.content.include?('internal'))
             sep = sig && sig.content.include?('static') ? '.' : '#'
-            name = "#{self.name}#{sep}#{node['id']}#{'()' if type == 'methods'}"
+            function = node['id'].remove(/\A\./)
+            name = "#{self.name}#{sep}#{function}#{'()' if type == 'methods'}"
             entries << [name, node['id']]
           end
         end

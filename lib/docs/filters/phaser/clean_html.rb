@@ -37,9 +37,6 @@ module Docs
           css('h4.name').each do |node|
             node.name = 'h3'
           end
-
-          # Remove "Jump to" block
-          at_css('table').remove
         end
 
         doc.child.before(title)
