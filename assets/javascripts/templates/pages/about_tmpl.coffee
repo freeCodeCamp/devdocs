@@ -311,7 +311,7 @@ credits = [
     'https://raw.githubusercontent.com/npm/npm/master/LICENSE'
   ], [
     'OpenTSDB',
-    '2010-2015 The OpenTSDB Authors',
+    '2010-2016 The OpenTSDB Authors',
     'LGPLv2.1',
     'https://raw.githubusercontent.com/OpenTSDB/opentsdb.net/gh-pages/COPYING.LESSER'
   ], [
