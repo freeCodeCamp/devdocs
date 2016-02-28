@@ -26,7 +26,6 @@ app.views.MomentPage =
 app.views.MongoosePage =
 app.views.NodePage =
 app.views.PhaserPage =
-app.views.QPage =
 app.views.RamdaPage =
 app.views.RethinkdbPage =
 app.views.SinonPage =

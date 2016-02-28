@@ -1,7 +1,6 @@
 module Docs
-  class Q < UrlScraper
+  class Q < Github
     self.name = 'Q'
-    self.type = 'q'
     self.release = '1.4.1'
     self.base_url = 'https://github.com/kriskowal/q/wiki/'
     self.root_path = 'API-Reference'
@@ -10,7 +9,7 @@ module Docs
       code: 'https://github.com/kriskowal/q'
     }
 
-    html_filters.push 'q/clean_html', 'q/entries', 'title'
+    html_filters.push 'q/entries', 'title'
 
     options[:container] = '.markdown-body'
     options[:title] = 'Q'

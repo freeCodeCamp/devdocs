@@ -1,0 +1,5 @@
+._github {
+  @extend %simple;
+
+  h4 { @extend %block-label; }
+}
