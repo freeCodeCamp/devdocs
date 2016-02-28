@@ -120,7 +120,7 @@ class app.views.DocList extends app.View
     return
 
   focus: (model) ->
-    @listFocus.focus @find("a[href='#{model.fullPath()}']")
+    @listFocus?.focus @find("a[href='#{model.fullPath()}']")
     return
 
   revealCurrent: ->
