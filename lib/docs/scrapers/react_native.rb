@@ -3,7 +3,7 @@ module Docs
     self.name = 'React Native'
     self.slug = 'react_native'
     self.type = 'react'
-    self.release = '0.19'
+    self.release = '0.20'
     self.base_url = 'https://facebook.github.io/react-native/docs/'
     self.root_path = 'getting-started.html'
     self.links = {
@@ -17,6 +17,11 @@ module Docs
       videos.html
       transforms.html
       troubleshooting.html)
+
+    options[:fix_urls] = ->(url) {
+      url.sub! 'docs/docs', 'docs'
+      url
+    }
 
     options[:attribution] = <<-HTML
       &copy; 2016 Facebook Inc.<br>
