@@ -173,6 +173,12 @@ class AppTest < MiniTest::Spec
       assert last_response.redirect?
       assert_equal 'http://example.org/html/?bar=baz', last_response['Location']
     end
+
+    it "redirects old docs" do
+      get '/iojs/'
+      assert last_response.redirect?
+      assert_equal 'http://example.org/node/', last_response['Location']
+    end
   end
 
   describe "/[doc]-[type]" do
@@ -212,6 +218,12 @@ class AppTest < MiniTest::Spec
       assert last_response.redirect?
       assert_equal 'http://example.org/css-foo/?bar=baz', last_response['Location']
     end
+
+    it "redirects old docs" do
+      get '/yii1-foo/'
+      assert last_response.redirect?
+      assert_equal 'http://example.org/yii~1.1-foo/', last_response['Location']
+    end
   end
 
   describe "/[doc+type]/[path]" do
@@ -236,6 +248,12 @@ class AppTest < MiniTest::Spec
       get '/css/foo/', bar: 'baz'
       assert last_response.redirect?
       assert_equal 'http://example.org/css/foo?bar=baz', last_response['Location']
+    end
+
+    it "redirects old docs" do
+      get '/python2/foo'
+      assert last_response.redirect?
+      assert_equal 'http://example.org/python~2.7/foo', last_response['Location']
     end
   end
 

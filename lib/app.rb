@@ -270,8 +270,14 @@ class App < Sinatra::Application
     settings.news_feed
   end
 
+  DOC_REDIRECTS = {
+    'iojs' => 'node',
+    'yii1' => 'yii~1.1',
+    'python2' => 'python~2.7'
+  }
+
   get %r{\A/([\w~\.]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
-    return redirect "/node#{type}#{rest}" if doc == 'iojs'
+    return redirect "/#{DOC_REDIRECTS[doc]}#{type}#{rest}" if DOC_REDIRECTS.key?(doc)
     return 404 unless @doc = find_doc(doc)
 
     if rest.nil?
