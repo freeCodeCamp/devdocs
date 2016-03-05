@@ -1,0 +1,29 @@
+._haxe {
+  .page-header > .availability { @extend %note; }
+
+  h3 { @extend %block-heading; }
+  h4 { @extend %label; }
+  .field > p:first-of-type { @extend %block-label, %label-blue; }
+  .field > p.availability {
+    color: #AB611A;
+    font-size: 90%;
+  }
+  .field code {
+    white-space: nowrap;
+  }
+
+  .label {
+    display: inline-block;
+    padding: 2px 4px;
+    font-size: 11.844px;
+    font-weight: bold;
+    line-height: 14px;
+    color: #FFF;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #999;
+    border-radius: 3px;
+    margin-right: 5px;
+  }
+}
