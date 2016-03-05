@@ -204,7 +204,7 @@ class App < Sinatra::Application
   before do
     if request.host == OUT_HOST && !request.path.start_with?('/s/')
       query_string = "?#{request.query_string}" unless request.query_string.empty?
-      redirect "http://devdocs.io#{request.path}#{query_string}", 302
+      redirect "https://devdocs.io#{request.path}#{query_string}", 302
     end
   end
 
@@ -254,9 +254,9 @@ class App < Sinatra::Application
     '/s/jetbrains/c'      => 'https://www.jetbrains.com/clion/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
     '/s/jetbrains/web'    => 'https://www.jetbrains.com/webstorm/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
     '/s/code-school'      => 'http://www.codeschool.com/?utm_campaign=devdocs&utm_content=homepage&utm_source=devdocs&utm_medium=sponsorship',
-    '/s/tw'               => 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%2C%20offline%20API%20documentation%20browser%3A',
-    '/s/fb'               => 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdevdocs.io',
-    '/s/re'               => 'http://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%2C%20offline%20API%20documentation%20browser&resubmit=true'
+    '/s/tw'               => 'https://twitter.com/intent/tweet?url=https%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%2C%20offline%20API%20documentation%20browser%3A',
+    '/s/fb'               => 'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevdocs.io',
+    '/s/re'               => 'http://www.reddit.com/submit?url=https%3A%2F%2Fdevdocs.io&title=All-in-one%2C%20offline%20API%20documentation%20browser&resubmit=true'
   }.each do |path, url|
     class_eval <<-CODE, __FILE__, __LINE__ + 1
       get '#{path}' do
@@ -303,13 +303,13 @@ class App < Sinatra::Application
 
       maker.channel.links.new_link do |link|
         link.rel = 'self'
-        link.href = 'http://devdocs.io/feed.atom'
+        link.href = 'https://devdocs.io/feed.atom'
         link.type = 'application/atom+xml'
       end
 
       maker.channel.links.new_link do |link|
         link.rel = 'alternate'
-        link.href = 'http://devdocs.io/'
+        link.href = 'https://devdocs.io/'
         link.type = 'text/html'
       end
 
@@ -318,14 +318,14 @@ class App < Sinatra::Application
           item.id = "tag:devdocs.io,2014:News/#{settings.news.length - i}"
           item.title = news[1].split("\n").first.gsub(/<\/?[^>]*>/, '')
           item.description do |desc|
-            desc.content = news[1..-1].join.gsub("\n", '<br>').gsub('href="/', 'href="http://devdocs.io/')
+            desc.content = news[1..-1].join.gsub("\n", '<br>').gsub('href="/', 'href="https://devdocs.io/')
             desc.type = 'html'
           end
           item.updated = "#{news.first}T14:00:00Z"
           item.published = "#{news.first}T14:00:00Z"
           item.links.new_link do |link|
             link.rel = 'alternate'
-            link.href = 'http://devdocs.io/'
+            link.href = 'https://devdocs.io/'
             link.type = 'text/html'
           end
         end
