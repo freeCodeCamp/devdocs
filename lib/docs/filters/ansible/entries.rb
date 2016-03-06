@@ -1,62 +1,29 @@
 module Docs
   class Ansible
     class EntriesFilter < Docs::EntriesFilter
-      TYPES = {
-        'intro' => 'Basic Topics',
-        'modules' => 'Basic Topics',
-        'common' => 'Basic Topics',
-        'playbooks' => 'Playbooks',
-        'become' => 'Playbooks',
-        'test' => 'Playbooks',
-        'YAMLSyntax' => 'Playbooks',
-        'list' => 'Module Categories',
-        'guide' => 'Advanced Topics',
-        'developing' => 'Advanced Topics',
-        'galaxy' => 'Advanced Topics'
-      }
-
-      HIDE_SLUGS = [
-        'playbooks',
-        'playbooks_special_topics',
-        'list_of_all_modules.html',
-        'modules_by_category',
-        'modules'
-      ]
-
       def get_name
-        node = at_css('h1')
-        name = node.content.strip
-        case
-        when name.empty?
-          super
-        when slug.eql?('modules_intro')
-          name = 'Modules'
-        when name.eql?('Introduction')
-          name = '#Introduction'
-        when name.eql?('Getting Started')
-          name = '#Getting Started'
-        when name.eql?('Introduction To Ad-Hoc Commands')
-          name = 'Ad-Hoc Commands'
-        end
+        name = at_css('h1').content.strip
+        name.remove! "\u{00B6}"
+        name.remove! %r{ \- .*}
+        name.remove! 'Introduction To '
+        name.remove! %r{ Guide\z}
         name
       end
 
       def get_type
-        if HIDE_SLUGS.include?(slug)
-          type = nil
+        if slug.include?('module')
+          if name =~ /\A[a-z]/ && node = css('.toctree-l2.current').last
+            "Modules: #{node.content.remove(' Modules')}"
+          else
+            'Modules'
+          end
+        elsif slug.include?('playbook')
+          'Playbooks'
+        elsif slug.include?('guide')
+          'Guides'
         else
-          akey = slug.split('_').first
-          type = TYPES.key?(akey) ? TYPES[akey] : 'Modules Reference'
+          'Miscellaneous'
         end
-        type
-      end
-
-      def additional_entries
-        []
-      end
-
-      def include_default_entry?
-        true
       end
     end
   end

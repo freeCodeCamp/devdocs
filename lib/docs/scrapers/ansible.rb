@@ -1,30 +1,27 @@
 module Docs
   class Ansible < UrlScraper
     self.name = 'Ansible'
-    self.type = 'ansible'
-    self.release = '2.1.0'
-    self.base_url = 'http://docs.ansible.com/ansible/'
-    self.root_path = 'intro.html'
+    self.type = 'sphinx'
+    self.release = '2.0.1'
+    self.base_url = 'https://docs.ansible.com/ansible/'
     self.links = {
-      home: 'http://docs.ansible.com',
+      home: 'https://www.ansible.com/',
       code: 'https://github.com/ansible/ansible'
     }
 
-    html_filters.push 'ansible/clean_html', 'ansible/entries'
+    html_filters.push 'ansible/entries', 'ansible/clean_html', 'codeigniter/clean_html'
 
-    options[:title] = 'Ansible'
-    options[:container] = '#page-content'
-    options[:skip] = [
-      'glossary.html',
-      'faq.html',
-      'community.html',
-      'tower.html',
-      'quickstart.html'
-    ]
+    options[:skip] = %w(
+      glossary.html
+      faq.html
+      community.html
+      tower.html
+      quickstart.html
+      list_of_all_modules.html)
 
     options[:attribution] = <<-HTML
-      &copy; Michael DeHaan<br>
-      Licensed under the GNU General Public License v.3.
+      &copy; 2012&ndash;2016 Michael DeHaan<br>
+      Licensed under the GNU General Public License version 3.
     HTML
   end
 end

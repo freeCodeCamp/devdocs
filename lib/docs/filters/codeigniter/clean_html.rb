@@ -16,6 +16,7 @@ module Docs
 
         css('table').each do |node|
           node.remove_attribute 'border'
+          node.remove_attribute 'cellpadding'
         end
 
         css('.section').each do |node|

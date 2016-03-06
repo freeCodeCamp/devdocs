@@ -80,6 +80,11 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
+    'Ansible',
+    '2012-2016 Michael DeHaan',
+    'GPLv3',
+    'https://raw.githubusercontent.com/ansible/ansible/devel/COPYING'
+  ], [
     'Apache HTTP Server',
     '2016 The Apache Software Foundation',
     'Apache',
