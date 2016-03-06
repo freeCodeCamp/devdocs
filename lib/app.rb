@@ -101,7 +101,7 @@ class App < Sinatra::Application
     include Sprockets::Helpers
 
     def browser
-      @browser ||= Browser.new ua: request.user_agent
+      @browser ||= Browser.new(request.user_agent)
     end
 
     UNSUPPORTED_IE_VERSIONS = %w(6 7 8 9).freeze
