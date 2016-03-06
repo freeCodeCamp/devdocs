@@ -75,8 +75,9 @@ module Docs
     find(name, version).store_page(store, page_id)
   end
 
-  def self.generate(name, version)
-    find(name, version).store_pages(store)
+  def self.generate(doc, version = nil)
+    doc = find(doc, version) unless doc.respond_to?(:store_pages)
+    doc.store_pages(store)
   end
 
   def self.generate_manifest

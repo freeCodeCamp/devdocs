@@ -52,6 +52,7 @@ class DocsCLI < Thor
 
   desc 'generate <doc> [--version] [--verbose] [--debug] [--force] [--package]', 'Generate a documentation'
   option :version, type: :string
+  option :all, type: :boolean
   option :verbose, type: :boolean
   option :debug, type: :boolean
   option :force, type: :boolean
@@ -74,16 +75,20 @@ class DocsCLI < Thor
       return unless yes? 'Proceed? (y/n)'
     end
 
-    if Docs.generate(name, options[:version])
-      generate_manifest
-      if options[:package]
-        require 'unix_utils'
-        package_doc(Docs.find(name, options[:version]))
+    require 'unix_utils' if options[:package]
+
+    doc = Docs.find(name, options[:version])
+
+    result = if doc.version && options[:all]
+      doc.superclass.versions.all? do |_doc|
+        puts "==> #{_doc.version}"
+        generate_doc(_doc, package: options[:package]).tap { puts "\n" }
       end
-      puts 'Done'
     else
-      puts "Failed!#{' (try running with --debug for more information)' unless options[:debug]}"
+      generate_doc(doc, package: options[:package])
     end
+
+    generate_manifest if result
   rescue Docs::DocNotFound => error
     handle_doc_not_found_error(error)
   end
@@ -167,6 +172,17 @@ class DocsCLI < Thor
   def handle_doc_not_found_error(error)
     puts %(ERROR: #{error}.)
     puts 'Run "thor docs:list" to see the list of docs and versions.'
+  end
+
+  def generate_doc(doc, package: nil)
+    if Docs.generate(doc)
+      package_doc(doc) if package
+      puts 'Done'
+      true
+    else
+      puts "Failed!#{' (try running with --debug for more information)' unless options[:debug]}"
+      false
+    end
   end
 
   def download_docs(docs)
