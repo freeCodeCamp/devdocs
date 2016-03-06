@@ -276,7 +276,7 @@ credits = [
     'https://github.com/seattlerb/minitest/blob/master/README.rdoc#license'
   ], [
     'Mocha',
-    '2011-2015 TJ Holowaychuk',
+    '2011-2016 TJ Holowaychuk',
     'MIT',
     'https://raw.githubusercontent.com/mochajs/mocha/master/LICENSE'
   ], [
