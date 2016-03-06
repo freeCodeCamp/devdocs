@@ -19,6 +19,7 @@ module Docs
         klass.name = name
         klass.slug = slug
         klass.version = version
+        klass.release = release
         klass.links = links
         klass.class_exec(&block)
         @versions ||= []
@@ -48,7 +49,15 @@ module Docs
 
       def slug
         slug = @slug || name.try(:downcase)
-        version? ? "#{slug}~#{version.downcase.gsub('+', 'p').gsub(/[^a-z0-9\_\.]/, '_')}" : slug
+        version? ? "#{slug}~#{version_slug}" : slug
+      end
+
+      def version_slug
+        slug = version.downcase
+        slug.gsub! '+', 'p'
+        slug.gsub! '#', 's'
+        slug.gsub! %r{[^a-z0-9\_\.]}, '_'
+        slug
       end
 
       def path

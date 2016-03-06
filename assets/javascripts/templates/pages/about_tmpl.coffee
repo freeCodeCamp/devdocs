@@ -200,6 +200,11 @@ credits = [
     'BSD',
     'https://www.haskell.org/ghc/license'
   ], [
+    'Haxe',
+    '2005-2016 Haxe Foundation',
+    'MIT',
+    'http://haxe.org/foundation/open-source.html'
+  ], [
     'InfluxData',
     '2015 InfluxData, Inc.',
     'MIT',
