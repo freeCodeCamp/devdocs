@@ -1,7 +1,7 @@
 module Docs
   class Relay < React
     self.type = 'react'
-    self.release = '0.6'
+    self.release = '0.7.2'
     self.base_url = 'https://facebook.github.io/relay/docs/'
     self.root_path = 'getting-started.html'
     self.links = {
