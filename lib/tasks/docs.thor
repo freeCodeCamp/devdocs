@@ -141,7 +141,9 @@ class DocsCLI < Thor
 
   desc 'upload', '[private]'
   option :dryrun, type: :boolean
+  option :packaged, type: :boolean
   def upload(*names)
+    names = Dir[File.join(Docs.store_path, '*.tar.gz')].map { |f| File.basename(f, '.tar.gz') } if options[:packaged]
     docs = find_docs(names)
     assert_docs(docs)
     docs.each do |doc|
@@ -156,7 +158,7 @@ class DocsCLI < Thor
 
   def find_docs(names)
     names.map do |name|
-      name, version = name.split('@')
+      name, version = name.split(/@|~/)
       Docs.find(name, version)
     end
   end
