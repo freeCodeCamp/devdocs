@@ -1,15 +1,15 @@
 module Docs
   class Rust < UrlScraper
     self.type = 'rust'
-    self.release = '1.6.0'
-    self.base_url = 'http://doc.rust-lang.org/'
+    self.release = '1.7.0'
+    self.base_url = 'https://doc.rust-lang.org/'
     self.root_path = 'book/index.html'
     self.initial_paths = %w(
       reference.html
       collections/index.html
       std/index.html)
     self.links = {
-      home: 'http://www.rust-lang.org/',
+      home: 'https://www.rust-lang.org/',
       code: 'https://github.com/rust-lang/rust'
     }
 
