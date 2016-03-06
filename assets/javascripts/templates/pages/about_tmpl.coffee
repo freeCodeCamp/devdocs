@@ -415,6 +415,11 @@ credits = [
     'Tcl/Tk',
     'http://tcl.tk/software/tcltk/license.html'
   ], [
+    'TensorFlow',
+    '2015 The TensorFlow Authors',
+    'Apache',
+    'https://raw.githubusercontent.com/tensorflow/tensorflow/master/LICENSE'
+  ], [
     'Underscore.js',
     '2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',

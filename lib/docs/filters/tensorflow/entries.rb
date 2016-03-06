@@ -2,31 +2,26 @@ module Docs
   class Tensorflow
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('h1').content
+        name = at_css('h1').content.strip
+        name.remove! 'class '
+        name.remove! 'struct '
+        name
       end
 
       def get_type
-        at_css('h1').content
-      end
-
-      def include_default_entry?
-        false
+        type = name.dup
+        type.remove! %r{\ \(.*\)}
+        type.remove! 'tensorflow::'
+        type
       end
 
       def additional_entries
-        entries = []
-
-        # Just get everything that is a code tag inside a header tag. I haven't
-        # checked if all of these are necessary.
-        ents = css('h5 code') + css('h4 code') + css('h3 code') + css('h2 code')
-
-        ents.each do |node|
-          name = node.content.sub(/\(.*\)/, '()')
-          id = node.parent['id']
-          entries << [name, id, get_name]
+        css('h2 code', 'h3 code', 'h4 code', 'h5 code').map do |node|
+          name = node.content
+          name.sub! %r{\(.*}, '()'
+          name = name.split(' ').last
+          [name, node.parent['id']]
         end
-
-        entries
       end
     end
   end

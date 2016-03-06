@@ -48,7 +48,7 @@ module Docs
 
       def slug
         slug = @slug || name.try(:downcase)
-        version? ? "#{slug}~#{version.downcase.gsub(/[^a-z0-9\_\.]/, '_')}" : slug
+        version? ? "#{slug}~#{version.downcase.gsub('+', 'p').gsub(/[^a-z0-9\_\.]/, '_')}" : slug
       end
 
       def path
