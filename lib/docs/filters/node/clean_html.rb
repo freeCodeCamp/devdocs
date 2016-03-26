@@ -2,6 +2,8 @@ module Docs
   class Node
     class CleanHtmlFilter < Filter
       def call
+        css('hr').remove
+
         # Remove "#" links
         css('.mark').each do |node|
           node.parent.parent['id'] = node['id']
@@ -14,6 +16,10 @@ module Docs
 
         css('pre').each do |node|
           node.content = node.content
+        end
+
+        css('.__cf_email__').each do |node|
+          node.replace('pass@host.com')
         end
 
         doc
