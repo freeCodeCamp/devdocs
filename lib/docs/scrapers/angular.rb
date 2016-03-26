@@ -5,8 +5,6 @@ module Docs
     self.name = 'Angular.js'
     self.slug = 'angular'
     self.type = 'angular'
-    self.release = '1.5.3'
-    self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     self.root_path = 'api.html'
     self.initial_paths = %w(guide.html)
 
@@ -40,6 +38,26 @@ module Docs
       &copy; 2010&ndash;2016 Google, Inc.<br>
       Licensed under the Creative Commons Attribution License 4.0.
     HTML
+
+    version '1.5' do
+      self.release = '1.5.3'
+      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
+    end
+
+    version '1.4' do
+      self.release = '1.4.10'
+      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
+    end
+
+    version '1.3' do
+      self.release = '1.3.20'
+      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
+    end
+
+    version '1.2' do
+      self.release = '1.2.29'
+      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
+    end
 
     private
 
