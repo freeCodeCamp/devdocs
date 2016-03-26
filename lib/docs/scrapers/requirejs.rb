@@ -2,10 +2,10 @@ module Docs
   class Requirejs < UrlScraper
     self.name = 'RequireJS'
     self.type = 'requirejs'
-    self.release = '2.1.22'
-    self.base_url = 'http://requirejs.org/docs/'
+    self.release = '2.2.0'
+    self.base_url = 'https://requirejs.org/docs/'
     self.links = {
-      home: 'http://requirejs.org/',
+      home: 'https://requirejs.org/',
       code: 'https://github.com/jrburke/requirejs'
     }
     self.root_path = 'api.html'
@@ -26,7 +26,7 @@ module Docs
     options[:only] = self.initial_paths
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2015 The Dojo Foundation<br>
+      &copy; jQuery Foundation and other contributors<br>
       Licensed under the MIT License.
     HTML
   end

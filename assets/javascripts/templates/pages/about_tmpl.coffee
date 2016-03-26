@@ -376,9 +376,9 @@ credits = [
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
     'RequireJS',
-    '2010-2014 The Dojo Foundation',
+    'jQuery Foundation and other contributors',
     'MIT',
-    'https://raw.githubusercontent.com/jrburke/requirejs/master/LICENSE'
+    'https://raw.githubusercontent.com/requirejs/requirejs/master/LICENSE'
   ], [
     'RethinkDB',
     'RethinkDB contributors',
