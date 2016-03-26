@@ -96,9 +96,9 @@ credits = [
     'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
   ], [
     'Bower',
-    '2015 Bower contributors',
-    'CC BY',
-    'https://github.com/bower/bower.github.io/blob/b7b94ad38b72e8fb5dafb20c8ce42835a49cc98f/package.json#L20'
+    '2016 Bower contributors',
+    'MIT',
+    'https://github.com/bower/bower.github.io/blob/1057905c18d899106f91372e6cca7ef54a91d60f/package.json#L20'
   ], [
     'C<br>C++',
     'cppreference.com',
