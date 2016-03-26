@@ -3,13 +3,13 @@ module Docs
     self.name = 'Vue.js'
     self.slug = 'vue'
     self.type = 'vue'
-    self.release = '1.0.13'
-    self.base_url = 'http://vuejs.org'
+    self.release = '1.0.19'
+    self.base_url = 'https://vuejs.org'
     self.root_path = '/guide/index.html'
     self.initial_paths = %w(/api/index.html)
     self.links = {
-      home: 'http://vuejs.org/',
-      code: 'https://github.com/yyx990803/vue'
+      home: 'https://vuejs.org/',
+      code: 'https://github.com/vuejs/vue'
     }
 
     html_filters.push 'vue/clean_html', 'vue/entries'
