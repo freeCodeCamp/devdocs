@@ -57,6 +57,10 @@ module Docs
           node.before(node.children).remove
         end
 
+        css('p > a[name]').each do |node|
+          node.parent.next_element['id'] = node['name']
+        end
+
         # Remove code highlighting
         css('pre').each do |node|
           node.content = node.content
