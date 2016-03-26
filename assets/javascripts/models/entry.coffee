@@ -55,6 +55,7 @@ class app.models.Entry extends app.Model
     'knockout.js': 'ko'
     'less': 'ls'
     'lodash': '_'
+    'marionette': 'mn'
     'markdown': 'md'
     'modernizr': 'mdr'
     'moment.js': 'mt'
