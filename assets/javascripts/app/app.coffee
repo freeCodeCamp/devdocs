@@ -242,15 +242,7 @@
     !!(@DOC or @doc)
 
   isMobile: ->
-    try
-      # Need to sniff the user agent because some Android and Windows Phone devices don't take
-      # resolution (dpi) into account when reporting device width/height.
-      @_isMobile ?= (window.matchMedia('(max-device-width: 767px)').matches) or
-                    (window.matchMedia('(max-device-height: 767px) and (max-device-width: 1024px)').matches) or
-                    (navigator.userAgent.indexOf('Android') isnt -1 and navigator.userAgent.indexOf('Mobile') isnt -1) or
-                    (navigator.userAgent.indexOf('IEMobile') isnt -1)
-    catch
-      @_isMobile = false
+    @_isMobile ?= app.views.Mobile.detect()
 
   isInvalidLocation: ->
     @config.env is 'production' and location.host.indexOf(app.config.production_host) isnt 0

@@ -3,6 +3,9 @@ class app.views.Document extends app.View
 
   @el: document
 
+  @events:
+    visibilitychange: 'onVisibilityChange'
+
   @shortcuts:
     help:       'onHelp'
     escape:     'onEscape'
@@ -37,6 +40,14 @@ class app.views.Document extends app.View
 
   setTitle: (title) ->
     @el.title = if title then "DevDocs - #{title}" else 'DevDocs API Documentation'
+
+  onVisibilityChange: =>
+    return unless @el.visibilityState is 'visible'
+    @delay ->
+      location.reload() if app.isMobile() isnt app.views.Mobile.detect()
+      return
+    , 300
+    return
 
   onHelp: ->
     app.router.show '/help#shortcuts'
