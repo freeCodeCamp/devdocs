@@ -115,6 +115,24 @@ class NormalizeUrlsFilterTest < MiniTest::Spec
     end
   end
 
+  context "when context[:fix_urls_before_parse] is a block" do
+    before do
+      @body = link_to 'foo[bar]'
+    end
+
+    it "calls the block with each absolute url" do
+      context[:fix_urls_before_parse] = ->(arg) { (@args ||= []).push(arg); nil }
+      @body += link_to 'foo[bar]'
+      filter.call
+      assert_equal ['foo[bar]'] * 2, @args
+    end
+
+    it "replaces the url with the block's return value" do
+      context[:fix_urls_before_parse] = ->(url) { '/fixed' }
+      assert_equal link_to('http://example.com/fixed'), filter_output_string
+    end
+  end
+
   context "when context[:fix_urls] is a block" do
     before do
       @body = link_to 'http://example.com/path?#'
