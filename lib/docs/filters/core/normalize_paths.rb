@@ -26,7 +26,7 @@ module Docs
 
     def normalize_href(href)
       url = URL.parse(href)
-      url.path = normalize_path(url.path)
+      url.send(:set_path, normalize_path(url.path))
       url
     rescue URI::InvalidURIError
       href
