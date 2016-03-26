@@ -278,6 +278,7 @@ class App < Sinatra::Application
 
   get %r{\A/([\w~\.]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
     return redirect "/#{DOC_REDIRECTS[doc]}#{type}#{rest}" if DOC_REDIRECTS.key?(doc)
+    return redirect "/angular/api#{rest}", 301 if doc == 'angular' && rest.start_with?('/ng')
     return 404 unless @doc = find_doc(doc)
 
     if rest.nil?

@@ -2,8 +2,8 @@ module Docs
   class Angular
     class CleanUrlsFilter < Filter
       def call
-        html.gsub! "angularjs.org/#{Angular.release}/docs/partials/api/", "angularjs.org/#{Angular.release}/docs/api/"
-        html.gsub! %r{angularjs.org/#{Angular.release}/docs/api/(.+?)\.html}, "angularjs.org/#{Angular.release}/docs/api/\1"
+        html.gsub! %r{angularjs\.org/([\d\.]+)/docs/partials/(\w+)/}, 'angularjs.org/\1/docs/\2/'
+        html.gsub! %r{angularjs\.org/([\d\.]+)/docs/(\w+)/(.+?)\.html}, 'angularjs.org/\1/docs/\2/\3'
         html
       end
     end

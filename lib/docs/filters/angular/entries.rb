@@ -2,17 +2,27 @@ module Docs
   class Angular
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = slug.split('/').last
-        name.remove! %r{\Ang\.}
-        name << " (#{subtype})" if subtype == 'directive' || subtype == 'filter'
-        name.prepend("#{type}.") unless type.starts_with?('ng ') || name == type
-        name
+        if slug.start_with?('api')
+          name = URI.unescape(slug).split('/').last
+          name.remove! %r{\Ang\.}
+          name << " (#{subtype})" if subtype == 'directive' || subtype == 'filter'
+          name.prepend("#{type}.") unless type.starts_with?('ng ') || name == type
+          name
+        elsif slug.start_with?('guide')
+          name = URI.decode(at_css('.improve-docs')['href'][/message=docs\(guide%2F(.+?)\)/, 1])
+          name.prepend 'Guide: '
+          name
+        end
       end
 
       def get_type
-        type = slug.split('/').first
-        type << " #{subtype}s" if type == 'ng' && subtype
-        type
+        if slug.start_with?('api')
+          type = slug.split('/').drop(1).first
+          type << " #{subtype}s" if type == 'ng' && subtype
+          type
+        elsif slug.start_with?('guide')
+          'Guide'
+        end
       end
 
       def subtype
@@ -23,6 +33,7 @@ module Docs
       end
 
       def additional_entries
+        return [] unless slug.start_with?('api')
         entries = []
 
         css('ul.defs').each do |list|
@@ -36,10 +47,6 @@ module Docs
         end
 
         entries
-      end
-
-      def include_default_entry?
-        !at_css('h1 + .definition-table:last-child')
       end
     end
   end

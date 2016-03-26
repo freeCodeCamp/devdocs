@@ -36,7 +36,9 @@ module Docs
           node.before(node.children).remove
         end
 
-        at_css('h1').prepend_child(css('.view-source', '.improve-docs'))
+        if h1 = at_css('h1')
+          h1.prepend_child(css('.view-source', '.improve-docs'))
+        end
 
         # Remove root-level <div>
         while div = at_css('h1 + div')

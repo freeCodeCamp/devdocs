@@ -5,8 +5,10 @@ module Docs
     self.name = 'Angular.js'
     self.slug = 'angular'
     self.type = 'angular'
-    self.release = '1.5.0'
-    self.base_url = "https://code.angularjs.org/#{release}/docs/partials/api/"
+    self.release = '1.5.3'
+    self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
+    self.root_path = 'api.html'
+    self.initial_paths = %w(guide.html)
 
     html_filters.push 'angular/clean_html', 'angular/entries', 'title'
     text_filters.push 'angular/clean_urls'
@@ -14,14 +16,25 @@ module Docs
     options[:title] = false
     options[:root_title] = 'Angular.js'
 
+    options[:decode_and_clean_paths] = true
+    options[:fix_urls_before_parse] = ->(str) do
+      str.gsub!('[', '%5B')
+      str.gsub!(']', '%5D')
+      str
+    end
+
     options[:fix_urls] = ->(url) do
-      url.sub! '/partials/api/api/', '/partials/api/'
-      url.sub! %r{/api/(.+?)/api/}, '/api/'
-      url.sub! %r{/partials/api/(.+?)(?<!\.html)(?:\z|(#.*))}, '/partials/api/\1.html\2'
+      %w(api guide).each do |str|
+        url.sub! "/partials/#{str}/#{str}/", "/partials/#{str}/"
+        url.sub! %r{/#{str}/img/}, "/img/"
+        url.sub! %r{/#{str}/(.+?)/#{str}/}, "/#{str}/"
+        url.sub! %r{/partials/#{str}/(.+?)(?<!\.html)(?:\z|(#.*))}, "/partials/#{str}/\\1.html\\2"
+      end
       url
     end
 
-    options[:skip] = %w(ng.html)
+    options[:only_patterns] = [%r{\Aapi/}, %r{\Aguide/}]
+    options[:skip] = %w(api/ng.html)
 
     options[:attribution] = <<-HTML
       &copy; 2010&ndash;2016 Google, Inc.<br>
@@ -31,9 +44,11 @@ module Docs
     private
 
     def root_page_body
-      require 'capybara'
+      require 'capybara/dsl'
       Capybara.current_driver = :selenium
-      Capybara.visit("https://code.angularjs.org/#{self.class.release}/docs/api")
+      Capybara.run_server = false
+      Capybara.app_host = 'https://code.angularjs.org'
+      Capybara.visit("/#{self.class.release}/docs/api")
       Capybara.find('.side-navigation')['innerHTML']
     end
   end
