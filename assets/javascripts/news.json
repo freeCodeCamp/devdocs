@@ -147,7 +147,7 @@
     "New <a href=\"/d3/\">D3.js</a> and <a href=\"/knockout/\">Knockout.js</a> documentations"
   ], [
     "2014-01-18",
-    "DevDocs is now available as a <a href=\"https://marketplace.firefox.com/app/devdocs/\">Firefox web app</a> (currently requires Aurora)."
+    "DevDocs is now available as a <a href=\"https://marketplace.firefox.com/app/devdocs/\">Firefox web app</a>."
   ], [
     "2014-01-12",
     "Added <code class=\"_label\">alt + g</code> shortcut for searching on Google.",
