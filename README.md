@@ -66,13 +66,11 @@ Another driving factor is performance and the fact that everything happens in th
 DevDocs being a developer tool, the browser requirements are high:
 
 1. On the desktop:
-  * Recent version of Chrome
-  * Recent version of Firefox
-  * Safari 5.1+
-  * Opera 12.1+
-  * Internet Explorer 10+
+  * Recent version of Chrome, Firefox, or Opera
+  * Safari 8+
+  * IE / Edge 10+
 2. On mobile:
-  * iOS 6+
+  * iOS 8+
   * Android 4.1+
   * Windows Phone 8+
 
