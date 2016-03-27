@@ -17,10 +17,10 @@ app.templates.aboutPage = -> """
     <li>Free and <a href="https://github.com/Thibaut/devdocs">open source</a>
         <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
   </ul>
-  <p>To keep up-to-date with the latest development and community news:
+  <p>To keep up-to-date with the latest news:
   <ul>
-    <li>Subscribe to the <a href="http://eepurl.com/HnLUz">newsletter</a>
     <li>Follow <a href="https://twitter.com/DevDocs">@DevDocs</a> on Twitter
+    <li>Watch the repository on <a href="https://github.com/Thibaut/devdocs/subscription">GitHub</a>
     <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
   </ul>
   <p class="_note _note-green">If you like DevDocs, please consider supporting my work on

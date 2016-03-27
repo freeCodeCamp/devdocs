@@ -8,7 +8,6 @@ Keep track of development and community news:
 
 * Watch the repository on [GitHub](https://github.com/Thibaut/devdocs/subscription)
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
-* Subscribe to the [newsletter](http://eepurl.com/HnLUz)
 * Join the [mailing list](https://groups.google.com/d/forum/devdocs)
 
 DevDocs is free and open source. If you like it, please consider supporting my work on [Gratipay](https://gratipay.com/devdocs/). Thanks!
