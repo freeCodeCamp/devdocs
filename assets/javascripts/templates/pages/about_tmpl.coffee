@@ -440,6 +440,11 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/tensorflow/tensorflow/master/LICENSE'
   ], [
+    'TypeScript',
+    'Microsoft and other contributors',
+    'Apache',
+    'https://raw.githubusercontent.com/Microsoft/TypeScript-Handbook/master/LICENSE'
+  ], [
     'Underscore.js',
     '2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
