@@ -36,7 +36,7 @@ module Docs
 
         if slug == 'Attributes'
           css('.standard-table td:first-child').map do |node|
-            name = node.content.strip
+            name = "#{node.content.strip} (attribute)"
             id = node.parent['id'] = name.parameterize
             [name, id, 'Attributes']
           end

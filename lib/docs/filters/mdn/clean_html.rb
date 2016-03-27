@@ -8,7 +8,8 @@ module Docs
         '.Quick_links',      # (e.g. CSS/animation)
         '.todo',
         '.draftHeader',
-        '.hidden']
+        '.hidden',
+        '.button.section-edit']
 
       def call
         css(*REMOVE_NODES).remove

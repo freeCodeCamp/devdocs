@@ -36,6 +36,8 @@ module Docs
           name.remove! 'Functions and function scope.'
           name.remove! 'Operators.'
           name.remove! 'Statements.'
+          name.sub! 'Errors.', 'Errors: '
+          name.sub! 'Strict mode.', 'Strict mode: '
           name
         end
       end
@@ -47,7 +49,9 @@ module Docs
           'Operators'
         elsif slug.start_with? 'Classes'
           'Classes'
-        elsif slug.start_with?('Functions_and_function_scope') || slug.start_with?('Functions') || slug.include?('GeneratorFunction')
+        elsif slug.start_with? 'Errors'
+          'Errors'
+        elsif slug.start_with?('Functions') || slug.include?('GeneratorFunction')
           'Function'
         elsif slug.start_with? 'Global_Objects'
           object, method = *slug.remove('Global_Objects/').split('/')
@@ -68,13 +72,14 @@ module Docs
       end
 
       def include_default_entry?
-        node = doc.at_css '.overheadIndicator'
+        node = doc.at_css '.overheadIndicator, .warning'
 
         # Can't use :first-child because #doc is a DocumentFragment
         return true unless node && node.parent == doc && !node.previous_element
 
         !node.content.include?('not on a standards track') &&
         !node.content.include?('removed from the Web') &&
+        !node.content.include?('SpiderMonkey-specific feature, and will be removed') &&
         !node.content.include?('could be removed at any time')
       end
     end

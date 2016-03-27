@@ -23,6 +23,7 @@ module Docs
       /DOMObject
       /DOMStringList
       /Event/Comparison_of_Event_Targets
+      /Format
       /IDBDatabaseException
       /IndexedDB_API/Using_JavaScript_Generators_in_Firefox
       /Notation
@@ -69,6 +70,7 @@ module Docs
       return if url.include?('_') || url.include?('?')
       url.sub! 'https://developer.mozilla.org/en-US/docs/DOM/', "#{Dom.base_url}/"
       url.sub! 'https://developer.mozilla.org/en/DOM/',         "#{Dom.base_url}/"
+      url.sub! 'https://developer.mozilla.org/Web/API/',         "#{Dom.base_url}/"
       url.sub! "#{Dom.base_url}/Console",                       "#{Dom.base_url}/console"
       url.sub! "#{Dom.base_url}/Document\/",                    "#{Dom.base_url}/document\/"
       url.sub! "#{Dom.base_url}/Element",                       "#{Dom.base_url}/element"

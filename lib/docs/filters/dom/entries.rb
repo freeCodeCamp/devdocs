@@ -2,6 +2,10 @@ module Docs
   class Dom
     class EntriesFilter < Docs::EntriesFilter
       TYPE_BY_SPEC = {
+        'ANGLE_'              => 'WebGL',
+        'EXT_'                => 'WebGL',
+        'OES_'                => 'WebGL',
+        'WEBGL_'              => 'WebGL',
         'Battery Status'      => 'Battery Status',
         'Canvas '             => 'Canvas',
         'CSS Font Loading'    => 'CSS',
@@ -104,6 +108,7 @@ module Docs
         'Speech'        => 'Web Speech',
         'TextMetrics'   => 'Canvas',
         'timing'        => 'Web Performance',
+        'Timing'        => 'Web Performance',
         'udio'          => 'Web Audio',
         'WebSocket'     => 'Web Sockets',
         'WebGL'         => 'WebGL',
@@ -127,7 +132,8 @@ module Docs
         IndexedDB\ API.
         MediaRecorder\ API.
         Tutorial.
-        XMLHttpRequest.)
+        XMLHttpRequest.
+        ANGLE\ instanced\ arrays.)
 
       def get_name
         name = super
@@ -135,6 +141,7 @@ module Docs
         name.sub! 'Input.', 'HTMLInputElement.'
         name.sub! 'window.navigator', 'navigator'
         name.sub! 'API.', 'API: '
+        name.sub! %r{\A(ANGLE|EXT|OES|WEBGL)[\w\ ]+\.}, 'ext.'
         # Comment.Comment => Comment.constructor
         name.sub! %r{\A(\w+)\.\1\z}, '\1.constructor' unless name == 'window.window'
         name.prepend 'XMLHttpRequest.' if slug.start_with?('XMLHttpRequest/') && !name.start_with?('XMLHttpRequest')

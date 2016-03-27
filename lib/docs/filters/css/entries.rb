@@ -10,6 +10,7 @@ module Docs
         'CSS_Lists_and_Counters' => 'Lists & Counters',
         'CSS_Transforms' => 'Transforms',
         'Media_Queries' => 'Media Queries',
+        '@media' => 'Media Queries',
         'transform-function' => 'Transforms'
       }
 
@@ -50,6 +51,10 @@ module Docs
           type
         elsif type = TYPE_BY_PATH[slug.split('/').first]
           type
+        elsif name.start_with?('::')
+          'Pseudo-Elements'
+        elsif name.start_with?(':')
+          'Selectors'
         else
           'Miscellaneous'
         end
