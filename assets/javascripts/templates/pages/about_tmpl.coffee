@@ -6,6 +6,7 @@ app.templates.aboutPage = -> """
       <li><a href="#faq">FAQ</a>
       <li><a href="#copyright">Copyright</a>
       <li><a href="#plugins">Plugins</a>
+      <li><a href="#privacy">Privacy Policy</a>
     </ul>
   </div>
 
@@ -72,6 +73,16 @@ app.templates.aboutPage = -> """
     <li><a href="https://github.com/gruehle/dev-docs-viewer">Brackets extension</a>
   </ul>
   <p>You can also use <a href="http://fluidapp.com">Fluid</a> to turn DevDocs into a real OS X app, or <a href="https://apps.ubuntu.com/cat/applications/fogger/">Fogger</a> on Ubuntu.
+
+  <h2 class="_lined-heading" id="privacy">Privacy Policy</h2>
+  <ul>
+    <li><a href="http://devdocs.io">devdocs.io</a> ("App") is operated by Thibaut Courouble ("We").
+    <li>We do not collect personal information.
+    <li>We use Google Analytics, Gauges and Sentry to collect anonymous traffic information and improve the app.
+    <li>The app uses cookies to store user preferences.
+    <li>By using the app, you signify your acceptance of this policy. If you do not agree to this policy, please do not use the app.
+    <li>If you have any questions regarding privacy, please email <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
+  </ul>
 """
 
 credits = [
