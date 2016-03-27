@@ -273,7 +273,8 @@ class App < Sinatra::Application
   DOC_REDIRECTS = {
     'iojs' => 'node',
     'yii1' => 'yii~1.1',
-    'python2' => 'python~2.7'
+    'python2' => 'python~2.7',
+    'xpath' => 'xslt_xpath'
   }
 
   get %r{\A/([\w~\.]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|

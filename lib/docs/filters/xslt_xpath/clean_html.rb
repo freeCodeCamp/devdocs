@@ -1,8 +1,8 @@
 module Docs
-  class Xpath
+  class XsltXpath
     class CleanHtmlFilter < Filter
       def call
-        root_page? ? root : other
+        initial_page? ? root : other
         doc
       end
 

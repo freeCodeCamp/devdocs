@@ -9,7 +9,8 @@ module Docs
         '.todo',
         '.draftHeader',
         '.hidden',
-        '.button.section-edit']
+        '.button.section-edit',
+        'hr']
 
       def call
         css(*REMOVE_NODES).remove

@@ -101,6 +101,7 @@
     for slug in @settings.getDocs() when not @docs.findBy('slug', slug)
       needsSaving = true
       doc = @disabledDocs.findBy('slug', 'node~4_lts') if slug == 'node~4.2_lts'
+      doc = @disabledDocs.findBy('slug', 'xslt_xpath') if slug == 'xpath'
       doc ||= @disabledDocs.findBy('slug_without_version', slug)
       if doc
         @disabledDocs.remove(doc)
