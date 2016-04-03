@@ -2,7 +2,6 @@ module Docs
   class Rails < Rdoc
     self.name = 'Ruby on Rails'
     self.slug = 'rails'
-    self.release = '4.2.3'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Rails'
     self.links = {
       home: 'http://rubyonrails.org/',
@@ -58,8 +57,16 @@ module Docs
       /\ARails\/PluginBuilder/]
 
     options[:attribution] = <<-HTML
-      &copy; 2004&ndash;2015 David Heinemeier Hansson<br>
+      &copy; 2004&ndash;2016 David Heinemeier Hansson<br>
       Licensed under the MIT License.
     HTML
+
+    version '4.2' do
+      self.release = '4.2.6'
+    end
+
+    version '4.1' do
+      self.release = '4.1.15'
+    end
   end
 end
