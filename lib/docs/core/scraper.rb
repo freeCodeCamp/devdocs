@@ -3,7 +3,7 @@ require 'set'
 module Docs
   class Scraper < Doc
     class << self
-      attr_accessor :base_url, :root_path, :initial_paths, :options, :html_filters, :text_filters
+      attr_accessor :base_url, :root_path, :initial_paths, :options, :html_filters, :text_filters, :stubs
 
       def inherited(subclass)
         super
@@ -19,10 +19,16 @@ module Docs
         subclass.options = options.deep_dup
         subclass.html_filters = html_filters.inheritable_copy
         subclass.text_filters = text_filters.inheritable_copy
+        subclass.stubs = stubs.dup
       end
 
       def filters
         html_filters.to_a + text_filters.to_a
+      end
+
+      def stub(path, &block)
+        @stubs[path] = block
+        @stubs
       end
     end
 
@@ -30,12 +36,30 @@ module Docs
 
     self.initial_paths = []
     self.options = {}
+    self.stubs = {}
 
     self.html_filters = FilterStack.new
     self.text_filters = FilterStack.new
 
     html_filters.push 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths'
     text_filters.push 'inner_html', 'clean_text', 'attribution'
+
+    def initialize
+      super
+      initialize_stubs
+    end
+
+    def initialize_stubs
+      self.class.stubs.each do |path, block|
+        Typhoeus.stub(url_for(path)).and_return do
+          Typhoeus::Response.new \
+            effective_url: url_for(path),
+            code: 200,
+            headers: { 'Content-Type' => 'text/html' },
+            body: self.instance_exec(&block)
+        end
+      end
+    end
 
     def build_page(path)
       response = request_one url_for(path)

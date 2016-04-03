@@ -276,7 +276,7 @@ credits = [
     'https://daringfireball.net/projects/markdown/license'
   ], [
     'Meteor',
-    '2011-2015 Meteor Development Group',
+    '2011-2016 Meteor Development Group',
     'MIT',
     'https://raw.githubusercontent.com/meteor/meteor/master/LICENSE.txt'
   ], [
