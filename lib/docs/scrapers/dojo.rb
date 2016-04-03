@@ -2,8 +2,6 @@ require 'yajl/json_gem'
 
 module Docs
   class Dojo < UrlScraper
-    include StubRootPage
-
     self.type = 'dojo'
     self.release = '1.10'
     self.base_url = "http://dojotoolkit.org/api/#{release}/"
@@ -31,14 +29,14 @@ module Docs
       Licensed under the AFL 2.1 and BSD 3-Clause licenses.
     HTML
 
-    private
-
-    def root_page_body
+    stub '' do
       response = request_one("#{self.base_url}tree.json")
       json = JSON.parse(response.body)
       urls = get_url_list(json)
       urls.map { |url| "<a href='#{url}'>#{url}</a>" }.join
     end
+
+    private
 
     def get_url_list(json, set = Set.new)
       set.add("#{self.class.base_url}#{json['fullname']}.html?xhr=true")

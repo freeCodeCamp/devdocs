@@ -1,7 +1,5 @@
 module Docs
   class Angular < UrlScraper
-    include StubRootPage
-
     self.name = 'Angular.js'
     self.slug = 'angular'
     self.type = 'angular'
@@ -59,9 +57,7 @@ module Docs
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
-    private
-
-    def root_page_body
+    stub '' do
       require 'capybara/dsl'
       Capybara.current_driver = :selenium
       Capybara.run_server = false
