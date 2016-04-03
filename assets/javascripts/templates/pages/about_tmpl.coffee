@@ -251,7 +251,7 @@ credits = [
     'https://raw.githubusercontent.com/laravel/framework/master/LICENSE.txt'
   ], [
     'Less',
-    '2009-2015 The Core Less Team',
+    '2009-2016 The Core Less Team',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [

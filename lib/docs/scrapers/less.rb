@@ -1,7 +1,7 @@
 module Docs
   class Less < UrlScraper
     self.type = 'less'
-    self.release = '2.5.3'
+    self.release = '2.6.1'
     self.base_url = 'http://lesscss.org'
     self.root_path = '/features'
     self.initial_paths = %w(/functions)
@@ -18,7 +18,7 @@ module Docs
     options[:trailing_slash] = false
 
     options[:attribution] = <<-HTML
-      &copy; 2009&ndash;2015 The Core Less Team<br>
+      &copy; 2009&ndash;2016 The Core Less Team<br>
       Licensed under the Creative Commons Attribution License 3.0.
     HTML
   end
