@@ -58,7 +58,7 @@ module Docs
     if version.present?
       doc = doc.versions.find { |klass| klass.version == version || klass.version_slug == version }
       raise DocNotFound.new(%(could not find version "#{version}" for doc "#{name}"), name) unless doc
-    else
+    elsif version != false
       doc = doc.versions.first
     end
 
