@@ -4,7 +4,7 @@ module Docs
       def call
         # Remove links inside <h2> and add "id" attributes
         css('h2 > a').each do |node|
-          node.parent['id'] = node['name'].remove('user-content-') if node['name']
+          node.parent['id'] = (node['id'] || node['name']).remove('user-content-') if node['id'] || node['name']
           node.before(node.children).remove
         end
 
@@ -18,7 +18,7 @@ module Docs
 
         # Move content to the root-level
         css('#wiki-content').each do |node|
-          node.before(node.at_css('.markdown-body').children).remove
+          node.before(node.at_css('#wiki-body .markdown-body').children).remove
         end
 
         # Make headings for function definitions and add "id" attributes
