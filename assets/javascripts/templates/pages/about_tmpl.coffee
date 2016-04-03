@@ -411,9 +411,9 @@ credits = [
     'https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT'
   ], [
     'Sass',
-    '2006-2015 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
+    '2006-2016 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',
-    'https://raw.githubusercontent.com/nex3/sass/master/MIT-LICENSE'
+    'https://raw.githubusercontent.com/sass/sass/stable/MIT-LICENSE'
   ], [
     'Sinon',
     '2010-2015 Christian Johansen',
