@@ -4,7 +4,7 @@
   width: 1rem;
   height: 1rem;
   background-image: image-url('icons.png');
-  background-size: 10rem 11rem;
+  background-size: 10rem 12rem;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
@@ -133,3 +133,4 @@
 ._icon-haxe:before          { background-position: -7rem -10rem; }
 ._icon-ansible:before       { background-position: -8rem -10rem; @extend %darkIconFix !optional; }
 ._icon-typescript:before    { background-position: -9rem -10rem; }
+._icon-browser_support_tables:before { background-position: 0rem -11rem; }
