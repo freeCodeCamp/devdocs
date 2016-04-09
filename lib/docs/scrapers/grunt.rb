@@ -2,7 +2,7 @@ module Docs
   class Grunt < UrlScraper
     self.name = 'Grunt'
     self.type = 'grunt'
-    self.release = '0.4.5'
+    self.release = '1.0.1'
     self.base_url = 'http://gruntjs.com/'
     self.root_path = 'getting-started'
     self.initial_paths = %w(api/grunt)
@@ -13,14 +13,17 @@ module Docs
       configuring-tasks
       sample-gruntfile
       creating-tasks
+      creating-plugins
       using-the-cli
+      installing-grunt
+      project-scaffolding
     )
-    options[:only_patterns] = [/\Aapi\//]
+    options[:only_patterns] = [/\Aapi\//, /\Aupgrading-/]
 
     options[:container] = '.container > .row-fluid'
 
     options[:attribution] = <<-HTML
-      &copy; 2014 Grunt Team<br>
+      &copy; GruntJS Team<br>
       Licensed under the MIT License.
     HTML
   end

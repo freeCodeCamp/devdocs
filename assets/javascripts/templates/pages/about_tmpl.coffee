@@ -206,9 +206,9 @@ credits = [
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Grunt',
-    '2014 Grunt Team',
+    'GruntJS Team',
     'MIT',
-    'https://raw.githubusercontent.com/gruntjs/gruntjs.com/master/LICENSE'
+    'https://github.com/gruntjs/grunt-docs/blob/master/package.json#L10'
   ], [
     'Haskell',
     'The University of Glasgow',
