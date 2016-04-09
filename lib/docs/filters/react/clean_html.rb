@@ -22,6 +22,7 @@ module Docs
 
         css('.highlight').each do |node|
           node.name = 'pre'
+          node.css('.gutter').remove
           node['data-language'] = node.at_css('[data-lang]').try(:[], 'data-lang') || 'js'
           node.content = node.content
         end
