@@ -1,7 +1,7 @@
 module Docs
   class JqueryCore < Jquery
     self.name = 'jQuery'
-    self.release = 'up to 2.2.0'
+    self.release = 'up to 2.2.3'
     self.base_url = 'https://api.jquery.com/'
     self.initial_paths = %w(/index/index)
 
