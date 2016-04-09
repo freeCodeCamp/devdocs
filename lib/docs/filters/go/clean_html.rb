@@ -30,6 +30,7 @@ module Docs
 
         # Remove code highlighting
         css('pre').each do |node|
+          node['data-language'] = 'go'
           node.content = node.content
         end
 

@@ -1,7 +1,7 @@
 module Docs
   class Go < UrlScraper
     self.type = 'go'
-    self.release = '1.5.2'
+    self.release = '1.6.0'
     self.base_url = 'https://golang.org/pkg/'
     self.links = {
       home: 'https://golang.org/',
@@ -10,6 +10,7 @@ module Docs
 
     html_filters.push 'go/clean_html', 'go/entries'
 
+    options[:trailing_slash] = true
     options[:container] = '#page .container'
 
     options[:attribution] = <<-HTML
