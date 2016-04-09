@@ -22,7 +22,7 @@ module Docs
 
         css('.highlight').each do |node|
           node.name = 'pre'
-          node['data-lang'] = node.at_css('[data-lang]').try(:[], 'data-lang') || 'js'
+          node['data-language'] = node.at_css('[data-lang]').try(:[], 'data-lang') || 'js'
           node.content = node.content
         end
 
@@ -32,7 +32,7 @@ module Docs
 
         css('.prism').each do |node|
           node.name = 'pre'
-          node['data-lang'] = node['class'][/(?<=language\-)(\w+)/]
+          node['data-language'] = node['class'][/(?<=language\-)(\w+)/]
           node.content = node.content
         end
 

@@ -7,6 +7,7 @@ class app.views.SimplePage extends app.views.BasePage
     return
 
 app.views.MeteorPage =
+app.views.ReactPage =
 app.views.RethinkdbPage =
 app.views.TypescriptPage =
 app.views.SimplePage
