@@ -5,6 +5,10 @@ module Docs
         # Remove Links, Changelog
         css('#links ~ *', '#links').remove
 
+        css('pre').each do |node|
+          node['data-language'] = 'javascript'
+        end
+
         doc
       end
     end
