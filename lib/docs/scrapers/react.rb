@@ -2,7 +2,7 @@ module Docs
   class React < UrlScraper
     self.name = 'React'
     self.type = 'react'
-    self.release = '0.14.6'
+    self.release = '15.0.1'
     self.base_url = 'https://facebook.github.io/react/'
     self.root_path = 'docs/getting-started.html'
     self.links = {
