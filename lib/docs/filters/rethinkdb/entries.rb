@@ -6,8 +6,8 @@ module Docs
       end
 
       def get_type
-        link = at_css('a[href^="https://github.com/rethinkdb/docs/blob/master/api/javascript/"]')
-        dir = link['href'][/javascript\/([^\/]+)/, 1]
+        link = at_css('a[href^="https://github.com/rethinkdb/docs/blob/master/api/"]')
+        dir = link['href'][/api\/\w+\/([^\/]+)/, 1]
         dir.titleize.gsub('Rql', 'ReQL').gsub('And', 'and')
       end
 

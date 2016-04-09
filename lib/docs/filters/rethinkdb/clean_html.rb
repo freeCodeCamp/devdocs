@@ -31,6 +31,10 @@ module Docs
           node.name = 'h2'
         end
 
+        css('pre').each do |node|
+          node['data-language'] = current_url.path[/\A\/api\/(\w+)\//, 1]
+        end
+
         doc
       end
     end
