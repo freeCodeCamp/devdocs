@@ -32,6 +32,7 @@ module Docs
 
         # Remove code highlighting
         css('pre').each do |node|
+          node['data-language'] = 'javascript'
           node.content = node.content
         end
 

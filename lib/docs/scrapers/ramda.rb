@@ -1,7 +1,7 @@
 module Docs
   class Ramda < UrlScraper
     self.type = 'ramda'
-    self.release = '0.20.1'
+    self.release = '0.21.0'
     self.base_url = "http://ramdajs.com/#{release}/docs/"
     self.links = {
       home: 'http://ramdajs.com/',
