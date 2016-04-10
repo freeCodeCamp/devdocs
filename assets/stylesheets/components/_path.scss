@@ -11,6 +11,10 @@
   background: $pathBackground;
   box-shadow: inset 0 1px $pathBorder;
 
+  ._app[data-sidebar="hidden"] & {
+    left: 0;
+  }
+
   @media #{$mediumScreen} { left: $sidebarMediumWidth; }
 
   ~ ._container { padding-bottom: 2rem; }

@@ -10,6 +10,10 @@
   pointer-events: none;
   @extend %border-box;
 
+  ._app[data-sidebar="hidden"] & {
+    margin-left: 0;
+  }
+
   @media #{$mediumScreen} { margin-left: $sidebarMediumWidth; }
 }
 
