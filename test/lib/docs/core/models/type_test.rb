@@ -21,14 +21,17 @@ class DocsTypeTest < MiniTest::Spec
   describe "#<=>" do
     it "returns 1 when the other type's name is less" do
       assert_equal 1, Type.new('b') <=> Type.new('a')
+      assert_equal 1, Type.new('15 a') <=> Type.new('4 b')
     end
 
     it "returns -1 when the other type's name is greater" do
       assert_equal -1, Type.new('a') <=> Type.new('b')
+      assert_equal -1, Type.new('8 a') <=> Type.new('16 b')
     end
 
     it "returns 0 when the other type's name is equal" do
       assert_equal 0, Type.new('a') <=> Type.new('a')
+      assert_equal 0, Type.new('23 a') <=> Type.new('23 b')
     end
 
     it "is case-insensitive" do
