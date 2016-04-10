@@ -179,6 +179,14 @@
     # enabled because it doesn't support caching URLs that use CORS.
     @config[if @appCache and @settings.hasDocs() then 'index_path' else 'docs_host']
 
+  toggleSidebar: ->
+    state = @el.getAttribute('data-sidebar')
+    newState = if state == 'visible' then 'hidden' else 'visible'
+    @el.setAttribute('data-sidebar', newState)
+    @settings.setSidebar(newState)
+    @appCache?.updateInBackground()
+    return
+
   onBootError: (args...) ->
     @trigger 'bootError'
     @hideLoading()

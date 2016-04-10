@@ -33,6 +33,10 @@
   }
 
   a:focus { outline: 0; }
+
+  ._app[data-sidebar="hidden"] & {
+    display: none;
+  }
 }
 
 ._resizer {
@@ -44,6 +48,13 @@
   margin-left: -2px;
   width: 3px;
   cursor: col-resize;
+
+  ._app[data-sidebar="hidden"] & {
+    border: 1px solid $headerBorder;
+    background-color: $headerBackground;
+    margin-left: 0;
+    left: 1px;
+  }
 }
 
 //
