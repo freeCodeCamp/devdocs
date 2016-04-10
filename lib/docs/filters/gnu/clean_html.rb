@@ -1,5 +1,5 @@
 module Docs
-  class GnuFortran
+  class Gnu
     class CleanHtmlFilter < Filter
       def call
         heading = at_css('h1, h2, h3, h4, h5')
@@ -26,11 +26,11 @@ module Docs
           node.inner_html = node.inner_html.strip_heredoc.strip
         end
 
-        css('dt > em', 'acronym', 'dfn').each do |node|
+        css('dt > em', 'acronym', 'dfn', 'cite').each do |node|
           node.before(node.children).remove
         end
 
-        css('.node', 'br').remove
+        css('.node', 'br', 'hr').remove
 
         doc
       end

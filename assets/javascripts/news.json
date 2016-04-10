@@ -1,7 +1,7 @@
 [
   [
     "2016-04-10",
-    "New documentations: <a href=\"/browser_support_tables/\">Support tables (caniuse.com)</a> and <a href=\"/gnu_fortran/\">GNU Fortran</a>"
+    "New documentations: <a href=\"/browser_support_tables/\">Support tables (caniuse.com)</a>, <a href=\"/gcc/\">GCC</a> and <a href=\"/gnu_fortran/\">GNU Fortran</a>"
   ], [
     "2016-03-27",
     "New documentation: <a href=\"/typescript/\">TypeScript</a>"

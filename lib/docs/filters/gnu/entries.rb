@@ -1,5 +1,5 @@
 module Docs
-  class GnuFortran
+  class Gnu
     class EntriesFilter < Docs::EntriesFilter
       TYPE_BY_CHAPTER = { }
 
@@ -9,32 +9,32 @@ module Docs
       end
 
       def get_name
-        at_css('h1').content.split(' ').drop(1).join(' ').split('—').first
+        name = at_css('h1').content
+        name.remove! %r{\A[\d\.]*}
+        name.split('—').first.strip
       end
 
       def get_type
         "#{chapter_number}. #{TYPE_BY_CHAPTER[chapter_number]}"
       end
 
-      def include_default_entry?
-        !at_css('ul.menu')
-      end
-
       private
 
       def detect_chapters
+        TYPE_BY_CHAPTER.clear # YOLO
         css('.contents > ul > li > a').each do |node|
           index = node.content.strip.to_i
           next unless index > 0
           name = node.content.split(' ').drop(1).join(' ')
           name.remove! 'GNU Fortran '
-          name.remove! %r{:.*}
-          TYPE_BY_CHAPTER[index] = name # YOLO
+          name.remove! 'with GCC'
+          name.remove! %r{[\:\u{2013}\u{2014}].*}
+          TYPE_BY_CHAPTER[index] = name
         end
       end
 
       def chapter_number
-        at_css('h1').content.to_i
+        [at_css('h1').content.to_i, 1].max
       end
     end
   end

@@ -195,15 +195,15 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/visionmedia/express/master/LICENSE'
   ], [
+    'GCC<br>GNU Fortran',
+    'Free Software Foundation',
+    'GFDL',
+    'https://www.gnu.org/licenses/fdl-1.3.en.html'
+  ], [
     'Git',
     '2005-2016 Linus Torvalds and others',
     'GPLv2',
     'https://raw.githubusercontent.com/git/git/master/COPYING'
-  ], [
-    'GNU Fortran',
-    'Free Software Foundation',
-    'GFDL',
-    'https://gcc.gnu.org/onlinedocs/gcc-5.3.0/gfortran/GNU-Free-Documentation-License.html'
   ], [
     'Go',
     'Google, Inc.',
