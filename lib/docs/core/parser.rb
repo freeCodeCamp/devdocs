@@ -11,7 +11,7 @@ module Docs
     private
 
     def document?
-      @content =~ /\A\s*<!doctype/i
+      @content =~ /\A\s*<(?:\!doctype|html)/i
     end
 
     def parse_as_document

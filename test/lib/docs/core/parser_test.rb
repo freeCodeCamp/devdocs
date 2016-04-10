@@ -22,6 +22,9 @@ class DocsParserTest < MiniTest::Spec
       it "returns the <body>" do
         body = '<!doctype html><meta charset=utf-8><title></title><div>Test</div>'
         assert_equal '<div>Test</div>', parser(body).html.inner_html
+
+        body = '<html><meta charset=utf-8><title></title><div>Test</div></html>'
+        assert_equal '<div>Test</div>', parser(body).html.inner_html
       end
     end
   end
