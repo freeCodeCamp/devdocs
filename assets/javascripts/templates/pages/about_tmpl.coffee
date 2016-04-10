@@ -200,6 +200,11 @@ credits = [
     'GPLv2',
     'https://raw.githubusercontent.com/git/git/master/COPYING'
   ], [
+    'GNU Fortran',
+    'Free Software Foundation',
+    'GFDL',
+    'https://gcc.gnu.org/onlinedocs/gcc-5.3.0/gfortran/GNU-Free-Documentation-License.html'
+  ], [
     'Go',
     'Google, Inc.',
     'CC BY',
