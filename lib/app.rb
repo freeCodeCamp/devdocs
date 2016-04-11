@@ -185,6 +185,10 @@ class App < Sinatra::Application
       app_theme == 'dark'
     end
 
+    def app_sidebar
+      cookies[:sidebar].nil? ? 'visible' : cookies[:sidebar]
+    end
+
     def redirect_via_js(path) # courtesy of HTML5 App Cache
       response.set_cookie :initial_path, value: path, expires: Time.now + 15, path: '/'
       redirect '/', 302

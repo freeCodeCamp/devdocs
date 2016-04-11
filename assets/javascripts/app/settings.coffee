@@ -4,6 +4,7 @@ class app.Settings
   DARK_KEY = 'dark'
   LAYOUT_KEY = 'layout'
   SIZE_KEY = 'size'
+  SIDEBAR_KEY = 'sidebar'
 
   @defaults:
     count: 0
@@ -77,10 +78,17 @@ class app.Settings
     catch
     return
 
+  setSidebar: (value) ->
+    try
+      Cookies.set SIDEBAR_KEY, value, path: '/', expires: 1e8
+    catch
+    return
+
   reset: ->
     try Cookies.expire DOCS_KEY
     try Cookies.expire DARK_KEY
     try Cookies.expire LAYOUT_KEY
     try Cookies.expire SIZE_KEY
+    try Cookies.expire SIDEBAR_KEY
     try @store.del(SETTINGS_KEY)
     return
