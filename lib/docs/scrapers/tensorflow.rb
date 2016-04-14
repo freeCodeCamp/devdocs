@@ -2,6 +2,10 @@ module Docs
   class Tensorflow < UrlScraper
     self.name = 'TensorFlow'
     self.type = 'tensorflow'
+    self.links = {
+      home: 'https://www.tensorflow.org/',
+      code: 'https://github.com/tensorflow/tensorflow'
+    }
 
     html_filters.push 'tensorflow/entries', 'tensorflow/clean_html'
 
@@ -13,13 +17,13 @@ module Docs
     HTML
 
     version 'Python' do
-      self.base_url = 'https://www.tensorflow.org/versions/r0.7/api_docs/python/'
-      self.release = '0.7'
+      self.base_url = 'https://www.tensorflow.org/versions/r0.8/api_docs/python/'
+      self.release = '0.8'
     end
 
     version 'C++' do
-      self.base_url = 'https://www.tensorflow.org/versions/r0.7/api_docs/cc/'
-      self.release = '0.7'
+      self.base_url = 'https://www.tensorflow.org/versions/r0.8/api_docs/cc/'
+      self.release = '0.8'
 
       options[:fix_urls] = ->(url) {
         url.sub! '/api_docs/cc/class', '/api_docs/cc/Class'
