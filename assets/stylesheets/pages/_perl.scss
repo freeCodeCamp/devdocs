@@ -1,12 +1,5 @@
 ._perl {
+  @extend %simple;
 
-  h2 { @extend %block-heading; }
-  h3 { @extend %block-label; }
-  h4 { @extend %block-label, %label-blue; }
-
-  .perlvar,
-  .perlfunction {
-    @extend %block-label, %label-blue;
-  }
-
+  > h4 { @extend %block-label; }
 }

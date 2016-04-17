@@ -5,19 +5,19 @@ module Docs
         'Platform specific' => 'Platform Specific',
         'Internals and C language interface' => 'Internals',
 
-        'perlop' => 'Perl Operators',
-        'perlvar' => 'Perl Variables',
+        'perlop' => 'Operators',
+        'perlvar' => 'Variables',
         'Functions' => 'Functions'
       }
 
+      MANUAL_TYPES = %w(Overview Tutorials FAQs)
+
       def breadcrumbs
-        at_css('#breadcrumbs').content.split('>').each { |s| s.strip! }
+        @breadcrumbs ||= at_css('#breadcrumbs').content.split('>').each { |s| s.strip! }
       end
 
       def include_default_entry?
-        not slug =~ /\Aindex/ and
-        not slug =~ /perlop\z/ and
-        not slug =~ /perlvar/
+        slug !~ /\Aindex/
       end
 
       def get_name
@@ -26,41 +26,34 @@ module Docs
 
       def get_type
         case breadcrumbs[1]
-          when 'Language reference'
-            REPLACE_TYPES[breadcrumbs[2]] || 'Language Reference'
-          when /\ACore modules/
-            'Core Modules'
-          else
-            REPLACE_TYPES[breadcrumbs[1]] || breadcrumbs[1]
+        when 'Language reference'
+          REPLACE_TYPES[breadcrumbs[2]] || 'Language'
+        when /\ACore modules/
+          'Core Modules'
+        else
+          type = REPLACE_TYPES[breadcrumbs[1]] || breadcrumbs[1]
+          type.prepend 'Manual: ' if MANUAL_TYPES.include?(type)
+          type
         end
       end
 
       def additional_entries
-        entries = []
         case slug
-          when /perlop\z/
-            css('h2').each do |node|
-              name = node.content
-              id = node.previous_element['name']
-              entries << [name, id, get_type]
-            end
-
-          when /perlvar/
-            css('#content_body > ul > li > b').each do |node|
-              node['class'] = 'perlvar'
-              name = node.content
-              id = node.previous_element['name']
-              entries << [name, id, get_type]
-            end
-
-          when /functions/
-            css('#content_body > ul > li > b').each do |node|
-              node['class'] = 'perlfunction'
-            end
-
+        when 'perlop'
+          css('h2').map do |node|
+            name = node.content
+            id = node.previous_element['name']
+            [name, id]
+          end
+        when 'perlvar'
+          css('#content_body > ul > li > b').map do |node|
+            name = node.content
+            id = node.previous_element['name']
+            [name, id]
+          end
+        else
+          []
         end
-
-        entries
       end
     end
   end

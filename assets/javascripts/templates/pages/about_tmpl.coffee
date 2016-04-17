@@ -341,6 +341,11 @@ credits = [
     'LGPLv2.1',
     'https://raw.githubusercontent.com/OpenTSDB/opentsdb.net/gh-pages/COPYING.LESSER'
   ], [
+    'Perl',
+    '1993-2016 Larry Wall and others',
+    'GPLv1',
+    'http://perldoc.perl.org/index-licence.html'
+  ], [
     'Phalcon',
     '2011-2015 Phalcon Framework Team',
     'CC BY',

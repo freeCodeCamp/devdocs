@@ -1,16 +1,9 @@
 module Docs
   class Perl
     class CleanHtmlFilter < Filter
-      REMOVE_LIST = %w(
-        noscript
-        #recent_pages
-        #from_search
-        #page_index
-        .mod_az_list
-      )
-
       def call
         root_page? ? root : other
+        doc
       end
 
       def root
@@ -20,12 +13,13 @@ module Docs
       def other
         @doc = at_css('#content_body')
 
-        css(*REMOVE_LIST).remove
+        css('noscript', '#recent_pages', '#from_search', '#page_index', '.mod_az_list').remove
 
-        css('h4').each { |node| node.name = 'h5' }
-        css('h3').each { |node| node.name = 'h4' }
-        css('h2').each { |node| node.name = 'h3' }
-        css('h1').drop(1).each { |node| node.name = 'h2' }
+        css('h1, h2, h3, h4').each do |node|
+          node.name = node.name.sub(/\d/) { |i| i.to_i + 1 }
+        end
+
+        at_css('h2').name = 'h1'
 
         css('a[name] + h2', 'a[name] + h3', 'a[name] + h4', 'a[name] + h5').each do |node|
           node['id'] = node.previous_element['name']
@@ -39,7 +33,19 @@ module Docs
           node.css('li').each do |li|
             li.content = li.content + "\n"
           end
-          node.content =  node.content
+          node.content = node.content
+          node.inner_html = node.inner_html.strip_heredoc
+          node['data-language'] = 'perl'
+        end
+
+        if slug =~ /functions/ || slug == 'perlvar'
+          css('ul > li[id]').each do |node|
+            heading = node.at_css('b')
+            heading.name = 'h2'
+            heading['id'] = node['id']
+            node.parent.before(node.children)
+            node.remove
+          end
         end
 
         doc
