@@ -26,8 +26,9 @@ class app.views.Mobile extends app.View
     super
 
   init: ->
-    FastClick.attach @body
-    app.shortcuts.stop()
+    if $.isTouchScreen()
+      FastClick.attach @body
+      app.shortcuts.stop()
 
     $.on @body, 'click', @onClick
     $.on $('._home-link'), 'click', @onClickHome
