@@ -4,7 +4,6 @@ class app.Settings
   DARK_KEY = 'dark'
   LAYOUT_KEY = 'layout'
   SIZE_KEY = 'size'
-  SIDEBAR_KEY = 'sidebar'
 
   @defaults:
     count: 0
@@ -63,10 +62,18 @@ class app.Settings
     catch
     return
 
-  setLayout: (value) ->
+  setLayout: (name, enable) ->
     try
-      if value
-        Cookies.set LAYOUT_KEY, value, path: '/', expires: 1e8
+      layout = (Cookies.get(LAYOUT_KEY) || '').split(' ')
+      $.arrayDelete(layout, '')
+
+      if enable
+        layout.push(name) if layout.indexOf(name) is -1
+      else
+        $.arrayDelete(layout, name)
+
+      if layout.length > 0
+        Cookies.set LAYOUT_KEY, layout.join(' '), path: '/', expires: 1e8
       else
         Cookies.expire LAYOUT_KEY
     catch
@@ -78,17 +85,10 @@ class app.Settings
     catch
     return
 
-  setSidebar: (value) ->
-    try
-      Cookies.set SIDEBAR_KEY, value, path: '/', expires: 1e8
-    catch
-    return
-
   reset: ->
     try Cookies.expire DOCS_KEY
     try Cookies.expire DARK_KEY
     try Cookies.expire LAYOUT_KEY
     try Cookies.expire SIZE_KEY
-    try Cookies.expire SIDEBAR_KEY
     try @store.del(SETTINGS_KEY)
     return

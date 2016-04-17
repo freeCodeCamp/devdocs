@@ -34,7 +34,7 @@
 
   a:focus { outline: 0; }
 
-  ._app[data-sidebar="hidden"] & {
+  ._sidebar-hidden & {
     display: none;
   }
 }
@@ -49,11 +49,24 @@
   width: 3px;
   cursor: col-resize;
 
-  ._app[data-sidebar="hidden"] & {
-    border: 1px solid $headerBorder;
-    background-color: $headerBackground;
+  ._sidebar-hidden & {
+    left: 0;
     margin-left: 0;
-    left: 1px;
+    background: $headerBackground;
+    border-right: 1px solid $headerBorder;
+    width: 8px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 3px;
+      margin-top: -.5rem;
+      width: 1px;
+      height: 1rem;
+      border-left: 1px solid $textColorLighter;
+      border-right: 1px solid $textColorLighter;
+    }
   }
 }
 

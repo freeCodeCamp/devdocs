@@ -1,5 +1,6 @@
 class app.views.Document extends app.View
   MAX_WIDTH_CLASS = '_max-width'
+  HIDE_SIDEBAR_CLASS = '_sidebar-hidden'
 
   @el: document
 
@@ -34,7 +35,14 @@ class app.views.Document extends app.View
   toggleLayout: ->
     wantsMaxWidth = !app.el.classList.contains(MAX_WIDTH_CLASS)
     app.el.classList[if wantsMaxWidth then 'add' else 'remove'](MAX_WIDTH_CLASS)
-    app.settings.setLayout(if wantsMaxWidth then MAX_WIDTH_CLASS else false)
+    app.settings.setLayout(MAX_WIDTH_CLASS, wantsMaxWidth)
+    app.appCache?.updateInBackground()
+    return
+
+  toggleSidebar: ->
+    sidebarHidden = app.el.classList.contains(HIDE_SIDEBAR_CLASS)
+    app.el.classList[if sidebarHidden then 'remove' else 'add'](HIDE_SIDEBAR_CLASS)
+    app.settings.setLayout(HIDE_SIDEBAR_CLASS, !sidebarHidden)
     app.appCache?.updateInBackground()
     return
 
