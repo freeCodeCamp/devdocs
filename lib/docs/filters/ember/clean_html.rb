@@ -58,6 +58,7 @@ module Docs
         css('.highlight').each do |node|
           node.content = node.at_css('.code pre').content
           node.name = 'pre'
+          node['data-language'] = node['class'][/(javascript|js|html)/, 1]
         end
       end
     end

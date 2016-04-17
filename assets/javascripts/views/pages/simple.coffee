@@ -6,6 +6,7 @@ class app.views.SimplePage extends app.views.BasePage
       @highlightCode el, el.getAttribute('data-language')
     return
 
+app.views.EmberPage =
 app.views.GoPage =
 app.views.MeteorPage =
 app.views.RamdaPage =
