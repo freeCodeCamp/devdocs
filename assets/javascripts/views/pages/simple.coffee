@@ -12,6 +12,7 @@ app.views.MeteorPage =
 app.views.RamdaPage =
 app.views.ReactPage =
 app.views.RethinkdbPage =
+app.views.TensorflowPage =
 app.views.TypescriptPage =
 app.views.UnderscorePage =
 app.views.SimplePage
