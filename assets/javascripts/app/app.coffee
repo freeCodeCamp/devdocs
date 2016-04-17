@@ -56,6 +56,8 @@
           tags:
             mode: if @DOC then 'single' else 'full'
             iframe: (window.top isnt window).toString()
+          dataCallback: (data) ->
+            try $.extend(data.user, app.settings.settings)
         .install()
       @previousErrorHandler = onerror
       window.onerror = @onWindowError.bind(@)
