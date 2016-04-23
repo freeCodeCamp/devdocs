@@ -24,10 +24,10 @@ module Docs
     HTML
 
     version '12' do
-      self.release = '12.7'
+      self.release = '12.9'
 
-      options[:client_path] = client_path = '12-7'
-      options[:server_path] = server_path = 'server_12-4'
+      options[:client_path] = client_path = '12-9'
+      options[:server_path] = server_path = 'server_12-5'
 
       self.root_path = "#{client_path}/chef_overview.html"
       self.initial_paths = ["#{server_path}/server_components.html"]
@@ -39,7 +39,7 @@ module Docs
       self.release = '11.18'
 
       options[:client_path] = client_path = '11-18'
-      options[:server_path] = server_path = 'server_12-4'
+      options[:server_path] = server_path = 'server_12-5'
 
       self.root_path = "#{client_path}/chef_overview.html"
       self.initial_paths = ["#{server_path}/server_components.html"]

@@ -18,6 +18,7 @@ app.views.PostgresPage =
 app.views.RamdaPage =
 app.views.ReactPage =
 app.views.RethinkdbPage =
+app.views.SphinxSimplePage =
 app.views.TensorflowPage =
 app.views.TypescriptPage =
 app.views.UnderscorePage =

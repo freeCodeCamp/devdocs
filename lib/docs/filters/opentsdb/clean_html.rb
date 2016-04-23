@@ -14,6 +14,7 @@ module Docs
         end
 
         css('div[class*=highlight] .highlight pre').each do |node|
+          node['data-language'] = node.parent.parent['class'][/highlight\-(\w+)/, 1]
           node.parent.parent.before(node)
           node.content = node.content.gsub('    ', '  ')
         end

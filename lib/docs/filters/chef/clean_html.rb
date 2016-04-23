@@ -24,9 +24,10 @@ module Docs
           node.remove_attribute('border')
         end
 
-        css('div[class^="highlight-"]').each do |node|
+        css('div[class*="highlight-"]').each do |node|
           node.content = node.content.strip
           node.name = 'pre'
+          node['data-language'] = node['class'][/highlight\-(\w+)/, 1]
         end
 
         doc
