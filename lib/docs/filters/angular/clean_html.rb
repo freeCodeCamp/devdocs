@@ -67,7 +67,16 @@ module Docs
         end
 
         css('pre > code').each do |node|
-          node.parent['class'] = node['class']
+          node['class'] ||= ''
+          lang = if node['class'].include?('lang-html') || node.content =~ /\A</
+            'html'
+          elsif node['class'].include?('lang-css')
+            'css'
+          elsif node['class'].include?('lang-js') || node['class'].include?('lang-javascript')
+            'javascript'
+          end
+          node.parent['data-language'] = lang if lang
+
           node.before(node.children).remove
         end
 

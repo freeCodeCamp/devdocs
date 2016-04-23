@@ -37,8 +37,17 @@ module Docs
       Licensed under the Creative Commons Attribution License 4.0.
     HTML
 
+    stub '' do
+      require 'capybara/dsl'
+      Capybara.current_driver = :selenium
+      Capybara.run_server = false
+      Capybara.app_host = 'https://code.angularjs.org'
+      Capybara.visit("/#{self.class.release}/docs/api")
+      Capybara.find('.side-navigation')['innerHTML']
+    end
+
     version '1.5' do
-      self.release = '1.5.3'
+      self.release = '1.5.5'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
@@ -55,15 +64,6 @@ module Docs
     version '1.2' do
       self.release = '1.2.29'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
-    end
-
-    stub '' do
-      require 'capybara/dsl'
-      Capybara.current_driver = :selenium
-      Capybara.run_server = false
-      Capybara.app_host = 'https://code.angularjs.org'
-      Capybara.visit("/#{self.class.release}/docs/api")
-      Capybara.find('.side-navigation')['innerHTML']
     end
   end
 end
