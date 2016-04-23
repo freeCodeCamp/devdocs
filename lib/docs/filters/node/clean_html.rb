@@ -15,6 +15,10 @@ module Docs
         end
 
         css('pre').each do |node|
+          if lang = node.at_css('code')['class']
+            node['data-language'] = lang
+          end
+
           node.content = node.content
         end
 
