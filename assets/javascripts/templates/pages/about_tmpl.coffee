@@ -192,9 +192,9 @@ credits = [
     'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
   ], [
     'Express',
-    '2009-2015 TJ Holowaychuk',
-    'MIT',
-    'https://raw.githubusercontent.com/visionmedia/express/master/LICENSE'
+    '2016 StrongLoop, IBM, and other expressjs.com contributors.',
+    'Unknown',
+    'https://github.com/expressjs/expressjs.com/issues/413'
   ], [
     'GCC<br>GNU Fortran',
     'Free Software Foundation',

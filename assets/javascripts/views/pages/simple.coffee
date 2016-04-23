@@ -8,6 +8,7 @@ class app.views.SimplePage extends app.views.BasePage
 
 app.views.AngularPage =
 app.views.EmberPage =
+app.views.ExpressPage =
 app.views.GoPage =
 app.views.MeteorPage =
 app.views.MomentPage =

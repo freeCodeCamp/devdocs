@@ -2,7 +2,7 @@ module Docs
   class Express
     class CleanHtmlFilter < Filter
       def call
-        css('section').each do |node|
+        css('section', 'div.highlighter-rouge').each do |node|
           node.before(node.children).remove
         end
 
@@ -21,8 +21,15 @@ module Docs
         end
 
         # Remove code highlighting
-        css('pre').each do |node|
+        css('figure.highlight').each do |node|
+          node['data-language'] = node.at_css('code[data-lang]')['data-lang']
           node.content = node.content
+          node.name = 'pre'
+        end
+
+        css('pre > code').each do |node|
+          node.parent['data-language'] = node['class'][/language-(\w+)/, 1] if node['class']
+          node.parent.content = node.parent.content
         end
 
         doc

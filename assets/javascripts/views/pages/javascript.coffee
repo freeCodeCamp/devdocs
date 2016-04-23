@@ -16,7 +16,6 @@ class app.views.JavascriptWithMarkupCheckPage extends app.views.BasePage
     return
 
 app.views.ChaiPage =
-app.views.ExpressPage =
 app.views.GruntPage =
 app.views.LodashPage =
 app.views.MarionettePage =
