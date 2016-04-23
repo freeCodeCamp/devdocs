@@ -427,7 +427,7 @@ credits = [
     'https://raw.githubusercontent.com/sass/sass/stable/MIT-LICENSE'
   ], [
     'Sinon',
-    '2010-2015 Christian Johansen',
+    '2010-2016 Christian Johansen',
     'BSD',
     'https://raw.githubusercontent.com/cjohansen/Sinon.JS/master/LICENSE'
   ], [

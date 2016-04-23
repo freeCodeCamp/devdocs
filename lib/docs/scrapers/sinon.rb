@@ -2,7 +2,7 @@ module Docs
   class Sinon < UrlScraper
     self.name = 'Sinon'
     self.type = 'sinon'
-    self.release = '1.17.1'
+    self.release = '1.17.3'
     self.base_url = 'http://sinonjs.org/docs/'
     self.links = {
       home: 'http://sinonjs.org/',
@@ -16,7 +16,7 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2015 Christian Johansen<br>
+      &copy; 2010&ndash;2016 Christian Johansen<br>
       Licensed under the BSD License.
     HTML
   end
