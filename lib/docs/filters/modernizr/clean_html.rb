@@ -3,7 +3,9 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         css('pre').each do |node|
-          node.content = node.content
+          class_name = node.at_css('code')['class']
+          node['data-language'] = class_name[/lang-(\w+)/, 1] if class_name
+          node.content = node.content.strip_heredoc
         end
 
         css('sub').each do |node|

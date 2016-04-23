@@ -11,6 +11,7 @@ app.views.EmberPage =
 app.views.ExpressPage =
 app.views.GoPage =
 app.views.MeteorPage =
+app.views.ModernizrPage =
 app.views.MomentPage =
 app.views.NodePage =
 app.views.PerlPage =

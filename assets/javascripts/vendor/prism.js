@@ -1,4 +1,4 @@
-/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript+c+cpp+coffeescript+ruby+elixir+go+lua+nginx+perl+php+python+rust+sql+typescript */
+/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript+c+cpp+coffeescript+ruby+elixir+go+json+lua+nginx+perl+php+python+rust+sql+typescript */
 var _self = (typeof window !== 'undefined')
 	? window   // if in browser
 	: (
@@ -1005,6 +1005,18 @@ Prism.languages.go = Prism.languages.extend('clike', {
 	'string': /("|'|`)(\\?.|\r|\n)*?\1/
 });
 delete Prism.languages.go['class-name'];
+
+Prism.languages.json = {
+    'property': /".*?"(?=\s*:)/ig,
+    'string': /"(?!:)(\\?[^"])*?"(?!:)/g,
+    'number': /\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?)\b/g,
+    'punctuation': /[{}[\]);,]/g,
+    'operator': /:/g,
+    'boolean': /\b(true|false)\b/gi,
+    'null': /\bnull\b/gi,
+};
+
+Prism.languages.jsonp = Prism.languages.json;
 
 Prism.languages.lua = {
 	'comment': /^#!.+|--(?:\[(=*)\[[\s\S]*?\]\1\]|.*)/m,

@@ -20,7 +20,6 @@ app.views.GruntPage =
 app.views.LodashPage =
 app.views.MarionettePage =
 app.views.MochaPage =
-app.views.ModernizrPage =
 app.views.MongoosePage =
 app.views.SinonPage =
 app.views.JavascriptPage

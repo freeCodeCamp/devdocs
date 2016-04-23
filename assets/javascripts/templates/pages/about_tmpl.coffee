@@ -297,7 +297,7 @@ credits = [
     'https://raw.githubusercontent.com/mochajs/mocha/master/LICENSE'
   ], [
     'Modernizr',
-    '2009-2014 Modernizr',
+    '2009-2016 The Modernizr team',
     'MIT',
     'https://modernizr.com/license/'
   ], [
