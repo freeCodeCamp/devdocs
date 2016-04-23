@@ -3,6 +3,11 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         root_page? ? root : other
+
+        css('pre span').each do |node|
+          node.before(node.children).remove
+        end
+
         doc
       end
 

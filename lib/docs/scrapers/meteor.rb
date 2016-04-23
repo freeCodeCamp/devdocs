@@ -1,8 +1,8 @@
 module Docs
   class Meteor < UrlScraper
     self.type = 'meteor'
-    self.release = '1.3.0'
-    self.base_url = 'http://guide.meteor.com/v1.3/'
+    self.release = '1.3.2'
+    self.base_url = 'https://guide.meteor.com/v1.3/'
     self.initial_paths = %w(guide)
     self.links = {
       home: 'https://www.meteor.com/',
