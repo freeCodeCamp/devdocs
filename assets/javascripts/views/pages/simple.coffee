@@ -12,6 +12,7 @@ app.views.MeteorPage =
 app.views.MomentPage =
 app.views.NodePage =
 app.views.PerlPage =
+app.views.PhaserPage =
 app.views.PostgresPage =
 app.views.RamdaPage =
 app.views.ReactPage =

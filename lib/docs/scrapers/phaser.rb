@@ -1,7 +1,7 @@
 module Docs
   class Phaser < UrlScraper
     self.type = 'phaser'
-    self.release = '2.4.6'
+    self.release = '2.4.7'
     self.base_url = "http://phaser.io/docs/#{release}"
     self.root_path = '/index'
     self.links = {
@@ -22,7 +22,7 @@ module Docs
       /PIXI.WebGLStencilManager.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2015 Richard Davey, Photon Storm Ltd.<br>
+      &copy; 2016 Richard Davey, Photon Storm Ltd.<br>
       Licensed under the MIT License.
     HTML
   end

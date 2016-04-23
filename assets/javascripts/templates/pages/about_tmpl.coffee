@@ -352,7 +352,7 @@ credits = [
     'https://docs.phalconphp.com/en/latest/reference/license.html'
   ], [
     'Phaser',
-    '2015 Richard Davey, Photon Storm Ltd.',
+    '2016 Richard Davey, Photon Storm Ltd.',
     'MIT',
     'https://raw.githubusercontent.com/photonstorm/phaser/master/license.txt'
   ], [
