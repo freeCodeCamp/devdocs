@@ -22,6 +22,7 @@ app.views.RamdaPage =
 app.views.ReactPage =
 app.views.RethinkdbPage =
 app.views.SinonPage =
+app.views.SocketioPage =
 app.views.SphinxSimplePage =
 app.views.TensorflowPage =
 app.views.TypescriptPage =

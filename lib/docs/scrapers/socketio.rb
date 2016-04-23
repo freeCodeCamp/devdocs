@@ -3,7 +3,7 @@ module Docs
     self.name = 'Socket.IO'
     self.slug = 'socketio'
     self.type = 'socketio'
-    self.release = '1.4.3'
+    self.release = '1.4.5'
     self.base_url = 'http://socket.io/docs/'
     self.links = {
       home: 'http://socket.io/',

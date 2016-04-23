@@ -16,6 +16,7 @@ module Docs
 
         css('pre').each do |node|
           node.content = node.content
+          node['data-language'] = node.content =~ /\A\s*</ ? 'html' : 'javascript'
         end
 
         doc
