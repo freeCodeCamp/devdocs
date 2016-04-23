@@ -18,7 +18,15 @@ module Docs
         # Remove plugin list
         doc.children.last.remove while doc.children.last['id'] != 'plugins'
 
-        css('.docs-method-edit', '#plugins').remove
+        css('.docs-method-edit', '#plugins', 'hr').remove
+
+        css('pre').each do |node|
+          if node.content =~ /\A</
+            node['data-language'] = 'html'
+          elsif node.content !~ /\A\d/
+            node['data-language'] = 'javascript'
+          end
+        end
 
         doc
       end

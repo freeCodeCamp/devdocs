@@ -22,7 +22,6 @@ app.views.LodashPage =
 app.views.MarionettePage =
 app.views.MochaPage =
 app.views.ModernizrPage =
-app.views.MomentPage =
 app.views.MongoosePage =
 app.views.NodePage =
 app.views.PhaserPage =

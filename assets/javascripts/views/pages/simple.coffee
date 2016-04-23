@@ -9,6 +9,7 @@ class app.views.SimplePage extends app.views.BasePage
 app.views.EmberPage =
 app.views.GoPage =
 app.views.MeteorPage =
+app.views.MomentPage =
 app.views.PerlPage =
 app.views.PostgresPage =
 app.views.RamdaPage =
