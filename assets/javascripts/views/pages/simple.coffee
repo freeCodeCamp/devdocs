@@ -10,6 +10,7 @@ app.views.EmberPage =
 app.views.GoPage =
 app.views.MeteorPage =
 app.views.PerlPage =
+app.views.PostgresPage =
 app.views.RamdaPage =
 app.views.ReactPage =
 app.views.RethinkdbPage =

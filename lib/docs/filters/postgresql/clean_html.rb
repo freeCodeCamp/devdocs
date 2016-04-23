@@ -42,6 +42,14 @@ module Docs
           node.name = 'pre'
           node.content = node.content
         end
+
+        css('pre code', 'pre span').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('pre.SYNOPSIS', 'pre.PROGRAMLISTING').each do |node|
+          node['data-language'] = 'sql'
+        end
       end
     end
   end
