@@ -29,6 +29,10 @@ module Docs
           node.before(node.children).remove
         end
 
+        css('pre').each do |node|
+          node['data-language'] = 'javascript'
+        end
+
         doc
       end
     end
