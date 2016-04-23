@@ -17,4 +17,5 @@ app.views.RethinkdbPage =
 app.views.TensorflowPage =
 app.views.TypescriptPage =
 app.views.UnderscorePage =
+app.views.WebpackPage =
 app.views.SimplePage

@@ -2,7 +2,7 @@ module Docs
   class Webpack < UrlScraper
     self.name = 'webpack'
     self.type = 'webpack'
-    self.release = '1.12'
+    self.release = '1.13'
     self.base_url = 'https://webpack.github.io/docs/'
     self.links = {
       home: 'https://webpack.github.io/',
@@ -17,7 +17,7 @@ module Docs
     options[:skip] = %w(list-of-tutorials.html examples.html changelog.html ideas.html roadmap.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2015 Tobias Koppers<br>
+      &copy; 2012&ndash;2016 Tobias Koppers<br>
       Licensed under the MIT License.
     HTML
   end

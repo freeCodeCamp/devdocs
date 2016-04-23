@@ -27,7 +27,6 @@ app.views.MongoosePage =
 app.views.NodePage =
 app.views.PhaserPage =
 app.views.SinonPage =
-app.views.WebpackPage =
 app.views.JavascriptPage
 
 app.views.DojoPage =

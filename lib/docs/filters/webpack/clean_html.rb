@@ -18,8 +18,12 @@ module Docs
 
 
       def other
+        css('h1, h2, h3, h4').each do |node|
+          node.name = node.name.sub(/\d/) { |i| i.to_i + 1 }
+        end
+
         # Re-create the header element
-        at_css("#wiki").child.before("<h1>#{at_css("#wikititle").content}</h1>")
+        at_css("#wiki").child.before("<h1>#{at_css("#wikititle").content.titleize}</h1>")
 
         @doc = at_css("#wiki")
 
@@ -27,6 +31,7 @@ module Docs
 
         css('pre').each do |node|
           node.content = node.content
+          node['data-language'] = 'javascript'
         end
       end
     end

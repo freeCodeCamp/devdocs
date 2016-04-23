@@ -472,7 +472,7 @@ credits = [
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
   ], [
     'Webpack',
-    '2012-2015 Tobias Koppers',
+    '2012-2016 Tobias Koppers',
     'MIT',
     'https://raw.githubusercontent.com/webpack/webpack/master/LICENSE'
   ], [
