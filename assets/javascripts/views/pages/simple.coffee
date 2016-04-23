@@ -10,6 +10,7 @@ app.views.AngularPage =
 app.views.EmberPage =
 app.views.ExpressPage =
 app.views.GoPage =
+app.views.MarionettePage =
 app.views.MeteorPage =
 app.views.ModernizrPage =
 app.views.MomentPage =

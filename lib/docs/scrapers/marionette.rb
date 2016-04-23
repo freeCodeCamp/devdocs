@@ -3,7 +3,7 @@ module Docs
     self.name = 'Marionette.js'
     self.slug = 'marionette'
     self.type = 'marionette'
-    self.release = '2.4.3'
+    self.release = '2.4.5'
     self.base_url = "http://marionettejs.com/docs/v#{release}/"
     self.root_path = 'index'
     self.links = {
@@ -16,7 +16,7 @@ module Docs
     options[:container] = '.docs__content'
 
     options[:attribution] = <<-HTML
-      &copy; 2015 Muted Solutions, LLC<br>
+      &copy; 2016 Muted Solutions, LLC<br>
       Licensed under the MIT License.
     HTML
   end

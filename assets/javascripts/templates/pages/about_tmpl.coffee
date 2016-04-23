@@ -272,9 +272,9 @@ credits = [
     'http://www.lua.org/license.html'
   ], [
     'Marionette.js',
-    '2015 Muted Solutions, LLC',
+    '2016 Muted Solutions, LLC',
     'MIT',
-    'http://mutedsolutions.mit-license.org/'
+    'https://mutedsolutions.mit-license.org/'
   ], [
     'Markdown',
     '2004 John Gruber',
