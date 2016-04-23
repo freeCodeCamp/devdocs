@@ -27,5 +27,6 @@ app.views.SphinxSimplePage =
 app.views.TensorflowPage =
 app.views.TypescriptPage =
 app.views.UnderscorePage =
+app.views.VuePage =
 app.views.WebpackPage =
 app.views.SimplePage

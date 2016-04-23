@@ -3,7 +3,7 @@ module Docs
     self.name = 'Vue.js'
     self.slug = 'vue'
     self.type = 'vue'
-    self.release = '1.0.19'
+    self.release = '1.0.21'
     self.base_url = 'https://vuejs.org'
     self.root_path = '/guide/index.html'
     self.initial_paths = %w(/api/index.html)

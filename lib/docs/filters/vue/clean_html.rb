@@ -12,6 +12,7 @@ module Docs
         css('figure').each do |node|
           node.name = 'pre'
           node.content = node.at_css('td.code pre').css('.line').map(&:content).join("\n")
+          node['data-language'] = node['class'][/highlight (\w+)/, 1]
         end
 
         doc

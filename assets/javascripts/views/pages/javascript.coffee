@@ -24,5 +24,4 @@ app.views.JavascriptPage
 
 app.views.DojoPage =
 app.views.RequirejsPage =
-app.views.VuePage =
 app.views.JavascriptWithMarkupCheckPage
