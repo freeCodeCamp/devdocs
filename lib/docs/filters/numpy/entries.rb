@@ -2,38 +2,36 @@ module Docs
   class Numpy
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        dt = at_css('dt')
-        if dt
-          name = dt.content
-          name.sub! /\(.*/, '()'
-          name.sub! /[\=\[].*/, ''
-          name.remove! 'class '
-          name.remove! 'classmethod '
-          name.remove! 'exception '
+        if dt = at_css('dt')
+          name = dt.content.strip
+          name.sub! %r{\(.*}, '()'
+          name.remove! %r{[\=\[].*}
+          name.remove! %r{\A(class(method)?|exception) }
+          name.remove! %r{\s—.*}
         else
           name = at_css('h1').content.strip
         end
-        name.remove! '¶' # remove permalinks from title
+        name.remove! "\u{00B6}"
         name
       end
 
       def get_type
-        type = name.dup
-        nav_items = at_css('.nav.nav-pills.pull-left').children
-        if nav_items[7]
-          # Infer type from navigation item if possible...
-          type = nav_items[7].content
+        nav_items = css('.nav.nav-pills.pull-left > li')
+
+        if nav_items[3]
+          type = nav_items[3].content
+        elsif nav_items[2] && nav_items[2].content !~ /Manual|Reference/
+          type = nav_items[2].content
         else
-          # ... or the page is probably an overview, so use its title.
-          type = at_css('h1').content
-          type.remove! '¶' # remove permalinks from type
+          type = at_css('h1').content.strip
+          type.remove! "\u{00B6}"
 
           # Handle some edge cases that arent proberly categorized in the docs
-          if type[0..16] == 'numpy.polynomial.'
+          if type.start_with?('numpy.polynomial.')
             type = 'Polynomials'
-          elsif type[0..11] == 'numpy.ufunc.'
-            type = 'Universal functions (ufunc)'
-          elsif type[0..12] == 'numpy.nditer.'
+          elsif type.start_with?('numpy.ufunc.')
+            type = 'Universal functions'
+          elsif type.start_with?('numpy.nditer.')
             type = 'Indexing routines'
           elsif type == 'numpy.core.defchararray.chararray.argsort'
             type = 'String operations'
@@ -43,6 +41,13 @@ module Docs
             type = 'Polynomials'
           end
         end
+
+        type.remove! ' with automatic domain'
+        type.remove! %r{\s*\(.*}
+        type.capitalize!
+        type.sub! 'c-api', 'C API'
+        type.sub! 'Numpy', 'NumPy'
+        type.sub! 'swig', 'Swig'
         type
       end
     end

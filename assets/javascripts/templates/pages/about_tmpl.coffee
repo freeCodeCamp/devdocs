@@ -336,6 +336,11 @@ credits = [
     'npm',
     'https://raw.githubusercontent.com/npm/npm/master/LICENSE'
   ], [
+    'NumPy',
+    '2008-2016 NumPy Developers',
+    'NumPy',
+    'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
+  ], [
     'OpenTSDB',
     '2010-2016 The OpenTSDB Authors',
     'LGPLv2.1',
