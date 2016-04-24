@@ -157,7 +157,7 @@ class app.views.Content extends app.View
 
   onAltF: (event) =>
     unless document.activeElement and $.hasChild @el, document.activeElement
-      @findByTag('a')?.focus()
+      @find('a:not(:empty)')?.focus()
       $.stopEvent(event)
 
   findTargetByHash: (hash) ->
