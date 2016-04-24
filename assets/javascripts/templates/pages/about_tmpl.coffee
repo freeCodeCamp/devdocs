@@ -96,8 +96,8 @@ credits = [
     'GPLv3',
     'https://raw.githubusercontent.com/ansible/ansible/devel/COPYING'
   ], [
-    'Apache HTTP Server',
-    '2016 The Apache Software Foundation',
+    'Apache HTTP Server<br>Apache Pig',
+    '2016 The Apache Software Foundation<br>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.',
     'Apache',
     'https://www.apache.org/licenses/LICENSE-2.0'
   ], [

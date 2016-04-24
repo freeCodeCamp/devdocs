@@ -1,9 +1,7 @@
 module Docs
-  class Pig
+  class ApachePig
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('#content')
-
         css('.pdflink').remove
 
         css('a[name]').each do |node|
