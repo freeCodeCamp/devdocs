@@ -40,7 +40,7 @@ class app.views.EntryPage extends app.View
     @trigger 'loaded'
     return
 
-  CLIPBOARD_LINK = '<a class="_pre-clip" title="Copy to clipboard"></a>'
+  CLIPBOARD_LINK = '<a class="_pre-clip" title="Copy to clipboard" tabindex="-1"></a>'
 
   addClipboardLinks: ->
     for el in @findAllByTag('pre')
