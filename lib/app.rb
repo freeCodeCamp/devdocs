@@ -40,6 +40,8 @@ class App < Sinatra::Application
     set :news_path, -> { File.join(root, assets_prefix, 'javascripts', 'news.json') }
     set :news, -> { JSON.parse(File.read(news_path)) }
 
+    set :csp, false
+
     Dir[docs_path, root.join(assets_prefix, '*/')].each do |path|
       sprockets.append_path(path)
     end
@@ -69,6 +71,7 @@ class App < Sinatra::Application
   configure :production do
     set :static, false
     set :docs_host, '//docs.devdocs.io'
+    set :csp, "default-src 'self' *; script-src 'self' 'unsafe-inline' https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
     use Rack::ETag
@@ -88,6 +91,7 @@ class App < Sinatra::Application
     Sprockets::Helpers.configure do |config|
       config.digest = true
       config.asset_host = 'cdn.devdocs.io'
+      config.protocol = 'https://'
       config.manifest = Sprockets::Manifest.new(sprockets, assets_manifest_path)
     end
   end
@@ -216,6 +220,7 @@ class App < Sinatra::Application
 
   get '/' do
     return redirect '/' unless request.query_string.empty? # courtesy of HTML5 App Cache
+    response.headers['Content-Security-Policy'] = settings.csp if settings.csp
     erb :index
   end
 
@@ -289,6 +294,7 @@ class App < Sinatra::Application
     elsif user_has_docs?(doc) && supports_js_redirection?
       redirect_via_js(request.path)
     else
+      response.headers['Content-Security-Policy'] = settings.csp if settings.csp
       erb :other
     end
   end

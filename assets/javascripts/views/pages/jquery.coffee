@@ -44,7 +44,7 @@ class app.views.JqueryPage extends app.views.BasePage
     return
 
   fixIframeSource: (source) ->
-    source = source.replace '"/resources/', '"http://api.jquery.com/resources/' # attr(), keydown()
+    source = source.replace '"/resources/', '"https://api.jquery.com/resources/' # attr(), keydown()
     source.replace '</head>', """
       <style>
         html, body { border: 0; margin: 0; padding: 0; }
