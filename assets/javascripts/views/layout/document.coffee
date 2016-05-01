@@ -39,12 +39,17 @@ class app.views.Document extends app.View
     app.appCache?.updateInBackground()
     return
 
-  toggleSidebar: ->
-    sidebarHidden = app.el.classList.contains(HIDE_SIDEBAR_CLASS)
-    app.el.classList[if sidebarHidden then 'remove' else 'add'](HIDE_SIDEBAR_CLASS)
-    app.settings.setLayout(HIDE_SIDEBAR_CLASS, !sidebarHidden)
+  toggleSidebar: (saveLayout = true) ->
+    hasHiddenClass = app.el.classList.contains(HIDE_SIDEBAR_CLASS)
+    forceShow = (!hasHiddenClass || !@hasSidebar()) && !saveLayout
+    app.el.classList[if hasHiddenClass or forceShow then 'remove' else 'add'](HIDE_SIDEBAR_CLASS)
+    return unless saveLayout
+    app.settings.setLayout(HIDE_SIDEBAR_CLASS, !hasHiddenClass)
     app.appCache?.updateInBackground()
     return
+
+  hasSidebar: ->
+    return !app.el.classList.contains(HIDE_SIDEBAR_CLASS) && !app.settings.hasLayout(HIDE_SIDEBAR_CLASS)
 
   setTitle: (title) ->
     @el.title = if title then "DevDocs - #{title}" else 'DevDocs API Documentation'

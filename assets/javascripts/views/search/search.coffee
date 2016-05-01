@@ -68,8 +68,10 @@ class app.views.Search extends app.View
     @value = @input.value
 
     if @value.length
+      app.document.toggleSidebar(false)
       @search()
     else
+      app.document.toggleSidebar() unless app.document.hasSidebar()
       @clear()
     return
 

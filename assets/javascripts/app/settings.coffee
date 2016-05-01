@@ -79,6 +79,14 @@ class app.Settings
     catch
     return
 
+  hasLayout: (name) ->
+    try
+      layout = (Cookies.get(LAYOUT_KEY) || '').split(' ')
+      $.arrayDelete(layout, '')
+      return layout.indexOf(name) isnt -1
+    catch
+    return false
+
   setSize: (value) ->
     try
       Cookies.set SIZE_KEY, value, path: '/', expires: 1e8

@@ -55,6 +55,11 @@ class app.views.Resizer extends app.View
   onDragEnd: (event) =>
     $.off(window, 'dragover', @onDrag)
     value = event.pageX or (event.screenX - window.screenX)
+    if value <= 5
+      app.document.toggleSidebar()
+      return
+    else if !app.document.hasSidebar()
+      app.document.toggleSidebar(true)
     if @lastDragValue and not (@lastDragValue - 5 < value < @lastDragValue + 5) # https://github.com/Thibaut/devdocs/issues/265
       value = @lastDragValue
     @resize(value, true)
