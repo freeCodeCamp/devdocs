@@ -51,6 +51,7 @@ module Docs
         css('.method-signature').each do |node|
           node.name = 'pre'
           node.content = node.content.strip
+          node['data-language'] = 'php'
         end
 
         css('span.name > code').each do |node|
