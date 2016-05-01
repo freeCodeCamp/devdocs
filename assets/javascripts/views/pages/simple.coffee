@@ -11,6 +11,7 @@ app.views.CakephpPage =
 app.views.EmberPage =
 app.views.ExpressPage =
 app.views.GoPage =
+app.views.LaravelPage =
 app.views.MarionettePage =
 app.views.MeteorPage =
 app.views.ModernizrPage =

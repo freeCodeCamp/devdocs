@@ -29,11 +29,12 @@ module Docs
 
     options[:attribution] = <<-HTML
       &copy; Taylor Otwell<br>
-      Licensed under the MIT License.
+      Licensed under the MIT License.<br>
+      Laravel is a trademark of Taylor Otwell.
     HTML
 
     version '5.2' do
-      self.release = '5.2.24'
+      self.release = '5.2.31'
       self.root_path = '/api/5.2/index.html'
       self.initial_paths = %w(/docs/5.2/installation /api/5.2/classes.html)
 
@@ -46,7 +47,7 @@ module Docs
     end
 
     version '5.1' do
-      self.release = '5.1.11'
+      self.release = '5.1.33'
       self.root_path = '/api/5.1/index.html'
       self.initial_paths = %w(/docs/5.1/installation /api/5.1/classes.html)
 

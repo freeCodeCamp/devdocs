@@ -74,5 +74,16 @@ module Docs
       warn "#{self.class.name} is re-parsing the document" unless ENV['RACK_ENV'] == 'test'
       super
     end
+
+    def decode_cloudflare_email(str)
+      mask = "0x#{str[0..1]}".hex | 0
+      result = ''
+
+      str.chars.drop(2).each_slice(2) do |slice|
+        result += "%" + "0#{("0x#{slice.join}".hex ^ mask).to_s(16)}"[-2..-1]
+      end
+
+      URI.decode(result)
+    end
   end
 end

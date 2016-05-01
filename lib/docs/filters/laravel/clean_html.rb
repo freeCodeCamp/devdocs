@@ -8,6 +8,12 @@ module Docs
           other
         end
 
+        # Remove code highlighting
+        css('pre').each do |node|
+          node.content = node.content
+          node['data-language'] = 'php'
+        end
+
         doc
       end
 
@@ -61,9 +67,8 @@ module Docs
           node.parent.next_element['id'] = node['name']
         end
 
-        # Remove code highlighting
-        css('pre').each do |node|
-          node.content = node.content
+        css('a.__cf_email__').each do |node|
+          node.replace(decode_cloudflare_email(node['data-cfemail']))
         end
       end
     end
