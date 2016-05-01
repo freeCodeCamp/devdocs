@@ -71,6 +71,22 @@ module Docs
         end
       end
 
+      def additional_entries
+        return [] unless root_page?
+        entries = []
+
+        %w(arithmetic assignment bitwise comparison logical).each do |s|
+          css("a[href^='operators/#{s}_operators#']").each do |node|
+            name = node.content.strip
+            name.remove! %r{[a-zA-Z]}
+            name.strip!
+            entries << [name, node['href'], 'Operators']
+          end
+        end
+
+        entries.uniq
+      end
+
       def include_default_entry?
         node = doc.at_css '.overheadIndicator, .warning'
 

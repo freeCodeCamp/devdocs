@@ -12,12 +12,6 @@ module Docs
         div = at_css '#Global_Objects + div'
         div.css('h3').each { |node| node.name = 'h2' }
         at_css('#Global_Objects').replace(div.children)
-
-        # Remove heading links
-        css('h2 > a').each do |node|
-          node.before(node.content)
-          node.remove
-        end
       end
 
       def other

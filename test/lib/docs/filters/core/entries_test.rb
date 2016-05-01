@@ -69,6 +69,11 @@ class EntriesFilterTest < MiniTest::Spec
         assert_equal 'path#frag', entries.last.path
       end
 
+      it "has a path with the given path" do
+        stub(filter).additional_entries { [['test', 'custom_path#frag']] }
+        assert_equal 'custom_path#frag', entries.last.path
+      end
+
       it "has the given type" do
         stub(filter).additional_entries { [['test', nil, 'test']] }
         assert_equal 'test', entries.last.type

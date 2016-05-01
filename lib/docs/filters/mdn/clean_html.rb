@@ -25,6 +25,11 @@ module Docs
 
         css('h2[style]', 'pre[style]', 'th[style]', 'div[style*="line-height"]').remove_attr('style')
 
+        css('h2 > a[name]', 'h3 > a[name]').each do |node|
+          node.parent['id'] = node['name']
+          node.before(node.content).remove
+        end
+
         doc
       end
     end
