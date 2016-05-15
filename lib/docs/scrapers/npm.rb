@@ -2,7 +2,7 @@ module Docs
   class Npm < UrlScraper
     self.name = 'npm'
     self.type = 'npm'
-    self.release = '3.8.5'
+    self.release = '3.9.0'
     self.base_url = 'https://docs.npmjs.com/'
     self.links = {
       home: 'https://www.npmjs.com/',
@@ -27,5 +27,11 @@ module Docs
       Licensed under the npm License.<br>
       npm is a trademark of npm, Inc.
     HTML
+
+    private
+
+    def request_options
+      super.merge accept_encoding: 'gzip'
+    end
   end
 end
