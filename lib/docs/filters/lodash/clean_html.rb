@@ -20,6 +20,7 @@ module Docs
         css('pre').each do |node|
           node.inner_html = node.inner_html.gsub('<br>', "\n").gsub('&nbsp;', ' ')
           node.content = node.content
+          node['data-language'] = 'javascript'
         end
 
         doc
