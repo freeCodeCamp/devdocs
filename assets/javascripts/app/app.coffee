@@ -245,6 +245,9 @@
   isMobile: ->
     @_isMobile ?= app.views.Mobile.detect()
 
+  isAndroidWebview: ->
+    @_isAndroidWebview ?= app.views.Mobile.detectAndroidWebview()
+
   isInvalidLocation: ->
     @config.env is 'production' and location.host.indexOf(app.config.production_host) isnt 0
 

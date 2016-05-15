@@ -21,6 +21,12 @@ class app.views.Mobile extends app.View
     catch
       false
 
+  @detectAndroidWebview: ->
+    try
+      /(Android).*( Version\/.\.. ).*(Chrome)/.test(navigator.userAgent)
+    catch
+      false
+
   constructor: ->
     @el = document.documentElement
     super
