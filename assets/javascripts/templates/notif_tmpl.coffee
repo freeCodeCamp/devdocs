@@ -16,7 +16,7 @@ app.templates.notifError = ->
                 You can also report this issue on <a href="https://github.com/Thibaut/devdocs/issues/new" target="_blank">GitHub</a>. """
 
 app.templates.notifQuotaExceeded = ->
-  textNotif """ Oops, the offline database has exceeded its size limitation. """,
+  textNotif """ The offline database has exceeded its size limitation. """,
             """ Unfortunately this quota can't be detected programmatically, and the database can't be opened while over the quota, so it had to be reset. """
 
 app.templates.notifInvalidLocation = ->

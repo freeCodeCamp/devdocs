@@ -6,19 +6,19 @@ error = (title, text = '', links = '') ->
 back = '<a href="javascript:history.back()" class="_error-link">Go back</a>'
 
 app.templates.notFoundPage = ->
-  error """ Oops, that page doesn't exist. """,
+  error """ Page not found. """,
         """ It may be missing from the source documentation or this could be a bug. """,
         back
 
 app.templates.pageLoadError = ->
-  error """ Oops, the page failed to load. """,
+  error """ The page failed to load. """,
         """ It may be missing from the server (try reloading the app) or you could be offline.<br>
             If you keep seeing this, you're likely behind a proxy or firewall that blocks cross-domain requests. """,
         """ #{back} &middot; <a href="/##{location.pathname}" target="_top" class="_error-link">Reload</a>
             &middot; <a href="#" class="_error-link" data-retry>Retry</a> """
 
 app.templates.bootError = ->
-  error """ Oops, the app failed to load. """,
+  error """ The app failed to load. """,
         """ Check your Internet connection and try <a href="javascript:location.reload()">reloading</a>.<br>
             If you keep seeing this, you're likely behind a proxy or firewall that blocks cross-domain requests. """
 
@@ -33,7 +33,7 @@ app.templates.offlineError = (reason) ->
       """ Unfortunately Safari's implementation of IndexedDB is <a href="https://bugs.webkit.org/show_bug.cgi?id=136937">badly broken</a>.<br>
           This message will automatically go away when Apple fix their code. """
 
-  error """ Oops, offline mode is unavailable. """,
+  error """ Offline mode is unavailable. """,
         """ DevDocs requires IndexedDB to cache documentations for offline access.<br>#{reason} """
 
 app.templates.unsupportedBrowser = """
