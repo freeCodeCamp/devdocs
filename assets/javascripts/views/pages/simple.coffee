@@ -19,6 +19,7 @@ app.views.MomentPage =
 app.views.MongoosePage =
 app.views.NodePage =
 app.views.PerlPage =
+app.views.PhalconPage =
 app.views.PhaserPage =
 app.views.PostgresPage =
 app.views.RamdaPage =

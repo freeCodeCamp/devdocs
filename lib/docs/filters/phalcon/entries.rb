@@ -10,7 +10,7 @@ module Docs
           'Guides'
         else
           path = name.split('\\')
-          path[1] == 'Mvc' ? path[1..2].join('\\') : path[1]
+          path[0] == 'Mvc' ? path[0..1].join('\\') : path[0]
         end
       end
 

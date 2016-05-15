@@ -28,6 +28,8 @@ module Docs
           code.remove! %r{\A\s*<\?php\s*} unless code.include?(' ?>')
           node.content = code
           node.name = 'pre'
+          node['data-language'] = node['class'][/highlight-(\w+)/, 1]
+          node['data-language'] = 'php' if node['data-language'] == 'html+php'
         end
 
         css('.section').each do |node|
