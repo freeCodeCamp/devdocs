@@ -7,27 +7,35 @@ module Docs
 
       def get_name
         name = super
-        name.remove!('Element.').try(:downcase!)
+        name.sub!('Element.', '').try(:downcase!)
+        name.sub!('Global attributes.', '').try(:concat, ' (attribute)')
+        name.sub!(/input.(\w+)/, 'input type="\1"')
         name
       end
 
       def get_type
         slug = self.slug.remove('Element/')
 
-        if at_css('.obsoleteHeader', '.deprecatedHeader', '.nonStandardHeader') || OBSOLETE.include?(slug)
+        if self.slug.start_with?('Global_attr')
+          'Attributes'
+        elsif at_css('.obsoleteHeader', '.deprecatedHeader', '.nonStandardHeader') || OBSOLETE.include?(slug)
           'Obsolete'
         else
           spec = css('.standard-table').last.try(:content)
           if (spec && html5_spec?(spec)) || HTML5.include?(slug)
             'HTML5'
           else
-            'Standard'
+            if self.slug.start_with?('Element/')
+              'Standard'
+            else
+              'Miscellaneous'
+            end
           end
         end
       end
 
       def include_default_entry?
-        return false if %w(Attributes Link_types Element/Heading_Elements).include?(slug)
+        return false if %w(Element/Heading_Elements).include?(slug)
         (node = doc.at_css '.overheadIndicator').nil? || node.content.exclude?('not on a standards track')
       end
 
@@ -35,10 +43,11 @@ module Docs
         return ADDITIONAL_ENTRIES[slug] if ADDITIONAL_ENTRIES.key?(slug)
 
         if slug == 'Attributes'
-          css('.standard-table td:first-child').map do |node|
+          css('.standard-table td:first-child').each_with_object [] do |node, entries|
+            next if node.next_element.content.include?('Global attribute')
             name = "#{node.content.strip} (attribute)"
             id = node.parent['id'] = name.parameterize
-            [name, id, 'Attributes']
+            entries << [name, id, 'Attributes']
           end
         elsif slug == 'Link_types'
           css('.standard-table td:first-child > code').map do |node|

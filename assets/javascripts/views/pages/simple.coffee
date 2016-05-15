@@ -14,6 +14,7 @@ app.views.GoPage =
 app.views.LaravelPage =
 app.views.LodashPage =
 app.views.MarionettePage =
+app.views.MdnPage =
 app.views.MeteorPage =
 app.views.ModernizrPage =
 app.views.MomentPage =

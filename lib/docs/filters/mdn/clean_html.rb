@@ -10,6 +10,8 @@ module Docs
         '.draftHeader',
         '.hidden',
         '.button.section-edit',
+        '.communitybox',
+        '#Quick_Links',
         'hr']
 
       def call
@@ -28,6 +30,11 @@ module Docs
         css('h2 > a[name]', 'h3 > a[name]').each do |node|
           node.parent['id'] = node['name']
           node.before(node.content).remove
+        end
+
+        css('pre[class^="brush"]').each do |node|
+          node['data-language'] = node['class'][/brush: ?(\w+)/, 1]
+          node.remove_attribute('class')
         end
 
         doc

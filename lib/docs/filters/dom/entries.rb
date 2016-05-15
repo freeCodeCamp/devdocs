@@ -10,6 +10,7 @@ module Docs
         'Canvas '             => 'Canvas',
         'CSS Font Loading'    => 'CSS',
         'CSS Object Model'    => 'CSS',
+        'Credential'          => 'Credential Management',
         'Cryptography'        => 'Web Cryptography',
         'Device Orientation'  => 'Device Orientation',
         'Encoding'            => 'Encoding',
@@ -95,6 +96,7 @@ module Docs
         'Crypto'        => 'Web Cryptography',
         'Drag'          => 'Drag & Drop',
         'FormData'      => 'XMLHTTPRequest',
+        'History'       => 'History',
         'ImageBitmap'   => 'Canvas',
         'ImageData'     => 'Canvas',
         'IndexedDB'     => 'IndexedDB',
@@ -214,6 +216,10 @@ module Docs
             break if node.content == 'Non-standard methods'
             entries << ["#{name}.#{node.content}", node['id']]
           end
+        end
+
+        if slug == 'History_API'
+          entries << ['history.pushState()', 'The_pushState()_method']
         end
 
         entries

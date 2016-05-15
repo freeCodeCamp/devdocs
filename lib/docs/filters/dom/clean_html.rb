@@ -27,6 +27,11 @@ module Docs
         css('div > .overheadIndicator:first-child:last-child').each do |node|
           node.parent.replace(node)
         end
+
+        css('.syntaxbox > pre:first-child:last-child').each do |node|
+          node['class'] = 'syntaxbox'
+          node.parent.before(node).remove
+        end
       end
     end
   end
