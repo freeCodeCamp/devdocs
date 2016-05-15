@@ -3,13 +3,15 @@ module Docs
     self.name = 'React Native'
     self.slug = 'react_native'
     self.type = 'react'
-    self.release = '0.24'
+    self.release = '0.25'
     self.base_url = 'https://facebook.github.io/react-native/docs/'
     self.root_path = 'getting-started.html'
     self.links = {
       home: 'https://facebook.github.io/react-native/',
       code: 'https://github.com/facebook/react-native'
     }
+
+    html_filters.push 'react_native/clean_html'
 
     options[:root_title] = 'React Native Documentation'
     options[:only_patterns] = nil
