@@ -2,7 +2,7 @@ module Docs
   class Rethinkdb < UrlScraper
     self.name = 'RethinkDB'
     self.type = 'rethinkdb'
-    self.release = '2.3.0'
+    self.release = '2.3.2'
     self.links = {
       home: 'https://rethinkdb.com/',
       code: 'https://github.com/rethinkdb/rethinkdb'
