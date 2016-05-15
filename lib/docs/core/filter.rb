@@ -85,5 +85,9 @@ module Docs
 
       URI.decode(result)
     end
+
+    def clean_path(path)
+      path.gsub %r{[!;:]+}, '-'
+    end
   end
 end

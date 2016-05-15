@@ -81,6 +81,7 @@ module Docs
     def internal_path_to(url)
       url = index_url if url == root_url
       path = effective_url.relative_path_to(url)
+      path = clean_path(path) if context[:decode_and_clean_paths]
       URL.new(path: path, query: url.query, fragment: url.fragment).to_s
     end
 

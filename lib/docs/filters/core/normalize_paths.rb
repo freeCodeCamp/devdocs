@@ -37,7 +37,7 @@ module Docs
 
       if context[:decode_and_clean_paths]
         path = URI.unescape(path)
-        path.gsub! %r{[!;:]+}, '-'
+        path = clean_path(path)
       end
 
       if path == '.'
