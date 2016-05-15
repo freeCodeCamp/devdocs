@@ -2,7 +2,13 @@ module Docs
   class Redis
     class CleanHtmlFilter < Filter
       def call
-        at_css('ul')['class'] = 'commands' if root_page?
+        if root_page?
+          at_css('ul')['class'] = 'commands'
+        else
+          title = at_css('h1')
+          title.after("<pre>#{title.content.strip}</pre>")
+          title.content = title.content.split(' ').first
+        end
 
         css('nav', 'aside', 'form', '.anchor-link').remove
 

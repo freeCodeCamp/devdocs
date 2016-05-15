@@ -19,7 +19,7 @@
 
   // Others
 
-  > h1, > h2, > .metadata, > h1 ~ p { margin-left: -1rem; }
+  > h1, > h2, > .metadata, > h1 ~ p, > h1 + pre { margin-left: -1rem; }
   > h2 ~ p { margin-left: 0; }
 
   > h2 { @extend %block-heading; }
