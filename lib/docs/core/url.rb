@@ -100,7 +100,7 @@ module Docs
           result << '/' if result != '.'
         end
       else
-        dest_dir.parent.relative_path_from(base_dir).join(::File.basename(dest)).to_s
+        dest_dir.parent.relative_path_from(base_dir).join(dest.split('/').last).to_s
       end
     end
 
