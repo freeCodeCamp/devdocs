@@ -394,6 +394,14 @@ class DocsUrlTest < MiniTest::Spec
         assert_equal 'file', url.relative_path_to('http://example.com/file?query#frag')
       end
 
+      it "returns 'some:file' with 'http://example.com/some:file'" do
+        assert_equal 'some:file', url.relative_path_to('http://example.com/some:file')
+      end
+
+      it "returns 'some:file' with 'http://example.com/some:file?query#frag'" do
+        assert_equal 'some:file', url.relative_path_to('http://example.com/some:file?query#frag')
+      end
+
       it "returns nil with '/file'" do
         assert_nil url.relative_path_to('/file')
       end
