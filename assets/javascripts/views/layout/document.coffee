@@ -46,6 +46,27 @@ class app.views.Document extends app.View
     app.appCache?.updateInBackground()
     return
 
+  hideSidebar: (saveLayout = true) ->
+    sidebarHidden = app.el.classList.contains(HIDE_SIDEBAR_CLASS)
+    return if sidebarHidden
+    app.el.classList.add(HIDE_SIDEBAR_CLASS)
+    return unless saveLayout
+    app.settings.setLayout(HIDE_SIDEBAR_CLASS, true)
+    app.appCache?.updateInBackground()
+    return
+
+  showSidebar: (saveLayout = true) ->
+    sidebarHidden = app.el.classList.contains(HIDE_SIDEBAR_CLASS)
+    return unless sidebarHidden
+    app.el.classList.remove(HIDE_SIDEBAR_CLASS)
+    return unless saveLayout
+    app.settings.setLayout(HIDE_SIDEBAR_CLASS, false)
+    app.appCache?.updateInBackground()
+    return
+
+  hasSidebar: ->
+    return !app.el.classList.contains(HIDE_SIDEBAR_CLASS) && !app.settings.hasLayout(HIDE_SIDEBAR_CLASS)
+
   setTitle: (title) ->
     @el.title = if title then "DevDocs - #{title}" else 'DevDocs API Documentation'
 

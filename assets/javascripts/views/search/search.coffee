@@ -65,11 +65,14 @@ class app.views.Search extends app.View
   onInput: =>
     return if not @value? or # ignore events pre-"ready"
               @value is @input.value
+
     @value = @input.value
 
     if @value.length
+      app.document.showSidebar(false)
       @search()
     else
+      app.document.hideSidebar(false) unless app.document.hasSidebar()
       @clear()
     return
 
