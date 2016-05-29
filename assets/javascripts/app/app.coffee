@@ -56,6 +56,11 @@
           tags:
             mode: if @DOC then 'single' else 'full'
             iframe: (window.top isnt window).toString()
+          shouldSendCallback: ->
+            if @isInjectionError()
+              @onInjectionError()
+              return false
+            true
           dataCallback: (data) ->
             try
               $.extend(data.user ||= {}, app.settings.settings)
@@ -215,7 +220,7 @@
   isInjectionError: ->
     # Some browser extensions expect the entire web to use jQuery.
     # I gave up trying to fight back.
-    window.$ isnt app._$ or window.$$ isnt app._$$ or window.page isnt app._page
+    window.$ isnt app._$ or window.$$ isnt app._$$ or window.page isnt app._page or typeof $.empty isnt 'function' or typeof page.show isnt 'function'
 
   isAppError: (error, file) ->
     # Ignore errors from external scripts.
