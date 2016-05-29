@@ -92,7 +92,7 @@ credits = [
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Ansible',
-    '2012-2016 Michael DeHaan',
+    '2012-2016 Michael DeHaan<br>&copy; 2016 Red Hat, Inc.',
     'GPLv3',
     'https://raw.githubusercontent.com/ansible/ansible/devel/COPYING'
   ], [
