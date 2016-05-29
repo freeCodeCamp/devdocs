@@ -11,7 +11,7 @@ class app.Settings
     hideIntro: false
     news: 0
     autoUpdate: true
-    schema: 0
+    schema: 1
 
   constructor: (@store) ->
     @create() unless @settings = @store.get(SETTINGS_KEY)
