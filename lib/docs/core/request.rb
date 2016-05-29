@@ -4,7 +4,7 @@ module Docs
 
     DEFAULT_OPTIONS = {
       followlocation: true,
-      headers: { 'User-Agent' => 'devdocs.io' }
+      headers: { 'User-Agent' => 'DevDocs' }
     }
 
     def self.run(*args, &block)

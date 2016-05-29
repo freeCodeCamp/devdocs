@@ -12,7 +12,7 @@ module Docs
     end
 
     self.params = {}
-    self.headers = { 'User-Agent' => 'devdocs.io' }
+    self.headers = { 'User-Agent' => 'DevDocs' }
 
     private
 
