@@ -1,4 +1,5 @@
 ._node {
+  .api_stability { clear: both; }
   .api_stability_0, .api_stability_1 { @extend %note, %note-red; }
   .api_stability_2 { @extend %note; }
   .api_stability_3, .api_stability_4 { @extend %note, %note-green; }
@@ -11,6 +12,12 @@
 
   p > code, li > code, .type {
     white-space: normal;
+    @extend %label;
+  }
+
+  .api_metadata {
+    float: right;
+    margin: 0 0 1em 1em;
     @extend %label;
   }
 }

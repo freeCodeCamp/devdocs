@@ -16,14 +16,14 @@ module Docs
 
         css('pre').each do |node|
           if lang = node.at_css('code')['class']
-            node['data-language'] = lang
+            node['data-language'] = lang.remove('lang-')
           end
 
           node.content = node.content
         end
 
         css('.__cf_email__').each do |node|
-          node.replace('pass@host.com')
+          node.replace(decode_cloudflare_email(node['data-cfemail']))
         end
 
         doc
