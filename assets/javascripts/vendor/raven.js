@@ -1,4 +1,4 @@
-/*! Raven.js 2.3.0 (b09d766) | github.com/getsentry/raven-js */
+/*! Raven.js 3.0.4 (0784c3c) | github.com/getsentry/raven-js */
 
 /*
  * Includes TraceKit
@@ -23,12 +23,51 @@ RavenConfigError.prototype.constructor = RavenConfigError;
 module.exports = RavenConfigError;
 
 },{}],2:[function(_dereq_,module,exports){
+'use strict';
+
+var wrapMethod = function(console, level, callback) {
+    var originalConsoleLevel = console[level];
+    var originalConsole = console;
+
+    if (!(level in console)) {
+        return;
+    }
+
+    var sentryLevel = level === 'warn'
+        ? 'warning'
+        : level;
+
+    console[level] = function () {
+        var args = [].slice.call(arguments);
+
+        var msg = '' + args.join(' ');
+        var data = {level: sentryLevel, logger: 'console', extra: {'arguments': args}};
+        callback && callback(msg, data);
+
+        // this fails for some browsers. :(
+        if (originalConsoleLevel) {
+            // IE9 doesn't allow calling apply on console functions directly
+            // See: https://stackoverflow.com/questions/5472938/does-ie9-support-console-log-and-is-it-a-real-function#answer-5473193
+            Function.prototype.apply.call(
+                originalConsoleLevel,
+                originalConsole,
+                args
+            );
+        }
+    };
+};
+
+module.exports = {
+    wrapMethod: wrapMethod
+};
+
+},{}],3:[function(_dereq_,module,exports){
 /*global XDomainRequest:false*/
 'use strict';
 
-var TraceKit = _dereq_(5);
+var TraceKit = _dereq_(6);
 var RavenConfigError = _dereq_(1);
-var utils = _dereq_(4);
+var utils = _dereq_(5);
 
 var isFunction = utils.isFunction;
 var isUndefined = utils.isUndefined;
@@ -41,6 +80,11 @@ var objectMerge = utils.objectMerge;
 var truncate = utils.truncate;
 var urlencode = utils.urlencode;
 var uuid4 = utils.uuid4;
+var htmlTreeAsString = utils.htmlTreeAsString;
+var parseUrl = utils.parseUrl;
+var isString = utils.isString;
+
+var wrapConsoleMethod = _dereq_(2).wrapMethod;
 
 var dsnKeys = 'source protocol user pass host port path'.split(' '),
     dsnPattern = /^(?:(\w+):)?\/\/(?:(\w+)(:\w+)?@)?([\w\.-]+)(?::(\d+))?(\/.*)/;
@@ -83,6 +127,12 @@ function Raven() {
     this._plugins = [];
     this._startTime = now();
     this._wrappedBuiltIns = [];
+    this._breadcrumbs = [];
+    this._breadcrumbLimit = 20;
+    this._lastCapturedEvent = null;
+    this._keypressTimeout;
+    this._location = window.location;
+    this._lastHref = this._location && this._location.href;
 
     for (var method in this._originalConsole) {  // eslint-disable-line guard-for-in
       this._originalConsoleMethods[method] = this._originalConsole[method];
@@ -100,7 +150,7 @@ Raven.prototype = {
     // webpack (using a build step causes webpack #1617). Grunt verifies that
     // this value matches package.json during build.
     //   See: https://github.com/getsentry/raven-js/issues/465
-    VERSION: '2.3.0',
+    VERSION: '3.0.4',
 
     debug: false,
 
@@ -223,11 +273,11 @@ Raven.prototype = {
      *
      * @param {object} options A specific set of options for this context [optional]
      * @param {function} func The function to be wrapped in a new context
+     * @param {function} func A function to call before the try/catch wrapper [optional, private]
      * @return {function} The newly wrapped functions with a context
      */
-    wrap: function(options, func) {
+    wrap: function(options, func, _before) {
         var self = this;
-
         // 1 argument has been passed, and it's not a function
         // so just return it
         if (isUndefined(func) && !isFunction(options)) {
@@ -266,9 +316,13 @@ Raven.prototype = {
         function wrapped() {
             var args = [], i = arguments.length,
                 deep = !options || options && options.deep !== false;
+
+            if (_before && isFunction(_before)) {
+                _before.apply(this, arguments);
+            }
+
             // Recursively wrap all of a function's arguments that are
             // functions themselves.
-
             while(i--) args[i] = deep ? self.wrap(options, arguments[i]) : arguments[i];
 
             try {
@@ -286,10 +340,9 @@ Raven.prototype = {
                 wrapped[property] = func[property];
             }
         }
-        func.__raven_wrapper__ = wrapped;
-
         wrapped.prototype = func.prototype;
 
+        func.__raven_wrapper__ = wrapped;
         // Signal that this function has been wrapped already
         // for both debugging and to prevent it to being wrapped twice
         wrapped.__raven__ = true;
@@ -368,6 +421,17 @@ Raven.prototype = {
         );
 
         return this;
+    },
+
+    captureBreadcrumb: function (obj) {
+        var crumb = objectMerge({
+            timestamp: now() / 1000
+        }, obj);
+
+        this._breadcrumbs.push(crumb);
+        if (this._breadcrumbs.length > this._breadcrumbLimit) {
+            this._breadcrumbs.shift();
+        }
     },
 
     addPlugin: function(plugin /*arg1, arg2, ... argN*/) {
@@ -620,6 +684,114 @@ Raven.prototype = {
     },
 
     /**
+     * Wraps addEventListener to capture UI breadcrumbs
+     * @param evtName the event name (e.g. "click")
+     * @returns {Function}
+     * @private
+     */
+    _breadcrumbEventHandler: function(evtName) {
+        var self = this;
+        return function (evt) {
+            // reset keypress timeout; e.g. triggering a 'click' after
+            // a 'keypress' will reset the keypress debounce so that a new
+            // set of keypresses can be recorded
+            self._keypressTimeout = null;
+
+            // It's possible this handler might trigger multiple times for the same
+            // event (e.g. event propagation through node ancestors). Ignore if we've
+            // already captured the event.
+            if (self._lastCapturedEvent === evt)
+                return;
+
+            self._lastCapturedEvent = evt;
+            var elem = evt.target;
+
+            var target;
+
+            // try/catch htmlTreeAsString because it's particularly complicated, and
+            // just accessing the DOM incorrectly can throw an exception in some circumstances.
+            try {
+                target = htmlTreeAsString(elem);
+            } catch (e) {
+                target = '<unknown>';
+            }
+
+            self.captureBreadcrumb({
+                category: 'ui.' + evtName, // e.g. ui.click, ui.input
+                message: target
+            });
+        };
+    },
+
+    /**
+     * Wraps addEventListener to capture keypress UI events
+     * @returns {Function}
+     * @private
+     */
+    _keypressEventHandler: function() {
+        var self = this,
+            debounceDuration = 1000; // milliseconds
+
+        // TODO: if somehow user switches keypress target before
+        //       debounce timeout is triggered, we will only capture
+        //       a single breadcrumb from the FIRST target (acceptable?)
+
+        return function (evt) {
+            var target = evt.target,
+                tagName = target && target.tagName;
+
+            // only consider keypress events on actual input elements
+            // this will disregard keypresses targeting body (e.g. tabbing
+            // through elements, hotkeys, etc)
+            if (!tagName || tagName !== 'INPUT' && tagName !== 'TEXTAREA')
+                return;
+
+            // record first keypress in a series, but ignore subsequent
+            // keypresses until debounce clears
+            var timeout = self._keypressTimeout;
+            if (!timeout) {
+                self._breadcrumbEventHandler('input')(evt);
+            }
+            clearTimeout(timeout);
+            self._keypressTimeout = setTimeout(function () {
+               self._keypressTimeout = null;
+            }, debounceDuration);
+        };
+    },
+
+    /**
+     * Captures a breadcrumb of type "navigation", normalizing input URLs
+     * @param to the originating URL
+     * @param from the target URL
+     * @private
+     */
+    _captureUrlChange: function(from, to) {
+        var parsedLoc = parseUrl(this._location.href);
+        var parsedTo = parseUrl(to);
+        var parsedFrom = parseUrl(from);
+
+        // because onpopstate only tells you the "new" (to) value of location.href, and
+        // not the previous (from) value, we need to track the value of the current URL
+        // state ourselves
+        this._lastHref = to;
+
+        // Use only the path component of the URL if the URL matches the current
+        // document (almost all the time when using pushState)
+        if (parsedLoc.protocol === parsedTo.protocol && parsedLoc.host === parsedTo.host)
+            to = parsedTo.relative;
+        if (parsedLoc.protocol === parsedFrom.protocol && parsedLoc.host === parsedFrom.host)
+            from = parsedFrom.relative;
+
+        this.captureBreadcrumb({
+            category: 'navigation',
+            data: {
+                to: to,
+                from: from
+            }
+        });
+    },
+
+    /**
      * Install any queued plugins
      */
     _wrapBuiltIns: function() {
@@ -635,8 +807,12 @@ Raven.prototype = {
 
         function wrapTimeFn(orig) {
             return function (fn, t) { // preserve arity
-                // Make a copy of the arguments
-                var args = [].slice.call(arguments);
+                // Make a copy of the arguments to prevent deoptimization
+                // https://github.com/petkaantonov/bluebird/wiki/Optimization-killers#32-leaking-arguments
+                var args = new Array(arguments.length);
+                for(var i = 0; i < args.length; ++i) {
+                    args[i] = arguments[i];
+                }
                 var originalCallback = args[0];
                 if (isFunction(originalCallback)) {
                     args[0] = self.wrap(originalCallback);
@@ -653,6 +829,49 @@ Raven.prototype = {
             };
         }
 
+        function wrapEventTarget(global) {
+            var proto = window[global] && window[global].prototype;
+            if (proto && proto.hasOwnProperty && proto.hasOwnProperty('addEventListener')) {
+                fill(proto, 'addEventListener', function(orig) {
+                    return function (evtName, fn, capture, secure) { // preserve arity
+                        try {
+                            if (fn && fn.handleEvent) {
+                                fn.handleEvent = self.wrap(fn.handleEvent);
+                            }
+                        } catch (err) {
+                            // can sometimes get 'Permission denied to access property "handle Event'
+                        }
+
+
+                        // TODO: more than just click
+                        var before;
+                        if (global === 'EventTarget' || global === 'Node') {
+                            if (evtName === 'click'){
+                                before = self._breadcrumbEventHandler(evtName);
+                            } else if (evtName === 'keypress') {
+                                before = self._keypressEventHandler();
+                            }
+                        }
+                        return orig.call(this, evtName, self.wrap(fn, undefined, before), capture, secure);
+                    };
+                });
+                fill(proto, 'removeEventListener', function (orig) {
+                    return function (evt, fn, capture, secure) {
+                        fn = fn && (fn.__raven_wrapper__ ? fn.__raven_wrapper__  : fn);
+                        return orig.call(this, evt, fn, capture, secure);
+                    };
+                });
+            }
+        }
+
+        function wrapProp(prop, xhr) {
+            if (prop in xhr && isFunction(xhr[prop])) {
+                fill(xhr, prop, function (orig) {
+                    return self.wrap(orig);
+                }, true /* noUndo */); // don't track filled methods on XHR instances
+            }
+        }
+
         fill(window, 'setTimeout', wrapTimeFn);
         fill(window, 'setInterval', wrapTimeFn);
         if (window.requestAnimationFrame) {
@@ -663,45 +882,119 @@ Raven.prototype = {
             });
         }
 
+        // Capture breadcrubms from any click that is unhandled / bubbled up all the way
+        // to the document. Do this before we instrument addEventListener.
+        if (this._hasDocument) {
+            document.addEventListener('click', self._breadcrumbEventHandler('click'));
+            document.addEventListener('keypress', self._keypressEventHandler());
+        }
+
         // event targets borrowed from bugsnag-js:
         // https://github.com/bugsnag/bugsnag-js/blob/master/src/bugsnag.js#L666
-        'EventTarget Window Node ApplicationCache AudioTrackList ChannelMergerNode CryptoOperation EventSource FileReader HTMLUnknownElement IDBDatabase IDBRequest IDBTransaction KeyOperation MediaController MessagePort ModalWindow Notification SVGElementInstance Screen TextTrack TextTrackCue TextTrackList WebSocket WebSocketWorker Worker XMLHttpRequest XMLHttpRequestEventTarget XMLHttpRequestUpload'.replace(/\w+/g, function (global) {
-            var proto = window[global] && window[global].prototype;
-            if (proto && proto.hasOwnProperty && proto.hasOwnProperty('addEventListener')) {
-                fill(proto, 'addEventListener', function(orig) {
-                    return function (evt, fn, capture, secure) { // preserve arity
-                        try {
-                            if (fn && fn.handleEvent) {
-                                fn.handleEvent = self.wrap(fn.handleEvent);
-                            }
-                        } catch (err) {
-                            // can sometimes get 'Permission denied to access property "handle Event'
-                        }
-                        return orig.call(this, evt, self.wrap(fn), capture, secure);
-                    };
-                });
-                fill(proto, 'removeEventListener', function (orig) {
-                    return function (evt, fn, capture, secure) {
-                        fn = fn && (fn.__raven_wrapper__ ? fn.__raven_wrapper__  : fn);
-                        return orig.call(this, evt, fn, capture, secure);
-                    };
-                });
-            }
-        });
+        var eventTargets = ['EventTarget', 'Window', 'Node', 'ApplicationCache', 'AudioTrackList', 'ChannelMergerNode', 'CryptoOperation', 'EventSource', 'FileReader', 'HTMLUnknownElement', 'IDBDatabase', 'IDBRequest', 'IDBTransaction', 'KeyOperation', 'MediaController', 'MessagePort', 'ModalWindow', 'Notification', 'SVGElementInstance', 'Screen', 'TextTrack', 'TextTrackCue', 'TextTrackList', 'WebSocket', 'WebSocketWorker', 'Worker', 'XMLHttpRequest', 'XMLHttpRequestEventTarget', 'XMLHttpRequestUpload'];
+        for (var i = 0; i < eventTargets.length; i++) {
+            wrapEventTarget(eventTargets[i]);
+        }
 
         if ('XMLHttpRequest' in window) {
-            fill(XMLHttpRequest.prototype, 'send', function(origSend) {
+            var xhrproto = XMLHttpRequest.prototype;
+            fill(xhrproto, 'open', function(origOpen) {
+                return function (method, url) { // preserve arity
+
+                    // if Sentry key appears in URL, don't capture
+                    if (isString(url) && url.indexOf(self._globalKey) === -1) {
+                        this.__raven_xhr = {
+                            method: method,
+                            url: url,
+                            status_code: null
+                        };
+                    }
+
+                    return origOpen.apply(this, arguments);
+                };
+            });
+
+            fill(xhrproto, 'send', function(origSend) {
                 return function (data) { // preserve arity
                     var xhr = this;
-                    'onreadystatechange onload onerror onprogress'.replace(/\w+/g, function (prop) {
-                        if (prop in xhr && Object.prototype.toString.call(xhr[prop]) === '[object Function]') {
-                            fill(xhr, prop, function (orig) {
-                                return self.wrap(orig);
-                            }, true /* noUndo */); // don't track filled methods on XHR instances
+
+                    function onreadystatechangeHandler() {
+                        if (xhr.__raven_xhr && (xhr.readyState === 1 || xhr.readyState === 4)) {
+                            try {
+                                // touching statusCode in some platforms throws
+                                // an exception
+                                xhr.__raven_xhr.status_code = xhr.status;
+                            } catch (e) { /* do nothing */ }
+                            self.captureBreadcrumb({
+                                type: 'http',
+                                category: 'xhr',
+                                data: xhr.__raven_xhr
+                            });
                         }
-                    });
+                    }
+
+                    var props = ['onload', 'onerror', 'onprogress'];
+                    for (var j = 0; j < props.length; j++) {
+                        wrapProp(props[j], xhr);
+                    }
+
+                    if ('onreadystatechange' in xhr && isFunction(xhr.onreadystatechange)) {
+                        fill(xhr, 'onreadystatechange', function (orig) {
+                            return self.wrap(orig, undefined, onreadystatechangeHandler);
+                        }, true /* noUndo */);
+                    } else {
+                        // if onreadystatechange wasn't actually set by the page on this xhr, we
+                        // are free to set our own and capture the breadcrumb
+                        xhr.onreadystatechange = onreadystatechangeHandler;
+                    }
+
                     return origSend.apply(this, arguments);
                 };
+            });
+        }
+
+        // record navigation (URL) changes
+        if ('history' in window && history.pushState) {
+            // TODO: remove onpopstate handler on uninstall()
+            var oldOnPopState = window.onpopstate;
+            window.onpopstate = function () {
+                var currentHref = self._location.href;
+                self._captureUrlChange(self._lastHref, currentHref);
+
+                if (oldOnPopState) {
+                    return oldOnPopState.apply(this, arguments);
+                }
+            };
+
+            fill(history, 'pushState', function (origPushState) {
+                // note history.pushState.length is 0; intentionally not declaring
+                // params to preserve 0 arity
+                return function(/* state, title, url */) {
+                    var url = arguments.length > 2 ? arguments[2] : undefined;
+
+                    // url argument is optional
+                    if (url) {
+                        // coerce to string (this is what pushState does)
+                        self._captureUrlChange(self._lastHref, url + '');
+                    }
+
+                    return origPushState.apply(this, arguments);
+                };
+            });
+        }
+
+        // console
+        var consoleMethodCallback = function (msg, data) {
+            self.captureBreadcrumb({
+                message: msg,
+                level: data.level,
+                category: 'console'
+            });
+        };
+
+        if ('console' in window && console.log) {
+            each(['debug', 'info', 'warn', 'error', 'log'], function (_, level) {
+                wrapConsoleMethod(console, level, consoleMethodCallback);
             });
         }
 
@@ -977,6 +1270,14 @@ Raven.prototype = {
         // Send along our own collected metadata with extra
         data.extra['session:duration'] = now() - this._startTime;
 
+        if (this._breadcrumbs && this._breadcrumbs.length > 0) {
+            // intentionally make shallow copy so that additions
+            // to breadcrumbs aren't accidentally sent in this request
+            data.breadcrumbs = {
+                values: [].slice.call(this._breadcrumbs, 0)
+            };
+        }
+
         // If there are no tags/extra, strip the key from the payload alltogther.
         if (isEmptyObject(data.tags)) delete data.tags;
 
@@ -1026,6 +1327,12 @@ Raven.prototype = {
             auth.sentry_secret = this._globalSecret;
         }
 
+        this.captureBreadcrumb({
+            category: 'sentry',
+            message: data.message,
+            event_id: data.event_id
+        });
+
         var url = this._globalEndpoint;
         (globalOptions.transport || this._makeRequest).call(this, {
             url: url,
@@ -1047,24 +1354,15 @@ Raven.prototype = {
         });
     },
 
-    _makeImageRequest: function(opts) {
-        // Tack on sentry_data to auth options, which get urlencoded
-        opts.auth.sentry_data = JSON.stringify(opts.data);
+    _makeRequest: function(opts) {
+        var request = new XMLHttpRequest();
 
-        var img = this._newImage(),
-            src = opts.url + '?' + urlencode(opts.auth),
-            crossOrigin = opts.options.crossOrigin;
+        // if browser doesn't support CORS (e.g. IE7), we are out of luck
+        var hasCORS =
+            'withCredentials' in request ||
+            typeof XDomainRequest !== 'undefined';
 
-        if (crossOrigin || crossOrigin === '') {
-            img.crossOrigin = crossOrigin;
-        }
-        img.onload = opts.onSuccess;
-        img.onerror = img.onabort = opts.onError;
-        img.src = src;
-    },
-
-    _makeXhrRequest: function(opts) {
-        var request;
+        if (!hasCORS) return;
 
         var url = opts.url;
         function handler() {
@@ -1077,7 +1375,6 @@ Raven.prototype = {
             }
         }
 
-        request = new XMLHttpRequest();
         if ('withCredentials' in request) {
             request.onreadystatechange = function () {
                 if (request.readyState !== 4) {
@@ -1099,14 +1396,6 @@ Raven.prototype = {
         //       HTTP header) so as to avoid preflight CORS requests
         request.open('POST', url + '?' + urlencode(opts.auth));
         request.send(JSON.stringify(opts.data));
-    },
-
-    _makeRequest: function(opts) {
-        var hasCORS =
-            'withCredentials' in new XMLHttpRequest() ||
-            typeof XDomainRequest !== 'undefined';
-
-        return (hasCORS ? this._makeXhrRequest : this._makeImageRequest)(opts);
     },
 
     // Note: this is shitty, but I can't figure out how to get
@@ -1142,7 +1431,7 @@ Raven.prototype.setReleaseContext = Raven.prototype.setRelease;
 
 module.exports = Raven;
 
-},{"1":1,"4":4,"5":5}],3:[function(_dereq_,module,exports){
+},{"1":1,"2":2,"5":5,"6":6}],4:[function(_dereq_,module,exports){
 /**
  * Enforces a single instance of the Raven client, and the
  * main entry point for Raven. If you are a consumer of the
@@ -1151,7 +1440,7 @@ module.exports = Raven;
 
 'use strict';
 
-var RavenConstructor = _dereq_(2);
+var RavenConstructor = _dereq_(3);
 
 var _Raven = window.Raven;
 
@@ -1172,7 +1461,8 @@ Raven.afterLoad();
 
 module.exports = Raven;
 
-},{"2":2}],4:[function(_dereq_,module,exports){
+},{"3":3}],5:[function(_dereq_,module,exports){
+/*eslint no-extra-parens:0*/
 'use strict';
 
 var objectPrototype = Object.prototype;
@@ -1282,6 +1572,23 @@ function urlencode(o) {
     return pairs.join('&');
 }
 
+// borrowed from https://tools.ietf.org/html/rfc3986#appendix-B
+// intentionally using regex and not <a/> href parsing trick because React Native and other
+// environments where DOM might not be available
+function parseUrl(url) {
+    var match = url.match(/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$/);
+    if (!match) return {};
+
+    // coerce to undefined values to empty string so we don't get 'undefined'
+    var query = match[6] || '';
+    var fragment = match[8] || '';
+    return {
+        protocol: match[2],
+        host: match[4],
+        path: match[5],
+        relative: match[5] + query + fragment // everything minus origin
+    };
+}
 function uuid4() {
     var crypto = window.crypto || window.msCrypto;
 
@@ -1315,6 +1622,84 @@ function uuid4() {
     }
 }
 
+/**
+ * Given a child DOM element, returns a query-selector statement describing that
+ * and its ancestors
+ * e.g. [HTMLElement] => body > div > input#foo.btn[name=baz]
+ * @param elem
+ * @returns {string}
+ */
+function htmlTreeAsString(elem) {
+    var MAX_TRAVERSE_HEIGHT = 5,
+        MAX_OUTPUT_LEN = 80,
+        out = [],
+        height = 0,
+        len = 0,
+        separator = ' > ',
+        sepLength = separator.length,
+        nextStr;
+
+    while (elem && height++ < MAX_TRAVERSE_HEIGHT) {
+
+        nextStr = htmlElementAsString(elem);
+        // bail out if
+        // - nextStr is the 'html' element
+        // - the length of the string that would be created exceeds MAX_OUTPUT_LEN
+        //   (ignore this limit if we are on the first iteration)
+        if (nextStr === 'html' || height > 1 && len + (out.length * sepLength) + nextStr.length >= MAX_OUTPUT_LEN) {
+            break;
+        }
+
+        out.push(nextStr);
+
+        len += nextStr.length;
+        elem = elem.parentNode;
+    }
+
+    return out.reverse().join(separator);
+}
+
+/**
+ * Returns a simple, query-selector representation of a DOM element
+ * e.g. [HTMLElement] => input#foo.btn[name=baz]
+ * @param HTMLElement
+ * @returns {string}
+ */
+function htmlElementAsString(elem) {
+    var out = [],
+        className,
+        classes,
+        key,
+        attr,
+        i;
+
+    if (!elem || !elem.tagName) {
+        return '';
+    }
+
+    out.push(elem.tagName.toLowerCase());
+    if (elem.id) {
+        out.push('#' + elem.id);
+    }
+
+    className = elem.className;
+    if (className && isString(className)) {
+        classes = className.split(' ');
+        for (i = 0; i < classes.length; i++) {
+            out.push('.' + classes[i]);
+        }
+    }
+    var attrWhitelist = ['type', 'name', 'title', 'alt'];
+    for (i = 0; i < attrWhitelist.length; i++) {
+        key = attrWhitelist[i];
+        attr = elem.getAttribute(key);
+        if (attr) {
+            out.push('[' + key + '="' + attr + '"]');
+        }
+    }
+    return out.join('');
+}
+
 module.exports = {
     isUndefined: isUndefined,
     isFunction: isFunction,
@@ -1328,13 +1713,16 @@ module.exports = {
     hasKey: hasKey,
     joinRegExp: joinRegExp,
     urlencode: urlencode,
-    uuid4: uuid4
+    uuid4: uuid4,
+    htmlTreeAsString: htmlTreeAsString,
+    htmlElementAsString: htmlElementAsString,
+    parseUrl: parseUrl
 };
 
-},{}],5:[function(_dereq_,module,exports){
+},{}],6:[function(_dereq_,module,exports){
 'use strict';
 
-var utils = _dereq_(4);
+var utils = _dereq_(5);
 
 var hasKey = utils.hasKey;
 var isString = utils.isString;
@@ -1358,7 +1746,7 @@ var _slice = [].slice;
 var UNKNOWN_FUNCTION = '?';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Error_types
-var ERROR_TYPES_RE = /^(?:Uncaught )?((?:Eval|Internal|Range|Reference|Syntax|Type|URI)Error)\: ?(.*)$/;
+var ERROR_TYPES_RE = /^(?:Uncaught (?:exception: )?)?((?:Eval|Internal|Range|Reference|Syntax|Type|URI)Error): ?(.*)$/;
 
 function getLocationHref() {
     if (typeof document === 'undefined')
@@ -1496,8 +1884,6 @@ TraceKit.report = (function reportModuleWrapper() {
                 'line': lineNo,
                 'column': colNo
             };
-            location.func = TraceKit.computeStackTrace.guessFunctionName(location.url, location.line);
-            location.context = TraceKit.computeStackTrace.gatherContext(location.url, location.line);
 
             var name = undefined;
             var msg = message; // must be new var or will modify original `arguments`
@@ -1509,6 +1895,9 @@ TraceKit.report = (function reportModuleWrapper() {
                     msg = groups[2];
                 }
             }
+
+            location.func = UNKNOWN_FUNCTION;
+            location.context = null;
 
             stack = {
                 'name': name,
@@ -1651,131 +2040,6 @@ TraceKit.report = (function reportModuleWrapper() {
  *
  */
 TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
-    var sourceCache = {};
-
-    /**
-     * Attempts to retrieve source code via XMLHttpRequest, which is used
-     * to look up anonymous function names.
-     * @param {string} url URL of source code.
-     * @return {string} Source contents.
-     */
-    function loadSource(url) {
-        if (!TraceKit.remoteFetching) { //Only attempt request if remoteFetching is on.
-            return '';
-        }
-        try {
-            var getXHR = function() {
-                try {
-                    return new window.XMLHttpRequest();
-                } catch (e) {
-                    // explicitly bubble up the exception if not found
-                    return new window.ActiveXObject('Microsoft.XMLHTTP');
-                }
-            };
-
-            var request = getXHR();
-            request.open('GET', url, false);
-            request.send('');
-            return request.responseText;
-        } catch (e) {
-            return '';
-        }
-    }
-
-    /**
-     * Retrieves source code from the source code cache.
-     * @param {string} url URL of source code.
-     * @return {Array.<string>} Source contents.
-     */
-    function getSource(url) {
-        if (!isString(url)) return [];
-        if (!hasKey(sourceCache, url)) {
-            // URL needs to be able to fetched within the acceptable domain.  Otherwise,
-            // cross-domain errors will be triggered.
-            var source = '';
-            var domain = '';
-            try { domain = document.domain; } catch (e) {}
-            if (url.indexOf(domain) !== -1) {
-                source = loadSource(url);
-            }
-            sourceCache[url] = source ? source.split('\n') : [];
-        }
-
-        return sourceCache[url];
-    }
-
-    /**
-     * Tries to use an externally loaded copy of source code to determine
-     * the name of a function by looking at the name of the variable it was
-     * assigned to, if any.
-     * @param {string} url URL of source code.
-     * @param {(string|number)} lineNo Line number in source code.
-     * @return {string} The function name, if discoverable.
-     */
-    function guessFunctionName(url, lineNo) {
-        var reFunctionArgNames = /function ([^(]*)\(([^)]*)\)/,
-            reGuessFunction = /['"]?([0-9A-Za-z$_]+)['"]?\s*[:=]\s*(function|eval|new Function)/,
-            line = '',
-            maxLines = 10,
-            source = getSource(url),
-            m;
-
-        if (!source.length) {
-            return UNKNOWN_FUNCTION;
-        }
-
-        // Walk backwards from the first line in the function until we find the line which
-        // matches the pattern above, which is the function definition
-        for (var i = 0; i < maxLines; ++i) {
-            line = source[lineNo - i] + line;
-
-            if (!isUndefined(line)) {
-                if ((m = reGuessFunction.exec(line))) {
-                    return m[1];
-                } else if ((m = reFunctionArgNames.exec(line))) {
-                    return m[1];
-                }
-            }
-        }
-
-        return UNKNOWN_FUNCTION;
-    }
-
-    /**
-     * Retrieves the surrounding lines from where an exception occurred.
-     * @param {string} url URL of source code.
-     * @param {(string|number)} line Line number in source code to centre
-     * around for context.
-     * @return {?Array.<string>} Lines of source code.
-     */
-    function gatherContext(url, line) {
-        var source = getSource(url);
-
-        if (!source.length) {
-            return null;
-        }
-
-        var context = [],
-            // linesBefore & linesAfter are inclusive with the offending line.
-            // if linesOfContext is even, there will be one extra line
-            //   *before* the offending line.
-            linesBefore = Math.floor(TraceKit.linesOfContext / 2),
-            // Add one extra line if linesOfContext is odd
-            linesAfter = linesBefore + (TraceKit.linesOfContext % 2),
-            start = Math.max(0, line - linesBefore - 1),
-            end = Math.min(source.length, line + linesAfter - 1);
-
-        line -= 1; // convert to 0-based index
-
-        for (var i = start; i < end; ++i) {
-            if (!isUndefined(source[i])) {
-                context.push(source[i]);
-            }
-        }
-
-        return context.length > 0 ? context : null;
-    }
-
     /**
      * Escapes special characters, except for whitespace, in a string to be
      * used inside a regular expression as a string literal.
@@ -1795,128 +2059,6 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
      */
     function escapeCodeAsRegExpForMatchingInsideHTML(body) {
         return escapeRegExp(body).replace('<', '(?:<|&lt;)').replace('>', '(?:>|&gt;)').replace('&', '(?:&|&amp;)').replace('"', '(?:"|&quot;)').replace(/\s+/g, '\\s+');
-    }
-
-    /**
-     * Determines where a code fragment occurs in the source code.
-     * @param {RegExp} re The function definition.
-     * @param {Array.<string>} urls A list of URLs to search.
-     * @return {?Object.<string, (string|number)>} An object containing
-     * the url, line, and column number of the defined function.
-     */
-    function findSourceInUrls(re, urls) {
-        var source, m;
-        for (var i = 0, j = urls.length; i < j; ++i) {
-            // console.log('searching', urls[i]);
-            if ((source = getSource(urls[i])).length) {
-                source = source.join('\n');
-                if ((m = re.exec(source))) {
-                    // console.log('Found function in ' + urls[i]);
-
-                    return {
-                        'url': urls[i],
-                        'line': source.substring(0, m.index).split('\n').length,
-                        'column': m.index - source.lastIndexOf('\n', m.index) - 1
-                    };
-                }
-            }
-        }
-
-        // console.log('no match');
-
-        return null;
-    }
-
-    /**
-     * Determines at which column a code fragment occurs on a line of the
-     * source code.
-     * @param {string} fragment The code fragment.
-     * @param {string} url The URL to search.
-     * @param {(string|number)} line The line number to examine.
-     * @return {?number} The column number.
-     */
-    function findSourceInLine(fragment, url, line) {
-        var source = getSource(url),
-            re = new RegExp('\\b' + escapeRegExp(fragment) + '\\b'),
-            m;
-
-        line -= 1;
-
-        if (source && source.length > line && (m = re.exec(source[line]))) {
-            return m.index;
-        }
-
-        return null;
-    }
-
-    /**
-     * Determines where a function was defined within the source code.
-     * @param {(Function|string)} func A function reference or serialized
-     * function definition.
-     * @return {?Object.<string, (string|number)>} An object containing
-     * the url, line, and column number of the defined function.
-     */
-    function findSourceByFunctionBody(func) {
-        if (typeof document === 'undefined')
-            return;
-
-        var urls = [window.location.href],
-            scripts = document.getElementsByTagName('script'),
-            body,
-            code = '' + func,
-            codeRE = /^function(?:\s+([\w$]+))?\s*\(([\w\s,]*)\)\s*\{\s*(\S[\s\S]*\S)\s*\}\s*$/,
-            eventRE = /^function on([\w$]+)\s*\(event\)\s*\{\s*(\S[\s\S]*\S)\s*\}\s*$/,
-            re,
-            parts,
-            result;
-
-        for (var i = 0; i < scripts.length; ++i) {
-            var script = scripts[i];
-            if (script.src) {
-                urls.push(script.src);
-            }
-        }
-
-        if (!(parts = codeRE.exec(code))) {
-            re = new RegExp(escapeRegExp(code).replace(/\s+/g, '\\s+'));
-        }
-
-        // not sure if this is really necessary, but I don’t have a test
-        // corpus large enough to confirm that and it was in the original.
-        else {
-            var name = parts[1] ? '\\s+' + parts[1] : '',
-                args = parts[2].split(',').join('\\s*,\\s*');
-
-            body = escapeRegExp(parts[3]).replace(/;$/, ';?'); // semicolon is inserted if the function ends with a comment.replace(/\s+/g, '\\s+');
-            re = new RegExp('function' + name + '\\s*\\(\\s*' + args + '\\s*\\)\\s*{\\s*' + body + '\\s*}');
-        }
-
-        // look for a normal function definition
-        if ((result = findSourceInUrls(re, urls))) {
-            return result;
-        }
-
-        // look for an old-school event handler function
-        if ((parts = eventRE.exec(code))) {
-            var event = parts[1];
-            body = escapeCodeAsRegExpForMatchingInsideHTML(parts[2]);
-
-            // look for a function defined in HTML as an onXXX handler
-            re = new RegExp('on' + event + '=[\\\'"]\\s*' + body + '\\s*[\\\'"]', 'i');
-
-            if ((result = findSourceInUrls(re, urls[0]))) {
-                return result;
-            }
-
-            // look for ???
-            re = new RegExp(body);
-
-            if ((result = findSourceInUrls(re, urls))) {
-                return result;
-            }
-        }
-
-        return null;
     }
 
     // Contents of Exception in various browsers.
@@ -2005,11 +2147,11 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
             }
 
             if (!element.func && element.line) {
-                element.func = guessFunctionName(element.url, element.line);
+                element.func = UNKNOWN_FUNCTION;
             }
 
             if (element.line) {
-                element.context = gatherContext(element.url, element.line);
+                element.context = null;
             }
 
             stack.push(element);
@@ -2019,9 +2161,7 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
             return null;
         }
 
-        if (stack[0].line && !stack[0].column && reference) {
-            stack[0].column = findSourceInLine(reference[1], stack[0].url, stack[0].line);
-        } else if (!stack[0].column && !isUndefined(ex.columnNumber)) {
+        if (!stack[0].column && !isUndefined(ex.columnNumber)) {
             // FireFox uses this awesome columnNumber property for its top frame
             // Also note, Firefox's column number is 0-based and everything else expects 1-based,
             // so adding 1
@@ -2077,17 +2217,9 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
 
             if (element) {
                 if (!element.func && element.line) {
-                    element.func = guessFunctionName(element.url, element.line);
+                    element.func = UNKNOWN_FUNCTION;
                 }
-                if (element.line) {
-                    try {
-                        element.context = gatherContext(element.url, element.line);
-                    } catch (exc) {}
-                }
-
-                if (!element.context) {
-                    element.context = [lines[line + 1]];
-                }
+                element.context = [lines[line + 1]];
 
                 stack.push(element);
             }
@@ -2139,14 +2271,7 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
             lineRE3 = /^\s*Line (\d+) of function script\s*$/i,
             stack = [],
             scripts = document.getElementsByTagName('script'),
-            inlineScriptBlocks = [],
             parts;
-
-        for (var s in scripts) {
-            if (hasKey(scripts, s) && !scripts[s].src) {
-                inlineScriptBlocks.push(scripts[s]);
-            }
-        }
 
         for (var line = 2; line < lines.length; line += 2) {
             var item = null;
@@ -2167,42 +2292,23 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
                     'column': null // TODO: Check to see if inline#1 (+parts[2]) points to the script number or column number.
                 };
                 var relativeLine = (+parts[1]); // relative to the start of the <SCRIPT> block
-                var script = inlineScriptBlocks[parts[2] - 1];
-                if (script) {
-                    var source = getSource(item.url);
-                    if (source) {
-                        source = source.join('\n');
-                        var pos = source.indexOf(script.innerText);
-                        if (pos >= 0) {
-                            item.line = relativeLine + source.substring(0, pos).split('\n').length;
-                        }
-                    }
-                }
             } else if ((parts = lineRE3.exec(lines[line]))) {
                 var url = window.location.href.replace(/#.*$/, '');
-                var re = new RegExp(escapeCodeAsRegExpForMatchingInsideHTML(lines[line + 1]));
-                var src = findSourceInUrls(re, [url]);
                 item = {
                     'url': url,
                     'func': '',
                     'args': [],
-                    'line': src ? src.line : parts[1],
+                    'line': parts[1],
                     'column': null
                 };
             }
 
             if (item) {
                 if (!item.func) {
-                    item.func = guessFunctionName(item.url, item.line);
+                    item.func = UNKNOWN_FUNCTION;
                 }
-                var context = gatherContext(item.url, item.line);
-                var midline = (context ? context[Math.floor(context.length / 2)] : null);
-                if (context && midline.replace(/^\s*/, '') === lines[line + 1].replace(/^\s*/, '')) {
-                    item.context = context;
-                } else {
-                    // if (context) alert("Context mismatch. Correct midline:\n" + lines[i+1] + "\n\nMidline:\n" + midline + "\n\nContext:\n" + context.join("\n") + "\n\nURL:\n" + item.url);
-                    item.context = [lines[line + 1]];
-                }
+                item.context = [lines[line + 1]];
+
                 stack.push(item);
             }
         }
@@ -2242,16 +2348,7 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
             stackInfo.incomplete = false;
 
             if (!initial.func) {
-                initial.func = guessFunctionName(initial.url, initial.line);
-            }
-
-            if (!initial.context) {
-                initial.context = gatherContext(initial.url, initial.line);
-            }
-
-            var reference = / '([^']+)' /.exec(message);
-            if (reference) {
-                initial.column = findSourceInLine(reference[1], initial.url, initial.line);
+                initial.func = UNKNOWN_FUNCTION;
             }
 
             if (stackInfo.stack.length > 0) {
@@ -2317,20 +2414,6 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
               try {
                 item.func = parts.input.substring(0, parts.input.indexOf('{'));
               } catch (e) { }
-            }
-
-            if ((source = findSourceByFunctionBody(curr))) {
-                item.url = source.url;
-                item.line = source.line;
-
-                if (item.func === UNKNOWN_FUNCTION) {
-                    item.func = guessFunctionName(item.url, item.line);
-                }
-
-                var reference = / '([^']+)' /.exec(ex.message || ex.description);
-                if (reference) {
-                    item.column = findSourceInLine(reference[1], source.url, source.line);
-                }
             }
 
             if (funcs['' + curr]) {
@@ -2423,13 +2506,11 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
 
     computeStackTrace.augmentStackTraceWithInitialElement = augmentStackTraceWithInitialElement;
     computeStackTrace.computeStackTraceFromStackProp = computeStackTraceFromStackProp;
-    computeStackTrace.guessFunctionName = guessFunctionName;
-    computeStackTrace.gatherContext = gatherContext;
 
     return computeStackTrace;
 }());
 
 module.exports = TraceKit;
 
-},{"4":4}]},{},[3])(3)
+},{"5":5}]},{},[4])(4)
 });
