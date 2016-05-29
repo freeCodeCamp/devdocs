@@ -244,6 +244,7 @@ class app.DB
     @useIndexedDB and (not @cachedDocs or @cachedDocs[entry.doc.slug])
 
   idbTransaction: (db, options) ->
+    app.lastIDBTransaction = [options.stores, options.mode]
     txn = db.transaction(options.stores, options.mode)
     unless options.ignoreError is false
       txn.onerror = (event) ->
