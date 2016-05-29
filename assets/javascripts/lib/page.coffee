@@ -149,7 +149,10 @@ onpopstate = (event) ->
   return
 
 onclick = (event) ->
-  return if event.which isnt 1 or event.metaKey or event.ctrlKey or event.shiftKey or event.defaultPrevented
+  try
+    return if event.which isnt 1 or event.metaKey or event.ctrlKey or event.shiftKey or event.defaultPrevented
+  catch
+    return
 
   link = event.target
   link = link.parentElement while link and link.tagName isnt 'A'
