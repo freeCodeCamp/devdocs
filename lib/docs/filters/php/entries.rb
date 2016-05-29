@@ -94,7 +94,7 @@ module Docs
       end
 
       def get_type
-        return 'Language Reference' if subpath.start_with?('language.')
+        return 'Language Reference' if subpath.start_with?('language.') || subpath.start_with?('functions.')
         return 'PCRE Reference' if subpath.start_with?('regexp.')
 
         type = at_css('.up').content.strip
