@@ -20,6 +20,10 @@ class app.views.Document extends app.View
     @addSubview @content = new app.views.Content
     @addSubview @path    = new app.views.Path unless app.isSingleDoc() or app.isMobile()
 
+    @sidebar.search
+      .on 'searching', @onSearching
+      .on 'clear', @onSearchClear
+
     @activate()
     return
 
@@ -39,17 +43,32 @@ class app.views.Document extends app.View
     app.appCache?.updateInBackground()
     return
 
-  toggleSidebar: (saveLayout = true) ->
-    hasHiddenClass = app.el.classList.contains(HIDE_SIDEBAR_CLASS)
-    forceShow = (!hasHiddenClass || !@hasSidebar()) && !saveLayout
-    app.el.classList[if hasHiddenClass or forceShow then 'remove' else 'add'](HIDE_SIDEBAR_CLASS)
-    return unless saveLayout
-    app.settings.setLayout(HIDE_SIDEBAR_CLASS, !hasHiddenClass)
-    app.appCache?.updateInBackground()
+  showSidebar: (options = {}) ->
+    @toggleSidebar(options, true)
+    return
+
+  hideSidebar: (options = {}) ->
+    @toggleSidebar(options, false)
+    return
+
+  toggleSidebar: (options = {}, shouldShow) ->
+    shouldShow ?= if options.save then !@hasSidebar() else app.el.classList.contains(HIDE_SIDEBAR_CLASS)
+    app.el.classList[if shouldShow then 'remove' else 'add'](HIDE_SIDEBAR_CLASS)
+    app.settings.setLayout(HIDE_SIDEBAR_CLASS, !shouldShow) if options.save
     return
 
   hasSidebar: ->
-    return !app.el.classList.contains(HIDE_SIDEBAR_CLASS) && !app.settings.hasLayout(HIDE_SIDEBAR_CLASS)
+    !app.settings.hasLayout(HIDE_SIDEBAR_CLASS)
+
+  onSearching: =>
+    unless @hasSidebar()
+      @showSidebar()
+    return
+
+  onSearchClear: =>
+    unless @hasSidebar()
+      @hideSidebar()
+    return
 
   setTitle: (title) ->
     @el.title = if title then "DevDocs - #{title}" else 'DevDocs API Documentation'

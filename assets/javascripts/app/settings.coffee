@@ -82,10 +82,9 @@ class app.Settings
   hasLayout: (name) ->
     try
       layout = (Cookies.get(LAYOUT_KEY) || '').split(' ')
-      $.arrayDelete(layout, '')
-      return layout.indexOf(name) isnt -1
+      layout.indexOf(name) isnt -1
     catch
-    return false
+      false
 
   setSize: (value) ->
     try
