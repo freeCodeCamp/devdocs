@@ -157,7 +157,7 @@ $.offset = (el, container = document.body) ->
 $.scrollParent = (el) ->
   while el = el.parentElement
     break if el.scrollTop > 0
-    break if getComputedStyle(el).overflowY in ['auto', 'scroll']
+    break if getComputedStyle(el)?.overflowY in ['auto', 'scroll']
   el
 
 $.scrollTo = (el, parent, position = 'center', options = {}) ->
