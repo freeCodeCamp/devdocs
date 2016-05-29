@@ -3,7 +3,7 @@ module Docs
     self.name = 'Marionette.js'
     self.slug = 'marionette'
     self.type = 'marionette'
-    self.release = '2.4.5'
+    self.release = '2.5.6'
     self.base_url = "http://marionettejs.com/docs/v#{release}/"
     self.root_path = 'index'
     self.links = {
