@@ -14,7 +14,7 @@ class app.views.Resizer extends app.View
     @appendTo $('._app')
 
     @style = $('style[data-resizer]')
-    @size = @savedSize = @style.getAttribute('data-size')
+    @size = @style.getAttribute('data-size')
     return
 
   MIN = 260
@@ -22,22 +22,13 @@ class app.views.Resizer extends app.View
 
   resize: (value, save) ->
     value -= app.el.offsetLeft
-    return unless value >= 0
-
-    if value <= 5
-      app.document.hideSidebar({save})
-      newSize = @savedSize
-    else
-      app.document.showSidebar({save})
-      value = Math.min(Math.max(Math.round(value), MIN), MAX)
-      newSize = "#{value}px"
-
+    return unless value > 0
+    value = Math.min(Math.max(Math.round(value), MIN), MAX)
+    newSize = "#{value}px"
     @style.innerHTML = @style.innerHTML.replace(new RegExp(@size, 'g'), newSize)
     @size = newSize
-
     if save
-      @savedSize = @size
-      app.settings.setSize(parseInt(@savedSize))
+      app.settings.setSize(value)
       app.appCache?.updateInBackground()
     return
 
@@ -64,7 +55,7 @@ class app.views.Resizer extends app.View
   onDragEnd: (event) =>
     $.off(window, 'dragover', @onDrag)
     value = event.pageX or (event.screenX - window.screenX)
-    if @lastDragValue and value > 0 and not (@lastDragValue - 5 < value < @lastDragValue + 5) # https://github.com/Thibaut/devdocs/issues/265
+    if @lastDragValue and not (@lastDragValue - 5 < value < @lastDragValue + 5) # https://github.com/Thibaut/devdocs/issues/265
       value = @lastDragValue
     @resize(value, true)
     return
