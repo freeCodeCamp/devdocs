@@ -56,10 +56,11 @@
           tags:
             mode: if @DOC then 'single' else 'full'
             iframe: (window.top isnt window).toString()
-          shouldSendCallback: ->
-            if @isInjectionError()
-              @onInjectionError()
-              return false
+          shouldSendCallback: =>
+            try
+              if @isInjectionError()
+                @onInjectionError()
+                return false
             true
           dataCallback: (data) ->
             try
