@@ -54,7 +54,9 @@ class app.views.Document extends app.View
   toggleSidebar: (options = {}, shouldShow) ->
     shouldShow ?= if options.save then !@hasSidebar() else app.el.classList.contains(HIDE_SIDEBAR_CLASS)
     app.el.classList[if shouldShow then 'remove' else 'add'](HIDE_SIDEBAR_CLASS)
-    app.settings.setLayout(HIDE_SIDEBAR_CLASS, !shouldShow) if options.save
+    if options.save
+      app.settings.setLayout(HIDE_SIDEBAR_CLASS, !shouldShow)
+      app.appCache?.updateInBackground()
     return
 
   hasSidebar: ->
