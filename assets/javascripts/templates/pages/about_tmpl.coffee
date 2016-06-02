@@ -71,6 +71,7 @@ app.templates.aboutPage = -> """
     <li><a href="https://atom.io/packages/devdocs">Atom plugin</a>
     <li><a href="https://github.com/gruehle/dev-docs-viewer">Brackets extension</a>
     <li><a href="https://github.com/xuchunyang/DevDocs.el">Emacs Package</a>
+    <li><a href="https://github.com/waiting-for-dev/vim-www">Vim searching plugin with DevDocs integrated</a>
   </ul>
   <p>You can also use <a href="http://fluidapp.com">Fluid</a> to turn DevDocs into a real OS X app, or <a href="https://apps.ubuntu.com/cat/applications/fogger/">Fogger</a> on Ubuntu.
 
