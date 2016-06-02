@@ -17,3 +17,4 @@
 * [Emacs lookup](https://github.com/skeeto/devdocs-lookup)
 * [Alfred Workflow](https://github.com/yannickglt/alfred-devdocs) (1)
 * [Alfred Workflow](https://github.com/jeffscottward/DevDocsIO-AlfredWorkflow) (2)
+* [Vim search plugin with Devdocs in its defaults](https://github.com/waiting-for-dev/vim-www) Just set `let g:www_shortcut_engines = { 'devdocs': ['Devdocs', '<leader>dd'] }` to have a `:Devdocs` command and a `<leader>dd` mapping.
