@@ -13,9 +13,8 @@
   <link rel="stylesheet" href="<%= main_stylesheet_path %>" data-alt="<%= alternate_stylesheet_path %>">
   <%= javascript_tag 'application', asset_host: false %><% unless App.production? %>
   <%= javascript_tag 'debug' %><% end %>
-  <script>app.DOC = <%= @doc.to_json %>;</script>
 </head>
-<body class="_booting _noscript">
+<body class="_booting _noscript" data-doc="<%= CGI::escape_html @doc.to_json %>">
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
 <%= erb :app %></body>
 </html>
