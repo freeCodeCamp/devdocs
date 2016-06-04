@@ -62,6 +62,8 @@
               if @isInjectionError()
                 @onInjectionError()
                 return false
+              if @isAndroidWebview()
+                return false
             true
           dataCallback: (data) ->
             try
