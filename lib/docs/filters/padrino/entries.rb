@@ -2,15 +2,13 @@ module Docs
   class Padrino
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        node = at_css('h1')
-        result = node.content.strip
-        result << ' event' if type == 'Events'
-        result << '()' if node['class'].try(:include?, 'function')
-        result
+        at_css('h1, h2').content
       end
 
       def get_type
-        return 'Ruby'
+        type = name.dup
+        type.remove! %r{#.+\z}
+        type.split('::')[0..2].join('::')
       end
     end
   end

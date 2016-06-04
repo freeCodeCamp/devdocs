@@ -4,6 +4,7 @@ module Docs
     self.slug = 'padrino'
     self.type = 'ruby'
     self.version = 'master'
+    self.release = '0.13.2'
     self.base_url = 'http://www.rubydoc.info/github/padrino/padrino-framework'
     self.links = {
       home: 'http://padrinorb.com/',
