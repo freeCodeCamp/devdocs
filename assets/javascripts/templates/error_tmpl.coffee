@@ -3,7 +3,7 @@ error = (title, text = '', links = '') ->
   links = """<p class="_error-links">#{links}</p>""" if links
   """<div class="_error"><h1 class="_error-title">#{title}</h1>#{text}#{links}</div>"""
 
-back = '<a href="javascript:history.back()" class="_error-link">Go back</a>'
+back = '<a href="#" data-behavior="back" class="_error-link">Go back</a>'
 
 app.templates.notFoundPage = ->
   error """ Page not found. """,
@@ -19,7 +19,7 @@ app.templates.pageLoadError = ->
 
 app.templates.bootError = ->
   error """ The app failed to load. """,
-        """ Check your Internet connection and try <a href="javascript:location.reload()">reloading</a>.<br>
+        """ Check your Internet connection and try <a href="#" data-behavior="reload">reloading</a>.<br>
             If you keep seeing this, you're likely behind a proxy or firewall that blocks cross-domain requests. """
 
 app.templates.offlineError = (reason) ->

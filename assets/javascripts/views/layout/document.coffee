@@ -24,6 +24,8 @@ class app.views.Document extends app.View
       .on 'searching', @onSearching
       .on 'clear', @onSearchClear
 
+    $.on document.body, 'click', @onClick
+
     @activate()
     return
 
@@ -99,3 +101,14 @@ class app.views.Document extends app.View
 
   onForward: ->
     history.forward()
+
+  onClick: (event) ->
+    return unless event.target.hasAttribute('data-behavior')
+    $.stopEvent(event)
+    switch event.target.getAttribute('data-behavior')
+      when 'back'         then history.back()
+      when 'reload'       then window.location.reload()
+      when 'reboot'       then window.location = '/'
+      when 'hard-reload'  then app.reload()
+      when 'reset'        then app.reset() if confirm('Are you sure you want to reset DevDocs?')
+    return

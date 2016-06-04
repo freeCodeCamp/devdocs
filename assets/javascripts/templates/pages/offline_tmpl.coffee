@@ -33,7 +33,7 @@ app.templates.offlinePage = (docs) -> """
     <dt>I found a bug, where do I report it?
     <dd>In the <a href="https://github.com/Thibaut/devdocs/issues">issue tracker</a>. Thanks!
     <dt>How do I uninstall/reset the app?
-    <dd>Click <a href="javascript:if(confirm('Are you sure you want to reset DevDocs?'))app.reset()">here</a>.
+    <dd>Click <a href="#" data-behavior="reset">here</a>.
     <dt>Why aren't all documentations listed above?
     <dd>You have to <a href="#" data-pick-docs>enable</a> them first.
   </dl>

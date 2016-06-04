@@ -7,12 +7,12 @@ textNotif = (title, message) ->
 
 app.templates.notifUpdateReady = ->
   textNotif """ DevDocs has been updated. """,
-            """ <a href="javascript:location='/'">Reload the page</a> to use the new version. """
+            """ <a href="#" data-behavior="reboot">Reload the page</a> to use the new version. """
 
 app.templates.notifError = ->
   textNotif """ Oops, an error occured. """,
-            """ Try <a href="javascript:app.reload()">reloading</a>, and if the problem persists,
-                <a href="javascript:if(confirm('Are you sure you want to reset DevDocs?'))app.reset()">resetting the app</a>.<br>
+            """ Try <a href="#" data-behavior="hard-reload">reloading</a>, and if the problem persists,
+                <a href="#" data-behavior="reset">resetting the app</a>.<br>
                 You can also report this issue on <a href="https://github.com/Thibaut/devdocs/issues/new" target="_blank">GitHub</a>. """
 
 app.templates.notifQuotaExceeded = ->
