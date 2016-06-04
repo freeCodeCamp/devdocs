@@ -67,13 +67,13 @@ class App < Sinatra::Application
     BetterErrors.application_root = File.expand_path('..', __FILE__)
     BetterErrors.editor = :sublime
 
-    set :csp, "default-src 'self' *; script-src 'self' 'unsafe-inline' *; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' *; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
   end
 
   configure :production do
     set :static, false
     set :docs_host, '//docs.devdocs.io'
-    set :csp, "default-src 'self' *; script-src 'self' 'unsafe-inline' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+    set :csp, "default-src 'self' *; script-src 'self' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
     use Rack::ETag
