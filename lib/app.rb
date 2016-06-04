@@ -66,6 +66,8 @@ class App < Sinatra::Application
     use BetterErrors::Middleware
     BetterErrors.application_root = File.expand_path('..', __FILE__)
     BetterErrors.editor = :sublime
+
+    set :csp, "default-src 'self' *; script-src 'self' 'unsafe-inline' *; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
   end
 
   configure :production do
