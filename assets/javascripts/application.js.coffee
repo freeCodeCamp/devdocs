@@ -18,6 +18,8 @@
 
 #= require_tree ./templates
 
+#= require tracking
+
 init = ->
   document.removeEventListener 'DOMContentLoaded', init, false
 
