@@ -29,6 +29,7 @@ app.views.PostgresPage =
 app.views.RamdaPage =
 app.views.ReactPage =
 app.views.RethinkdbPage =
+app.views.RubydocPage =
 app.views.SinonPage =
 app.views.SocketioPage =
 app.views.SphinxSimplePage =

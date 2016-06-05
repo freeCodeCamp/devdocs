@@ -351,6 +351,11 @@ credits = [
     'LGPLv2.1',
     'https://raw.githubusercontent.com/OpenTSDB/opentsdb.net/gh-pages/COPYING.LESSER'
   ], [
+    'Padrino',
+    '2010-2016 Padrino',
+    'MIT',
+    'https://raw.githubusercontent.com/padrino/padrino-framework/master/padrino/LICENSE.txt'
+  ], [
     'Perl',
     '1993-2016 Larry Wall and others',
     'GPLv1',
