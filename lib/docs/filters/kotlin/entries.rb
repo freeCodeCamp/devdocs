@@ -2,49 +2,27 @@ module Docs
   class Kotlin
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        if at_css('h1')
-          name = at_css('h1').text
-          module_name = breadcrumbs[1]
-
-          "#{module_name}.#{name}"
-        elsif at_css('h2')
-          at_css('h2').text.gsub 'Package ', ''
-        elsif at_css('h3')
-          at_css('h3').text
+        if subpath.start_with?('api')
+          breadcrumbs[1..-1].join('.')
+        else
+          at_css('h1').content
         end
       end
 
       def get_type
-        if package? || top_level? && !extensions?
+        if subpath.start_with?('api')
           breadcrumbs[1]
-        else
-          "miscellaneous"
+        elsif subpath.start_with?('docs/tutorials')
+          'Tutorials'
+        elsif subpath.start_with?('docs/reference')
+          'Reference'
         end
       end
 
       private
 
       def breadcrumbs
-        container = at_css('.api-docs-breadcrumbs')
-
-        if container
-          links = container.children.select.with_index { |_, i| i.even? }
-          links.map &:text
-        else
-          []
-        end
-      end
-
-      def top_level?
-        breadcrumbs.size == 3
-      end
-
-      def extensions?
-        get_name.start_with? 'Extensions'
-      end
-
-      def package?
-        breadcrumbs.size == 2
+        @breadcrumbs ||= css('.api-docs-breadcrumbs a').map(&:content).map(&:strip)
       end
     end
   end

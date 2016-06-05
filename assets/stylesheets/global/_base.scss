@@ -155,6 +155,7 @@ td {
     margin-top: 0;
     margin-bottom: 0;
   }
+  > pre:first-child, > p:first-child, > ul:first-child, > ol:first-child { margin-top: 0; }
   > pre:last-child, > p:last-child, > ul:last-child, > ol:last-child { margin-bottom: 0; }
 }
 

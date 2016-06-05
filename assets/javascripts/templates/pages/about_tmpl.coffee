@@ -251,6 +251,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/knockout/knockout/master/LICENSE'
   ], [
+    'Kotlin',
+    '2010-2016 JetBrains s.r.o.',
+    'Apache',
+    'https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/LICENSE'
+  ], [
     'Laravel',
     'Taylor Otwell',
     'MIT',
