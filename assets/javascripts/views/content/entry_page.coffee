@@ -41,10 +41,10 @@ class app.views.EntryPage extends app.View
     return
 
   CLIPBOARD_LINK = '<a class="_pre-clip" title="Copy to clipboard" tabindex="-1"></a>'
+  PRE_TAGS = /<pre[^>]*>/g
 
   addClipboardLinks: ->
-    for el in @findAllByTag('pre')
-      el.insertAdjacentHTML('afterbegin', CLIPBOARD_LINK)
+    @el.innerHTML = @el.innerHTML.replace(PRE_TAGS, "$&#{CLIPBOARD_LINK}")
     return
 
   LINKS =

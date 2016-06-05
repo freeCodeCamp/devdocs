@@ -10,6 +10,7 @@ class app.views.BasePage extends app.View
     return
 
   highlightCode: (el, language) ->
+    return unless language
     if $.isCollection(el)
       @highlightCode e, language for e in el
     else if el

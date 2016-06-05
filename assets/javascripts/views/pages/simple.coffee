@@ -2,7 +2,7 @@
 
 class app.views.SimplePage extends app.views.BasePage
   prepare: ->
-    for el in @findAllByTag('pre') when el.hasAttribute('data-language')
+    for el in @findAll('pre[data-language]')
       @highlightCode el, el.getAttribute('data-language')
     return
 
