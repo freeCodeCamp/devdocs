@@ -36,7 +36,8 @@ class app.views.Search extends app.View
     return
 
   focus: ->
-    @input.focus() unless document.activeElement is @input
+    @delay =>
+      @input.focus() unless document.activeElement is @input
     return
 
   autoFocus: =>

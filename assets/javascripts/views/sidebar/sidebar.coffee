@@ -23,7 +23,7 @@ class app.views.Sidebar extends app.View
     @docList = new app.views.DocList
     @docPicker = new app.views.DocPicker unless app.isSingleDoc()
 
-    app.on 'ready', @showDocList
+    app.on 'ready', @onReady
     $.on document, 'click', @onGlobalClick if @docPicker
     return
 
@@ -32,11 +32,16 @@ class app.views.Sidebar extends app.View
       @hover?.hide()
       @saveScrollPosition()
       @view?.deactivate()
-      @html @view = view
-      @append @tmpl('sidebarSettings') if @view is @docList and @docPicker
+      @view = view
+      @render()
       @view.activate()
       @restoreScrollPosition()
       if view is @docPicker then @search.disable() else @search.enable()
+    return
+
+  render: ->
+    @html @view
+    @append @tmpl('sidebarSettings') if @view is @docList and @docPicker
     return
 
   showDocList: (reset) =>
@@ -53,6 +58,11 @@ class app.views.Sidebar extends app.View
   showResults: =>
     @show @results
     return
+
+  onReady: =>
+    @view = @docList
+    @render()
+    @view.activate()
 
   reset: ->
     @showDocList true
