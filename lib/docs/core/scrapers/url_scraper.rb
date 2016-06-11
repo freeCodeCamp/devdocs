@@ -36,6 +36,16 @@ module Docs
       response.success? && response.html? && base_url.contains?(response.effective_url)
     end
 
+    def load_capybara_selenium
+      require 'capybara/dsl'
+      Capybara.register_driver :selenium_marionette do |app|
+        Capybara::Selenium::Driver.new(app, marionette: true)
+      end
+      Capybara.current_driver = :selenium_marionette
+      Capybara.run_server = false
+      Capybara
+    end
+
     module FixRedirectionsBehavior
       def self.included(base)
         base.extend ClassMethods

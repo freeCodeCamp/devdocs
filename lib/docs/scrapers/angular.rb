@@ -25,6 +25,7 @@ module Docs
         url.sub! %r{/#{str}/img/}, "/img/"
         url.sub! %r{/#{str}/(.+?)/#{str}/}, "/#{str}/"
         url.sub! %r{/partials/#{str}/(.+?)(?<!\.html)(?:\z|(#.*))}, "/partials/#{str}/\\1.html\\2"
+        url.sub! %r{/partials/.+/#{str}/}, "/partials/#{str}/"
       end
       url
     end
@@ -38,21 +39,19 @@ module Docs
     HTML
 
     stub '' do
-      require 'capybara/dsl'
-      Capybara.current_driver = :selenium
-      Capybara.run_server = false
-      Capybara.app_host = 'https://code.angularjs.org'
-      Capybara.visit("/#{self.class.release}/docs/api")
-      Capybara.find('.side-navigation')['innerHTML']
+      capybara = load_capybara_selenium
+      capybara.app_host = 'https://code.angularjs.org'
+      capybara.visit("/#{self.class.release}/docs/api")
+      capybara.execute_script("return document.querySelector('.side-navigation').innerHTML")
     end
 
     version '1.5' do
-      self.release = '1.5.5'
+      self.release = '1.5.6'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
     version '1.4' do
-      self.release = '1.4.10'
+      self.release = '1.4.11'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
