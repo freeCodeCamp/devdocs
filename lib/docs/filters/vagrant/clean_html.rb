@@ -2,12 +2,12 @@ module Docs
   class Vagrant
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.page-contents .span8')
+        @doc = at_css('#main-content .bs-docs-section')
 
         css('hr').remove
 
         css('pre > code').each do |node|
-          node.parent['class'] = node['class']
+          node.parent['data-language'] = 'ruby'
           node.before(node.children).remove
         end
 

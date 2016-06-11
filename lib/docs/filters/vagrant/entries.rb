@@ -12,14 +12,17 @@ module Docs
       end
 
       def get_type
-        at_css('.sidebar-nav li.current').content
+        type = at_css('.docs-sidenav > li.active > a').content
+        node = at_css('.docs-sidenav > li.active > ul > li.active > a + ul')
+        type << ": #{node.previous_element.content}" if node
+        type
       end
 
       def additional_entries
         case at_css('h1 + p > strong > code').try(:content)
         when /config\./
           h2 = nil
-          css('.page-contents .span8 > *').each_with_object [] do |node, entries|
+          css('#main-content .bs-docs-section > *').each_with_object [] do |node, entries|
             next if node.name == 'pre'
             if node.name == 'h2'
               h2 = node.content
