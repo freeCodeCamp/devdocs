@@ -3,7 +3,7 @@ module Docs
     self.name = 'React Native'
     self.slug = 'react_native'
     self.type = 'react'
-    self.release = '0.26'
+    self.release = '0.27'
     self.base_url = 'https://facebook.github.io/react-native/docs/'
     self.root_path = 'getting-started.html'
     self.links = {
@@ -15,6 +15,7 @@ module Docs
 
     options[:root_title] = 'React Native Documentation'
     options[:only_patterns] = nil
+    options[:skip_patterns] = [/\Asample\-/]
     options[:skip] = %w(
       videos.html
       transforms.html
