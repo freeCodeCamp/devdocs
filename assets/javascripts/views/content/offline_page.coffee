@@ -58,6 +58,7 @@ class app.views.OfflinePage extends app.View
       link.parentNode.innerHTML = "#{link.textContent.replace(/e$/, '')}ing…"
     else if action = link.getAttribute('data-action-all')
       $.stopEvent(event)
+      app.db.migrate()
       el.click() for el in @findAll("a[data-action='#{action}']")
     return
 
