@@ -278,6 +278,12 @@ $.classify = (string) ->
     string[i] = substr[0].toUpperCase() + substr[1..]
   string.join('')
 
+$.framify = (fn, obj) ->
+  if requestAnimationFrame
+    (args...) -> requestAnimationFrame(fn.bind(obj, args...))
+  else
+    fn
+
 #
 # Miscellaneous
 #

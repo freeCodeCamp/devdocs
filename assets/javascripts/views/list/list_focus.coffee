@@ -12,7 +12,9 @@ class app.views.ListFocus extends app.View
     superEnter: 'onSuperEnter'
     escape:     'blur'
 
-  constructor: (@el) -> super
+  constructor: (@el) ->
+    super
+    @focus = $.framify(@focus, @)
 
   focus: (el) ->
     if el and not el.classList.contains @constructor.activeClass
