@@ -164,6 +164,14 @@ class AppTest < MiniTest::Spec
       assert last_response.not_found?
     end
 
+    it "decodes '~' properly" do
+      get '/html%7E5/'
+      assert last_response.ok?
+
+      get '/html%7E42/'
+      assert last_response.not_found?
+    end
+
     it "redirects with trailing slash" do
       get '/html'
       assert last_response.redirect?
