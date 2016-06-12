@@ -7,6 +7,7 @@ class app.models.Doc extends app.Model
     @slug_without_version = @slug.split('~')[0]
     @fullName = "#{@name}" + if @version then " #{@version}" else ''
     @icon = @slug_without_version
+    @short_version = @version.split(' ')[0] if @version
     @text = @toEntry().text
 
   reset: (data) ->
