@@ -27,12 +27,16 @@ module Docs
 
         css('div[class^="highlight-"]').each do |node|
           node.name = 'pre'
-          node['class'] = case node['class']
+          node['class'] = node['data-language'] = case node['class']
             when 'highlight-python' then 'python'
             when 'highlight-html+django' then 'markup'
             else ''
           end
           node.content = node.at_css('pre').content
+        end
+
+        css('code > code').each do |node|
+          node.before(node.children).remove
         end
 
         doc
