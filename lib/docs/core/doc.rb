@@ -53,6 +53,7 @@ module Docs
       end
 
       def version_slug
+        return if version.blank?
         slug = version.downcase
         slug.gsub! '+', 'p'
         slug.gsub! '#', 's'
