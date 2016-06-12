@@ -1,54 +1,53 @@
 ._angular {
+  padding-left: 1rem;
+
+  h1, h2, > h3, .banner, .badges { margin-left: -1rem; }
+
+  ._mobile & {
+    padding-left: 0;
+
+    h1, h2, > h3, .banner, .badges { margin-left: 0; }
+  }
+
   h2 { @extend %block-heading; }
+  > h3 { @extend %block-label, %label-blue; }
 
-  //
-  // Index
-  //
+  p > code, .status-badge { @extend %label; }
 
-  .nav-index-section {
-    margin: 1.5em 0 1em -2em;
-    list-style: none;
-    font-weight: bold;
-    text-transform: capitalize;
+  .l-sub-section, .alert, .banner { @extend %note; }
+  .banner { @extend %note-green; }
+  .alert.is-important { @extend %note-red; }
+  .alert.is-helpful { @extend %note-blue; }
+
+  td > h3, .l-sub-section > h3, .l-sub-section > h4, .alert > h3, .alert > h4 {
+    margin-top: .25rem;
+    font-size: 1em;
   }
 
-  //
-  // Other
-  //
+  img {
+    display: block;
+    margin: 1em auto;
 
-  h3, h4 { font-size: 1rem; }
+    &[align="left"] {
+      float: left;
+      margin: 0 1em 0 0;
+    }
 
-  .alert { @extend %note; }
-  .alert-success { @extend %note-green; }
-  .alert-error { @extend %note-red; }
-
-  p > code, li > code, td > code { @extend %label; }
-
-  .view-source, .improve-docs {
-    position: relative;
-    float: right;
-    line-height: 1.7rem;
-    padding-left: 1em;
-    font-size: .875rem;
-    background: $contentBackground;
+    &[align="right"] {
+      float: right;
+      margin: 0 0 0 1em;
+    }
   }
 
-  .defs {
-    padding-left: 1rem;
-    list-style: none;
+  .location-badge {
+    text-align: right;
+    font-style: italic;
+  }
 
-    > li > h3:first-child {
-      margin: 0 0 1em -1rem;
-      @extend %block-label, %label-blue;
-    }
+  .filetree {
+    white-space: normal;
+    @extend %pre;
 
-    > li + li { margin-top: 2em; }
-
-    h4 {
-      margin: 1em 0 .5em;
-      font-size: 1em;
-    }
-
-    ul { list-style-type: disc; }
+    .children { padding-left: 1em; }
   }
 }

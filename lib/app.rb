@@ -280,12 +280,16 @@ class App < Sinatra::Application
     'iojs' => 'node',
     'yii1' => 'yii~1.1',
     'python2' => 'python~2.7',
-    'xpath' => 'xslt_xpath'
+    'xpath' => 'xslt_xpath',
+    'angular~1.5' => 'angularjs~1.5',
+    'angular~1.4' => 'angularjs~1.4',
+    'angular~1.3' => 'angularjs~1.3',
+    'angular~1.2' => 'angularjs~1.2'
   }
 
   get %r{\A/([\w~\.]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
     return redirect "/#{DOC_REDIRECTS[doc]}#{type}#{rest}" if DOC_REDIRECTS.key?(doc)
-    return redirect "/angular/api#{rest}", 301 if doc == 'angular' && rest.start_with?('/ng')
+    return redirect "/angularjs/api#{rest}", 301 if doc == 'angular' && rest.start_with?('/ng')
     return 404 unless @doc = find_doc(doc)
 
     if rest.nil?

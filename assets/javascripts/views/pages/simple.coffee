@@ -7,6 +7,7 @@ class app.views.SimplePage extends app.views.BasePage
     return
 
 app.views.AngularPage =
+app.views.AngularjsPage =
 app.views.CakephpPage =
 app.views.ElixirPage =
 app.views.EmberPage =

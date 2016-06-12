@@ -1,5 +1,5 @@
 module Docs
-  class Angular
+  class Angularjs
     class CleanUrlsFilter < Filter
       def call
         html.gsub! %r{angularjs\.org/([\d\.]+)/docs/partials/(\w+)/}, 'angularjs.org/\1/docs/\2/'

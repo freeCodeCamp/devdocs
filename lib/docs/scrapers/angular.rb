@@ -1,68 +1,59 @@
 module Docs
   class Angular < UrlScraper
-    self.name = 'Angular.js'
-    self.slug = 'angular'
     self.type = 'angular'
-    self.root_path = 'api.html'
-    self.initial_paths = %w(guide.html)
+    self.root_path = 'api/'
+    self.links = {
+      home: 'https://angular.io/',
+      code: 'https://github.com/angular/angular'
+    }
 
-    html_filters.push 'angular/clean_html', 'angular/entries', 'title'
-    text_filters.push 'angular/clean_urls'
+    html_filters.push 'angular/entries', 'angular/clean_html'
 
-    options[:title] = false
-    options[:root_title] = 'Angular.js'
+    options[:skip_patterns] = [/deprecated/]
+    options[:skip] = %w(
+      index.html
+      styleguide.html
+      quickstart.html
+      guide/cheatsheet.html
+      guide/style-guide.html)
 
-    options[:decode_and_clean_paths] = true
-    options[:fix_urls_before_parse] = ->(str) do
-      str.gsub!('[', '%5B')
-      str.gsub!(']', '%5D')
-      str
-    end
+    options[:replace_paths] = {
+      'testing/index.html' => 'guide/testing.html',
+      'glossary.html'      => 'guide/glossary.html',
+      'tutorial'           => 'tutorial/'
+    }
 
-    options[:fix_urls] = ->(url) do
-      %w(api guide).each do |str|
-        url.sub! "/partials/#{str}/#{str}/", "/partials/#{str}/"
-        url.sub! %r{/#{str}/img/}, "/img/"
-        url.sub! %r{/#{str}/(.+?)/#{str}/}, "/#{str}/"
-        url.sub! %r{/partials/#{str}/(.+?)(?<!\.html)(?:\z|(#.*))}, "/partials/#{str}/\\1.html\\2"
-        url.sub! %r{/partials/.+/#{str}/}, "/partials/#{str}/"
-      end
+    options[:fix_urls] = -> (url) do
+      url.sub! %r{\A(https://angular\.io/docs/.+/)index\.html\z}, '\1'
+      url.sub! %r{\A(https://angular\.io/docs/.+/index)/\z}, '\1'
       url
     end
-
-    options[:only_patterns] = [%r{\Aapi/}, %r{\Aguide/}]
-    options[:skip] = %w(api/ng.html)
 
     options[:attribution] = <<-HTML
       &copy; 2010&ndash;2016 Google, Inc.<br>
       Licensed under the Creative Commons Attribution License 4.0.
     HTML
 
-    stub '' do
+    stub 'api/' do
       capybara = load_capybara_selenium
-      capybara.app_host = 'https://code.angularjs.org'
-      capybara.visit("/#{self.class.release}/docs/api")
-      capybara.execute_script("return document.querySelector('.side-navigation').innerHTML")
+      capybara.app_host = 'https://angular.io'
+      capybara.visit('/docs/ts/latest/api/')
+      capybara.execute_script('return document.body.innerHTML')
     end
 
-    version '1.5' do
-      self.release = '1.5.6'
-      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
+    version '2.0 TypeScript' do
+      self.release = '2.0.0rc1'
+      self.base_url = "https://angular.io/docs/ts/latest/"
     end
 
-    version '1.4' do
-      self.release = '1.4.11'
-      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
-    end
+    private
 
-    version '1.3' do
-      self.release = '1.3.20'
-      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
-    end
-
-    version '1.2' do
-      self.release = '1.2.29'
-      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
+    def parse(string)
+      string.gsub! '<code-example', '<pre'
+      string.gsub! '</code-example', '</pre'
+      string.gsub! '<code-pane', '<pre'
+      string.gsub! '</code-pane', '</pre'
+      super string
     end
   end
 end

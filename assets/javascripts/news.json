@@ -1,5 +1,8 @@
 [
   [
+    "2016-06-12",
+    "New documentation: <a href=\"/angular/\">Angular 2</a>"
+  ], [
     "2016-06-05",
     "New documentation: <a href=\"/kotlin/\">Kotlin</a> and <a href=\"/padrino/\">Padrino</a>"
   ], [
@@ -155,9 +158,6 @@
     "2014-02-12",
     "The root/category pages are now included in the search index (e.g. <a href=\"/#q=CSS\">CSS</a>)"
   ], [
-    "2014-01-26",
-    "Updated <a href=\"/angular/\">Angular.js</a> documentation"
-  ], [
     "2014-01-19",
     "New <a href=\"/d3/\">D3.js</a> and <a href=\"/knockout/\">Knockout.js</a> documentations"
   ], [
@@ -210,7 +210,7 @@
     "URL search now automatically opens the first result."
   ], [
     "2013-08-13",
-    "New <a href=\"/angular/\">Angular.js</a> documentation"
+    "New <a href=\"/angularjs/\">Angular.js</a> documentation"
   ], [
     "2013-08-11",
     "New <a href=\"/sass/\">Sass</a> and <a href=\"/less/\">Less</a> documentations"

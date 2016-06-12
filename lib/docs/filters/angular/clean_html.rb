@@ -2,96 +2,85 @@ module Docs
   class Angular
     class CleanHtmlFilter < Filter
       def call
-        root_page? ? root : other
+        container = at_css('article.docs-content')
+        container.child.before(at_css('header.hero h1')).before(css('header.hero .badges')).before(css('header.hero + .banner'))
+        @doc = container
 
-        # Remove ng-* attributes
-        css('*').each do |node|
-          node.attributes.each_key do |attribute|
-            node.remove_attribute(attribute) if attribute.start_with? 'ng-'
+        css('pre.no-bg-with-indent').each do |node|
+          node.content = '  ' + node.content.gsub("\n", "\n  ")
+        end
+
+        css('.openParens').each do |node|
+          node.parent.name = 'pre'
+          node.parent.content = node.parent.css('code, pre').map(&:content).join("\n")
+        end
+
+        css('button.verbose', 'button.verbose + .l-verbose-section', 'a[id=top]', 'a[href="#top"]').remove
+
+        css('.c10', '.showcase', '.showcase-content', '.l-main-section', 'div.div', 'div[flex]', 'code-tabs', 'md-card', 'md-card-content', 'div:not([class])', 'footer', '.card-row', '.card-row-container', 'figure', 'blockquote', 'exported', 'defined', 'div.ng-scope').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('span.badges').each do |node|
+          node.name = 'div'
+        end
+
+        css('pre[language]').each do |node|
+          node['data-language'] = node['language'].sub(/\Ats/, 'typescript').strip
+        end
+
+        css('pre.prettyprint').each do |node|
+          node.content = node.content.strip
+        end
+
+        css('a[id]:empty').each do |node|
+          node.next_element['id'] = node['id'] if node.next_element
+        end
+
+        css('a[name]:empty').each do |node|
+          node.next_element['id'] = node['name'] if node.next_element
+        end
+
+        css('tr[style]').each do |node|
+          node.remove_attribute 'style'
+        end
+
+        css('h1:not(:first-child)').each do |node|
+          node.name = 'h2'
+        end unless at_css('h2')
+
+        css('img[style]').each do |node|
+          node['align'] ||= node['style'][/float:\s*(left|right)/, 1]
+          node['style'] = node['style'].split(';').map(&:strip).select { |s| s =~ /\Awidth|height/ }.join(';')
+        end
+
+        css('.example-title + pre').each do |node|
+          node['name'] = node.previous_element.content.strip
+          node.previous_element.remove
+        end
+
+        css('pre[name]').each do |node|
+          case node['data-language']
+          when 'html' then node.content = "<!-- #{node['name']} -->\n\n" + node.content
+          when 'css'  then node.content = "/* #{node['name']} */\n\n" + node.content
+          else             node.content = "// #{node['name']}\n\n" + node.content
           end
+        end
+
+        css('a.is-button > h3').each do |node|
+          node.parent.content = node.content
+        end
+
+        css('#angular-2-glossary ~ .l-sub-section').each do |node|
+          node.before(node.children).remove
+        end
+
+        location_badge = at_css('.location-badge')
+        if location_badge && doc.last_element_child != location_badge
+          doc.last_element_child.after(location_badge)
         end
 
         doc
-      end
-
-      def root
-        css('.nav-index-group').each do |node|
-          if heading = node.at_css('.nav-index-group-heading')
-            heading.name = 'h2'
-          end
-          node.parent.before(node.children)
-        end
-
-        css('.nav-index-section').each do |node|
-          node.content = node.content
-        end
-
-        css('.toc-close', '.naked-list').remove
-      end
-
-      def other
-        css('#example', '.example', '#description_source', '#description_demo', '[id$="example"]', 'hr').remove
-
-        css('header').each do |node|
-          node.before(node.children).remove
-        end
-
-        if h1 = at_css('h1')
-          h1.prepend_child(css('.view-source', '.improve-docs'))
-        end
-
-        # Remove root-level <div>
-        while div = at_css('h1 + div')
-          div.before(div.children)
-          div.remove
-        end
-
-        css('.api-profile-header-structure > li').each do |node|
-          node.inner_html = node.inner_html.remove('- ')
-        end
-
-        css('h1').each_with_index do |node, i|
-          next if i == 0
-          node.name = 'h2'
-        end
-
-        # Remove examples
-        css('.runnable-example').each do |node|
-          node.parent.remove
-        end
-
-        # Remove dead links (e.g. ngRepeat)
-        css('a.type-hint').each do |node|
-          node.name = 'code'
-          node.remove_attribute 'href'
-        end
-
-        css('pre > code').each do |node|
-          node['class'] ||= ''
-          lang = if node['class'].include?('lang-html') || node.content =~ /\A</
-            'html'
-          elsif node['class'].include?('lang-css')
-            'css'
-          elsif node['class'].include?('lang-js') || node['class'].include?('lang-javascript')
-            'javascript'
-          end
-          node.parent['data-language'] = lang if lang
-
-          node.before(node.children).remove
-        end
-
-        # Remove some <code> elements
-        css('h1 > code', 'h2 > code', 'h3 > code', 'h4 > code', 'h6 > code').each do |node|
-          node.before(node.content).remove
-        end
-
-        css('ul.methods', 'ul.properties', 'ul.events').add_class('defs').each do |node|
-          node.css('> li > h3').each do |h3|
-            next if h3.content.present?
-            h3.content = h3.next_element.content
-            h3.next_element.remove
-          end
-        end
       end
     end
   end
