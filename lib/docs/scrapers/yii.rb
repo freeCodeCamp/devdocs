@@ -8,7 +8,7 @@ module Docs
     HTML
 
     version '2.0' do
-      self.release = '2.0.6'
+      self.release = '2.0.8'
       self.base_url = 'http://www.yiiframework.com/doc-2.0/'
       self.root_path = 'index.html'
 

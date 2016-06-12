@@ -31,6 +31,14 @@ module Docs
           node.name = 'th'
         end
 
+        css('.summary').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('a[id]:empty').each do |node|
+          node.next_element['id'] = node['id'] if node.next_element && node.next_element.name != 'a'
+        end
+
         doc
       end
     end
