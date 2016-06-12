@@ -30,6 +30,10 @@ module Docs
           node.before(node.children).remove
         end
 
+        css('pre').each do |node|
+          node['data-language'] = 'elixir'
+        end
+
         doc
       end
     end
