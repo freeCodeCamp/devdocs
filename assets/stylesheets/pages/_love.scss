@@ -1,0 +1,67 @@
+._love {
+  padding-left: 1rem;
+
+  h1, h2 { margin-left: -1rem; }
+  h2 { @extend %block-heading; }
+  h3 { margin-left: -0.5rem; @extend %block-label; }
+
+  ._mobile & {
+    padding-left: 0;
+
+    h1, h2, h3 { margin-left: 0; }
+  }
+
+  p > code, li > code { @extend %label; }
+  blockquote { @extend %note; }
+
+  .box { @extend %box; }
+  .note { @extend %note; }
+  .label { @extend %label; }
+
+  .box-heading {
+    @extend %heading-box;
+    padding: .5em .75em;
+    margin-top: 1.5rem;
+    margin-bottom: 0px;
+    border-bottom: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  .box-with-heading {
+    @extend %box;
+    padding: .5em .75em;
+    margin-top: 0px;
+    margin-bottom: 1.5rem;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+
+  .note-green, .label-green { @extend %note-green; }
+  .note-red, .label-red { @extend %note-red; }
+  .note-orange, .label-orange { @extend %note-orange; }
+  .cell-green { background: $noteGreenBackground; }
+  .cell-red { background: $noteRedBackground; }
+
+  .smwtable {
+    width: 100%;
+    tr {
+      td {
+        word-wrap: break-word;
+      }
+
+      td:first-child, td:nth-last-child(2), td:last-child {
+        vertical-align: middle;
+        white-space: nowrap;
+        width: 1em;
+        overflow: hidden;
+      }
+    }
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background-color: $textColorLighter;
+    margin: 1.5em 0 1em;
+  }
+}
