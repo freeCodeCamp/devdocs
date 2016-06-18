@@ -279,7 +279,7 @@ $.classify = (string) ->
   string.join('')
 
 $.framify = (fn, obj) ->
-  if requestAnimationFrame
+  if window.requestAnimationFrame
     (args...) -> requestAnimationFrame(fn.bind(obj, args...))
   else
     fn
