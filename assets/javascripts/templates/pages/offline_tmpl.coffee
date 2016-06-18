@@ -6,7 +6,7 @@ app.templates.offlinePage = (docs) -> """
       <a class="_docs-link" data-action-all="install">Install all</a><a class="_docs-link" data-action-all="update"><strong>Update all</strong></a><a class="_docs-link" data-action-all="uninstall">Uninstall all</a>
     </div>
     <label class="_docs-label">
-      <input type="checkbox" name="autoUpdate" value="1" #{if app.settings.get('autoUpdate') then 'checked' else ''}>
+      <input type="checkbox" name="autoUpdate" value="1" #{if app.settings.get('manualUpdate') then '' else 'checked'}>
       Check for and install updates automatically
     </label>
   </div>

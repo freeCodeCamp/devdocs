@@ -67,7 +67,7 @@
             true
           dataCallback: (data) ->
             try
-              $.extend(data.user ||= {}, app.settings.settings)
+              $.extend(data.user ||= {}, app.settings.dump())
               data.user.lastIDBTransaction = app.lastIDBTransaction if app.lastIDBTransaction
             data
         .install()
@@ -170,10 +170,10 @@
 
   showTip: (tip) ->
     return if @isSingleDoc()
-    tips = @settings.get('tips') || []
+    tips = @settings.getTips()
     if tips.indexOf(tip) is -1
       tips.push(tip)
-      @settings.set('tips', tips)
+      @settings.setTips(tips)
       new app.views.Tip(tip)
     return
 

@@ -1,101 +1,88 @@
 class app.Settings
-  SETTINGS_KEY = 'settings'
   DOCS_KEY = 'docs'
   DARK_KEY = 'dark'
   LAYOUT_KEY = 'layout'
   SIZE_KEY = 'size'
+  TIPS_KEY = 'tips'
 
   @defaults:
     count: 0
     hideDisabled: false
     hideIntro: false
     news: 0
-    autoUpdate: true
+    manualUpdate: false
     schema: 1
 
-  constructor: (@store) ->
-    @create() unless @settings = @store.get(SETTINGS_KEY)
+  constructor: (legacyStore) ->
+    @store = new CookieStore
+    @importLegacyValues(legacyStore)
 
-  create: ->
-    @settings = $.extend({}, @constructor.defaults)
-    @applyLegacyValues @settings
-    @save()
+  importLegacyValues: (legacyStore) ->
+    return unless settings = legacyStore.get('settings')
+    for key, value of settings
+      if key == 'autoUpdate'
+        key = 'manualUpdate'
+        value = !value
+      else if key == 'tips'
+        value = value.join('/')
+      @store.set(key, value)
+    legacyStore.del('settings')
     return
-
-  applyLegacyValues: (settings) ->
-    for key, v of settings when (value = @store.get(key))?
-      settings[key] = value
-      @store.del(key)
-    return
-
-  save: ->
-    @store.set SETTINGS_KEY, @settings
 
   set: (key, value) ->
-    @settings[key] = value
-    @save()
+    @store.set(key, value)
+    return
 
   get: (key) ->
-    @settings[key] ? @constructor.defaults[key]
+    @store.get(key) ? @constructor.defaults[key]
 
   hasDocs: ->
-    try !!Cookies.get DOCS_KEY
+    try !!@store.get(DOCS_KEY)
 
   getDocs: ->
-    try
-      Cookies.get(DOCS_KEY)?.split('/') or app.config.default_docs
-    catch
-      app.config.default_docs
+    @store.get(DOCS_KEY)?.split('/') or app.config.default_docs
 
   setDocs: (docs) ->
-    try
-      Cookies.set DOCS_KEY, docs.join('/'), path: '/', expires: 1e8
-    catch
+    @store.set DOCS_KEY, docs.join('/')
+    return
+
+  getTips: ->
+    @store.get(TIPS_KEY)?.split('/') or []
+
+  setTips: (tips) ->
+    @store.set TIPS_KEY, tips.join('/')
     return
 
   setDark: (value) ->
-    try
-      if value
-        Cookies.set DARK_KEY, '1', path: '/', expires: 1e8
-      else
-        Cookies.expire DARK_KEY
-    catch
+    @store.set DARK_KEY, !!value
     return
 
   setLayout: (name, enable) ->
-    try
-      layout = (Cookies.get(LAYOUT_KEY) || '').split(' ')
-      $.arrayDelete(layout, '')
+    layout = (@store.get(LAYOUT_KEY) || '').split(' ')
+    $.arrayDelete(layout, '')
 
-      if enable
-        layout.push(name) if layout.indexOf(name) is -1
-      else
-        $.arrayDelete(layout, name)
+    if enable
+      layout.push(name) if layout.indexOf(name) is -1
+    else
+      $.arrayDelete(layout, name)
 
-      if layout.length > 0
-        Cookies.set LAYOUT_KEY, layout.join(' '), path: '/', expires: 1e8
-      else
-        Cookies.expire LAYOUT_KEY
-    catch
+    if layout.length > 0
+      @store.set LAYOUT_KEY, layout.join(' ')
+    else
+      @store.del LAYOUT_KEY
     return
 
   hasLayout: (name) ->
-    try
-      layout = (Cookies.get(LAYOUT_KEY) || '').split(' ')
-      layout.indexOf(name) isnt -1
-    catch
-      false
+    layout = (@store.get(LAYOUT_KEY) || '').split(' ')
+    layout.indexOf(name) isnt -1
 
   setSize: (value) ->
-    try
-      Cookies.set SIZE_KEY, value, path: '/', expires: 1e8
-    catch
+    @store.set SIZE_KEY, value
     return
 
+  dump: ->
+    @store.dump()
+
   reset: ->
-    try Cookies.expire DOCS_KEY
-    try Cookies.expire DARK_KEY
-    try Cookies.expire LAYOUT_KEY
-    try Cookies.expire SIZE_KEY
-    try @store.del(SETTINGS_KEY)
+    @store.reset()
     return

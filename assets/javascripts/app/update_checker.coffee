@@ -22,7 +22,7 @@ class app.UpdateChecker
     return
 
   checkDocs: ->
-    if app.settings.get('autoUpdate')
+    unless app.settings.get('manualUpdate')
       app.docs.updateInBackground()
     else
       app.docs.checkForUpdates (i) => @onDocsUpdateReady() if i > 0

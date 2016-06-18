@@ -46,10 +46,9 @@ class app.views.DocList extends app.View
     return
 
   renderDisabledList: ->
-    if (hidden = app.settings.get 'hideDisabled') is true
+    if app.settings.get('hideDisabled')
       @removeDisabledList()
     else
-      app.settings.set 'hideDisabled', false unless hidden is false
       @appendDisabledList()
     return
 

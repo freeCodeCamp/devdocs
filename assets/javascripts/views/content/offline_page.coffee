@@ -81,5 +81,5 @@ class app.views.OfflinePage extends app.View
 
   onChange: (event) ->
     if event.target.name is 'autoUpdate'
-      app.settings.set 'autoUpdate', !!event.target.checked
+      app.settings.set 'manualUpdate', !event.target.checked
     return
