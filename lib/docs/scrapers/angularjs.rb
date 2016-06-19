@@ -30,7 +30,7 @@ module Docs
       url
     end
 
-    options[:only_patterns] = [%r{\Aapi/}, %r{\Aguide/}]
+    options[:only_patterns] = [%r{\Aapi}, %r{\Aguide}]
     options[:skip] = %w(api/ng.html)
 
     options[:attribution] = <<-HTML
@@ -46,12 +46,12 @@ module Docs
     end
 
     version '1.5' do
-      self.release = '1.5.6'
+      self.release = '1.5.7'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
     version '1.4' do
-      self.release = '1.4.11'
+      self.release = '1.4.12'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
