@@ -1,7 +1,7 @@
 module Docs
   class Phaser < UrlScraper
     self.type = 'phaser'
-    self.release = '2.4.7'
+    self.release = '2.5.0'
     self.base_url = "http://phaser.io/docs/#{release}"
     self.root_path = '/index'
     self.links = {
