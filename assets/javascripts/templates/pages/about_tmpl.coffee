@@ -276,6 +276,11 @@ credits = [
     'MIT',
     'http://www.lua.org/license.html'
   ], [
+    'L&Ouml;VE',
+    '2006-2016 L&Ouml;VE Development Team',
+    'GFDL',
+    'http://www.gnu.org/copyleft/fdl.html'
+  ], [
     'Marionette.js',
     '2016 Muted Solutions, LLC',
     'MIT',

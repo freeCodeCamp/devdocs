@@ -39,6 +39,7 @@ module Docs
     def to_internal_url(str)
       return unless (url = parse_url(str)) && (subpath = subpath_to(url))
       normalize_subpath(subpath)
+      subpath = URI.unescape(subpath) if context[:decode_and_clean_paths]
       return if skip_subpath?(subpath)
       normalize_url(url, subpath)
       url

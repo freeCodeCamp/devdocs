@@ -1,10 +1,13 @@
 [
   [
+    "2016-06-19",
+    "New documentation: <a href=\"/love/\">L&Ouml;VE</a>"
+  ], [
     "2016-06-12",
     "New documentation: <a href=\"/angular/\">Angular 2</a>"
   ], [
     "2016-06-05",
-    "New documentation: <a href=\"/kotlin/\">Kotlin</a> and <a href=\"/padrino/\">Padrino</a>"
+    "New documentations: <a href=\"/kotlin/\">Kotlin</a> and <a href=\"/padrino/\">Padrino</a>"
   ], [
     "2016-04-24",
     "New documentations: <a href=\"/numpy/\">NumPy</a> and <a href=\"/apache_pig/\">Apache Pig</a>"

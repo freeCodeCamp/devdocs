@@ -2,99 +2,66 @@ module Docs
   class Love
     class CleanHtmlFilter < Filter
       def call
-        # Fix syntax highlighting
+        @doc = at_css('#mw-content-text')
+
         css('.mw-code').each do |node|
-          node.content = node.at_css("div > pre").content
+          node.content = node.at_css('div > pre').content
           node['data-language'] = 'lua'
           node.name = 'pre'
         end
 
-        # Move header tags up
-        css('h2', 'h3').each do |node|
-          headline = node.at_css('.mw-headline')
-          node['id'] = headline['id']
-          node.content = headline.inner_text
+        css('span[id]').each do |node|
+          node.parent['id'] = node['id']
+          node.before(node.children).remove
         end
 
-        # Move dt tags up
-        css('dt > span').each do |node|
-          node.parent.content = node.inner_text
+        css('table.notice').each do |node|
+          content = node.at_css('td:nth-child(2)').inner_html
+          node.replace %(<p class="note">#{content}</p>)
         end
 
-        # Style notices and new/removed sections
-        css('.notice', '.new-section', '.removed-section', '.removed-new-section').each do |node|
-          case node['class']
-          when 'notice'
-            node['class'] = 'note note-warning'
-            node.inner_html = node.at_css('td:nth-child(2)').inner_html
-            node.next.remove unless node.next.nil? or node.next.name != 'br'
-          when 'new-section', 'removed-section', 'removed-new-section'
-            node['class'] = node['class'] == 'new-section' ? 'note note-green' : 'note note-red'
-            node.inner_html = node.at_css('tr > td > i').inner_html \
-              + '<br>' \
-              + node.at_css('tr > td > small').inner_html
-          end
-
-          node.name = 'p'
-          node.remove_attribute('bgcolor')
-          node.remove_attribute('style')
-          node.remove_attribute('align')
+        css('table.new-section', 'table.removed-section', 'table.removed-new-section').each do |node|
+          klass = node['class'] == 'new-section' ? 'note-green' : 'note-red'
+          content = node.css('td').map(&:inner_html).join('<br>')
+          node.replace %(<p class="note #{klass}">#{content}</p>)
         end
 
-        # Style new/removed features
         css('.new-feature', '.removed-feature', '.removed-new-feature').each do |node|
-          node.name = 'div'
-          node['class'] = node['class'] == 'new-feature' ? 'box-heading label-green' : 'box-heading label-red'
-          node.remove_attribute('style')
+          klass = node['class'] == 'new-feature' ? 'label-green' : 'label-red'
+          content = node.content.sub(' LÖVE', '')
+          label = %( <span class="label #{klass}">#{content}</span>)
 
-          container = node.next_element
-          container.name = 'div'
-          container['class'] = 'box-with-heading'
-          container.remove_attribute('style')
-        end
-
-        # Style tables
-        css('table.smwtable').each do |table|
-          table.remove_attribute('style')
-          table.css('td').each do |cell|
-            cell.remove_attribute('style')
-          end
-          table.css('td:last-child', 'td:nth-last-child(2)').each do |cell|
-            img = cell.at_css('img')
-            if img then
-              if img['alt'] == 'Added since' then
-                cell['class'] = 'cell-green'
-              elsif img['alt'] == 'Removed in'
-                cell['class'] = 'cell-red'
-              end
-              img.remove
-            end
-          end
-        end
-
-        # Remove Other Languages
-        css('#Other_Languages').remove
-        css('.i18n').remove
-
-        # Remove changelog
-        node = at_css('h2#Changelog')
-        if !node.nil? then
-          begin
-            nxt = node.next
-            node.remove
-            node = nxt
-          end while !node.nil? and node.name != 'h2'
-        end
-
-        # Remove empty paragraphs
-        css('p').each do |node|
-          node.remove if node.inner_text.strip == ''
-        end
-
-        # Remove linebreaks that are the first or last child of a paragraph
-        css('p > br:first-child', 'p > br:last-child').each do |node|
+          node.next_element.css('dt').each { |n| n << label }
           node.remove
         end
+
+        css('img[src$="Add.png"]').each do |node|
+          node.parent['class'] = 'cell-green'
+          node.remove
+        end
+
+        css('img[src$="Remove.png"]').each do |node|
+          node.parent['class'] = 'cell-red'
+          node.remove
+        end
+
+        css('table, tr, td, th').each do |node|
+          %w(style cellpadding cellspacing width height valign).each do |attribute|
+            node.remove_attribute(attribute)
+          end
+        end
+
+        css('.note i', '.note small', 'div:not([class])', '.smwtable td:nth-last-child(2) > a', '.smwtable td:last-child > a').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('p > br').each do |node|
+          node.parent.remove if node.parent.content.empty?
+        end
+
+        css('div > br', '> br', 'hr').remove
+        css('#Editing_the_wiki + p', '#Editing_the_wiki').remove
+        css('#Other_Languages', '.i18n').remove
 
         doc
       end
