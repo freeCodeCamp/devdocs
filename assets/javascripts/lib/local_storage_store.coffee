@@ -1,4 +1,4 @@
-class @Store
+class @LocalStorageStore
   get: (key) ->
     try
       JSON.parse localStorage.getItem(key)
@@ -16,7 +16,7 @@ class @Store
       true
     catch
 
-  clear: ->
+  reset: ->
     try
       localStorage.clear()
       true

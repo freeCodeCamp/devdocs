@@ -13,9 +13,9 @@
     @showLoading()
 
     @el = $('._app')
-    @store = new Store
+    @localStorage = new LocalStorageStore
     @appCache = new app.AppCache if app.AppCache.isEnabled()
-    @settings = new app.Settings @store
+    @settings = new app.Settings @localStorage
     @db = new app.DB()
 
     @docs = new app.collections.Docs
@@ -161,7 +161,7 @@
     return
 
   reset: ->
-    @store.clear()
+    @localStorage.reset()
     @settings.reset()
     @db?.reset()
     @appCache?.update()

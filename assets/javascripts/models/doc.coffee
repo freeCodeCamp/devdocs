@@ -67,7 +67,7 @@ class app.models.Doc extends app.Model
       error: onError
 
   clearCache: ->
-    app.store.del @slug
+    app.localStorage.del @slug
     return
 
   _loadFromCache: (onSuccess) ->
@@ -82,7 +82,7 @@ class app.models.Doc extends app.Model
     true
 
   _getCache: ->
-    return unless data = app.store.get @slug
+    return unless data = app.localStorage.get @slug
 
     if data[0] is @mtime
       return data[1]
@@ -91,7 +91,7 @@ class app.models.Doc extends app.Model
       return
 
   _setCache: (data) ->
-    app.store.set @slug, [@mtime, data]
+    app.localStorage.set @slug, [@mtime, data]
     return
 
   install: (onSuccess, onError) ->
