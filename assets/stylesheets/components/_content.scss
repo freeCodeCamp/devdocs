@@ -234,7 +234,7 @@
 ._docs-name:before {
   float: left;
   margin: .25rem .5rem .25rem 0;
-  @extend %icon;
+  @extend %doc-icon;
 }
 
 ._docs-size { text-align: right; }

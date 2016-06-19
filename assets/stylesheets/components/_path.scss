@@ -33,7 +33,7 @@
     width: 1rem;
     height: 1rem;
     margin: .5rem .375rem 0 0;
-    @extend %icon;
+    @extend %doc-icon;
   }
 
   & + &:after {
