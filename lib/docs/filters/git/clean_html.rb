@@ -2,6 +2,7 @@ module Docs
   class Git
     class CleanHtmlFilter < Filter
       def call
+        @doc = at_css('.man-page, #main')
         root_page? ? root : other
         doc
       end
@@ -37,6 +38,10 @@ module Docs
 
         css('tt', 'p > em').each do |node|
           node.name = 'code'
+        end
+
+        css('pre').each do |node|
+          node.content = node.content.gsub("\t", ' ' * 8)
         end
       end
     end

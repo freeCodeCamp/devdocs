@@ -1,7 +1,7 @@
 module Docs
   class Git < UrlScraper
     self.type = 'git'
-    self.release = '2.8.0'
+    self.release = '2.9.0'
     self.base_url = 'https://git-scm.com/docs'
     self.initial_paths = %w(/git.html)
     self.links = {
@@ -9,11 +9,11 @@ module Docs
       code: 'https://github.com/git/git'
     }
 
-    html_filters.push 'git/clean_html', 'git/entries'
+    html_filters.push 'git/entries', 'git/clean_html'
 
-    options[:container] = ->(filter) { filter.root_page? ? '#main' : '.man-page, #main' }
-    options[:follow_links] = ->(filter) { filter.root_page? }
-    options[:only_patterns] = [/\A\/git\-/]
+    options[:container] = '#content'
+    options[:only_patterns] = [/\A\/[^\/]+\z/]
+    options[:skip] = %w(/howto-index.html)
 
     options[:attribution] = <<-HTML
       &copy; 2005&ndash;2016 Linus Torvalds and others<br>
