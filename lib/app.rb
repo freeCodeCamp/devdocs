@@ -119,7 +119,7 @@ class App < Sinatra::Application
       @docs ||= begin
         cookie = cookies[:docs]
 
-        if cookie.nil? || cookie.empty?
+        if cookie.nil?
           settings.default_docs
         else
           cookie.split('/')

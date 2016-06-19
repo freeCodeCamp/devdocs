@@ -132,6 +132,12 @@ class AppTest < MiniTest::Spec
       assert last_response.ok?
     end
 
+    it "renders when the doc exists, is a default doc, and all docs are enabled" do
+      set_cookie('docs=')
+      get '/css/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
+      assert last_response.ok?
+    end
+
     it "redirects via JS cookie when the doc exists and is enabled" do
       set_cookie('docs=html~5')
       get '/html~5/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
