@@ -2,7 +2,7 @@ module Docs
   class Express < UrlScraper
     self.name = 'Express'
     self.type = 'express'
-    self.release = '4.13.4'
+    self.release = '4.14.0'
     self.base_url = 'http://expressjs.com/en/'
     self.root_path = '4x/api.html'
     self.initial_paths = %w(
