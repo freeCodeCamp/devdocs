@@ -20,6 +20,7 @@ class app.Shortcuts
     @showTip = null
 
   onKeydown: (event) =>
+    return if @buggyEvent(event)
     result = if event.ctrlKey or event.metaKey
       @handleKeydownSuperEvent event unless event.altKey or event.shiftKey
     else if event.shiftKey
@@ -33,6 +34,7 @@ class app.Shortcuts
     return
 
   onKeypress: (event) =>
+    return if @buggyEvent(event)
     unless event.ctrlKey or event.metaKey
       result = @handleKeypressEvent event
       event.preventDefault() if result is false
@@ -148,3 +150,12 @@ class app.Shortcuts
       false
     else
       @lastKeypress = Date.now()
+
+  buggyEvent: (event) ->
+    try
+      event.target
+      event.ctrlKey
+      event.which
+      return false
+    catch
+      return true
