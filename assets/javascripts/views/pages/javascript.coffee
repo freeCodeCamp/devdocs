@@ -15,7 +15,6 @@ class app.views.JavascriptWithMarkupCheckPage extends app.views.BasePage
       @highlightCode el, language
     return
 
-app.views.ChaiPage =
 app.views.GruntPage =
 app.views.MochaPage =
 app.views.JavascriptPage
