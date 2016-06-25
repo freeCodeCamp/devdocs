@@ -34,7 +34,7 @@ class @CookieStore
 
   dump: ->
     result = {}
-    for cookie in document.cookie.split(/;\s?/)
+    for cookie in document.cookie.split(/;\s?/) when cookie[0] isnt '_'
       cookie = cookie.split('=')
       result[cookie[0]] = cookie[1]
     result
