@@ -59,32 +59,36 @@ class app.views.Content extends app.View
     @scrollEl.scrollTop = value or 0
     return
 
+  smoothScrollTo: (value) ->
+    $.smoothScroll @scrollEl, value or 0
+    return
+
   scrollBy: (n) ->
-    @scrollEl.scrollTop += n
+    @smoothScrollTo @scrollEl.scrollTop + n
     return
 
   scrollToTop: =>
-    @scrollTo 0
+    @smoothScrollTo 0
     return
 
   scrollToBottom: =>
-    @scrollTo @scrollEl.scrollHeight
+    @smoothScrollTo @scrollEl.scrollHeight
     return
 
   scrollStepUp: =>
-    @scrollBy -50
+    @scrollBy -80
     return
 
   scrollStepDown: =>
-    @scrollBy 50
+    @scrollBy 80
     return
 
   scrollPageUp: =>
-    @scrollBy 80 - @scrollEl.clientHeight
+    @scrollBy 40 - @scrollEl.clientHeight
     return
 
   scrollPageDown: =>
-    @scrollBy @scrollEl.clientHeight - 80
+    @scrollBy @scrollEl.clientHeight - 40
     return
 
   scrollToTarget: ->

@@ -223,6 +223,36 @@ $.lockScroll = (el, fn) ->
     fn()
   return
 
+smoothScroll =  smoothStart = smoothEnd = smoothDistance = smoothDuration = null
+
+$.smoothScroll = (el, end) ->
+  unless window.requestAnimationFrame
+    el.scrollTop = end
+    return
+
+  smoothEnd = end
+
+  if smoothScroll
+    newDistance = smoothEnd - smoothStart
+    smoothDuration += Math.min 400, Math.abs(smoothDistance - newDistance)
+    smoothDistance = newDistance
+    return
+
+  smoothStart = el.scrollTop
+  smoothDistance = smoothEnd - smoothStart
+  smoothDuration = Math.min 400, Math.abs(smoothDistance)
+  startTime = Date.now()
+
+  smoothScroll = ->
+    p = Math.min 1, (Date.now() - startTime) / smoothDuration
+    y = Math.max 0, Math.floor(smoothStart + smoothDistance * (if p < 0.5 then 2 * p * p else p * (4 - p * 2) - 1))
+    el.scrollTop = y
+    if p is 1
+      smoothScroll = null
+    else
+      requestAnimationFrame(smoothScroll)
+  requestAnimationFrame(smoothScroll)
+
 #
 # Utilities
 #
