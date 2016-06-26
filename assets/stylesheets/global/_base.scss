@@ -159,7 +159,7 @@ td {
   > pre:last-child, > p:last-child, > ul:last-child, > ol:last-child { margin-bottom: 0; }
 }
 
-input {
+input, button {
   margin: 0;
   font-family: inherit;
   font-size: 100%;
@@ -168,7 +168,16 @@ input {
   @extend %border-box;
 }
 
-input[type="search"] { -webkit-appearance: none; }
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+button, input[type="search"] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+}
 
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {

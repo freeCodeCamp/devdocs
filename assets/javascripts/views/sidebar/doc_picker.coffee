@@ -1,5 +1,7 @@
 class app.views.DocPicker extends app.View
   @className: '_list _list-picker'
+  @attributes:
+    role: 'form'
 
   @elements:
     saveLink: '._sidebar-footer-save'

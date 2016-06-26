@@ -1,6 +1,8 @@
 class app.views.Notif extends app.View
   @className: '_notif'
   @activeClass: '_in'
+  @attributes:
+    role: 'alert'
 
   @defautOptions:
     autoHide: 15000

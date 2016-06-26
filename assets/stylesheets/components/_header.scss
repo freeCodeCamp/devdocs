@@ -139,8 +139,10 @@
   top: .5em;
   right: 0;
   padding: .5em;
-  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
   opacity: .3;
+  @extend %content-box, %hide-text;
 
   &:hover { opacity: .5; }
   @if $style == 'dark' {

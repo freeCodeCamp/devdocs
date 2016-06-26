@@ -1,5 +1,7 @@
 class app.views.Path extends app.View
   @className: '_path'
+  @attributes:
+    role: 'complementary'
 
   @events:
     click: 'onClick'

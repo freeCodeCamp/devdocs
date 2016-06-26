@@ -1,5 +1,5 @@
 app.templates.aboutPage = -> """
-  <div class="_toc">
+  <nav class="_toc" role="directory">
     <h3 class="_toc-title">Table of Contents</h3>
     <ul class="_toc-list">
       <li><a href="#credits">Credits</a>
@@ -8,7 +8,7 @@ app.templates.aboutPage = -> """
       <li><a href="#plugins">Plugins</a>
       <li><a href="#privacy">Privacy Policy</a>
     </ul>
-  </div>
+  </nav>
 
   <h1 class="_lined-heading">API Documentation Browser</h1>
   <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.

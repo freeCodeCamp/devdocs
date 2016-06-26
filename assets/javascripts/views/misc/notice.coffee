@@ -1,5 +1,7 @@
 class app.views.Notice extends app.View
   @className: '_notice'
+  @attributes:
+    role: 'alert'
 
   constructor: (@type, @args...) -> super
 

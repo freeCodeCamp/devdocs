@@ -1,18 +1,18 @@
-<div class="_app<%= " #{app_layout}" if app_layout %>">
-  <header class="_header">
+<div class="_app<%= " #{app_layout}" if app_layout %>" role="application">
+  <header class="_header" role="banner">
     <button type="button" class="_mobile-btn _back-btn">Back</button>
     <button type="button" class="_mobile-btn _forward-btn">Forward</button>
     <button type="button" class="_mobile-btn _menu-btn">Menu</button>
     <button type="button" class="_mobile-btn _home-btn">Home</button>
-    <form class="_search">
+    <form class="_search" role="search">
       <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="30" aria-label="Search">
-      <a class="_search-clear"></a>
+      <button type="reset" class="_search-clear" title="Clear search">Clear search</button>
       <div class="_search-tag"></div>
     </form>
     <h1 class="_logo">
       <a href="/" class="_nav-link" title="Offline API Documentation Browser">DevDocs</a><%= "/ #{@doc['full_name']}" if @doc %>
     </h1>
-    <nav class="_nav">
+    <nav class="_nav" role="navigation">
       <a href="/offline" class="_nav-link">Offline</a>
       <a href="/about" class="_nav-link">About</a>
       <a href="/news" class="_nav-link">News</a>
@@ -20,7 +20,7 @@
     </nav>
   </header>
   <section class="_sidebar">
-    <div class="_list">
+    <div class="_list" role="navigation">
       <% unless @doc %>
       <% App.docs.each do |slug, doc| %>
       <a href="/<%= slug %>/" class="_list-item"><span class="_list-arrow"></span><%= doc['full_name'] %></a>
@@ -28,9 +28,9 @@
       <% end %>
     </div>
   </section>
-  <section class="_container">
-    <div class="_content _content-loading"></div>
-  </section>
+  <div class="_container" role="document">
+    <main class="_content _content-loading" role="main"></main>
+  </div>
 </div>
 <style data-size="<%= app_size %>" data-resizer>
   ._container { margin-left: <%= app_size %>; }

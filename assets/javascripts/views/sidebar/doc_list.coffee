@@ -1,5 +1,7 @@
 class app.views.DocList extends app.View
   @className: '_list'
+  @attributes:
+    role: 'navigation'
 
   @events:
     open:  'onOpen'

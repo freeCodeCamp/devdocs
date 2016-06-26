@@ -43,9 +43,11 @@
   position: absolute;
   top: 0;
   right: 0;
+  width: 1rem;
+  height: 1rem;
   padding: .625rem;
   opacity: .9;
-  cursor: pointer;
+  @extend %content-box, %hide-text;
 
   &:before { @extend %icon, %icon-close-white; }
 }

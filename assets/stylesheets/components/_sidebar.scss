@@ -434,6 +434,7 @@
   width: 2rem;
   padding: 0;
   opacity: .65;
+  @extend %hide-text;
 
   &:before {
     float: none;
@@ -454,6 +455,7 @@
   width: 2rem;
   padding: 0;
   opacity: .65;
+  @extend %hide-text;
 
   &:before {
     float: none;

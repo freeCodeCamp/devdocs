@@ -7,6 +7,11 @@
        box-sizing: border-box;
 }
 
+%content-box {
+  -moz-box-sizing: content-box;
+       box-sizing: content-box;
+}
+
 %user-select-none {
   -webkit-user-select: none;
      -moz-user-select: -moz-none;
@@ -17,7 +22,7 @@
 %hide-text {
   white-space: nowrap;
   overflow: hidden;
-  color: transparent;
+  color: transparent !important;
   @extend %user-select-none;
 }
 

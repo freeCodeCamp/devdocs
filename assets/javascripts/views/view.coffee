@@ -16,6 +16,10 @@ class app.View
       @constructor.el
     else
       document.createElement @constructor.tagName or 'div'
+
+    if @constructor.attributes
+      for key, value of @constructor.attributes
+        @el.setAttribute(key, value)
     return
 
   refreshElements: ->

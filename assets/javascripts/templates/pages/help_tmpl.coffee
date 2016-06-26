@@ -2,14 +2,14 @@ ctrlKey = if $.isMac() then 'cmd' else 'ctrl'
 navKey = if $.isWindows() then 'alt' else ctrlKey
 
 app.templates.helpPage = """
-  <div class="_toc">
+  <nav class="_toc" role="directory">
     <h3 class="_toc-title">Table of Contents</h3>
     <ul class="_toc-list">
       <li><a href="#search">Search</a>
       <li><a href="#shortcuts">Keyboard Shortcuts</a>
       <li><a href="#abbreviations">Abbreviations</a>
     </ul>
-  </div>
+  </nav>
 
   <h2 class="_lined-heading" id="search">Search</h2>
   <p>

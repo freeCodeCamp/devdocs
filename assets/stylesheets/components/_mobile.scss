@@ -155,11 +155,12 @@
   float: left;
   width: 2.5rem;
   height: 100%;
-  background: none;
-  border: 0;
   @extend %hide-text;
 
-  &[disabled] { opacity: .3; }
+  &[disabled] {
+    opacity: .3;
+    cursor: not-allowed;
+  }
 
   &:before {
     position: absolute;

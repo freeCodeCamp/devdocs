@@ -1,6 +1,6 @@
 notif = (title, html) ->
   html = html.replace /<a /g, '<a class="_notif-link" '
-  """<h5 class="_notif-title">#{title}</h5>#{html}<a href="#" class="_notif-close"></a>"""
+  """<h5 class="_notif-title">#{title}</h5>#{html}<button type="button" class="_notif-close" title="Close">Close</a>"""
 
 textNotif = (title, message) ->
   notif title, """<p class="_notif-text">#{message}"""
