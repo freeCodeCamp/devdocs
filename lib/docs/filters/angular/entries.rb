@@ -20,6 +20,10 @@ module Docs
       def get_type
         if slug.start_with?('guide/')
           'Guide'
+        elsif slug.start_with?('cookbook/')
+          'Cookbook'
+        elsif slug == 'glossary'
+          'Guide'
         else
           type = at_css('.is-nav-title-selected').content.strip
           type.remove! ' Reference'

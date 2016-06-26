@@ -18,9 +18,9 @@ module Docs
       guide/style-guide.html)
 
     options[:replace_paths] = {
-      'testing/index.html' => 'guide/testing.html',
-      'glossary.html'      => 'guide/glossary.html',
-      'tutorial'           => 'tutorial/'
+      'testing/index.html'  => 'guide/testing.html',
+      'guide/glossary.html' => 'glossary.html',
+      'tutorial'            => 'tutorial/'
     }
 
     options[:fix_urls] = -> (url) do
@@ -42,7 +42,7 @@ module Docs
     end
 
     version '2.0 TypeScript' do
-      self.release = '2.0.0rc1'
+      self.release = '2.0.0rc3'
       self.base_url = "https://angular.io/docs/ts/latest/"
     end
 
