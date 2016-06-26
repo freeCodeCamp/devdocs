@@ -19,7 +19,7 @@
       <a href="/help" class="_nav-link">Tips</a>
     </nav>
   </header>
-  <section class="_sidebar">
+  <section class="_sidebar" tabindex="-1">
     <div class="_list" role="navigation">
       <% unless @doc %>
       <% App.docs.each do |slug, doc| %>
@@ -29,7 +29,7 @@
     </div>
   </section>
   <div class="_container" role="document">
-    <main class="_content _content-loading" role="main"></main>
+    <main class="_content _content-loading" role="main" tabindex="1"></main>
   </div>
 </div>
 <style data-size="<%= app_size %>" data-resizer>

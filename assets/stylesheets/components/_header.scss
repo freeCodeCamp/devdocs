@@ -13,8 +13,6 @@
   background: $headerBackground;
   border-bottom: 1px solid $headerBorder;
   @extend %user-select-none;
-
-  a:focus { outline: 0; }
 }
 
 //
@@ -58,6 +56,8 @@
 }
 
 ._nav-current {
+  outline: 0;
+
   &:before, &:after { content: ''; }
 }
 

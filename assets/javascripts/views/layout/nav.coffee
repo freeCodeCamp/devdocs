@@ -9,11 +9,13 @@ class app.views.Nav extends app.View
     @deselect()
     if @current = @find "a[href='#{href}']"
       @current.classList.add @constructor.activeClass
+      @current.setAttribute 'tabindex', '-1'
     return
 
   deselect: ->
     if @current
       @current.classList.remove @constructor.activeClass
+      @current.removeAttribute 'tabindex'
       @current = null
     return
 

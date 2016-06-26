@@ -159,6 +159,8 @@ td {
   > pre:last-child, > p:last-child, > ul:last-child, > ol:last-child { margin-bottom: 0; }
 }
 
+section, main { outline: 0; }
+
 input, button {
   margin: 0;
   font-family: inherit;
@@ -177,6 +179,11 @@ button {
 button, input[type="search"] {
   -webkit-appearance: none;
      -moz-appearance: none;
+}
+
+button:focus {
+  outline: 1px dotted;
+  outline: -webkit-focus-ring-color auto 5px;
 }
 
 input[type="search"]::-webkit-search-cancel-button,

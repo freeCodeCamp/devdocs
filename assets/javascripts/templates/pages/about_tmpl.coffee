@@ -15,7 +15,7 @@ app.templates.aboutPage = -> """
   <ul>
     <li>Created and maintained by <a href="http://thibaut.me">Thibaut Courouble</a>
     <li>Free and <a href="https://github.com/Thibaut/devdocs">open source</a>
-        <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+        <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20" tabindex="-1"></iframe>
   </ul>
   <p>To keep up-to-date with the latest news:
   <ul>

@@ -32,8 +32,6 @@
     }
   }
 
-  a:focus { outline: 0; }
-
   ._sidebar-hidden & {
     display: none;
   }
@@ -88,6 +86,8 @@
     min-height: 100%;
     padding-bottom: 3.5rem;
   }
+
+  a:focus { outline: 0; }
 }
 
 ._list-title {
@@ -422,6 +422,8 @@
 }
 
 ._sidebar-footer-edit {
+  display: inline-block;
+
   @if $style == 'dark' {
     &:before { @extend %icon-settings-white; }
   } @else {

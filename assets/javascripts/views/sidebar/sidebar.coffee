@@ -101,9 +101,11 @@ class app.views.Sidebar extends app.View
       @reset()
     else if event.target.hasAttribute? 'data-light'
       $.stopEvent(event)
+      document.activeElement?.blur()
       app.document.toggleLight()
     else if event.target.hasAttribute? 'data-layout'
       $.stopEvent(event)
+      document.activeElement?.blur()
       app.document.toggleLayout()
     return
 

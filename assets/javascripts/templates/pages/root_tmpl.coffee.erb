@@ -3,7 +3,7 @@ app.templates.splash = """<div class="_splash-title">DevDocs</div>"""
 <% if App.development? %>
 app.templates.intro = """
   <div class="_intro"><div class="_intro-message">
-    <a class="_intro-hide" data-hide-intro>Stop showing this message</a>
+    <a href="#" class="_intro-hide" data-hide-intro>Stop showing this message</a>
     <h2 class="_intro-title">Hi there!</h2>
     <p>Thanks for downloading DevDocs. Here are a few things you should know:
     <ol class="_intro-list">
@@ -27,7 +27,7 @@ app.templates.intro = """
 <% else %>
 app.templates.intro = """
   <div class="_intro"><div class="_intro-message">
-    <a class="_intro-hide" data-hide-intro>Stop showing this message</a>
+    <a href="#" class="_intro-hide" data-hide-intro>Stop showing this message</a>
     <h2 class="_intro-title">Welcome!</h2>
     <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
        Here's what you should know before you start:

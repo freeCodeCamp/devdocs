@@ -21,14 +21,14 @@ class app.views.DocPicker extends app.View
       @render()
       @findByTag('input')?.focus()
       app.appCache?.on 'progress', @onAppCacheProgress
-      $.on @el, 'focus', @onFocus, true
+      $.on @el, 'focus', @onDOMFocus, true
     return
 
   deactivate: ->
     if super
       @empty()
       app.appCache?.off 'progress', @onAppCacheProgress
-      $.off @el, 'focus', @onFocus, true
+      $.off @el, 'focus', @onDOMFocus, true
     return
 
   render: ->
@@ -84,14 +84,27 @@ class app.views.DocPicker extends app.View
       input.name
 
   onClick: (event) =>
+    if @focusTimeout
+      clearTimeout @focusTimeout
+      @focusTimeout = null
     return if event.which isnt 1
     if event.target is @saveLink
       $.stopEvent(event)
       @save()
     return
 
-  onFocus: (event) ->
-    $.scrollTo event.target.parentNode, null, 'continuous', bottomGap: 2
+  onDOMFocus: (event) =>
+    target = event.target
+    if target.tagName is 'INPUT'
+      $.scrollTo target.parentNode, null, 'continuous', bottomGap: 2
+    else if target.classList.contains(app.views.ListFold.targetClass)
+      target.blur()
+      @focusTimeout = setTimeout =>
+        @listFold.open(target) unless target.classList.contains(app.views.ListFold.activeClass)
+        $('input', target.nextElementSibling).focus()
+        @focusTimeout = null
+      , 10
+    return
 
   onEnter: =>
     @save()

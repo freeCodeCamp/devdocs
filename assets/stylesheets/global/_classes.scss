@@ -22,7 +22,7 @@
 %hide-text {
   white-space: nowrap;
   overflow: hidden;
-  color: transparent !important;
+  text-indent: -1000px;
   @extend %user-select-none;
 }
 
