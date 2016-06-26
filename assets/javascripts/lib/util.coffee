@@ -234,13 +234,13 @@ $.smoothScroll = (el, end) ->
 
   if smoothScroll
     newDistance = smoothEnd - smoothStart
-    smoothDuration += Math.min 400, Math.abs(smoothDistance - newDistance)
+    smoothDuration += Math.min 300, Math.abs(smoothDistance - newDistance)
     smoothDistance = newDistance
     return
 
   smoothStart = el.scrollTop
   smoothDistance = smoothEnd - smoothStart
-  smoothDuration = Math.min 400, Math.abs(smoothDistance)
+  smoothDuration = Math.min 300, Math.abs(smoothDistance)
   startTime = Date.now()
 
   smoothScroll = ->
