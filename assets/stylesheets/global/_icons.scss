@@ -37,8 +37,8 @@
 %icon-clear                 { background-position: -3rem 0; }
 %icon-settings              { background-position: 0 -1rem; }
 %icon-check                 { background-position: -1rem -1rem; }
-%icon-menu                  { background-position: -2rem -1rem; }
-%icon-home                  { background-position: -3rem -1rem; }
+%icon-menu                  { background-position: -2rem -1rem; @extend %darkIconFix !optional; }
+%icon-home                  { background-position: -3rem -1rem; @extend %darkIconFix !optional; }
 %icon-path                  { background-position: 0 -2rem; }
 %icon-search-white          { background-position: -1rem -2rem; }
 %icon-dir-white             { background-position: -2rem -2rem; }
@@ -54,6 +54,7 @@
 %icon-clipboard             { background-position: 0 -5rem; }
 %icon-clipboard-white       { background-position: -1rem -5rem; }
 %icon-close-white           { background-position: -2rem -5rem; }
+%icon-back                  { background-position: -3rem -5rem; @extend %darkIconFix !optional; }
 
 ._icon-http:before          { background-position: -7rem 0; @extend %darkIconFix !optional; }
 ._icon-jquery:before        { background-position: -8rem 0; @extend %darkIconFix !optional; }

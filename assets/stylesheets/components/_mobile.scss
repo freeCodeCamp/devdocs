@@ -34,7 +34,7 @@
   }
 
   ._logo, ._nav { display: none; }
-  ._home-link, ._menu-link { display: block; }
+  ._mobile-btn { display: block; }
 
   ._search {
     float: none;
@@ -149,12 +149,17 @@
 // Header buttons
 //
 
-%mobile-link {
+._mobile-btn {
   display: none;
   position: relative;
   float: left;
   width: 2.5rem;
   height: 100%;
+  background: none;
+  border: 0;
+  @extend %hide-text;
+
+  &[disabled] { opacity: .3; }
 
   &:before {
     position: absolute;
@@ -165,15 +170,33 @@
   }
 }
 
-._home-link {
-  @extend %mobile-link;
-
-  &:before { @extend %icon-home; }
+._back-btn {
+  &:before { @extend %icon-back; }
 }
 
-._menu-link {
+._forward-btn {
+  width: 2.25rem;
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+
+  &:before {
+    margin-left: -.375rem;
+    @extend %icon-back;
+  }
+}
+
+._home-btn {
   float: right;
-  @extend %mobile-link;
+  width: 2rem;
+
+  &:before {
+    margin-left: -.375rem;
+    @extend %icon-home;
+  }
+}
+
+._menu-btn {
+  float: right;
 
   &:before { @extend %icon-menu; }
 }

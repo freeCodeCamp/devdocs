@@ -14,6 +14,13 @@
           user-select: none;
 }
 
+%hide-text {
+  white-space: nowrap;
+  overflow: hidden;
+  color: transparent;
+  @extend %user-select-none;
+}
+
 //
 // Boxes
 //

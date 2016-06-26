@@ -37,9 +37,15 @@ class app.views.Mobile extends app.View
       app.shortcuts.stop()
 
     $.on @body, 'click', @onClick
-    $.on $('._home-link'), 'click', @onClickHome
-    $.on $('._menu-link'), 'click', @onClickMenu
+    $.on $('._home-btn'), 'click', @onClickHome
+    $.on $('._menu-btn'), 'click', @onClickMenu
     $.on $('._search'), 'touchend', @onTapSearch
+
+    @back = $('._back-btn')
+    $.on @back, 'click', @onClickBack
+
+    @forward = $('._forward-btn')
+    $.on @forward, 'click', @onClickForward
 
     app.document.sidebar.search
       .on 'searching', @showSidebar
@@ -76,6 +82,12 @@ class app.views.Mobile extends app.View
       @showSidebar()
     return
 
+  onClickBack: =>
+    history.back()
+
+  onClickForward: =>
+    history.forward()
+
   onClickHome: =>
     app.shortcuts.trigger 'escape'
     @hideSidebar()
@@ -90,4 +102,14 @@ class app.views.Mobile extends app.View
 
   afterRoute: =>
     @hideSidebar()
+
+    if page.canGoBack()
+      @back.removeAttribute('disabled')
+    else
+      @back.setAttribute('disabled', 'disabled')
+
+    if page.canGoForward()
+      @forward.removeAttribute('disabled')
+    else
+      @forward.setAttribute('disabled', 'disabled')
     return
