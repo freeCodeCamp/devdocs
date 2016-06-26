@@ -117,7 +117,10 @@
     left: 0;
     padding: 0 .5rem;
 
-    ~ ._sidebar { padding-bottom: 4rem; }
+    ~ ._sidebar {
+      margin-top: 2.5rem;
+      padding-bottom: 4rem;
+    }
   }
 
   ._notice-text { font-size: .75em; }
