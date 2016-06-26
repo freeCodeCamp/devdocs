@@ -22,13 +22,15 @@ module Docs
         end
 
         css('h1', 'h2', 'h3', 'dt').each do |node|
+          links = node.css('a').remove
           node.content = node.content
+          node << links
         end
 
         css('div[class^="highlight-"]').each do |node|
           node.name = 'pre'
           node['class'] = node['data-language'] = case node['class']
-            when 'highlight-python' then 'python'
+            when 'highlight-python', 'highlight-default' then 'python'
             when 'highlight-html+django' then 'markup'
             else ''
           end
