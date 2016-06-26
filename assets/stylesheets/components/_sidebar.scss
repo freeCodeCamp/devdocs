@@ -53,6 +53,7 @@
     background: $headerBackground;
     border-right: 1px solid $headerBorder;
     width: 8px;
+    cursor: pointer;
 
     &:before {
       content: '';
