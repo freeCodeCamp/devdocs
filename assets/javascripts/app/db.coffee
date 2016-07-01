@@ -71,7 +71,7 @@ class app.DB
       try db.deleteObjectStore(name)
     return
 
-  store: (doc, data, onSuccess, onError) ->
+  store: (doc, data, onSuccess, onError, _retry = true) ->
     @db (db) =>
       unless db
         onError()
@@ -82,9 +82,13 @@ class app.DB
         @cachedDocs?[doc.slug] = doc.mtime
         onSuccess()
         return
-      txn.onerror = (event) ->
+      txn.onerror = (event) =>
         event.preventDefault()
-        onError(event)
+        if txn.error.name is 'NotFoundError' and _retry
+          @migrate()
+          @store(doc, data, onSuccess, onError, false)
+        else
+          onError(event)
         return
 
       store = txn.objectStore(doc.slug)
@@ -96,7 +100,7 @@ class app.DB
       return
     return
 
-  unstore: (doc, onSuccess, onError) ->
+  unstore: (doc, onSuccess, onError, _retry = true) ->
     @db (db) =>
       unless db
         onError()
@@ -109,7 +113,11 @@ class app.DB
         return
       txn.onerror = (event) ->
         event.preventDefault()
-        onError(event)
+        if txn.error.name is 'NotFoundError' and _retry
+          @migrate()
+          @unstore(doc, onSuccess, onError, false)
+        else
+          onError(event)
         return
 
       store = txn.objectStore(doc.slug)
