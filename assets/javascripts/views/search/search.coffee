@@ -89,6 +89,7 @@ class app.views.Search extends app.View
 
     return unless value = @extractHashValue()
     @input.value = @value = value
+    @input.setSelectionRange(value.length, value.length)
     @search true
     true
 
