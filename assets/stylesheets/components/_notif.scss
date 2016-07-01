@@ -43,13 +43,17 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 1rem;
-  height: 1rem;
-  padding: .625rem;
+  width: 2.25rem;
+  height: 2.25rem;
   opacity: .9;
-  @extend %content-box, %hide-text;
+  @extend %hide-text;
 
-  &:before { @extend %icon, %icon-close-white; }
+  &:before {
+    position: absolute;
+    top: .625rem;
+    left: .625rem;
+    @extend %icon, %icon-close-white;
+  }
 }
 
 ._notif-content {
