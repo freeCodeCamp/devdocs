@@ -42,6 +42,7 @@ module Docs
           parent.name = 'pre'
           parent.inner_html = node.inner_html.gsub('<br>', "\n").strip
           parent.content = parent.content
+          parent['data-language'] = 'kotlin'
         end
       end
     end
