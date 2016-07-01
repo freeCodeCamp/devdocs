@@ -35,6 +35,11 @@ module Docs
       Licensed under the Apache License, Version 2.0.
     HTML
 
+    version '19' do
+      self.release = '19.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/Erlang19'
+    end
+
     version '18' do
       self.release = '18.3'
       self.dir = '/Users/Thibaut/DevDocs/Docs/Erlang18'
