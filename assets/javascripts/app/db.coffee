@@ -62,7 +62,7 @@ class app.DB
     objectStoreNames = $.makeArray(db.objectStoreNames)
 
     unless $.arrayDelete(objectStoreNames, 'docs')
-      db.createObjectStore('docs')
+      try db.createObjectStore('docs')
 
     for doc in app.docs.all() when not $.arrayDelete(objectStoreNames, doc.slug)
       try db.createObjectStore(doc.slug)
