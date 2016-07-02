@@ -136,6 +136,11 @@ credits = [
     'EPL',
     'https://github.com/clojure/clojure/blob/master/epl-v10.html'
   ], [
+    'CMake',
+    '2000-2016 Kitware, Inc.<br>&copy; 2000-2011 Insight Software Consortium',
+    'BSD',
+    'https://cmake.org/licensing/'
+  ], [
     'CodeIgniter',
     '2014-2016 British Columbia Institute of Technology',
     'MIT',
