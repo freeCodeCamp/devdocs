@@ -2,7 +2,9 @@ module Docs
   class Codeigniter
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('h1').content.strip
+        name = at_css('h1').content.strip
+        name.remove! "\u{00B6}"
+        name
       end
 
       def get_type

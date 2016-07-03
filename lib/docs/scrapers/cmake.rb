@@ -7,7 +7,7 @@ module Docs
       code: 'https://cmake.org/gitweb?p=cmake.git;a=summary'
     }
 
-    html_filters.push 'cmake/clean_html', 'cmake/entries', 'title'
+    html_filters.push 'cmake/clean_html', 'sphinx/clean_html', 'cmake/entries', 'title'
 
     options[:container] = '.body'
     options[:title] = false

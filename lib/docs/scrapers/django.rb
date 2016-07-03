@@ -8,7 +8,7 @@ module Docs
       code: 'https://github.com/django/django'
     }
 
-    html_filters.push 'django/entries', 'django/clean_html'
+    html_filters.push 'django/entries', 'sphinx/clean_html', 'django/clean_html'
     text_filters.push 'django/fix_urls'
 
     options[:container] = '#bd'

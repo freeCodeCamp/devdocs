@@ -36,6 +36,7 @@ app.views.RethinkdbPage =
 app.views.RubydocPage =
 app.views.SinonPage =
 app.views.SocketioPage =
+app.views.SphinxPage =
 app.views.SphinxSimplePage =
 app.views.TensorflowPage =
 app.views.TypescriptPage =

@@ -9,7 +9,7 @@ module Docs
       code: 'https://github.com/bcit-ci/CodeIgniter'
     }
 
-    html_filters.push 'codeigniter/clean_html', 'codeigniter/entries'
+    html_filters.push 'codeigniter/entries', 'sphinx/clean_html'
 
     options[:container] = '.document'
 
@@ -36,7 +36,7 @@ module Docs
     HTML
 
     version '3.0' do
-      self.release = '3.0.4'
+      self.release = '3.0.6'
     end
   end
 end

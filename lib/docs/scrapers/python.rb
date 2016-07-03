@@ -20,19 +20,19 @@ module Docs
     HTML
 
     version '3.5' do
-      self.release = '3.5.1'
+      self.release = '3.5.2'
       self.dir = '/Users/Thibaut/DevDocs/Docs/Python35' # docs.python.org/3.5/download.html
       self.base_url = 'https://docs.python.org/3.5/'
 
-      html_filters.push 'python/entries_v3', 'python/clean_html'
+      html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
     end
 
     version '2.7' do
-      self.release = '2.7.10'
+      self.release = '2.7.12'
       self.dir = '/Users/Thibaut/DevDocs/Docs/Python27' # docs.python.org/2.7/download.html
       self.base_url = 'https://docs.python.org/2.7/'
 
-      html_filters.push 'python/entries_v2', 'python/clean_html'
+      html_filters.push 'python/entries_v2', 'sphinx/clean_html', 'python/clean_html'
     end
   end
 end

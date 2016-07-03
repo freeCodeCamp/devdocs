@@ -9,7 +9,7 @@ module Docs
       code: 'https://github.com/ansible/ansible'
     }
 
-    html_filters.push 'ansible/entries', 'ansible/clean_html', 'codeigniter/clean_html'
+    html_filters.push 'ansible/entries', 'ansible/clean_html', 'sphinx/clean_html'
 
     options[:skip] = %w(
       glossary.html

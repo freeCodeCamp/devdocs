@@ -8,7 +8,7 @@ module Docs
       code: 'https://github.com/matplotlib/matplotlib'
     }
 
-    html_filters.push 'matplotlib/entries', 'matplotlib/clean_html'
+    html_filters.push 'matplotlib/entries', 'sphinx/clean_html'
 
     options[:container] = '.body'
     options[:skip] = %w(api_changes.html)
