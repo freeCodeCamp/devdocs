@@ -84,9 +84,11 @@ class app.DB
         return
       txn.onerror = (event) =>
         event.preventDefault()
-        if txn.error.name is 'NotFoundError' and _retry
+        if txn.error?.name is 'NotFoundError' and _retry
           @migrate()
-          @store(doc, data, onSuccess, onError, false)
+          setTimeout =>
+            @store(doc, data, onSuccess, onError, false)
+          , 0
         else
           onError(event)
         return
@@ -113,9 +115,11 @@ class app.DB
         return
       txn.onerror = (event) ->
         event.preventDefault()
-        if txn.error.name is 'NotFoundError' and _retry
+        if txn.error?.name is 'NotFoundError' and _retry
           @migrate()
-          @unstore(doc, onSuccess, onError, false)
+          setTimeout =>
+            @unstore(doc, onSuccess, onError, false)
+          , 0
         else
           onError(event)
         return
