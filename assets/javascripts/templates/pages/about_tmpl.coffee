@@ -296,6 +296,11 @@ credits = [
     'BSD',
     'https://daringfireball.net/projects/markdown/license'
   ], [
+    'Matplotlib',
+    '2012-2016 Matplotlib Development Team. All rights reserved.',
+    'Custom',
+    'https://raw.githubusercontent.com/matplotlib/matplotlib/master/LICENSE/LICENSE'
+  ], [
     'Meteor',
     '2011-2016 Meteor Development Group',
     'MIT',

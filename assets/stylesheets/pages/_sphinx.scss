@@ -1,6 +1,8 @@
 %sphinx {
   h2, h3 { @extend %block-heading; }
-  dl:not(.docutils) > dt { @extend %block-label, %label-blue; }
+  h4 { font-size: 1em; }
+  > dl:not(.docutils) > dt { @extend %block-label, %label-blue; }
+  dl > dl > dt { @extend %block-label; }
   dt + dt { margin-top: -.5em; }
 
   .note, .admonition, .versionadded, .versionchanged, .deprecated-removed { @extend %note; }
@@ -8,7 +10,7 @@
   .warning, .deprecated-removed { @extend %note-red; }
   .versionmodified { font-weight: bold; }
 
-  p > code, li > code { @extend %label; }
+  p > code, li > code, dd > code { @extend %label; }
 
   .admonition-title {
     float: left;
@@ -22,10 +24,11 @@
     clear: left;
     margin: 0;
   }
+  .admonition-title + dl { padding-top: .5em; }
 
   ul.simple { margin: 1em 0; }
 
-  h2 > a, h3 > a, dt > a { float: right; }
+  h2 > a, h3 > a, dt[id] > a.external { float: right; }
 }
 
 ._sphinx {

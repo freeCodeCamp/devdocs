@@ -1,9 +1,8 @@
 module Docs
-  class Matplotlib < FileScraper
+  class Matplotlib < UrlScraper
     self.name = 'Matplotlib'
     self.type = 'sphinx'
     self.root_path = 'index.html'
-    self.release = "1.5.1"
     self.links = {
       home: 'http://matplotlib.org/',
       code: 'https://github.com/matplotlib/matplotlib'
@@ -12,13 +11,16 @@ module Docs
     html_filters.push 'matplotlib/entries', 'matplotlib/clean_html'
 
     options[:container] = '.body'
+    options[:skip] = %w(api_changes.html)
 
     options[:attribution] = <<-HTML
-      &copy; Matplotlib Development Team <br>
-      Licensed under the BSD License.
+      &copy; 2012&ndash;2016 Matplotlib Development Team. All rights reserved.<br>
+      Licensed under the Matplotlib License Agreement.
     HTML
 
-    self.dir = '~/workspace/tmp/matplotlib/matplotlib.github.com-master/1.5.1/api/'
-    # self.base_url = 'http://matplotlib.org/api/'
+    version '1.5' do
+      self.release = '1.5.1'
+      self.base_url = 'http://matplotlib.org/1.5.1/api/'
+    end
   end
 end
