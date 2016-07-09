@@ -20,7 +20,7 @@ class app.views.Search extends app.View
 
   @routes:
     root: 'onRoot'
-    after: 'autoFocus'
+    after: 'afterRoute'
 
   init: ->
     @addSubview @scope = new app.views.SearchScope @el
@@ -84,8 +84,10 @@ class app.views.Search extends app.View
     return
 
   searchUrl: =>
-    return unless app.router.isRoot()
-    @scope.searchUrl()
+    if app.router.isRoot()
+      @scope.searchUrl()
+    else if not app.router.isDocIndex()
+      return
 
     return unless value = @extractHashValue()
     @input.value = @value = value
@@ -136,13 +138,18 @@ class app.views.Search extends app.View
 
   onRoot: (context) =>
     @reset() unless context.init
-    @delay @searchUrl if context.hash
     return
+
+  afterRoute: (name, context) =>
+    @delay @searchUrl if context.hash
+    @autoFocus()
 
   extractHashValue: ->
     if (value = @getHashValue())?
       app.router.replaceHash()
       value
 
+  HASH_RGX = new RegExp "^##{SEARCH_PARAM}=(.*)"
+
   getHashValue: ->
-    try (new RegExp "##{SEARCH_PARAM}=(.*)").exec($.urlDecode location.hash)?[1] catch
+    try HASH_RGX.exec($.urlDecode location.hash)?[1] catch

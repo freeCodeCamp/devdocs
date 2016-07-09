@@ -102,6 +102,9 @@ class app.Router
   isRoot: ->
     location.pathname is '/'
 
+  isDocIndex: ->
+    @context.doc and @context.entry is @context.doc.toEntry()
+
   setInitialPath: ->
     # Remove superfluous forward slashes at the beginning of the path
     if (path = location.pathname.replace /^\/{2,}/g, '/') isnt location.pathname
