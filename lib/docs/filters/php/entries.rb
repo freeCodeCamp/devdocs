@@ -20,6 +20,7 @@ module Docs
         'SplTempFile'     => 'SPL/File',
         'Spl'             => 'SPL',
         'Stackable'       => 'pthreads',
+        'Sync'            => 'Sync',
         'streamWrapper'   => 'Stream',
         'Thread'          => 'pthreads',
         'tidy'            => 'Tidy',
@@ -79,7 +80,7 @@ module Docs
         'Mail'                  => ['Mail', 'Mailparse'],
         'Mathematics'           => ['BC Math', 'Math', 'Statistic'],
         'Networking'            => ['GeoIP', 'Network', 'Output Control', 'SSH2', 'Socket', 'URL'],
-        'Process Control'       => ['Eio', 'Libevent', 'POSIX', 'Program execution', 'pthreads'],
+        'Process Control'       => ['Eio', 'Libevent', 'POSIX', 'Program execution', 'pthreads', 'PCNTL', 'Ev', 'Semaphore', 'Shared Memory', 'Sync'],
         'String'                => ['Ctype', 'PCRE', 'POSIX Regex', 'Taint'],
         'Variables'             => ['Filter', 'Variable handling'],
         'XML'                   => ['libxml', 'SimpleXML', 'XML Parser', 'XML-RPC', 'XMLReader', 'XMLWriter', 'XSLT'] }
@@ -99,6 +100,7 @@ module Docs
 
         type = at_css('.up').content.strip
         type = 'SPL/Iterators' if type.end_with? 'Iterator'
+        type = 'Ev' if type =~ /\AEv[A-Z]/
         type.remove! ' Functions'
 
         TYPE_BY_NAME_STARTS_WITH.each_pair do |key, value|
