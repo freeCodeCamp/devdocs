@@ -4,7 +4,7 @@ module Docs
       def call
         if slug.start_with?('book')
           book
-        elsif slug.start_with?('reference')
+        elsif slug.start_with?('reference') || slug == 'error-index'
           reference
         else
           api
@@ -41,7 +41,11 @@ module Docs
       end
 
       def reference
-        css('#versioninfo').remove
+        css('#versioninfo', '.error-undescribed').remove
+
+        css('.error-described').each do |node|
+          node.before(node.children).remove
+        end
       end
 
       def api

@@ -6,6 +6,8 @@ module Docs
           at_css("#toc a[href='#{File.basename(slug)}']").content
         elsif slug.start_with?('reference')
           'Reference'
+        elsif slug == 'error-index'
+          'Compiler Errors'
         else
           name = at_css('h1.fqn .in-band').content.remove(/\A.+\s/)
           mod = slug.split('/').first
@@ -21,6 +23,8 @@ module Docs
           'Guide'
         elsif slug.start_with?('reference')
           'Reference'
+        elsif slug == 'error-index'
+          'Compiler Errors'
         else
           path = name.split('::')
           heading = at_css('h1.fqn .in-band').content.strip
@@ -42,6 +46,10 @@ module Docs
             name.sub! '10.0.', '10.'
             id = node['href'].remove('#')
             [name, id]
+          end
+        elsif slug == 'error-index'
+          css('.error-described h2.section-header').map do |node|
+            [node.content, node['id']]
           end
         else
           css('#methods + * + div > .method', '#required-methods + div > .method', '#provided-methods + div > .method').map do |node|
