@@ -21,6 +21,7 @@ app.views.LovePage =
 app.views.MarionettePage =
 app.views.MdnPage =
 app.views.MeteorPage =
+app.views.MochaPage =
 app.views.ModernizrPage =
 app.views.MomentPage =
 app.views.MongoosePage =
