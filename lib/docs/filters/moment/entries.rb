@@ -25,7 +25,8 @@ module Docs
           elsif node['id'] == 'customization-now'
             name = 'moment.now'
           elsif %w(Display Durations Get\ +\ Set i18n Manipulate Query Utilities).include?(type) ||
-                %w(parsing-is-valid parsing-parse-zone parsing-unix-timestamp parsing-utc parsing-creation-data customization-relative-time-threshold).include?(node['id'])
+                %w(parsing-is-valid parsing-parse-zone parsing-unix-timestamp parsing-utc parsing-creation-data customization-relative-time-threshold customization-relative-time-rounding
+                  customization-calendar-format).include?(node['id'])
             name = node.next_element.content[/moment(?:\(.*?\))?\.(?:duration\(\)\.)?\w+/]
             name.sub! %r{\(.*?\)\.}, '#'
             name << '()'
