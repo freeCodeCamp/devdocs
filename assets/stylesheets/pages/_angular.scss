@@ -19,7 +19,7 @@
   .alert.is-important { @extend %note-red; }
   .alert.is-helpful { @extend %note-blue; }
 
-  td > h3, .l-sub-section > h3, .l-sub-section > h4, .alert > h3, .alert > h4 {
+  td > h3, .l-sub-section > h3, .l-sub-section > h4, .alert > h3, .alert > h4, .row-margin > h3 {
     margin-top: .25rem;
     font-size: 1em;
   }
