@@ -21,6 +21,11 @@ module Docs
       Licensed under the BSD 3-clause License.
     HTML
 
+    version '3.6' do
+      self.release = '3.6.0'
+      self.base_url = 'https://cmake.org/cmake/help/v3.6/'
+    end
+
     version '3.5' do
       self.release = '3.5.2'
       self.base_url = 'https://cmake.org/cmake/help/v3.5/'
