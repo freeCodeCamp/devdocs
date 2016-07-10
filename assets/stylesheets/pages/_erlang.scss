@@ -2,6 +2,7 @@
   @extend %simple;
 
   h3.code { @extend %code; }
+  code.code { @extend %label; }
   .note { @extend %note; }
   .warning { @extend %note, %note-red; }
   .note .label, .warning .label { font-weight: bold; }

@@ -45,7 +45,7 @@ module Docs
           node.content = content.capitalize if content == content.upcase
         end
 
-        css('p > span.bold_code:first-child ~ br:last-child').each do |node|
+        css('p > .bold_code:first-child ~ br:last-child').each do |node|
           parent = node.parent
           parent.name = 'h3'
           parent['class'] = 'code'
@@ -54,15 +54,11 @@ module Docs
           parent.inner_html = parent.inner_html.strip
         end
 
-        css('span.code').each do |node|
-          node.name = 'code'
-        end
-
-        css('pre *:not(a)').each do |node|
+        css('pre:not(.REFTYPES) *:not(a)', 'a[href^=javascript]').each do |node|
           node.before(node.children).remove
         end
 
-        css('pre').each do |node|
+        css('pre:not(.REFTYPES)').each do |node|
           node.inner_html = node.inner_html.strip_heredoc
         end
 

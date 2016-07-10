@@ -10,13 +10,18 @@ module Docs
     html_filters.insert_after 'container', 'erlang/pre_clean_html'
     html_filters.push 'erlang/entries', 'erlang/clean_html'
 
-    options[:only_patterns] = [/\Alib/]
+    options[:only_patterns] = [
+      /\Alib/,
+      /\Adoc\/\w+\//,
+      /\Aerts.+\/html/
+    ]
 
     options[:skip_patterns] = [
       /pdf/,
       /release_notes/,
       /result/,
       /java/,
+      /\.erl\z/,
       /\/html\/.*_app\.html\z/,
       /_examples\.html\z/,
       /\Alib\/edoc/,
