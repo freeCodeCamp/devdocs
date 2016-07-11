@@ -1,0 +1,7 @@
+._crystal {
+  @extend %simple;
+
+  blockquote {
+    @extend %note;
+  }
+}
