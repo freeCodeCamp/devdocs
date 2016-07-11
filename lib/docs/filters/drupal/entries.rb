@@ -3,13 +3,14 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = at_css('#page-subtitle').content
-        name.remove! %r{(abstract|public|static|protected|final|function|class)\s+}
+        name.remove! %r{(abstract|public|static|protected|final|function|class|constant|interface|property|global)\s+}
         name
       end
 
       def get_type
-        type = css('.breadcrumb > a')[1].content.strip
-        type.split('.').first
+        links = css('.breadcrumb > a')
+        type = links.length > 1 ? links[1].content.strip : name
+        type.split(/[\.\-]/).first
       end
 
       def include_default_entry?

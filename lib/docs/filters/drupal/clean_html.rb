@@ -17,12 +17,13 @@ module Docs
         at_css('#main').replace(at_css('.content'))
         at_css('#page-heading').replace(at_css('#page-subtitle'))
 
-        css('th.views-field > a', '.content').each do |node|
+        css('th.views-field > a', '.content', 'ins').each do |node|
           node.before(node.children).remove
         end
 
         css('pre').each do |node|
           node.content = node.content
+          node['data-language'] = 'php'
         end
 
         # Replaces the signature table from api.drupal.org with a simple pre tag
