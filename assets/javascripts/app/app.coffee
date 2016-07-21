@@ -252,7 +252,7 @@
       false
 
   isSingleDoc: ->
-    !!(@DOC or @doc)
+    document.body.hasAttribute('data-doc')
 
   isMobile: ->
     @_isMobile ?= app.views.Mobile.detect()
