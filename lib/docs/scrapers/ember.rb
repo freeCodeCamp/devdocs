@@ -3,7 +3,7 @@ module Docs
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.release = '2.6.0'
+    self.release = '2.6.1'
     self.base_url = 'http://emberjs.com/api/'
     self.links = {
       home: 'http://emberjs.com/',
