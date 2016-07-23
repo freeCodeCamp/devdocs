@@ -15,6 +15,7 @@ app.views.ElixirPage =
 app.views.EmberPage =
 app.views.ExpressPage =
 app.views.GoPage =
+app.views.InfluxdataPage =
 app.views.KotlinPage =
 app.views.LaravelPage =
 app.views.LodashPage =

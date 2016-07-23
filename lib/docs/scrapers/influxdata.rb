@@ -2,7 +2,7 @@ module Docs
   class Influxdata < UrlScraper
     self.name = 'InfluxData'
     self.type = 'influxdata'
-    self.release = '0.10'
+    self.release = '0.13'
     self.base_url = 'https://docs.influxdata.com/'
 
     html_filters.push 'influxdata/entries', 'influxdata/clean_html', 'title'
@@ -19,10 +19,6 @@ module Docs
       "influxdb/v#{release}/tools/grafana/",
       "influxdb/v#{release}/about/"
     ]
-
-    options[:replace_paths] = {
-      "influxdb/v#{release}/guides/clustering/" => 'influxdb/v0.10/clustering/'
-    }
 
     options[:attribution] = <<-HTML
       &copy; 2015 InfluxData, Inc.<br>

@@ -7,16 +7,20 @@ module Docs
           return doc
         end
 
-        doc = @doc.at_css('#page-content')
+        doc = @doc.at_css('article')
 
-        css('.page--contribute', 'hr').remove
+        css('.article-footer', 'hr').remove
 
-        css('.page--body', '.page--title', 'font').each do |node|
+        css('a.offset-anchor').each do |node|
+          node.parent['id'] = node['id']
+        end
+
+        css('.article-content', '.article-section', 'font').each do |node|
           node.before(node.children).remove
         end
 
         css('pre > code').each do |node|
-          node.parent['class'] = node['class']
+          node.parent['data-language'] = node['class'][/language-(\w+)/, 1] if node['class']
           node.before(node.children).remove
         end
 
