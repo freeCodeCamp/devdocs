@@ -32,6 +32,7 @@ app.views.PerlPage =
 app.views.PhalconPage =
 app.views.PhaserPage =
 app.views.PhpPage =
+app.views.PhpunitPage =
 app.views.PostgresPage =
 app.views.RamdaPage =
 app.views.ReactPage =

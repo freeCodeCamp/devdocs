@@ -53,6 +53,10 @@ module Docs
           node.content = node.content
         end
 
+        css('pre.programlisting').each do |node|
+          node['data-language'] = 'php'
+        end
+
         doc
       end
     end

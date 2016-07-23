@@ -24,7 +24,7 @@ module Docs
     HTML
 
     version '5' do
-      self.release = '5.2'
+      self.release = '5.4'
       self.base_url = "https://phpunit.de/manual/#{release}/en/"
     end
 
