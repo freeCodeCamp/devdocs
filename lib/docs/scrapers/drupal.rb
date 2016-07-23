@@ -17,29 +17,23 @@ module Docs
     options[:skip_link] = ->(link) { link['href'] =~ /[\?&]order/ }
 
     options[:skip_patterns] = [
+      /test/i,
+      /_update_[0-9]{4}/,
       /\/group\/updates\-\d/,
-      /_update_[0-9]{4}/,               # Skip update functions
-      /\/class\/hierarchy\//,           # Skip class hierarchy listings
-      /\/function\/calls\//,            # Skip function calls listings
-      /\/function\/invokes\//,          # Skip function invokations listings
-      /\/function\/overrides\//,        # Skip function overrides listings
-      /\/function\/references\//,       # Skip function references listings
-      /\/function\/implementations\//,  # Skip hook implementation listings
-      /\/function\/theme_references\//, # Skip hook references listings
-      /\.test\//,                       # Skip test files
-      /_test\//,                        # Skip test files
-      /\.test\.module\//,               # Skip test files
-      /_test\.module\//,                # Skip test files
-      /_test_/,                         # Skip test files
-      /_test\./,                        # Skip test files
-      /tests/,
-      /testing/,
+      /interface\/implements/,
+      /\/(class|interface|trait)\/hierarchy\//,
+      /\/(class|interface|trait)\/uses\//,
+      /\/(class|interface|trait)\/references\//,
+      /\/(class|interface|trait)\/annotations\//,
+      /\/function\/calls\//,
+      /\/function\/invokes\//,
+      /\/function\/overrides\//,
+      /\/function\/references\//,
+      /\/function\/implementations\//,
+      /\/function\/theme_references\//,
       /upgrade/,
       /DRUPAL_ROOT/,
-      /simpletest/,
       /constant\/constants/,
-      /interface\/implements/,
-      /interface\/hierarchy/,
       /theme_invokes/
     ]
 
@@ -48,6 +42,43 @@ module Docs
       Licensed under the GNU General Public License, version 2 and later.<br>
       Drupal is a registered trademark of Dries Buytaert.
     HTML
+
+    version '8' do
+      self.release = '8.1.7'
+      self.root_path = '8.1.x'
+      self.initial_paths = %w(groups/8.1.x groups/8.1.x?page=1)
+
+      options[:only_patterns] = [
+        /\/class\/[^\/]+\/8\.1\.x\z/,
+        /\/group\/[^\/]+\/8\.1\.x\z/,
+        /\/function\/[^\/]+\/8\.1\.x\z/,
+        /\/constant\/[^\/]+\/8\.1\.x\z/,
+        /\/interface\/[^\/]+\/8\.1\.x\z/,
+        /\/property\/[^\/]+\/8\.1\.x\z/,
+        /\/global\/[^\/]+\/8\.1\.x\z/,
+        /\/trait\/[^\/]+\/8\.1\.x\z/,
+        /modules.*\/8\.1\.x\z/,
+        /includes.*\/8\.1\.x\z/,
+        /\A[\w\-\.]+\.php\/8\.1\.x\z/
+      ]
+
+      options[:skip] = %w(index.php/8.1.x update.php/8.1.x)
+
+      options[:skip_patterns] += [
+        /[^\w\-\.].*\.php\/8\.1\.x\z/,
+        /\!src\!/,
+        /migrate/,
+        /Assertion/,
+        /listing_page/,
+        /update_api/,
+        /vendor/,
+        /deprecated/,
+        /namespace/,
+        /\.yml/,
+        /Plugin/,
+        /\.theme\//
+      ]
+    end
 
     version '7' do
       self.release = '7.50'
