@@ -22,10 +22,10 @@ module Docs
     options[:fix_urls] = ->(url) do
       %w(api guide).each do |str|
         url.sub! "/partials/#{str}/#{str}/", "/partials/#{str}/"
-        url.sub! %r{/#{str}/img/}, "/img/"
+        url.sub! %r{/#{str}/img/}, '/img/'
         url.sub! %r{/#{str}/(.+?)/#{str}/}, "/#{str}/"
         url.sub! %r{/partials/#{str}/(.+?)(?<!\.html)(?:\z|(#.*))}, "/partials/#{str}/\\1.html\\2"
-        url.sub! %r{/partials/.+/#{str}/}, "/partials/#{str}/"
+        url.sub! %r{/partials/(?!img).+/#{str}/}, "/partials/#{str}/"
       end
       url
     end
@@ -46,7 +46,7 @@ module Docs
     end
 
     version '1.5' do
-      self.release = '1.5.7'
+      self.release = '1.5.8'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
@@ -61,7 +61,7 @@ module Docs
     end
 
     version '1.2' do
-      self.release = '1.2.29'
+      self.release = '1.2.30'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
   end
