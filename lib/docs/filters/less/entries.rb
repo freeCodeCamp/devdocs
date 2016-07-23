@@ -6,7 +6,7 @@ module Docs
       end
 
       def type
-        root_page? ? 'Language' : nil
+        root_page? ? 'Language' : 'Functions'
       end
 
       def additional_entries
