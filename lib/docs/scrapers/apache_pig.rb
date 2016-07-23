@@ -18,6 +18,11 @@ module Docs
       Licensed under the Apache Software License version 2.0.
     HTML
 
+    version '0.16' do
+      self.release = '0.16.0'
+      self.base_url = "https://pig.apache.org/docs/r#{release}/"
+    end
+
     version '0.15' do
       self.release = '0.15.0'
       self.base_url = "https://pig.apache.org/docs/r#{release}/"
