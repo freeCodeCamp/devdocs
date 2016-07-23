@@ -26,6 +26,11 @@ module Docs
       Licensed under the MIT License.
     HTML
 
+    version '3.1' do
+      self.release = '3.1.2'
+      self.base_url = "http://api.symfony.com/#{version}/"
+    end
+
     version '3.0' do
       self.release = '3.0.1'
       self.base_url = "http://api.symfony.com/#{version}/"
