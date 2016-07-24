@@ -34,9 +34,11 @@ module Docs
         'Transition'       => 'CSS',
         'PageTransition'   => 'History',
         'WebSocket'        => 'WebSocket',
+        'Web App Manifest' => 'Web App Manifest',
         'Web Audio'        => 'Web Audio',
         'Web Messaging'    => 'Web Messaging',
         'WebRTC'           => 'WebRTC',
+        'WebVR'            => 'WebVR',
         'Wheel'            => 'Mouse',
         'Worker'           => 'Web Workers' }
 

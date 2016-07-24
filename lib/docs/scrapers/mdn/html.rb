@@ -31,5 +31,10 @@ module Docs
       '/Element/h5' => '/Element/Heading_Elements',
       '/Element/h6' => '/Element/Heading_Elements',
       '/Global_attributes/data-%2A' => '/Global_attributes/data-*' }
+
+    options[:fix_urls] = ->(url) do
+      url.sub! 'https://developer.mozilla.org/en-US/docs/HTML/', "#{Html.base_url}/" unless url.include?('Content_categories')
+      url
+    end
   end
 end

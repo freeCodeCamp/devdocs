@@ -21,11 +21,11 @@ module Docs
           node.name = 'th'
         end
 
-        css('nobr').each do |node|
+        css('nobr', 'span[style*="font"]', 'pre code').each do |node|
           node.before(node.children).remove
         end
 
-        css('h2[style]', 'pre[style]', 'th[style]', 'div[style*="line-height"]').remove_attr('style')
+        css('h2[style]', 'pre[style]', 'th[style]', 'div[style*="line-height"]', 'table[style]', 'pre p[style]').remove_attr('style')
 
         css('h2 > a[name]', 'h3 > a[name]').each do |node|
           node.parent['id'] = node['name']

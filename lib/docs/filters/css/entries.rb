@@ -11,7 +11,12 @@ module Docs
         'CSS_Transforms' => 'Transforms',
         'Media_Queries' => 'Media Queries',
         '@media' => 'Media Queries',
-        'transform-function' => 'Transforms'
+        'transform-function' => 'Transforms',
+        'text-size-adjust' => 'Miscellaneous',
+        'resolved_value' => 'Miscellaneous',
+        'touch-action' => 'Miscellaneous',
+        'will-change' => 'Miscellaneous',
+        'align-self' => 'Flexible Box Layout'
       }
 
       DATA_TYPE_SLUGS = %w(angle basic-shape color_value counter frequency
@@ -37,7 +42,9 @@ module Docs
       end
 
       def get_type
-        if type = get_spec
+        if type = TYPE_BY_PATH[slug.split('/').first]
+          type
+        elsif type = get_spec
           type.remove! 'CSS '
           type.remove! ' Module'
           type.remove! %r{ Level \d\z}
@@ -48,8 +55,6 @@ module Docs
           type = 'Image Values' if type == 'Image Values & Replaced Content'
           type = 'Variables' if type == 'Custom Properties for Cascading Variables'
           type.prepend 'Miscellaneous ' if type =~ /\ALevel \d\z/
-          type
-        elsif type = TYPE_BY_PATH[slug.split('/').first]
           type
         elsif name.start_with?('::')
           'Pseudo-Elements'
@@ -110,10 +115,10 @@ module Docs
         'color_value' => [
           %w(transparent transparent_keyword),
           %w(currentColor currentColor_keyword),
-          %w(rgb() rgb()),
-          %w(hsl() hsl()),
-          %w(rgba() rgba()),
-          %w(hsla() hsla()) ]}
+          %w(rgb() rgb),
+          %w(hsl() hsl),
+          %w(rgba() rgba),
+          %w(hsla() hsla) ]}
 
       def additional_entries
         ADDITIONAL_ENTRIES[slug] || []

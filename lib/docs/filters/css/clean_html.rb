@@ -18,6 +18,10 @@ module Docs
             node.replace node.content
           end
         end
+
+        css('img[style*="float"]').each do |node|
+          node['style'] = node['style'] + ';float: none; display: block;'
+        end
       end
     end
   end

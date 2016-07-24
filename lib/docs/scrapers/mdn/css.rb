@@ -13,7 +13,12 @@ module Docs
     options[:skip_patterns] = [/\-webkit/, /\-moz/, /Extensions/, /Tools/]
 
     options[:replace_paths] = {
-      '/%3Cbasic-shape%3E' => '/basic-shape'
+      '/%3Cbasic-shape%3E' => '/basic-shape',
+      '/fallback' => '/@counter-style/fallback',
+      '/range' => '/@counter-style/range',
+      '/symbols' => '/@counter-style/symbols',
+      '/system' => '/@counter-style/system',
+      '/var' => '/var()'
     }
 
     options[:fix_urls] = ->(url) do
