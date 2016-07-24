@@ -1,7 +1,4 @@
 @app =
-  _$: $
-  _$$: $$
-  _page: page
   collections: {}
   models:      {}
   templates:   {}
@@ -53,18 +50,11 @@
         Raven.config @config.sentry_dsn,
           whitelistUrls: [/devdocs/]
           includePaths: [/devdocs/]
-          ignoreErrors: [/dpQuery/, /NPObject/, /NS_ERROR/, /^null$/]
+          ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/]
           tags:
-            mode: if @DOC then 'single' else 'full'
+            mode: if @isSingleDoc() then 'single' else 'full'
             iframe: (window.top isnt window).toString()
-          shouldSendCallback: =>
-            try
-              if @isInjectionError()
-                @onInjectionError()
-                return false
-              if @isAndroidWebview()
-                return false
-            true
+          shouldSendCallback: => not @isAndroidWebview()
           dataCallback: (data) ->
             try
               $.extend(data.user ||= {}, app.settings.dump())
@@ -201,31 +191,15 @@
     return if @quotaExceeded
     @quotaExceeded = true
     new app.views.Notif 'QuotaExceeded', autoHide: null
-    Raven.captureMessage 'QuotaExceededError'
+    Raven.captureMessage 'QuotaExceededError', level: 'warning'
 
   onWindowError: (args...) ->
-    if @isInjectionError args...
-      @onInjectionError()
-    else if @isAppError args...
-      @previousErrorHandler? args...
-      @hideLoading()
-      @errorNotif or= new app.views.Notif 'Error'
-      @errorNotif.show()
+    return unless @isAppError args...
+    @previousErrorHandler? args...
+    @hideLoading()
+    @errorNotif or= new app.views.Notif 'Error'
+    @errorNotif.show()
     return
-
-  onInjectionError: ->
-    unless @injectionError
-      @injectionError = true
-      alert """
-        JavaScript code has been injected in the page which prevents DevDocs from running correctly.
-        Please check your browser extensions/addons. """
-      Raven.captureMessage 'injection error'
-    return
-
-  isInjectionError: ->
-    # Some browser extensions expect the entire web to use jQuery.
-    # I gave up trying to fight back.
-    window.$ isnt app._$ or window.$$ isnt app._$$ or window.page isnt app._page or typeof $.empty isnt 'function' or typeof page.show isnt 'function'
 
   isAppError: (error, file) ->
     # Ignore errors from external scripts.
@@ -243,12 +217,12 @@
         cssGradients:         supportsCssGradients()
 
       for key, value of features when not value
-        Raven.captureMessage "unsupported/#{key}"
+        Raven.captureMessage "unsupported/#{key}", level: 'info'
         return false
 
       true
     catch error
-      Raven.captureMessage 'unsupported/exception', extra: { error: error }
+      Raven.captureMessage 'unsupported/exception', level: 'info', extra: { error: error }
       false
 
   isSingleDoc: ->

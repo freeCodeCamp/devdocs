@@ -297,7 +297,7 @@ class app.DB
         @cachedDocs[doc] = false
         store.delete(doc)
       return
-    Raven.captureMessage 'corruptedDocs', extra: { docs: @corruptedDocs.join(',') }
+    Raven.captureMessage 'corruptedDocs', level: 'info', extra: { docs: @corruptedDocs.join(',') }
     return
 
   shouldLoadWithIDB: (entry) ->
