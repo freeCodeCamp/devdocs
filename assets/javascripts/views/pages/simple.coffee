@@ -37,6 +37,7 @@ app.views.PhpunitPage =
 app.views.PostgresPage =
 app.views.RamdaPage =
 app.views.ReactPage =
+app.views.ReduxPage =
 app.views.RethinkdbPage =
 app.views.RubydocPage =
 app.views.SinonPage =

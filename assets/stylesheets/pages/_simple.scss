@@ -14,6 +14,7 @@
 
   p > code, li > code { @extend %label; }
   blockquote { @extend %note; }
+  blockquote > h4, blockquote > h5 { margin-top: .25rem; }
 }
 
 ._apache_pig,
@@ -29,6 +30,7 @@
 ._markdown,
 ._mocha,
 ._mongoose,
+._redux,
 ._sinon,
 ._typescript,
 ._webpack {

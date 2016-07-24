@@ -436,6 +436,11 @@ credits = [
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
+    'Redux',
+    '2015-2016 Dan Abramov',
+    'MIT',
+    'https://raw.githubusercontent.com/reactjs/redux/master/LICENSE.md'
+  ], [
     'RequireJS',
     'jQuery Foundation and other contributors',
     'MIT',
