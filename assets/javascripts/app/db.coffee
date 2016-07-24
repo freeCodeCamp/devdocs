@@ -273,6 +273,10 @@ class app.DB
       for slug in @corruptedDocs
         $.arrayDelete(docs, slug)
 
+      if docs.length is 0
+        setTimeout(@deleteCorruptedDocs, 0)
+        return
+
       txn = @idbTransaction(db, stores: docs, mode: 'readonly', ignoreError: false)
       txn.oncomplete = =>
         setTimeout(@deleteCorruptedDocs, 0) if @corruptedDocs.length > 0
