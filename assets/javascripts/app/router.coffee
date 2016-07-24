@@ -103,7 +103,7 @@ class app.Router
     location.pathname is '/'
 
   isDocIndex: ->
-    @context.doc and @context.entry is @context.doc.toEntry()
+    @context and @context.doc and @context.entry is @context.doc.toEntry()
 
   setInitialPath: ->
     # Remove superfluous forward slashes at the beginning of the path
