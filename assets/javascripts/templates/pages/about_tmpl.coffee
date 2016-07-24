@@ -256,6 +256,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/jquery/api.jqueryui.com/master/LICENSE.txt'
   ], [
+    'Julia',
+    '2009-2015 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/JuliaLang/julia/master/LICENSE.md'
+  ], [
     'Knockout.js',
     'Steven Sanderson, the Knockout.js team, and other contributors',
     'MIT',
