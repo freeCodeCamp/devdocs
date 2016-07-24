@@ -10,6 +10,7 @@ app.views.AngularPage =
 app.views.AngularjsPage =
 app.views.CakephpPage =
 app.views.ChaiPage =
+app.views.CrystalPage =
 app.views.DrupalPage =
 app.views.ElixirPage =
 app.views.EmberPage =

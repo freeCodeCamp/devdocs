@@ -161,6 +161,11 @@ credits = [
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/2.5/'
   ], [
+    'Crystal',
+    '2012-2016 Manas Technology Solutions',
+    'Apache',
+    'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
+  ], [
     'D3.js',
     '2010-2016 Michael Bostock',
     'BSD',
