@@ -22,16 +22,23 @@ class app.DB
     return
 
   onOpenSuccess: (event) =>
-    try
-      db = event.target.result
-      unless @checkedBuggyIDB
-        @checkedBuggyIDB = true
-        @idbTransaction(db, stores: $.makeArray(db.objectStoreNames)[0..1], mode: 'readwrite').abort() # https://bugs.webkit.org/show_bug.cgi?id=136937
-    catch
+    db = event.target.result
+
+    if db.objectStoreNames.length is 0
       try db.close()
-      @reason = 'apple'
+      @reason = 'empty'
       @onOpenError()
       return
+
+    unless @checkedBuggyIDB
+      @checkedBuggyIDB = true
+      try
+        @idbTransaction(db, stores: $.makeArray(db.objectStoreNames)[0..1], mode: 'readwrite').abort() # https://bugs.webkit.org/show_bug.cgi?id=136937
+      catch
+        try db.close()
+        @reason = 'apple'
+        @onOpenError()
+        return
 
     @runCallbacks(db)
     @open = false

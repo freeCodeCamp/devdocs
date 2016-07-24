@@ -25,10 +25,13 @@ app.templates.bootError = ->
 app.templates.offlineError = (reason) ->
   reason = switch reason
     when 'not_supported'
-      """ Unfortunately your browser either doesn't support it or does not make it available. """
+      """ Unfortunately your browser either doesn't support IndexedDB or does not make it available. """
     when 'cant_open'
-      """ Although your browser appears to support it, DevDocs couldn't open the database.<br>
-          This could be because you're browsing in private mode and have disallowed offline storage on the domain. """
+      """ Although your browser supports IndexedDB, DevDocs couldn't open the database.<br>
+          This could be because you're browsing in private mode or have disallowed offline storage on the domain. """
+    when 'empty'
+      """ Although your browser supports IndexedDB, DevDocs couldn't properly set up the database.<br>
+          This could be because the database is corrupted. Try <a href="#" data-behavior="reset">resetting the app</a>. """
     when 'apple'
       """ Unfortunately Safari's implementation of IndexedDB is <a href="https://bugs.webkit.org/show_bug.cgi?id=136937">badly broken</a>.<br>
           This message will automatically go away when Apple fix their code. """
