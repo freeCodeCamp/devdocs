@@ -1,4 +1,7 @@
 @app =
+  _$: $
+  _$$: $$
+  _page: page
   collections: {}
   models:      {}
   templates:   {}
@@ -54,7 +57,14 @@
           tags:
             mode: if @isSingleDoc() then 'single' else 'full'
             iframe: (window.top isnt window).toString()
-          shouldSendCallback: => not @isAndroidWebview()
+          shouldSendCallback: =>
+            try
+              if @isInjectionError()
+                @onInjectionError()
+                return false
+              if @isAndroidWebview()
+                return false
+            true
           dataCallback: (data) ->
             try
               $.extend(data.user ||= {}, app.settings.dump())
@@ -194,12 +204,28 @@
     Raven.captureMessage 'QuotaExceededError', level: 'warning'
 
   onWindowError: (args...) ->
-    return unless @isAppError args...
-    @previousErrorHandler? args...
-    @hideLoading()
-    @errorNotif or= new app.views.Notif 'Error'
-    @errorNotif.show()
+    if @isInjectionError args...
+      @onInjectionError()
+    else if @isAppError args...
+      @previousErrorHandler? args...
+      @hideLoading()
+      @errorNotif or= new app.views.Notif 'Error'
+      @errorNotif.show()
     return
+
+  onInjectionError: ->
+    unless @injectionError
+      @injectionError = true
+      alert """
+        JavaScript code has been injected in the page which prevents DevDocs from running correctly.
+        Please check your browser extensions/addons. """
+      Raven.captureMessage 'injection error', level: 'info'
+    return
+
+  isInjectionError: ->
+    # Some browser extensions expect the entire web to use jQuery.
+    # I gave up trying to fight back.
+    window.$ isnt app._$ or window.$$ isnt app._$$ or window.page isnt app._page or typeof $.empty isnt 'function' or typeof page.show isnt 'function'
 
   isAppError: (error, file) ->
     # Ignore errors from external scripts.
