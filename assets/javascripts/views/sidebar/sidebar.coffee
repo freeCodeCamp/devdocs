@@ -91,7 +91,7 @@ class app.views.Sidebar extends app.View
     return
 
   onFocus: (event) =>
-    $.scrollTo event.target, @el, 'continuous', bottomGap: 2
+    $.scrollTo event.target, @el, 'continuous', bottomGap: 2 unless event.target is @el
     return
 
   onClick: (event) =>
