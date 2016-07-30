@@ -106,6 +106,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
   ], [
+    'Bootstrap',
+    '2011-2016 Twitter, Inc.',
+    'CC BY',
+    'https://creativecommons.org/licenses/by/3.0/'
+  ], [
     'Bower',
     '2016 Bower contributors',
     'MIT',

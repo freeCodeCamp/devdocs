@@ -8,6 +8,7 @@ class app.views.SimplePage extends app.views.BasePage
 
 app.views.AngularPage =
 app.views.AngularjsPage =
+app.views.Bsv3Page =
 app.views.CakephpPage =
 app.views.ChaiPage =
 app.views.CrystalPage =
