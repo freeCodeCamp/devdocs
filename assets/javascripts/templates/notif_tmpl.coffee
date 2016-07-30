@@ -50,7 +50,7 @@ app.templates.notifUpdates = (docs, disabledDocs) ->
 
 app.templates.notifShare = ->
   textNotif """ Hi there! """,
-            """ Like DevDocs? Help us reach more developers by sharing the link with your friends, on
+            """ Like DevDocs? Help us reach more developers by sharing the link with your friends on
                 <a href="http://out.devdocs.io/s/tw" target="_blank">Twitter</a>, <a href="http://out.devdocs.io/s/fb" target="_blank">Facebook</a>,
                 <a href="http://out.devdocs.io/s/re" target="_blank">Reddit</a>, etc.<br>Thanks :) """
 
