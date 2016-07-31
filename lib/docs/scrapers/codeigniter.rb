@@ -35,8 +35,8 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    version '3.0' do
-      self.release = '3.0.6'
+    version '3' do
+      self.release = '3.1.0'
     end
   end
 end
