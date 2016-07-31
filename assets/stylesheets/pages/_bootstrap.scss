@@ -1,7 +1,7 @@
-._bsv3  {
+._bootstrap {
   @extend %simple;
 
-  h4 > code, h5 > code { @extend %label; }
+  h4 > code, h5 > code, strong > code { @extend %label; }
 
   h2 > small {
     color: $textColorLight;
