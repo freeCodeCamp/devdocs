@@ -29,6 +29,7 @@ app.views.MochaPage =
 app.views.ModernizrPage =
 app.views.MomentPage =
 app.views.MongoosePage =
+app.views.NginxPage =
 app.views.NodePage =
 app.views.PerlPage =
 app.views.PhalconPage =
