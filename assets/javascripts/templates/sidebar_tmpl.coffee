@@ -60,7 +60,7 @@ templates.sidebarDisabledVersionedDoc = (doc, versions) ->
 
 templates.sidebarPickerNote = """
   <div class="_list-note">Tip: for faster and better search results, select only the docs you need.</div>
-  <a href="https://trello.com/b/6BmTulfx/devdocs-documentation" class="_list-link" target="_blank">Vote for new documentation</a>
+  <a href="https://trello.com/b/6BmTulfx/devdocs-documentation" class="_list-link" target="_blank" rel="noopener">Vote for new documentation</a>
   """
 
 sidebarFooter = (html) -> """<div class="_sidebar-footer">#{html}</div>"""

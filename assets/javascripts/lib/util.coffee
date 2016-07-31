@@ -321,7 +321,9 @@ $.framify = (fn, obj) ->
 $.noop = ->
 
 $.popup = (value) ->
-  open value.href or value, '_blank'
+  win = window.open()
+  win.opener = null if win.opener
+  win.location = value.href or value
   return
 
 $.isTouchScreen = ->

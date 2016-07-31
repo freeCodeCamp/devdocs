@@ -13,7 +13,7 @@ app.templates.notifError = ->
   textNotif """ Oops, an error occured. """,
             """ Try <a href="#" data-behavior="hard-reload">reloading</a>, and if the problem persists,
                 <a href="#" data-behavior="reset">resetting the app</a>.<br>
-                You can also report this issue on <a href="https://github.com/Thibaut/devdocs/issues/new" target="_blank">GitHub</a>. """
+                You can also report this issue on <a href="https://github.com/Thibaut/devdocs/issues/new" target="_blank" rel="noopener">GitHub</a>. """
 
 app.templates.notifQuotaExceeded = ->
   textNotif """ The offline database has exceeded its size limitation. """,
@@ -51,8 +51,8 @@ app.templates.notifUpdates = (docs, disabledDocs) ->
 app.templates.notifShare = ->
   textNotif """ Hi there! """,
             """ Like DevDocs? Help us reach more developers by sharing the link with your friends on
-                <a href="http://out.devdocs.io/s/tw" target="_blank">Twitter</a>, <a href="http://out.devdocs.io/s/fb" target="_blank">Facebook</a>,
-                <a href="http://out.devdocs.io/s/re" target="_blank">Reddit</a>, etc.<br>Thanks :) """
+                <a href="http://out.devdocs.io/s/tw" target="_blank" rel="noopener">Twitter</a>, <a href="http://out.devdocs.io/s/fb" target="_blank" rel="noopener">Facebook</a>,
+                <a href="http://out.devdocs.io/s/re" target="_blank" rel="noopener">Reddit</a>, etc.<br>Thanks :) """
 
 app.templates.notifUpdateDocs = ->
   textNotif """ Documentation updates available. """,
