@@ -41,7 +41,8 @@ class app.views.Search extends app.View
     return
 
   autoFocus: =>
-    @focus() unless $.isTouchScreen()
+    unless $.isTouchScreen()
+      @input.focus() unless document.activeElement is @input
     return
 
   reset: ->
