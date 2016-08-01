@@ -9,74 +9,77 @@ $sidebarWidth: 18rem;
 $sidebarMediumWidth: 16rem;
 $sidebarHiddenWidth: 9px;
 
-$contentBackground: #303030;
-$documentBackground: #404040;
+$contentBackground: #33373a;
+$documentBackground: $contentBackground;
 
-$textColor: #c9c9c9;
-$textColorLight: #858585;
-$textColorLighter: #706f6f;
+$textColor: #cbd0d0;
+$textColorLight: #9da5ad;
+$textColorLighter: #77787a;
 
-$inputFocusBorder: #444;
+$inputFocusBorder: false;
 
-$focusBackground: #3d3d3e;
-$focusBorder: #3d3d3e;
+$focusBackground: #3f4042;
+$focusBorder: #000;
 $focusText: #f7f2f2;
 
-$loadingText: #666;
-$splashText: #666;
+$loadingText: #5d6164;
+$splashText: $loadingText;
 
-$selectionBackground: #346fce;
-$selectionBorder: #346fce;
+$selectionBackground: #007acc;
+$selectionBorder: #000;
 $selectionText: #fff;
 
-$highlightBackground: #3d4449;
+$highlightBackground: #64675f;
 
-$linkColor: #fff;
-$linkColorHover: #fff;
+$linkColor: $textColor;
+$linkColorHover: white;
+$linkTextDecoration: underline;
 
-$headerBackground: #1c1c1c;
-$headerBorder: #1c1c1c;
+$headerBackground: #1e1e1e;
+$headerBorder: #000;
 
-$sidebarBackground: #262626;
-$sidebarBorder: #262626;
+$sidebarBackground: #24282a;
+$sidebarBorder: #000;
 
-$scrollbarColor: #515151;
-$scrollbarColorHover: #888;
+$scrollbarColor: #6c6c6f;
+$scrollbarColorHover: #949697;
 
 $pathBackground: $headerBackground;
 $pathBorder: $headerBorder;
 
-$noticeBackground: #1c1c1c;
-$noticeBorder: #1c1c1c;
+$noticeBackground: $sidebarBackground;
+$noticeBorder: $sidebarBorder;
 
-$boxBackground: #262626;
-$boxBorder: #000;
-$boxBorderLight: #000;
-$boxHeaderBackground: #262626;
+$boxBackground: $sidebarBackground;
+$boxBorder: $headerBorder;
+$boxBorderLight: $headerBorder;
+$boxHeaderColor: #dbe4e4;
+$boxHeaderBackground: $sidebarBackground;
 
-$noteBackground: #3a4031;
+$noteBackground: #45474b;
 $noteBorder: #000;
 
-$noteGreenBackground: #223e23;
+$noteGreenBackground: #284a2a;
 $noteGreenBorder: #000;
 
-$noteBlueBackground: #223546;
+$noteBlueBackground: #2a4151;
 $noteBlueBorder: #000;
 
-$noteOrangeBackground: #523121;
+$noteOrangeBackground: #563322;
 $noteOrangeBorder: #000;
 
-$noteRedBackground: #5b1f22;
+$noteRedBackground: #603033;
 $noteRedBorder: #000;
 
-$labelBackground: #3c3c3e;
+$labelBackground: $boxBackground;
 
-$notifBackground: rgba(#000, .85);
+$notifBackground: rgba(#555, .95);
+$notifBorder: 1px solid #000;
 $notifColor: #fff;
 $notifColorLight: #ccc;
 
-$tipBackground: #3d4449;
-$tipBorder: #566166;
+$tipBackground: $notifBackground;
+$tipBorder: $notifBorder;
 
 $mediumScreen: '(max-width: 800px)';
 

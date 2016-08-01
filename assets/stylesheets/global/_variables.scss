@@ -33,6 +33,7 @@ $highlightBackground: #fffdcd;
 
 $linkColor: #3377c0;
 $linkColorHover: #2f6cb6;
+$linkTextDecoration: none;
 
 $headerBackground: #f0f0f0;
 $headerBorder: #d9d9d9;
@@ -52,6 +53,7 @@ $noticeBorder: #e2e2c1;
 $boxBackground: #fafafa;
 $boxBorder: #d8d8d8;
 $boxBorderLight: #e5e5e5;
+$boxHeaderColor: $textColor;
 $boxHeaderBackground: #f5f5f5;
 
 $noteBackground: #f8f8dd;
@@ -72,11 +74,12 @@ $noteRedBorder: #dc7874;
 $labelBackground: #f4f4f4;
 
 $notifBackground: rgba(#333, .85);
+$notifBorder: none;
 $notifColor: #fff;
 $notifColorLight: #ccc;
 
-$tipBackground: #fffdcd;
-$tipBorder: #e7dca9;
+$tipBackground: rgba(#fffdcd, .95);
+$tipBorder: 1px solid #e7dca9;
 
 $mediumScreen: '(max-width: 800px)';
 

@@ -22,7 +22,7 @@ body {
 
 a {
   color: $linkColor;
-  text-decoration: none;
+  text-decoration: $linkTextDecoration;
 
   &:hover {
     color: $linkColorHover;

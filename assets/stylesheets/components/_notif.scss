@@ -9,6 +9,7 @@
   font-size: .75rem;
   color: $notifColor;
   background: $notifBackground;
+  border: $notifBorder;
   border-radius: .25rem;
   transition: opacity .2s;
   opacity: 0;
@@ -127,8 +128,8 @@
 
 ._notif-tip {
   color: $textColor;
-  background: rgba($tipBackground, .95);
-  border: 1px solid $tipBorder;
+  background: $tipBackground;
+  border: $tipBorder;
 
   ._notif-info { color: $textColorLight; }
 }
