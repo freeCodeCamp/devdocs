@@ -20,7 +20,6 @@ class app.views.DocPicker extends app.View
   activate: ->
     if super
       @render()
-      @findByTag('input')?.focus()
       app.appCache?.on 'progress', @onAppCacheProgress
       $.on @el, 'focus', @onDOMFocus, true
     return
@@ -47,9 +46,9 @@ class app.views.DocPicker extends app.View
     @html html + @tmpl('sidebarPickerNote') + @tmpl('sidebarSave')
     @refreshElements()
 
-    @delay -> # trigger animation
-      @el.offsetWidth
+    $.requestAnimationFrame =>
       @addClass '_in'
+      @findByTag('input')?.focus()
     return
 
   renderVersions: (docs) ->

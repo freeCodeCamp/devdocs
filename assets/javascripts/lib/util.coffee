@@ -314,6 +314,13 @@ $.framify = (fn, obj) ->
   else
     fn
 
+$.requestAnimationFrame = (fn) ->
+  if window.requestAnimationFrame
+    requestAnimationFrame(fn)
+  else
+    setTimeout(fn, 0)
+  return
+
 #
 # Miscellaneous
 #

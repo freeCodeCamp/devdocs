@@ -12,6 +12,7 @@
   overflow-x: hidden;
   overflow-y: scroll;
   background: $sidebarBackground;
+  background-clip: content-box;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none; // IE 10 doesn't support pointer-events
   @extend %user-select-none;
@@ -339,10 +340,12 @@
 //
 
 ._list-picker {
-  opacity: 0;
-  transition: .2s;
+  > ._list, > ._list-item {
+    opacity: 0;
+    transition: .2s;
+  }
+  &._in { > ._list, > ._list-item { opacity: 1; } }
 
-  &._in { opacity: 1; }
   ._list-item { cursor: pointer; }
   ._list-sub > ._list-item { padding-left: 2.375rem; }
 }
@@ -378,6 +381,8 @@
   width: $sidebarWidth;
   background: $sidebarBackground;
   box-shadow: inset -1px 0 $sidebarBorder;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
 
   @media #{$mediumScreen} { width: $sidebarMediumWidth; }
 
