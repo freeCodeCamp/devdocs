@@ -94,7 +94,7 @@ class app.models.Doc extends app.Model
     app.localStorage.set @slug, [@mtime, data]
     return
 
-  install: (onSuccess, onError) ->
+  install: (onSuccess, onError, onProgress) ->
     return if @installing
     @installing = true
 
@@ -112,6 +112,7 @@ class app.models.Doc extends app.Model
       url: @dbUrl()
       success: success
       error: error
+      progress: onProgress
       timeout: 3600
     return
 

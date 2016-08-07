@@ -29,6 +29,7 @@ ajax.defaults =
   # data
   # error
   # headers
+  # progress
   # success
   # url
 
@@ -54,6 +55,7 @@ applyCallbacks = (xhr, options) ->
   return unless options.async
 
   xhr.timer = setTimeout onTimeout.bind(undefined, xhr, options), options.timeout * 1000
+  xhr.onprogress = options.progress if options.progress
   xhr.onreadystatechange = ->
     if xhr.readyState is 4
       clearTimeout(xhr.timer)
