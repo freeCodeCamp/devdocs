@@ -8,6 +8,7 @@ class app.views.DocPicker extends app.View
 
   @events:
     click: 'onClick'
+    mousedown: 'onMouseDown'
 
   @shortcuts:
     enter: 'onEnter'
@@ -84,14 +85,14 @@ class app.views.DocPicker extends app.View
       input.name
 
   onClick: (event) =>
-    if @focusTimeout
-      clearTimeout @focusTimeout
-      @focusTimeout = null
     return if event.which isnt 1
     if event.target is @saveLink
       $.stopEvent(event)
       @save()
     return
+
+  onMouseDown: =>
+    @mouseDown = Date.now()
 
   onDOMFocus: (event) =>
     target = event.target
@@ -99,11 +100,9 @@ class app.views.DocPicker extends app.View
       $.scrollTo target.parentNode, null, 'continuous', bottomGap: 2
     else if target.classList.contains(app.views.ListFold.targetClass)
       target.blur()
-      @focusTimeout = setTimeout =>
+      unless @mouseDown and @mouseDown > Date.now() - 100
         @listFold.open(target) unless target.classList.contains(app.views.ListFold.activeClass)
         $('input', target.nextElementSibling).focus()
-        @focusTimeout = null
-      , 10
     return
 
   onEnter: =>
