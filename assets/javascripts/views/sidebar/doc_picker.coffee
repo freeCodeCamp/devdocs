@@ -30,6 +30,7 @@ class app.views.DocPicker extends app.View
       @empty()
       app.appCache?.off 'progress', @onAppCacheProgress
       $.off @el, 'focus', @onDOMFocus, true
+      @focusEl = null
     return
 
   render: ->
@@ -101,8 +102,16 @@ class app.views.DocPicker extends app.View
     else if target.classList.contains(app.views.ListFold.targetClass)
       target.blur()
       unless @mouseDown and @mouseDown > Date.now() - 100
-        @listFold.open(target) unless target.classList.contains(app.views.ListFold.activeClass)
-        $('input', target.nextElementSibling).focus()
+        if @focusEl is $('input', target.nextElementSibling)
+          @listFold.close(target) if target.classList.contains(app.views.ListFold.activeClass)
+          prev = target.previousElementSibling
+          prev = prev.previousElementSibling until prev.tagName is 'LABEL' or prev.classList.contains(app.views.ListFold.targetClass)
+          prev = $.makeArray($$('input', prev.nextElementSibling)).pop() if prev.classList.contains(app.views.ListFold.activeClass)
+          @delay -> prev.focus()
+        else
+          @listFold.open(target) unless target.classList.contains(app.views.ListFold.activeClass)
+          @delay -> $('input', target.nextElementSibling).focus()
+    @focusEl = target
     return
 
   onEnter: =>
