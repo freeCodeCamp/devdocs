@@ -55,7 +55,10 @@ class app.views.Mobile extends app.View
     return
 
   showSidebar: =>
-    return if @isSidebarShown()
+    if @isSidebarShown()
+      @body.scrollTop = 0
+      return
+
     @contentTop = @body.scrollTop
     @content.style.display = 'none'
     @sidebar.style.display = 'block'

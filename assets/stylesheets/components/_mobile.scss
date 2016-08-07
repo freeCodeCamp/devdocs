@@ -55,9 +55,6 @@
     position: static;
     min-height: 100%;
     overflow: visible;
-    padding-bottom: 2rem;
-
-    > ._list { padding-bottom: 0; }
   }
 
   ._list, ._sidebar-footer { width: 100%; }
@@ -81,16 +78,10 @@
 
   ._list-link { display: none; }
 
-  ._sidebar-footer {
-    position: static;
-    margin-top: .5rem;
-    font-weight: bold;
-
-    &:before { content: none; }
-  }
+  ._sidebar-footer { box-shadow: none; }
 
   ._sidebar-footer-save {
-    margin-top: 1rem;
+    margin: 0;
     box-shadow: 0 1px $noteGreenBorder, 0 -1px $noteGreenBorder;
   }
 
