@@ -180,6 +180,11 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/django/django/master/LICENSE'
   ], [
+    'Docker',
+    '2013-2016 Docker, Inc.<br>Docker and the Docker logo are trademarks of Docker, Inc.',
+    'Apache',
+    'https://raw.githubusercontent.com/docker/docker/master/LICENSE'
+  ], [
     'Dojo',
     '2005-2015 The Dojo Foundation',
     'BSD + AFL',
