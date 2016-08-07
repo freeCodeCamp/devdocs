@@ -329,8 +329,11 @@ $.noop = ->
 
 $.popup = (value) ->
   win = window.open()
-  win.opener = null if win.opener
-  win.location = value.href or value
+  if win
+    win.opener = null if win.opener
+    win.location = value.href or value
+  else
+    window.open value.href or value, '_blank'
   return
 
 $.isTouchScreen = ->
