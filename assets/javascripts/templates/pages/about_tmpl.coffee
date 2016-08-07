@@ -435,6 +435,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/kriskowal/q/v1/LICENSE'
   ], [
+    'Ramda',
+    '2013-2016 Scott Sauyet and Michael Hurley',
+    'MIT',
+    'https://raw.githubusercontent.com/ramda/ramda/master/LICENSE.txt'
+  ], [
     'React, React Native, Flow, Relay',
     '2013-2016 Facebook Inc.',
     'CC BY',
