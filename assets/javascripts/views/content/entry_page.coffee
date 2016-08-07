@@ -40,11 +40,13 @@ class app.views.EntryPage extends app.View
     @trigger 'loaded'
     return
 
-  CLIPBOARD_LINK = '<a class="_pre-clip" title="Copy to clipboard" tabindex="-1"></a>'
-  PRE_TAGS = /<pre[^>]*>/g
-
   addClipboardLinks: ->
-    @el.innerHTML = @el.innerHTML.replace(PRE_TAGS, "$&#{CLIPBOARD_LINK}")
+    unless @clipBoardLink
+      @clipBoardLink = document.createElement('a')
+      @clipBoardLink.className = '_pre-clip'
+      @clipBoardLink.title = 'Copy to clipboard'
+      @clipBoardLink.tabIndex = -1
+    el.appendChild(@clipBoardLink.cloneNode()) for el in @el.querySelectorAll('pre')
     return
 
   LINKS =
