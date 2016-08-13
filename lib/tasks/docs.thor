@@ -228,23 +228,16 @@ class DocsCLI < Thor
   end
 
   def download_doc(doc)
-    target = File.join(Docs.store_path, "#{doc.path}.tar.gz")
+    target_path = File.join(Docs.store_path, doc.path)
     open "http://dl.devdocs.io/#{doc.path}.tar.gz" do |file|
-      FileUtils.mkpath(Docs.store_path)
-      FileUtils.mv(file, target)
-      unpackage_doc(doc)
+      FileUtils.mkpath(target_path)
+      file.close
+      tar = UnixUtils.gunzip(file.path)
+      dir = UnixUtils.untar(tar)
+      FileUtils.rm_rf(target_path)
+      FileUtils.mv(dir, target_path)
+      FileUtils.rm(file.path)
     end
-  end
-
-  def unpackage_doc(doc)
-    path = File.join(Docs.store_path, doc.path)
-    FileUtils.mkpath(path)
-    tar = UnixUtils.gunzip("#{path}.tar.gz")
-    dir = UnixUtils.untar(tar)
-    FileUtils.rm_rf(path)
-    FileUtils.mv(dir, path)
-    FileUtils.rm(tar)
-    FileUtils.rm("#{path}.tar.gz")
   end
 
   def package_doc(doc)
