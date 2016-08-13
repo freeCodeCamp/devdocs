@@ -6,10 +6,7 @@ module Docs
 
         css('h3 + p', 'hr').remove
 
-        # Set id attributes on <h3> instead of an empty <a>
-        css('h3').each do |node|
-          node['id'] = node.at_css('a')['id']
-        end
+        css('h2 a:contains("#")', 'h3 a:contains("#")').remove
 
         # Remove <code> inside headings
         css('h2', 'h3').each do |node|
