@@ -51,6 +51,9 @@ class app.views.Content extends app.View
     @addClass @constructor.loadingClass
     return
 
+  isLoading: ->
+    @el.classList.contains @constructor.loadingClass
+
   hideLoading: ->
     @removeClass @constructor.loadingClass
     return
@@ -92,12 +95,14 @@ class app.views.Content extends app.View
     return
 
   scrollToTarget: ->
+    return if @isLoading()
     if @routeCtx.hash and el = @findTargetByHash @routeCtx.hash
       $.scrollToWithImageLock el, @scrollEl, 'top',
         margin: 20 + if @scrollEl is @el then 0 else $.offset(@el).top
       $.highlight el, className: '_highlight'
     else
       @scrollTo @scrollMap[@routeCtx.state.id]
+    clearTimeout @scrollTimeout
     return
 
   onReady: =>
@@ -121,7 +126,7 @@ class app.views.Content extends app.View
   beforeRoute: (context) =>
     @cacheScrollPosition()
     @routeCtx = context
-    @delay @scrollToTarget
+    @scrollTimeout = @delay @scrollToTarget
     return
 
   cacheScrollPosition: ->
