@@ -13,7 +13,8 @@ class app.views.BasePage extends app.View
     @prepare?() unless fromCache
     @activate()
     @delay @afterRender if @afterRender
-    $.requestAnimationFrame(@paintCode) if @highlightNodes.length > 0
+    if @highlightNodes.length > 0
+      $.requestAnimationFrame => $.requestAnimationFrame(@paintCode)
     return
 
   highlightCode: (el, language) ->
