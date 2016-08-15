@@ -187,7 +187,7 @@
   hideLoading: ->
     document.body.classList.remove '_booting'
     document.body.classList.remove '_loading'
-    $.remove document.getElementById('fontLoader')
+    try $.remove document.getElementById('fontLoader')
     return
 
   indexHost: ->
