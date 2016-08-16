@@ -19,7 +19,7 @@
 
   ul.simple { margin: 1em 0; }
 
-  h2 > a, h3 > a, dt[id] > a.external { float: right; }
+  h2 > a, h3 > a, dt[id] > a.external, dt[id] > a.internal { float: right; }
 
   .admonition-title {
     float: left;
