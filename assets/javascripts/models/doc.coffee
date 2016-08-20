@@ -39,10 +39,13 @@ class app.models.Doc extends app.Model
     "#{app.indexHost()}/#{@slug}/#{app.config.index_filename}?#{@mtime}"
 
   toEntry: ->
-    @entry ||= new app.models.Entry
+    return @entry if @entry
+    @entry = new app.models.Entry
       doc: @
       name: @fullName
       path: 'index'
+    @entry.addAlias(@name) if @version
+    @entry
 
   findEntryByPathAndHash: (path, hash) ->
     if hash and entry = @entries.findBy 'path', "#{path}##{hash}"
