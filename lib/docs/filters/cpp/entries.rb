@@ -12,9 +12,16 @@ module Docs
         name = at_css('#firstHeading').content.strip
         name.remove! 'C++ concepts: '
         name.remove! 'C++ keywords: '
-        name.remove! 'C++ '
+        name.remove! 'C++ ' unless name == 'C++ language'
         name.remove! %r{\s\(.+\)}
         name.sub! %r{\AStandard library header <(.+)>\z}, '\1'
+        if name.include?('operator') && name.include?(',')
+          name.sub!(%r{operator.+([\( ])}, 'operators (') || name.sub!(%r{operator.+}, 'operators')
+          name.sub! '  ', ' '
+          name << ')' unless name.last == ')' || name.exclude?('(')
+          name.sub! '()', ''
+          name.sub! %r{\(.+\)}, '' if !name.start_with?('operator') && name.length > 50
+        end
         name = name.split(',').first
         REPLACE_NAMES[name] || name
       end
@@ -35,17 +42,12 @@ module Docs
       end
 
       def additional_entries
-        return [] unless include_default_entry?
+        return [] if root_page? || self.name.start_with?('operators')
         names = at_css('#firstHeading').content.remove(%r{\(.+?\)}).split(',')[1..-1]
         names.each(&:strip!).reject! do |name|
           name.size <= 2 || name == '...' || name =~ /\A[<>]/ || name.start_with?('operator')
         end
         names.map { |name| [name] }
-      end
-
-      def include_default_entry?
-        return @include_default_entry if defined? @include_default_entry
-        @include_default_entry = at_css('.t-navbar > div:nth-child(4) > a') && at_css('#firstHeading').content !~ /\A\s*operator./
       end
     end
   end

@@ -2,10 +2,10 @@ module Docs
   class C
     class FixCodeFilter < Filter
       def call
-        css('div > span.source-c').each do |node|
+        css('div > span.source-c', 'div > span.source-cpp').each do |node|
           node.inner_html = node.inner_html.gsub(/<br>\n?/, "\n").gsub("\n</p>\n", "</p>\n")
           node.parent.name = 'pre'
-          node.parent['class'] = 'source-c'
+          node.parent['class'] = node['class']
           node.parent.content = node.content
         end
 
