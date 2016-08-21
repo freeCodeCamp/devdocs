@@ -33,7 +33,11 @@ module Docs
         raise "Error status code (#{response.code}): #{response.url}"
       end
 
-      response.success? && response.html? && base_url.contains?(response.effective_url)
+      response.success? && response.html? && process_url?(response.effective_url)
+    end
+
+    def process_url?(url)
+      base_url.contains?(url)
     end
 
     def load_capybara_selenium

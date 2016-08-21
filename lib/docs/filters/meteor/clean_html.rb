@@ -2,44 +2,45 @@ module Docs
   class Meteor
     class CleanHtmlFilter < Filter
       def call
-        root_page? ? root : other
+        @doc = at_css('.content-wrapper')
 
-        css('pre span').each do |node|
+        css('.page-actions', '.anchor').remove
+
+        css('.header-content', '.document-formatting', 'h2 > a', '.api', '.api-body', 'div.desc').each do |node|
           node.before(node.children).remove
         end
 
-        doc
-      end
-
-      def root
-        @doc = at_css('#introduction').parent
-
-        css('.github-ribbon', '#introduction').remove
-
-        css('.selflink', 'b > em').each do |node|
-          node.before(node.children).remove
+        css('.anchor-offset').each do |node|
+          node.parent['id'] = node['id']
+          node.remove
         end
 
-        css('pre').each do |node|
-          node['data-language'] = node.at_css('code')['class'].include?('html') ? 'html' : 'js'
-          node.content = node.content
+        css('.api-heading').each do |node|
+          heading = node.at_css('h2, h3')
+          name = heading.name
+          node['id'] = heading['id']
+          heading.replace "<code>#{heading.content.strip}</code>"
+          node.name = name
         end
 
-        css('a.src-code').each do |node|
-          node.content = 'Source'
+        css('div.code', 'span.code', '.args .name').each do |node|
+          node.name = 'code'
+          node.remove_attribute('class')
         end
-      end
-
-      def other
-        @doc = at_css('#content')
-
-        css('.edit-discuss-links', '.bottom-nav', '.edit-link').remove
 
         css('figure.highlight').each do |node|
-          node.inner_html = node.at_css('.code pre').inner_html.gsub('<br>', "\n")
+          node.inner_html = node.at_css('.code pre').inner_html.gsub('</div><div', "</div>\n<div").gsub('<br>', "\n")
+          node.content = node.content
           node['data-language'] = node['class'].split.last
           node.name = 'pre'
         end
+
+        css('pre.prettyprint').each do |node|
+          node['data-language'] = node['class'].include?('html') ? 'html' : 'js'
+          node.content = node.content
+        end
+
+        doc
       end
     end
   end

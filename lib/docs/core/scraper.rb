@@ -3,7 +3,7 @@ require 'set'
 module Docs
   class Scraper < Doc
     class << self
-      attr_accessor :base_url, :root_path, :initial_paths, :options, :html_filters, :text_filters, :stubs
+      attr_accessor :base_url, :root_path, :initial_paths, :initial_urls, :options, :html_filters, :text_filters, :stubs
 
       def inherited(subclass)
         super
@@ -16,6 +16,7 @@ module Docs
         subclass.base_url = base_url
         subclass.root_path = root_path
         subclass.initial_paths = initial_paths.dup
+        subclass.initial_urls = initial_urls.dup
         subclass.options = options.deep_dup
         subclass.html_filters = html_filters.inheritable_copy
         subclass.text_filters = text_filters.inheritable_copy
@@ -35,6 +36,7 @@ module Docs
     include Instrumentable
 
     self.initial_paths = []
+    self.initial_urls = []
     self.options = {}
     self.stubs = {}
 
@@ -103,7 +105,7 @@ module Docs
     end
 
     def initial_urls
-      @initial_urls ||= [root_url.to_s].concat(initial_paths.map(&method(:url_for))).freeze
+      @initial_urls ||= [root_url.to_s].concat(self.class.initial_urls).concat(initial_paths.map(&method(:url_for))).freeze
     end
 
     def pipeline
