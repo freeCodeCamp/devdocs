@@ -14,7 +14,7 @@ module Docs
           end
         end
 
-        css('#plusone', '#nav', '.pkgGopher', '#footer', '.collapsed').remove
+        css('#plusone', '#nav', '.pkgGopher', '#footer', '.collapsed', '.permalink').remove
 
         # Remove triangle character
         css('h2', '.exampleHeading').each do |node|
