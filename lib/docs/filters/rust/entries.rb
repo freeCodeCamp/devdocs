@@ -48,8 +48,8 @@ module Docs
             [name, id]
           end
         elsif slug == 'error-index'
-          css('.error-described h2.section-header').map do |node|
-            [node.content, node['id']]
+          css('.error-described h2.section-header').each_with_object [] do |node, entries|
+            entries << [node.content, node['id']] unless node.content.include?('Note:')
           end
         else
           css('#methods + * + div > .method', '#required-methods + div > .method', '#provided-methods + div > .method').map do |node|
