@@ -3,7 +3,7 @@ module Docs
     self.name = 'Tcl/Tk'
     self.type = 'tcl_tk'
     self.slug = 'tcl_tk'
-    self.release = '8.6'
+    self.release = '8.6.6'
     self.base_url = 'https://www.tcl.tk/man/tcl/'
     self.root_path = 'contents.htm'
 
