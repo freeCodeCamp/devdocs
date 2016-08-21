@@ -4,12 +4,8 @@ module Docs
       def call
         css('.breadcrumbs', 'a.permalink', 'a.anchor').remove
 
-        css('.section', '#content', '.description', '.list').each do |node|
+        css('.section', '#content', '.description', '.list', 'span.attributes').each do |node|
           node.before(node.children).remove
-        end
-
-        css('h1').drop(1).each do |node|
-          node.name = 'h2'
         end
 
         css('> h6').each do |node|
@@ -20,12 +16,17 @@ module Docs
           node.name = 'h4'
         end
 
-        css('.property-name').each do |node|
-          node.name = 'h3'
-        end
-
         css('var').each do |node|
           node.name = 'code'
+        end
+
+        css('.member-summary h3', 'li > h5').each do |node|
+          node.name = 'div'
+          node.remove_attribute('class')
+        end
+
+        css('div.attributes').each do |node|
+          node.name = 'p'
         end
 
         # Move dummy anchor to method and property name
@@ -35,8 +36,7 @@ module Docs
         end
 
         css('.property-detail').each do |node|
-          node.at_css('.property-name')['id'] = node['id']
-          node.remove_attribute('id')
+          node.at_css('.property-name')['id'] = node.at_css('a')['id']
         end
 
         # Break out source link to separate element
@@ -48,7 +48,7 @@ module Docs
           source['class'] = 'source'
         end
 
-        css('.method-signature').each do |node|
+        css('.method-signature', 'pre').each do |node|
           node.name = 'pre'
           node.content = node.content.strip
           node['data-language'] = 'php'
