@@ -17,13 +17,13 @@ module Docs
     HTML
 
     version 'Python' do
-      self.base_url = 'https://www.tensorflow.org/versions/r0.9/api_docs/python/'
-      self.release = '0.9'
+      self.base_url = 'https://www.tensorflow.org/versions/r0.10/api_docs/python/'
+      self.release = '0.10'
     end
 
     version 'C++' do
-      self.base_url = 'https://www.tensorflow.org/versions/r0.9/api_docs/cc/'
-      self.release = '0.9'
+      self.base_url = 'https://www.tensorflow.org/versions/r0.10/api_docs/cc/'
+      self.release = '0.10'
 
       options[:fix_urls] = ->(url) {
         url.sub! '/api_docs/cc/class', '/api_docs/cc/Class'
