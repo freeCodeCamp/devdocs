@@ -13,6 +13,7 @@ app.views.CPage =
 app.views.CakephpPage =
 app.views.ChaiPage =
 app.views.CrystalPage =
+app.views.D3Page =
 app.views.DrupalPage =
 app.views.ElixirPage =
 app.views.EmberPage =
