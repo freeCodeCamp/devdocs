@@ -4,5 +4,6 @@
   h4 { font-size: 1em; }
 
   blockquote { @extend %note; }
-  p > code { @extend %label; }
+  blockquote.tip { @extend %note-blue; }
+  p > code, h4 > code { @extend %label; }
 }

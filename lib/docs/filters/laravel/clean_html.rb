@@ -14,6 +14,10 @@ module Docs
           node['data-language'] = 'php'
         end
 
+        css('a.__cf_email__').each do |node|
+          node.replace(decode_cloudflare_email(node['data-cfemail']))
+        end
+
         doc
       end
 
@@ -67,8 +71,9 @@ module Docs
           node.parent.next_element['id'] = node['name']
         end
 
-        css('a.__cf_email__').each do |node|
-          node.replace(decode_cloudflare_email(node['data-cfemail']))
+        css('blockquote').each do |node|
+          node['class'] = 'tip' if node.inner_html.include?('{tip}')
+          node.inner_html = node.inner_html.remove(/\{(tip|note)\}\s?/)
         end
       end
     end
