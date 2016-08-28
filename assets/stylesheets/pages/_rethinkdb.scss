@@ -1,6 +1,7 @@
 ._rethinkdb {
-  > h2 { @extend %block-heading; }
-  code { @extend %label; }
+  @extend %simple;
+
+  .infobox-alert { @extend %note-orange; }
 
   .api_command_illustration {
     float: right;
