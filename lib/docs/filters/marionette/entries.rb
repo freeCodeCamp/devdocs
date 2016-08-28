@@ -9,7 +9,10 @@ module Docs
       end
 
       def get_type
-        name
+        type = name.dup
+        type = 'CollectionView' if type.include?('CollectionView')
+        type = 'Miscellaneous' if %w(Features Installing\ Marionette Upgrade\ Guide Common\ Concepts).include?(type)
+        type
       end
 
       def additional_entries

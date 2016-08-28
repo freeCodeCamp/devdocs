@@ -15,7 +15,7 @@ module Docs
         css('#source + h2', '#improve', '#source', '.glyphicon', 'p > br').remove
 
         css('pre > code').each do |node|
-          node.parent['data-language'] = node['class'][/lang-(\w+)/, 1]
+          node.parent['data-language'] = node['class'][/lang-(\w+)/, 1] if node['class']
           node.before(node.children).remove
         end
 
