@@ -4,7 +4,7 @@ module Docs
 
     self.name = 'PHP'
     self.type = 'php'
-    self.release = 'up to 7.0.8'
+    self.release = 'up to 7.0.10'
     self.base_url = 'https://secure.php.net/manual/en/'
     self.root_path = 'index.html'
     self.initial_paths = %w(

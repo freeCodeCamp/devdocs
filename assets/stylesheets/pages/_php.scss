@@ -29,4 +29,6 @@
 
   div.warning { @extend %note, %note-red; }
   div.tip { @extend %note, %note-green; }
+
+  strong > code, dt > code { @extend %label; }
 }
