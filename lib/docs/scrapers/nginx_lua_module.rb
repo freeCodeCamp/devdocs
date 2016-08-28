@@ -2,8 +2,8 @@ module Docs
   class NginxLuaModule < Github
     self.name = 'nginx / Lua Module'
     self.slug = 'nginx_lua_module'
-    self.release = '0.10.0'
-    self.base_url = 'https://github.com/openresty/lua-nginx-module/tree/v0.10.0/'
+    self.release = '0.10.6'
+    self.base_url = "https://github.com/openresty/lua-nginx-module/tree/v#{self.release}/"
 
     html_filters.push 'nginx_lua_module/clean_html', 'nginx_lua_module/entries', 'title'
 
