@@ -57,7 +57,7 @@ module Docs
     end
 
     def md_to_html(str)
-      str = str.strip
+      str = CGI::escape_html(str.strip)
       str.gsub! %r{`(.*?)`}, '<code>\1</code>'
       str.gsub! %r{\n\s*\n}, '</p><p>'
       str.gsub! "\n", '<br>'
