@@ -4,7 +4,7 @@ MAINTAINER Conor Heine <conor.heine@gmail.com>
 
 RUN apt-get update
 RUN apt-get -y install git nodejs
-RUN git clone https://github.com/Thibaut/devdocs.git /devdocs
+COPY . /devdocs
 RUN gem install bundler
 
 WORKDIR /devdocs
