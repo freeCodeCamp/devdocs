@@ -8,7 +8,7 @@ module Docs
       code: 'https://go.googlesource.com/go'
     }
 
-    html_filters.push 'go/clean_html', 'go/entries'
+    html_filters.push 'go/clean_html', 'go/entries', 'go/usages'
 
     options[:trailing_slash] = true
     options[:container] = '#page .container'
