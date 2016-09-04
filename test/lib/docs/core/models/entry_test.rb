@@ -82,24 +82,6 @@ class DocsEntryTest < MiniTest::Spec
     end
   end
 
-  describe "#<=>" do
-    it "returns 1 when the other's name is less" do
-      assert_equal 1, build_entry('b') <=> build_entry('a')
-    end
-
-    it "returns -1 when the other's name is greater" do
-      assert_equal -1, build_entry('a') <=> build_entry('b')
-    end
-
-    it "returns 0 when the other's name is equal" do
-      assert_equal 0, build_entry('a') <=> build_entry('a')
-    end
-
-    it "is case-insensitive" do
-      assert_equal 0, build_entry('a') <=> build_entry('A')
-    end
-  end
-
   describe "#root?" do
     it "returns true when #path is 'index'" do
       entry.path = 'index'

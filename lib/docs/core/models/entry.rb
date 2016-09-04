@@ -22,10 +22,6 @@ module Docs
       other.name == name && other.path == path && other.type == type
     end
 
-    def <=>(other)
-      name.to_s.casecmp(other.name.to_s)
-    end
-
     def name=(value)
       @name = value.try :strip
     end
