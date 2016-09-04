@@ -15,22 +15,14 @@
 
   .text-danger { @extend %label, %label-red; }
 
-  .bs-example {
+  p.bs-example {
     padding: .375rem .625rem;
     line-height: 1.5;
     @extend %heading-box;
   }
 
   div.bs-example {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-
-    + pre {
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-      border-top: 0;
-      margin-top: 0;
-    }
+    @extend %pre-heading;
   }
 
   a.thumbnail {

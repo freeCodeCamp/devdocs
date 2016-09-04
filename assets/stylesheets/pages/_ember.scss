@@ -1,53 +1,22 @@
 ._ember {
-  > .class-info { @extend %note, %note-blue; }
-  > .class-info > p { margin: 0; }
+  @extend %simple;
 
-  > .description > h2, > .description > h3 { font-size: 1rem; }
+  blockquote.class-info { @extend %note-blue; }
+  blockquote.class-info > p { margin: 0; }
 
-  .item-entry { padding-left: 1rem; }
+  .pre-title { @extend %pre-heading; }
 
-  .title {
-    margin-left: -1rem;
-    @extend %block-heading;
-
-    > h2, > .args, > .flag {
-      display: inline-block;
-      vertical-align: top;
-      margin: 0;
-      line-height: inherit;
-      font-size: inherit;
-    }
-
-    > .flag { // "static"
-      margin-left: .5em;
-      color: $textColorLight;
-    }
-
-    > .type {
-      float: right;
-      font-weight: normal;
-    }
-  }
-
-  .meta { // "defined in"
+  h2 > .flag, h2 > .type {
+    margin-left: .5em;
     color: $textColorLight;
-    margin-bottom: 1em;
+    font-weight: normal;
   }
 
-  .return, .params {
-    margin-top: 1.5em;
+  h2 > .type { float: right; }
 
-    > h3 {
-      display: inline-block;
-      vertical-align: top;
-      margin: 0 0 1em;
-      font-size: inherit;
-      @extend %label, %label-blue;
-    }
-  }
+  .meta { color: $textColorLight; }
 
   dl { margin: 0 1em; }
   dt + dt, dd + dt { margin-top: .5em; }
-
-  p > code { @extend %label; }
+  dt > code { @extend %label; }
 }
