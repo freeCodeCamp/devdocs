@@ -2,7 +2,12 @@ module Docs
   class Angular
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('header.hero h1').content.strip
+        if slug.start_with?('tutorial') || slug.start_with?('guide')
+          name = at_css('.nav-list-item.is-selected').content.strip
+        else
+          name = at_css('header.hero h1').content.strip
+        end
+
         name = name.split(':').first
 
         if mod
