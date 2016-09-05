@@ -14,12 +14,12 @@ module Docs
           node.name = 'h2'
         end
 
-        css('h2 > a').each do |node|
+        css('.anchor').each do |node|
           node.parent['id'] = node['id']
         end
 
         css('pre').each do |node|
-          node['class'] = 'fish' # Prism may support fish in the future
+          node['data-language'] = 'fish' # Prism may support fish in the future
           node.content = node.content
         end
 

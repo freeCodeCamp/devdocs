@@ -220,6 +220,11 @@ credits = [
     'Unknown',
     'https://github.com/expressjs/expressjs.com/issues/413'
   ], [
+    'Fish',
+    '2005-2009 Axel Liljencrantz',
+    'GPLv2',
+    'https://fishshell.com/docs/current/license.html'
+  ], [
     'GCC<br>GNU Fortran',
     'Free Software Foundation',
     'GFDL',

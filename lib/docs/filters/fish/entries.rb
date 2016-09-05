@@ -1,17 +1,28 @@
 module Docs
   class Fish
     class EntriesFilter < Docs::EntriesFilter
+      def get_name
+        if slug == 'faq'
+          'FAQ'
+        else
+          slug.capitalize
+        end
+      end
 
-      def include_default_entry?
-        false
+      def get_type
+        if root_page? || slug == 'faq'
+          'Manual'
+        else
+          name
+        end
       end
 
       def additional_entries
-        css('h2').each_with_object [] do |node, entries|
-          name = node.content.split(' - ').first
-          id = node['id']
-          type = root_page? ? 'Reference' : (slug == 'faq' ? 'FAQ' : slug.capitalize)
-          entries << [name, id, type]
+        return [] if slug == 'faq'
+        css('h2').map.with_index do |node, i|
+          name = node.content.split(' - ').first.strip
+          name.prepend "#{i + 1}. " unless slug == 'commands'
+          [name, node['id'], get_type]
         end
       end
     end
