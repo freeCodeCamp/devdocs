@@ -51,6 +51,7 @@
     else
       if @config.sentry_dsn
         Raven.config @config.sentry_dsn,
+          release: @config.release
           whitelistUrls: [/devdocs/]
           includePaths: [/devdocs/]
           ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/]
@@ -68,6 +69,7 @@
           dataCallback: (data) ->
             try
               $.extend(data.user ||= {}, app.settings.dump())
+              data.user.docs = data.user.docs.split('/') if data.user.docs
               data.user.lastIDBTransaction = app.lastIDBTransaction if app.lastIDBTransaction
             data
         .install()

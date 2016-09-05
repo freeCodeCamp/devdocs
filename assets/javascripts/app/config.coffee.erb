@@ -11,3 +11,4 @@ app.config =
   search_param: 'q'
   sentry_dsn: '<%= App.sentry_dsn %>'
   version: <%= Time.now.to_i %>
+  release: <%= Time.now.utc.httpdate.to_json %>
