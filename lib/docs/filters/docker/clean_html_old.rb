@@ -1,17 +1,15 @@
 module Docs
   class Docker
-    class CleanHtmlFilter < Filter
+    class CleanHtmlOldFilter < Filter
       def call
         if root_page?
           doc.inner_html = "<h1>Docker Documentation</h1>"
           return doc
         end
 
-        @doc = at_css('#DocumentationText')
+        @doc = at_css('#content')
 
         at_css('h2').name = 'h1' unless at_css('h1')
-
-        css('.anchorLink').remove
 
         css('pre').each do |node|
           node.content = node.content
