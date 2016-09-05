@@ -495,6 +495,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/sass/sass/stable/MIT-LICENSE'
   ], [
+    'scikit-image',
+    '2011 the scikit-image team',
+    'BSD',
+    'http://scikit-image.org/docs/dev/license.html'
+  ], [
     'Sinon',
     '2010-2016 Christian Johansen',
     'BSD',

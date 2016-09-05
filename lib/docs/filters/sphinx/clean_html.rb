@@ -9,7 +9,7 @@ module Docs
           node.remove
         end
 
-        css('em.xref', 'tt').each do |node|
+        css('em.xref', 'tt', 'cite').each do |node|
           node.name = 'code'
         end
 

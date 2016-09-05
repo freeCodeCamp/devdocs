@@ -4,17 +4,27 @@ module Docs
       def get_name
         name = at_css('h1').content.strip
         name.remove! "\u{00b6}"
-        name.remove! 'Module: '
-        name.remove! %r{ \(.*\)}
-        name.downcase!
+
+        if slug.start_with?('api')
+          name.remove! 'Module: '
+          name.remove! %r{ \(.*\)}
+          name.downcase!
+        end
+
         name
       end
 
       def get_type
-        name.split('.').first
+        if slug.start_with?('api')
+          name.split('.').first
+        else
+          'Guide'
+        end
       end
 
       def additional_entries
+        return [] unless slug.start_with?('api')
+
         entries = []
 
         css('.class > dt[id]', '.exception > dt[id]', '.attribute > dt[id]').each do |node|
@@ -30,7 +40,12 @@ module Docs
         css('.function > dt[id]', '.method > dt[id]', '.classmethod > dt[id]').each do |node|
           entries << [node['id'].remove('skimage.') + '()', node['id']]
         end
+
         entries
+      end
+
+      def include_default_entry?
+        slug != 'api/api'
       end
     end
   end
