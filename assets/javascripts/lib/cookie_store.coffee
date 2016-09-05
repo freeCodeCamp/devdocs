@@ -2,28 +2,23 @@ class @CookieStore
   INT = /^\d+$/
 
   get: (key) ->
-    try
-      value = Cookies.get(key)
-      value = parseInt(value, 10) if value? and INT.test(value)
-      value
-    catch
+    value = Cookies.get(key)
+    value = parseInt(value, 10) if value? and INT.test(value)
+    value
 
   set: (key, value) ->
     if value == false
-      return @del(key)
-    else if value == true
-      value = 1
+      @del(key)
+      return
 
-    try
-      Cookies.set(key, '' + value, path: '/', expires: 1e8)
-      true
-    catch
+    value = 1 if value == true
+    Cookies.set(key, '' + value, path: '/', expires: 1e8)
+    throw new Error("Failed to set cookie '#{key}'") unless @get(key) == value
+    return
 
   del: (key) ->
-    try
-      Cookies.expire(key)
-      true
-    catch
+    Cookies.expire(key)
+    return
 
   reset: ->
     try
