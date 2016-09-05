@@ -1,0 +1,9 @@
+._cordova {
+  @extend %simple;
+
+  .alert { @extend %note; }
+
+  .compat .n { background: pink; }
+  .compat .y { background: lightgreen; }
+  .compat .p { background: khaki; }
+}

@@ -12,6 +12,7 @@ app.views.BootstrapPage =
 app.views.CPage =
 app.views.CakephpPage =
 app.views.ChaiPage =
+app.views.CordovaPage =
 app.views.CrystalPage =
 app.views.D3Page =
 app.views.DrupalPage =
