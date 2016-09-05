@@ -1,16 +1,6 @@
 module Docs
   class Bottle
     class EntriesFilter < Docs::EntriesFilter
-      TYPES = {
-        'routing' => 'Request Routing',
-        'stpl' => 'SimpleTemplate Engine',
-        'api'  => 'API Reference',
-
-        'tutorial_app' => 'Tutorial',
-        'async' => 'Primer to Asynchronous Applications',
-        'faq' => 'Frequently Asked Questions'
-      }
-
       def get_name
         name = at_css('h1').content.strip
         name.remove! "\u{00B6}"
@@ -18,15 +8,18 @@ module Docs
       end
 
       def get_type
-        type = slug.split('/').first
-
-        if TYPES.key?(type)
-          type = TYPES[type]
+        case slug
+        when 'api'
+          'Reference'
+        when 'configuration'
+          'Reference: Configuration'
+        when 'stpl'
+          'Reference: SimpleTemplate'
+        when 'plugindev'
+          'Reference: Plugin'
         else
-          type = type.capitalize
+          'Manual'
         end
-
-        type
       end
 
       def additional_entries

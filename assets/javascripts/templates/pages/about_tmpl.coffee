@@ -110,6 +110,11 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Bottle',
+    '2016 Marcel Hellkamp',
+    'MIT',
+    'https://raw.githubusercontent.com/bottlepy/bottle/master/LICENSE'
+  ], [
     'Bower',
     '2016 Bower contributors',
     'MIT',
