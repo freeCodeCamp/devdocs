@@ -20,6 +20,15 @@ module Docs
       log event.payload[:msg]
     end
 
+    def error(event)
+      exception = event.payload[:exception]
+      log "ERROR:"
+      puts "  #{event.payload[:url]}"
+      puts "  #{exception.class}: #{exception.message.gsub("\n", "\n    ")}"
+      puts exception.backtrace.select { |line| line.start_with?(Docs.root_path) }.join("\n  ").prepend("\n  ")
+      puts "\n"
+    end
+
     private
 
     def parse_payload(event)

@@ -58,6 +58,7 @@ class DocsCLI < Thor
   option :force, type: :boolean
   option :package, type: :boolean
   def generate(name)
+    Docs.rescue_errors = true
     Docs.install_report :store if options[:verbose]
     Docs.install_report :scraper if options[:debug]
     Docs.install_report :progress_bar, :doc if $stdout.tty?
@@ -93,6 +94,8 @@ class DocsCLI < Thor
     generate_manifest if result
   rescue Docs::DocNotFound => error
     handle_doc_not_found_error(error)
+  ensure
+    Docs.rescue_errors = false
   end
 
   desc 'manifest', 'Create the manifest'

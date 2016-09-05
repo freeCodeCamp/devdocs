@@ -163,8 +163,12 @@ module Docs
         instrument 'ignore_response.scraper', response: response
       end
     rescue => e
-      puts "URL: #{response.url}"
-      raise e
+      if Docs.rescue_errors
+        instrument 'error.doc', exception: e, url: response.url
+        nil
+      else
+        raise e
+      end
     end
 
     def process_response(response)
