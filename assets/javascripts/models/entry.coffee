@@ -67,6 +67,7 @@ class app.models.Entry extends app.Model
     'moment.js': 'mt'
     'nginx': 'ngx'
     'numpy': 'np'
+    'pandas': 'pd'
     'postgresql': 'pg'
     'python': 'py'
     'ruby.on.rails': 'ror'
