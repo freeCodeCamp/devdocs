@@ -23,12 +23,12 @@ module Docs
     HTML
 
     version '3.3' do
-      self.release = '3.3.1'
+      self.release = '3.3.3'
       self.base_url = 'http://api.cakephp.org/3.3/'
     end
 
     version '3.2' do
-      self.release = '3.2.8'
+      self.release = '3.2.14'
       self.base_url = 'http://api.cakephp.org/3.2/'
     end
 
@@ -38,7 +38,7 @@ module Docs
     end
 
     version '2.8' do
-      self.release = '2.8.3'
+      self.release = '2.8.8'
       self.base_url = 'http://api.cakephp.org/2.8/'
     end
 

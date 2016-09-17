@@ -26,7 +26,7 @@ module Docs
         return 'Global' if slug == 'namespace-None'
         case page_type
         when 'class', 'namespace', 'package'
-          if (node = at_css('.info')) && node.content =~ /Located at\s+((?:\w+\/?)+)/ # for 2.x docs
+          if (node = at_css('.info')) && node.content =~ /Location:\s+((?:\w+\/?)+)/ # for 2.x docs
             path = $1.split('/')
           else
             path = slug_without_page_type.split('.')
