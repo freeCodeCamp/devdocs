@@ -1,9 +1,9 @@
 module Docs
   class Crystal < UrlScraper
     self.type = 'crystal'
-    self.release = '0.18.7'
+    self.release = '0.19.2'
     self.base_url = 'https://crystal-lang.org/'
-    self.root_path = 'api/0.18.7/index.html'
+    self.root_path = "api/#{release}/index.html"
     self.initial_paths = %w(docs/index.html)
     self.links = {
       home: 'https://crystal-lang.org/',
