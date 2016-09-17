@@ -48,7 +48,7 @@ Use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) wher
 
 See the [wiki](https://github.com/Thibaut/devdocs/wiki) to learn how to add new documentations.
 
-**Important:** the documentation's license must permit alteration, redistribution, and commercial use.
+**Important:** the documentation's license must permit alteration, redistribution and commercial use, and the documented software must be released under an open source license. Feel free to get in touch if you're not sure if a documentation meets those requirements.
 
 In addition to the [guidelines for contributing code](#contributing-code-and-features), the following guidelines apply to pull requests that add a new documentation:
 
