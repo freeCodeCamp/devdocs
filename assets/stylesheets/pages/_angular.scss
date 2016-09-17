@@ -11,6 +11,7 @@
 
   h2 { @extend %block-heading; }
   > h3 { @extend %block-label, %label-blue; }
+  .code-example > h4, .pre-title { @extend %pre-heading; }
 
   p > code, .status-badge { @extend %label; }
 

@@ -48,7 +48,10 @@
 }
 
 %pre-heading {
+  margin: 0;
   padding: .375rem .625rem;
+  font-size: inherit;
+  font-weight: normal;
   line-height: 1.5;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;

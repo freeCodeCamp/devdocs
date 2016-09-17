@@ -42,8 +42,8 @@ module Docs
     end
 
     version '2.0 TypeScript' do
-      self.release = '2.0.0rc6'
-      self.base_url = "https://angular.io/docs/ts/latest/"
+      self.release = '2.0.0'
+      self.base_url = 'https://angular.io/docs/ts/latest/'
     end
 
     private
@@ -53,6 +53,9 @@ module Docs
       string.gsub! '</code-example', '</pre'
       string.gsub! '<code-pane', '<pre'
       string.gsub! '</code-pane', '</pre'
+      string.gsub! '<live-example></live-example>', 'live example'
+      string.gsub! '<live-example', '<span'
+      string.gsub! '</live-example', '</span'
       super string
     end
   end

@@ -18,7 +18,7 @@ module Docs
           end
         end
 
-        name << '()' if at_css('.status-badge').try(:content) == 'Function'
+        name << '()' if at_css('.hero-subtitle').try(:content) == 'Function'
         name
       end
 
@@ -30,7 +30,7 @@ module Docs
         elsif slug == 'glossary'
           'Guide'
         else
-          type = at_css('.is-nav-title-selected').content.strip
+          type = at_css('.nav-title.is-selected').content.strip
           type.remove! ' Reference'
           type << ": #{mod}" if mod
           type

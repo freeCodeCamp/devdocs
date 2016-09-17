@@ -3,7 +3,13 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         container = at_css('article.docs-content')
-        container.child.before(at_css('header.hero h1')).before(css('header.hero .badges')).before(css('header.hero + .banner'))
+        badges = css('header.hero .badge, header.hero .hero-subtitle').map do |node|
+          node.name = 'span'
+          node['class'] = 'status-badge'
+          node.to_html
+        end.join(' ')
+        badges = %(<div class="badges">#{badges}</div>)
+        container.child.before(at_css('header.hero h1')).before(badges).before(css('header.hero + .banner'))
         @doc = container
 
         css('pre.no-bg-with-indent').each do |node|
@@ -17,7 +23,7 @@ module Docs
 
         css('button.verbose', 'button.verbose + .l-verbose-section', 'a[id=top]', 'a[href="#top"]').remove
 
-        css('.c10', '.showcase', '.showcase-content', '.l-main-section', 'div.div', 'div[flex]', 'code-tabs', 'md-card', 'md-card-content', 'div:not([class])', 'footer', '.card-row', '.card-row-container', 'figure', 'blockquote', 'exported', 'defined', 'div.ng-scope').each do |node|
+        css('.c10', '.showcase', '.showcase-content', '.l-main-section', 'div.div', 'div[flex]', 'code-tabs', 'md-card', 'md-card-content', 'div:not([class])', 'footer', '.card-row', '.card-row-container', 'figure', 'blockquote', 'exported', 'defined', 'div.ng-scope', '.code-example header').each do |node|
           node.before(node.children).remove
         end
 
@@ -60,11 +66,7 @@ module Docs
         end
 
         css('pre[name]').each do |node|
-          case node['data-language']
-          when 'html' then node.content = "<!-- #{node['name']} -->\n\n" + node.content
-          when 'css'  then node.content = "/* #{node['name']} */\n\n" + node.content
-          else             node.content = "// #{node['name']}\n\n" + node.content
-          end
+          node.before(%(<div class="pre-title">#{node['name']}</div>))
         end
 
         css('a.is-button > h3').each do |node|
