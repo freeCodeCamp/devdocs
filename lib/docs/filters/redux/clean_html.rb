@@ -2,7 +2,7 @@ module Docs
   class Redux
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.page-inner > section')
+        @doc = at_css('.page-inner section')
 
         css('#edit-link', 'hr').remove
 

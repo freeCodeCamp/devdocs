@@ -1,7 +1,7 @@
 module Docs
   class Redux < UrlScraper
     self.type = 'redux'
-    self.release = '3.5.2'
+    self.release = '3.6.0'
     self.base_url = 'http://redux.js.org/docs/'
     self.links = {
       home: 'http://redux.js.org/',
