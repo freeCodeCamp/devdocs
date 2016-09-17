@@ -10,16 +10,22 @@ module Docs
       end
 
       CLIENT_TYPE_BY_SLUG_END_WITH = {
-        'knife_common_options'               => 'Knife Commands',
-        'knife_using'                        => 'Knife Commands',
-        'resource_common'                    => 'Chef Resources',
-        'config_rb_knife_optional_settings'  => 'Config Files'
+        'knife_common_options'               => 'Workflow Tools',
+        'knife_using'                        => 'Workflow Tools',
+        'resource_common'                    => 'Cookbooks',
+        'config_rb_knife_optional_settings'  => 'Workflow Tools',
+        'knife_index_rebuild'                => 'Workflow Tools',
+        'handlers'                           => 'Extend Chef',
+        'dsl_recipe'                         => 'Extend Chef',
+        'resource'                           => 'Extend Chef'
       }
 
       SERVER_TYPE_BY_SLUG_END_WITH = {
         'auth'                               => 'Theory & Concepts',
+        'install_server'                     => 'Setup & Config',
         'install_server_pre'                 => 'Setup & Config',
-        'config_rb_server_optional_settings' => 'Config Files'
+        'config_rb_server_optional_settings' => 'Manage the Server',
+        'ctl_chef_server'                    => 'Manage the Server'
       }
 
       def get_type
