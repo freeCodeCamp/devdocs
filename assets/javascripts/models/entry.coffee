@@ -73,4 +73,5 @@ class app.models.Entry extends app.Model
     'ruby': 'rb'
     'sass': 'scss'
     'tensorflow': 'tf'
+    'typescript': 'ts'
     'underscore.js': '_'
