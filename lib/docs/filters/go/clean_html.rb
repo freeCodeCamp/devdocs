@@ -14,12 +14,16 @@ module Docs
           end
         end
 
-        css('#plusone', '#nav', '.pkgGopher', '#footer', '.collapsed', '.permalink').remove
+        css('#plusone', '#nav', '.pkgGopher', '#footer', '.collapsed', '.permalink', '#pkg-callgraph').remove
+
+        css('span[style]', '.toggleVisible', '.expanded', 'div.toggle').each do |node|
+          node.before(node.children).remove
+        end
 
         # Remove triangle character
         css('h2', '.exampleHeading').each do |node|
           node.content = node.content.remove("\u25BE")
-          node.name = 'h2'
+          node.name = 'h4' unless node.name == 'h2'
         end
 
         # Turn <dl> into <ul>
@@ -28,19 +32,19 @@ module Docs
           node.name = 'ul'
         end
 
-        # Remove code highlighting
-        css('pre').each do |node|
-          node['data-language'] = 'go'
-          node.content = node.content
-        end
-
         # Fix example markup
         css('.play').each do |node|
           node.children = node.at_css('.code').children
           node.name = 'pre'
         end
 
-        css('td[style]').each do |node|
+        # Remove code highlighting
+        css('pre').each do |node|
+          node['data-language'] = 'go'
+          node.content = node.content
+        end
+
+        css('td[style]', 'ul[style]').each do |node|
           node.remove_attribute('style')
         end
 
