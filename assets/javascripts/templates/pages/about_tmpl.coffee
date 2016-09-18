@@ -400,6 +400,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/padrino/padrino-framework/master/padrino/LICENSE.txt'
   ], [
+    'pandas',
+    '2011-2012 Lambda Foundry, Inc. and PyData Development Team<br>&copy; 2008-2011 AQR Capital Management, LLC<br>&copy; 2008-2014 the pandas development team',
+    'BSD',
+    'https://raw.githubusercontent.com/pydata/pandas/master/LICENSE'
+  ], [
     'Perl',
     '1993-2016 Larry Wall and others',
     'GPLv1',
