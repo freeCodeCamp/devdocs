@@ -1,6 +1,8 @@
 class @CookieStore
   INT = /^\d+$/
 
+  @onBlocked: ->
+
   get: (key) ->
     value = Cookies.get(key)
     value = parseInt(value, 10) if value? and INT.test(value)
@@ -13,7 +15,7 @@ class @CookieStore
 
     value = 1 if value == true
     Cookies.set(key, '' + value, path: '/', expires: 1e8)
-    throw new Error("Failed to set cookie '#{key}'") unless @get(key) == value
+    @constructor.onBlocked(key, value, @get(key)) if @get(key) != value
     return
 
   del: (key) ->

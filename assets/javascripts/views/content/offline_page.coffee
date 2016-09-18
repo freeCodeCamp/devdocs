@@ -11,6 +11,10 @@ class app.views.OfflinePage extends app.View
     return
 
   render: ->
+    if app.cookieBlocked
+      @html @tmpl('offlineError', 'cookie_blocked')
+      return
+
     app.docs.getInstallStatuses (statuses) =>
       return unless @activated
       if statuses is false

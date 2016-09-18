@@ -75,6 +75,7 @@
         .install()
       @previousErrorHandler = onerror
       window.onerror = @onWindowError.bind(@)
+      CookieStore.onBlocked = @onCookieBlocked
     return
 
   bootOne: ->
@@ -207,8 +208,17 @@
     @quotaExceeded = true
     new app.views.Notif 'QuotaExceeded', autoHide: null
     Raven.captureMessage 'QuotaExceededError', level: 'warning'
+    return
+
+  onCookieBlocked: (key, value, actual) ->
+    return if @cookieBlocked
+    @cookieBlocked = true
+    new app.views.Notif 'CookieBlocked', autoHide: null
+    Raven.captureMessage "CookieBlocked/#{key}", level: 'warning', extra: {value, actual}
+    return
 
   onWindowError: (args...) ->
+    return if @cookieBlocked
     if @isInjectionError args...
       @onInjectionError()
     else if @isAppError args...

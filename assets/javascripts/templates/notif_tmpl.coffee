@@ -19,6 +19,10 @@ app.templates.notifQuotaExceeded = ->
   textNotif """ The offline database has exceeded its size limitation. """,
             """ Unfortunately this quota can't be detected programmatically, and the database can't be opened while over the quota, so it had to be reset. """
 
+app.templates.notifCookieBlocked = ->
+  textNotif """ Please enable cookies. """,
+            """ DevDocs will not work properly if cookies are disabled. """
+
 app.templates.notifInvalidLocation = ->
   textNotif """ DevDocs must be loaded from #{app.config.production_host} """,
             """ Otherwise things are likely to break. """
