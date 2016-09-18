@@ -50,6 +50,52 @@ module Docs
       Capybara
     end
 
+    module MultipleBaseUrls
+      def self.included(base)
+        base.extend ClassMethods
+      end
+
+      module ClassMethods
+        attr_reader :base_urls
+
+        def base_urls=(urls)
+          self.base_url = urls.first
+          @base_urls = urls
+        end
+      end
+
+      def initial_urls
+        super + self.class.base_urls[1..-1]
+      end
+
+      def base_urls
+        @base_urls ||= self.class.base_urls.map { |url| URL.parse(url) }
+      end
+
+      private
+
+      def process_url?(url)
+        base_urls.any? { |base_url| base_url.contains?(url) }
+      end
+
+      def process_response(response)
+        original_scheme = self.base_url.scheme
+        original_host = self.base_url.host
+        original_path = self.base_url.path
+
+        effective_base_url = self.base_urls.find { |base_url| base_url.contains?(response.effective_url) }
+
+        self.base_url.scheme = effective_base_url.scheme
+        self.base_url.host = effective_base_url.host
+        self.base_url.path = effective_base_url.path
+        super
+      ensure
+        self.base_url.scheme = original_scheme
+        self.base_url.host = original_host
+        self.base_url.path = original_path
+      end
+    end
+
     module FixRedirectionsBehavior
       def self.included(base)
         base.extend ClassMethods
