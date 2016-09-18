@@ -2,7 +2,7 @@ module Docs
   class Minitest < Rdoc
     self.name = 'Ruby / Minitest'
     self.slug = 'minitest'
-    self.release = '5.8.1'
+    self.release = '5.9.0'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Minitest' # rake docs
     self.links = {
       code: 'https://github.com/seattlerb/minitest'
@@ -11,7 +11,6 @@ module Docs
     html_filters.replace 'rdoc/entries', 'minitest/entries'
 
     options[:root_title] = 'Minitest'
-    options[:only_patterns] = [/\AMinitest/]
 
     options[:attribution] = <<-HTML
       &copy; Ryan Davis, seattle.rb<br>
