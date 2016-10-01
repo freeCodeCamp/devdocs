@@ -3,8 +3,6 @@ module Docs
     self.name = 'Vue.js'
     self.slug = 'vue'
     self.type = 'vue'
-    self.release = '1.0.24'
-    self.base_url = 'https://vuejs.org'
     self.root_path = '/guide/index.html'
     self.initial_paths = %w(/api/index.html)
     self.links = {
@@ -20,5 +18,15 @@ module Docs
       &copy; 2013&ndash;2016 Evan You, Vue.js contributors<br>
       Licensed under the MIT License.
     HTML
+
+    version '2' do
+      self.release = '2.0.1'
+      self.base_url = 'https://vuejs.org'
+    end
+
+    version '1' do
+      self.release = '1.0.27'
+      self.base_url = 'https://v1.vuejs.org'
+    end
   end
 end
