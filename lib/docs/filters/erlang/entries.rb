@@ -4,10 +4,13 @@ module Docs
       def get_name
         name = at_css('h1').content.strip
         name << " (#{type.remove('Guide: ')})" if name == '1 Introduction'
+        name.sub! %r{\A(\d+)}, '\1.'
         name
       end
 
       def get_type
+        name = at_css('h1').content.strip
+
         if subpath.start_with?('lib/')
           type = subpath[/lib\/(.+?)[\-\/]/, 1]
           type << "/#{name}" if type == 'stdlib' && entry_nodes.length >= 10

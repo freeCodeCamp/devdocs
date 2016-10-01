@@ -41,7 +41,7 @@ module Docs
     HTML
 
     version '19' do
-      self.release = '19.0'
+      self.release = '19.1'
       self.dir = '/Users/Thibaut/DevDocs/Docs/Erlang19'
     end
 
