@@ -65,7 +65,7 @@ module Docs
       end
 
       def initial_urls
-        super + self.class.base_urls[1..-1]
+        super + self.class.base_urls[1..-1].deep_dup
       end
 
       def base_urls

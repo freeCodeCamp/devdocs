@@ -2,6 +2,29 @@ module Docs
   class Elixir
     class CleanHtmlFilter < Filter
       def call
+        if current_url.path.start_with?('/getting-started')
+          guide
+        else
+          api
+        end
+        doc
+      end
+
+      def guide
+        @doc = at_css('#content article')
+
+        css('pre > code').each do |node|
+          node.parent.content = node.content
+        end
+
+        css('div > pre.highlight').each do |node|
+          node.content = node.content
+          node['data-language'] = node.parent['class'][/language-(\w+)/, 1]
+          node.parent.before(node).remove
+        end
+      end
+
+      def api
         css('footer', '.view-source', 'h1 .visible-xs').remove
 
         css('section section.docstring h2').each do |node|
@@ -33,8 +56,6 @@ module Docs
         css('pre').each do |node|
           node['data-language'] = 'elixir'
         end
-
-        doc
       end
     end
   end

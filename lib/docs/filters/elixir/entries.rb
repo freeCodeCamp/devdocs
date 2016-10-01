@@ -2,26 +2,40 @@ module Docs
   class Elixir
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('h1').content.split(' ').first.strip
+        if current_url.path.start_with?('/getting-started')
+          at_css('h1').content.strip.remove(/\.\z/)
+        else
+          at_css('h1').content.split(' ').first.strip
+        end
       end
 
       def get_type
-        case at_css('h1 small').try(:content)
-        when 'exception'
-          'Exceptions'
-        when 'protocol'
-          'Protocols'
-        else
-          if name.start_with?('Phoenix')
-            name.split('.')[0..2].join('.')
+        if current_url.path.start_with?('/getting-started')
+          if subpath.start_with?('mix-otp')
+            'Guide: Mix & OTP'
+          elsif subpath.start_with?('meta')
+            'Guide: Metaprogramming'
           else
-            name.split('.').first
+            'Guide'
+          end
+        else
+          case at_css('h1 small').try(:content)
+          when 'exception'
+            'Exceptions'
+          when 'protocol'
+            'Protocols'
+          else
+            if name.start_with?('Phoenix')
+              name.split('.')[0..2].join('.')
+            else
+              name.split('.').first
+            end
           end
         end
       end
 
       def additional_entries
-        return [] if type == 'Exceptions'
+        return [] if type == 'Exceptions' || type == 'Guide'
 
         css('.detail-header .signature').map do |node|
           id = node.parent['id']
