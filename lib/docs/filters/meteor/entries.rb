@@ -9,6 +9,7 @@ module Docs
         if subpath.start_with?('api')
           name
         else
+          return 'Guide: Blaze' if base_url.host == 'blazejs.org' && subpath.start_with?('guide')
           type = at_css('.item-toc.current').ancestors('li').first.at_css('.heading-toc').try(:content) || 'Guide'
           type.prepend 'Guide: ' if base_url.host == 'guide.meteor.com' && type != 'Guide'
           type
