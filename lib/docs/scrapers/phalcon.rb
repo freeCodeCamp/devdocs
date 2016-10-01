@@ -1,8 +1,6 @@
 module Docs
   class Phalcon < UrlScraper
     self.type = 'phalcon'
-    self.release = '3.0.0'
-    self.base_url = 'https://docs.phalconphp.com/en/latest/'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://phalconphp.com/',
@@ -21,5 +19,15 @@ module Docs
       &copy; 2011&ndash;2016 Phalcon Framework Team<br>
       Licensed under the Creative Commons Attribution License 3.0.
     HTML
+
+    version '3' do
+      self.release = '3.0.1'
+      self.base_url = 'https://docs.phalconphp.com/en/latest/'
+    end
+
+    version '2' do
+      self.release = '2.0.13'
+      self.base_url = 'https://docs.phalconphp.com/en/2.0.0/'
+    end
   end
 end
