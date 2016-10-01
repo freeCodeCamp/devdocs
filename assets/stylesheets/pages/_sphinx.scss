@@ -37,6 +37,16 @@
   .admonition-title + dl { padding-top: .5em; }
 
   td > div { margin: 0 !important; }
+
+  .row-fluid {
+    h2 {
+      background: none;
+      border: none;
+      > a {
+        float: none;
+      }
+    }
+  }
 }
 
 ._sphinx {
