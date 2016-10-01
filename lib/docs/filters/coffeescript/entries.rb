@@ -41,6 +41,10 @@ module Docs
         ['Block comments',              'strings',                  'Language'],
         ['###',                         'strings',                  'Language'],
         ['Block regexes',               'regexes',                  'Language'],
+        ['///',                         'regexes',                  'Language'],
+        ['Modules',                     'modules',                  'Language'],
+        ['import',                      'modules',                  'Language'],
+        ['export',                      'modules',                  'Language'],
         ['cake command',                'cake',                     'Miscellaneous'],
         ['Cakefile',                    'cake',                     'Miscellaneous'],
         ['Source maps',                 'source-maps',              'Miscellaneous']
@@ -68,6 +72,7 @@ module Docs
           when '**' then 'pow'
           when '//' then 'floor'
           when '%%' then 'mod'
+          when '@' then 'this'
           else name.parameterize
         end
       end

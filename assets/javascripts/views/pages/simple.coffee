@@ -13,6 +13,7 @@ app.views.BowerPage =
 app.views.CPage =
 app.views.CakephpPage =
 app.views.ChaiPage =
+app.views.CoffeescriptPage =
 app.views.CordovaPage =
 app.views.CrystalPage =
 app.views.D3Page =
