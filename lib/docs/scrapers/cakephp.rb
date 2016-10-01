@@ -23,7 +23,7 @@ module Docs
     HTML
 
     version '3.3' do
-      self.release = '3.3.3'
+      self.release = '3.3.5'
       self.base_url = 'http://api.cakephp.org/3.3/'
     end
 
