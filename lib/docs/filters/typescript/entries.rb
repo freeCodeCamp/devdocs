@@ -8,18 +8,19 @@ module Docs
       end
 
       def get_type
+        return 'Declaration Files' if subpath.include?('declaration-files')
         type = at_css('#main-nav a.active').ancestors('.panel').first.at_css('> a').content
         type = name if type == 'Handbook'
         type
       end
 
-      SKIP_ENTRIES = ['Introduction', 'A note', 'A Note', ', and', 'Techniques', ' Concepts', 'Hello World', 'Working with', 'Our ', 'Implementing ', 'Difference between', 'Basic', 'sample', 'Questions', 'Example', 'Export as close', 'Red Flags', 'First steps', 'Pitfalls', 'Well-known', 'Starting out', 'Comparing ', 'Do not', 'Trade-off', ' vs']
+      SKIP_ENTRIES = ['Introduction', 'A note', 'A Note', ', and', 'Techniques', ' Concepts', 'Hello World', 'Working with', 'Our ', 'Implementing ', 'Difference between', 'Basic', 'sample', 'Questions', 'Example', 'Export as close', 'Red Flags', 'First steps', 'Pitfalls', 'Well-known', 'Starting out', 'Comparing ', 'Do not', 'Trade-off', ' vs', 'Overview', 'Related']
 
       def additional_entries
         return [] unless slug.start_with?('handbook')
         return [] if slug == 'handbook/writing-definition-files'
 
-        css('h1, h2').each_with_object [] do |node, entries|
+        css('.post-content h1, .post-content h2').each_with_object [] do |node, entries|
           next if node.next_element.try(:name) == 'h2'
           name = node.content.strip
           next if name.length > 40
