@@ -9,6 +9,7 @@ module Docs
 
       REPLACE_TYPES = {
         'Quick Start' => 'Guides',
+        'User Guide' => 'Guides',
         'The Basics' => 'Getting Started',
         'apis' => 'APIs',
         'components' => 'Components'
