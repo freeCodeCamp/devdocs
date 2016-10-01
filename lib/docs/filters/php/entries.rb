@@ -29,7 +29,7 @@ module Docs
         'Yar'             => 'Yar',
         'ZipArchive'      => 'Zip' }
 
-      %w(APC Directory DOM Event Gearman Gmagick Imagick mysqli OAuth PDO Reflection
+      %w(APC Directory DOM Event Gearman Gmagick Imagick mysqli OAuth PDO Phar Reflection
         Session SimpleXML Solr Sphinx SQLite3 Varnish XSLT Yaf).each do |str|
         TYPE_BY_NAME_STARTS_WITH[str] = str
       end
