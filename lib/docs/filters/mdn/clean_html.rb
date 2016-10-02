@@ -21,7 +21,7 @@ module Docs
           node.name = 'th'
         end
 
-        css('nobr', 'span[style*="font"]', 'pre code').each do |node|
+        css('nobr', 'span[style*="font"]', 'pre code', 'h2 strong').each do |node|
           node.before(node.children).remove
         end
 

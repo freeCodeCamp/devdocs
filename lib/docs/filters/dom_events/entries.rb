@@ -4,6 +4,7 @@ module Docs
       TYPE_BY_INFO = {
         'applicationCache' => 'Application Cache',
         'Battery'          => 'Battery',
+        'Call'             => 'Telephony',
         'Clipboard'        => 'Clipboard',
         'CSS'              => 'CSS',
         'Drag'             => 'Drag & Drop',
@@ -27,6 +28,7 @@ module Docs
         'Push'             => 'Push',
         'Progress'         => 'Progress',
         'Proximity'        => 'Device',
+        'Selection'        => 'Selection',
         'Server Sent'      => 'Server Sent Events',
         'Speech'           => 'Web Speech',
         'Storage'          => 'Web Storage',
@@ -37,6 +39,7 @@ module Docs
         'Web App Manifest' => 'Web App Manifest',
         'Web Audio'        => 'Web Audio',
         'Web Messaging'    => 'Web Messaging',
+        'WebGL'            => 'WebGL',
         'WebRTC'           => 'WebRTC',
         'WebVR'            => 'WebVR',
         'Wheel'            => 'Mouse',
@@ -47,7 +50,7 @@ module Docs
       LOAD_SLUGS = %w(abort beforeunload DOMContentLoaded error load
         readystatechange unload)
 
-      APPEND_TYPE = %w(Application\ Cache IndexedDB Progress
+      APPEND_TYPE = %w(Application\ Cache IndexedDB Progress Telephony
         Server\ Sent\ Events WebSocket Web\ Messaging Web\ Workers)
 
       def get_name
@@ -62,10 +65,9 @@ module Docs
         elsif LOAD_SLUGS.include?(slug)
           'Load'
         else
-          if info = at_css('.eventinfo, .properties').try(:content)
-            TYPE_BY_INFO.each_pair do |key, value|
-              return value if info.include?(key)
-            end
+          info = css('.eventinfo, .properties, .standard-table').map(&:content).join
+          TYPE_BY_INFO.each_pair do |key, value|
+            return value if info.include?(key)
           end
 
           'Miscellaneous'
@@ -73,7 +75,11 @@ module Docs
       end
 
       def include_default_entry?
-        !doc.content.include?('Firefox OS specific')
+        content = doc.content
+        !content.include?('Firefox OS specific') &&
+        !content.include?('Addons specific') &&
+        !content.include?('Mozilla specific') &&
+        content !~ /Specification\s+XUL/
       end
     end
   end

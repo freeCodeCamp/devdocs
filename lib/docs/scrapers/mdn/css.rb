@@ -10,7 +10,7 @@ module Docs
 
     options[:skip] = %w(/CSS3 /Media/Visual /paged_media)
     options[:skip] += %w(/mq-boolean /single-transition-timing-function) # bug
-    options[:skip_patterns] = [/\-webkit/, /\-moz/, /Extensions/, /Tools/]
+    options[:skip_patterns] = [/Extensions/, /Tools/, /@media\/-webkit/, /webkit-mask/, /-moz-system-metric/]
 
     options[:replace_paths] = {
       '/%3Cbasic-shape%3E' => '/basic-shape',
@@ -18,7 +18,8 @@ module Docs
       '/range' => '/@counter-style/range',
       '/symbols' => '/@counter-style/symbols',
       '/system' => '/@counter-style/system',
-      '/var' => '/var()'
+      '/var' => '/var()',
+      '/Flexbox' => '/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes'
     }
 
     options[:fix_urls] = ->(url) do

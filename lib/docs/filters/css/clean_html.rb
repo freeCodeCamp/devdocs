@@ -12,6 +12,10 @@ module Docs
       end
 
       def other
+        css('.syntaxbox > .syntaxbox').each do |node|
+          node.parent.before(node.parent.children).remove
+        end
+
         # Remove "|" and "||" links in syntax box (e.g. animation, all, etc.)
         css('.syntaxbox', '.twopartsyntaxbox').css('a').each do |node|
           if node.content == '|' || node.content == '||'

@@ -42,7 +42,9 @@ module Docs
       end
 
       def get_type
-        if type = TYPE_BY_PATH[slug.split('/').first]
+        if slug.include?('-webkit') || slug.include?('-moz')
+          'Extensions'
+        elsif type = TYPE_BY_PATH[slug.split('/').first]
           type
         elsif type = get_spec
           type.remove! 'CSS '
@@ -122,6 +124,11 @@ module Docs
 
       def additional_entries
         ADDITIONAL_ENTRIES[slug] || []
+      end
+
+      def include_default_entry?
+        return true unless warning = at_css('.warning').try(:content)
+        !warning.include?('CSS Flexible Box') && !warning.include?('replaced in newer drafts')
       end
     end
   end

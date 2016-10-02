@@ -7,11 +7,8 @@ module Docs
       end
 
       def root
-        # Remove parapraph mentioning non-standard events
-        at_css('#Standard_events').previous_element.remove
-
         # Remove everything after "Standard events"
-        css('.standard-table ~ *').remove
+        css('#Non-standard_events', '#Non-standard_events ~ *').remove
 
         # Remove events we don't want
         css('tr').each do |tr|
