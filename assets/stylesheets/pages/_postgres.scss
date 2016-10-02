@@ -6,9 +6,14 @@
 
   .VARIABLELIST dt { @extend %block-label, %label-blue; }
 
-  blockquote.NOTE, blockquote.IMPORTANT { @extend %note; }
-  blockquote.TIP { @extend %note, %note-green; }
+  blockquote.NOTE, blockquote.IMPORTANT, blockquote.TIP, blockquote.CAUTION { @extend %note; }
+  blockquote.TIP { @extend %note-green; }
+  blockquote.CAUTION { @extend %note-orange; }
 
   p > code { @extend %label; }
   p.c2 { font-weight: bold; }
+
+  .NAVFOOTER > table { width: 100%; }
+  td[align=center] { text-align: center; }
+  td[align=right] { text-align: right; }
 }
