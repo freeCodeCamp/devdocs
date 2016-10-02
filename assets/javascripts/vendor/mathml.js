@@ -1,6 +1,6 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Adapted from: https://github.com/fred-wang/mathml.css */
 /*jslint browser: true*/
 
@@ -18,7 +18,7 @@
         if (Math.abs(box.height - 23) > 1  || Math.abs(box.width - 77) > 1) {
             // Insert the mathml.css stylesheet.
             link = document.createElement("link");
-            link.href = "http://fred-wang.github.io/mathml.css/mathml.css";
+            link.href = "https://cdn.devdocs.io/mathml.css";
             link.rel = "stylesheet";
             document.head.appendChild(link);
         }

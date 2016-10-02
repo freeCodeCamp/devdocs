@@ -80,11 +80,12 @@ class App < Sinatra::Application
     use Rack::Deflater
     use Rack::Static,
       root: 'public',
-      urls: %w(/assets /docs/ /images /favicon.ico /robots.txt /opensearch.xml /manifest.webapp),
+      urls: %w(/assets /docs/ /images /favicon.ico /robots.txt /opensearch.xml /manifest.webapp /mathml.css),
       header_rules: [
         [:all,           {'Cache-Control' => 'no-cache, max-age=0'}],
         ['/assets',      {'Cache-Control' => 'public, max-age=604800'}],
         ['/favicon.ico', {'Cache-Control' => 'public, max-age=86400'}],
+        ['/mathml.css',  {'Cache-Control' => 'public, max-age=604800'}],
         ['/images',      {'Cache-Control' => 'public, max-age=86400'}] ]
 
     sprockets.js_compressor = Uglifier.new output: { beautify: true, indent_level: 0 }
