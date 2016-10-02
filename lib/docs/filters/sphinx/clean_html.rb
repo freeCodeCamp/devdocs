@@ -20,10 +20,18 @@ module Docs
         css('div[class*="highlight-"]').each do |node|
           pre = node.at_css('pre')
           pre.content = pre.content
-          pre['data-language'] = node['class'][/highlight\-(\w+)/, 1]
-          pre['data-language'] = 'php' if pre['data-language'] == 'ci'
-          pre['data-language'] = 'markup' if pre['data-language'] == 'html+django'
-          pre['data-language'] = 'python' if pre['data-language'] == 'default' || pre['data-language'].start_with?('python')
+          lang = node['class'][/highlight\-(\w+)/, 1]
+          lang = 'php' if lang == 'ci'
+          lang = 'markup' if lang == 'html+django'
+          lang = 'python' if lang == 'default' || lang.start_with?('python') || lang.start_with?('ipython')
+          pre['data-language'] = lang
+          node.replace(pre)
+        end
+
+        # Support code blocks in jupyter notebook files
+        css('.code_cell div.highlight').each do |node|
+          pre = node.at_css('pre')
+          pre['data-language'] = 'python'
           node.replace(pre)
         end
 
