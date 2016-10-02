@@ -37,7 +37,12 @@ class app.views.BasePage extends app.View
         @nodesPerFrame = Math.round(Math.max(@nodesPerFrame * .8, 10))
     else
       @nodesPerFrame = 10
-    Prism.highlightElement(el) for el in @highlightNodes.splice(0, @nodesPerFrame)
+
+    for el in @highlightNodes.splice(0, @nodesPerFrame)
+      $.remove(clipEl) if clipEl = el.lastElementChild
+      Prism.highlightElement(el)
+      $.append(el, clipEl) if clipEl
+
     $.requestAnimationFrame(@paintCode) if @highlightNodes.length > 0
     @previousTiming = timing
     return
