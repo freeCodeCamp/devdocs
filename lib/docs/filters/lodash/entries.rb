@@ -9,7 +9,7 @@ module Docs
 
           heading.parent.css('a').each do |link|
             name = link.content
-            name = name.remove(/\u{279C}.*/)
+            name.remove! %r{\s.*}
             entries << [name, link['href'].remove('#'), type]
           end
         end

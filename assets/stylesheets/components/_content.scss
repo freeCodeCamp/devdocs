@@ -163,6 +163,13 @@
   }
 }
 
+._heading-links {
+  float: right;
+  font-weight: normal;
+
+  > a + a { margin-left: .25rem; }
+}
+
 //
 // Table of contents
 //
