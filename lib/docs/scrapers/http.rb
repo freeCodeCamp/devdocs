@@ -3,11 +3,12 @@ module Docs
     self.name = 'HTTP'
     self.type = 'rfc'
     self.base_url = 'https://tools.ietf.org/html/'
-    self.initial_paths = %w(rfc2616 rfc7230 rfc7231
+    self.initial_paths = %w(rfc2616 rfc4918 rfc7230 rfc7231
       rfc7232 rfc7233 rfc7234 rfc7235)
 
     html_filters.push 'http/clean_html', 'http/entries'
 
+    options[:container] = '.content'
     options[:skip_links] = true
     options[:attribution] = <<-HTML
       &copy; document authors. All rights reserved.
