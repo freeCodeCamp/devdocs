@@ -1,5 +1,5 @@
 
-FROM ruby:2.3.0
+FROM ruby:2.3.1
 MAINTAINER Conor Heine <conor.heine@gmail.com>
 
 RUN apt-get update
