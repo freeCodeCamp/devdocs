@@ -5,10 +5,10 @@ module Docs
         @doc = at_css('.body')
 
         if root_page?
-            at_css('h1').content = 'Statsmodels'
-            at_css('#basic-documentation').remove
-            at_css('#table-of-contents').remove
-            at_css('#indices-and-tables').remove
+          at_css('h1').content = 'Statsmodels'
+          at_css('#basic-documentation').remove
+          at_css('#table-of-contents').remove
+          at_css('#indices-and-tables').remove
         end
 
         doc

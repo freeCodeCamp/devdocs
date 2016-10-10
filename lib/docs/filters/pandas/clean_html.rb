@@ -13,8 +13,6 @@ module Docs
           node.before(node.children).remove
         end
 
-        css('.anchor-link').remove
-
         doc
       end
     end

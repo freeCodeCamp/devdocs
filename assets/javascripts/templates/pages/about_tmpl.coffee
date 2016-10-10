@@ -520,6 +520,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/Automattic/socket.io/master/LICENSE'
   ], [
+    'Statsmodels',
+    '2009-2012 Statsmodels Developers<br>&copy; 2006-2008 Scipy Developers<br>&copy; 2006 Jonathan E. Taylor',
+    'BSD',
+    'https://raw.githubusercontent.com/statsmodels/statsmodels/master/LICENSE.txt'
+  ], [
     'Symfony',
     '2004-2016 Fabien Potencier',
     'MIT',
