@@ -74,6 +74,11 @@ class NormalizeUrlsFilterTest < MiniTest::Spec
     assert_equal @body, filter_output_string
   end
 
+  it "doesn't rewrite data image urls" do
+    @body = '<img src="data:image/gif;base64,aaaa">'
+    assert_equal @body, filter_output_string
+  end
+
   context "when context[:replace_paths] is a hash" do
     before do
       context[:base_url] = 'http://example.com/dir/'

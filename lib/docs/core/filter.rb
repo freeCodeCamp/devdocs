@@ -62,6 +62,12 @@ module Docs
       str[0] == '#'
     end
 
+    DATA_URL = 'data:'.freeze
+
+    def data_url_string?(str)
+      str.start_with?(DATA_URL)
+    end
+
     def relative_url_string?(str)
       !fragment_url_string?(str) && str !~ SCHEME_RGX
     end
