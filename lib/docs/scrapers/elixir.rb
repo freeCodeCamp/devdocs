@@ -4,7 +4,7 @@ module Docs
 
     self.name = 'Elixir'
     self.type = 'elixir'
-    self.release = '1.3.3'
+    self.release = '1.3.4'
     self.base_urls = ['http://elixir-lang.org/docs/stable/', 'http://elixir-lang.org/getting-started/']
     self.root_path = 'elixir/api-reference.html'
     self.initial_paths = %w(

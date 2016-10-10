@@ -53,6 +53,10 @@ module Docs
           node.before(node.children).remove
         end
 
+        css('.detail-header > pre').each do |node|
+          node.parent.after(node)
+        end
+
         css('pre').each do |node|
           node['data-language'] = 'elixir'
         end
