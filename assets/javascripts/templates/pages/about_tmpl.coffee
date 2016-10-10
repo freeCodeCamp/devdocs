@@ -505,6 +505,11 @@ credits = [
     'BSD',
     'http://scikit-image.org/docs/dev/license.html'
   ], [
+    'scikit-learn',
+    '2007-2016 The scikit-learn developers',
+    'BSD',
+    'https://raw.githubusercontent.com/scikit-learn/scikit-learn/master/COPYING'
+  ], [
     'Sinon',
     '2010-2016 Christian Johansen',
     'BSD',

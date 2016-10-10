@@ -3,32 +3,23 @@ module Docs
     self.name = 'scikit-learn'
     self.slug = 'scikit_learn'
     self.type = 'sphinx'
-    self.release = '0.17.1'
-    self.base_url = "http://scikit-learn.org/0.17/"
+    self.release = '0.18'
+    self.base_url = 'http://scikit-learn.org/stable/'
     self.root_path = 'documentation.html'
-    self.initial_paths = %w(
-      user_guide.html
-      supervised_learning.html
-      unsupervised_learning.html
-      model_selection.html
-      data_transforms.html)
-
     self.links = {
       home: 'http://scikit-learn.org/',
       code: 'https://github.com/scikit-learn/scikit-learn'
     }
 
-    html_filters.push 'scikit_learn/entries', 'sphinx/clean_html'
+    html_filters.push 'scikit_learn/entries', 'scikit_learn/clean_html', 'sphinx/clean_html'
 
-    options[:container] = '.body'
-
-    options[:root_title] = self.name
-
-    options[:only] = self.initial_paths
-    options[:only_patterns] = [/\Amodules/, /\Adatasets/]
+    options[:container] = ->(filter) { filter.root_page? ? '.container-index' : '.body' }
+    options[:skip] = %w(tutorial/statistical_inference/finding_help.html)
+    options[:only_patterns] = [/\Amodules/, /\Adatasets/, /\Atutorial/, /\Aauto_examples/]
+    options[:skip_patterns] = [/\Adatasets\/(?!index)/]
 
     options[:attribution] = <<-HTML
-      &copy; 2007&ndash;2016 The scikit-learn deveopers<br>
+      &copy; 2007&ndash;2016 The scikit-learn developers<br>
       Licensed under the 3-clause BSD License.
     HTML
 

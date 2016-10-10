@@ -6,12 +6,12 @@
   dd > dl:not(.docutils) > dt { @extend %block-label; }
   dt + dt { margin-top: -.5em; }
 
-  .note, .admonition, div.versionadded, div.versionchanged, .deprecated-removed, .deprecated { @extend %note; }
+  .note, .admonition, div.versionadded, div.versionchanged, .deprecated-removed, .deprecated, .topic { @extend %note; }
 
   .important { @extend %note-orange; }
   .warning, .deprecated-removed, .deprecated { @extend %note-red; }
 
-  .versionmodified, span.title {
+  .versionmodified, span.title, .topic-title {
     display: block;
     font-weight: bold;
   }
@@ -37,16 +37,6 @@
   .admonition-title + dl { padding-top: .5em; }
 
   td > div { margin: 0 !important; }
-
-  .row-fluid {
-    h2 {
-      background: none;
-      border: none;
-      > a {
-        float: none;
-      }
-    }
-  }
 }
 
 ._sphinx {

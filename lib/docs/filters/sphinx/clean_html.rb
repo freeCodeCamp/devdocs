@@ -2,7 +2,7 @@ module Docs
   class Sphinx
     class CleanHtmlFilter < Filter
       def call
-        css('.headerlink', 'hr', '#contents .topic-title', '#topics .topic-title', 'colgroup').remove
+        css('.headerlink', 'hr', '#contents .topic-title', '#topics .topic-title', 'colgroup', '.line-block').remove
 
         css('.contents > ul:first-child:last-child.simple > li:first-child:last-child').each do |node|
           node.parent.before(node.at_css('> ul')) if node.at_css('> ul')
