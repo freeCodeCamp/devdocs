@@ -1,6 +1,6 @@
 module Docs
   class CleanTextFilter < Filter
-    EMPTY_NODES_RGX = /<(?!td|th|iframe)(\w+)[^>]*>[[:space:]]*<\/\1>/
+    EMPTY_NODES_RGX = /<(?!td|th|iframe|mspace)(\w+)[^>]*>[[:space:]]*<\/\1>/
 
     def call
       html.strip!
