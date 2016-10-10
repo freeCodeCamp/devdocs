@@ -37,6 +37,7 @@ class app.views.EntryPage extends app.View
     if app.disabledDocs.findBy 'slug', @entry.doc.slug
       @hiddenView = new app.views.HiddenPage @el, @entry
 
+    @delay @polyfillMathML
     @trigger 'loaded'
     return
 
@@ -47,6 +48,12 @@ class app.views.EntryPage extends app.View
       @clipBoardLink.title = 'Copy to clipboard'
       @clipBoardLink.tabIndex = -1
     el.appendChild(@clipBoardLink.cloneNode()) for el in @el.querySelectorAll('pre')
+    return
+
+  polyfillMathML: ->
+    return unless window.supportsMathML is false and !@polyfilledMathML and @find('math')
+    @polyfilledMathML = true
+    $.append document.head, """<link rel="stylesheet" href="#{app.config.mathml_stylesheet}">"""
     return
 
   LINKS =
