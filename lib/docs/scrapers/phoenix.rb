@@ -2,14 +2,16 @@ module Docs
   class Phoenix < Elixir
     self.type = 'elixir'
     self.release = '1.2.1'
-    self.base_url = 'https://hexdocs.pm/'
+    self.base_urls = ['https://hexdocs.pm/']
     self.root_path = 'phoenix/Phoenix.html'
     self.initial_paths = %w(
       phoenix/api-reference.html
       ecto/api-reference.html
       phoenix_html/api-reference.html
       phoenix_pubsub/api-reference.html
-      plug/extra-api-reference.html)
+      plug/api-reference.html
+      # needed to workaround a workaround in Elixir#initial_urls scraper:
+      dummy)
     self.links = {
       home: 'http://www.phoenixframework.org',
       code: 'https://github.com/phoenixframework/phoenix'
