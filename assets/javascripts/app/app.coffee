@@ -196,7 +196,7 @@
   indexHost: ->
     # Can't load the index files from the host/CDN when applicationCache is
     # enabled because it doesn't support caching URLs that use CORS.
-    @config[if @appCache and @settings.hasDocs() then 'index_path' else 'docs_host']
+    @config[if @appCache and @settings.hasDocs() then 'index_path' else 'docs_origin']
 
   onBootError: (args...) ->
     @trigger 'bootError'

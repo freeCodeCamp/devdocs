@@ -30,10 +30,10 @@ class app.models.Doc extends app.Model
     "/#{@slug}#{path}"
 
   fileUrl: (path) ->
-    "#{app.config.docs_host}#{@fullPath(path)}?#{@mtime}"
+    "#{app.config.docs_origin}#{@fullPath(path)}?#{@mtime}"
 
   dbUrl: ->
-    "#{app.config.docs_host}/#{@slug}/#{app.config.db_filename}?#{@mtime}"
+    "#{app.config.docs_origin}/#{@slug}/#{app.config.db_filename}?#{@mtime}"
 
   indexUrl: ->
     "#{app.indexHost()}/#{@slug}/#{app.config.index_filename}?#{@mtime}"

@@ -26,7 +26,7 @@ class App < Sinatra::Application
 
     require 'yajl/json_gem'
     set :docs_prefix, 'docs'
-    set :docs_host, -> { File.join('', docs_prefix) }
+    set :docs_origin, -> { File.join('', docs_prefix) }
     set :docs_path, -> { File.join(public_folder, docs_prefix) }
     set :docs_manifest_path, -> { File.join(docs_path, 'docs.json') }
     set :default_docs, %w(css dom dom_events html http javascript)
@@ -75,7 +75,7 @@ class App < Sinatra::Application
   configure :production do
     set :static, false
     set :cdn_origin, 'https://cdn.devdocs.io'
-    set :docs_host, '//docs.devdocs.io'
+    set :docs_origin, '//docs.devdocs.io'
     set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
