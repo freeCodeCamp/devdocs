@@ -41,8 +41,8 @@ module Docs
       capybara.execute_script('return document.body.innerHTML')
     end
 
-    version '2.0 TypeScript' do
-      self.release = '2.0.0'
+    version '2 TypeScript' do
+      self.release = '2.1.0'
       self.base_url = 'https://angular.io/docs/ts/latest/'
     end
 

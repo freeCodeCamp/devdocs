@@ -289,6 +289,7 @@ class App < Sinatra::Application
     'yii1' => 'yii~1.1',
     'python2' => 'python~2.7',
     'xpath' => 'xslt_xpath',
+    'angular~2.0_typescript' => 'angular~2_typescript',
     'angular~1.5' => 'angularjs~1.5',
     'angular~1.4' => 'angularjs~1.4',
     'angular~1.3' => 'angularjs~1.3',
