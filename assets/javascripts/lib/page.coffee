@@ -41,6 +41,7 @@ page.show = (path, state) ->
   currentState = context.state
   page.dispatch(context)
   context.pushState()
+  updateCanonicalLink()
   track()
   context
 
@@ -50,6 +51,7 @@ page.replace = (path, state, skipDispatch, init) ->
   currentState = context.state
   page.dispatch(context) unless skipDispatch
   context.replaceState()
+  updateCanonicalLink()
   track() unless init or skipDispatch
   context
 
@@ -176,6 +178,10 @@ onclick = (event) ->
 
 isSameOrigin = (url) ->
   url.indexOf("#{location.protocol}//#{location.hostname}") is 0
+
+updateCanonicalLink = ->
+  @canonicalLink ||= document.head.querySelector('link[rel="canonical"]')
+  @canonicalLink.setAttribute('href', "http://#{location.host}#{location.pathname}")
 
 track = ->
   ga?('send', 'pageview', location.pathname + location.search + location.hash)
