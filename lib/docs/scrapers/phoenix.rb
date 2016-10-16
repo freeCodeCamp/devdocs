@@ -1,5 +1,5 @@
 module Docs
-  class Phoenix < Elixir
+  class Phoenix < UrlScraper
     self.type = 'elixir'
     self.release = '1.2.1'
     self.base_url = 'https://hexdocs.pm/'
@@ -9,13 +9,15 @@ module Docs
       ecto/api-reference.html
       phoenix_html/api-reference.html
       phoenix_pubsub/api-reference.html
-      plug/extra-api-reference.html)
+      plug/api-reference.html)
     self.links = {
       home: 'http://www.phoenixframework.org',
       code: 'https://github.com/phoenixframework/phoenix'
     }
 
-    options[:root_title] = false
+    html_filters.push 'elixir/clean_html', 'elixir/entries'
+
+    options[:container] = '#content'
 
     options[:skip_patterns] = [/extra-api-reference/]
     options[:only_patterns] = [
