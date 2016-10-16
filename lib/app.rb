@@ -17,6 +17,8 @@ class App < Sinatra::Application
     set :root, Pathname.new(File.expand_path('../..', __FILE__))
     set :sprockets, Sprockets::Environment.new(root)
 
+    set :cdn_origin, ''
+
     set :assets_prefix, 'assets'
     set :assets_path, -> { File.join(public_folder, assets_prefix) }
     set :assets_manifest_path, -> { File.join(assets_path, 'manifest.json') }
@@ -72,6 +74,7 @@ class App < Sinatra::Application
 
   configure :production do
     set :static, false
+    set :cdn_origin, 'https://cdn.devdocs.io'
     set :docs_host, '//docs.devdocs.io'
     set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
@@ -105,6 +108,10 @@ class App < Sinatra::Application
   helpers do
     include Sinatra::Cookies
     include Sprockets::Helpers
+
+    def canonical_origin
+      "http://#{request.host_with_port}"
+    end
 
     def browser
       @browser ||= Browser.new(request.user_agent)
