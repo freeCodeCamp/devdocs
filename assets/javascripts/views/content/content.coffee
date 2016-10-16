@@ -6,13 +6,13 @@ class app.views.Content extends app.View
     click: 'onClick'
 
   @shortcuts:
-    altUp:    'scrollStepUp'
-    altDown:  'scrollStepDown'
-    pageUp:   'scrollPageUp'
-    pageDown: 'scrollPageDown'
-    home:     'scrollToTop'
-    end:      'scrollToBottom'
-    altF:     'onAltF'
+    altUp:      'scrollStepUp'
+    altDown:    'scrollStepDown'
+    pageUp:     'scrollPageUp'
+    pageDown:   'scrollPageDown'
+    pageTop:    'scrollToTop'
+    pageBottom: 'scrollToBottom'
+    altF:       'onAltF'
 
   @routes:
     before: 'beforeRoute'
