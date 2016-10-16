@@ -20,12 +20,12 @@ module Docs
     HTML
 
     version '2' do
-      self.release = '2.0.1'
+      self.release = '2.0.3'
       self.base_url = 'https://vuejs.org'
     end
 
     version '1' do
-      self.release = '1.0.27'
+      self.release = '1.0.28'
       self.base_url = 'https://v1.vuejs.org'
     end
   end
