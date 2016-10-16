@@ -1,6 +1,6 @@
 module Docs
   class Marionette
-    class EntriesFilter < Docs::EntriesFilter
+    class EntriesV2Filter < Docs::EntriesFilter
       def get_name
         name = at_css('h1').content.strip
         name.remove!(/Marionette./)
