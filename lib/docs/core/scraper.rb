@@ -51,12 +51,20 @@ module Docs
 
     def initialize_stubs
       self.class.stubs.each do |path, block|
-        Typhoeus.stub(url_for(path)).and_return do
+        stub_path = nil
+        case path
+        when String
+          stub_path = url_for(path)
+        when Regexp
+          stub_path = path
+        end
+
+        Typhoeus.stub(stub_path).and_return do |request|
           Typhoeus::Response.new \
-            effective_url: url_for(path),
+            effective_url: request.url,
             code: 200,
             headers: { 'Content-Type' => 'text/html' },
-            body: self.instance_exec(&block)
+            body: self.instance_exec(request.url, &block)
         end
       end
     end
