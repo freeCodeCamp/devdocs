@@ -12,6 +12,13 @@ module Docs
         container.child.before(at_css('header.hero h1')).before(badges).before(css('header.hero + .banner'))
         @doc = container
 
+        title = at_css('h1').content.strip
+        if title == 'Index'
+          at_css('h1').content = result[:entries].first.name
+        elsif title == 'Angular'
+          at_css('h1').content = slug.split('/').last.gsub('-', ' ')
+        end
+
         css('pre.no-bg-with-indent').each do |node|
           node.content = '  ' + node.content.gsub("\n", "\n  ")
         end

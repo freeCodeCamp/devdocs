@@ -25,7 +25,6 @@ module Docs
 
     options[:fix_urls] = -> (url) do
       url.sub! %r{\A(https://angular\.io/docs/.+/)index\.html\z}, '\1'
-      url.sub! %r{\A(https://angular\.io/docs/.+/index)/\z}, '\1'
       url
     end
 

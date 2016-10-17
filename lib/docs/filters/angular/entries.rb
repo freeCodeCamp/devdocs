@@ -11,10 +11,10 @@ module Docs
         name = name.split(':').first
 
         if mod
-          if name == 'Testing'
-            return "#{mod.capitalize} Testing"
-          elsif name == 'Index' || name == 'Angular'
-            return mod
+          if name == 'Index'
+            return slug.split('/')[1..-2].join('/')
+          elsif name == 'Angular'
+            return slug.split('/').last.split('-').first
           end
         end
 
