@@ -41,7 +41,7 @@ module Docs
     end
 
     version '2 TypeScript' do
-      self.release = '2.1.0'
+      self.release = '2.1.2'
       self.base_url = 'https://angular.io/docs/ts/latest/'
     end
 
