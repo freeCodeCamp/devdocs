@@ -28,7 +28,7 @@ module Docs
     HTML
 
     version '6' do
-      self.release = '6.3.1'
+      self.release = '6.4.0'
       self.base_url = 'https://cordova.apache.org/docs/en/6.x/'
     end
   end

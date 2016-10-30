@@ -13,7 +13,7 @@ module Docs
         end
 
         css('img[src*="travis-ci"]').each do |node|
-          node.ancestors('p').first.remove
+          node.ancestors('p, a').first.remove
         end
 
         css('pre').each do |node|
