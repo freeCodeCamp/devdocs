@@ -45,14 +45,28 @@ module Docs
       'Wtrigraphs.html' => 'Invocation.html'
     }
 
+    version '6' do
+      self.release = '6.2.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/gcc6'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
+    end
+
+    version '6 CPP' do
+      self.release = '6.2.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/gcpp6'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
+
+      options[:root_title] = false
+      options[:replace_paths] = CPP_PATHS
+    end
     version '5' do
-      self.release = '5.3.0'
+      self.release = '5.4.0'
       self.dir = '/Users/Thibaut/DevDocs/Docs/gcc5'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '5 CPP' do
-      self.release = '5.3.0'
+      self.release = '5.4.0'
       self.dir = '/Users/Thibaut/DevDocs/Docs/gcpp5'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
