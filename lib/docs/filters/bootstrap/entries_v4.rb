@@ -5,6 +5,7 @@ module Docs
         name = at_css('.bd-content h1').content.strip
         name.remove! ' system'
         return type if name == 'Overview'
+        name.prepend 'Utilities: ' if subpath.start_with?('utilities')
         name
       end
 

@@ -15,13 +15,13 @@ module Docs
     HTML
 
     version '4' do
-      self.release = 'alpha.4'
+      self.release = 'alpha.5'
       self.base_url = 'https://v4-alpha.getbootstrap.com/'
       self.root_path = 'getting-started/introduction'
 
       html_filters.push 'bootstrap/entries_v4', 'bootstrap/clean_html_v4'
 
-      options[:only_patterns] = [/\Agetting-started\//, /\Alayout\//, /\Acontent\//, /\Acomponents\//]
+      options[:only_patterns] = [/\Agetting-started\//, /\Alayout\//, /\Acontent\//, /\Acomponents\//, /\Autilities\//]
     end
 
     version '3' do
