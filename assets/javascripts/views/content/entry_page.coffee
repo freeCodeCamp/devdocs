@@ -5,6 +5,9 @@ class app.views.EntryPage extends app.View
   @events:
     click: 'onClick'
 
+  @shortcuts:
+    altO: 'onAltO'
+
   @routes:
     before: 'beforeRoute'
 
@@ -145,4 +148,9 @@ class app.views.EntryPage extends app.View
       $.stopEvent(event)
       target.classList.add if $.copyToClipboard(target.parentNode.textContent) then '_pre-clip-success' else '_pre-clip-error'
       setTimeout (-> target.className = '_pre-clip'), 2000
+    return
+
+  onAltO: =>
+    return unless link = @find('._attribution:last-child ._attribution-link')
+    $.popup(link.href + location.hash)
     return

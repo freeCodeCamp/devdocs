@@ -137,6 +137,9 @@ class app.Shortcuts
       when 71
         @trigger 'altG'
         false
+      when 79
+        @trigger 'altO'
+        false
       when 82
         @trigger 'altR'
         false
