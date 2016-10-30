@@ -159,7 +159,10 @@ td {
   > pre:last-child, > p:last-child, > ul:last-child, > ol:last-child { margin-bottom: 0; }
 }
 
-section, main { outline: 0; }
+section, main {
+  display: block;
+  outline: 0;
+}
 
 input, button {
   margin: 0;
