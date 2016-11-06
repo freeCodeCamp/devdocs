@@ -21,7 +21,7 @@ module Docs
       def additional_entries
         entries = []
 
-        css('dl.function', 'dl.class', 'dl.method', 'dl.attribute').each do |node|
+        css('dl.function', 'dl.class', 'dl.method', 'dl.attribute', 'dl.data').each do |node|
           next unless id = node.at_css('dt')['id']
           next unless name = id.dup.sub!('django.', '')
 
@@ -33,6 +33,13 @@ module Docs
           name << '()' if node['class'].include?('method') || node['class'].include?('function')
 
           entries << [name, id, type]
+        end
+
+        css('span[id^="std:setting-"] + h3').each do |node|
+          name = node.content
+          name.remove! "\u{00B6}"
+          name.prepend 'settings.'
+          entries << [name, node.previous_element['id'], 'settings']
         end
 
         entries
