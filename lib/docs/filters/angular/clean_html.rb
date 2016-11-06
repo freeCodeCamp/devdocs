@@ -9,7 +9,7 @@ module Docs
           node.to_html
         end.join(' ')
         badges = %(<div class="badges">#{badges}</div>)
-        container.child.before(at_css('header.hero h1')).before(badges).before(css('header.hero + .banner'))
+        container.child.before(at_css('header.hero h1')).before(badges).before(css('header.hero + .banner, header.hero .breadcrumbs'))
         @doc = container
 
         title = at_css('h1').content.strip
@@ -17,6 +17,8 @@ module Docs
           at_css('h1').content = result[:entries].first.name
         elsif title == 'Angular'
           at_css('h1').content = slug.split('/').last.gsub('-', ' ')
+        elsif at_css('.breadcrumbs') && title != result[:entries].first.name
+          at_css('h1').content = result[:entries].first.name
         end
 
         css('pre.no-bg-with-indent').each do |node|
@@ -28,9 +30,9 @@ module Docs
           node.parent.content = node.parent.css('code, pre').map(&:content).join("\n")
         end
 
-        css('button.verbose', 'button.verbose + .l-verbose-section', 'a[id=top]', 'a[href="#top"]').remove
+        css('button.verbose', 'button.verbose + .l-verbose-section', 'a[id=top]', 'a[href="#top"]', '.sidebar').remove
 
-        css('.c10', '.showcase', '.showcase-content', '.l-main-section', 'div.div', 'div[flex]', 'code-tabs', 'md-card', 'md-card-content', 'div:not([class])', 'footer', '.card-row', '.card-row-container', 'figure', 'blockquote', 'exported', 'defined', 'div.ng-scope', '.code-example header').each do |node|
+        css('.c10', '.showcase', '.showcase-content', '.l-main-section', 'div.div', 'div[flex]', 'code-tabs', 'md-card', 'md-card-content', 'div:not([class])', 'footer', '.card-row', '.card-row-container', 'figure', 'blockquote', 'exported', 'defined', 'div.ng-scope', '.code-example header', 'section.desc', '.row', '.dart-api-entry-main', '.main-content', 'section.summary', 'span.signature').each do |node|
           node.before(node.children).remove
         end
 
@@ -43,6 +45,12 @@ module Docs
         end
 
         css('pre.prettyprint').each do |node|
+          node.content = node.content.strip
+          node['data-language'] = 'dart' if node['class'].include?('dart')
+        end
+
+        css('.multi-line-signature').each do |node|
+          node.name = 'pre'
           node.content = node.content.strip
         end
 

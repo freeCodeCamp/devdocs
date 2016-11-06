@@ -36,13 +36,23 @@ module Docs
     stub 'api/' do
       capybara = load_capybara_selenium
       capybara.app_host = 'https://angular.io'
-      capybara.visit('/docs/ts/latest/api/')
+      capybara.visit(URL.parse(self.base_url).path + 'api/')
       capybara.execute_script('return document.body.innerHTML')
     end
 
     version '2 TypeScript' do
       self.release = '2.1.2'
       self.base_url = 'https://angular.io/docs/ts/latest/'
+    end
+
+    version '2 Dart' do
+      self.release = '2.1.2'
+      self.base_url = 'https://angular.io/docs/dart/latest/'
+
+      options[:skip_patterns] += [/angular2\.compiler/]
+      options[:skip_link] = ->(link) do
+        link.parent['class'].try(:include?, 'inherited') || link.parent.parent['class'].try(:include?, 'inherited')
+      end
     end
 
     private

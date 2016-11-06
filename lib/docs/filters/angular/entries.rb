@@ -3,7 +3,7 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         if slug.start_with?('tutorial') || slug.start_with?('guide')
-          name = at_css('.nav-list-item.is-selected').content.strip
+          name = at_css('.nav-list-item.is-selected, header.hero h1').content.strip
         else
           name = at_css('header.hero h1').content.strip
         end
@@ -18,7 +18,11 @@ module Docs
           end
         end
 
-        name << '()' if at_css('.hero-subtitle').try(:content) == 'Function'
+        subtitle = at_css('.hero-subtitle').try(:content)
+        breadcrumbs = css('.breadcrumbs li').map(&:content)[2..-2]
+
+        name.prepend "#{breadcrumbs.join('.')}#" if breadcrumbs.present? && breadcrumbs[0] != name
+        name << '()' if %w(Function Method Constructor).include?(subtitle)
         name
       end
 
@@ -46,7 +50,10 @@ module Docs
       private
 
       def mod
-        @mod ||= slug[/api\/([\w\-]+)\//, 1]
+        return @mod if defined?(@mod)
+        @mod = slug[/api\/([\w\-\.]+)\//, 1]
+        @mod.remove! 'angular2.' if @mod
+        @mod
       end
     end
   end

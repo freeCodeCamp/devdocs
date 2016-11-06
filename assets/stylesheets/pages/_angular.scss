@@ -1,24 +1,25 @@
 ._angular {
   padding-left: 1rem;
 
-  h1, h2, > h3, .banner, .badges { margin-left: -1rem; }
+  h1, h2, > h3, .banner, .badges, .breadcrumbs { margin-left: -1rem; }
 
   ._mobile & {
     padding-left: 0;
 
-    h1, h2, > h3, .banner, .badges { margin-left: 0; }
+    h1, h2, > h3, .banner, .badges, .breadcrumbs { margin-left: 0; }
   }
 
   h2 { @extend %block-heading; }
   > h3 { @extend %block-label, %label-blue; }
   .code-example > h4, .pre-title { @extend %pre-heading; }
 
-  p > code, .status-badge { @extend %label; }
+  p > code, dd > code, .status-badge { @extend %label; }
 
-  .l-sub-section, .alert, .banner { @extend %note; }
+  .l-sub-section, .alert, .banner, .breadcrumbs { @extend %note; }
   .banner { @extend %note-green; }
   .alert.is-important { @extend %note-red; }
-  .alert.is-helpful { @extend %note-blue; }
+  .alert.is-helpful, .breadcrumbs { @extend %note-blue; }
+  .breadcrumbs { padding-left: 2em; }
 
   td > h3, .l-sub-section > h3, .l-sub-section > h4, .alert > h3, .alert > h4, .row-margin > h3 {
     margin-top: .25rem;
