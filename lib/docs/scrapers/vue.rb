@@ -3,8 +3,6 @@ module Docs
     self.name = 'Vue.js'
     self.slug = 'vue'
     self.type = 'vue'
-    self.root_path = '/guide/index.html'
-    self.initial_paths = %w(/api/index.html)
     self.links = {
       home: 'https://vuejs.org/',
       code: 'https://github.com/vuejs/vue'
@@ -12,7 +10,7 @@ module Docs
 
     html_filters.push 'vue/clean_html', 'vue/entries'
 
-    options[:only_patterns] = [/\/guide\//, /\/api\//]
+    options[:only_patterns] = [/guide\//, /api\//]
 
     options[:attribution] = <<-HTML
       &copy; 2013&ndash;2016 Evan You, Vue.js contributors<br>
@@ -20,13 +18,17 @@ module Docs
     HTML
 
     version '2' do
-      self.release = '2.0.3'
-      self.base_url = 'https://vuejs.org'
+      self.release = '2.0.5'
+      self.base_url = 'https://vuejs.org/v2/'
+      self.root_path = 'guide/index.html'
+      self.initial_paths = %w(api/index.html)
     end
 
     version '1' do
       self.release = '1.0.28'
       self.base_url = 'https://v1.vuejs.org'
+      self.root_path = '/guide/index.html'
+      self.initial_paths = %w(/api/index.html)
     end
   end
 end
