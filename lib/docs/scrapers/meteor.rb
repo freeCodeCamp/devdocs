@@ -31,7 +31,7 @@ module Docs
     HTML
 
     version '1.4' do
-      self.release = '1.4.1'
+      self.release = '1.4.2'
       self.base_urls = ['https://docs.meteor.com/', 'https://guide.meteor.com/', 'http://blazejs.org/']
     end
 
