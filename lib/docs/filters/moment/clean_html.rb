@@ -12,13 +12,7 @@ module Docs
           node.before(node.children).remove
         end
 
-        # Remove introduction
-        doc.child.remove while doc.child['id'] != 'parsing'
-
-        # Remove plugin list
-        doc.children.last.remove while doc.children.last['id'] != 'plugins'
-
-        css('.docs-method-edit', '#plugins', 'hr').remove
+        css('.docs-method-edit', 'hr').remove
 
         css('pre').each do |node|
           if node.content =~ /\A</
