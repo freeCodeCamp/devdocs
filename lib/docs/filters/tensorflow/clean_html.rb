@@ -12,9 +12,11 @@ module Docs
         css('pre').each do |node|
           node.inner_html = node.inner_html.strip_heredoc
 
-          if node['class'].include?('lang-c++')
+          next unless node['class']
+
+          if node['class'] =~ /lang-c++/i
             node['data-language'] = 'cpp'
-          elsif node['class'].include?('lang-python')
+          elsif node['class'] =~ /lang-python/i
             node['data-language'] = 'python'
           end
         end

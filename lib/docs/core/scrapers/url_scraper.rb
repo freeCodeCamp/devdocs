@@ -3,16 +3,19 @@ module Docs
     class << self
       attr_accessor :params
       attr_accessor :headers
+      attr_accessor :force_gzip
 
       def inherited(subclass)
         super
         subclass.params = params.deep_dup
         subclass.headers = headers.deep_dup
+        subclass.force_gzip = force_gzip
       end
     end
 
     self.params = {}
     self.headers = { 'User-Agent' => 'DevDocs' }
+    self.force_gzip = false
 
     private
 
@@ -25,7 +28,9 @@ module Docs
     end
 
     def request_options
-      { params: self.class.params, headers: self.class.headers }
+      options = { params: self.class.params, headers: self.class.headers }
+      options[:accept_encoding] = 'gzip' if self.class.force_gzip
+      options
     end
 
     def process_response?(response)

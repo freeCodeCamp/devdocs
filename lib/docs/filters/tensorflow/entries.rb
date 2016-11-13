@@ -9,13 +9,21 @@ module Docs
       end
 
       def get_type
-        type = name.dup
-        type.remove! %r{\ \(.*\)}
-        type.remove! 'tensorflow::'
-        type
+        if subpath.start_with?('tutorials')
+          'Tutorials'
+        elsif subpath.start_with?('how_tos')
+          'How-Tos'
+        else
+          type = name.dup
+          type.remove! %r{\ \(.*\)}
+          type.remove! 'tensorflow::'
+          type
+        end
       end
 
       def additional_entries
+        return [] if subpath.start_with?('tutorials') || subpath.start_with?('how_tos')
+
         css('h2 code', 'h3 code', 'h4 code', 'h5 code').map do |node|
           name = node.content
           name.sub! %r{\(.*}, '()'
