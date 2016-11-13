@@ -16,6 +16,7 @@ module Docs
         css('pre').each do |node|
           node.inner_html = node.inner_html.gsub('<br>', "\n").gsub('&nbsp;', ' ')
           node.content = node.content
+          node['data-language'] = 'php'
         end
 
         css('div.signature').each do |node|
@@ -31,7 +32,7 @@ module Docs
           node.name = 'th'
         end
 
-        css('.summary').each do |node|
+        css('.summary', 'span[style]').each do |node|
           node.before(node.children).remove
         end
 

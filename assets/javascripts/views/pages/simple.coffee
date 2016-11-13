@@ -59,4 +59,5 @@ app.views.UnderscorePage =
 app.views.VagrantPage =
 app.views.VuePage =
 app.views.WebpackPage =
+app.views.YiiPage =
 app.views.SimplePage
