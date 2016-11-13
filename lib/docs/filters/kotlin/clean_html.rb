@@ -15,7 +15,9 @@ module Docs
         end
 
         css('pre').each do |node|
-          node['data-language'] = node.at_css('code')['class'][/lang_(\w+)/, 1] if node.at_css('code')
+          node['data-language'] = 'kotlin' if node.at_css('code[data-lang="text/x-kotlin"]')
+          node['data-language'] = 'xml' if node.at_css('code[data-lang="application/xml"]')
+          node['data-language'] = 'javascript' if node.at_css('code[data-lang="text/javascript"]')
           node.content = node.content
         end
       end

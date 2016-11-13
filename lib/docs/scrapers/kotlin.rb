@@ -1,7 +1,7 @@
 module Docs
   class Kotlin < UrlScraper
     self.type = 'kotlin'
-    self.release = '1.0.3'
+    self.release = '1.0.4'
     self.base_url = 'https://kotlinlang.org/'
     self.root_path = 'api/latest/jvm/stdlib/index.html'
     self.links = {
