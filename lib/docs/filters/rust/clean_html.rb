@@ -25,12 +25,13 @@ module Docs
         end
 
         css('pre > code').each do |node|
-          node.parent['class'] = node['class']
+          node.parent['data-language'] = 'rust' if node['class'] && node['class'].include?('rust')
           node.before(node.children).remove
         end
 
         css('pre').each do |node|
           node.content = node.content
+          node['data-language'] = 'rust' if node['class'] && node['class'].include?('rust')
         end
 
         doc

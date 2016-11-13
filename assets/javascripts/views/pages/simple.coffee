@@ -48,6 +48,7 @@ app.views.ReactPage =
 app.views.ReduxPage =
 app.views.RethinkdbPage =
 app.views.RubydocPage =
+app.views.RustPage =
 app.views.SinonPage =
 app.views.SocketioPage =
 app.views.SphinxPage =
