@@ -56,6 +56,7 @@
 %icon-close-white           { background-position: -2rem -5rem; }
 %icon-back                  { background-position: -3rem -5rem; @extend %darkIconFix !optional; }
 
+._icon-async:before         { background-position: -6rem 0; @extend %darkIconFix !optional; }
 ._icon-http:before          { background-position: -7rem 0; @extend %darkIconFix !optional; }
 ._icon-jquery:before        { background-position: -8rem 0; @extend %darkIconFix !optional; }
 ._icon-underscore:before    { background-position: -9rem 0; @extend %darkIconFix !optional; }

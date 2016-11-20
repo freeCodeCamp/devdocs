@@ -8,6 +8,7 @@ class app.views.SimplePage extends app.views.BasePage
 
 app.views.AngularPage =
 app.views.AngularjsPage =
+app.views.AsyncPage =
 app.views.BootstrapPage =
 app.views.BowerPage =
 app.views.CPage =

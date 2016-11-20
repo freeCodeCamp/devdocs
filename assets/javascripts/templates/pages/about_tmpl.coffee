@@ -100,6 +100,11 @@ credits = [
     'Apache',
     'https://www.apache.org/licenses/LICENSE-2.0'
   ], [
+    'Async',
+    '2010-2016 Caolan McMahon',
+    'MIT',
+    'https://raw.githubusercontent.com/caolan/async/master/LICENSE'
+  ], [
     'Backbone.js',
     '2010-2016 Jeremy Ashkenas, DocumentCloud',
     'MIT',
