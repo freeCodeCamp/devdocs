@@ -8,7 +8,7 @@ module Docs
           at_css('h1').content = context[:root_title]
         end
 
-        css('.docs-prevnext', '.hash-link', '.edit-page-link', '.edit-github', 'a.hash', '.edit-page-block', 'a.show', 'a.hide').remove
+        css('.docs-prevnext', '.hash-link', '.edit-page-link', '.edit-github', 'a.hash', '.edit-page-block', 'a.show', 'a.hide', 'hr').remove
 
         css('table h1', 'table h2', 'table h3').each do |node|
           table = node
