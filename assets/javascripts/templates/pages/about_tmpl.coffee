@@ -255,6 +255,11 @@ credits = [
     'MIT',
     'http://haxe.org/foundation/open-source.html'
   ], [
+    'Immutable.js',
+    '2014-2016 Facebook, Inc.',
+    'BSD',
+    'https://raw.githubusercontent.com/facebook/immutable-js/master/LICENSE'
+  ], [
     'InfluxData',
     '2015 InfluxData, Inc.',
     'MIT',

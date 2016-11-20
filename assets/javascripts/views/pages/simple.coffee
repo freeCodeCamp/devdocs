@@ -22,6 +22,7 @@ app.views.ElixirPage =
 app.views.EmberPage =
 app.views.ExpressPage =
 app.views.GoPage =
+app.views.ImmutablePage =
 app.views.InfluxdataPage =
 app.views.KnockoutPage =
 app.views.KotlinPage =
