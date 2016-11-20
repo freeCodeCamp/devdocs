@@ -20,7 +20,8 @@ module Docs
     options[:replace_paths] = {
       'testing/index.html'  => 'guide/testing.html',
       'guide/glossary.html' => 'glossary.html',
-      'tutorial'            => 'tutorial/'
+      'tutorial'            => 'tutorial/',
+      'api'                 => 'api/'
     }
 
     options[:fix_urls] = -> (url) do
@@ -41,12 +42,12 @@ module Docs
     end
 
     version '2 TypeScript' do
-      self.release = '2.1.2'
+      self.release = '2.2.1'
       self.base_url = 'https://angular.io/docs/ts/latest/'
     end
 
     version '2 Dart' do
-      self.release = '2.1.2'
+      self.release = '2.2.1'
       self.base_url = 'https://angular.io/docs/dart/latest/'
 
       options[:skip_patterns] += [/angular2\.compiler/]
