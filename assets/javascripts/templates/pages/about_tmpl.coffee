@@ -575,6 +575,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/webpack/webpack/master/LICENSE'
   ], [
+    'Yarn',
+    '2016 Yarn Contributors',
+    'BSD',
+    'https://raw.githubusercontent.com/yarnpkg/yarn/master/LICENSE'
+  ], [
     'Yii',
     '2008-2016 by Yii Software LLC',
     'BSD',
