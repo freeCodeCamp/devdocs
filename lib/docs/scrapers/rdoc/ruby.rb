@@ -78,12 +78,12 @@ module Docs
     HTML
 
     version '2.3' do
-      self.release = '2.3.0'
+      self.release = '2.3.2'
       self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby23'
     end
 
     version '2.2' do
-      self.release = '2.2.4'
+      self.release = '2.2.6'
       self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby22'
     end
   end

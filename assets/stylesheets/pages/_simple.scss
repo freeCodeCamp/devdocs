@@ -25,6 +25,7 @@
 ._gnu,
 ._grunt,
 ._haxe,
+._immutable,
 ._influxdata,
 ._less,
 ._lodash,
@@ -35,6 +36,7 @@
 ._redux,
 ._sinon,
 ._typescript,
-._webpack {
+._webpack,
+._yarn {
   @extend %simple;
 }

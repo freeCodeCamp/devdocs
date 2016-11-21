@@ -100,6 +100,11 @@ credits = [
     'Apache',
     'https://www.apache.org/licenses/LICENSE-2.0'
   ], [
+    'Async',
+    '2010-2016 Caolan McMahon',
+    'MIT',
+    'https://raw.githubusercontent.com/caolan/async/master/LICENSE'
+  ], [
     'Backbone.js',
     '2010-2016 Jeremy Ashkenas, DocumentCloud',
     'MIT',
@@ -254,6 +259,11 @@ credits = [
     '2005-2016 Haxe Foundation',
     'MIT',
     'http://haxe.org/foundation/open-source.html'
+  ], [
+    'Immutable.js',
+    '2014-2016 Facebook, Inc.',
+    'BSD',
+    'https://raw.githubusercontent.com/facebook/immutable-js/master/LICENSE'
   ], [
     'InfluxData',
     '2015 InfluxData, Inc.',
@@ -569,6 +579,11 @@ credits = [
     '2012-2016 Tobias Koppers',
     'MIT',
     'https://raw.githubusercontent.com/webpack/webpack/master/LICENSE'
+  ], [
+    'Yarn',
+    '2016 Yarn Contributors',
+    'BSD',
+    'https://raw.githubusercontent.com/yarnpkg/yarn/master/LICENSE'
   ], [
     'Yii',
     '2008-2016 by Yii Software LLC',

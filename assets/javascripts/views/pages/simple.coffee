@@ -8,6 +8,7 @@ class app.views.SimplePage extends app.views.BasePage
 
 app.views.AngularPage =
 app.views.AngularjsPage =
+app.views.AsyncPage =
 app.views.BootstrapPage =
 app.views.BowerPage =
 app.views.CPage =
@@ -22,6 +23,7 @@ app.views.ElixirPage =
 app.views.EmberPage =
 app.views.ExpressPage =
 app.views.GoPage =
+app.views.ImmutablePage =
 app.views.InfluxdataPage =
 app.views.KnockoutPage =
 app.views.KotlinPage =
@@ -59,5 +61,6 @@ app.views.UnderscorePage =
 app.views.VagrantPage =
 app.views.VuePage =
 app.views.WebpackPage =
+app.views.YarnPage =
 app.views.YiiPage =
 app.views.SimplePage
