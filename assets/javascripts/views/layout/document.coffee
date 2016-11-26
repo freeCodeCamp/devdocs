@@ -38,6 +38,20 @@ class app.views.Document extends app.View
     app.appCache?.updateInBackground()
     return
 
+  toggleColor: (theme) ->
+    # TODO
+    switch theme
+      when "dark" then newcss="/assets/application-dark.css"
+      when "sepia" then newcss="/assets/application-sepia.css"
+      when "default" then newcss="/assets/application.css"        
+      else newcss="/assets/application.css"        
+    css = $('link[rel="stylesheet"][data-alt]')
+    css.setAttribute('href', newcss)  
+    app.settings.setDark(newcss.indexOf('dark') > 0)
+    app.settings.setSepia(newcss.indexOf('sepia') > 0)          
+    app.appCache?.updateInBackground()
+    return  
+
   toggleLayout: ->
     wantsMaxWidth = !app.el.classList.contains(MAX_WIDTH_CLASS)
     app.el.classList[if wantsMaxWidth then 'add' else 'remove'](MAX_WIDTH_CLASS)

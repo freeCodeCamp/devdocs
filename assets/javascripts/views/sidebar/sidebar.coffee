@@ -90,6 +90,17 @@ class app.views.Sidebar extends app.View
     @el.scrollTop = 0
     return
 
+  hideAssetsMenu: ->
+    console.log("HIDE COLOR MENU")
+    dropdowns = document.getElementsByClassName("dropdown-content")
+    i = 0
+    while i < dropdowns.length
+      openDropdown = dropdowns[i]
+      if openDropdown.classList.contains('show')
+        openDropdown.classList.remove 'show'
+      i++
+    return  
+
   onFocus: (event) =>
     $.scrollTo event.target, @el, 'continuous', bottomGap: 2 unless event.target is @el
     return
@@ -99,10 +110,15 @@ class app.views.Sidebar extends app.View
     if event.target.hasAttribute? 'data-reset-list'
       $.stopEvent(event)
       @reset()
+    else if event.target.hasAttribute? 'data-theme'
+      $.stopEvent(event)
+      # document.activeElement?.blur()
+      document.getElementById("myDropdown").classList.toggle("show");
     else if event.target.hasAttribute? 'data-light'
       $.stopEvent(event)
       document.activeElement?.blur()
-      app.document.toggleLight()
+      app.document.toggleColor(event.target.getAttribute('data-style'))
+      @hideAssetsMenu()
     else if event.target.hasAttribute? 'data-layout'
       $.stopEvent(event)
       document.activeElement?.blur()
@@ -116,6 +132,8 @@ class app.views.Sidebar extends app.View
       @showDocPicker()
     else if @view is @docPicker
       @showDocList() unless $.hasChild @el, event.target
+    else if !event.target.matches('.dropbtn')
+      @hideAssetsMenu()
     return
 
   onAltR: =>

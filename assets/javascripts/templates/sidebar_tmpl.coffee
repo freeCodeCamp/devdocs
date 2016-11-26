@@ -68,8 +68,18 @@ sidebarFooter = (html) -> """<div class="_sidebar-footer">#{html}</div>"""
 templates.sidebarSettings = ->
   sidebarFooter """
     <button type="button" class="_sidebar-footer-link _sidebar-footer-edit" data-pick-docs>Select documentation</button>
-    <button type="button" class="_sidebar-footer-link _sidebar-footer-light" title="Toggle light" data-light>Toggle light</button>
+
+    <div class="dropdown">
+      <button type="button" class="_sidebar-footer-link _sidebar-footer-light dropbtn" title="Toggle light" data-theme>Toggle light</button>
+      <div id="myDropdown" class="dropdown-content">
+        <a href="#" data-light data-style="default">Default</a>
+        <a href="#" data-light data-style="sepia">Sepia</a>
+        <a href="#" data-light data-style="dark">Dark</a>
+      </div>
+    </div>
+
     <button type="button" class="_sidebar-footer-link _sidebar-footer-layout" title="Toggle layout" data-layout>Toggle layout</button>
+
   """
 
 templates.sidebarSave = ->
