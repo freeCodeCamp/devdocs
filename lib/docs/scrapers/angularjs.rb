@@ -46,7 +46,7 @@ module Docs
     end
 
     version '1.5' do
-      self.release = '1.5.8'
+      self.release = '1.5.9'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
