@@ -2,7 +2,7 @@ module Docs
   class Haxe
     class CleanHtmlFilter < Filter
       def call
-        css('.viewsource').remove
+        css('.viewsource', 'hr', 'h1 > small', '.inherited-fields').remove
 
         css('h4 + h1').each do |node|
           node.after(node.previous_element)
@@ -21,6 +21,7 @@ module Docs
         end
 
         css('.field > p > code:first-child:last-child').each do |node|
+          next if node.next.try(:content).present?
           node = node.parent
           node.name = 'h3'
           node.inner_html = node.inner_html.squish.gsub('</span><', '</span> <')
@@ -39,6 +40,14 @@ module Docs
 
         css('.inline-content').each do |node|
           node.name = 'p'
+        end
+
+        css('> div.indent').each do |node|
+          node.name = 'blockquote'
+        end
+
+        css('p.inline-content').each do |node|
+          node.name = 'div'
         end
 
         doc
