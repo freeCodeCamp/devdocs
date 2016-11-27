@@ -1,7 +1,7 @@
 module Docs
   class Crystal < UrlScraper
     self.type = 'crystal'
-    self.release = '0.19.2'
+    self.release = '0.20.0'
     self.base_url = 'https://crystal-lang.org/'
     self.root_path = "api/#{release}/index.html"
     self.initial_paths = %w(docs/index.html)
@@ -13,6 +13,7 @@ module Docs
     html_filters.push 'crystal/entries', 'crystal/clean_html'
 
     options[:only_patterns] = [/\Adocs\//, /\Aapi\/#{release}\//]
+    options[:skip_patterns] = [/debug/i]
 
     options[:replace_paths] = {
       "api/#{release}/" => "api/#{release}/index.html",
