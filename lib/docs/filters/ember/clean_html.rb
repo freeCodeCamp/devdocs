@@ -84,6 +84,10 @@ module Docs
       def guide
         @doc = at_css('article')
 
+        if root_page?
+          at_css('h1').remove
+        end
+
         css('.previous-guide', '.next-guide').remove
 
         css('img').each do |node|
