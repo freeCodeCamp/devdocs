@@ -15,6 +15,10 @@ module Docs
           node['data-language'] = node['class'][/highlight (\w+)/, 1]
         end
 
+        css('iframe').each do |node|
+          node['sandbox'] = 'allow-forms allow-scripts allow-same-origin'
+        end
+
         doc
       end
     end
