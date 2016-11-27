@@ -3,7 +3,7 @@ module Docs
     self.name = 'LÖVE'
     self.slug = 'love'
     self.type = 'love'
-    self.release = '0.10.1'
+    self.release = '0.10.2'
     self.base_url = 'https://love2d.org/wiki/'
     self.root_path = 'Main_Page'
     self.initial_paths = %w(love love.audio love.event love.filesystem love.font love.graphics
