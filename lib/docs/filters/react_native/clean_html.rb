@@ -3,7 +3,7 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         if root_page?
-          css('#unsupported + div + center', '#unsupported + div', '#unsupported', '.toggler', 'center > img').remove
+          css('h1 ~ *').remove
         end
 
         css('center > .button', 'p:contains("short survey")', 'iframe', '.embedded-simulator').remove
