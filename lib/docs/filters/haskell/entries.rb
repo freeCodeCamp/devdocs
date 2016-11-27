@@ -23,10 +23,18 @@ module Docs
         Data-ByteString-Builder-Prim.html)
 
       def get_name
-        at_css('#module-header .caption').content.strip
+        if subpath.start_with?('users_guide')
+          name = at_css('h1').content
+          name.remove! "\u{00B6}"
+          name
+        else
+          at_css('#module-header .caption').content
+        end
       end
 
       def get_type
+        return 'Guide' if subpath.start_with?('users_guide')
+
         %w(System.Posix System.Win32 Control.Monad).each do |type|
           return type if name.start_with?(type)
         end
@@ -41,6 +49,7 @@ module Docs
       ADD_SUB_ENTRIES_KEYWORDS = %w(class module newtype)
 
       def additional_entries
+        return [] if subpath.start_with?('users_guide')
         return [] if IGNORE_ENTRIES_PATHS.include?(subpath.split('/').last)
 
         css('#synopsis > ul > li').each_with_object [] do |node, entries|
@@ -66,7 +75,7 @@ module Docs
       end
 
       def include_default_entry?
-        at_css('#synopsis > ul > li')
+        subpath.start_with?('users_guide') || at_css('#synopsis > ul > li')
       end
     end
   end
