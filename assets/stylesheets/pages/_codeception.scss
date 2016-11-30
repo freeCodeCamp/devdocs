@@ -1,0 +1,29 @@
+._codeception {
+  @extend %simple;
+
+  .warning, .alert {
+    @extend %note;
+  }
+
+  h4 {
+      @extend %block-label;
+  }
+
+  .alert-danger { @extend %note-red; }
+
+  .language-yaml {
+      @extend .token;
+
+      .c1 {
+          @extend .token.comment;
+      }
+
+      .pi {
+          @extend .token.operator;
+      }
+
+      .s {
+          @extend .token.string;
+      }
+  }
+}
