@@ -8,6 +8,7 @@
 
 * [Chrome web app](https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe)
 * [Firefox web app](https://marketplace.firefox.com/app/devdocs/)
+* [Ubuntu Touch app](https://uappexplorer.com/app/devdocsunofficial.berkes)
 * [Sublime Text plugin](https://sublime.wbond.net/packages/DevDocs)
 * [Atom plugin](https://atom.io/packages/devdocs)
 * [Brackets extension](https://github.com/gruehle/dev-docs-viewer) 
