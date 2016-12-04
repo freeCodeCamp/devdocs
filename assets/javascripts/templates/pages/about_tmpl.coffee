@@ -160,6 +160,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/Codeception/Codeception/master/LICENSE'
   ], [
+    'CodeceptJS',
+    '2015 DavertMik',
+    'MIT',
+    'https://raw.githubusercontent.com/Codeception/CodeceptJS/master/LICENSE'
+  ], [
     'CodeIgniter',
     '2014-2016 British Columbia Institute of Technology',
     'MIT',

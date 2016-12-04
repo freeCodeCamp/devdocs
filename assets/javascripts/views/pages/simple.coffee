@@ -15,6 +15,7 @@ app.views.CPage =
 app.views.CakephpPage =
 app.views.ChaiPage =
 app.views.CodeceptionPage =
+app.views.CodeceptjsPage =
 app.views.CoffeescriptPage =
 app.views.CordovaPage =
 app.views.CrystalPage =

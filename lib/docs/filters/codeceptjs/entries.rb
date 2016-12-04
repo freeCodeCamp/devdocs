@@ -2,26 +2,29 @@ module Docs
   class Codeceptjs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-          (at_css('h1') || at_css('h2')).content
+        at_css('h1').content
       end
 
       def get_type
-          return "Reference" if %w(commands configuration reports translation).include? subpath.scan(/\w+/).first
-          return "Guides" unless slug.camelize =~ /Helpers::.+/
-          "Helpers::" + (at_css('h1') || at_css('h2')).content
+        if subpath == 'helpers/'
+          'Helpers'
+        elsif subpath.start_with?('helpers')
+          "Helpers: #{name}"
+        elsif subpath.in? %w(commands/ configuration/ reports/ translation/)
+          'Reference'
+        else
+          'Guide'
+        end
       end
 
       def additional_entries
-        return [] unless type =~ /Helpers::.*/
+        return [] unless subpath.start_with?('helpers') && subpath != 'helpers/'
 
-        helper = type.sub(/Helpers::/, '')+ '::'
-
-        css('h2').map do |node|
+        css('h2').each_with_object [] do |node, entries|
           next if node['id'] == 'access-from-helpers'
-          [helper + node.content, node['id']]
-        end.compact
+          entries << ["#{node.content} (#{name})", node['id']]
+        end
       end
-
     end
   end
 end

@@ -3,7 +3,7 @@ module Docs
     self.name = 'CodeceptJS'
     self.type = 'codeceptjs'
     self.root_path = 'index.html'
-    self.release = '0.4'
+    self.release = '0.4.9'
     self.base_url = 'http://codecept.io/'
     self.links = {
       home: 'http://codecept.io/',
@@ -14,11 +14,11 @@ module Docs
 
     options[:root_title] = 'CodeceptJS'
     options[:title] = false
-    options[:skip_links] = ->(filter) { !filter.initial_page? }
-    options[:skip_patterns] = [/changelog/, /quickstart$/]
+    options[:skip_links] = ->(filter) { !filter.root_page? }
+    options[:skip_patterns] = [/changelog/, /quickstart\z/]
 
     options[:attribution] = <<-HTML
-      &copy; 2015–2016 Michael Bodnarchuk and Contributors<br>
+      &copy; 2015 DavertMik &lt;davert@codegyre.com&gt; (http://codegyre.com)<br>
       Licensed under the MIT License.
     HTML
   end
