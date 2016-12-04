@@ -107,7 +107,7 @@ app.templates.helpPage = """
     <dd class="_shortcuts-dd">Show this page
   </dl>
   <p class="_note">
-    <strong>Tip:</strong> If the cursor is no longer in the search field, press backspace or
+    <strong>Tip:</strong> If the cursor is no longer in the search field, press <code class="_label">/</code> or
     continue to type and it will refocus the search field and start showing new results.
 
   <h2 class="_lined-heading" id="abbreviations">Abbreviations</h2>

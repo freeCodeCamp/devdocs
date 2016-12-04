@@ -76,6 +76,10 @@ class app.Shortcuts
         @trigger 'down'
         @showTip?()
         false
+      when 191
+        unless event.target.form
+          @trigger 'typing'
+          false
 
   handleKeydownSuperEvent: (event) ->
     switch event.which
