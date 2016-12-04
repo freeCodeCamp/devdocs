@@ -15,7 +15,7 @@ module Docs
         elsif slug == 'git' || slug.start_with?('git-')
           'Git'
         else
-          'Miscellaenous'
+          'Miscellaneous'
         end
       end
     end

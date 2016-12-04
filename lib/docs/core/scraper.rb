@@ -171,7 +171,10 @@ module Docs
 
     def process_response(response)
       data = {}
-      pipeline.call(parse(response.body), pipeline_context(response), data)
+      html, title = parse(response.body)
+      context = pipeline_context(response)
+      context[:html_title] = title
+      pipeline.call(html, context, data)
       data
     end
 
@@ -180,7 +183,8 @@ module Docs
     end
 
     def parse(string)
-      Parser.new(string).html
+      parser = Parser.new(string)
+      [parser.html, parser.title]
     end
 
     def with_filters(*filters)

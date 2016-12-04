@@ -1,0 +1,6 @@
+._sqlite {
+  @extend %simple;
+
+  dt { @extend %block-label, %label-blue; }
+  .todo { @extend %note, %note-red; }
+}

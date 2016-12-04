@@ -530,6 +530,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/Automattic/socket.io/master/LICENSE'
   ], [
+    'SQLite',
+    'n/a',
+    'Public Domain',
+    'https://sqlite.org/copyright.html'
+  ], [
     'Statsmodels',
     '2009-2012 Statsmodels Developers<br>&copy; 2006-2008 Scipy Developers<br>&copy; 2006 Jonathan E. Taylor',
     'BSD',

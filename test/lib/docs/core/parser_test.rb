@@ -28,4 +28,16 @@ class DocsParserTest < MiniTest::Spec
       end
     end
   end
+
+  describe "#title" do
+    it "returns nil when there is no <title>" do
+      body = '<!doctype html><meta charset=utf-8><div>Test</div>'
+      assert_nil parser(body).title
+    end
+
+    it "returns the <title> when there is one" do
+      body = '<!doctype html><meta charset=utf-8><title>Title</title><div>Test</div>'
+      assert_equal 'Title', parser(body).title
+    end
+  end
 end
