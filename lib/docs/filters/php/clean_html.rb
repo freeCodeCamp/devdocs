@@ -11,16 +11,28 @@ module Docs
       end
 
       def other
-        css('.manualnavbar', 'hr').remove
+        css('.manualnavbar:first-child', '.manualnavbar .up', '.manualnavbar .home', 'hr').remove
+
+        nav = at_css('.manualnavbar').remove
+
+        if prev_link = nav.at_css('.prev a')
+          prev_link.content = "← #{prev_link.content}"
+        end
+
+        if next_link = nav.at_css('.next a')
+          next_link.content = "#{next_link.content} →"
+        end
 
         # Remove top-level <div>
         if doc.elements.length == 1
           @doc = doc.first_element_child
         end
 
+        doc << nav
+
         # Remove code highlighting
         br = /<br\s?\/?>/i
-        css('.phpcode').each do |node|
+        css('.phpcode', 'div.methodsynopsis').each do |node|
           node.name = 'pre'
           node.inner_html = node.inner_html.gsub(br, "\n")
           node.content = node.content.strip
