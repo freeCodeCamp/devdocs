@@ -155,6 +155,11 @@ credits = [
     'BSD',
     'https://cmake.org/licensing/'
   ], [
+    'Codeception',
+    '2011-2016 Michael Bodnarchuk and contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/Codeception/Codeception/master/LICENSE'
+  ], [
     'CodeIgniter',
     '2014-2016 British Columbia Institute of Technology',
     'MIT',
