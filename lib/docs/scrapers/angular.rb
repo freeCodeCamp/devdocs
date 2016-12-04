@@ -42,12 +42,12 @@ module Docs
     end
 
     version '2 TypeScript' do
-      self.release = '2.2.1'
+      self.release = '2.2.4'
       self.base_url = 'https://angular.io/docs/ts/latest/'
     end
 
     version '2 Dart' do
-      self.release = '2.2.1'
+      self.release = '2.2.4'
       self.base_url = 'https://angular.io/docs/dart/latest/'
 
       options[:skip_patterns] += [/angular2\.compiler/]
