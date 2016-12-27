@@ -15,6 +15,8 @@ module Docs
         name = at_css('h1').content.strip
         name.remove! "\u{00b6}"
         name.remove! 'matplotlib.'
+        name.remove! 'mpl_toolkits.'
+        name.remove! ' API'
         name.remove! %r{ \(.*\)}
         name.downcase!
         name
@@ -29,17 +31,20 @@ module Docs
         entries = []
 
         css('.class > dt[id]', '.exception > dt[id]', '.attribute > dt[id]').each do |node|
-          entries << [node['id'].remove('matplotlib.'), node['id']]
+          entry_name = node['id'].remove('matplotlib.').remove('mpl_toolkits.')
+          entries << [entry_name, node['id']]
         end
 
         css('.data > dt[id]').each do |node|
           if node['id'].split('.').last.upcase! # skip constants
-            entries << [node['id'].remove('matplotlib.'), node['id']]
+            entry_name = node['id'].remove('matplotlib.').remove('mpl_toolkits.')
+            entries << [entry_name, node['id']]
           end
         end
 
         css('.function > dt[id]', '.method > dt[id]', '.classmethod > dt[id]').each do |node|
-          entries << [node['id'].remove('matplotlib.') + '()', node['id']]
+          entry_name = node['id'].remove('matplotlib.').remove('mpl_toolkits.')
+          entries << [entry_name + '()', node['id']]
         end
 
         entries
