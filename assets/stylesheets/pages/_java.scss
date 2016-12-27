@@ -1,0 +1,16 @@
+._java {
+  ul.blockList, ul.blockListLast {
+    padding-left: 0;
+    li.blockList {
+      list-style: none;
+    }
+  }
+
+  .memberSummary > caption {
+    display: none;
+  }
+
+  .details h4 {
+    @extend %block-label, %label-blue;
+  }
+}
