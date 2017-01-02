@@ -19,6 +19,14 @@ module Docs
       Licensed under the PSF License.
     HTML
 
+    version '3.6' do
+      self.release = '3.6.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/Python36' # docs.python.org/3.6/download.html
+      self.base_url = 'https://docs.python.org/3.6/'
+
+      html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
+    end
+
     version '3.5' do
       self.release = '3.5.2'
       self.dir = '/Users/Thibaut/DevDocs/Docs/Python35' # docs.python.org/3.5/download.html
