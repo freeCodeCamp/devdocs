@@ -10,7 +10,7 @@ module Docs
           api
         end
 
-        css('.rusttest', 'hr').remove
+        css('.rusttest', '.test-arrow', 'hr').remove
 
         css('.docblock > h1').each { |node| node.name = 'h4' }
         css('h2.section-header').each { |node| node.name = 'h3' }
