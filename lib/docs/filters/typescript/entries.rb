@@ -18,6 +18,7 @@ module Docs
 
       def additional_entries
         return [] unless slug.start_with?('handbook')
+        return [] if slug.include?('release-notes')
         return [] if slug == 'handbook/writing-definition-files'
 
         css('.post-content h1, .post-content h2').each_with_object [] do |node, entries|
