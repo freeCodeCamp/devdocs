@@ -1,10 +1,14 @@
 module Docs
   class Twig < UrlScraper
     self.type = 'sphinx'
-    self.release = '1.24'
+    self.release = '1.29'
     self.base_url = 'http://twig.sensiolabs.org/doc/'
     self.root_path = 'index.html'
     self.initial_paths = %w(extensions/index.html)
+    self.links = {
+      home: 'http://twig.sensiolabs.org/',
+      code: 'https://github.com/twigphp/Twig'
+    }
 
     options[:attribution] = <<-HTML
       &copy; 2009&ndash;2016 by the Twig Team<br>
