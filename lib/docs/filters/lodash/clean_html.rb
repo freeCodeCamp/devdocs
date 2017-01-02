@@ -20,7 +20,7 @@ module Docs
 
         # Remove code highlighting
         css('pre').each do |node|
-          node.inner_html = node.inner_html.gsub('</div>', "</div>\n").gsub('&nbsp;', ' ')
+          node.inner_html = node.inner_html.gsub('</div>', "</div>\n").gsub('&nbsp;', ' ').gsub('&amp;ampamp;', '&amp;amp;')
           node.content = node.content.strip
           node['data-language'] = 'javascript'
         end
