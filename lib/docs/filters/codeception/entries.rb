@@ -26,13 +26,13 @@ module Docs
       def additional_entries
         if type =~ /Module/
           prefix = "#{name}::"
-          pattern = '#actions ~ h4'
+          pattern = at_css('#actions') ? '#actions ~ h4' : '#page h4'
         elsif type =~ /Functions/
           prefix = ''
           pattern = '#page h4'
         elsif name =~ /Util/
           prefix = "#{name.remove('Codeception\\Util\\')}::"
-          pattern = 'h3'
+          pattern = '#page h4'
         elsif type =~ /(Commands)|(Configuration)/
           prefix = ''
           pattern = 'h2'
