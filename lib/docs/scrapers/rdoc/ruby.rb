@@ -12,6 +12,8 @@ module Docs
     #     --no-line-numbers \
     #     --op html .
 
+    include FixInternalUrlsBehavior
+
     self.links = {
       home: 'https://www.ruby-lang.org/',
       code: 'https://github.com/ruby/ruby'
@@ -77,8 +79,13 @@ module Docs
       Licensed under their own licenses.
     HTML
 
+    version '2.4' do
+      self.release = '2.4.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby24'
+    end
+
     version '2.3' do
-      self.release = '2.3.2'
+      self.release = '2.3.3'
       self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby23'
     end
 
