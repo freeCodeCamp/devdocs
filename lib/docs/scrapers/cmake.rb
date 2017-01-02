@@ -22,7 +22,7 @@ module Docs
     HTML
 
     version '3.7' do
-      self.release = '3.7.0'
+      self.release = '3.7.1'
       self.base_url = 'https://cmake.org/cmake/help/v3.7/'
     end
 
