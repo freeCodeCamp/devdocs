@@ -13,7 +13,9 @@ module Docs
         @doc = container
 
         title = at_css('h1').content.strip
-        if title == 'Index'
+        if root_page?
+          at_css('h1').content = 'Angular Documentation'
+        elsif title == 'Index'
           at_css('h1').content = result[:entries].first.name
         elsif title == 'Angular'
           at_css('h1').content = slug.split('/').last.gsub('-', ' ')
@@ -42,11 +44,13 @@ module Docs
 
         css('pre[language]').each do |node|
           node['data-language'] = node['language'].sub(/\Ats/, 'typescript').strip
+          node['data-language'] = 'html' if node.content.start_with?('<')
         end
 
         css('pre.prettyprint').each do |node|
           node.content = node.content.strip
           node['data-language'] = 'dart' if node['class'].include?('dart')
+          node['data-language'] = 'html' if node.content.start_with?('<')
         end
 
         css('.multi-line-signature').each do |node|

@@ -9,7 +9,7 @@ module Docs
 
     html_filters.push 'angular/entries', 'angular/clean_html'
 
-    options[:skip_patterns] = [/deprecated/]
+    options[:skip_patterns] = [/deprecated/, /VERSION-let/]
     options[:skip] = %w(
       index.html
       styleguide.html
@@ -42,7 +42,7 @@ module Docs
     end
 
     version '2 TypeScript' do
-      self.release = '2.2.4'
+      self.release = '2.4.1'
       self.base_url = 'https://angular.io/docs/ts/latest/'
     end
 
