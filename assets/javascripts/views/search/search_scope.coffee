@@ -95,7 +95,7 @@ class app.views.SearchScope extends app.View
     else if not @doc and @input.value
       return if event.ctrlKey or event.metaKey or event.altKey or event.shiftKey
       if event.which is 9 or # tab
-         event.which is 32 and (app.isMobile() or $.isTouchScreen()) # space
+         (event.which is 32 and app.isMobile()) # space
         @search @input.value[0...@input.selectionStart]
         $.stopEvent(event) if @doc
     return

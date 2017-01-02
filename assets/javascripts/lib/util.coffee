@@ -336,9 +336,6 @@ $.popup = (value) ->
     window.open value.href or value, '_blank'
   return
 
-$.isTouchScreen = ->
-  typeof ontouchstart isnt 'undefined'
-
 $.isWindows = ->
   navigator.platform?.indexOf('Win') >= 0
 

@@ -14,6 +14,7 @@ body {
   color: $textColor;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: rgba(black, 0);
   -webkit-touch-callout: none;
   -webkit-text-size-adjust: 100%;

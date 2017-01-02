@@ -32,9 +32,7 @@ class app.views.Mobile extends app.View
     super
 
   init: ->
-    if $.isTouchScreen()
-      FastClick.attach @body
-      app.shortcuts.stop()
+    FastClick.attach @body
 
     $.on @body, 'click', @onClick
     $.on $('._home-btn'), 'click', @onClickHome
