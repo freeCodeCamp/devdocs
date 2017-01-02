@@ -6,16 +6,12 @@ module Docs
 
         # Set id attributes on actual elements instead of an empty <span>
         css('.bookmark').each do |node|
-          if node.parent.name == 'h2'
-            node.parent['id'] = node['id']
-          elsif node.next_element.name == 'b'
-            node.next_element['id'] = node['id']
-          end
+          node.next_element['id'] = node['id']
           node.remove
         end
 
         # Remove Books, Screencasts, etc.
-        while doc.children.last['id'] != 'scripts'
+        while doc.children.last['id'] != 'resources'
           doc.children.last.remove
         end
         doc.children.last.remove
@@ -48,6 +44,10 @@ module Docs
         # Remove code highlighting
         css('pre').each do |node|
           node.content = node.content
+        end
+
+        css('blockquote > pre:first-child:last-child').each do |node|
+          node.parent.before(node).remove
         end
 
         css('.code pre:first-child').each do |node|
