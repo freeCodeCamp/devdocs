@@ -3,7 +3,7 @@ module Docs
     self.name = 'CodeceptJS'
     self.type = 'codeceptjs'
     self.root_path = 'index.html'
-    self.release = '0.4.9'
+    self.release = '0.4.13'
     self.base_url = 'http://codecept.io/'
     self.links = {
       home: 'http://codecept.io/',
