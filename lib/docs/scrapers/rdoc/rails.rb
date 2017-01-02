@@ -1,5 +1,7 @@
 module Docs
   class Rails < Rdoc
+    include FixInternalUrlsBehavior
+
     self.name = 'Ruby on Rails'
     self.slug = 'rails'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Rails'
@@ -47,15 +49,15 @@ module Docs
     HTML
 
     version '5.0' do
-      self.release = '5.0.0'
+      self.release = '5.0.1'
     end
 
     version '4.2' do
-      self.release = '4.2.6'
+      self.release = '4.2.7'
     end
 
     version '4.1' do
-      self.release = '4.1.15'
+      self.release = '4.1.16'
     end
   end
 end

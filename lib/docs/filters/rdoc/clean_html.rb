@@ -42,6 +42,8 @@ module Docs
         # Remove code highlighting
         css('pre').each do |node|
           node.content = node.content
+          node['data-language'] = 'c' if node['class'] == 'c'
+          node['data-language'] = 'ruby' if node['class'] && node['class'].include?('ruby')
         end
       end
     end
