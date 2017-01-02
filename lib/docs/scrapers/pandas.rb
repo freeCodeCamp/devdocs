@@ -23,7 +23,7 @@ module Docs
     HTML
 
     version '0.19' do
-      self.release = '0.19.0'
+      self.release = '0.19.2'
       self.base_url = "http://pandas.pydata.org/pandas-docs/version/#{self.release}/"
     end
 
