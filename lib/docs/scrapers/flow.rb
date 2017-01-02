@@ -1,7 +1,7 @@
 module Docs
   class Flow < React
     self.type = 'react'
-    self.release = '0.34'
+    self.release = '0.37.4'
     self.base_url = 'https://flowtype.org/docs/'
     self.root_path = 'getting-started.html'
     self.links = {
@@ -14,7 +14,7 @@ module Docs
     options[:only_patterns] = nil
 
     options[:attribution] = <<-HTML
-      &copy; 2013&ndash;2016 Facebook Inc.<br>
+      &copy; 2013&ndash;present Facebook Inc.<br>
       Licensed under the BSD License.
     HTML
   end

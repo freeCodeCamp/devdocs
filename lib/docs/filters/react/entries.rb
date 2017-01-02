@@ -7,6 +7,7 @@ module Docs
 
       def get_type
         link = at_css('.nav-docs-section .active, .toc .active')
+        return 'Miscellaneous' unless link
         section = link.ancestors('.nav-docs-section, section').first
         type = section.at_css('h3').content.strip
         type
