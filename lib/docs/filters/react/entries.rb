@@ -14,7 +14,9 @@ module Docs
       end
 
       def additional_entries
-        css('.inner-content h3 code, .inner-content h4 code').each_with_object([]) do |node, entries|
+        entries = []
+
+        css('.inner-content h3 code, .inner-content h4 code').each do |node|
           name = node.content
           name.remove! %r{[#\(\)]}
           name.remove! %r{\w+\:}
@@ -30,6 +32,19 @@ module Docs
           end
           entries << [name, id, type]
         end
+
+        css('.apiIndex a pre').each do |node| # relay
+          next unless node.parent['href'].start_with?('#')
+          id = node.parent['href'].remove('#')
+          name = node.content.strip
+          sep = name.start_with?('static') ? '.' : '#'
+          name.remove! %r{(abstract|static) }
+          name.sub! %r{\(.*\)}, '()'
+          name.prepend(self.name + sep)
+          entries << [name, id]
+        end
+
+        entries
       end
     end
   end
