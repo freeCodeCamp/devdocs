@@ -4,7 +4,7 @@ module Docs
     self.slug = 'angularjs'
     self.type = 'angularjs'
     self.root_path = 'api.html'
-    self.initial_paths = %w(guide.html)
+    self.initial_paths = %w(guide.html guide/controller.html)
 
     html_filters.push 'angularjs/clean_html', 'angularjs/entries', 'title'
     text_filters.push 'angularjs/clean_urls'
@@ -45,8 +45,13 @@ module Docs
       capybara.execute_script("return document.querySelector('.side-navigation').innerHTML")
     end
 
+    version '1.6' do
+      self.release = '1.6.1'
+      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
+    end
+
     version '1.5' do
-      self.release = '1.5.9'
+      self.release = '1.5.10'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
