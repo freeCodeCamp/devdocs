@@ -7,7 +7,7 @@ module Docs
       end
 
       def book
-        @doc = at_css('.page-inner > section')
+        @doc = at_css('.page-inner section')
 
         css('pre > code').each do |node|
           node.parent['data-language'] = node['class'][/lang-(\w+)/, 1] if node['class']
