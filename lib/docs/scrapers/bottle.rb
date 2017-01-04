@@ -3,7 +3,7 @@ module Docs
     self.type = 'sphinx'
     self.root_path = 'index.html'
     self.links = {
-      home: 'https://bottle.org/',
+      home: 'https://bottlepy.org/',
       code: 'https://github.com/bottlepy/bottle'
     }
 
