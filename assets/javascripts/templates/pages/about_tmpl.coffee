@@ -116,7 +116,7 @@ credits = [
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Bottle',
-    '2016 Marcel Hellkamp',
+    '2009-2017 Marcel Hellkamp',
     'MIT',
     'https://raw.githubusercontent.com/bottlepy/bottle/master/LICENSE'
   ], [
