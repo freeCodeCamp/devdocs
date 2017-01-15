@@ -37,10 +37,10 @@ module Docs
         end
 
         css('.details-list').each do |list|
-          type = list['id'].remove(/s\z/)
+          type = list['id'].remove(/s\z/) if list['id']
           list.css('.detail-header').each do |node|
             node.name = 'h3'
-            node['class'] += " #{type}"
+            node['class'] += " #{type}" if type
           end
         end
 

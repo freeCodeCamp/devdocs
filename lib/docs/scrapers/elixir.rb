@@ -4,16 +4,7 @@ module Docs
 
     self.name = 'Elixir'
     self.type = 'elixir'
-    self.release = '1.3.4'
-    self.base_urls = ['http://elixir-lang.org/docs/stable/', 'http://elixir-lang.org/getting-started/']
-    self.root_path = 'elixir/api-reference.html'
-    self.initial_paths = %w(
-      eex/EEx.html
-      ex_unit/ExUnit.html
-      iex/IEx.html
-      logger/Logger.html
-      mix/Mix.html
-    )
+    self.root_path = 'api-reference.html'
     self.links = {
       home: 'http://elixir-lang.org/',
       code: 'https://github.com/elixir-lang/elixir'
@@ -28,12 +19,44 @@ module Docs
     options[:root_title] = 'Elixir'
 
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2016 Plataformatec<br>
+      &copy; 2012&ndash;2017 Plataformatec<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 
     def initial_urls
-      super.tap { |urls| urls.last << 'introduction.html' }
+      [ "https://hexdocs.pm/elixir/#{self.class.release}/api-reference.html",
+        "https://hexdocs.pm/eex/#{self.class.release}/EEx.html",
+        "https://hexdocs.pm/ex_unit/#{self.class.release}/ExUnit.html",
+        "https://hexdocs.pm/iex/#{self.class.release}/IEx.html",
+        "https://hexdocs.pm/logger/#{self.class.release}/Logger.html",
+        "https://hexdocs.pm/mix/#{self.class.release}/Mix.html",
+        "http://elixir-lang.org/getting-started/introduction.html" ]
+    end
+
+    version '1.4' do
+      self.release = '1.4.0'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'http://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.3' do
+      self.release = '1.3.3'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'http://elixir-lang.org/getting-started/'
+      ]
     end
   end
 end
