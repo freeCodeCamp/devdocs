@@ -21,7 +21,7 @@ module Docs
     HTML
 
     version '3' do
-      self.release = '3.0.1'
+      self.release = '3.0.2'
       self.base_url = 'https://docs.phalconphp.com/en/latest/'
     end
 
