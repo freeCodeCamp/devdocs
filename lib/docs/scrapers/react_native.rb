@@ -3,7 +3,7 @@ module Docs
     self.name = 'React Native'
     self.slug = 'react_native'
     self.type = 'react'
-    self.release = '0.39'
+    self.release = '0.40'
     self.base_url = 'https://facebook.github.io/react-native/docs/'
     self.root_path = 'getting-started.html'
     self.links = {
@@ -29,7 +29,7 @@ module Docs
     }
 
     options[:attribution] = <<-HTML
-      &copy; 2016 Facebook Inc.<br>
+      &copy; 2015&ndash;2017 Facebook Inc.<br>
       Licensed under the Creative Commons Attribution 4.0 International Public License.
     HTML
   end
