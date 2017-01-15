@@ -12,7 +12,7 @@ module Docs
           node.parent.remove
         end
 
-        css('.bd-example-row', '.table-responsive').each do |node|
+        css('.bd-example-row', '.bd-example-border-utils').each do |node|
           node.before(node.children).remove
         end
 

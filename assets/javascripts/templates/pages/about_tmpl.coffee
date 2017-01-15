@@ -111,7 +111,7 @@ credits = [
     'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
   ], [
     'Bootstrap',
-    '2011-2016 Twitter, Inc.',
+    '2011-2017 Twitter, Inc.<br>2011-2017 The Bootstrap Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [

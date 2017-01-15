@@ -30,7 +30,7 @@ module Docs
           entries << [name, id]
         end
 
-        css("#options + p + div tbody td:first-child").each do |node|
+        css("#options + p + table tbody td:first-child").each do |node|
           name = node.content.strip
           id = node.parent['id'] = "#{name.parameterize}-option"
           name.prepend "#{self.name}: "
@@ -40,7 +40,9 @@ module Docs
 
         css("#methods + table tbody td:first-child, #methods ~ h4 code").each do |node|
           next unless name = node.content[/\('(\w+)'\)/, 1]
-          id = node.parent['id'] = "#{name.parameterize}-method"
+          unless id = node.parent['id']
+            id = node.parent['id'] = "#{name.parameterize}-method"
+          end
           name.prepend "#{self.name}: "
           name << ' (method)'
           entries << [name, id]
