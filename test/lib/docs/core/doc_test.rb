@@ -55,6 +55,18 @@ class DocsDocTest < MiniTest::Spec
       doc.version = '42'
       assert_equal 'foo~42', doc.slug
     end
+
+    it "returns 'foobar' when #name has been set to 'FooBar'" do
+      doc.name = 'FooBar'
+      assert_equal 'foobar', doc.slug
+    end
+
+    it "raises error when #name has unsluggable characters" do
+      assert_raises do
+        doc.name = 'Foo-Bar'
+        doc.slug
+      end
+    end
   end
 
   describe ".slug=" do

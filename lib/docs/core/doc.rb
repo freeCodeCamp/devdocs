@@ -48,7 +48,10 @@ module Docs
       end
 
       def slug
-        slug = @slug || name.try(:downcase)
+        slug = @slug || (
+          raise "Slug must be set explicitly when name (#{name}) consists of anything else than [\\w\\.%]" if /[^\w\.%]/ =~ name
+          name.try(:downcase)
+        )
         version? ? "#{slug}~#{version_slug}" : slug
       end
 
