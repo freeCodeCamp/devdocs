@@ -596,7 +596,7 @@ credits = [
     'https://raw.githubusercontent.com/webpack/webpack/master/LICENSE'
   ], [
     'Yarn',
-    '2016 Yarn Contributors',
+    '2016-2017 Yarn Contributors',
     'BSD',
     'https://raw.githubusercontent.com/yarnpkg/yarn/master/LICENSE'
   ], [
