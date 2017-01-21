@@ -115,7 +115,8 @@ module Docs
     def options
       @options ||= self.class.options.deep_dup.tap do |options|
         options.merge! base_url: base_url, root_url: root_url,
-                       root_path: root_path, initial_paths: initial_paths
+                       root_path: root_path, initial_paths: initial_paths,
+                       version: self.class.version
 
         if root_path?
           (options[:skip] ||= []).concat ['', '/']

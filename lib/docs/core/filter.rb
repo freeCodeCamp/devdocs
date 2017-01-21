@@ -36,6 +36,10 @@ module Docs
       context[:root_path]
     end
 
+    def version
+      context[:version]
+    end
+
     def subpath
       @subpath ||= subpath_to(current_url)
     end

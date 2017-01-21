@@ -562,8 +562,8 @@ credits = [
   ], [
     'TensorFlow',
     '2015 The TensorFlow Authors',
-    'Apache',
-    'https://raw.githubusercontent.com/tensorflow/tensorflow/master/LICENSE'
+    'CC BY',
+    'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Twig',
     '2009-2016 The Twig Team',
