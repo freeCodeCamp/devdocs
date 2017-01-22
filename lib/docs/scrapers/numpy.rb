@@ -22,9 +22,14 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2008&ndash;2016 NumPy Developers<br>
+      &copy; 2008&ndash;2017 NumPy Developers<br>
       Licensed under the NumPy License.
     HTML
+
+    version '1.12' do
+      self.release = '1.12.0'
+      self.base_url = "https://docs.scipy.org/doc/numpy-#{self.release}/reference/"
+    end
 
     version '1.11' do
       self.release = '1.11.0'
