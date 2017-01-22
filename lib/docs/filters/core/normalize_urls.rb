@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Docs
   class NormalizeUrlsFilter < Filter
     ATTRIBUTES = { a: 'href', img: 'src', iframe: 'src' }
