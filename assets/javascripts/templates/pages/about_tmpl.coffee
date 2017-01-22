@@ -590,10 +590,10 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
   ], [
-    'Webpack',
+    'webpack',
     '2012-2016 Tobias Koppers',
-    'MIT',
-    'https://raw.githubusercontent.com/webpack/webpack/master/LICENSE'
+    'CC BY',
+    'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Yarn',
     '2016-2017 Yarn Contributors',

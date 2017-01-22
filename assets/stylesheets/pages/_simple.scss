@@ -12,7 +12,7 @@
     h1, h2, h3 { margin-left: 0; }
   }
 
-  p > code, li > code, td > code { @extend %label; }
+  p > code, li > code, td > code, blockquote > code { @extend %label; }
   blockquote { @extend %note; }
   blockquote > h4, blockquote > h5 { margin-top: .25rem; }
 }
@@ -37,7 +37,6 @@
 ._redux,
 ._sinon,
 ._typescript,
-._webpack,
 ._yarn {
   @extend %simple;
 }
