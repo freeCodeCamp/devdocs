@@ -566,7 +566,7 @@ credits = [
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Twig',
-    '2009-2016 The Twig Team',
+    '2009-2017 The Twig Team',
     'BSD',
     'http://twig.sensiolabs.org/license'
   ], [
