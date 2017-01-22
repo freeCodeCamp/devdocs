@@ -2,11 +2,29 @@ module Docs
   class Http
     class CleanHtmlFilter < Filter
       def call
-        if root_page?
-          doc.inner_html = '<h1>Hypertext Transfer Protocol</h1>'
-          return doc
+        current_url.host == 'tools.ietf.org' ? ietf : mdn
+        doc
+      end
+
+      def mdn
+        css('.column-container', '.column-half').each do |node|
+          node.before(node.children).remove
         end
 
+        css('p > code + strong').each do |node|
+          code = node.previous_element
+          if code.content =~ /\A[\s\d]+\z/
+            code.content = "#{code.content.strip} #{node.content.strip}"
+            node.remove
+          end
+        end
+
+        css('strong > code').each do |node|
+          node.parent.before(node.parent.children).remove
+        end
+      end
+
+      def ietf
         doc.child.remove while doc.child.name != 'pre'
 
         css('span.grey', '.invisible', '.noprint', 'a[href^="#page-"]').remove
@@ -33,8 +51,6 @@ module Docs
         html.remove! %r[\.{2,}$]
         html.gsub! %r[(^\n$){3,}], "\n"
         doc.inner_html = %(<div class="_rfc-pre">#{html}</div>)
-
-        doc
       end
     end
   end
