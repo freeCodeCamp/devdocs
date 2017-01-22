@@ -1,11 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.7.1)
+    activesupport (5.0.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
-      json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
-      thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     backports (3.6.8)
     better_errors (2.1.1)
@@ -17,26 +16,25 @@ GEM
     coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.11.1)
-    concurrent-ruby (1.0.2)
+    coffee-script-source (1.12.2)
+    concurrent-ruby (1.0.4)
     daemons (1.2.4)
     erubis (2.7.0)
-    ethon (0.9.1)
+    ethon (0.10.1)
       ffi (>= 1.3.0)
     eventmachine (1.2.1)
     execjs (2.7.0)
-    ffi (1.9.14)
+    ffi (1.9.17)
     highline (1.7.8)
-    html-pipeline (2.4.2)
+    html-pipeline (2.5.0)
       activesupport (>= 2)
       nokogiri (>= 1.4)
     i18n (0.7.0)
-    json (1.8.3)
     method_source (0.8.2)
     mini_portile2 (2.1.0)
-    minitest (5.9.1)
+    minitest (5.10.1)
     multi_json (1.12.1)
-    nokogiri (1.6.8.1)
+    nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
     options (2.3.2)
     progress_bar (1.1.0)
@@ -51,9 +49,9 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    rake (11.3.0)
+    rake (12.0.0)
     rr (1.2.0)
-    sass (3.4.22)
+    sass (3.4.23)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -66,7 +64,7 @@ GEM
       sinatra (~> 1.4.0)
       tilt (>= 1.3, < 3)
     slop (3.6.0)
-    sprockets (3.7.0)
+    sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-helpers (1.2.1)
@@ -75,24 +73,26 @@ GEM
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
       rack (>= 1, < 3)
-    thor (0.19.3)
+    thor (0.19.4)
     thread_safe (0.3.5)
     tilt (2.0.5)
-    tty-pager (0.4.0)
+    tty-pager (0.5.0)
       tty-screen (~> 0.5.0)
-      tty-which (~> 0.1.0)
-      verse (~> 0.4.0)
+      tty-which (~> 0.2.0)
+      verse (~> 0.5.0)
     tty-screen (0.5.0)
-    tty-which (0.1.0)
-    typhoeus (1.1.0)
+    tty-which (0.2.1)
+    typhoeus (1.1.2)
       ethon (>= 0.9.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (3.0.3)
+    uglifier (3.0.4)
       execjs (>= 0.3.0, < 3)
+    unicode-display_width (1.1.3)
     unicode_utils (1.4.0)
     unix_utils (0.0.15)
-    verse (0.4.0)
+    verse (0.5.0)
+      unicode-display_width (~> 1.1.0)
       unicode_utils (~> 1.4.0)
     yajl-ruby (1.3.0)
 
@@ -100,7 +100,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport (~> 4.2)
+  activesupport (~> 5.0)
   better_errors
   browser
   coffee-script
@@ -128,7 +128,7 @@ DEPENDENCIES
   yajl-ruby
 
 RUBY VERSION
-   ruby 2.3.3p222
+   ruby 2.4.0p0
 
 BUNDLED WITH
-   1.13.6
+   1.14.1

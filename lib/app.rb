@@ -7,6 +7,7 @@ class App < Sinatra::Application
   Bundler.require environment
   require 'sinatra/cookies'
   require 'tilt/erubis'
+  require 'active_support/notifications'
 
   Rack::Mime::MIME_TYPES['.webapp'] = 'application/x-web-app-manifest+json'
 
