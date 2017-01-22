@@ -149,6 +149,10 @@ class DocsFilterTest < MiniTest::Spec
     it "returns false with 'mailto:test@example.com'" do
       refute filter.relative_url_string?('mailto:test@example.com')
     end
+
+    it "returns false with 'data:image/gif;base64,foo'" do
+      refute filter.relative_url_string?('data:image/gif;base64,foo')
+    end
   end
 
   describe "#absolute_url_string?" do

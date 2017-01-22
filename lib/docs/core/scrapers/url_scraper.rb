@@ -129,7 +129,7 @@ module Docs
 
       def fetch_redirections
         result = {}
-        with_filters 'container', 'normalize_urls', 'internal_urls' do
+        with_filters 'apply_base_url', 'container', 'normalize_urls', 'internal_urls' do
           build_pages do |page|
             next if page[:response_effective_path] == page[:response_path]
             result[page[:response_path].downcase] = page[:response_effective_path]

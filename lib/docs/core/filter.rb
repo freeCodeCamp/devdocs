@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Docs
   class Filter < ::HTML::Pipeline::Filter
     def css(*args)
@@ -73,7 +75,7 @@ module Docs
     end
 
     def relative_url_string?(str)
-      !fragment_url_string?(str) && str !~ SCHEME_RGX
+      str !~ SCHEME_RGX && !fragment_url_string?(str) && !data_url_string?(str)
     end
 
     def absolute_url_string?(str)
