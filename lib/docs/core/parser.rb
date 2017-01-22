@@ -9,14 +9,16 @@ module Docs
 
     private
 
+    DOCUMENT_RGX = /\A(?:\s|(?:<!--.*?-->))*<(?:\!doctype|html)/i
+
     def document?
-      @content =~ /\A\s*<(?:\!doctype|html)/i
+      @content =~ DOCUMENT_RGX
     end
 
     def parse_as_document
       document = Nokogiri::HTML.parse @content, nil, 'UTF-8'
       @title = document.at_css('title').try(:content)
-      document.at_css 'body'
+      document
     end
 
     def parse_as_fragment

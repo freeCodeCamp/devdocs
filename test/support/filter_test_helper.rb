@@ -3,15 +3,16 @@ module FilterTestHelper
 
   included do
     class_attribute :filter_class
+    class_attribute :filter_type
   end
 
   def filter
-    @filter ||= filter_class.new @body || '', context, result
+    @filter ||= filter_class.new prepare_body(@body || ''), context, result
   end
 
   def filter_output
     @filter_output ||= begin
-      filter.instance_variable_set :@html, @body if @body
+      filter.instance_variable_set :@html, prepare_body(@body) if @body
       filter.call
     end
   end
@@ -40,5 +41,13 @@ module FilterTestHelper
 
   def link_to(href)
     %(<a href="#{href}">Link</a>)
+  end
+
+  def prepare_body(body)
+    if self.class.filter_type == 'html'
+      Docs::Parser.new(body).html
+    else
+      body
+    end
   end
 end

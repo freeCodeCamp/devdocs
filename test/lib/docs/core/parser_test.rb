@@ -14,17 +14,23 @@ class DocsParserTest < MiniTest::Spec
     context "with an HTML fragment" do
       it "returns the fragment" do
         body = '<div>Test</div>'
-        assert_equal body, parser(body).html.inner_html
+        html = parser(body).html
+        assert_equal '#document-fragment', html.name
+        assert_equal body, html.inner_html
       end
     end
 
     context "with an HTML document" do
-      it "returns the <body>" do
-        body = '<!doctype html><meta charset=utf-8><title></title><div>Test</div>'
-        assert_equal '<div>Test</div>', parser(body).html.inner_html
+      it "returns the document" do
+        body = '<!-- foo --> <!doctype html><meta charset=utf-8><title></title><div>Test</div>'
+        html = parser(body).html
+        assert_equal 'document', html.name
+        assert_equal '<div>Test</div>', html.at_css('body').inner_html
 
         body = '<html><meta charset=utf-8><title></title><div>Test</div></html>'
-        assert_equal '<div>Test</div>', parser(body).html.inner_html
+        html = parser(body).html
+        assert_equal 'document', html.name
+        assert_equal '<div>Test</div>', html.at_css('body').inner_html
       end
     end
   end
