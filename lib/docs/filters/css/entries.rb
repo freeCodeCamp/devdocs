@@ -53,6 +53,8 @@ module Docs
           type.remove! %r{\(.*\)}
           type.sub! 'and', '&'
           type.strip!
+          type = 'Scroll Snap' if type.include?('Scroll Snap')
+          type = 'Compositing & Blending' if type.include?('Compositing')
           type = 'Animations & Transitions' if type.in?(%w(Animations Transitions))
           type = 'Image Values' if type == 'Image Values & Replaced Content'
           type = 'Variables' if type == 'Custom Properties for Cascading Variables'

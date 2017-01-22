@@ -51,7 +51,7 @@ module Docs
           'Classes'
         elsif slug.start_with? 'Errors'
           'Errors'
-        elsif slug.start_with?('Functions') || slug.include?('GeneratorFunction')
+        elsif slug.start_with?('Functions') || slug.include?('GeneratorFunction') || slug.include?('AsyncFunction')
           'Function'
         elsif slug.start_with? 'Global_Objects'
           object, method = *slug.remove('Global_Objects/').split('/')
@@ -77,7 +77,7 @@ module Docs
 
         %w(arithmetic assignment bitwise comparison logical).each do |s|
           css("a[href^='operators/#{s}_operators#']").each do |node|
-            name = node.content.strip
+            name = CGI::unescapeHTML(node.content.strip)
             name.remove! %r{[a-zA-Z]}
             name.strip!
             entries << [name, node['href'], 'Operators']

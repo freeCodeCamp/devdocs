@@ -8,7 +8,7 @@ module Docs
 
     options[:root_title] = 'CSS'
 
-    options[:skip] = %w(/CSS3 /Media/Visual /paged_media)
+    options[:skip] = %w(/CSS3 /Media/Visual /paged_media /Media/TV /Media/Tactile)
     options[:skip] += %w(/mq-boolean /single-transition-timing-function) # bug
     options[:skip_patterns] = [/Extensions/, /Tools/, /@media\/-webkit/, /webkit-mask/, /-moz-system-metric/]
 
