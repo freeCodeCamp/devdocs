@@ -300,8 +300,19 @@ class App < Sinatra::Application
 
   get %r{\A/([\w~\.%]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
     doc.sub! '%7E', '~'
-    return redirect "/#{DOC_REDIRECTS[doc]}#{type}#{rest}", 301 if DOC_REDIRECTS.key?(doc)
-    return redirect "/angularjs/api#{rest}", 301 if doc == 'angular' && rest && rest.start_with?('/ng')
+
+    if DOC_REDIRECTS.key?(doc)
+      return redirect "/#{DOC_REDIRECTS[doc]}#{type}#{rest}", 301
+    end
+
+    if rest && doc == 'angular' && rest.start_with?('/ng')
+      return redirect "/angularjs/api#{rest}", 301
+    end
+
+    if rest && doc == 'dom' && rest.start_with?('/windowtimers')
+      return redirect "/dom#{rest.sub('windowtimers', 'windoworworkerglobalscope')}"
+    end
+
     return 404 unless @doc = find_doc(doc)
 
     if rest.nil?
