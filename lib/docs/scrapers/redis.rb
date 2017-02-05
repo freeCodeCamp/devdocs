@@ -1,10 +1,10 @@
 module Docs
   class Redis < UrlScraper
     self.type = 'redis'
-    self.release = 'up to 3.2.5'
-    self.base_url = 'http://redis.io/commands'
+    self.release = 'up to 3.2.7'
+    self.base_url = 'https://redis.io/commands'
     self.links = {
-      home: 'http://redis.io/',
+      home: 'https://redis.io/',
       code: 'https://github.com/antirez/redis'
     }
 
@@ -16,7 +16,7 @@ module Docs
     options[:follow_links] = ->(filter) { filter.root_page? }
 
     options[:attribution] = <<-HTML
-      &copy; 2009&ndash;2016 Salvatore Sanfilippo<br>
+      &copy; 2009&ndash;2017 Salvatore Sanfilippo<br>
       Licensed under the Creative Commons Attribution-ShareAlike License 4.0.
     HTML
   end
