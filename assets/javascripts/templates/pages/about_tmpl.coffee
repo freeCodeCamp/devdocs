@@ -156,7 +156,7 @@ credits = [
     'https://cmake.org/licensing/'
   ], [
     'Codeception',
-    '2011-2016 Michael Bodnarchuk and contributors',
+    '2011-2017 Michael Bodnarchuk and contributors',
     'MIT',
     'https://raw.githubusercontent.com/Codeception/Codeception/master/LICENSE'
   ], [
