@@ -31,12 +31,12 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2014&ndash;2016 British Columbia Institute of Technology<br>
+      &copy; 2014&ndash;2017 British Columbia Institute of Technology<br>
       Licensed under the MIT License.
     HTML
 
     version '3' do
-      self.release = '3.1.2'
+      self.release = '3.1.3'
     end
   end
 end
