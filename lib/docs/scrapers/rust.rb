@@ -1,7 +1,7 @@
 module Docs
   class Rust < UrlScraper
     self.type = 'rust'
-    self.release = '1.14.0'
+    self.release = '1.15.0'
     self.base_url = 'https://doc.rust-lang.org/'
     self.root_path = 'book/index.html'
     self.initial_paths = %w(
@@ -31,7 +31,7 @@ module Docs
     end
 
     options[:attribution] = <<-HTML
-      &copy; 2016 The Rust Project Developers<br>
+      &copy; 2010 The Rust Project Developers<br>
       Licensed under the Apache License, Version 2.0 or the MIT license, at your option.
     HTML
 
