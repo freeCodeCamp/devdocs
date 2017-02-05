@@ -34,7 +34,7 @@ module Docs
     end
 
     version '1.4' do
-      self.release = '1.4.0'
+      self.release = '1.4.1'
       self.base_urls = [
         "https://hexdocs.pm/elixir/#{release}/",
         "https://hexdocs.pm/eex/#{release}/",
