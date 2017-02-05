@@ -14,7 +14,7 @@ group :app do
   gem 'thin'
   gem 'sprockets'
   gem 'sprockets-helpers'
-  gem 'erubis'
+  gem 'erubi'
   gem 'browser'
   gem 'sass'
   gem 'coffee-script'
