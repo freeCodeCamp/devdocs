@@ -5,7 +5,7 @@ module Docs
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.release = '2.10.0'
+    self.release = '2.11.0'
     self.base_urls = ['http://emberjs.com/api/', 'https://guides.emberjs.com/v2.10.0/']
     self.links = {
       home: 'http://emberjs.com/',
@@ -32,7 +32,7 @@ module Docs
     options[:skip_patterns] = [/\._/, /contributing/]
 
     options[:attribution] = <<-HTML
-      &copy; 2016 Yehuda Katz, Tom Dale and Ember.js contributors<br>
+      &copy; 2017 Yehuda Katz, Tom Dale and Ember.js contributors<br>
       Licensed under the MIT License.
     HTML
   end

@@ -216,7 +216,7 @@ credits = [
     'https://api.drupal.org/api/drupal/LICENSE.txt'
   ], [
     'Ember.js',
-    '2016 Yehuda Katz, Tom Dale and Ember.js contributors',
+    '2017 Yehuda Katz, Tom Dale and Ember.js contributors',
     'MIT',
     'https://raw.githubusercontent.com/emberjs/ember.js/master/LICENSE'
   ], [
