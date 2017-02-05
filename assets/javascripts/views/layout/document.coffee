@@ -75,7 +75,7 @@ class app.views.Document extends app.View
     return
 
   setTitle: (title) ->
-    @el.title = if title then "DevDocs - #{title}" else 'DevDocs API Documentation'
+    @el.title = if title then "DevDocs — #{title}" else 'DevDocs API Documentation'
 
   onVisibilityChange: =>
     return unless @el.visibilityState is 'visible'

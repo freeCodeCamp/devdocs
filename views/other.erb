@@ -6,7 +6,7 @@
   <% if doc_index_page? %><meta name="description" content="<%= @doc['full_name'] %> API documentation with instant search, offline mode, keyboard shortcuts, mobile version, and more."><% else %><meta name="robots" content="noindex"><% end %>
   <meta name="format-detection" content="telephone=no">
   <meta property="og:image" content="<%= App.cdn_origin %>/images/icon-128.png">
-  <title>DevDocs<%= " - #{@doc['full_name']} documentation" if doc_index_page? %></title>
+  <title>DevDocs<%= " &mdash; #{@doc['full_name']} documentation (fast, offline)" if doc_index_page? %></title>
   <link rel="canonical" href="<%= canonical_origin %><%= request.path %>">
   <link rel="icon" type="image/x-icon" href="<%= App.cdn_origin %>/favicon.ico">
   <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Search DevDocs">
