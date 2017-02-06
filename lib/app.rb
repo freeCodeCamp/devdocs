@@ -169,17 +169,14 @@ class App < Sinatra::Application
     end
 
     def main_stylesheet_path
-      stylesheet_paths[dark_theme? ? :dark : :default]
-    end
-
-    def alternate_stylesheet_path
-      stylesheet_paths[dark_theme? ? :default : :dark]
+      dark_theme? || sepia_theme? ? (dark_theme? ? stylesheet_paths[:dark] : stylesheet_paths[:sepia]) : stylesheet_paths[:default]
     end
 
     def stylesheet_paths
       @stylesheet_paths ||= {
         default: stylesheet_path('application'),
-        dark: stylesheet_path('application-dark')
+        dark: stylesheet_path('application-dark'),
+        sepia: stylesheet_path('application-sepia')
       }
     end
 
@@ -192,11 +189,16 @@ class App < Sinatra::Application
     end
 
     def app_theme
-      @app_theme ||= cookies[:dark].nil? ? 'default' : 'dark'
+      cookies[:dark].nil? ? (cookies[:sepia].nil? ? theme = 'default' : theme = 'sepia') : theme = 'dark'
+      @app_theme = theme
     end
 
     def dark_theme?
       app_theme == 'dark'
+    end
+
+    def sepia_theme?
+      app_theme == 'sepia'
     end
 
     def redirect_via_js(path) # courtesy of HTML5 App Cache

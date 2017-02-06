@@ -1,6 +1,7 @@
 class app.Settings
   DOCS_KEY = 'docs'
   DARK_KEY = 'dark'
+  SEPIA_KEY = 'sepia'
   LAYOUT_KEY = 'layout'
   SIZE_KEY = 'size'
   TIPS_KEY = 'tips'
@@ -56,6 +57,10 @@ class app.Settings
   setDark: (value) ->
     @store.set DARK_KEY, !!value
     return
+
+  setSepia: (value) ->
+    @store.set SEPIA_KEY, !!value
+    return  
 
   setLayout: (name, enable) ->
     layout = (@store.get(LAYOUT_KEY) || '').split(' ')
