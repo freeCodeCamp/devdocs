@@ -10,7 +10,7 @@ module Docs
             '.t-dcl-rev-num > .t-dcl-rev-aux ~ tr:not(.t-dcl-rev-aux) > td:nth-child(2)').remove
 
         css('#bodyContent', '.mw-content-ltr', 'span[style]', 'div[class^="t-ref"]',
-            'th > div', '.t-dsc-see', '.mainpagediv', 'code > b').each do |node|
+            'th > div', 'td > div', '.t-dsc-see', '.mainpagediv', 'code > b', 'tbody').each do |node|
           node.before(node.children).remove
         end
 
