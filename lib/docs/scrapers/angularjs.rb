@@ -34,7 +34,7 @@ module Docs
     options[:skip] = %w(api/ng.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2016 Google, Inc.<br>
+      &copy; 2010&ndash;2017 Google, Inc.<br>
       Licensed under the Creative Commons Attribution License 4.0.
     HTML
 
@@ -46,12 +46,12 @@ module Docs
     end
 
     version '1.6' do
-      self.release = '1.6.1'
+      self.release = '1.6.2'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
     version '1.5' do
-      self.release = '1.5.10'
+      self.release = '1.5.11'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
