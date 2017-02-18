@@ -17,6 +17,10 @@ module Docs
     options[:skip_links] = ->(filter) {
       filter.current_url.host == 'tools.ietf.org' ? true : false
     }
+    options[:fix_urls] = ->(url) {
+      url.sub! %r{(Status/\d\d\d)_[A-Z].+}, '\1'
+      url
+    }
     options[:attribution] = ->(filter) {
       if filter.current_url.host == 'tools.ietf.org'
         "&copy; document authors. All rights reserved."
