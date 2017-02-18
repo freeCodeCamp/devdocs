@@ -58,15 +58,15 @@ module Docs
 
     private
 
-    def parse(string)
-      string.gsub! '<code-example', '<pre'
-      string.gsub! '</code-example', '</pre'
-      string.gsub! '<code-pane', '<pre'
-      string.gsub! '</code-pane', '</pre'
-      string.gsub! '<live-example></live-example>', 'live example'
-      string.gsub! '<live-example', '<span'
-      string.gsub! '</live-example', '</span'
-      super string
+    def parse(response)
+      response.body.gsub! '<code-example', '<pre'
+      response.body.gsub! '</code-example', '</pre'
+      response.body.gsub! '<code-pane', '<pre'
+      response.body.gsub! '</code-pane', '</pre'
+      response.body.gsub! '<live-example></live-example>', 'live example'
+      response.body.gsub! '<live-example', '<span'
+      response.body.gsub! '</live-example', '</span'
+      super
     end
   end
 end

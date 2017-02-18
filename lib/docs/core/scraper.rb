@@ -172,7 +172,7 @@ module Docs
 
     def process_response(response)
       data = {}
-      html, title = parse(response.body)
+      html, title = parse(response)
       context = pipeline_context(response)
       context[:html_title] = title
       pipeline.call(html, context, data)
@@ -183,8 +183,8 @@ module Docs
       options.merge url: response.url
     end
 
-    def parse(string)
-      parser = Parser.new(string)
+    def parse(response)
+      parser = Parser.new(response.body)
       [parser.html, parser.title]
     end
 

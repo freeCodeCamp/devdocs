@@ -44,8 +44,8 @@ module Docs
 
     private
 
-    def parse(html)
-      html.gsub! %r{(<h2[^>]*>[^<]+)</h1>}, '\1</h2>'
+    def parse(response)
+      response.body.gsub! %r{(<h2[^>]*>[^<]+)</h1>}, '\1</h2>'
       super
     end
   end

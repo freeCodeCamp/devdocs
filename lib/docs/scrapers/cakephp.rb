@@ -59,8 +59,8 @@ module Docs
 
     private
 
-    def parse(string)
-      string.gsub! '<h5 class="method-name">', '<h3 class="method-name">'
+    def parse(response)
+      response.body.gsub! '<h5 class="method-name">', '<h3 class="method-name">'
       super
     end
   end

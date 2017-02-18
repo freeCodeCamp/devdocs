@@ -21,8 +21,9 @@ module Docs
 
     private
 
-    def parse(html) # Hook here because Nokogori removes whitespace from textareas
-      super html.gsub %r{<textarea\ class="code"[^>]*>([\W\w]+?)</textarea>}, '<pre class="code">\1</pre>'
+    def parse(response) # Hook here because Nokogori removes whitespace from textareas
+      response.body.gsub! %r{<textarea\ class="code"[^>]*>([\W\w]+?)</textarea>}, '<pre class="code">\1</pre>'
+      super
     end
   end
 end
