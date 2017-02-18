@@ -16,14 +16,19 @@ module Docs
     options[:skip_patterns] = [/\Asource-/]
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2016 The Cake Software Foundation, Inc.<br>
+      &copy; 2005&ndash;2017 The Cake Software Foundation, Inc.<br>
       Licensed under the MIT License.<br>
       CakePHP is a registered trademark of Cake Software Foundation, Inc.<br>
       We are not endorsed by or affiliated with CakePHP.
     HTML
 
+    version '3.4' do
+      self.release = '3.4.1'
+      self.base_url = 'https://api.cakephp.org/3.4/'
+    end
+
     version '3.3' do
-      self.release = '3.3.12'
+      self.release = '3.3.15'
       self.base_url = 'https://api.cakephp.org/3.3/'
     end
 

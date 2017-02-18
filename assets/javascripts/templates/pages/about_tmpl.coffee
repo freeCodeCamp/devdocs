@@ -131,7 +131,7 @@ credits = [
     'http://en.cppreference.com/w/Cppreference:Copyright/CC-BY-SA'
   ], [
     'CakePHP',
-    '2005-2016 The Cake Software Foundation, Inc.',
+    '2005-2017 The Cake Software Foundation, Inc.',
     'MIT',
     'https://raw.githubusercontent.com/cakephp/cakephp/master/LICENSE.txt'
   ], [
