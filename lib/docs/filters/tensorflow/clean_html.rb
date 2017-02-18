@@ -21,6 +21,10 @@ module Docs
           node.parent.before(node).remove
         end
 
+        css('aside.note').each do |node|
+          node.name = 'blockquote'
+        end
+
         css('pre').each do |node|
           node.content = node.content.strip_heredoc
 
