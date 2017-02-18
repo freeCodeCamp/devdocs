@@ -3,9 +3,12 @@
 module Docs
   class InternalUrlsFilter < Filter
     def call
+      result[:subpath] = subpath
+
       unless skip_links?
         follow_links? ? update_and_follow_links : update_links
       end
+
       doc
     end
 

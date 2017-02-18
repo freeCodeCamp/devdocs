@@ -1,6 +1,7 @@
 module Docs
   class Javascript < Mdn
-    include FixRedirectionsBehavior
+    prepend FixInternalUrlsBehavior
+    prepend FixRedirectionsBehavior
 
     self.name = 'JavaScript'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference'

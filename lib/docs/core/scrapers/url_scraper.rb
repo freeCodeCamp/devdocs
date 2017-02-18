@@ -106,13 +106,21 @@ module Docs
         base.extend ClassMethods
       end
 
+      def self.prepended(base)
+        class << base
+          prepend ClassMethods
+        end
+      end
+
       module ClassMethods
-        attr_reader :redirections
+        def redirections
+          @redirections
+        end
 
         def store_pages(store)
           instrument 'info.doc', msg: 'Fetching redirections...'
           with_redirections do
-            instrument 'info.doc', msg: 'Building pages...'
+            instrument 'info.doc', msg: 'Continuing...'
             super
           end
         end
@@ -145,7 +153,7 @@ module Docs
       end
 
       def additional_options
-        { redirections: self.class.redirections }
+        super.merge! redirections: self.class.redirections
       end
     end
   end
