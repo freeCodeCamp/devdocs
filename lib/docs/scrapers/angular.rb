@@ -30,7 +30,7 @@ module Docs
     end
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2016 Google, Inc.<br>
+      &copy; 2010&ndash;2017 Google, Inc.<br>
       Licensed under the Creative Commons Attribution License 4.0.
     HTML
 
@@ -42,7 +42,7 @@ module Docs
     end
 
     version '2 TypeScript' do
-      self.release = '2.4.3'
+      self.release = '2.4.7'
       self.base_url = 'https://angular.io/docs/ts/latest/'
     end
 
