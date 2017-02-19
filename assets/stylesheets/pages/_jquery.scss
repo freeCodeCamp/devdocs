@@ -32,7 +32,7 @@
 
   .toc-list {
     margin-top: 0;
-    font-weight: bold;
+    font-weight: $boldFontWeight;
 
     > li + li { margin-top: 1em; }
     > li > ul { font-weight: normal; }
@@ -48,7 +48,7 @@
   .returns,
   .option-type {
     float: right;
-    font-weight: bold;
+    font-weight: $boldFontWeight;
     margin-left: 1em;
   }
 

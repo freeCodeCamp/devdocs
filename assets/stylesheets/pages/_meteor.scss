@@ -9,7 +9,7 @@
   dt > code { @extend %label; }
 
   .api-heading { overflow: hidden; }
-  .api-heading > code { font-weight: bold; }
+  .api-heading > code { font-weight: $boldFontWeight; }
   .locus, .src-code { float: right; }
   .locus, .type, .src-code { margin-left: .5em; }
   h2 .subtext-api { margin-top: .25rem; }

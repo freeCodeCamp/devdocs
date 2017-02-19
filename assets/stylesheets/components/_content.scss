@@ -135,7 +135,7 @@
 
 ._error-links {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: $boldFontWeight;
 }
 
 ._error-link { padding: 0 .5rem; }
@@ -187,7 +187,7 @@
 ._toc-title {
   margin: 0 0 .5rem;
   font-size: inherit;
-  font-weight: bold;
+  font-weight: $boldFontWeight;
 }
 
 ._toc-list {

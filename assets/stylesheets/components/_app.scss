@@ -33,9 +33,10 @@
     line-height: 1;
     margin-top: -.75em;
     font-size: 4rem;
+    font-weight: 300;
+    letter-spacing: -.125rem;
     color: $loadingText;
     text-align: center;
-    letter-spacing: -.125rem;
     opacity: 0;
     -webkit-transition: opacity .1s .3s;
             transition: opacity .1s .3s;

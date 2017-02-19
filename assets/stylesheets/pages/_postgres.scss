@@ -11,7 +11,7 @@
   blockquote.CAUTION { @extend %note-orange; }
 
   p > code { @extend %label; }
-  p.c2 { font-weight: bold; }
+  p.c2 { font-weight: $boldFontWeight; }
 
   .NAVFOOTER > table { width: 100%; }
   td[align=center] { text-align: center; }

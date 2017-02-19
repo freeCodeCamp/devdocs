@@ -185,13 +185,11 @@
   showLoading: ->
     document.body.classList.remove '_noscript'
     document.body.classList.add '_loading'
-    document.body.insertAdjacentHTML 'beforeend', '<div id="fontLoader" aria-hidden="true" style="position: absolute; top: 0; height: 0; overflow: hidden; visibility: hidden;"><b>Preload</b> <em>all <b>fonts</b></em></div>' # Chrome
     return
 
   hideLoading: ->
     document.body.classList.remove '_booting'
     document.body.classList.remove '_loading'
-    try $.remove document.getElementById('fontLoader')
     return
 
   indexHost: ->

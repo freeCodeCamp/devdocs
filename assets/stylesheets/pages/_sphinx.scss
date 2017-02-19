@@ -13,7 +13,7 @@
 
   .versionmodified, span.title, .topic-title {
     display: block;
-    font-weight: bold;
+    font-weight: $boldFontWeight;
   }
 
   p > code, li > code, dd > code, .docutils > dt > code { @extend %label; }
@@ -25,7 +25,7 @@
   .admonition-title {
     float: left;
     margin: 0 .5em 0 0;
-    font-weight: bold;
+    font-weight: $boldFontWeight;
 
     &:after { content: ':'; }
   }

@@ -40,7 +40,7 @@ img {
 h1, h2, h3, h4, h5, h6 {
   margin: 1.5em 0 1em;
   line-height: 1.3;
-  font-weight: bold;
+  font-weight: $bolderFontWeight;
 }
 
 h1 { font-size: 1.5em; }
@@ -52,7 +52,7 @@ h5, h6 { font-size: 1em; }
 p { margin: 0 0 1em; }
 p:last-child { margin-bottom: 0; }
 
-b, strong { font-weight: bold; }
+b, strong { font-weight: $boldFontWeight; }
 
 small { font-size: .9em; }
 
@@ -72,7 +72,7 @@ li > ul, li > ol, dd > ul, dd > ol { margin: .5em 0; }
 li > p { margin-bottom: .25em; }
 
 dl { margin: 1.5em 0; }
-dt { font-weight: bold; }
+dt { font-weight: $boldFontWeight; }
 dd {
   margin: .375em;
   padding-left: 1em;
@@ -129,6 +129,7 @@ th, td {
 }
 
 th {
+  font-weight: $boldFontWeight;
   border: 0;
   border-bottom: 1px solid $boxBorder;
   border-radius: 0;
