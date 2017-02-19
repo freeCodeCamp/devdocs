@@ -229,6 +229,7 @@ class App < Sinatra::Application
   end
 
   get '/' do
+    return redirect "/#q=#{params[:q]}" if params[:q]
     return redirect '/' unless request.query_string.empty? # courtesy of HTML5 App Cache
     response.headers['Content-Security-Policy'] = settings.csp if settings.csp
     erb :index
