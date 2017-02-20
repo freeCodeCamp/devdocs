@@ -31,7 +31,7 @@ class AppTest < MiniTest::Spec
 
     it "sets default size" do
       get '/'
-      assert_includes last_response.body, 'data-size="18rem"'
+      assert_includes last_response.body, 'data-size="20rem"'
     end
 
     it "sets size from cookie" do
@@ -115,7 +115,7 @@ class AppTest < MiniTest::Spec
 
     it "sets default size" do
       get '/manifest.appcache'
-      assert_includes last_response.body, '18rem'
+      assert_includes last_response.body, '20rem'
     end
 
     it "sets size from cookie" do

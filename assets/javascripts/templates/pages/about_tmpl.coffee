@@ -10,7 +10,7 @@ app.templates.aboutPage = -> """
     </ul>
   </nav>
 
-  <h1 class="_lined-heading">API Documentation Browser</h1>
+  <h1 class="_lined-heading">DevDocs: API Documentation Browser</h1>
   <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
   <ul>
     <li>Created and maintained by <a href="http://thibaut.me">Thibaut Courouble</a>
@@ -26,7 +26,7 @@ app.templates.aboutPage = -> """
   <p class="_note _note-green">If you like DevDocs, please consider supporting my work on
     <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!<br>
 
-  <h2 class="_lined-heading" id="credits">Credits</h2>
+  <h2 class="_block-heading" id="credits">Credits</h2>
 
   <p><strong>Special thanks to:</strong>
   <ul>
@@ -45,7 +45,7 @@ app.templates.aboutPage = -> """
     #{("<tr><td>#{c[0]}<td>&copy; #{c[1]}<td><a href=\"#{c[3]}\">#{c[2]}</a>" for c in credits).join('')}
   </table>
 
-  <h2 class="_lined-heading" id="faq">Questions & Answers</h2>
+  <h2 class="_block-heading" id="faq">Questions & Answers</h2>
   <dl>
     <dt>Where can I suggest new docs and features?
     <dd>You can suggest and vote for new docs on the <a href="https://trello.com/b/6BmTulfx/devdocs-documentation">Trello board</a>.<br>
@@ -56,7 +56,7 @@ app.templates.aboutPage = -> """
   </dl>
   <p>For anything else, feel free to email me at <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
 
-  <h2 class="_lined-heading" id="copyright">Copyright and License</h2>
+  <h2 class="_block-heading" id="copyright">Copyright and License</h2>
   <p class="_note">
     <strong>Copyright 2013&ndash;2017 Thibaut Courouble and <a href="https://github.com/Thibaut/devdocs/graphs/contributors">other contributors</a></strong><br>
     This software is licensed under the terms of the Mozilla Public License v2.0.<br>
@@ -64,7 +64,7 @@ app.templates.aboutPage = -> """
     For more information, see the <a href="https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
     and <a href="https://github.com/Thibaut/devdocs/blob/master/LICENSE">LICENSE</a> files.
 
-  <h2 class="_lined-heading" id="plugins">Plugins and Extensions</h2>
+  <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
   <ul>
     <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
     <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text plugin</a>
@@ -73,7 +73,7 @@ app.templates.aboutPage = -> """
     <li><a href="https://github.com/xuchunyang/DevDocs.el">Emacs Package</a>
   </ul>
 
-  <h2 class="_lined-heading" id="privacy">Privacy Policy</h2>
+  <h2 class="_block-heading" id="privacy">Privacy Policy</h2>
   <ul>
     <li><a href="http://devdocs.io">devdocs.io</a> ("App") is operated by Thibaut Courouble ("We").
     <li>We do not collect personal information.

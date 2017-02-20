@@ -20,17 +20,23 @@
   height: 100%;
   overflow-y: scroll;
   margin-left: .875rem;
-  padding: 1.25rem 1.5rem 0;
+  padding: 1.125rem 1.5rem 0;
   font-size: .875rem;
   pointer-events: auto;
   -webkit-overflow-scrolling: touch;
   @extend %border-box;
 
-  -webkit-padding-start: .75rem;
-  -webkit-padding-end: 1rem;
+  -webkit-padding-start: .625rem;
+  -webkit-padding-end: .75rem;
 
-  @media (-moz-overlay-scrollbars) { padding-left: .75rem; }
+  @media (-moz-overlay-scrollbars) { padding-left: .625rem; }
   @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { margin-left: 0; }
+
+  ._sidebar-hidden &:before {
+    content: '';
+    display: block;
+    margin-top: $headerHeight;
+  }
 
   &:after { // padding bottom
     content: '';
@@ -77,15 +83,22 @@
 // Intro
 //
 
-._intro { text-align: center; }
+._intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 2.375rem);
+
+  ._sidebar-hidden & {
+    min-height: calc(100vh - 2.375rem - #{$headerHeight});
+  }
+}
 
 ._intro-message {
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
   max-width: 37rem;
+  margin: .5rem 0;
   padding: 1rem 1.25rem;
-  text-align: left;
   @extend %note, %note-green;
 }
 
@@ -146,22 +159,24 @@
 
 ._lined-heading,
 %lined-heading {
-  white-space: nowrap;
-  overflow: hidden;
-  word-wrap: normal;
-  overflow-wrap: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:after {
     content: '';
     display: inline-block;
     vertical-align: middle;
-    width: 100%;
+    flex-grow: 1;
     height: 1px;
     line-height: 0;
+    margin-top: .25rem;
     margin-left: 1rem;
     background: $boxBorderLight;
   }
 }
+
+._block-heading { @extend %block-heading; }
 
 ._heading-links {
   float: right;

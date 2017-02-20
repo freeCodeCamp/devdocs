@@ -184,7 +184,7 @@ class App < Sinatra::Application
     end
 
     def app_size
-      @app_size ||= cookies[:size].nil? ? '18rem' : "#{cookies[:size]}px"
+      @app_size ||= cookies[:size].nil? ? '20rem' : "#{cookies[:size]}px"
     end
 
     def app_layout

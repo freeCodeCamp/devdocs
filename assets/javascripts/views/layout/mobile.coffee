@@ -35,44 +35,48 @@ class app.views.Mobile extends app.View
     FastClick.attach @body
 
     $.on @body, 'click', @onClick
-    $.on $('._home-btn'), 'click', @onClickHome
-    $.on $('._menu-btn'), 'click', @onClickMenu
     $.on $('._search'), 'touchend', @onTapSearch
 
-    @back = $('._back-btn')
+    @toggleSidebar = $('button[data-toggle-sidebar]')
+    @toggleSidebar.removeAttribute('hidden')
+    $.on @toggleSidebar, 'click', @onClickToggleSidebar
+
+    @back = $('button[data-back]')
+    @back.removeAttribute('hidden')
     $.on @back, 'click', @onClickBack
 
-    @forward = $('._forward-btn')
+    @forward = $('button[data-forward]')
+    @forward.removeAttribute('hidden')
     $.on @forward, 'click', @onClickForward
 
     app.document.sidebar.search
       .on 'searching', @showSidebar
-      .on 'clear', @hideSidebar
 
     @activate()
     return
 
   showSidebar: =>
     if @isSidebarShown()
-      @body.scrollTop = 0
+      window.scrollTo 0, 0
       return
 
-    @contentTop = @body.scrollTop
+    @contentTop = window.scrollY
     @content.style.display = 'none'
     @sidebar.style.display = 'block'
 
     if selection = @findByClass app.views.ListSelect.activeClass
-      $.scrollTo selection, @body, 'center'
+      scrollContainer = if window.scrollY is @body.scrollTop then @body else document.documentElement
+      $.scrollTo selection, scrollContainer, 'center'
     else
-      @body.scrollTop = @findByClass(app.views.ListFold.activeClass) and @sidebarTop or 0
+      window.scrollTo 0, @findByClass(app.views.ListFold.activeClass) and @sidebarTop or 0
     return
 
   hideSidebar: =>
     return unless @isSidebarShown()
-    @sidebarTop = @body.scrollTop
+    @sidebarTop = window.scrollY
     @sidebar.style.display = 'none'
     @content.style.display = 'block'
-    @body.scrollTop = @contentTop or 0
+    window.scrollTo 0, @contentTop or 0
     return
 
   isSidebarShown: ->
@@ -89,17 +93,12 @@ class app.views.Mobile extends app.View
   onClickForward: =>
     history.forward()
 
-  onClickHome: =>
-    app.shortcuts.trigger 'escape'
-    @hideSidebar()
-    return
-
-  onClickMenu: =>
+  onClickToggleSidebar: =>
     if @isSidebarShown() then @hideSidebar() else @showSidebar()
     return
 
   onTapSearch: =>
-    @body.scrollTop = 0
+    window.scrollTo 0, 0
 
   afterRoute: =>
     @hideSidebar()

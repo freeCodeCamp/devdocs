@@ -21,7 +21,7 @@ app.templates.offlinePage = (docs) -> """
     #{docs}
   </table>
   <p class="_note"><strong>Note:</strong> your browser may delete DevDocs's offline data if your computer is running low on disk space and you haven't used the app in a while. Load this page before going offline to make sure the data is still there.
-  <h1 class="_lined-heading">Questions & Answers</h1>
+  <h2 class="_block-heading">Questions & Answers</h2>
   <dl>
     <dt>How does this work?
     <dd>Each page is cached as a key-value pair in <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">IndexedDB</a> (downloaded from a single file).<br>

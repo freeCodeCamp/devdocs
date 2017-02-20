@@ -3,6 +3,7 @@ class app.views.Sidebar extends app.View
 
   @events:
     focus: 'onFocus'
+    select: 'onSelect'
     click: 'onClick'
 
   @shortcuts:
@@ -14,8 +15,8 @@ class app.views.Sidebar extends app.View
     @addSubview @search = new app.views.Search
 
     @search
-      .on 'searching', @showResults
-      .on 'clear', @showDocList
+      .on 'searching', @onSearching
+      .on 'clear', @onSearchClear
     .scope
       .on 'change', @onScopeChange
 
@@ -27,7 +28,15 @@ class app.views.Sidebar extends app.View
     $.on document, 'click', @onGlobalClick if @docPicker
     return
 
-  show: (view) ->
+  display: ->
+    @el.style.display = 'block'
+    return
+
+  resetDisplay: ->
+    @el.style.display = '' unless @el.style.display is 'none'
+    return
+
+  showView: (view) ->
     unless @view is view
       @hover?.hide()
       @saveScrollPosition()
@@ -44,28 +53,29 @@ class app.views.Sidebar extends app.View
     @append @tmpl('sidebarSettings') if @view is @docList and @docPicker
     return
 
-  showDocList: (reset) =>
-    @show @docList
-    if reset is true
-      @docList.reset(revealCurrent: true)
-      @search.reset()
+  showDocList: ->
+    @showView @docList
     return
 
   showDocPicker: =>
-    @show @docPicker
+    @showView @docPicker
     return
 
   showResults: =>
-    @show @results
+    @showView @results
+    return
+
+  reset: ->
+    @display()
+    @showDocList()
+    @docList.reset()
+    @search.reset()
     return
 
   onReady: =>
     @view = @docList
     @render()
     @view.activate()
-
-  reset: ->
-    @showDocList true
     return
 
   onScopeChange: (newDoc, previousDoc) =>
@@ -90,15 +100,30 @@ class app.views.Sidebar extends app.View
     @el.scrollTop = 0
     return
 
+  onSearching: =>
+    @display()
+    @showResults()
+    return
+
+  onSearchClear: =>
+    @resetDisplay()
+    @showDocList()
+    return
+
   onFocus: (event) =>
+    @display()
     $.scrollTo event.target, @el, 'continuous', bottomGap: 2 unless event.target is @el
+    return
+
+  onSelect: =>
+    @resetDisplay()
     return
 
   onClick: (event) =>
     return if event.which isnt 1
     if event.target.hasAttribute? 'data-reset-list'
       $.stopEvent(event)
-      @reset()
+      @onAltR()
     else if event.target.hasAttribute? 'data-light'
       $.stopEvent(event)
       document.activeElement?.blur()
@@ -120,6 +145,8 @@ class app.views.Sidebar extends app.View
 
   onAltR: =>
     @reset()
+    @docList.reset(revealCurrent: true)
+    @display()
     return
 
   onEscape: =>

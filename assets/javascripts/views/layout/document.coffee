@@ -1,6 +1,6 @@
 class app.views.Document extends app.View
-  MAX_WIDTH_CLASS = '_max-width'
-  HIDE_SIDEBAR_CLASS = '_sidebar-hidden'
+  MAX_WIDTH_LAYOUT = '_max-width'
+  SIDEBAR_HIDDEN_LAYOUT = '_sidebar-hidden'
 
   @el: document
 
@@ -14,15 +14,11 @@ class app.views.Document extends app.View
     superRight: 'onForward'
 
   init: ->
-    @addSubview @nav     = new app.views.Nav,
+    @addSubview @menu    = new app.views.Menu,
     @addSubview @sidebar = new app.views.Sidebar
     @addSubview @resizer = new app.views.Resizer if app.views.Resizer.isSupported()
     @addSubview @content = new app.views.Content
     @addSubview @path    = new app.views.Path unless app.isSingleDoc() or app.isMobile()
-
-    @sidebar.search
-      .on 'searching', @onSearching
-      .on 'clear', @onSearchClear
 
     $.on document.body, 'click', @onClick
 
@@ -39,39 +35,17 @@ class app.views.Document extends app.View
     return
 
   toggleLayout: ->
-    wantsMaxWidth = !app.el.classList.contains(MAX_WIDTH_CLASS)
-    app.el.classList[if wantsMaxWidth then 'add' else 'remove'](MAX_WIDTH_CLASS)
-    app.settings.setLayout(MAX_WIDTH_CLASS, wantsMaxWidth)
+    wantsMaxWidth = !app.el.classList.contains(MAX_WIDTH_LAYOUT)
+    app.el.classList[if wantsMaxWidth then 'add' else 'remove'](MAX_WIDTH_LAYOUT)
+    app.settings.setLayout(MAX_WIDTH_LAYOUT, wantsMaxWidth)
     app.appCache?.updateInBackground()
     return
 
-  showSidebar: (options = {}) ->
-    @toggleSidebar(options, true)
-    return
-
-  hideSidebar: (options = {}) ->
-    @toggleSidebar(options, false)
-    return
-
-  toggleSidebar: (options = {}, shouldShow) ->
-    shouldShow ?= if options.save then !@hasSidebar() else app.el.classList.contains(HIDE_SIDEBAR_CLASS)
-    app.el.classList[if shouldShow then 'remove' else 'add'](HIDE_SIDEBAR_CLASS)
-    if options.save
-      app.settings.setLayout(HIDE_SIDEBAR_CLASS, !shouldShow)
-      app.appCache?.updateInBackground()
-    return
-
-  hasSidebar: ->
-    !app.settings.hasLayout(HIDE_SIDEBAR_CLASS)
-
-  onSearching: =>
-    unless @hasSidebar()
-      @showSidebar()
-    return
-
-  onSearchClear: =>
-    unless @hasSidebar()
-      @hideSidebar()
+  toggleSidebarLayout: ->
+    shouldHide = !app.settings.hasLayout(SIDEBAR_HIDDEN_LAYOUT)
+    app.el.classList[if shouldHide then 'add' else 'remove'](SIDEBAR_HIDDEN_LAYOUT)
+    app.settings.setLayout(SIDEBAR_HIDDEN_LAYOUT, shouldHide)
+    app.appCache?.updateInBackground()
     return
 
   setTitle: (title) ->

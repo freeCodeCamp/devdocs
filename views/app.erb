@@ -1,22 +1,28 @@
 <div class="_app<%= " #{app_layout}" if app_layout %>" role="application">
   <header class="_header" role="banner">
-    <button type="button" class="_mobile-btn _back-btn">Back</button>
-    <button type="button" class="_mobile-btn _forward-btn">Forward</button>
-    <button type="button" class="_mobile-btn _menu-btn">Menu</button>
-    <button type="button" class="_mobile-btn _home-btn">Home</button>
+    <button type="button" aria-label="Toggle navigation" class="_header-btn" data-toggle-sidebar hidden>
+      <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+    </button>
     <form class="_search" role="search">
       <input type="search" name="q" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="30" aria-label="Search">
       <button type="reset" class="_search-clear" title="Clear search">Clear search</button>
       <div class="_search-tag"></div>
     </form>
-    <h1 class="_logo">
-      <a href="/" class="_nav-link" title="Offline API Documentation Browser">DevDocs</a><%= "/ #{@doc['full_name']}" if @doc %>
-    </h1>
-    <nav class="_nav" role="navigation">
-      <a href="/offline" class="_nav-link">Offline</a>
-      <a href="/about" class="_nav-link">About</a>
-      <a href="/news" class="_nav-link">News</a>
-      <a href="/help" class="_nav-link">Tips</a>
+    <button type="button" aria-label="Back" class="_header-btn" data-back hidden>
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></svg>
+    </button>
+    <button type="button" aria-label="Forward" class="_header-btn _forward-btn" data-forward hidden>
+      <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></svg>
+    </button>
+    <button type="button" aria-label="Toggle menu" title="Toggle menu" class="_header-btn _menu-btn" data-toggle-menu>
+      <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+    </button>
+    <nav class="_menu" role="navigation">
+      <h1 class="_menu-title"><a href="/" class="_menu-title-link">DevDocs</a></h1>
+      <a href="/offline" class="_menu-link">Offline</a>
+      <a href="/news" class="_menu-link">Changelog</a>
+      <a href="/help" class="_menu-link">Help</a>
+      <a href="/about" class="_menu-link">About</a>
     </nav>
   </header>
   <section class="_sidebar" tabindex="-1">
@@ -34,7 +40,7 @@
 </div>
 <style data-size="<%= app_size %>" data-resizer>
   ._container { margin-left: <%= app_size %>; }
-  ._search, ._list, ._sidebar-footer { width: <%= app_size %>; }
+  ._header, ._list, ._sidebar-footer { width: <%= app_size %>; }
   ._list-hover.clone { min-width: <%= app_size %>; }
   ._notice, ._path, ._resizer { left: <%= app_size %>; }
 </style>

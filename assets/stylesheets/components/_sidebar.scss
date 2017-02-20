@@ -40,7 +40,7 @@
 
 ._resizer {
   position: absolute;
-  z-index: $sidebarZ + 1;
+  z-index: $sidebarZ;
   top: $headerHeight;
   bottom: 0;
   left: $sidebarWidth;

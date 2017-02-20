@@ -35,7 +35,7 @@ class app.views.Resizer extends app.View
     return
 
   onClick: ->
-    app.document.toggleSidebar(save: true)
+    app.document.toggleSidebarLayout()
     return
 
   onDragStart: (event) =>

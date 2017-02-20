@@ -11,7 +11,9 @@ app.templates.helpPage = """
     </ul>
   </nav>
 
-  <h2 class="_lined-heading" id="search">Search</h2>
+  <h1 class="_lined-heading" id="search">Help</h2>
+
+  <h2 class="_block-heading" id="search">Search</h2>
   <p>
     The search is case-insensitive and supports fuzzy matching (for queries longer than two characters).
     For example, searching <code class="_label">bgcp</code> brings up <code class="_label">background-clip</code>.<br>
@@ -42,7 +44,7 @@ app.templates.helpPage = """
             <a href="https://support.mozilla.org/en-US/kb/how-search-from-address-bar">these instructions</a>.
   </dl>
 
-  <h2 class="_lined-heading" id="shortcuts">Keyboard Shortcuts</h2>
+  <h2 class="_block-heading" id="shortcuts">Keyboard Shortcuts</h2>
   <h3 class="_shortcuts-title">Selection</h3>
   <dl class="_shortcuts-dl">
     <dt class="_shortcuts-dt">
@@ -110,7 +112,7 @@ app.templates.helpPage = """
     <strong>Tip:</strong> If the cursor is no longer in the search field, press <code class="_label">/</code> or
     continue to type and it will refocus the search field and start showing new results.
 
-  <h2 class="_lined-heading" id="abbreviations">Abbreviations</h2>
+  <h2 class="_block-heading" id="abbreviations">Abbreviations</h2>
   <p>Feel free to suggest new abbreviations on <a href="https://github.com/Thibaut/devdocs/issues/new">GitHub</a>.
   <table class="_abbreviations">
     <tr>

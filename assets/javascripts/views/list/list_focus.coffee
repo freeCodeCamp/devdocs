@@ -14,7 +14,7 @@ class app.views.ListFocus extends app.View
 
   constructor: (@el) ->
     super
-    @focus = $.framify(@focus, @)
+    @focusOnNextFrame = $.framify(@focus, @)
 
   focus: (el) ->
     if el and not el.classList.contains @constructor.activeClass
@@ -87,22 +87,22 @@ class app.views.ListFocus extends app.View
 
   onDown: =>
     if cursor = @getCursor()
-      @focus @findNext(cursor)
+      @focusOnNextFrame @findNext(cursor)
     else
-      @focus @findByTag('a')
+      @focusOnNextFrame @findByTag('a')
     return
 
   onUp: =>
     if cursor = @getCursor()
-      @focus @findPrev(cursor)
+      @focusOnNextFrame @findPrev(cursor)
     else
-      @focus @findLastByTag('a')
+      @focusOnNextFrame @findLastByTag('a')
     return
 
   onLeft: =>
     cursor = @getCursor()
     if cursor and not cursor.classList.contains(app.views.ListFold.activeClass) and cursor.parentElement isnt @el
-      @focus cursor.parentElement.previousSibling
+      @focusOnNextFrame cursor.parentElement.previousSibling
     return
 
   onEnter: =>

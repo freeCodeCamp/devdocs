@@ -130,7 +130,7 @@ class app.views.Search extends app.View
     if event.target is @resetLink
       $.stopEvent(event)
       @reset()
-      @focus()
+      app.document.onEscape()
     return
 
   onSubmit: (event) ->

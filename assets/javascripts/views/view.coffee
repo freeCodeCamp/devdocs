@@ -35,6 +35,13 @@ class app.View
     @el.classList.remove(name)
     return
 
+  toggleClass: (name) ->
+    @el.classList.toggle(name)
+    return
+
+  hasClass: (name) ->
+    @el.classList.contains(name)
+
   resetClass: ->
     @el.className = @originalClassName or ''
     if @constructor.className
