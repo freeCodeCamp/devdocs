@@ -1,7 +1,7 @@
 <div class="_app<%= " #{app_layout}" if app_layout %>" role="application">
   <header class="_header" role="banner">
     <button type="button" aria-label="Toggle navigation" class="_header-btn" data-toggle-sidebar hidden>
-      <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+      <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" /></svg>
     </button>
     <form class="_search" role="search">
       <input type="search" name="q" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="30" aria-label="Search">
@@ -9,17 +9,18 @@
       <div class="_search-tag"></div>
     </form>
     <button type="button" aria-label="Back" class="_header-btn" data-back hidden>
-      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></svg>
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" /></svg>
     </button>
     <button type="button" aria-label="Forward" class="_header-btn _forward-btn" data-forward hidden>
-      <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" /></svg>
     </button>
     <button type="button" aria-label="Toggle menu" title="Toggle menu" class="_header-btn _menu-btn" data-toggle-menu>
-      <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>
     </button>
     <nav class="_menu" role="navigation">
       <h1 class="_menu-title"><a href="/" class="_menu-title-link">DevDocs</a></h1>
-      <a href="/offline" class="_menu-link">Offline</a>
+      <a href="/settings" class="_menu-link">Preferences</a>
+      <a href="/offline" class="_menu-link">Offline Data</a>
       <a href="/news" class="_menu-link">Changelog</a>
       <a href="/help" class="_menu-link">Help</a>
       <a href="/about" class="_menu-link">About</a>
@@ -37,10 +38,27 @@
   <div class="_container" role="document">
     <main class="_content _content-loading" role="main"></main>
   </div>
+  <form class="_settings" id="settings">
+    <div class="_header">
+      <button type="button" aria-label="Back" class="_settings-btn" data-back>
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" /></svg> Back
+      </button>
+      <nav class="_settings-tabs">
+        <a class="_settings-tab active" data-tab="doc-picker" hidden>Docs</a>
+        <a class="_settings-tab" data-tab="settings" hidden>Settings</a>
+      </nav>
+    </div>
+    <div class="_sidebar"></div>
+    <div class="_footer">
+      <button type="submit" class="_settings-btn _save-btn">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" /></svg> Save
+      </button>
+    </div>
+  </form>
 </div>
 <style data-size="<%= app_size %>" data-resizer>
   ._container { margin-left: <%= app_size %>; }
-  ._header, ._list, ._sidebar-footer { width: <%= app_size %>; }
+  ._header, ._list, ._footer { width: <%= app_size %>; }
   ._list-hover.clone { min-width: <%= app_size %>; }
   ._notice, ._path, ._resizer { left: <%= app_size %>; }
 </style>

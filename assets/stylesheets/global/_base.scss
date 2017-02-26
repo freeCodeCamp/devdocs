@@ -166,6 +166,11 @@ section, main {
   outline: 0;
 }
 
+label {
+  display: block;
+  @extend %user-select-none;
+}
+
 input, button {
   margin: 0;
   font-family: inherit;
@@ -173,6 +178,12 @@ input, button {
   color: $textColor;
   line-height: normal;
   @extend %border-box;
+}
+
+input[type=checkbox] {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
 }
 
 button {

@@ -6,4 +6,4 @@ app.templates.singleDocNotice = (doc) ->
 
 app.templates.disabledDocNotice = ->
   notice """ <strong>This documentation is disabled.</strong>
-             To enable it, click <a href="#" class="_notice-link" data-pick-docs>Select documentation</a>. """
+             To enable it, go to <a href="/settings" class="_notice-link">Preferences</a>. """

@@ -1,17 +1,8 @@
 class app.views.DocPicker extends app.View
   @className: '_list _list-picker'
-  @attributes:
-    role: 'form'
-
-  @elements:
-    saveLink: '._sidebar-footer-save'
 
   @events:
-    click: 'onClick'
     mousedown: 'onMouseDown'
-
-  @shortcuts:
-    enter: 'onEnter'
 
   init: ->
     @addSubview @listFold = new app.views.ListFold(@el)
@@ -20,14 +11,12 @@ class app.views.DocPicker extends app.View
   activate: ->
     if super
       @render()
-      app.appCache?.on 'progress', @onAppCacheProgress
       $.on @el, 'focus', @onDOMFocus, true
     return
 
   deactivate: ->
     if super
       @empty()
-      app.appCache?.off 'progress', @onAppCacheProgress
       $.off @el, 'focus', @onDOMFocus, true
       @focusEl = null
     return
@@ -43,8 +32,7 @@ class app.views.DocPicker extends app.View
       else
         html += @tmpl('sidebarLabel', doc, checked: app.docs.contains(doc))
 
-    @html html + @tmpl('sidebarPickerNote') + @tmpl('sidebarSave')
-    @refreshElements()
+    @html html + @tmpl('docPickerNote')
 
     $.requestAnimationFrame =>
       @addClass '_in'
@@ -68,31 +56,13 @@ class app.views.DocPicker extends app.View
     super
     return
 
-  save: ->
-    unless @saving
-      @saving = true
-      docs = @getSelectedDocs()
-      app.settings.setDocs(docs)
-      @saveLink.textContent = if app.appCache then 'Downloading\u2026' else 'Saving\u2026'
-      disabledDocs = new app.collections.Docs(doc for doc in app.docs.all() when docs.indexOf(doc.slug) is -1)
-      disabledDocs.uninstall ->
-        app.db.migrate()
-        app.reload()
-    return
-
   getSelectedDocs: ->
     for input in @findAllByTag 'input' when input?.checked
       input.name
 
-  onClick: (event) =>
-    return if event.which isnt 1
-    if event.target is @saveLink
-      $.stopEvent(event)
-      @save()
-    return
-
   onMouseDown: =>
     @mouseDown = Date.now()
+    return
 
   onDOMFocus: (event) =>
     target = event.target
@@ -111,14 +81,4 @@ class app.views.DocPicker extends app.View
           @listFold.open(target) unless target.classList.contains(app.views.ListFold.activeClass)
           @delay -> $('input', target.nextElementSibling).focus()
     @focusEl = target
-    return
-
-  onEnter: =>
-    @save()
-    return
-
-  onAppCacheProgress: (event) =>
-    if event.lengthComputable
-      percentage = Math.round event.loaded * 100 / event.total
-      @saveLink.textContent = "Downloading\u2026 (#{percentage}%)"
     return

@@ -8,13 +8,13 @@
   top: $headerHeight;
   bottom: 0;
   left: 0;
-  margin-top: 1px;
   overflow-x: hidden;
   overflow-y: scroll;
   background: $sidebarBackground;
   background-clip: content-box;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none; // IE 10 doesn't support pointer-events
+  @extend %border-box;
   @extend %user-select-none;
 
   &::-webkit-scrollbar { -webkit-appearance: none; width: 10px; }
@@ -48,26 +48,7 @@
   width: 3px;
   cursor: col-resize;
 
-  ._sidebar-hidden & {
-    left: 0;
-    margin-left: 0;
-    background: $headerBackground;
-    border-right: 1px solid $headerBorder;
-    width: 8px;
-    cursor: pointer;
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 3px;
-      margin-top: -.5rem;
-      width: 1px;
-      height: 1rem;
-      border-left: 1px solid $textColorLighter;
-      border-right: 1px solid $textColorLighter;
-    }
-  }
+  ._sidebar-hidden & { display: none; }
 }
 
 //
@@ -84,10 +65,7 @@
 
   @media #{$mediumScreen} { width: $sidebarMediumWidth; }
 
-  ._sidebar > & {
-    min-height: 100%;
-    padding-bottom: 3.5rem;
-  }
+  ._sidebar > & { min-height: 100%; }
 
   a:focus { outline: 0; }
 }
@@ -342,7 +320,7 @@
 ._list-picker {
   > ._list, > ._list-item {
     opacity: 0;
-    transition: .2s;
+    transition: opacity .2s;
   }
   &._in { > ._list, > ._list-item { opacity: 1; } }
 
@@ -354,150 +332,15 @@
   position: absolute;
   top: .5rem;
   right: .75rem;
-  width: 1rem;
-  height: 1rem;
-  transition: .2s;
 }
 
 ._list-link {
   display: block;
-  margin-top: .75rem;
+  padding: .75rem 0;
   font-size: .8125rem;
   text-align: center;
   @extend %external-link;
 
   &:after { visibility: hidden; }
   &:hover:after { visibility: visible; }
-}
-
-//
-// Footer
-//
-
-._sidebar-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: $sidebarWidth;
-  background: $sidebarBackground;
-  box-shadow: inset -1px 0 $sidebarBorder;
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0);
-
-  @media #{$mediumScreen} { width: $sidebarMediumWidth; }
-
-  ._max-width & {
-    left: calc(50% - #{$maxWidth} / 2);
-    @media (max-width: #{$maxWidth}) { left: 0; }
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    right: 1px;
-    height: 1em;
-    background-image: -webkit-linear-gradient(top,       rgba($sidebarBackground, 0), rgba($sidebarBackground, .95));
-    background-image:         linear-gradient(to bottom, rgba($sidebarBackground, 0), rgba($sidebarBackground, .95));
-    pointer-events: none;
-  }
-}
-
-._sidebar-footer-link {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  height: 2.5rem;
-  line-height: 1rem;
-  padding: .75rem .25rem .75rem .75rem;
-  font-size: .875em;
-  cursor: pointer;
-  @extend %border-box;
-
-  &, &:hover {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  &:before {
-    float: left;
-    margin-right: .625rem;
-    @extend %icon;
-  }
-}
-
-._sidebar-footer-edit {
-  display: inline-block;
-
-  @if $style == 'dark' {
-    &:before { @extend %icon-settings-white; }
-  } @else {
-    &:before { @extend %icon-settings; }
-  }
-}
-
-._sidebar-footer-light {
-  float: right;
-  width: 2rem;
-  padding: 0;
-  opacity: .65;
-  @extend %hide-text;
-
-  &:before {
-    float: none;
-    position: absolute;
-    top: .75rem;
-    left: .25rem;
-
-    @if $style == 'dark' {
-      @extend %icon-light-white;
-    } @else {
-      @extend %icon-light;
-    }
-  }
-}
-
-._sidebar-footer-layout {
-  float: right;
-  width: 2rem;
-  padding: 0;
-  opacity: .65;
-  @extend %hide-text;
-
-  &:before {
-    float: none;
-    position: absolute;
-    top: .75rem;
-    left: .375rem;
-    @if $style == 'dark' {
-      @extend %icon-expand-white;
-    } @else {
-      @extend %icon-expand;
-    }
-
-    ._max-width & {
-      @if $style == 'dark' {
-        @extend %icon-contract-white;
-      } @else {
-        @extend %icon-contract;
-      }
-    }
-  }
-
-  @media (max-width: #{$maxWidth + .1rem}) { display: none; }
-}
-
-._sidebar-footer-save {
-  margin-right: 1px;
-  font-weight: $boldFontWeight;
-  background: $noteGreenBackground;
-  box-shadow: inset 0 1px $noteGreenBorder,
-                    1px 0 $noteGreenBorder;
-
-  @if $style == 'dark' {
-    &:before { @extend %icon-check-white; }
-  } @else {
-    &:before { @extend %icon-check; }
-  }
 }

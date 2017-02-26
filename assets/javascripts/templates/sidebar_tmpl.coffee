@@ -30,7 +30,7 @@ templates.sidebarResult = (entry) ->
 templates.sidebarNoResults = ->
   html = """ <div class="_list-note">No results.</div> """
   html += """
-    <div class="_list-note">Note: documentations must be <a href="#" class="_list-note-link" data-pick-docs>enabled</a> to appear in the search.</div>
+    <div class="_list-note">Note: documentations must be <a href="/settings" class="_list-note-link">enabled</a> to appear in the search.</div>
   """ unless app.isSingleDoc() or app.disabledDocs.isEmpty()
   html
 
@@ -58,19 +58,7 @@ templates.sidebarDisabledList = (html) ->
 templates.sidebarDisabledVersionedDoc = (doc, versions) ->
   """<a class="_list-item _list-dir _icon-#{doc.icon} _list-disabled" data-slug="#{doc.slug_without_version}" tabindex="-1"><span class="_list-arrow"></span>#{doc.name}</a><div class="_list _list-sub">#{versions}</div>"""
 
-templates.sidebarPickerNote = """
+templates.docPickerNote = """
   <div class="_list-note">Tip: for faster and better search results, select only the docs you need.</div>
   <a href="https://trello.com/b/6BmTulfx/devdocs-documentation" class="_list-link" target="_blank" rel="noopener">Vote for new documentation</a>
   """
-
-sidebarFooter = (html) -> """<div class="_sidebar-footer">#{html}</div>"""
-
-templates.sidebarSettings = ->
-  sidebarFooter """
-    <button type="button" class="_sidebar-footer-link _sidebar-footer-edit" data-pick-docs>Select documentation</button>
-    <button type="button" class="_sidebar-footer-link _sidebar-footer-light" title="Toggle light" data-light>Toggle light</button>
-    <button type="button" class="_sidebar-footer-link _sidebar-footer-layout" title="Toggle layout" data-layout>Toggle layout</button>
-  """
-
-templates.sidebarSave = ->
-  sidebarFooter """<a class="_sidebar-footer-link _sidebar-footer-save" role="button">Save</a>"""

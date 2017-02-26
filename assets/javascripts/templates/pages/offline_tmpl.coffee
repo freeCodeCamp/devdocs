@@ -35,7 +35,7 @@ app.templates.offlinePage = (docs) -> """
     <dt>How do I uninstall/reset the app?
     <dd>Click <a href="#" data-behavior="reset">here</a>.
     <dt>Why aren't all documentations listed above?
-    <dd>You have to <a href="#" data-pick-docs>enable</a> them first.
+    <dd>You have to <a href="/settings">enable</a> them first.
   </dl>
 """
 

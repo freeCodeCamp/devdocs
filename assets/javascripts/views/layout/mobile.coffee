@@ -2,9 +2,10 @@ class app.views.Mobile extends app.View
   @className: '_mobile'
 
   @elements:
-    body:     'body'
-    content:  '._container'
-    sidebar:  '._sidebar'
+    body:      'body'
+    content:   '._container'
+    sidebar:   '._sidebar'
+    docPicker: '._settings ._sidebar'
 
   @routes:
     after: 'afterRoute'
@@ -34,7 +35,6 @@ class app.views.Mobile extends app.View
   init: ->
     FastClick.attach @body
 
-    $.on @body, 'click', @onClick
     $.on $('._search'), 'touchend', @onTapSearch
 
     @toggleSidebar = $('button[data-toggle-sidebar]')
@@ -48,6 +48,14 @@ class app.views.Mobile extends app.View
     @forward = $('button[data-forward]')
     @forward.removeAttribute('hidden')
     $.on @forward, 'click', @onClickForward
+
+    @docPickerTab = $('a[data-tab="doc-picker"]')
+    @docPickerTab.removeAttribute('hidden')
+    $.on @docPickerTab, 'click', @onClickDocPickerTab
+
+    @settingsTab = $('a[data-tab="settings"]')
+    @settingsTab.removeAttribute('hidden')
+    $.on @settingsTab, 'click', @onClickSettingsTab
 
     app.document.sidebar.search
       .on 'searching', @showSidebar
@@ -82,11 +90,6 @@ class app.views.Mobile extends app.View
   isSidebarShown: ->
     @sidebar.style.display isnt 'none'
 
-  onClick: (event) =>
-    if event.target.hasAttribute 'data-pick-docs'
-      @showSidebar()
-    return
-
   onClickBack: =>
     history.back()
 
@@ -97,11 +100,40 @@ class app.views.Mobile extends app.View
     if @isSidebarShown() then @hideSidebar() else @showSidebar()
     return
 
+  onClickDocPickerTab: (event) =>
+    $.stopEvent(event)
+    @showDocPicker()
+    return
+
+  onClickSettingsTab: (event) =>
+    $.stopEvent(event)
+    @showSettings()
+    return
+
+  showDocPicker: ->
+    @docPickerTab.classList.add 'active'
+    @settingsTab.classList.remove 'active'
+    @docPicker.style.display = 'block'
+    @content.style.display = 'none'
+    return
+
+  showSettings: ->
+    @docPickerTab.classList.remove 'active'
+    @settingsTab.classList.add 'active'
+    @docPicker.style.display = 'none'
+    @content.style.display = 'block'
+    return
+
   onTapSearch: =>
     window.scrollTo 0, 0
 
-  afterRoute: =>
+  afterRoute: (route) =>
     @hideSidebar()
+
+    if route is 'settings'
+      @showDocPicker()
+    else
+      @content.style.display = 'block'
 
     if page.canGoBack()
       @back.removeAttribute('disabled')

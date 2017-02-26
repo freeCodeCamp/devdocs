@@ -57,6 +57,9 @@ class app.Settings
     @store.set DARK_KEY, !!value
     return
 
+  getDark: ->
+    @store.get DARK_KEY
+
   setLayout: (name, enable) ->
     layout = (@store.get(LAYOUT_KEY) || '').split(' ')
     $.arrayDelete(layout, '')

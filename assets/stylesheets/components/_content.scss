@@ -12,7 +12,7 @@
 
   @media #{$mediumScreen} { margin-left: $sidebarMediumWidth; }
 
-  ._sidebar-hidden & { margin-left: $sidebarHiddenWidth; }
+  ._sidebar-hidden & { margin-left: 0; }
 }
 
 ._content {
@@ -283,7 +283,6 @@
 }
 
 ._docs-label {
-  display: block;
   overflow: hidden;
   margin: 1px 0;
   padding: .375rem .5rem;
@@ -292,8 +291,6 @@
     display: inline-block;
     vertical-align: top;
     margin: .25rem;
-    width: 1rem;
-    height: 1rem;
   }
 }
 

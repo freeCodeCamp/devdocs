@@ -235,7 +235,7 @@ class App < Sinatra::Application
     erb :index
   end
 
-  %w(offline about news help).each do |page|
+  %w(settings offline about news help).each do |page|
     get "/#{page}" do
       if supports_js_redirection?
         redirect_via_js "/#{page}"

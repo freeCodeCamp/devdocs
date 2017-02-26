@@ -4,7 +4,7 @@
   width: 1rem;
   height: 1rem;
   background-image: image-url('icons.png');
-  background-size: 4rem 6rem;
+  background-size: 4rem 3rem;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
@@ -35,23 +35,13 @@
 %icon-search                { background-position: -1rem 0; }
 %icon-link                  { background-position: -2.25rem -.25rem; }
 %icon-clear                 { background-position: -3rem 0; }
-%icon-settings              { background-position: 0 -1rem; }
-%icon-check                 { background-position: -1rem -1rem; }
-%icon-path                  { background-position: 0 -2rem; }
-%icon-search-white          { background-position: -1rem -2rem; }
-%icon-dir-white             { background-position: -2rem -2rem; }
-%icon-link-white            { background-position: -3.25rem -2.25rem; }
-%icon-settings-white        { background-position: 0 -3rem; }
-%icon-check-white           { background-position: -1rem -3rem; }
-%icon-light                 { background-position: -2rem -3rem; }
-%icon-light-white           { background-position: -3rem -3rem; }
-%icon-expand                { background-position: 0 -4rem; }
-%icon-contract              { background-position: -1rem -4rem; }
-%icon-expand-white          { background-position: -2rem -4rem; }
-%icon-contract-white        { background-position: -3rem -4rem; }
-%icon-clipboard             { background-position: 0 -5rem; }
-%icon-clipboard-white       { background-position: -1rem -5rem; }
-%icon-close-white           { background-position: -2rem -5rem; }
+%icon-path                  { background-position: 0 -1rem; }
+%icon-search-white          { background-position: -1rem -1rem; }
+%icon-dir-white             { background-position: -2rem -1rem; }
+%icon-link-white            { background-position: -3.25rem -1.25rem; }
+%icon-clipboard             { background-position: 0 -2rem; }
+%icon-clipboard-white       { background-position: -1rem -2rem; }
+%icon-close-white           { background-position: -2rem -2rem; }
 
 ._icon-codeceptjs:before    { background-position: -3rem 0; }
 ._icon-codeception:before   { background-position: -4rem 0; }

@@ -11,7 +11,8 @@
 
   @media #{$mediumScreen} { left: $sidebarMediumWidth; }
 
-  ._sidebar-hidden & { left: $sidebarHiddenWidth; }
+  ._sidebar-hidden & { left: 0; }
+
   ~ ._container { padding-bottom: 2.5rem; }
 }
 

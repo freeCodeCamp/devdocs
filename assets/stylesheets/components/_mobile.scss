@@ -11,30 +11,42 @@
   body { -ms-overflow-style: -ms-autohiding-scrollbar; }
 
   ._app, ._content { overflow: visible; }
-  ._app { padding-top: $headerHeight; }
-  ._container { margin: 0; }
+
+  ._container, ._sidebar {
+    margin: 0;
+    padding-top: $headerHeight;
+  }
 
   ._content {
     position: static;
     height: auto;
     margin: 0;
-    padding: .75rem 1rem 2.5rem;
+    padding: .75rem 1rem 2rem;
 
     &:before { content: none; }
   }
 
   ._booting:before, ._content-loading:before { font-size: 3rem; }
 
-  // Header
-
-  ._header {
+  ._header, ._footer {
     position: fixed;
-    max-width: 100vw;
+    width: 100%;
   }
+
+  ._header, ._list, ._footer {
+    width: 100%;
+    border-right: 0;
+    box-shadow: none;
+  }
+
+  ._settings { position: static; }
+  ._settings ._sidebar { padding-bottom: $headerHeight; }
+  ._settings-tabs { display: block; }
+
+  // Header
 
   ._header-btn { width: 2.5rem; }
   ._header-btn[hidden] { display: block; }
-  ._menu-btn { border-right: 0; }
 
   ._search {
     padding-right: .125rem;
@@ -53,8 +65,6 @@
     overflow: visible;
   }
 
-  ._header, ._list, ._sidebar-footer { width: 100%; }
-
   ._list-item {
     white-space: normal;
     word-wrap: break-word;
@@ -70,15 +80,6 @@
       top: .25rem;
       left: .75rem;
     }
-  }
-
-  ._list-link { display: none; }
-
-  ._sidebar-footer { box-shadow: none; }
-
-  ._sidebar-footer-save {
-    margin: 0;
-    box-shadow: 0 1px $noteGreenBorder, 0 -1px $noteGreenBorder;
   }
 
   // Notice

@@ -2,16 +2,17 @@ class app.Router
   $.extend @prototype, Events
 
   @routes: [
-    ['*',              'before'  ]
-    ['/',              'root'    ]
-    ['/offline',       'offline' ]
-    ['/about',         'about'   ]
-    ['/news',          'news'    ]
-    ['/help',          'help'    ]
-    ['/:doc-:type/',   'type'    ]
-    ['/:doc/',         'doc'     ]
-    ['/:doc/:path(*)', 'entry'   ]
-    ['*',              'notFound']
+    ['*',              'before'   ]
+    ['/',              'root'     ]
+    ['/settings',      'settings' ]
+    ['/offline',       'offline'  ]
+    ['/about',         'about'    ]
+    ['/news',          'news'     ]
+    ['/help',          'help'     ]
+    ['/:doc-:type/',   'type'     ]
+    ['/:doc/',         'doc'      ]
+    ['/:doc/:path(*)', 'entry'    ]
+    ['*',              'notFound' ]
   ]
 
   constructor: ->
@@ -74,6 +75,10 @@ class app.Router
       setTimeout (-> window.location = '/'), 0
     else
       @triggerRoute 'root'
+    return
+
+  settings: ->
+    @triggerRoute 'settings'
     return
 
   offline: ->

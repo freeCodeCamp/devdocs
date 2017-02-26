@@ -22,10 +22,8 @@ class app.views.Sidebar extends app.View
 
     @results = new app.views.Results @, @search
     @docList = new app.views.DocList
-    @docPicker = new app.views.DocPicker unless app.isSingleDoc()
 
     app.on 'ready', @onReady
-    $.on document, 'click', @onGlobalClick if @docPicker
     return
 
   display: ->
@@ -45,23 +43,18 @@ class app.views.Sidebar extends app.View
       @render()
       @view.activate()
       @restoreScrollPosition()
-      if view is @docPicker then @search.disable() else @search.enable()
     return
 
   render: ->
     @html @view
-    @append @tmpl('sidebarSettings') if @view is @docList and @docPicker
     return
 
   showDocList: ->
     @showView @docList
     return
 
-  showDocPicker: =>
-    @showView @docPicker
-    return
-
   showResults: =>
+    @display()
     @showView @results
     return
 
@@ -101,7 +94,6 @@ class app.views.Sidebar extends app.View
     return
 
   onSearching: =>
-    @display()
     @showResults()
     return
 
@@ -124,23 +116,6 @@ class app.views.Sidebar extends app.View
     if event.target.hasAttribute? 'data-reset-list'
       $.stopEvent(event)
       @onAltR()
-    else if event.target.hasAttribute? 'data-light'
-      $.stopEvent(event)
-      document.activeElement?.blur()
-      app.document.toggleLight()
-    else if event.target.hasAttribute? 'data-layout'
-      $.stopEvent(event)
-      document.activeElement?.blur()
-      app.document.toggleLayout()
-    return
-
-  onGlobalClick: (event) =>
-    return if event.which isnt 1
-    if event.target.hasAttribute? 'data-pick-docs'
-      $.stopEvent(event)
-      @showDocPicker()
-    else if @view is @docPicker
-      @showDocList() unless $.hasChild @el, event.target
     return
 
   onAltR: =>
@@ -157,3 +132,4 @@ class app.views.Sidebar extends app.View
   onDocEnabled: ->
     @docList.onEnabled()
     @reset()
+    return
