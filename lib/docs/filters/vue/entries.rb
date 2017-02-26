@@ -2,7 +2,11 @@ module Docs
   class Vue
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('h1').try(:content).presence || 'API'
+        if slug == 'api/'
+          'API'
+        else
+          at_css('h1').content
+        end
       end
 
       def get_type

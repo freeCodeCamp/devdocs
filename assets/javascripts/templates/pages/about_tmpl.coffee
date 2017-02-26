@@ -586,7 +586,7 @@ credits = [
     'https://raw.githubusercontent.com/mitchellh/vagrant/master/LICENSE'
   ], [
     'Vue.js',
-    '2013-2016 Evan You, Vue.js contributors',
+    '2013-2017 Evan You, Vue.js contributors',
     'MIT',
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
   ], [

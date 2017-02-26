@@ -5,6 +5,7 @@ module Docs
         @doc = at_css('.content')
 
         at_css('h1').content = 'Vue.js' if root_page?
+        doc.child.before('<h1>Vue.js API</h1>') if slug == 'api/'
 
         css('.demo', '.guide-links', '.footer', '#ad').remove
 

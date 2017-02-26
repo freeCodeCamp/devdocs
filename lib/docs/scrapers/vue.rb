@@ -13,15 +13,15 @@ module Docs
     options[:only_patterns] = [/guide\//, /api\//]
 
     options[:attribution] = <<-HTML
-      &copy; 2013&ndash;2016 Evan You, Vue.js contributors<br>
+      &copy; 2013&ndash;2017 Evan You, Vue.js contributors<br>
       Licensed under the MIT License.
     HTML
 
     version '2' do
-      self.release = '2.1.8'
+      self.release = '2.2.1'
       self.base_url = 'https://vuejs.org/v2/'
       self.root_path = 'guide/index.html'
-      self.initial_paths = %w(api/index.html)
+      self.initial_paths = %w(api/)
     end
 
     version '1' do
