@@ -7,13 +7,14 @@ module Docs
         'modules'  => 'module' }
 
       REPLACE_TYPES = {
-        'Addons'                 => 'Miscellaneous',
-        'Debugger'               => 'Miscellaneous',
-        'os'                     => 'OS',
-        'StringDecoder'          => 'String Decoder',
-        'TLS (SSL)'              => 'TLS/SSL',
-        'UDP / Datagram Sockets' => 'UDP/Datagram',
-        'Executing JavaScript'   => 'VM' }
+        'Addons'                    => 'Miscellaneous',
+        'Debugger'                  => 'Miscellaneous',
+        'os'                        => 'OS',
+        'StringDecoder'             => 'String Decoder',
+        'TLS (SSL)'                 => 'TLS/SSL',
+        'UDP / Datagram Sockets'    => 'UDP/Datagram',
+        'VM (Executing JavaScript)' => 'VM',
+        'Executing JavaScript'      => 'VM' }
 
       def get_name
         REPLACE_NAMES[slug] || slug
