@@ -104,6 +104,9 @@ class app.Shortcuts
       when 40
         @trigger 'pageBottom'
         false
+      when 188
+        @trigger 'preferences'
+        false
 
   handleKeydownShiftEvent: (event, _force) ->
     return @handleKeydownEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()

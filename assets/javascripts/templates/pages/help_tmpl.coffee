@@ -45,7 +45,7 @@ app.templates.helpPage = """
   </dl>
 
   <h2 class="_block-heading" id="shortcuts">Keyboard Shortcuts</h2>
-  <h3 class="_shortcuts-title">Selection</h3>
+  <h3 class="_shortcuts-title">Sidebar</h3>
   <dl class="_shortcuts-dl">
     <dt class="_shortcuts-dt">
       <code class="_shortcut-code">&darr;</code>
@@ -61,8 +61,11 @@ app.templates.helpPage = """
     <dt class="_shortcuts-dt">
       <code class="_shortcut-code">#{ctrlKey} + enter</code>
     <dd class="_shortcuts-dd">Open selection in a new tab
+    <dt class="_shortcuts-dt">
+      <code class="_shortcut-code">alt + r</code>
+    <dd class="_shortcuts-dd">Reveal current page in sidebar
   </dl>
-  <h3 class="_shortcuts-title">Navigation</h3>
+  <h3 class="_shortcuts-title">Browsing</h3>
   <dl class="_shortcuts-dl">
     <dt class="_shortcuts-dt">
       <code class="_shortcut-code">#{navKey} + &larr;</code>
@@ -83,15 +86,24 @@ app.templates.helpPage = """
       <code class="_shortcut-code">#{ctrlKey} + &uarr;</code>
       <code class="_shortcut-code">#{ctrlKey} + &darr;</code>
     <dd class="_shortcuts-dd">Scroll to the top/bottom
-  </dl>
-  <h3 class="_shortcuts-title">Misc</h3>
-  <dl class="_shortcuts-dl">
     <dt class="_shortcuts-dt">
       <code class="_shortcut-code">alt + f</code>
     <dd class="_shortcuts-dd">Focus first link in the content area<br>(press tab to focus the other links)
+  </dl>
+  <h3 class="_shortcuts-title">App</h3>
+  <dl class="_shortcuts-dl">
     <dt class="_shortcuts-dt">
-      <code class="_shortcut-code">alt + r</code>
-    <dd class="_shortcuts-dd">Reveal current page in sidebar
+      <code class="_shortcut-code">ctrl + ,</code>
+    <dd class="_shortcuts-dd">Open preferences
+    <dt class="_shortcuts-dt">
+      <code class="_shortcut-code">escape</code>
+    <dd class="_shortcuts-dd">Reset UI
+    <dt class="_shortcuts-dt">
+      <code class="_shortcut-code">?</code>
+    <dd class="_shortcuts-dd">Show this page
+  </dl>
+  <h3 class="_shortcuts-title">Miscellaneous</h3>
+  <dl class="_shortcuts-dl">
     <dt class="_shortcuts-dt">
       <code class="_shortcut-code">alt + o</code>
     <dd class="_shortcuts-dd">Open original page
@@ -101,12 +113,6 @@ app.templates.helpPage = """
     <dt class="_shortcuts-dt">
       <code class="_shortcut-code">alt + s</code>
     <dd class="_shortcuts-dd">Search on Stack Overflow
-    <dt class="_shortcuts-dt">
-      <code class="_shortcut-code">escape</code>
-    <dd class="_shortcuts-dd">Reset<br>(press twice in single doc mode)
-    <dt class="_shortcuts-dt">
-      <code class="_shortcut-code">?</code>
-    <dd class="_shortcuts-dd">Show this page
   </dl>
   <p class="_note">
     <strong>Tip:</strong> If the cursor is no longer in the search field, press <code class="_label">/</code> or

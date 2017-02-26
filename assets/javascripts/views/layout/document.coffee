@@ -5,10 +5,11 @@ class app.views.Document extends app.View
     visibilitychange: 'onVisibilityChange'
 
   @shortcuts:
-    help:       'onHelp'
-    escape:     'onEscape'
-    superLeft:  'onBack'
-    superRight: 'onForward'
+    help:        'onHelp'
+    preferences: 'onPreferences'
+    escape:      'onEscape'
+    superLeft:   'onBack'
+    superRight:  'onForward'
 
   @routes:
     after: 'afterRoute'
@@ -46,6 +47,11 @@ class app.views.Document extends app.View
 
   onHelp: ->
     app.router.show '/help#shortcuts'
+    return
+
+  onPreferences: ->
+    app.router.show '/settings'
+    return
 
   onEscape: ->
     path = if !app.isSingleDoc() or location.pathname is app.doc.fullPath()
@@ -54,12 +60,15 @@ class app.views.Document extends app.View
       app.doc.fullPath()
 
     app.router.show(path)
+    return
 
   onBack: ->
     history.back()
+    return
 
   onForward: ->
     history.forward()
+    return
 
   onClick: (event) ->
     return unless event.target.hasAttribute('data-behavior')
