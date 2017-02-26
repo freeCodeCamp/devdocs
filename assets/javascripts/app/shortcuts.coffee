@@ -2,7 +2,7 @@ class app.Shortcuts
   $.extend @prototype, Events
 
   constructor: ->
-    @isWindows = $.isWindows()
+    @isMac = $.isMac()
     @start()
 
   start: ->
@@ -91,14 +91,14 @@ class app.Shortcuts
       when 13
         @trigger 'superEnter'
       when 37
-        unless @isWindows
+        if @isMac
           @trigger 'superLeft'
           false
       when 38
         @trigger 'pageTop'
         false
       when 39
-        unless @isWindows
+        if @isMac
           @trigger 'superRight'
           false
       when 40
@@ -135,14 +135,14 @@ class app.Shortcuts
       when 9
         @trigger 'altRight', event
       when 37
-        if @isWindows
+        unless @isMac
           @trigger 'superLeft'
           false
       when 38
         @trigger 'altUp'
         false
       when 39
-        if @isWindows
+        unless @isMac
           @trigger 'superRight'
           false
       when 40

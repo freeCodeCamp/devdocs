@@ -336,9 +336,6 @@ $.popup = (value) ->
     window.open value.href or value, '_blank'
   return
 
-$.isWindows = ->
-  navigator.platform?.indexOf('Win') >= 0
-
 $.isMac = ->
   navigator.userAgent?.indexOf('Mac') >= 0
 

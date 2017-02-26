@@ -1,5 +1,5 @@
 ctrlKey = if $.isMac() then 'cmd' else 'ctrl'
-navKey = if $.isWindows() then 'alt' else ctrlKey
+navKey = if $.isMac() then 'cmd' else 'alt'
 
 app.templates.helpPage = """
   <nav class="_toc" role="directory">
