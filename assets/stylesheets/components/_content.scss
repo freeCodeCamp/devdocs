@@ -358,18 +358,13 @@
 }
 
 //
-// Abbreviations
-//
-
-._abbreviations td { @extend %code; }
-
-//
 // Utilities
 //
 
 ._note { @extend %note; }
 ._note-green { @extend %note-green; }
 ._label { @extend %label; }
+._code { @extend %code; }
 ._highlight { background: $highlightBackground !important; }
 
 ._pre-clip {

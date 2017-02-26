@@ -88,7 +88,7 @@
     "New documentations: <a href=\"/q/\">Q</a> and <a href=\"/opentsdb/\">OpenTSDB</a>"
   ], [
     "2015-07-26",
-    "Added search abbreviations (e.g. <code class=\"_label\">$</code> is an alias for <code class=\"_label\">jQuery</code>).\n<a href=\"/help#abbreviations\">Click here</a> to see the full list. Feel free to suggest more on <a href=\"https://github.com/Thibaut/devdocs/issues/new\" target=\"_blank\" rel=\"noopener\">GitHub</a>.",
+    "Added search aliases (e.g. <code class=\"_label\">$</code> is an alias for <code class=\"_label\">jQuery</code>).\n<a href=\"/help#aliases\">Click here</a> to see the full list. Feel free to suggest more on <a href=\"https://github.com/Thibaut/devdocs/issues/new\" target=\"_blank\" rel=\"noopener\">GitHub</a>.",
     "Added <code class=\"_label\">shift + &darr;/&uarr;</code> shortcut for scrolling (same as <code class=\"_label\">alt + &darr;/&uarr;</code>)."
   ], [
     "2015-07-05",
