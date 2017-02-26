@@ -186,7 +186,7 @@ credits = [
     'https://creativecommons.org/licenses/by-sa/2.5/'
   ], [
     'Crystal',
-    '2012-2016 Manas Technology Solutions',
+    '2012-2017 Manas Technology Solutions',
     'Apache',
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
   ], [
