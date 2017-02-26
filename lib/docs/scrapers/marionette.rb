@@ -14,12 +14,12 @@ module Docs
     options[:container] = '.docs__content'
 
     options[:attribution] = <<-HTML
-      &copy; 2016 Muted Solutions, LLC<br>
+      &copy; 2017 Muted Solutions, LLC<br>
       Licensed under the MIT License.
     HTML
 
     version '3' do
-      self.release = '3.1.0'
+      self.release = '3.2.0'
       self.base_url = "https://marionettejs.com/docs/v#{release}/"
 
       html_filters.push 'marionette/entries_v3'

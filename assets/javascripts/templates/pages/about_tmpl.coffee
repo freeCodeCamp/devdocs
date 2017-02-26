@@ -336,7 +336,7 @@ credits = [
     'http://www.gnu.org/copyleft/fdl.html'
   ], [
     'Marionette.js',
-    '2016 Muted Solutions, LLC',
+    '2017 Muted Solutions, LLC',
     'MIT',
     'https://mutedsolutions.mit-license.org/'
   ], [
