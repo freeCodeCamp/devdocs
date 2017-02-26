@@ -12,7 +12,7 @@ class app.views.Menu extends app.View
   onClick: =>
     prev = @el.previousElementSibling
     $.remove @el
-    $.requestAnimationFrame => $.after(prev, @el)
+    @delay (=> $.after prev, @el), 200
     return
 
   onGlobalClick: (event) =>
