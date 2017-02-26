@@ -173,7 +173,9 @@ onclick = (event) ->
 
   if link and not link.target and isSameOrigin(link.href)
     event.preventDefault()
-    page.show link.pathname + link.search + link.hash
+    path = link.pathname + link.search + link.hash
+    path = path.replace /^\/\/+/, '/' # IE11 bug
+    page.show(path)
   return
 
 isSameOrigin = (url) ->

@@ -10,7 +10,10 @@ body {
   height: 100%;
   margin: 0;
   overflow: auto;
-  font: normal 1em/1.7 $baseFont;
+  font-size: 1em;
+  font-weight: normal;
+  font-family: $baseFont;
+  line-height: 1.7;
   color: $textColor;
   word-wrap: break-word;
   overflow-wrap: break-word;
