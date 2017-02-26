@@ -67,7 +67,7 @@ app.templates.offlineDoc = (doc, status) ->
     """
   else
     """
-      <td>Up-to-date</td>
+      <td>Up&#8209;to&#8209;date</td>
       <td><a data-action="uninstall">Uninstall</a></td>
     """
 

@@ -17,9 +17,8 @@
     ._sidebar-hidden & { display: block; }
   }
 
-  ._header {
-    justify-content: space-between;
-  }
+  ._header { justify-content: space-between; }
+  ._footer { box-shadow: 1.25rem 0 $contentBackground; } // cover sidebar scrollbar
 }
 
 //
