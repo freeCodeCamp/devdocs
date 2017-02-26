@@ -16,7 +16,7 @@ module Docs
           parent = node.parent
           parent.name = 'h6'
           parent['id'] = (node['name'] || node['href'].remove(/\A.+#/)).remove('user-content-')
-          parent.css('a[name], a:contains("#")').remove
+          parent.css('a[name], a:contains("#"), a:contains("†")').remove
           node.remove
         end
 
