@@ -18,6 +18,16 @@ app.templates.settingsPage = (settings) -> """
   </div>
 
   <div class="_settings-fieldset">
+    <h2 class="_settings-legend">Scrolling:</h2>
+
+    <div class="_settings-inputs">
+      <label class="_settings-label">
+        <input type="checkbox" name="smoothScroll" value="1"#{if settings.smoothScroll then ' checked' else ''}>Use smooth scrolling
+      </label>
+    </div>
+  </div>
+
+  <div class="_settings-fieldset">
     <h2 class="_settings-legend">Advanced:</h2>
 
     <div class="_settings-inputs">

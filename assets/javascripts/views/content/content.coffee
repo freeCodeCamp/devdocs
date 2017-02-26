@@ -64,7 +64,10 @@ class app.views.Content extends app.View
     return
 
   smoothScrollTo: (value) ->
-    $.smoothScroll @scrollEl, value or 0
+    if app.settings.get('fastScroll')
+      @scrollTo value
+    else
+      $.smoothScroll @scrollEl, value or 0
     return
 
   scrollBy: (n) ->

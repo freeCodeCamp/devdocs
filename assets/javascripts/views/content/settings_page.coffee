@@ -13,7 +13,8 @@ class app.views.SettingsPage extends app.View
 
   currentSettings: ->
     settings = {}
-    settings.dark = app.settings.getDark()
+    settings.dark = app.settings.get('dark')
+    settings.smoothScroll = !app.settings.get('fastScroll')
     settings[layout] = app.settings.hasLayout(layout) for layout in LAYOUTS
     settings
 
@@ -25,7 +26,7 @@ class app.views.SettingsPage extends app.View
     alt = css.getAttribute('data-alt')
     css.setAttribute('data-alt', css.getAttribute('href'))
     css.setAttribute('href', alt)
-    app.settings.setDark(enable)
+    app.settings.set('dark', !!enable)
     app.appCache?.updateInBackground()
     return
 
@@ -35,6 +36,10 @@ class app.views.SettingsPage extends app.View
     app.appCache?.updateInBackground()
     return
 
+  toggleSmoothScroll: (enable) ->
+    app.settings.set('fastScroll', !enable)
+    return
+
   onChange: (event) =>
     input = event.target
     switch input.name
@@ -42,6 +47,8 @@ class app.views.SettingsPage extends app.View
         @toggleDark input.checked
       when 'layout'
         @toggleLayout input.value, input.checked
+      when 'smoothScroll'
+        @toggleSmoothScroll input.checked
     return
 
   onRoute: (route) =>
