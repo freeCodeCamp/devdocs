@@ -84,7 +84,7 @@ class app.views.DocList extends app.View
     @listSelect.deselect()
     @listFocus?.blur()
     @listFold.reset()
-    @revealCurrent() if options.revealCurrent
+    @revealCurrent() if options.revealCurrent || app.isSingleDoc()
     return
 
   onOpen: (event) =>
