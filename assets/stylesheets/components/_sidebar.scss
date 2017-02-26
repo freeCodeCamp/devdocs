@@ -5,17 +5,23 @@
 ._sidebar {
   position: absolute;
   z-index: $sidebarZ;
-  top: $headerHeight;
+  top: 0;
   bottom: 0;
   left: 0;
   overflow-x: hidden;
   overflow-y: scroll;
+  padding-top: $headerHeight;
   background: $sidebarBackground;
   background-clip: content-box;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none; // IE 10 doesn't support pointer-events
   @extend %border-box;
   @extend %user-select-none;
+
+  @media (-moz-overlay-scrollbars) {
+    padding-top: 0;
+    top: $headerHeight;
+  }
 
   &::-webkit-scrollbar { -webkit-appearance: none; width: 10px; }
   &::-webkit-scrollbar-button { display: none; }
@@ -41,9 +47,9 @@
 
 ._resizer {
   position: absolute;
-  z-index: $sidebarZ;
+  z-index: $sidebarZ + 1;
   top: $headerHeight;
-  bottom: 0;
+  bottom: $headerHeight;
   left: $sidebarWidth;
   margin-left: -2px;
   width: 3px;

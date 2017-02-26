@@ -47,17 +47,18 @@
         <a class="_settings-tab active" data-tab="doc-picker" hidden>Docs</a><a class="_settings-tab" data-tab="settings" hidden>Settings</a>
       </nav>
     </div>
-    <div class="_sidebar"></div>
-    <div class="_footer">
-      <button type="submit" class="_settings-btn">
-        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg> Save
-      </button>
+    <div class="_sidebar">
+      <div class="_sidebar-footer">
+        <button type="submit" class="_settings-btn">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg> Apply
+        </button>
+      </div>
     </div>
   </form>
 </div>
 <style data-size="<%= app_size %>" data-resizer>
   ._container { margin-left: <%= app_size %>; }
-  ._header, ._list, ._footer { width: <%= app_size %>; }
+  ._header, ._list, ._sidebar-footer { width: <%= app_size %>; }
   ._list-hover.clone { min-width: <%= app_size %>; }
   ._notice, ._path, ._resizer { left: <%= app_size %>; }
 </style>

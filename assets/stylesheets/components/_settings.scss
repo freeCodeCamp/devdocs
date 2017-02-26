@@ -12,13 +12,16 @@
   &._in { display: block; }
 
   ._sidebar {
-    bottom: $headerHeight;
+    &:after { // padding bottom
+      content: '';
+      display: block;
+      height: $headerHeight;
+    }
 
     ._sidebar-hidden & { display: block; }
   }
 
   ._header { justify-content: space-between; }
-  ._footer { box-shadow: 1.25rem 0 $contentBackground; } // cover sidebar scrollbar
 }
 
 //
@@ -78,8 +81,8 @@
 // Footer
 //
 
-._footer {
-  position: absolute;
+._sidebar-footer {
+  position: fixed;
   z-index: $headerZ;
   bottom: 0;
   left: 0;

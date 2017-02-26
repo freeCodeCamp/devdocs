@@ -12,7 +12,7 @@
 
   ._app, ._content { overflow: visible; }
 
-  ._container, ._sidebar {
+  ._container {
     margin: 0;
     padding-top: $headerHeight;
   }
@@ -21,26 +21,22 @@
     position: static;
     height: auto;
     margin: 0;
-    padding: .75rem 1rem 2rem;
+    padding: .75rem 1rem 0;
 
     &:before { content: none; }
   }
 
   ._booting:before, ._content-loading:before { font-size: 3rem; }
 
-  ._header, ._footer {
-    position: fixed;
-    width: 100%;
-  }
+  ._header { position: fixed; }
 
-  ._header, ._list, ._footer {
+  ._header, ._list, ._sidebar-footer {
     width: 100%;
     border-right: 0;
     box-shadow: none;
   }
 
-  ._settings { position: static; }
-  ._settings ._sidebar { padding-bottom: $headerHeight; }
+  ._settings { position: relative; }
   ._settings-tabs { display: block; }
   ._header ._settings-btn { width: auto; }
 
@@ -61,10 +57,12 @@
   // Sidebar
 
   ._sidebar {
-    position: static;
+    position: relative;
     min-height: 100%;
     overflow: visible;
   }
+
+  ._resizer { display: none; }
 
   ._list-item {
     white-space: normal;
