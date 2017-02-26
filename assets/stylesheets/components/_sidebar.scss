@@ -27,6 +27,7 @@
     border: 3px solid $contentBackground;
     border-radius: 5px;
 
+    &:hover,
     &:active {
       background-color: $scrollbarColorHover;
       border-width: 2px;

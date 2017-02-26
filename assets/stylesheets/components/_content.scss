@@ -38,17 +38,12 @@
     margin-top: $headerHeight;
   }
 
-  &:after { // padding bottom
-    content: '';
-    display: block;
-    margin-bottom: 1.25rem;
-  }
-
   &::-webkit-scrollbar { -webkit-appearance: none; }
   &::-webkit-scrollbar:vertical { width: 14px; }
   &::-webkit-scrollbar:horizontal { height: 14px }
   &::-webkit-scrollbar-button { display: none; }
-  &::-webkit-scrollbar-track { background: $contentBackground; }
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-corner { background: $contentBackground; }
   &::-webkit-scrollbar-thumb {
     min-height: 2rem;
     background: $scrollbarColor;
@@ -56,6 +51,7 @@
     border: 5px solid $contentBackground;
     border-radius: 10px;
 
+    &:hover,
     &:active {
       background-color: $scrollbarColorHover;
       border-width: 4px;
@@ -229,8 +225,6 @@
 
 ._credits {
   width: 100%;
-
-  td:first-child, td:last-child { white-space: nowrap; }
 }
 
 //
@@ -244,7 +238,6 @@
 
   th, td {
     width: 1%;
-    white-space: nowrap;
 
     &:first-child { width: auto; }
     &:last-child { width: 12rem; }
@@ -259,7 +252,11 @@
   @extend %doc-icon;
 }
 
-._docs-size { text-align: right; }
+._docs-size {
+  text-align: right;
+
+  > small { color: $textColorLight; }
+}
 
 ._docs-tools {
   overflow: hidden;

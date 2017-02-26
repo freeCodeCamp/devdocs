@@ -126,6 +126,7 @@ th, td {
   padding-bottom: -webkit-calc(.3em + 1px);
   padding-bottom:         calc(.3em + 1px);
   text-align: left;
+  white-space: normal !important;
 }
 
 th {

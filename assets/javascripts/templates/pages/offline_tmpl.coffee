@@ -52,7 +52,7 @@ app.templates.offlineDoc = (doc, status) ->
   html = """
     <tr data-slug="#{doc.slug}"#{if outdated then ' class="_highlight"' else ''}>
       <td class="_docs-name _icon-#{doc.icon}">#{doc.fullName}</td>
-      <td class="_docs-size">#{Math.ceil(doc.db_size / 100000) / 10} MB</td>
+      <td class="_docs-size">#{Math.ceil(doc.db_size / 100000) / 10}&nbsp;<small>MB</small></td>
   """
 
   html += if !(status and status.installed)

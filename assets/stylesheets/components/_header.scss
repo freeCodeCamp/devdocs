@@ -146,7 +146,7 @@
   &:before {
     position: absolute;
     z-index: 1;
-    top: 1rem;
+    top: calc(1rem - 1px);
     left: 1rem;
     opacity: .4;
     pointer-events: none;
