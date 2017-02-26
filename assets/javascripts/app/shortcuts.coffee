@@ -15,6 +15,9 @@ class app.Shortcuts
     $.off document, 'keypress', @onKeypress
     return
 
+  swapArrowKeysBehavior: ->
+    app.settings.get('arrowScroll')
+
   showTip: ->
     app.showTip('KeyNav')
     @showTip = null
@@ -40,7 +43,9 @@ class app.Shortcuts
       event.preventDefault() if result is false
     return
 
-  handleKeydownEvent: (event) ->
+  handleKeydownEvent: (event, _force) ->
+    return @handleKeydownAltEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+
     if not event.target.form and (48 <= event.which <= 57 or 65 <= event.which <= 90)
       @trigger 'typing'
       return
@@ -100,7 +105,9 @@ class app.Shortcuts
         @trigger 'pageBottom'
         false
 
-  handleKeydownShiftEvent: (event) ->
+  handleKeydownShiftEvent: (event, _force) ->
+    return @handleKeydownEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+
     if not event.target.form and 65 <= event.which <= 90
       @trigger 'typing'
       return
@@ -118,7 +125,9 @@ class app.Shortcuts
           @trigger 'altDown'
           false
 
-  handleKeydownAltEvent: (event) ->
+  handleKeydownAltEvent: (event, _force) ->
+    return @handleKeydownEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+
     switch event.which
       when 9
         @trigger 'altRight', event

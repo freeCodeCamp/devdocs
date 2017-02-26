@@ -15,6 +15,7 @@ class app.views.SettingsPage extends app.View
     settings = {}
     settings.dark = app.settings.get('dark')
     settings.smoothScroll = !app.settings.get('fastScroll')
+    settings.arrowScroll = app.settings.get('arrowScroll')
     settings[layout] = app.settings.hasLayout(layout) for layout in LAYOUTS
     settings
 
@@ -40,6 +41,10 @@ class app.views.SettingsPage extends app.View
     app.settings.set('fastScroll', !enable)
     return
 
+  toggle: (name, enable) ->
+    app.settings.set(name, enable)
+    return
+
   onChange: (event) =>
     input = event.target
     switch input.name
@@ -49,6 +54,8 @@ class app.views.SettingsPage extends app.View
         @toggleLayout input.value, input.checked
       when 'smoothScroll'
         @toggleSmoothScroll input.checked
+      else
+        @toggle input.name, input.checked
     return
 
   onRoute: (route) =>
