@@ -91,9 +91,6 @@
     "Added search abbreviations (e.g. <code class=\"_label\">$</code> is an alias for <code class=\"_label\">jQuery</code>).\n<a href=\"/help#abbreviations\">Click here</a> to see the full list. Feel free to suggest more on <a href=\"https://github.com/Thibaut/devdocs/issues/new\" target=\"_blank\" rel=\"noopener\">GitHub</a>.",
     "Added <code class=\"_label\">shift + &darr;/&uarr;</code> shortcut for scrolling (same as <code class=\"_label\">alt + &darr;/&uarr;</code>)."
   ], [
-    "2015-07-12",
-    "New sponsors: <a href=\"http://out.devdocs.io/s/jetbrains\">JetBrains</a> and <a href=\"http://out.devdocs.io/s/code-school\">Code School</a>\nIf you like DevDocs, please take a moment to check out their products — they're awesome!"
-  ], [
     "2015-07-05",
     "New documentations: <a href=\"/drupal/\">Drupal</a>, <a href=\"/vue/\">Vue.js</a>, <a href=\"/phaser/\">Phaser</a> and <a href=\"/webpack/\">webpack</a>"
   ], [
