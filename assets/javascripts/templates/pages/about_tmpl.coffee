@@ -101,7 +101,7 @@ credits = [
     'https://www.apache.org/licenses/LICENSE-2.0'
   ], [
     'Async',
-    '2010-2016 Caolan McMahon',
+    '2010-2017 Caolan McMahon',
     'MIT',
     'https://raw.githubusercontent.com/caolan/async/master/LICENSE'
   ], [
