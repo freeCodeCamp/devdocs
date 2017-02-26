@@ -111,6 +111,7 @@ class app.views.Mobile extends app.View
     return
 
   showDocPicker: ->
+    window.scrollTo 0, 0
     @docPickerTab.classList.add 'active'
     @settingsTab.classList.remove 'active'
     @docPicker.style.display = 'block'
@@ -118,6 +119,7 @@ class app.views.Mobile extends app.View
     return
 
   showSettings: ->
+    window.scrollTo 0, 0
     @docPickerTab.classList.remove 'active'
     @settingsTab.classList.add 'active'
     @docPicker.style.display = 'none'
