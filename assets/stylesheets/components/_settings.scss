@@ -66,15 +66,11 @@
 }
 
 @media (max-width: $maxWidth) {
-  ._settings-max-width { display: none; }
+  ._setting-max-width { display: none; }
 }
 
-._settings-link {
-  display: inline-block;
-  vertical-align: top;
-  margin-left: .375rem;
-
-  &[data-behavior="reset"] { color: $textColorRed; }
+._reset-link {
+  color: $textColorRed;
 }
 
 //

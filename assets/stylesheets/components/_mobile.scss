@@ -6,6 +6,8 @@
   font-size: 100%;
   background: $contentBackground;
 
+  ._hide-on-mobile { display: none; }
+
   // Layout
 
   body { -ms-overflow-style: -ms-autohiding-scrollbar; }
@@ -35,6 +37,8 @@
     border-right: 0;
     box-shadow: none;
   }
+
+  // Settings
 
   ._settings { position: relative; }
   ._settings-tabs { display: block; }
