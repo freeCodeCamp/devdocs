@@ -2,7 +2,7 @@ module Docs
   class Requirejs < UrlScraper
     self.name = 'RequireJS'
     self.type = 'requirejs'
-    self.release = '2.3.1'
+    self.release = '2.3.3'
     self.base_url = 'http://requirejs.org/docs/'
     self.links = {
       home: 'http://requirejs.org/',
