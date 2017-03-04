@@ -54,10 +54,11 @@
           release: @config.release
           whitelistUrls: [/devdocs/]
           includePaths: [/devdocs/]
-          ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/]
+          ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/, /Electron\.app/]
           tags:
             mode: if @isSingleDoc() then 'single' else 'full'
             iframe: (window.top isnt window).toString()
+            electron: window.process?.versions?.electron
           shouldSendCallback: =>
             try
               if @isInjectionError()
