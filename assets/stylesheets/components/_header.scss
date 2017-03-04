@@ -62,8 +62,11 @@
   z-index: 1;
   top: .25rem;
   right: .25rem;
-  width: 8rem;
+  width: 8.5rem;
   height: calc(13.75rem + 1px);
+  white-space: nowrap;
+  word-wrap: normal;
+  overflow-wrap: normal;
   font-size: .875rem;
   background: $contentBackground;
   border: 1px solid $headerBorder;
