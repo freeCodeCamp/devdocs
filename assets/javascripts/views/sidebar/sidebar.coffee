@@ -6,6 +6,9 @@ class app.views.Sidebar extends app.View
     select: 'onSelect'
     click: 'onClick'
 
+  @routes:
+    after: 'afterRoute'
+
   @shortcuts:
     altR: 'onAltR'
     escape: 'onEscape'
@@ -132,4 +135,8 @@ class app.views.Sidebar extends app.View
   onDocEnabled: ->
     @docList.onEnabled()
     @reset()
+    return
+
+  afterRoute: =>
+    @resetDisplay()
     return
