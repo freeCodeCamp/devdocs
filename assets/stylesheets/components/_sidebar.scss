@@ -40,9 +40,8 @@
     }
   }
 
-  ._sidebar-hidden & {
-    display: none;
-  }
+  ._sidebar-hidden & { display: none; }
+  &.show { display: block; }
 }
 
 ._resizer {
@@ -56,6 +55,7 @@
   cursor: col-resize;
 
   ._sidebar-hidden & { display: none; }
+  ._sidebar-hidden ._sidebar.show ~ & { display: block; }
 }
 
 //

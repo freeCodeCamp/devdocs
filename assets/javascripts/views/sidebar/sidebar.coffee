@@ -27,11 +27,11 @@ class app.views.Sidebar extends app.View
     return
 
   display: ->
-    @el.style.display = 'block'
+    @addClass 'show'
     return
 
   resetDisplay: ->
-    @el.style.display = '' unless @el.style.display is 'none'
+    @removeClass 'show'
     return
 
   showView: (view) ->
