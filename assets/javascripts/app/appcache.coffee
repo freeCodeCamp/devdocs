@@ -28,10 +28,9 @@ class app.AppCache
 
   reload: ->
     $.on @cache, 'updateready noupdate error', -> window.location = '/'
-    @updateInBackground()
     @notifyUpdate = false
     @notifyProgress = true
-    @cache.update()
+    try @cache.update() catch
     return
 
   onProgress: (event) =>
