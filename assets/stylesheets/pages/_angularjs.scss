@@ -25,12 +25,11 @@
   p > code, li > code, td > code { @extend %label; }
 
   .view-source, .improve-docs {
-    position: relative;
-    float: right;
-    line-height: 1.7rem;
+    order: 1;
+    display: block;
+    vertical-align: top;
     padding-left: 1em;
     font-size: .875rem;
-    background: $contentBackground;
   }
 
   .defs {
