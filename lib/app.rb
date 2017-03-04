@@ -281,6 +281,26 @@ class App < Sinatra::Application
     CODE
   end
 
+  %w(/maxcdn /maxcdn/).each do |path|
+    class_eval <<-CODE, __FILE__, __LINE__ + 1
+      get '#{path}' do
+        410
+      end
+    CODE
+  end
+
+  {
+    '/css-data-types/'    => '/css-values-units/',
+    '/css-at-rules/'      => '/?q=css%20%40',
+    '/html/article'       => '/html/element/article'
+  }.each do |path, url|
+    class_eval <<-CODE, __FILE__, __LINE__ + 1
+      get '#{path}' do
+        redirect '#{url}', 301
+      end
+    CODE
+  end
+
   get %r{\A/feed(?:\.atom)?\z} do
     content_type 'application/atom+xml'
     settings.news_feed
@@ -288,6 +308,8 @@ class App < Sinatra::Application
 
   DOC_REDIRECTS = {
     'iojs' => 'node',
+    'node_lts' => 'node~6_lts',
+    'node~4.2_lts' => 'node~4_lts',
     'yii1' => 'yii~1.1',
     'python2' => 'python~2.7',
     'xpath' => 'xslt_xpath',
@@ -310,8 +332,18 @@ class App < Sinatra::Application
       return redirect "/angularjs/api#{rest}", 301
     end
 
-    if rest && doc == 'dom' && rest.start_with?('/windowtimers')
-      return redirect "/dom#{rest.sub('windowtimers', 'windoworworkerglobalscope')}"
+    if rest && doc == 'dom'
+      if rest.start_with?('/windowtimers')
+        return redirect "/dom#{rest.sub('windowtimers', 'windoworworkerglobalscope')}", 301
+      end
+
+      if rest.start_with?('/window.')
+        return redirect "/dom#{rest.sub('window.', 'window/')}", 301
+      end
+
+      if rest.start_with?('/element.')
+        return redirect "/dom#{rest.sub('element.', 'element/')}", 301
+      end
     end
 
     return 404 unless @doc = find_doc(doc)
