@@ -35,7 +35,7 @@ class app.views.OfflinePage extends app.View
 
   refreshLinks: ->
     for action in ['install', 'update', 'uninstall']
-      @find("a[data-action-all='#{action}']").classList[if @find("a[data-action='#{action}']") then 'add' else 'remove']('_show')
+      @find("[data-action-all='#{action}']").classList[if @find("[data-action='#{action}']") then 'add' else 'remove']('_show')
     return
 
   docByEl: (el) ->
@@ -53,17 +53,15 @@ class app.views.OfflinePage extends app.View
     return
 
   onClick: (event) =>
-    return unless link = $.closestLink(event.target)
-    if action = link.getAttribute('data-action')
-      $.stopEvent(event)
-      doc = @docByEl(link)
+    el = event.target
+    if action = el.getAttribute('data-action')
+      doc = @docByEl(el)
       action = 'install' if action is 'update'
       doc[action](@onInstallSuccess.bind(@, doc), @onInstallError.bind(@, doc), @onInstallProgress.bind(@, doc))
-      link.parentNode.innerHTML = "#{link.textContent.replace(/e$/, '')}ing…"
-    else if action = link.getAttribute('data-action-all')
-      $.stopEvent(event)
+      el.parentNode.innerHTML = "#{el.textContent.replace(/e$/, '')}ing…"
+    else if action = el.getAttribute('data-action-all')
       app.db.migrate()
-      el.click() for el in @findAll("a[data-action='#{action}']")
+      $.click(el) for el in @findAll("[data-action='#{action}']")
     return
 
   onInstallSuccess: (doc) ->

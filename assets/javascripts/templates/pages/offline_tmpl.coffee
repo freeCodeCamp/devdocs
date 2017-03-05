@@ -2,13 +2,12 @@ app.templates.offlinePage = (docs) -> """
   <h1 class="_lined-heading">Offline Documentation</h1>
 
   <div class="_docs-tools">
-    <div class="_docs-links">
-      <a class="_docs-link" data-action-all="install">Install all</a><a class="_docs-link" data-action-all="update"><strong>Update all</strong></a><a class="_docs-link" data-action-all="uninstall">Uninstall all</a>
-    </div>
-    <label class="_docs-label">
-      <input type="checkbox" name="autoUpdate" value="1" #{if app.settings.get('manualUpdate') then '' else 'checked'}>
-      Check for and install updates automatically
+    <label>
+      <input type="checkbox" name="autoUpdate" value="1" #{if app.settings.get('manualUpdate') then '' else 'checked'}>Install updates automatically
     </label>
+    <div class="_docs-links">
+      <button type="button" class="_btn-link" data-action-all="install">Install all</button><button type="button" class="_btn-link" data-action-all="update"><strong>Update all</strong></button><button type="button" class="_btn-link" data-action-all="uninstall">Uninstall all</button>
+    </div>
   </div>
 
   <table class="_docs">
@@ -29,7 +28,7 @@ app.templates.offlinePage = (docs) -> """
     <dt>Can I close the tab/browser?
     <dd>#{canICloseTheTab()}
     <dt>What if I don't update a documentation?
-    <dd>You'll see outdated content and some pages will be missing or broken, since the rest of the app (including data for the search and sidebar) uses a different caching mechanism which is updated automatically.
+    <dd>You'll see outdated content and some pages will be missing or broken, because the rest of the app (including data for the search and sidebar) uses a different caching mechanism that's updated automatically.
     <dt>I found a bug, where do I report it?
     <dd>In the <a href="https://github.com/Thibaut/devdocs/issues">issue tracker</a>. Thanks!
     <dt>How do I uninstall/reset the app?
@@ -43,8 +42,8 @@ canICloseTheTab = ->
   if app.AppCache.isEnabled()
     """ Yes! Even offline, you can open a new tab, go to <a href="//devdocs.io">devdocs.io</a>, and everything will work as if you were online (provided you installed all the documentations you want to use beforehand). """
   else
-    """ No. AppCache isn't available in your browser (or is disabled) so loading <a href="//devdocs.io">devdocs.io</a> offline won't work.<br>
-        The current tab will continue to work, though (provided you installed all the documentations you want to use beforehand). """
+    """ No. AppCache isn't available in your browser (or is disabled), so loading <a href="//devdocs.io">devdocs.io</a> offline won't work.<br>
+        The current tab will continue to function even when you go offline (provided you installed all the documentations beforehand). """
 
 app.templates.offlineDoc = (doc, status) ->
   outdated = doc.isOutdated(status)
@@ -58,17 +57,17 @@ app.templates.offlineDoc = (doc, status) ->
   html += if !(status and status.installed)
     """
       <td>-</td>
-      <td><a data-action="install">Install</a></td>
+      <td><button type="button" class="_btn-link" data-action="install">Install</button></td>
     """
   else if outdated
     """
       <td><strong>Outdated</strong></td>
-      <td><a data-action="update">Update</a> - <a data-action="uninstall">Uninstall</a></td>
+      <td><button type="button" class="_btn-link _bold" data-action="update">Update</button> - <button type="button" class="_btn-link" data-action="uninstall">Uninstall</button></td>
     """
   else
     """
       <td>Up&#8209;to&#8209;date</td>
-      <td><a data-action="uninstall">Uninstall</a></td>
+      <td><button type="button" class="_btn-link" data-action="uninstall">Uninstall</button></td>
     """
 
   html + '</tr>'

@@ -233,7 +233,7 @@
 
 ._docs {
   width: 100%;
-  margin-top: .75rem;
+  margin-top: .25rem;
   line-height: 1.5rem;
 
   th, td {
@@ -242,8 +242,6 @@
     &:first-child { width: auto; }
     &:last-child { width: 12rem; }
   }
-
-  td > a { cursor: pointer; }
 }
 
 ._docs-name:before {
@@ -259,36 +257,31 @@
 }
 
 ._docs-tools {
-  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
   line-height: 1.5rem;
-}
+  margin-top: -.5rem;
 
-._docs-links {
-  float: right;
-  padding: .375rem .125rem;
-  @extend %box;
-}
-
-._docs-link {
-  display: none;
-  vertical-align: top;
-  padding: 0 .75rem;
-  cursor: pointer;
-
-  &._show { display: inline-block; }
-  &._show ~ &._show { border-left: 1px solid $boxBorder; }
-}
-
-._docs-label {
-  overflow: hidden;
-  margin: 1px 0;
-  padding: .375rem .5rem;
-
-  > input {
-    display: inline-block;
+  input[type=checkbox] {
     vertical-align: top;
     margin: .25rem;
   }
+}
+
+._docs-links {
+  flex: 0 0 auto;
+  margin: .5rem 0;
+  padding: .25rem 0;
+  @extend %box;
+
+  ._btn-link {
+    vertical-align: top;
+    padding: 0 .75rem;
+  }
+  ._btn-link:not(._show) { display: none; }
+  ._btn-link._show ~ ._btn-link._show { border-left: 1px solid $boxBorder; }
 }
 
 //
@@ -361,6 +354,7 @@
 // Utilities
 //
 
+._bold { font-weight: $boldFontWeight; }
 ._note { @extend %note; }
 ._note-green { @extend %note-green; }
 ._label { @extend %label; }
@@ -405,6 +399,18 @@
   &:active {
     background-color: $boxBackground;
     box-shadow: inset 0 1px 3px rgba(black, .15);
+  }
+}
+
+._btn-link {
+  line-height: inherit;
+  color: $linkColor;
+  text-decoration: $linkTextDecoration;
+  cursor: pointer;
+
+  &:hover {
+    color: $linkColorHover;
+    text-decoration: underline;
   }
 }
 
