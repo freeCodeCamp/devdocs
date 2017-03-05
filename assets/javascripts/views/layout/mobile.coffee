@@ -49,11 +49,11 @@ class app.views.Mobile extends app.View
     @forward.removeAttribute('hidden')
     $.on @forward, 'click', @onClickForward
 
-    @docPickerTab = $('a[data-tab="doc-picker"]')
+    @docPickerTab = $('button[data-tab="doc-picker"]')
     @docPickerTab.removeAttribute('hidden')
     $.on @docPickerTab, 'click', @onClickDocPickerTab
 
-    @settingsTab = $('a[data-tab="settings"]')
+    @settingsTab = $('button[data-tab="settings"]')
     @settingsTab.removeAttribute('hidden')
     $.on @settingsTab, 'click', @onClickSettingsTab
 

@@ -123,25 +123,18 @@
 ._settings-tabs {
   display: none; // mobile only
   margin-right: .5rem;
-  line-height: $headerHeight;
 }
 
 ._settings-tab {
   position: relative;
-  display: inline-block;
   vertical-align: top;
   padding: 0 .75rem;
-  cursor: pointer;
-
-  &, &:hover {
-    color: $textColorLight;
-    text-decoration: none;
-  }
+  line-height: $headerHeight;
+  color: $textColorLight;
 
   &.active {
     color: $textColor;
     font-weight: $boldFontWeight;
-    text-decoration: none;
     box-shadow: inset 0 -2px $linkColor;
   }
 }
