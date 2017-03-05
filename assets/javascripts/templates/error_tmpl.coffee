@@ -40,6 +40,9 @@ app.templates.offlineError = (reason, exception) ->
       """ An error occured when trying to open the IndexedDB database:<br>
           <code class="_label">#{exception.name}: #{exception.message}</code><br>
           This could be because you're browsing in private mode or have disallowed offline storage on the domain. """
+    when 'version'
+      """ The IndexedDB database was modified with a newer version of the app.<br>
+          <a href="#" data-behavior="reload">Reload the page</a> to use offline mode. """
     when 'empty'
       """ The IndexedDB database appears to be corrupted. Try <a href="#" data-behavior="reset">resetting the app</a>. """
 

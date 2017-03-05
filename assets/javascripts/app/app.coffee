@@ -201,7 +201,6 @@
     return if @quotaExceeded
     @quotaExceeded = true
     new app.views.Notif 'QuotaExceeded', autoHide: null
-    Raven.captureMessage 'QuotaExceededError', level: 'warning'
     return
 
   onCookieBlocked: (key, value, actual) ->
