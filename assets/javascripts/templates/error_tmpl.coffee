@@ -22,25 +22,28 @@ app.templates.bootError = ->
         """ Check your Internet connection and try <a href="#" data-behavior="reload">reloading</a>.<br>
             If you keep seeing this, you're likely behind a proxy or firewall that blocks cross-domain requests. """
 
-app.templates.offlineError = (reason) ->
+app.templates.offlineError = (reason, exception) ->
   if reason is 'cookie_blocked'
     return error """ Cookies must be enabled to use offline mode. """
 
   reason = switch reason
     when 'not_supported'
-      """ Unfortunately your browser either doesn't support IndexedDB or does not make it available. """
+      """ DevDocs requires IndexedDB to cache documentations for offline access.<br>
+          Unfortunately your browser either doesn't support IndexedDB or doesn't make it available. """
+    when 'buggy'
+      """ DevDocs requires IndexedDB to cache documentations for offline access.<br>
+          Unfortunately your browser's implementation of IndexedDB contains bugs that prevent DevDocs from using it. """
+    when 'exception'
+      """ An error occured when trying to open the IndexedDB database:<br>
+          <code class="_label">#{exception.name}: #{exception.message}</code> """
     when 'cant_open'
-      """ Although your browser supports IndexedDB, DevDocs couldn't open the database.<br>
+      """ An error occured when trying to open the IndexedDB database:<br>
+          <code class="_label">#{exception.name}: #{exception.message}</code><br>
           This could be because you're browsing in private mode or have disallowed offline storage on the domain. """
     when 'empty'
-      """ Although your browser supports IndexedDB, DevDocs couldn't properly set up the database.<br>
-          This could be because the database is corrupted. Try <a href="#" data-behavior="reset">resetting the app</a>. """
-    when 'apple'
-      """ Unfortunately Safari's implementation of IndexedDB is <a href="https://bugs.webkit.org/show_bug.cgi?id=136937">badly broken</a>.<br>
-          This message will automatically go away when Apple fix their code. """
+      """ The IndexedDB database appears to be corrupted. Try <a href="#" data-behavior="reset">resetting the app</a>. """
 
-  error """ Offline mode is unavailable. """,
-        """ DevDocs requires IndexedDB to cache documentations for offline access.<br>#{reason} """
+  error 'Offline mode is unavailable.', reason
 
 app.templates.unsupportedBrowser = """
   <div class="_fail">

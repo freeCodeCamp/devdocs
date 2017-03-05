@@ -17,8 +17,8 @@ class app.DB
       req.onsuccess = @onOpenSuccess
       req.onerror = @onOpenError
       req.onupgradeneeded = @onUpgradeNeeded
-    catch
-      @onOpenError()
+    catch error
+      @fail 'error', error
     return
 
   onOpenSuccess: (event) =>
@@ -26,18 +26,16 @@ class app.DB
 
     if db.objectStoreNames.length is 0
       try db.close()
-      @reason = 'empty'
-      @onOpenError()
+      @fail 'empty'
       return
 
     unless @checkedBuggyIDB
       @checkedBuggyIDB = true
       try
         @idbTransaction(db, stores: $.makeArray(db.objectStoreNames)[0..1], mode: 'readwrite').abort() # https://bugs.webkit.org/show_bug.cgi?id=136937
-      catch
+      catch error
         try db.close()
-        @reason = 'apple'
-        @onOpenError()
+        @fail 'buggy', error
         return
 
     @runCallbacks(db)
@@ -46,17 +44,25 @@ class app.DB
     return
 
   onOpenError: (event) =>
-    event?.preventDefault()
+    event.preventDefault()
     @open = false
+    error = event.target.error
 
-    if event?.target?.error?.name is 'QuotaExceededError'
+    if error.name is 'QuotaExceededError'
       @reset()
       @db()
       app.onQuotaExceeded()
     else
-      @useIndexedDB = false
-      @reason or= 'cant_open'
-      @runCallbacks()
+      @fail 'cant_open', error
+    return
+
+  fail: (reason, error) ->
+    @useIndexedDB = false
+    @reason or= reason
+    @error or= error
+    console.error? 'IDB error', error if error
+    @runCallbacks()
+    Raven.captureException error, level: 'warning' if error
     return
 
   runCallbacks: (db) ->

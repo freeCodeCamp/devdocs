@@ -18,7 +18,7 @@ class app.views.OfflinePage extends app.View
     app.docs.getInstallStatuses (statuses) =>
       return unless @activated
       if statuses is false
-        @html @tmpl('offlineError', app.db.reason)
+        @html @tmpl('offlineError', app.db.reason, app.db.error)
       else
         html = ''
         html += @renderDoc(doc, statuses[doc.slug]) for doc in app.docs.all()
