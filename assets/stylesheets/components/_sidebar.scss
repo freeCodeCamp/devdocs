@@ -97,6 +97,7 @@
   cursor: default;
   background: $sidebarBackground;
   box-shadow: inset -1px 0 $sidebarBorder;
+  @extend %truncate-text;
 
   &, &:hover {
     color: inherit;
@@ -126,17 +127,10 @@
   }
 }
 
-._list-item, ._list-text {
-  overflow: hidden;
-  white-space: nowrap;
-  word-wrap: normal;
-  overflow-wrap: normal;
-  text-overflow: ellipsis;
-}
-
 ._list-text {
   display: block;
   pointer-events: none;
+  @extend %truncate-text;
 }
 
 ._list-count, ._list-enable {

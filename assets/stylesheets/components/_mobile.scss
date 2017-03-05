@@ -23,7 +23,7 @@
     position: static;
     height: auto;
     margin: 0;
-    padding: .75rem 1rem 0;
+    padding: .75rem 1rem 1px;
 
     &:before { content: none; }
   }
@@ -46,14 +46,13 @@
 
   // Header
 
-  ._header-btn { width: 2.5rem; }
   ._header-btn[hidden] { display: block; }
 
   ._search {
     padding-right: .125rem;
     padding-left: .125rem;
 
-    &:before { left: .5rem; }
+    &:before { left: .625rem; }
   }
 
   ._search-tag { left: .5rem; }

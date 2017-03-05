@@ -21,6 +21,14 @@
   @extend %user-select-none;
 }
 
+%truncate-text {
+  overflow: hidden;
+  white-space: nowrap;
+  word-wrap: normal;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+}
+
 //
 // Boxes
 //

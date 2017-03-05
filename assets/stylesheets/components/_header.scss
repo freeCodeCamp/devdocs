@@ -31,6 +31,7 @@
 
 ._header-btn {
   position: relative;
+  flex: 0 0 auto;
   width: 2.25rem;
   height: 100%;
   color: $textColorLight;
@@ -220,10 +221,12 @@
   z-index: 2;
   top: .875rem;
   left: .875rem;
-  padding: 0 .5rem;
+  padding: 0 .375rem;
   line-height: 1.25rem;
-  font-size: .875rem;
+  max-width: 50%;
+  font-size: .8125rem;
   color: $textColorLight;
   background: darken($headerBackground, 5%);
   border-radius: 2px;
+  @extend %truncate-text;
 }
