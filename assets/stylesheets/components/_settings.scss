@@ -29,13 +29,15 @@
 //
 
 ._settings-fieldset {
+  display: -ms-flexbox;
   display: flex;
   margin: 1.5rem 0;
   line-height: 1.5rem;
 }
 
 ._settings-legend {
-  flex: 0 1 10rem;
+  -ms-flex: 0 1 10rem;
+      flex: 0 1 10rem;
   margin: 0;
   padding-right: .5rem;
   line-height: inherit;
@@ -46,7 +48,8 @@
 }
 
 ._settings-inputs {
-  flex: 1 1 20rem;
+  -ms-flex: 1 1 20rem;
+      flex: 1 1 20rem;
 }
 
 ._settings-label {

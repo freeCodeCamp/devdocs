@@ -80,10 +80,14 @@
 //
 
 ._intro {
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -ms-flex-direction: column;
+      flex-direction: column;
+    -ms-flex-pack: center;
   justify-content: center;
-  align-items: center;
+   -ms-flex-align: center;
+      align-items: center;
   min-height: calc(100vh - 2.375rem);
 
   ._sidebar-hidden & {
@@ -257,10 +261,14 @@
 }
 
 ._docs-tools {
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+    -ms-flex-pack: justify;
   justify-content: space-between;
-  align-items: center;
+  -ms-flex-align: center;
+     align-items: center;
   line-height: 1.5rem;
   margin-top: -.5rem;
 
@@ -271,7 +279,8 @@
 }
 
 ._docs-links {
-  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
   margin: .5rem 0;
   padding: .25rem 0;
   @extend %box;

@@ -7,6 +7,7 @@
   z-index: $headerZ;
   top: 0;
   left: 0;
+  display: -ms-flexbox;
   display: flex;
   width: $sidebarWidth;
   height: $headerHeight;
@@ -141,7 +142,8 @@
 //
 
 ._search {
-  flex-grow: 1;
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
   position: relative;
   height: 100%;
   padding: .5rem 0 .5rem .5rem;
