@@ -339,6 +339,9 @@ $.popup = (value) ->
 $.isMac = ->
   navigator.userAgent?.indexOf('Mac') >= 0
 
+$.isIE = ->
+  navigator.userAgent?.indexOf('MSIE') >= 0 || navigator.userAgent?.indexOf('rv:11.0') >= 0
+
 HIGHLIGHT_DEFAULTS =
   className: 'highlight'
   delay: 1000

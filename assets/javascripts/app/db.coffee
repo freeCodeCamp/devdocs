@@ -3,6 +3,7 @@ class app.DB
   VERSION = 15
 
   constructor: ->
+    @versionMultipler = if $.isIE() then 1e5 else 1e9
     @useIndexedDB = @useIndexedDB()
     @callbacks = []
 
@@ -13,12 +14,12 @@ class app.DB
 
     try
       @open = true
-      req = indexedDB.open(NAME, VERSION * 1e9 + @userVersion())
+      req = indexedDB.open(NAME, VERSION * @versionMultipler + @userVersion())
       req.onsuccess = @onOpenSuccess
       req.onerror = @onOpenError
       req.onupgradeneeded = @onUpgradeNeeded
     catch error
-      @fail 'error', error
+      @fail 'exception', error
     return
 
   onOpenSuccess: (event) =>
@@ -79,10 +80,10 @@ class app.DB
     return
 
   handleVersionMismatch: (actualVersion) ->
-    if Math.floor(actualVersion / 1e9) isnt VERSION
+    if Math.floor(actualVersion / @versionMultipler) isnt VERSION
       @fail 'version'
     else
-      @setUserVersion actualVersion - VERSION * 1e9
+      @setUserVersion actualVersion - VERSION * @versionMultipler
       @db()
     return
 
