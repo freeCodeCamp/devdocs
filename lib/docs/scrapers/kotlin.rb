@@ -1,7 +1,7 @@
 module Docs
   class Kotlin < UrlScraper
     self.type = 'kotlin'
-    self.release = '1.0.4'
+    self.release = '1.1.0'
     self.base_url = 'https://kotlinlang.org/'
     self.root_path = 'api/latest/jvm/stdlib/index.html'
     self.links = {
@@ -14,6 +14,7 @@ module Docs
     options[:container] = '.global-content'
 
     options[:only_patterns] = [/\Adocs\/tutorials\//, /\Adocs\/reference\//, /\Aapi\/latest\/jvm\/stdlib\//]
+    options[:skip_patterns] = [/stdlib\/org\./]
     options[:skip] = %w(
       api/latest/jvm/stdlib/alltypes/index.html
       docs/
@@ -24,7 +25,7 @@ module Docs
     options[:replace_paths] = { 'api/latest/jvm/stdlib/' => 'api/latest/jvm/stdlib/index.html' }
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2016 JetBrains s.r.o.<br>
+      &copy; 2010&ndash;2017 JetBrains s.r.o.<br>
       Licensed under the Apache License, Version 2.0.
     HTML
   end
