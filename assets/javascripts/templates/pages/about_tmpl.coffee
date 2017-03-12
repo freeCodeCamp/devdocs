@@ -581,9 +581,9 @@ credits = [
     'https://raw.githubusercontent.com/jashkenas/underscore/master/LICENSE'
   ], [
     'Vagrant',
-    '2010-2016 Mitchell Hashimoto',
-    'MIT',
-    'https://raw.githubusercontent.com/mitchellh/vagrant/master/LICENSE'
+    '2010-2017 Mitchell Hashimoto',
+    'MPL',
+    'https://raw.githubusercontent.com/mitchellh/vagrant/master/website/LICENSE.md'
   ], [
     'Vue.js',
     '2013-2017 Evan You, Vue.js contributors',

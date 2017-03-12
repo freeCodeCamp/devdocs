@@ -3,12 +3,12 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         if slug.start_with?('push/')
-          name = at_css('h2').try(:content)
+          name = at_css('#main-content h2').try(:content)
         elsif slug.start_with?('cli/')
-          name = at_css('h1 + p > strong > code').try(:content).try(:[], /\s*vagrant\s+[\w\-]+/)
+          name = at_css('#main-content h1 + p > strong > code').try(:content).try(:[], /\s*vagrant\s+[\w\-]+/)
         end
 
-        name || at_css('h1').content
+        name || at_css('#main-content h1').content
       end
 
       def get_type
