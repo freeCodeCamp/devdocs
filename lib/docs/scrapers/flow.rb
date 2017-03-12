@@ -1,7 +1,7 @@
 module Docs
   class Flow < React
     self.type = 'react'
-    self.release = '0.37.4'
+    self.release = '0.41.0'
     self.base_url = 'https://flowtype.org/docs/'
     self.root_path = 'getting-started.html'
     self.links = {
