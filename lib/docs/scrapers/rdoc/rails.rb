@@ -44,16 +44,16 @@ module Docs
       /\ARails\/Generators\/Testing/]
 
     options[:attribution] = <<-HTML
-      &copy; 2004&ndash;2016 David Heinemeier Hansson<br>
+      &copy; 2004&ndash;2017 David Heinemeier Hansson<br>
       Licensed under the MIT License.
     HTML
 
     version '5.0' do
-      self.release = '5.0.1'
+      self.release = '5.0.2'
     end
 
     version '4.2' do
-      self.release = '4.2.7'
+      self.release = '4.2.8'
     end
 
     version '4.1' do
