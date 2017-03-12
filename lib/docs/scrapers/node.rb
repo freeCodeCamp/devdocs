@@ -23,7 +23,7 @@ module Docs
     HTML
 
     version do
-      self.release = '7.6.0'
+      self.release = '7.7.2'
       self.base_url = 'https://nodejs.org/dist/latest-v7.x/docs/api/'
     end
 
