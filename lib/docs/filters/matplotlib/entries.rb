@@ -18,13 +18,16 @@ module Docs
         name.remove! 'mpl_toolkits.'
         name.remove! ' API'
         name.remove! %r{ \(.*\)}
-        name.downcase!
         name
       end
 
       def get_type
         return TYPE_BY_SLUG[slug] if TYPE_BY_SLUG.key?(slug)
-        name.split('.').first
+        type = name.split('.').first
+        type.downcase!
+        type.remove! ' module'
+        type.remove! ' class'
+        type
       end
 
       def additional_entries
@@ -32,19 +35,19 @@ module Docs
 
         css('.class > dt[id]', '.exception > dt[id]', '.attribute > dt[id]').each do |node|
           entry_name = node['id'].remove('matplotlib.').remove('mpl_toolkits.')
-          entries << [entry_name, node['id']]
+          entries << [entry_name, node['id']] unless entry_name.casecmp(name) == 0
         end
 
         css('.data > dt[id]').each do |node|
           if node['id'].split('.').last.upcase! # skip constants
             entry_name = node['id'].remove('matplotlib.').remove('mpl_toolkits.')
-            entries << [entry_name, node['id']]
+            entries << [entry_name, node['id']] unless entry_name.casecmp(name) == 0
           end
         end
 
         css('.function > dt[id]', '.method > dt[id]', '.classmethod > dt[id]').each do |node|
           entry_name = node['id'].remove('matplotlib.').remove('mpl_toolkits.')
-          entries << [entry_name + '()', node['id']]
+          entries << [entry_name + '()', node['id']] unless entry_name.casecmp(name) == 0
         end
 
         entries
