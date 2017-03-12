@@ -232,8 +232,8 @@ credits = [
   ], [
     'Express',
     '2016 StrongLoop, IBM, and other expressjs.com contributors.',
-    'Unknown',
-    'https://github.com/expressjs/expressjs.com/issues/413'
+    'CC BY-SA',
+    'https://raw.githubusercontent.com/expressjs/expressjs.com/gh-pages/LICENSE.md'
   ], [
     'Fish',
     '2005-2009 Axel Liljencrantz',

@@ -6,7 +6,7 @@ module Docs
           node.before(node.children).remove
         end
 
-        doc.child.remove while doc.child.name != 'h1'
+        @doc = at_css('#page-doc') unless root_page?
 
         at_css('h1').remove if root_page?
 

@@ -2,7 +2,7 @@ module Docs
   class Express < UrlScraper
     self.name = 'Express'
     self.type = 'express'
-    self.release = '4.14.0'
+    self.release = '4.15.2'
     self.base_url = 'http://expressjs.com/en/'
     self.root_path = '4x/api.html'
     self.initial_paths = %w(
@@ -26,7 +26,8 @@ module Docs
       /\Aadvanced/ ]
 
     options[:attribution] = <<-HTML
-      &copy; 2016 StrongLoop, IBM, and other expressjs.com contributors.
+      &copy; 2016 StrongLoop, IBM, and other expressjs.com contributors.<br>
+      Licensed under the Creative Commons Attribution-ShareAlike License v3.0.
     HTML
   end
 end
