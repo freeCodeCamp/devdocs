@@ -220,7 +220,6 @@ module Docs
         def store_pages(store)
           instrument 'info.doc', msg: 'Building internal urls...'
           with_internal_urls do
-            puts @internal_urls
             instrument 'info.doc', msg: 'Continuing...'
             super
           end
