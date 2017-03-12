@@ -23,12 +23,12 @@ module Docs
     end
 
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2016 The Apache Software Foundation<br>
+      &copy; 2012&ndash;2017 The Apache Software Foundation<br>
       Licensed under the Apache License 2.0.
     HTML
 
     version '6' do
-      self.release = '6.4.0'
+      self.release = '6.5.0'
       self.base_url = 'https://cordova.apache.org/docs/en/6.x/'
     end
   end
