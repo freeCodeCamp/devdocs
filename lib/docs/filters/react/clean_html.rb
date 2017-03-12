@@ -48,7 +48,7 @@ module Docs
           node.before(node.children).remove
         end
 
-        css('a pre').each do |node|
+        css('a pre', 'h3 .propType').each do |node|
           node.name = 'code'
         end
 
