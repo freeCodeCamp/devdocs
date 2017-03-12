@@ -9,7 +9,12 @@ module Docs
           css('meta', '.colophon').remove
         end
 
-        css('> section', '.deep-link > a').each do |node|
+        css('a.deep-link[id]').each do |node|
+          node.parent['id'] = node['id']
+          node.remove
+        end
+
+        css('> section').each do |node|
           node.before(node.children).remove
         end
 

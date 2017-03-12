@@ -26,13 +26,13 @@ module Docs
       def additional_entries
         case slug
         when 'files/package.json'
-          css('#page > h2[id]').each_with_object [] do |node, entries|
+          css('#page > h2').each_with_object [] do |node, entries|
             next if node.content =~ /\A[A-Z]/
-            entries << ["package.json: #{node.content}", node['id']]
+            entries << ["package.json: #{node.content}", node.at_css('.deep-link')['id']]
           end
         when 'misc/config'
-          css('#config-settings ~ h3[id]').map do |node|
-            ["config: #{node.content}", node['id']]
+          css('h2:contains("Config Settings") ~ h3').map do |node|
+            ["config: #{node.content}", node.at_css('.deep-link')['id']]
           end
         else
           []
