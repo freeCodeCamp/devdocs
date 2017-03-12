@@ -20,12 +20,12 @@ module Docs
     options[:skip] = %w(deprecated.html advanced_legacy.html)
 
     version '2' do
-      self.release = '2.1.0'
+      self.release = '2.2.0'
       self.base_url = 'http://twig.sensiolabs.org/doc/2.x/'
     end
 
     version '1' do
-      self.release = '1.31.0'
+      self.release = '1.32.0'
       self.base_url = 'http://twig.sensiolabs.org/doc/1.x/'
     end
   end
