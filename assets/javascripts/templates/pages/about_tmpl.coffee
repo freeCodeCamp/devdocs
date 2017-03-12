@@ -601,7 +601,7 @@ credits = [
     'https://raw.githubusercontent.com/yarnpkg/yarn/master/LICENSE'
   ], [
     'Yii',
-    '2008-2016 by Yii Software LLC',
+    '2008-2017 by Yii Software LLC',
     'BSD',
     'https://raw.githubusercontent.com/yiisoft/yii/master/LICENSE'
   ]
