@@ -43,7 +43,7 @@ module Docs
           node.name = 'h1'
         end
 
-        css('div.partintro', 'div.section').each do |node|
+        css('div.partintro', 'div.section', 'h1 a').each do |node|
           node.before(node.children).remove
         end
 

@@ -446,9 +446,9 @@ credits = [
     'https://raw.githubusercontent.com/phoenixframework/phoenix/master/LICENSE.md'
   ], [
     'PHP',
-    '1997-2016 The PHP Documentation Group',
+    '1997-2017 The PHP Documentation Group',
     'CC BY',
-    'https://creativecommons.org/licenses/by/3.0/'
+    'https://secure.php.net/manual/en/copyright.php'
   ], [
     'PHPUnit',
     '2005-2016 Sebastian Bergmann',
