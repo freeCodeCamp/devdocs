@@ -2,6 +2,10 @@ module Docs
   class Python < FileScraper
     self.type = 'sphinx'
     self.root_path = 'library/index.html'
+    self.links = {
+      home: 'https://www.python.org/',
+      code: 'https://github.com/python/cpython'
+    }
 
     options[:only_patterns] = [/\Alibrary\//]
 
@@ -15,12 +19,12 @@ module Docs
       library/sunau.html)
 
     options[:attribution] = <<-HTML
-      &copy; 1990&ndash;2015 Python Software Foundation<br>
+      &copy; 2001&ndash;2017 Python Software Foundation<br>
       Licensed under the PSF License.
     HTML
 
     version '3.6' do
-      self.release = '3.6.0'
+      self.release = '3.6.1'
       self.dir = '/Users/Thibaut/DevDocs/Docs/Python36' # docs.python.org/3.6/download.html
       self.base_url = 'https://docs.python.org/3.6/'
 
@@ -28,7 +32,7 @@ module Docs
     end
 
     version '3.5' do
-      self.release = '3.5.2'
+      self.release = '3.5.3'
       self.dir = '/Users/Thibaut/DevDocs/Docs/Python35' # docs.python.org/3.5/download.html
       self.base_url = 'https://docs.python.org/3.5/'
 
@@ -36,7 +40,7 @@ module Docs
     end
 
     version '2.7' do
-      self.release = '2.7.12'
+      self.release = '2.7.13'
       self.dir = '/Users/Thibaut/DevDocs/Docs/Python27' # docs.python.org/2.7/download.html
       self.base_url = 'https://docs.python.org/2.7/'
 

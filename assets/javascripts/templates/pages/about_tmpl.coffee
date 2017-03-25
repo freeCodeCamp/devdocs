@@ -461,7 +461,7 @@ credits = [
     'http://www.postgresql.org/about/licence/'
   ], [
     'Python',
-    '1990-2015 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
+    '2001-2017 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
     'PSFL',
     'https://docs.python.org/3/license.html'
   ], [

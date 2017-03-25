@@ -60,7 +60,7 @@ module Docs
           next unless node['id'] || node.at_css('code, .classifier')
           links = []
           links << node.children.last.remove while node.children.last.try(:name) == 'a'
-          node.inner_html = "<code>#{node.content.strip}</code> "
+          node.inner_html = "<code>#{CGI::escapeHTML(node.content.strip)}</code> "
           links.reverse_each { |link| node << link }
         end
 
