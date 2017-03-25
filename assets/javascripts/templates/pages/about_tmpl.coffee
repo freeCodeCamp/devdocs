@@ -466,9 +466,9 @@ credits = [
     'https://docs.python.org/3/license.html'
   ], [
     'Q',
-    '2009-2015 Kristopher Michael Kowal and contributors',
+    '2009-2017 Kristopher Michael Kowal',
     'MIT',
-    'https://raw.githubusercontent.com/kriskowal/q/v1/LICENSE'
+    'https://raw.githubusercontent.com/kriskowal/q/master/LICENSE'
   ], [
     'Ramda',
     '2013-2016 Scott Sauyet and Michael Hurley',
