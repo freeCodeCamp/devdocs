@@ -371,7 +371,7 @@ credits = [
     'https://modernizr.com/license/'
   ], [
     'Moment.js',
-    '2011-2016 Tim Wood, Iskren Chernev, Moment.js contributors',
+    'JS Foundation and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/moment/moment/master/LICENSE'
   ], [
