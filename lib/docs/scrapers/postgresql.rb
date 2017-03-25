@@ -6,6 +6,10 @@ module Docs
     self.type = 'postgres'
     self.root_path = 'reference.html'
     self.initial_paths = %w(sql.html admin.html internals.html appendixes.html tutorial.html)
+    self.links = {
+      home: 'https://www.postgresql.org/',
+      code: 'https://git.postgresql.org/gitweb/?p=postgresql.git'
+    }
 
     html_filters.insert_before 'normalize_urls', 'postgresql/extract_metadata'
     html_filters.push 'postgresql/clean_html', 'postgresql/entries', 'title'
@@ -47,22 +51,22 @@ module Docs
       /\Aunsupported-features/ ]
 
     options[:attribution] = <<-HTML
-      &copy; 1996&ndash;2016 The PostgreSQL Global Development Group<br>
+      &copy; 1996&ndash;2017 The PostgreSQL Global Development Group<br>
       Licensed under the PostgreSQL License.
     HTML
 
     version '9.6' do
-      self.release = '9.6.0'
+      self.release = '9.6.2'
       self.base_url = 'https://www.postgresql.org/docs/9.6/static/'
     end
 
     version '9.5' do
-      self.release = '9.5.4'
+      self.release = '9.5.6'
       self.base_url = 'https://www.postgresql.org/docs/9.5/static/'
     end
 
     version '9.4' do
-      self.release = '9.4.9'
+      self.release = '9.4.11'
       self.base_url = 'https://www.postgresql.org/docs/9.4/static/'
     end
   end

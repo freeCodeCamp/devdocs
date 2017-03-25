@@ -456,9 +456,9 @@ credits = [
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'PostgreSQL',
-    '1996-2016 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
+    '1996-2017 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
-    'http://www.postgresql.org/about/licence/'
+    'https://www.postgresql.org/about/licence/'
   ], [
     'Python',
     '2001-2017 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
