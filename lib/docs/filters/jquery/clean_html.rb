@@ -18,6 +18,10 @@ module Docs
           end
         end
 
+        css('.page-header', 'h1 span').each do |node|
+          node.before(node.children).remove
+        end
+
         # Remove useless <header>
         css('.entry-header > .entry-title', 'header > .underline', 'header > h2:only-child').to_a.uniq.each do |node|
           node.parent.replace node

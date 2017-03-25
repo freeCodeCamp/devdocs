@@ -10,7 +10,7 @@ module Docs
 
     options[:root_title] = 'jQuery Mobile'
     options[:skip] = %w(/tabs /theme)
-    options[:skip_patterns].concat [/\A\/icons/, /cdn-cgi/i]
+    options[:skip_patterns] += [/\A\/icons/, /cdn-cgi/i]
     options[:replace_paths] = { '/select/' => '/selectmenu' }
 
     options[:fix_urls] = ->(url) do

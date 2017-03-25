@@ -8,12 +8,13 @@ module Docs
 
       def get_name
         name = at_css('h1').content.strip
-        name.gsub!(/ [A-Z]/) { |str| str.downcase! }
+        name.gsub!(/ [A-Z]/) { |str| str.downcase! } unless name.start_with?('Category')
         name.gsub! %r{[“”]}, '"'
         name
       end
 
       def get_type
+        return 'Categories' if slug.start_with?('category')
         return 'Ajax' if slug == 'Ajax_Events'
         categories = css 'span.category'
         types = categories.map { |node| node.at_css('a').content.strip }
