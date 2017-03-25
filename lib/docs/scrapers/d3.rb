@@ -16,7 +16,7 @@ module Docs
     HTML
 
     version '4' do
-      self.release = '4.7.2'
+      self.release = '4.7.4'
       self.base_url = 'https://github.com/d3/'
       self.root_path = 'd3/blob/master/API.md'
 
