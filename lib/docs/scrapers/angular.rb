@@ -14,6 +14,7 @@ module Docs
       index.html
       styleguide.html
       quickstart.html
+      cheatsheet.html
       guide/cheatsheet.html
       guide/style-guide.html)
 
@@ -25,7 +26,7 @@ module Docs
     }
 
     options[:fix_urls] = -> (url) do
-      url.sub! %r{\A(https://angular\.io/docs/.+/)index\.html\z}, '\1'
+      url.sub! %r{\A(https://(?:v2\.)?angular\.io/docs/.+/)index\.html\z}, '\1'
       url
     end
 
@@ -35,25 +36,21 @@ module Docs
     HTML
 
     stub 'api/' do
+      base_url = URL.parse(self.base_url)
       capybara = load_capybara_selenium
-      capybara.app_host = 'https://angular.io'
-      capybara.visit(URL.parse(self.base_url).path + 'api/')
+      capybara.app_host = base_url.origin
+      capybara.visit(base_url.path + 'api/')
       capybara.execute_script('return document.body.innerHTML')
     end
 
-    version '2 TypeScript' do
-      self.release = '2.4.7'
+    version '4 TypeScript' do
+      self.release = '4.0.0'
       self.base_url = 'https://angular.io/docs/ts/latest/'
     end
 
-    version '2 Dart' do
-      self.release = '2.2.4'
-      self.base_url = 'https://angular.io/docs/dart/latest/'
-
-      options[:skip_patterns] += [/angular2\.compiler/]
-      options[:skip_link] = ->(link) do
-        link.parent['class'].try(:include?, 'inherited') || link.parent.parent['class'].try(:include?, 'inherited')
-      end
+    version '2 TypeScript' do
+      self.release = '2.4.10'
+      self.base_url = 'https://v2.angular.io/docs/ts/latest/'
     end
 
     private
