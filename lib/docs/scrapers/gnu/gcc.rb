@@ -12,6 +12,7 @@ module Docs
     options[:title] = false
 
     options[:replace_paths] = {
+      'aarch64_002dfeature_002dmodifiers.html' => 'AArch64-Options.html',
       'AssemblerTemplate.html' => 'Extended-Asm.html',
       'AVR-Named-Address-Spaces.html' => 'Named-Address-Spaces.html',
       'AVR-Variable-Attributes.html' => 'Variable-Attributes.html',
@@ -46,13 +47,13 @@ module Docs
     }
 
     version '6' do
-      self.release = '6.2.0'
+      self.release = '6.3.0'
       self.dir = '/Users/Thibaut/DevDocs/Docs/gcc6'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '6 CPP' do
-      self.release = '6.2.0'
+      self.release = '6.3.0'
       self.dir = '/Users/Thibaut/DevDocs/Docs/gcpp6'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
