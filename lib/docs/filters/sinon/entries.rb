@@ -1,46 +1,27 @@
 module Docs
   class Sinon
     class EntriesFilter < Docs::EntriesFilter
+      def get_name
+        at_css('h1').content.strip
+      end
+
+      def get_type
+        name
+      end
+
       def additional_entries
-        entries = []
-        type = config = nil
+        css('h4 > code').each_with_object [] do |node, entries|
+          name = node.content.strip
+          name.sub! %r{\s*\(.*\);?}, '()'
+          name.sub! %r{\A(\w+\.\w+)\s+\=.*}, '\1'
+          name.remove! %r{\A.+?\=\s+}
+          name.remove! %r{\A\w+?\s}
+          name.remove! %r{;\z}
 
-        css('*').each do |node|
-          if node.name == 'h2'
-            config = false
-            type = node.content.strip
-            type.remove! 'Test '
-            type.remove! 'Sinon.JS '
-            type = type[0].upcase + type.from(1)
+          next if entries.any? { |entry| entry[0].casecmp(name) == 0 }
 
-            id = type.parameterize
-            node['id'] = id
-
-            entries << [type, id, 'Sections']
-          elsif node.name == 'h3' && node.content.include?('sinon.config')
-            config = true
-          elsif node.name == 'dl'
-            node.css('dt > code').each do |code|
-              name = code.content.strip
-              name.sub! %r{\(.*\);?}, '()'
-              name.sub! %r{\Aserver.(\w+)\s=.*\z}, 'server.\1'
-              name.remove! '`'
-              name.remove! %r{\A.+?\=\s+}
-              name.remove! %r{\A\w+?\s}
-              name.prepend 'sinon.config.' if config
-
-              next if name =~ /\s/
-              next if entries.any? { |entry| entry[0].casecmp(name) == 0 }
-
-              id = name.parameterize
-              code.parent['id'] = id
-
-              entries << [name, id, type]
-            end
-          end
+          entries << [name, node.parent['id']]
         end
-
-        entries
       end
     end
   end

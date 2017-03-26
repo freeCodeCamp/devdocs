@@ -531,9 +531,9 @@ credits = [
     'https://raw.githubusercontent.com/scikit-learn/scikit-learn/master/COPYING'
   ], [
     'Sinon',
-    '2010-2016 Christian Johansen',
+    '2010-2017 Christian Johansen',
     'BSD',
-    'https://raw.githubusercontent.com/cjohansen/Sinon.JS/master/LICENSE'
+    'https://raw.githubusercontent.com/sinonjs/sinon/master/LICENSE'
   ], [
     'Socket.io',
     '2014-2015 Automattic',
