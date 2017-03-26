@@ -170,10 +170,11 @@ $.scrollTo = (el, parent, position = 'center', options = {}) ->
   return unless parent.scrollHeight > parentHeight
 
   top = $.offset(el, parent).top
+  offsetTop = parent.firstElementChild.offsetTop
 
   switch position
     when 'top'
-      parent.scrollTop = top - (if options.margin? then options.margin else 20)
+      parent.scrollTop = top - offsetTop - (if options.margin? then options.margin else 0)
     when 'center'
       parent.scrollTop = top - Math.round(parentHeight / 2 - el.offsetHeight / 2)
     when 'continuous'
@@ -182,8 +183,8 @@ $.scrollTo = (el, parent, position = 'center', options = {}) ->
 
       # If the target element is above the visible portion of its scrollable
       # ancestor, move it near the top with a gap = options.topGap * target's height.
-      if top <= scrollTop + height * (options.topGap or 1)
-        parent.scrollTop = top - height * (options.topGap or 1)
+      if top - offsetTop <= scrollTop + height * (options.topGap or 1)
+        parent.scrollTop = top - offsetTop - height * (options.topGap or 1)
       # If the target element is below the visible portion of its scrollable
       # ancestor, move it near the bottom with a gap = options.bottomGap * target's height.
       else if top >= scrollTop + parentHeight - height * ((options.bottomGap or 1) + 1)

@@ -102,7 +102,7 @@ class app.views.Content extends app.View
     return if @isLoading()
     if @routeCtx.hash and el = @findTargetByHash @routeCtx.hash
       $.scrollToWithImageLock el, @scrollEl, 'top',
-        margin: 20 + if @scrollEl is @el then 0 else $.offset(@el).top
+        margin: if @scrollEl is @el then 0 else $.offset(@el).top
       $.highlight el, className: '_highlight'
     else
       @scrollTo @scrollMap[@routeCtx.state.id]
