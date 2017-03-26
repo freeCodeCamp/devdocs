@@ -26,7 +26,7 @@ module Docs
           node.inner_html = node.inner_html.strip_heredoc.strip
         end
 
-        css('dt > em', 'acronym', 'dfn', 'cite').each do |node|
+        css('dt > em', 'acronym', 'dfn', 'cite', 'h1 code').each do |node|
           node.before(node.children).remove
         end
 
