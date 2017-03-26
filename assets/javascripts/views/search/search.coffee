@@ -135,7 +135,8 @@ class app.views.Search extends app.View
 
   afterRoute: (name, context) =>
     @delay @searchUrl if context.hash
-    @autoFocus()
+    @delay @autoFocus
+    return
 
   extractHashValue: ->
     if (value = @getHashValue())?

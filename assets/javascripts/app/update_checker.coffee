@@ -5,7 +5,7 @@ class app.UpdateChecker
     $.on window, 'focus', @checkForUpdate
     app.appCache.on 'updateready', @onUpdateReady if app.appCache
 
-    @checkDocs()
+    setTimeout @checkDocs, 0
 
   check: ->
     if app.appCache
@@ -21,7 +21,7 @@ class app.UpdateChecker
     new app.views.Notif 'UpdateReady', autoHide: null
     return
 
-  checkDocs: ->
+  checkDocs: =>
     unless app.settings.get('manualUpdate')
       app.docs.updateInBackground()
     else

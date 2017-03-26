@@ -105,8 +105,10 @@
     @trigger 'ready'
     @router.start()
     @hideLoading()
-    @welcomeBack() unless @doc
-    @removeEvent 'ready bootError'
+    setTimeout =>
+      @welcomeBack() unless @doc
+      @removeEvent 'ready bootError'
+    , 50
     return
 
   initDoc: (doc) ->
