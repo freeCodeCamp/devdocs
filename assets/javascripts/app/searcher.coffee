@@ -113,6 +113,7 @@ class app.Searcher
     fuzzy_min_length: 3
 
   SEPARATORS_REGEXP = /#|::|:-|->|\$(?=\w)|\-(?=\w)|\:(?=\w)|\ [\/\-&]\ |:\ |\ /g
+  EOS_SEPARATORS_REGEXP = /(\w)[\-:]$/
   INFO_PARANTHESES_REGEXP = /\ \(\w+?\)$/
   EMPTY_PARANTHESES_REGEXP = /\(\)/
   EVENT_REGEXP = /\ event$/
@@ -134,6 +135,10 @@ class app.Searcher
       .replace EMPTY_PARANTHESES_REGEXP, EMPTY_STRING
       .replace WHITESPACE_REGEXP, EMPTY_STRING
 
+  @normalizeQuery: (string) ->
+    string = @normalizeString(string)
+    string.replace EOS_SEPARATORS_REGEXP, '$1.'
+
   constructor: (options = {}) ->
     @options = $.extend {}, DEFAULTS, options
 
@@ -149,7 +154,7 @@ class app.Searcher
     return
 
   setup: ->
-    query = @query = @constructor.normalizeString(@query)
+    query = @query = @constructor.normalizeQuery(@query)
     queryLength = query.length
     @dataLength = @data.length
     @matchers = [exactMatch]
