@@ -292,7 +292,8 @@ class App < Sinatra::Application
   {
     '/css-data-types/'    => '/css-values-units/',
     '/css-at-rules/'      => '/?q=css%20%40',
-    '/html/article'       => '/html/element/article'
+    '/html/article'       => '/html/element/article',
+    '/http-status-codes/' => '/http-status/'
   }.each do |path, url|
     class_eval <<-CODE, __FILE__, __LINE__ + 1
       get '#{path}' do
