@@ -1,4 +1,4 @@
-/*! Raven.js 3.11.0 (cb87941) | github.com/getsentry/raven-js */
+/*! Raven.js 3.13.1 (f55d281) | github.com/getsentry/raven-js */
 
 /*
  * Includes TraceKit
@@ -11,35 +11,6 @@
  */
 
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Raven = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-exports = module.exports = stringify
-exports.getSerialize = serializer
-
-function stringify(obj, replacer, spaces, cycleReplacer) {
-  return JSON.stringify(obj, serializer(replacer, cycleReplacer), spaces)
-}
-
-function serializer(replacer, cycleReplacer) {
-  var stack = [], keys = []
-
-  if (cycleReplacer == null) cycleReplacer = function(key, value) {
-    if (stack[0] === value) return "[Circular ~]"
-    return "[Circular ~." + keys.slice(0, stack.indexOf(value)).join(".") + "]"
-  }
-
-  return function(key, value) {
-    if (stack.length > 0) {
-      var thisPos = stack.indexOf(this)
-      ~thisPos ? stack.splice(thisPos + 1) : stack.push(this)
-      ~thisPos ? keys.splice(thisPos, Infinity, key) : keys.push(key)
-      if (~stack.indexOf(value)) value = cycleReplacer.call(this, key, value)
-    }
-    else stack.push(value)
-
-    return replacer == null ? value : replacer.call(this, key, value)
-  }
-}
-
-},{}],2:[function(_dereq_,module,exports){
 'use strict';
 
 function RavenConfigError(message) {
@@ -51,7 +22,7 @@ RavenConfigError.prototype.constructor = RavenConfigError;
 
 module.exports = RavenConfigError;
 
-},{}],3:[function(_dereq_,module,exports){
+},{}],2:[function(_dereq_,module,exports){
 'use strict';
 
 var wrapMethod = function(console, level, callback) {
@@ -90,16 +61,20 @@ module.exports = {
     wrapMethod: wrapMethod
 };
 
-},{}],4:[function(_dereq_,module,exports){
+},{}],3:[function(_dereq_,module,exports){
 (function (global){
 /*global XDomainRequest:false, __DEV__:false*/
 'use strict';
 
 var TraceKit = _dereq_(6);
-var RavenConfigError = _dereq_(2);
-var stringify = _dereq_(1);
+var stringify = _dereq_(7);
+var RavenConfigError = _dereq_(1);
+var utils = _dereq_(5);
 
-var wrapConsoleMethod = _dereq_(3).wrapMethod;
+var isError = utils.isError,
+    isObject = utils.isObject;
+
+var wrapConsoleMethod = _dereq_(2).wrapMethod;
 
 var dsnKeys = 'source protocol user pass host port path'.split(' '),
     dsnPattern = /^(?:(\w+):)?\/\/(?:(\w+)(:\w+)?@)?([\w\.-]+)(?::(\d+))?(\/.*)/;
@@ -141,7 +116,8 @@ function Raven() {
         collectWindowErrors: true,
         maxMessageLength: 0,
         stackTraceLimit: 50,
-        autoBreadcrumbs: true
+        autoBreadcrumbs: true,
+        sampleRate: 1
     };
     this._ignoreOnError = 0;
     this._isRavenInstalled = false;
@@ -176,7 +152,7 @@ Raven.prototype = {
     // webpack (using a build step causes webpack #1617). Grunt verifies that
     // this value matches package.json during build.
     //   See: https://github.com/getsentry/raven-js/issues/465
-    VERSION: '3.11.0',
+    VERSION: '3.13.1',
 
     debug: false,
 
@@ -1578,7 +1554,13 @@ Raven.prototype = {
             return;
         }
 
-        this._sendProcessedPayload(data);
+        if (typeof globalOptions.sampleRate === 'number') {
+            if (Math.random() < globalOptions.sampleRate) {
+                this._sendProcessedPayload(data);
+            }
+        } else {
+            this._sendProcessedPayload(data);
+        }
     },
 
     _getUuid: function () {
@@ -1674,24 +1656,18 @@ Raven.prototype = {
         if (!hasCORS) return;
 
         var url = opts.url;
-        function handler() {
-            if (request.status === 200) {
-                if (opts.onSuccess) {
-                    opts.onSuccess();
-                }
-            } else if (opts.onError) {
-                var err = new Error('Sentry error code: ' + request.status);
-                err.request = request;
-                opts.onError(err);
-            }
-        }
 
         if ('withCredentials' in request) {
             request.onreadystatechange = function () {
                 if (request.readyState !== 4) {
                     return;
+                } else if (request.status === 200) {
+                    opts.onSuccess && opts.onSuccess();
+                } else if (opts.onError) {
+                    var err = new Error('Sentry error code: ' + request.status);
+                    err.request = request;
+                    opts.onError(err);
                 }
-                handler();
             };
         } else {
             request = new XDomainRequest();
@@ -1700,7 +1676,16 @@ Raven.prototype = {
             url = url.replace(/^https?:/, '');
 
             // onreadystatechange not supported by XDomainRequest
-            request.onload = handler;
+            if (opts.onSuccess) {
+                request.onload = opts.onSuccess;
+            }
+            if (opts.onError) {
+                request.onerror = function () {
+                    var err = new Error('Sentry error code: XDomainRequest');
+                    err.request = request;
+                    opts.onError(err);
+                }
+            }
         }
 
         // NOTE: auth is intentionally sent as part of query string (NOT as custom
@@ -1749,23 +1734,10 @@ function isString(what) {
     return objectPrototype.toString.call(what) === '[object String]';
 }
 
-function isObject(what) {
-    return typeof what === 'object' && what !== null;
-}
 
 function isEmptyObject(what) {
     for (var _ in what) return false;  // eslint-disable-line guard-for-in, no-unused-vars
     return true;
-}
-
-// Sorta yanked from https://github.com/joyent/node/blob/aa3b4b4/lib/util.js#L560
-// with some tiny modifications
-function isError(what) {
-    var toString = objectPrototype.toString.call(what);
-    return isObject(what) &&
-        toString === '[object Error]' ||
-        toString === '[object Exception]' || // Firefox NS_ERROR_FAILURE Exceptions
-        what instanceof Error;
 }
 
 function each(obj, callback) {
@@ -2067,7 +2039,7 @@ Raven.prototype.setReleaseContext = Raven.prototype.setRelease;
 module.exports = Raven;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"1":1,"2":2,"3":3,"6":6}],5:[function(_dereq_,module,exports){
+},{"1":1,"2":2,"5":5,"6":6,"7":7}],4:[function(_dereq_,module,exports){
 (function (global){
 /**
  * Enforces a single instance of the Raven client, and the
@@ -2077,7 +2049,7 @@ module.exports = Raven;
 
 'use strict';
 
-var RavenConstructor = _dereq_(4);
+var RavenConstructor = _dereq_(3);
 
 // This is to be defensive in environments where window does not exist (see https://github.com/getsentry/raven-js/pull/785)
 var _window = typeof window !== 'undefined' ? window
@@ -2104,9 +2076,32 @@ Raven.afterLoad();
 module.exports = Raven;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"4":4}],6:[function(_dereq_,module,exports){
+},{"3":3}],5:[function(_dereq_,module,exports){
+'use strict';
+
+function isObject(what) {
+    return typeof what === 'object' && what !== null;
+}
+
+// Sorta yanked from https://github.com/joyent/node/blob/aa3b4b4/lib/util.js#L560
+// with some tiny modifications
+function isError(what) {
+    var toString = {}.toString.call(what);
+    return isObject(what) &&
+        toString === '[object Error]' ||
+        toString === '[object Exception]' || // Firefox NS_ERROR_FAILURE Exceptions
+        what instanceof Error;
+}
+
+module.exports = {
+    isObject: isObject,
+    isError: isError
+};
+},{}],6:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
+
+var utils = _dereq_(5);
 
 /*
  TraceKit - Cross brower stack traces
@@ -2134,7 +2129,7 @@ var _slice = [].slice;
 var UNKNOWN_FUNCTION = '?';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Error_types
-var ERROR_TYPES_RE = /^(?:Uncaught (?:exception: )?)?((?:Eval|Internal|Range|Reference|Syntax|Type|URI)Error): ?(.*)$/;
+var ERROR_TYPES_RE = /^(?:[Uu]ncaught (?:exception: )?)?(?:((?:Eval|Internal|Range|Reference|Syntax|Type|URI|)Error): )?(.*)$/;
 
 function getLocationHref() {
     if (typeof document === 'undefined' || typeof document.location === 'undefined')
@@ -2142,6 +2137,7 @@ function getLocationHref() {
 
     return document.location.href;
 }
+
 
 /**
  * TraceKit.report: cross-browser processing of unhandled exceptions
@@ -2260,7 +2256,9 @@ TraceKit.report = (function reportModuleWrapper() {
         if (lastExceptionStack) {
             TraceKit.computeStackTrace.augmentStackTraceWithInitialElement(lastExceptionStack, url, lineNo, message);
             processLastException();
-        } else if (ex) {
+        } else if (ex && utils.isError(ex)) {
+            // non-string `ex` arg; attempt to extract stack trace
+
             // New chrome and blink send along a real error object
             // Let's just report that like a normal error.
             // See: https://mikewest.org/2013/08/debugging-runtime-errors-with-window-onerror
@@ -2703,7 +2701,6 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
                 throw e;
             }
         }
-
         return {
             'name': ex.name,
             'message': ex.message,
@@ -2720,5 +2717,54 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
 module.exports = TraceKit;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[5])(5)
+},{"5":5}],7:[function(_dereq_,module,exports){
+'use strict';
+
+/*
+ json-stringify-safe
+ Like JSON.stringify, but doesn't throw on circular references.
+
+ Originally forked from https://github.com/isaacs/json-stringify-safe
+ version 5.0.1 on 3/8/2017 and modified for IE8 compatibility.
+ Tests for this are in test/vendor.
+
+ ISC license: https://github.com/isaacs/json-stringify-safe/blob/master/LICENSE
+*/
+
+exports = module.exports = stringify
+exports.getSerialize = serializer
+
+function indexOf(haystack, needle) {
+  for (var i = 0; i < haystack.length; ++i) {
+    if (haystack[i] === needle) return i;
+  }
+  return -1;
+}
+
+function stringify(obj, replacer, spaces, cycleReplacer) {
+  return JSON.stringify(obj, serializer(replacer, cycleReplacer), spaces)
+}
+
+function serializer(replacer, cycleReplacer) {
+  var stack = [], keys = []
+
+  if (cycleReplacer == null) cycleReplacer = function(key, value) {
+    if (stack[0] === value) return '[Circular ~]'
+    return '[Circular ~.' + keys.slice(0, indexOf(stack, value)).join('.') + ']'
+  }
+
+  return function(key, value) {
+    if (stack.length > 0) {
+      var thisPos = indexOf(stack, this);
+      ~thisPos ? stack.splice(thisPos + 1) : stack.push(this)
+      ~thisPos ? keys.splice(thisPos, Infinity, key) : keys.push(key)
+      if (~indexOf(stack, value)) value = cycleReplacer.call(this, key, value)
+    }
+    else stack.push(value)
+
+    return replacer == null ? value : replacer.call(this, key, value)
+  }
+}
+
+},{}]},{},[4])(4)
 });

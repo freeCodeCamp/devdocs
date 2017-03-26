@@ -60,7 +60,8 @@ class app.DB
     @error or= error
     console.error? 'IDB error', error if error
     @runCallbacks()
-    Raven.captureException error, level: 'warning' if error and reason == 'cant_open'
+    if error and reason is 'cant_open'
+      Raven.captureMessage "#{error.name}: #{error.message}", level: 'warning', fingerprint: [error.name]
     return
 
   onQuotaExceededError: ->

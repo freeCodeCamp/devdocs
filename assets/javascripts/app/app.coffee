@@ -58,7 +58,7 @@
           tags:
             mode: if @isSingleDoc() then 'single' else 'full'
             iframe: (window.top isnt window).toString()
-            electron: window.process?.versions?.electron
+            electron: (!!window.process?.versions?.electron).toString()
           shouldSendCallback: =>
             try
               if @isInjectionError()
