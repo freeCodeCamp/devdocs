@@ -31,6 +31,7 @@
 
   @media (-moz-overlay-scrollbars) { padding-left: .625rem; }
   @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { margin-left: 0; }
+  @supports (-ms-overflow-style: none) { margin-left: 0; }
 
   ._sidebar-hidden &:before {
     content: '';

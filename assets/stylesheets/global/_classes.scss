@@ -18,6 +18,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-indent: 100%;
+  word-wrap: normal;
+  overflow-wrap: normal;
   @extend %user-select-none;
 }
 
