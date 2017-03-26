@@ -8,6 +8,7 @@ module Docs
       def get_type
         product = at_css('.navbar--current-product').content.split(' ').first.capitalize.sub('db', 'DB')
         return product if %w(Chronograf Telegraf).include?(product)
+        return "#{product}: Tools" if subpath.include?('tools/')
 
         node = at_css('a.sidebar--page[href="index"]')
         node ||= at_css('.sidebar--section-title a[href="index"]').parent
