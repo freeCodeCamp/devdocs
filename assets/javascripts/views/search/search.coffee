@@ -41,7 +41,7 @@ class app.views.Search extends app.View
     return
 
   autoFocus: =>
-    unless app.isMobile()
+    unless app.isMobile() or $.isAndroid() or $.isIOS()
       @input.focus() unless document.activeElement is @input
     return
 
