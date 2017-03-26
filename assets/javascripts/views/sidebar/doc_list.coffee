@@ -167,7 +167,7 @@ class app.views.DocList extends app.View
     else if slug = event.target.getAttribute('data-enable')
       $.stopEvent(event)
       doc = app.disabledDocs.findBy('slug', slug)
-      app.enableDoc(doc, @onEnabled, @onEnabled)
+      app.enableDoc(doc, @onEnabled, @onEnabled) if doc
     return
 
   onEnabled: =>
