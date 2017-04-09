@@ -5,9 +5,13 @@ module Docs
         @doc = at_css('.content')
 
         at_css('h1').content = 'Vue.js' if root_page?
-        doc.child.before('<h1>Vue.js API</h1>') if slug == 'api/'
+        doc.child.before('<h1>Vue.js API</h1>') if slug == 'api/' || slug == 'api/index'
 
         css('.demo', '.guide-links', '.footer', '#ad').remove
+
+        css('.__cf_email__').each do |node|
+          node.replace(decode_cloudflare_email(node['data-cfemail']))
+        end
 
         # Remove code highlighting
         css('figure').each do |node|
