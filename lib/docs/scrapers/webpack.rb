@@ -4,9 +4,9 @@ module Docs
     self.type = 'webpack'
 
     version '2' do
-      self.release = '2.2.0'
+      self.release = '2.3.3'
       self.base_url = 'https://webpack.js.org/'
-      self.root_path = 'get-started/'
+      self.root_path = 'guides/get-started/'
       self.initial_paths = %w(
         concepts/
         guides/
@@ -25,7 +25,6 @@ module Docs
       options[:container] = '.page'
       options[:trailing_slash] = true
       options[:only_patterns] = [
-        /\Aget-started\//,
         /\Aconcepts\//,
         /\Aguides\//,
         /\Aapi\//,

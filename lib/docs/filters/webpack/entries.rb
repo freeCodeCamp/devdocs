@@ -8,7 +8,6 @@ module Docs
       end
 
       TYPE_BY_DIRECTORY = {
-        'get-started'   => 'Getting Started',
         'concepts'      => 'Concepts',
         'guides'        => 'Guides',
         'api'           => 'API',
@@ -23,8 +22,9 @@ module Docs
 
       def additional_entries
         if slug.start_with?('configuration')
-          css('h2[id] code').map do |node|
-            [node.content, node.parent['id']]
+          css('h2[id] code').each_with_object [] do |node, entries|
+            next if node.previous.try(:content).present?
+            entries << [node.content, node.parent['id']]
           end
         elsif slug.start_with?('api')
           css('.header[id] code').each_with_object [] do |node, entries|
