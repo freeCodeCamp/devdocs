@@ -17,7 +17,7 @@ module Docs
         end
 
         css('a.anchor', 'a.hashref').each do |node|
-          node.parent['id'] = node['name'] || node['id']
+          node.parent['id'] ||= node['name'] || node['id']
         end
 
         css('.highlight').each do |node|

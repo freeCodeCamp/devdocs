@@ -22,7 +22,8 @@ module Docs
           name.remove! %r{\w+\:}
           name.strip!
           name = 'createFragmentobject' if name.include?('createFragmentobject')
-          id = node.parent.at_css('.anchor')['name']
+          id = name.parameterize
+          node.parent['id'] = id
           type = if slug == 'react-component'
             'Reference: Component'
           elsif slug == 'react-api'
