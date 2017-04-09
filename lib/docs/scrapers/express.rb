@@ -18,7 +18,6 @@ module Docs
 
     options[:title] = false
     options[:root_title] = 'Express'
-    options[:container] = ->(filter) { filter.root_page? ? '#api-doc' : '.content' }
 
     options[:only_patterns] = [
       /\Astarter/,

@@ -2,6 +2,13 @@ module Docs
   class Express
     class CleanHtmlFilter < Filter
       def call
+        i = 1
+        n = at_css("#navmenu a[href='#{result[:path].split('/').last}']").parent
+        i += 1 while n && n = n.previous_element
+        at_css('h1')['data-level'] = i
+
+        @doc = at_css('#api-doc, .content')
+
         css('section', 'div.highlighter-rouge').each do |node|
           node.before(node.children).remove
         end
