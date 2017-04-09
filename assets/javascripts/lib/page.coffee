@@ -52,7 +52,7 @@ page.replace = (path, state, skipDispatch, init) ->
   page.dispatch(context) unless skipDispatch
   context.replaceState()
   updateCanonicalLink()
-  track() unless init or skipDispatch
+  track() unless skipDispatch
   context
 
 page.dispatch = (context) ->
@@ -185,7 +185,12 @@ updateCanonicalLink = ->
   @canonicalLink ||= document.head.querySelector('link[rel="canonical"]')
   @canonicalLink.setAttribute('href', "http://#{location.host}#{location.pathname}")
 
+trackers = []
+
+page.track = (fn) ->
+  trackers.push(fn)
+  return
+
 track = ->
-  ga?('send', 'pageview', location.pathname + location.search + location.hash)
-  _gauges?.push(['track'])
+  tracker.call() for tracker in trackers
   return
