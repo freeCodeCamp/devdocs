@@ -102,4 +102,6 @@
   .cleared { clear: both; } // CSS/box-shadow
 
   code > strong { font-weight: normal; }
+
+  #compat-desktop, #compat-mobile { @extend ._table; }
 }

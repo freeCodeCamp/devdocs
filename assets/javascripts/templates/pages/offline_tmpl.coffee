@@ -10,15 +10,17 @@ app.templates.offlinePage = (docs) -> """
     </div>
   </div>
 
-  <table class="_docs">
-    <tr>
-      <th>Documentation</th>
-      <th class="_docs-size">Size</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-    #{docs}
-  </table>
+  <div class="_table">
+    <table class="_docs">
+      <tr>
+        <th>Documentation</th>
+        <th class="_docs-size">Size</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+      #{docs}
+    </table>
+  </div>
   <p class="_note"><strong>Note:</strong> your browser may delete DevDocs's offline data if your computer is running low on disk space and you haven't used the app in a while. Load this page before going offline to make sure the data is still there.
   <h2 class="_block-heading">Questions & Answers</h2>
   <dl>

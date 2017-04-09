@@ -373,6 +373,9 @@
 ._code { @extend %code; }
 ._highlight { background: $highlightBackground !important; }
 
+._table { width: 100%; }
+._mobile ._table { overflow-x: auto; }
+
 ._pre-clip {
   display: none;
   position: absolute;

@@ -37,13 +37,15 @@ app.templates.aboutPage = -> """
     <li><a href="http://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
   </ul>
 
-  <table class="_credits">
-    <tr>
-      <th>Documentation
-      <th>Copyright
-      <th>License
-    #{("<tr><td>#{c[0]}<td>&copy; #{c[1]}<td><a href=\"#{c[3]}\">#{c[2]}</a>" for c in credits).join('')}
-  </table>
+  <div class="_table">
+    <table class="_credits">
+      <tr>
+        <th>Documentation
+        <th>Copyright
+        <th>License
+      #{("<tr><td>#{c[0]}<td>&copy; #{c[1]}<td><a href=\"#{c[3]}\">#{c[2]}</a>" for c in credits).join('')}
+    </table>
+  </div>
 
   <h2 class="_block-heading" id="faq">Questions & Answers</h2>
   <dl>
