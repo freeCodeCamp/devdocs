@@ -11,7 +11,6 @@ class app.views.Settings extends app.View
   @events:
     submit: 'onSubmit'
     click: 'onClick'
-    focus: 'onFocus'
 
   @shortcuts:
     enter: 'onEnter'
@@ -67,10 +66,6 @@ class app.views.Settings extends app.View
     if event.target is @backBtn
       $.stopEvent(event)
       app.router.show '/'
-    return
-
-  onFocus: (event) =>
-    $.scrollTo event.target, @el, 'continuous', bottomGap: 2
     return
 
   onAppCacheProgress: (event) =>

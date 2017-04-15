@@ -67,7 +67,7 @@ class app.views.DocPicker extends app.View
   onDOMFocus: (event) =>
     target = event.target
     if target.tagName is 'INPUT'
-      $.scrollTo target.parentNode, null, 'continuous', bottomGap: 2
+      $.scrollTo target.parentNode, null, 'continuous'
     else if target.classList.contains(app.views.ListFold.targetClass)
       target.blur()
       unless @mouseDown and @mouseDown > Date.now() - 100
