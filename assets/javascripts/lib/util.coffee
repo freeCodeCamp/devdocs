@@ -329,11 +329,11 @@ $.requestAnimationFrame = (fn) ->
 $.noop = ->
 
 $.popup = (value) ->
-  win = window.open()
-  if win
+  try
+    win = window.open()
     win.opener = null if win.opener
     win.location = value.href or value
-  else
+  catch
     window.open value.href or value, '_blank'
   return
 
