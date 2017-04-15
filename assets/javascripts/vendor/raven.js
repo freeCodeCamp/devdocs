@@ -1,4 +1,4 @@
-/*! Raven.js 3.13.1 (f55d281) | github.com/getsentry/raven-js */
+/*! Raven.js 3.14.2 (5cf57e1) | github.com/getsentry/raven-js */
 
 /*
  * Includes TraceKit
@@ -115,6 +115,9 @@ function Raven() {
         crossOrigin: 'anonymous',
         collectWindowErrors: true,
         maxMessageLength: 0,
+
+        // By default, truncates URL values to 250 chars
+        maxUrlLength: 250,
         stackTraceLimit: 50,
         autoBreadcrumbs: true,
         sampleRate: 1
@@ -152,7 +155,7 @@ Raven.prototype = {
     // webpack (using a build step causes webpack #1617). Grunt verifies that
     // this value matches package.json during build.
     //   See: https://github.com/getsentry/raven-js/issues/465
-    VERSION: '3.13.1',
+    VERSION: '3.14.2',
 
     debug: false,
 
@@ -457,9 +460,10 @@ Raven.prototype = {
 
         if (this._globalOptions.stacktrace || (options && options.stacktrace)) {
             var ex;
-            // create a stack trace from this point; just trim
-            // off extra frames so they don't include this function call (or
-            // earlier Raven.js library fn calls)
+            // Generate a "synthetic" stack trace from this point.
+            // NOTE: If you are a Sentry user, and you are seeing this stack frame, it is NOT indicative
+            //       of a bug with Raven.js. Sentry generates synthetic traces either by configuration,
+            //       or if it catches a thrown object without a "stack" property.
             try {
                 throw new Error(msg);
             } catch (ex1) {
@@ -473,6 +477,9 @@ Raven.prototype = {
                 // fingerprint on msg, not stack trace (legacy behavior, could be
                 // revisited)
                 fingerprint: msg,
+                // since we know this is a synthetic trace, the top N-most frames
+                // MUST be from Raven.js, so mark them as in_app later by setting
+                // trimHeadFrames
                 trimHeadFrames: (options.trimHeadFrames || 0) + 1
             }, options);
 
@@ -1385,7 +1392,46 @@ Raven.prototype = {
             exception.value = truncate(exception.value, max);
         }
 
+        var request = data.request;
+        if (request) {
+            if (request.url) {
+                request.url = truncate(request.url, this._globalOptions.maxUrlLength);
+            }
+            if (request.Referer) {
+                request.Referer = truncate(request.Referer, this._globalOptions.maxUrlLength);
+            }
+        }
+
+        if (data.breadcrumbs && data.breadcrumbs.values)
+            this._trimBreadcrumbs(data.breadcrumbs);
+
         return data;
+    },
+
+    /**
+     * Truncate breadcrumb values (right now just URLs)
+     */
+    _trimBreadcrumbs: function (breadcrumbs) {
+        // known breadcrumb properties with urls
+        // TODO: also consider arbitrary prop values that start with (https?)?://
+        var urlProps = ['to', 'from', 'url'],
+            urlProp,
+            crumb,
+            data;
+
+        for (var i = 0; i < breadcrumbs.values.length; ++i) {
+            crumb = breadcrumbs.values[i];
+            if (!crumb.hasOwnProperty('data') || !isObject(crumb.data))
+                continue;
+
+            data = crumb.data;
+            for (var j = 0; j < urlProps.length; ++j) {
+                urlProp = urlProps[j];
+                if (data.hasOwnProperty(urlProp)) {
+                    data[urlProp] = truncate(data[urlProp], this._globalOptions.maxUrlLength);
+                }
+            }
+        }
     },
 
     _getHttpData: function() {
@@ -2083,20 +2129,22 @@ function isObject(what) {
     return typeof what === 'object' && what !== null;
 }
 
-// Sorta yanked from https://github.com/joyent/node/blob/aa3b4b4/lib/util.js#L560
+// Yanked from https://git.io/vS8DV re-used under CC0
 // with some tiny modifications
-function isError(what) {
-    var toString = {}.toString.call(what);
-    return isObject(what) &&
-        toString === '[object Error]' ||
-        toString === '[object Exception]' || // Firefox NS_ERROR_FAILURE Exceptions
-        what instanceof Error;
+function isError(value) {
+  switch ({}.toString.call(value)) {
+    case '[object Error]': return true;
+    case '[object Exception]': return true;
+    case '[object DOMException]': return true;
+    default: return value instanceof Error;
+  }
 }
 
 module.exports = {
     isObject: isObject,
     isError: isError
 };
+
 },{}],6:[function(_dereq_,module,exports){
 (function (global){
 'use strict';
@@ -2424,27 +2472,6 @@ TraceKit.report = (function reportModuleWrapper() {
  *
  */
 TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
-    /**
-     * Escapes special characters, except for whitespace, in a string to be
-     * used inside a regular expression as a string literal.
-     * @param {string} text The string.
-     * @return {string} The escaped string literal.
-     */
-    function escapeRegExp(text) {
-        return text.replace(/[\-\[\]{}()*+?.,\\\^$|#]/g, '\\$&');
-    }
-
-    /**
-     * Escapes special characters in a string to be used inside a regular
-     * expression as a string literal. Also ensures that HTML entities will
-     * be matched the same as their literal friends.
-     * @param {string} body The string.
-     * @return {string} The escaped string.
-     */
-    function escapeCodeAsRegExpForMatchingInsideHTML(body) {
-        return escapeRegExp(body).replace('<', '(?:<|&lt;)').replace('>', '(?:>|&gt;)').replace('&', '(?:&|&amp;)').replace('"', '(?:"|&quot;)').replace(/\s+/g, '\\s+');
-    }
-
     // Contents of Exception in various browsers.
     //
     // SAFARI:
@@ -2491,18 +2518,31 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
     function computeStackTraceFromStackProp(ex) {
         if (typeof ex.stack === 'undefined' || !ex.stack) return;
 
-        var chrome = /^\s*at (.*?) ?\(((?:file|https?|blob|chrome-extension|native|eval|<anonymous>).*?)(?::(\d+))?(?::(\d+))?\)?\s*$/i,
-            gecko = /^\s*(.*?)(?:\((.*?)\))?(?:^|@)((?:file|https?|blob|chrome|resource|\[native).*?)(?::(\d+))?(?::(\d+))?\s*$/i,
-            winjs = /^\s*at (?:((?:\[object object\])?.+) )?\(?((?:file|ms-appx|https?|blob):.*?):(\d+)(?::(\d+))?\)?\s*$/i,
+        var chrome = /^\s*at (.*?) ?\(((?:file|https?|blob|chrome-extension|native|eval|webpack|<anonymous>|\/).*?)(?::(\d+))?(?::(\d+))?\)?\s*$/i,
+            gecko = /^\s*(.*?)(?:\((.*?)\))?(?:^|@)((?:file|https?|blob|chrome|webpack|resource|\[native).*?)(?::(\d+))?(?::(\d+))?\s*$/i,
+            winjs = /^\s*at (?:((?:\[object object\])?.+) )?\(?((?:file|ms-appx|https?|webpack|blob):.*?):(\d+)(?::(\d+))?\)?\s*$/i,
+
+            // Used to additionally parse URL/line/column from eval frames
+            geckoEval = /(\S+) line (\d+)(?: > eval line \d+)* > eval/i,
+            chromeEval = /\((\S*)(?::(\d+))(?::(\d+))\)/,
+
             lines = ex.stack.split('\n'),
             stack = [],
+            submatch,
             parts,
             element,
             reference = /^(.*) is undefined$/.exec(ex.message);
 
         for (var i = 0, j = lines.length; i < j; ++i) {
             if ((parts = chrome.exec(lines[i]))) {
-                var isNative = parts[2] && parts[2].indexOf('native') !== -1;
+                var isNative = parts[2] && parts[2].indexOf('native') === 0; // start of line
+                var isEval = parts[2] && parts[2].indexOf('eval') === 0; // start of line
+                if (isEval && (submatch = chromeEval.exec(parts[2]))) {
+                    // throw out eval line/column and use top-most line/column number
+                    parts[2] = submatch[1]; // url
+                    parts[3] = submatch[2]; // line
+                    parts[4] = submatch[3]; // column
+                }
                 element = {
                     'url': !isNative ? parts[2] : null,
                     'func': parts[1] || UNKNOWN_FUNCTION,
@@ -2519,6 +2559,19 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
                     'column': parts[4] ? +parts[4] : null
                 };
             } else if ((parts = gecko.exec(lines[i]))) {
+                var isEval = parts[3] && parts[3].indexOf(' > eval') > -1;
+                if (isEval && (submatch = geckoEval.exec(parts[3]))) {
+                    // throw out eval line/column and use top-most line number
+                    parts[3] = submatch[1];
+                    parts[4] = submatch[2];
+                    parts[5] = null; // no column when eval
+                } else if (i === 0 && !parts[5] && typeof ex.columnNumber !== 'undefined') {
+                    // FireFox uses this awesome columnNumber property for its top frame
+                    // Also note, Firefox's column number is 0-based and everything else expects 1-based,
+                    // so adding 1
+                    // NOTE: this hack doesn't work if top-most frame is eval
+                    stack[0].column = ex.columnNumber + 1;
+                }
                 element = {
                     'url': parts[3],
                     'func': parts[1] || UNKNOWN_FUNCTION,
@@ -2539,13 +2592,6 @@ TraceKit.computeStackTrace = (function computeStackTraceWrapper() {
 
         if (!stack.length) {
             return null;
-        }
-
-        if (!stack[0].column && typeof ex.columnNumber !== 'undefined') {
-            // FireFox uses this awesome columnNumber property for its top frame
-            // Also note, Firefox's column number is 0-based and everything else expects 1-based,
-            // so adding 1
-            stack[0].column = ex.columnNumber + 1;
         }
 
         return {
