@@ -42,7 +42,7 @@ class app.views.Search extends app.View
 
   autoFocus: =>
     unless app.isMobile() or $.isAndroid() or $.isIOS()
-      @input.focus() unless document.activeElement is @input
+      @input.focus() unless document.activeElement?.tagName is 'INPUT'
     return
 
   reset: ->
