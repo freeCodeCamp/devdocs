@@ -70,7 +70,7 @@ class app.views.SearchScope extends app.View
   redirectToDoc: (doc) ->
     hash = location.hash
     app.router.replaceHash('')
-    window.location = doc.fullPath() + hash
+    location.assign doc.fullPath() + hash
     return
 
   reset: =>
