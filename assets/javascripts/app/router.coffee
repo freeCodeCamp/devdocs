@@ -112,18 +112,15 @@ class app.Router
     @triggerRoute 'notFound'
     return
 
-  isRoot: ->
-    location.pathname is '/'
-
-  isDocIndex: ->
-    @context and @context.doc and @context.entry is @context.doc.toEntry()
+  isIndex: ->
+    @context.path is '/' or (app.isSingleDoc() and @context?.entry?.isIndex())
 
   setInitialPath: ->
     # Remove superfluous forward slashes at the beginning of the path
     if (path = location.pathname.replace /^\/{2,}/g, '/') isnt location.pathname
       page.replace path + location.search + location.hash, null, true
 
-    if @isRoot()
+    if location.pathname is '/'
       if path = @getInitialPathFromHash()
         page.replace path + location.search, null, true
       else if path = @getInitialPathFromCookie()
