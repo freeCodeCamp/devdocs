@@ -57,6 +57,7 @@ class app.Shortcuts
         @trigger 'enter'
       when 27
         @trigger 'escape'
+        false
       when 32
         if event.target.type is 'search' and (not @lastKeypress or @lastKeypress < Date.now() - 500)
           @trigger 'pageDown'
