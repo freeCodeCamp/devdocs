@@ -34,19 +34,24 @@ class app.Router
     return
 
   before: (context, next) ->
+    previousContext = @context
     @context = context
     @trigger 'before', context
-    next()
-    return
+
+    if res = next()
+      @context = previousContext
+      return res
+    else
+      return
 
   doc: (context, next) ->
     if doc = app.docs.findBySlug(context.params.doc) or app.disabledDocs.findBySlug(context.params.doc)
       context.doc = doc
       context.entry = doc.toEntry()
       @triggerRoute 'entry'
+      return
     else
-      next()
-    return
+      return next()
 
   type: (context, next) ->
     doc = app.docs.findBySlug(context.params.doc)
@@ -55,9 +60,9 @@ class app.Router
       context.doc = doc
       context.type = type
       @triggerRoute 'type'
+      return
     else
-      next()
-    return
+      return next()
 
   entry: (context, next) ->
     doc = app.docs.findBySlug(context.params.doc)
@@ -66,36 +71,39 @@ class app.Router
       context.doc = doc
       context.entry = entry
       @triggerRoute 'entry'
+      return
     else
-      next()
-    return
+      return next()
 
   root: ->
-    if app.isSingleDoc()
-      setTimeout (-> window.location = '/'), 0
-    else
-      @triggerRoute 'root'
+    return '/' if app.isSingleDoc()
+    @triggerRoute 'root'
     return
 
-  settings: ->
+  settings: (context) ->
+    return "/#/#{context.path}" if app.isSingleDoc()
     @triggerRoute 'settings'
     return
 
-  offline: ->
+  offline: (context)->
+    return "/#/#{context.path}" if app.isSingleDoc()
     @triggerRoute 'offline'
     return
 
   about: (context) ->
+    return "/#/#{context.path}" if app.isSingleDoc()
     context.page = 'about'
     @triggerRoute 'page'
     return
 
   news: (context) ->
+    return "/#/#{context.path}" if app.isSingleDoc()
     context.page = 'news'
     @triggerRoute 'page'
     return
 
   help: (context) ->
+    return "/#/#{context.path}" if app.isSingleDoc()
     context.page = 'help'
     @triggerRoute 'page'
     return
