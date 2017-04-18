@@ -73,6 +73,7 @@ app.templates.aboutPage = -> """
     <li><a href="https://atom.io/packages/devdocs">Atom plugin</a>
     <li><a href="https://github.com/gruehle/dev-docs-viewer">Brackets extension</a>
     <li><a href="https://github.com/xuchunyang/DevDocs.el">Emacs Package</a>
+    <li><a href="https://github.com/waiting-for-dev/vim-www">Vim searching plugin with DevDocs integrated</a>
   </ul>
 
   <h2 class="_block-heading" id="privacy">Privacy Policy</h2>
