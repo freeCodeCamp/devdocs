@@ -58,9 +58,6 @@ class app.views.SettingsPage extends app.View
         @toggle input.name, input.checked
     return
 
-  onRoute: (route) =>
-    if app.isSingleDoc()
-      window.location = "/#/#{route.path}"
-    else
-      @render()
+  onRoute: (context) ->
+    @render()
     return

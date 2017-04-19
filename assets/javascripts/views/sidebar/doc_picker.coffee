@@ -3,6 +3,7 @@ class app.views.DocPicker extends app.View
 
   @events:
     mousedown: 'onMouseDown'
+    mouseup: 'onMouseUp'
 
   init: ->
     @addSubview @listFold = new app.views.ListFold(@el)
@@ -64,13 +65,18 @@ class app.views.DocPicker extends app.View
     @mouseDown = Date.now()
     return
 
+  onMouseUp: =>
+    @mouseUp = Date.now()
+    return
+
   onDOMFocus: (event) =>
     target = event.target
     if target.tagName is 'INPUT'
-      $.scrollTo target.parentNode, null, 'continuous', bottomGap: 2
+      unless (@mouseDown and Date.now() < @mouseDown + 100) or (@mouseUp and Date.now() < @mouseUp + 100)
+        $.scrollTo target.parentNode, null, 'continuous'
     else if target.classList.contains(app.views.ListFold.targetClass)
       target.blur()
-      unless @mouseDown and @mouseDown > Date.now() - 100
+      unless @mouseDown and Date.now() < @mouseDown + 100
         if @focusEl is $('input', target.nextElementSibling)
           @listFold.close(target) if target.classList.contains(app.views.ListFold.activeClass)
           prev = target.previousElementSibling

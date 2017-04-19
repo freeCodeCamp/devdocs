@@ -38,11 +38,15 @@ page.stop = ->
 page.show = (path, state) ->
   return if path is currentState?.path
   context = new Context(path, state)
+  previousState = currentState
   currentState = context.state
-  page.dispatch(context)
-  context.pushState()
-  updateCanonicalLink()
-  track()
+  if res = page.dispatch(context)
+    currentState = previousState
+    location.assign(res)
+  else
+    context.pushState()
+    updateCanonicalLink()
+    track()
   context
 
 page.replace = (path, state, skipDispatch, init) ->
@@ -58,10 +62,9 @@ page.replace = (path, state, skipDispatch, init) ->
 page.dispatch = (context) ->
   i = 0
   next = ->
-    fn(context, next) if fn = callbacks[i++]
-    return
-  next()
-  return
+    res = fn(context, next) if fn = callbacks[i++]
+    return res
+  return next()
 
 page.canGoBack = ->
   not Context.isIntialState(currentState)
@@ -116,10 +119,9 @@ class Route
     (context, next) =>
       if @match context.pathname, params = []
         context.params = params
-        fn(context, next)
+        return fn(context, next)
       else
-        next()
-      return
+        return next()
 
   match: (path, params) ->
     return unless matchData = @regexp.exec(path)

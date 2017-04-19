@@ -12,13 +12,13 @@
   &._in { display: block; }
 
   ._sidebar {
+    display: block !important;
+
     &:after { // padding bottom
       content: '';
       display: block;
       height: $headerHeight;
     }
-
-    ._sidebar-hidden & { display: block; }
   }
 
   ._header { justify-content: space-between; }

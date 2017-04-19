@@ -167,7 +167,8 @@ $.scrollTo = (el, parent, position = 'center', options = {}) ->
   return unless parent
 
   parentHeight = parent.clientHeight
-  return unless parent.scrollHeight > parentHeight
+  parentScrollHeight = parent.scrollHeight
+  return unless parentScrollHeight > parentHeight
 
   top = $.offset(el, parent).top
   offsetTop = parent.firstElementChild.offsetTop
@@ -181,14 +182,17 @@ $.scrollTo = (el, parent, position = 'center', options = {}) ->
       scrollTop = parent.scrollTop
       height = el.offsetHeight
 
+      lastElementOffset = parent.lastElementChild.offsetTop + parent.lastElementChild.offsetHeight
+      offsetBottom = if lastElementOffset > 0 then parentScrollHeight - lastElementOffset else 0
+
       # If the target element is above the visible portion of its scrollable
       # ancestor, move it near the top with a gap = options.topGap * target's height.
       if top - offsetTop <= scrollTop + height * (options.topGap or 1)
         parent.scrollTop = top - offsetTop - height * (options.topGap or 1)
       # If the target element is below the visible portion of its scrollable
       # ancestor, move it near the bottom with a gap = options.bottomGap * target's height.
-      else if top >= scrollTop + parentHeight - height * ((options.bottomGap or 1) + 1)
-        parent.scrollTop = top - parentHeight + height * ((options.bottomGap or 1) + 1)
+      else if top + offsetBottom >= scrollTop + parentHeight - height * ((options.bottomGap or 1) + 1)
+        parent.scrollTop = top + offsetBottom - parentHeight + height * ((options.bottomGap or 1) + 1)
   return
 
 $.scrollToWithImageLock = (el, parent, args...) ->
@@ -329,11 +333,11 @@ $.requestAnimationFrame = (fn) ->
 $.noop = ->
 
 $.popup = (value) ->
-  win = window.open()
-  if win
+  try
+    win = window.open()
     win.opener = null if win.opener
     win.location = value.href or value
-  else
+  catch
     window.open value.href or value, '_blank'
   return
 

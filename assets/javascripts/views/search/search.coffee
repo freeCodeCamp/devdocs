@@ -19,7 +19,6 @@ class app.views.Search extends app.View
     altS: 'stackoverflow'
 
   @routes:
-    root: 'onRoot'
     after: 'afterRoute'
 
   init: ->
@@ -42,7 +41,7 @@ class app.views.Search extends app.View
 
   autoFocus: =>
     unless app.isMobile() or $.isAndroid() or $.isIOS()
-      @input.focus() unless document.activeElement is @input
+      @input.focus() unless document.activeElement?.tagName is 'INPUT'
     return
 
   reset: ->
@@ -77,9 +76,9 @@ class app.views.Search extends app.View
     return
 
   searchUrl: =>
-    if app.router.isRoot()
+    if location.pathname is '/'
       @scope.searchUrl()
-    else if not app.router.isDocIndex()
+    else if not app.router.isIndex()
       return
 
     return unless value = @extractHashValue()
@@ -129,11 +128,8 @@ class app.views.Search extends app.View
     $.stopEvent(event)
     return
 
-  onRoot: (context) =>
-    @reset() unless context.init
-    return
-
   afterRoute: (name, context) =>
+    @reset() if not context.init and app.router.isIndex()
     @delay @searchUrl if context.hash
     @delay @autoFocus
     return
