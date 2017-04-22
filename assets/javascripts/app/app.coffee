@@ -111,7 +111,7 @@
     return
 
   initDoc: (doc) ->
-    @entries.add type.toEntry() for type in doc.types.all()
+    doc.entries.add type.toEntry() for type in doc.types.all()
     @entries.add doc.entries.all()
     return
 
