@@ -89,8 +89,8 @@ class app.views.EntryPage extends app.View
     @entry.doc.fullName + if @entry.isIndex() then ' documentation' else " / #{@entry.name}"
 
   beforeRoute: =>
-    @abort()
     @cache()
+    @abort()
     return
 
   onRoute: (context) ->
@@ -107,7 +107,7 @@ class app.views.EntryPage extends app.View
   abort: ->
     if @xhr
       @xhr.abort()
-      @xhr = null
+      @xhr = @entry = null
     return
 
   onSuccess: (response) =>
@@ -125,7 +125,7 @@ class app.views.EntryPage extends app.View
     return
 
   cache: ->
-    return if not @entry or @cacheMap[path = @entry.filePath()]
+    return if @xhr or not @entry or @cacheMap[path = @entry.filePath()]
 
     @cacheMap[path] = @el.innerHTML
     @cacheStack.push(path)

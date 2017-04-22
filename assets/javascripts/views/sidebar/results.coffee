@@ -46,7 +46,7 @@ class app.views.Results extends app.View
     return
 
   openFirst: ->
-    setTimeout (=> @el.firstElementChild?.click()), 0
+    @el.firstElementChild?.click()
     return
 
   onDocEnabled: (doc) ->
