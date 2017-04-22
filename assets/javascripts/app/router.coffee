@@ -113,7 +113,7 @@ class app.Router
     return
 
   isIndex: ->
-    @context.path is '/' or (app.isSingleDoc() and @context?.entry?.isIndex())
+    @context?.path is '/' or (app.isSingleDoc() and @context?.entry?.isIndex())
 
   setInitialPath: ->
     # Remove superfluous forward slashes at the beginning of the path
