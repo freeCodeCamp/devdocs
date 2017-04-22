@@ -24,6 +24,8 @@
   > h3 { @extend %block-label, %label-blue; }
   > h4 { font-size: 1em; }
 
+  p > code { @extend %label; }
+
   > .note,
   .notice,
   .warning,

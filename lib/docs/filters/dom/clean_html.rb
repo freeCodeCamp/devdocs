@@ -10,8 +10,14 @@ module Docs
       end
 
       def other
+        css('h1 + br').remove
+
         # Bug fix: HTMLElement.offsetWidth
         css('#offsetContainer .comment').remove
+
+        css('section', 'font').each do |node|
+          node.before(node.children).remove
+        end
 
         # Bug fix: CompositionEvent, DataTransfer, etc.
         if (div = at_css('div[style]')) && div['style'].include?('border: solid #ddd 2px')

@@ -19,7 +19,9 @@ module Docs
       '/symbols' => '/@counter-style/symbols',
       '/system' => '/@counter-style/system',
       '/var' => '/var()',
-      '/Flexbox' => '/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes'
+      '/element' => '/element()',
+      '/Flexbox' => '/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes',
+      '/currentColor' => '/color_value'
     }
 
     options[:fix_urls] = ->(url) do

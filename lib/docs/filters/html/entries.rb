@@ -1,7 +1,6 @@
 module Docs
   class Html
     class EntriesFilter < Docs::EntriesFilter
-      HTML5 = %w(content element video)
       OBSOLETE = %w(frame frameset hgroup noframes)
       ADDITIONAL_ENTRIES = { 'Element/Heading_Elements' => (1..6).map { |n| ["h#{n}"] } }
 
@@ -14,23 +13,16 @@ module Docs
       end
 
       def get_type
-        slug = self.slug.remove('Element/')
+        return 'Miscellaneous' if slug.include?('CORS') || slug.include?('Using')
 
-        if self.slug.start_with?('Global_attr')
+        if slug.start_with?('Global_attr')
           'Attributes'
-        elsif at_css('.obsoleteHeader', '.deprecatedHeader', '.nonStandardHeader') || OBSOLETE.include?(slug)
+        elsif at_css('.obsoleteHeader', '.deprecatedHeader', '.nonStandardHeader') || OBSOLETE.include?(slug.remove('Element/'))
           'Obsolete'
+        elsif slug.start_with?('Element/')
+          'Elements'
         else
-          spec = css('.standard-table').last.try(:content)
-          if (spec && html5_spec?(spec)) || HTML5.include?(slug)
-            'HTML5'
-          else
-            if self.slug.start_with?('Element/')
-              'Standard'
-            else
-              'Miscellaneous'
-            end
-          end
+          'Miscellaneous'
         end
       end
 
@@ -59,10 +51,6 @@ module Docs
         else
           []
         end
-      end
-
-      def html5_spec?(spec)
-        (spec =~ /HTML\s?5/ || spec.include?('WHATWG HTML Living Standard')) && spec !~ /HTML\s?4/
       end
     end
   end

@@ -6,17 +6,17 @@ module Docs
         'CSS_Background_and_Borders' => 'Backgrounds & Borders',
         'CSS_Columns' => 'Multi-column Layout',
         'CSS_Flexible_Box_Layout' => 'Flexible Box Layout',
+        'CSS_Grid_Layout' => 'Grid Layout',
         'CSS_Images' => 'Image Values',
         'CSS_Lists_and_Counters' => 'Lists & Counters',
         'CSS_Transforms' => 'Transforms',
         'Media_Queries' => 'Media Queries',
-        '@media' => 'Media Queries',
         'transform-function' => 'Transforms',
+        '@media' => 'Media Queries',
         'text-size-adjust' => 'Miscellaneous',
         'resolved_value' => 'Miscellaneous',
         'touch-action' => 'Miscellaneous',
-        'will-change' => 'Miscellaneous',
-        'align-self' => 'Flexible Box Layout'
+        'will-change' => 'Miscellaneous'
       }
 
       DATA_TYPE_SLUGS = %w(angle basic-shape color_value counter frequency
@@ -53,6 +53,7 @@ module Docs
           type.remove! %r{\(.*\)}
           type.sub! 'and', '&'
           type.strip!
+          type = 'Grid Layout' if type.include?('Grid Layout')
           type = 'Scroll Snap' if type.include?('Scroll Snap')
           type = 'Compositing & Blending' if type.include?('Compositing')
           type = 'Animations & Transitions' if type.in?(%w(Animations Transitions))
@@ -118,7 +119,7 @@ module Docs
           %w(step-end step-end) ],
         'color_value' => [
           %w(transparent transparent_keyword),
-          %w(currentColor currentColor_keyword),
+          %w(currentColor currentcolor_keyword),
           %w(rgb() rgb),
           %w(hsl() hsl),
           %w(rgba() rgba),
