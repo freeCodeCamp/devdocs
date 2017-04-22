@@ -33,6 +33,9 @@ app.templates.offlineError = (reason, exception) ->
     when 'buggy'
       """ DevDocs requires IndexedDB to cache documentations for offline access.<br>
           Unfortunately your browser's implementation of IndexedDB contains bugs that prevent DevDocs from using it. """
+    when 'private_mode'
+      """ Your browser appears to be running in private mode.<br>
+          This prevents DevDocs from caching documentations for offline access."""
     when 'exception'
       """ An error occured when trying to open the IndexedDB database:<br>
           <code class="_label">#{exception.name}: #{exception.message}</code> """

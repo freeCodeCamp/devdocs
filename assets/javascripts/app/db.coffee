@@ -49,6 +49,8 @@ class app.DB
         @onQuotaExceededError()
       when 'VersionError'
         @onVersionError()
+      when 'InvalidStateError'
+        @fail 'private_mode'
       else
         @fail 'cant_open', error
     return
