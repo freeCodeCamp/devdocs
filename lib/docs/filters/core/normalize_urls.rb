@@ -15,7 +15,7 @@ module Docs
       css(tag.to_s).each do |node|
         next unless value = node[attribute]
         next if fragment_url_string?(value) || data_url_string?(value)
-        node[attribute] = normalize_url(value)
+        node[attribute] = normalize_url(value) || (tag == :iframe ? value : '#')
       end
     end
 
@@ -31,7 +31,7 @@ module Docs
 
       url.to_s
     rescue URI::InvalidURIError
-      '#'
+      nil
     end
 
     def to_absolute_url(str)
