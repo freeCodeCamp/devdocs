@@ -22,9 +22,9 @@ module Docs
         ['Array slicing and splicing',  'slices',                   'Language'],
         ['Ranges',                      'slices',                   'Language'],
         ['Expressions',                 'expressions',              'Language'],
-        ['?',                           'the-existential-operator', 'Operators'],
-        ['?=',                          'the-existential-operator', 'Operators'],
-        ['?.',                          'the-existential-operator', 'Operators'],
+        ['?',                           'existential-operator',     'Operators'],
+        ['?=',                          'existential-operator',     'Operators'],
+        ['?.',                          'existential-operator',     'Operators'],
         ['class',                       'classes',                  'Statements'],
         ['extends',                     'classes',                  'Operators'],
         ['super',                       'classes',                  'Statements'],
@@ -37,14 +37,14 @@ module Docs
         ['for...from',                  'fat-arrow',                'Statements'],
         ['Embedded JavaScript',         'embedded',                 'Language'],
         ['switch...when...else',        'switch',                   'Statements'],
-        ['try...catch...finally',       'try',                      'Statements'],
+        ['try...catch...finally',       'try-catch',                'Statements'],
         ['Chained comparisons',         'comparisons',              'Language'],
         ['#{} interpolation',           'strings',                  'Language'],
         ['Block strings',               'strings',                  'Language'],
         ['"""',                         'strings',                  'Language'],
         ['Block comments',              'strings',                  'Language'],
         ['###',                         'strings',                  'Language'],
-        ['Tagged Template Literals',    'tagged-template-literals',  'Language'],
+        ['Tagged Template Literals',    'tagged-template-literals', 'Language'],
         ['Block regexes',               'regexes',                  'Language'],
         ['///',                         'regexes',                  'Language'],
         ['Modules',                     'modules',                  'Language'],
@@ -59,7 +59,7 @@ module Docs
         entries = ENTRIES.dup
 
         # Operators
-        css('.definitions td:first-child > code').each do |node|
+        at_css('#operators ~ table').css('td:first-child > code').each do |node|
           node.content.split(', ').each do |name|
             next if %w(true false yes no on off this).include?(name)
             name.sub! %r{\Aa (.+) b\z}, '\1'
