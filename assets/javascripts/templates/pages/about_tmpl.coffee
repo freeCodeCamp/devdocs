@@ -195,7 +195,7 @@ credits = [
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
   ], [
     'D3.js',
-    '2010-2016 Michael Bostock',
+    '2010-2017 Michael Bostock',
     'BSD',
     'https://raw.githubusercontent.com/d3/d3/master/LICENSE'
   ], [
