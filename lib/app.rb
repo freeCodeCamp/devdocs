@@ -290,6 +290,7 @@ class App < Sinatra::Application
   end
 
   {
+    '/tips'               => '/help',
     '/css-data-types/'    => '/css-values-units/',
     '/css-at-rules/'      => '/?q=css%20%40',
     '/html/article'       => '/html/element/article',
