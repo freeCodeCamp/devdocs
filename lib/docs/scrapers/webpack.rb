@@ -34,7 +34,7 @@ module Docs
       ]
 
       options[:attribution] = <<-HTML
-        &copy; 2012&ndash;2016 Tobias Koppers<br>
+        &copy; JS Foundation and other contributors<br>
         Licensed under the Creative Commons Attribution License 4.0.
       HTML
 
@@ -49,11 +49,11 @@ module Docs
     end
 
     version '1' do
-      self.release = '1.13.2'
+      self.release = '1.15.0'
       self.base_url = 'https://webpack.github.io/docs/'
       self.links = {
         home: 'https://webpack.github.io/',
-        code: 'https://github.com/webpack/webpack'
+        code: 'https://github.com/webpack/webpack/tree/webpack-1'
       }
 
       html_filters.push 'webpack/entries_old', 'webpack/clean_html_old', 'title'
@@ -64,7 +64,7 @@ module Docs
       options[:skip] = %w(list-of-tutorials.html examples.html changelog.html ideas.html roadmap.html)
 
       options[:attribution] = <<-HTML
-        &copy; 2012&ndash;2016 Tobias Koppers<br>
+        &copy; 2012&ndash;2015 Tobias Koppers<br>
         Licensed under the MIT License.
       HTML
     end

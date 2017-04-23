@@ -9,13 +9,16 @@ module Docs
       def root
         @doc = at_css(".container > .row > .col-md-9")
 
-        # Remove all introdcution before the hr,
+        # Remove all introduction before the hr,
         # The introduction about the documentation site which isn't relevant
         # in devdocs.
         hr_index = doc.children.find_index { |node| node.name == "hr" }
         doc.children[0..hr_index].each(&:remove)
-      end
 
+        css('.row', '.col-md-6', '.feature').each do |node|
+          node.before(node.children).remove
+        end
+      end
 
       def other
         css('h1, h2, h3, h4').each do |node|

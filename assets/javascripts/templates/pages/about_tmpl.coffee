@@ -595,7 +595,7 @@ credits = [
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
   ], [
     'webpack',
-    '2012-2016 Tobias Koppers',
+    'JS Foundation and other contributors',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
