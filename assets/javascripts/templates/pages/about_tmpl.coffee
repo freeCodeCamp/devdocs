@@ -370,7 +370,7 @@ credits = [
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Modernizr',
-    '2009-2016 The Modernizr team',
+    '2009-2017 The Modernizr team',
     'MIT',
     'https://modernizr.com/license/'
   ], [
