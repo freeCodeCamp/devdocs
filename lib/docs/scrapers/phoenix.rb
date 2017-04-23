@@ -1,7 +1,7 @@
 module Docs
   class Phoenix < UrlScraper
     self.type = 'elixir'
-    self.release = '1.2.1'
+    self.release = '1.2.3'
     self.base_url = 'https://hexdocs.pm/'
     self.root_path = 'phoenix/Phoenix.html'
     self.initial_paths = %w(
