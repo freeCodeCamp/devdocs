@@ -2,13 +2,16 @@ module Docs
   class Node
     class EntriesFilter < Docs::EntriesFilter
       REPLACE_NAMES = {
-        'debugger' => 'Debugger',
-        'addons'   => 'C/C++ Addons',
-        'modules'  => 'module' }
+        'addons'       => 'C/C++ Addons',
+        'debugger'     => 'Debugger',
+        'deprecations' => 'Deprecated APIs',
+        'modules'      => 'module' }
 
       REPLACE_TYPES = {
-        'Addons'                    => 'Miscellaneous',
+        'C/C++ Addons'              => 'Miscellaneous',
         'Debugger'                  => 'Miscellaneous',
+        'Deprecated APIs'           => 'Miscellaneous',
+        'Tracing'                   => 'Miscellaneous',
         'os'                        => 'OS',
         'StringDecoder'             => 'String Decoder',
         'TLS (SSL)'                 => 'TLS/SSL',
