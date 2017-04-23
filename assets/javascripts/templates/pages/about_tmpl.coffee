@@ -69,10 +69,12 @@ app.templates.aboutPage = -> """
   <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
   <ul>
     <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
-    <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text plugin</a>
-    <li><a href="https://atom.io/packages/devdocs">Atom plugin</a>
-    <li><a href="https://github.com/gruehle/dev-docs-viewer">Brackets extension</a>
-    <li><a href="https://github.com/xuchunyang/DevDocs.el">Emacs Package</a>
+    <li><a href="https://github.com/egoist/devdocs-app">Desktop app</a>
+    <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text package</a>
+    <li><a href="https://atom.io/packages/devdocs">Atom package</a>
+    <li><a href="https://marketplace.visualstudio.com/items?itemName=deibit.devdocs">Visual Studio Code extension</a>
+    <li><a href="https://github.com/yannickglt/alfred-devdocs">Alfred workflow</a>
+    <li><a href="https://github.com/search?q=topic%3Adevdocs&type=Repositories">More…</a>
   </ul>
 
   <h2 class="_block-heading" id="privacy">Privacy Policy</h2>
