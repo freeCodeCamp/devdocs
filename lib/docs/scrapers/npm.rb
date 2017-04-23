@@ -2,7 +2,7 @@ module Docs
   class Npm < UrlScraper
     self.name = 'npm'
     self.type = 'npm'
-    self.release = '4.4.1'
+    self.release = '4.5.0'
     self.base_url = 'https://docs.npmjs.com/'
     self.force_gzip = true
     self.links = {
