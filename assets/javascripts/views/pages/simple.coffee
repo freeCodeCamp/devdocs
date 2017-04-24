@@ -42,6 +42,7 @@ app.views.MomentPage =
 app.views.MongoosePage =
 app.views.NginxPage =
 app.views.NodePage =
+app.views.OpenjdkPage =
 app.views.PerlPage =
 app.views.PhalconPage =
 app.views.PhaserPage =
