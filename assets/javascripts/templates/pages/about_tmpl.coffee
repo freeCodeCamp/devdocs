@@ -2,10 +2,10 @@ app.templates.aboutPage = -> """
   <nav class="_toc" role="directory">
     <h3 class="_toc-title">Table of Contents</h3>
     <ul class="_toc-list">
-      <li><a href="#credits">Credits</a>
-      <li><a href="#faq">FAQ</a>
       <li><a href="#copyright">Copyright</a>
       <li><a href="#plugins">Plugins</a>
+      <li><a href="#faq">FAQ</a>
+      <li><a href="#credits">Credits</a>
       <li><a href="#privacy">Privacy Policy</a>
     </ul>
   </nav>
@@ -25,6 +25,36 @@ app.templates.aboutPage = -> """
   </ul>
   <p class="_note _note-green">If you like DevDocs, please consider supporting my work on
     <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!<br>
+
+  <h2 class="_block-heading" id="copyright">Copyright and License</h2>
+  <p class="_note">
+    <strong>Copyright 2013&ndash;2017 Thibaut Courouble and <a href="https://github.com/Thibaut/devdocs/graphs/contributors">other contributors</a></strong><br>
+    This software is licensed under the terms of the Mozilla Public License v2.0.<br>
+    You may obtain a copy of the source code at <a href="https://github.com/Thibaut/devdocs">github.com/Thibaut/devdocs</a>.<br>
+    For more information, see the <a href="https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
+    and <a href="https://github.com/Thibaut/devdocs/blob/master/LICENSE">LICENSE</a> files.
+
+  <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
+  <ul>
+    <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
+    <li><a href="https://github.com/egoist/devdocs-app">Desktop app</a>
+    <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text package</a>
+    <li><a href="https://atom.io/packages/devdocs">Atom package</a>
+    <li><a href="https://marketplace.visualstudio.com/items?itemName=deibit.devdocs">Visual Studio Code extension</a>
+    <li><a href="https://github.com/yannickglt/alfred-devdocs">Alfred workflow</a>
+    <li><a href="https://github.com/search?q=topic%3Adevdocs&type=Repositories">More…</a>
+  </ul>
+
+  <h2 class="_block-heading" id="faq">Questions & Answers</h2>
+  <dl>
+    <dt>Where can I suggest new docs and features?
+    <dd>You can suggest and vote for new docs on the <a href="https://trello.com/b/6BmTulfx/devdocs-documentation">Trello board</a>.<br>
+        If you have a specific feature request, add it to the <a href="https://github.com/Thibaut/devdocs/issues">issue tracker</a>.<br>
+        Otherwise use the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>.
+    <dt>Where can I report bugs?
+    <dd>In the <a href="https://github.com/Thibaut/devdocs/issues">issue tracker</a>. Thanks!
+  </dl>
+  <p>For anything else, feel free to email me at <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
 
   <h2 class="_block-heading" id="credits">Credits</h2>
 
@@ -46,36 +76,6 @@ app.templates.aboutPage = -> """
       #{("<tr><td>#{c[0]}<td>&copy; #{c[1]}<td><a href=\"#{c[3]}\">#{c[2]}</a>" for c in credits).join('')}
     </table>
   </div>
-
-  <h2 class="_block-heading" id="faq">Questions & Answers</h2>
-  <dl>
-    <dt>Where can I suggest new docs and features?
-    <dd>You can suggest and vote for new docs on the <a href="https://trello.com/b/6BmTulfx/devdocs-documentation">Trello board</a>.<br>
-        If you have a specific feature request, add it to the <a href="https://github.com/Thibaut/devdocs/issues">issue tracker</a>.<br>
-        Otherwise use the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>.
-    <dt>Where can I report bugs?
-    <dd>In the <a href="https://github.com/Thibaut/devdocs/issues">issue tracker</a>. Thanks!
-  </dl>
-  <p>For anything else, feel free to email me at <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
-
-  <h2 class="_block-heading" id="copyright">Copyright and License</h2>
-  <p class="_note">
-    <strong>Copyright 2013&ndash;2017 Thibaut Courouble and <a href="https://github.com/Thibaut/devdocs/graphs/contributors">other contributors</a></strong><br>
-    This software is licensed under the terms of the Mozilla Public License v2.0.<br>
-    You may obtain a copy of the source code at <a href="https://github.com/Thibaut/devdocs">github.com/Thibaut/devdocs</a>.<br>
-    For more information, see the <a href="https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
-    and <a href="https://github.com/Thibaut/devdocs/blob/master/LICENSE">LICENSE</a> files.
-
-  <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
-  <ul>
-    <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
-    <li><a href="https://github.com/egoist/devdocs-app">Desktop app</a>
-    <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text package</a>
-    <li><a href="https://atom.io/packages/devdocs">Atom package</a>
-    <li><a href="https://marketplace.visualstudio.com/items?itemName=deibit.devdocs">Visual Studio Code extension</a>
-    <li><a href="https://github.com/yannickglt/alfred-devdocs">Alfred workflow</a>
-    <li><a href="https://github.com/search?q=topic%3Adevdocs&type=Repositories">More…</a>
-  </ul>
 
   <h2 class="_block-heading" id="privacy">Privacy Policy</h2>
   <ul>
