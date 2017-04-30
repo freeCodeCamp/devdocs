@@ -65,6 +65,7 @@ class app.models.Entry extends app.Model
     'markdown': 'md'
     'modernizr': 'mdr'
     'moment.js': 'mt'
+    'openjdk': 'java'
     'nginx': 'ngx'
     'numpy': 'np'
     'pandas': 'pd'
