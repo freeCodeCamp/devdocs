@@ -37,7 +37,10 @@ class app.views.DocList extends app.View
     return
 
   render: =>
-    @html @tmpl('sidebarDoc', app.docs.all())
+    html = ''
+    for doc in app.docs.all()
+      html += @tmpl('sidebarDoc', doc, fullName: app.docs.countAllBy('name', doc.name) > 1)
+    @html html
     @renderDisabled() unless app.isSingleDoc() or app.disabledDocs.size() is 0
     return
 
