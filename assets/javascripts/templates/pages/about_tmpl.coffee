@@ -414,6 +414,11 @@ credits = [
     'NumPy',
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
   ], [
+    'OpenJDK',
+    '1993-2017, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
+    'GPLv2',
+    'http://openjdk.java.net/legal/gplv2+ce.html'
+  ], [
     'OpenTSDB',
     '2010-2016 The OpenTSDB Authors',
     'LGPLv2.1',

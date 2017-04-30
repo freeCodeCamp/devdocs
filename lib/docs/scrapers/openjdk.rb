@@ -3,17 +3,12 @@ module Docs
     self.name = 'OpenJDK'
     self.type = 'openjdk'
     self.root_path = 'overview-summary.html'
-    self.links = {
-      home: 'http://openjdk.java.net/',
-      code: 'http://hg.openjdk.java.net/jdk8u'
-    }
-    self.release = '8'
     # Downloaded from packages.debian.org/sid/openjdk-8-doc
-    # extracting subdirectoy /usr/share/doc/openjdk-8-jre-headless/api
-    self.dir = '/Users/Thibaut/DevDocs/Docs/Java'
+    # Extracting subdirectory /usr/share/doc/openjdk-8-jre-headless/api
+    self.dir = '/Users/Thibaut/DevDocs/Docs/OpenJDK'
 
-    html_filters.push 'openjdk/entries', 'openjdk/clean_html'
     html_filters.insert_after 'internal_urls', 'openjdk/clean_urls'
+    html_filters.push 'openjdk/entries', 'openjdk/clean_html'
 
     options[:skip_patterns] = [
       /compact[123]-/,
@@ -25,11 +20,15 @@ module Docs
 
     options[:attribution] = <<-HTML
       &copy; 1993&ndash;2017, Oracle and/or its affiliates. All rights reserved.<br>
-      Use is subject to <a href="http://download.oracle.com/otndocs/jcp/java_se-8-mrel-spec/license.html">license terms</a>.<br>
-      We are not endorsed by or affiliated with Oracle.
+      Documentation extracted from Debian's OpenJDK Development Kit package.<br>
+      Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>
+      Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>
+      Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.
     HTML
 
-    version 'Core' do
+    version '8' do
+      self.release = '8'
+
       options[:only_patterns] = [
         /\Ajava\/beans\//,
         /\Ajava\/io\//,
@@ -55,13 +54,17 @@ module Docs
         /\Ajavax\/tools\//]
     end
 
-    version 'GUI' do
+    version '8 GUI' do
+      self.release = '8'
+
       options[:only_patterns] = [
         /\Ajava\/awt\//,
         /\Ajavax\/swing\//]
     end
 
-    version 'Web' do
+    version '8 Web' do
+      self.release = '8'
+
       options[:only_patterns] = [
         /\Ajava\/applet\//,
         /\Ajava\/rmi\//,

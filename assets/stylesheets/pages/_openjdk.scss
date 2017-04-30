@@ -1,22 +1,7 @@
 ._openjdk {
-  > ul.inheritance {
-    @extend %note, %note-blue;
-    li {
-      list-style: none;
-    }
-  }
+  @extend %simple;
 
-  ul.blockList, ul.blockListLast {
-    padding-left: 0;
-    li.blockList {
-      list-style: none;
-    }
-  }
-
-  h3 {
-    @extend %block-heading;
-  }
-  h4 {
-    @extend %block-label, %label-blue;
-  }
+  ul.inheritance { list-style: none; }
+  > ul.inheritance { @extend %note, %note-blue; }
+  > ul.inheritance ul.inheritance { margin: 0; }
 }

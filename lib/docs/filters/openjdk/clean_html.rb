@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 module Docs
   class Openjdk
     class CleanHtmlFilter < Filter
       def call
+        css('.topNav', '.subNav', '.bottomNav', '.legalCopy', 'noscript', '.subTitle').remove
+
         # Preserve internal fragment links
         # Transform <a name="foo"><!-- --></a><bar>text</bar>
         #      into <bar id="foo">text</bar>
@@ -12,75 +16,117 @@ module Docs
           end
         end
 
-        # Find the main container
-        # Root page have three containers, we use the second one
-        container = at_css('.contentContainer' + (root_page? ? ':nth-of-type(2)' : ''))
-
-        # Move description to the container top
-        if description_link = at_css('a[href$=".description"]')
-          target = description_link['href'][1..-1]
-          description_nodes = xpath("//*[@id='#{target}'] | //*[@id='#{target}']/following-sibling::*")
-          container.prepend_child(description_nodes)
-          description_nodes.at_css('h2:contains("Description")')&.remove
-          description_link.parent.remove
+        # Remove superfluous content on package pages
+        css('h2:contains("Package Specification")').each do |node|
+          node.next.remove while node.next
+          node.remove
         end
 
-        # Remove superfluous and duplicated content
-        css('.subTitle', '.docSummary', '.summary caption', 'caption span.tabEnd').remove
-        css('table[class$="Summary"] > tr > th').each do |th|
-          th.parent.remove
-        end
-        css('h3[id$=".summary"]').each do |header|
-          # Keep only a minimal list of annotation required/optional elements
-          # as with "Methods inherited from class"
-          if header['id'].match? %r{\.element\.summary$}
-            table_summary = header.next_element
-            code_summary = header.document.create_element 'code'
-            table_summary.css('.memberNameLink a').each_with_index do |element, index|
-              code_summary << header.document.create_text_node(', ') if index > 0
-              code_summary << element
-            end
-            table_summary.replace(code_summary)
-          # Remove summary element if detail exists
-          elsif detail_header = at_css("h3[id='#{header['id'].sub('summary','detail')}']")
-            header.next_element.remove
-            header.replace(detail_header.parent.children)
-          end
-        end
-        at_css('.details')&.remove unless at_css('.details h3')
-        css('h3[id$=".summary"]', 'h3[id$=".detail"]', 'caption span').each do |header|
-          header.name = 'h3' if header.name == 'span'
-          content = header.content
-          content.remove! ' Summary'
-          content.remove! ' Detail'
-          header.content = content.pluralize
-        end
-        css('h4').each do |entry_header|
-          entry_pre = entry_header.next_element
-          entry_header.children = entry_pre.children
-          entry_pre.remove
+        # Replace summary tables with their detail content
+        css('h3[id$=".summary"]').each do |node|
+          id = node['id'].sub('summary', 'detail')
+          detail = at_css("h3[id='#{id}']") || at_css("h3[id='#{id.remove('optional.').remove('required.')}']")
+          node.parent.children = detail.parent.children if detail
         end
 
-        # Keep only header and container
-        container.prepend_child(at_css('.header'))
-        @doc = container
+        css('h3[id$=".summary"]', 'h3[id$=".detail"]').each do |node|
+          node.content = node.content.remove(' Summary').remove(' Detail').pluralize
+        end
 
-        # Remove packages not belonging to this version
         if root_page?
-          at_css('.overviewSummary caption h3').content =
-            version + ' ' +
-            at_css('.overviewSummary caption h3').content
-          css('.overviewSummary td.colFirst a').each do |node|
-            unless context[:only_patterns].any? { |pattern| node['href'].match? pattern }
+          css('.header')[1].remove
+          css('.contentContainer')[0].remove
+          css('.contentContainer')[-1].remove
+
+          # Remove packages not belonging to this version
+          css('td.colFirst a').each do |node|
+            unless context[:only_patterns].any? { |pattern| pattern =~ node['href'] }
               node.parent.parent.remove
             end
           end
+
+          at_css('h1').content = "OpenJDK #{release} Documentation" + (version != release ? " (#{version.split(' ').last})" : '')
         end
 
-        # Syntax highlighter
+        css('table').each do |node|
+          node.remove_attribute 'summary'
+          node.remove_attribute 'cellspacing'
+          node.remove_attribute 'cellpadding'
+          node.remove_attribute 'border'
+        end
+
+        css('span.deprecatedLabel').each { |node| node.name = 'strong' }
+
+        css('.contentContainer', '.docSummary', 'div.header', 'div.description', 'div.summary', 'span', 'tbody').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('tt').each { |node| node.name = 'code' }
+        css('div.block').each { |node| node.name = 'p' unless node.at_css('.block, p') }
+
+        # Create paragraphs
+        css('div > p:first-of-type').each do |node|
+          node.before('<p></p>')
+          node = node.previous
+          node.prepend_child(node.previous) while node.previous
+        end
+
+        css('ul > li > table:only-child').each do |node|
+          node.parent.parent.before(node)
+        end
+
+        css('blockquote > table:only-child', 'blockquote > dl:only-child').each do |node|
+          node.parent.before(node).remove
+        end
+
+        css('blockquote > pre:only-child').each do |node|
+          node.content = node.content.strip_heredoc
+          node.parent.before(node).remove
+        end
+
+        css('blockquote > code').each do |node|
+          node.parent.name = 'pre'
+          node.content = node.content.strip.gsub(/\s+/, ' ')
+        end
+
+        css('dt > cite').each do |node| # remove "See The Java™ Language Specification"
+          node.parent.next_element.remove
+          node.parent.remove
+        end
+
+        css('dt:contains("See Also")').each do |node|
+          unless node.next_element.at_css('a')
+            node.next_element.remove
+            node.remove
+          end
+        end
+
+        css('ul.blockList li.blockList:only-child').each do |node|
+          node.first_element_child['id'] ||= node.parent['id'] if node.parent['id']
+          node.parent.before(node.children).remove
+        end
+
+        css('hr + br', 'p + br', 'div + br', 'hr').remove
+
         css('pre').each do |node|
+          node.content = node.content.strip
           node['data-language'] = 'java'
         end
+
+        css('.title').each do |node|
+          node.name = 'h1'
+        end
+
+        css('h3, h4').each do |node|
+          node.name = node.name.sub(/\d/) { |i| i.to_i - 1 }
+        end
+
+        css('*[title]').remove_attr('title')
+
+        css('*[class]').each do |node|
+          node.remove_attribute('class') unless node['class'] == 'inheritance'
+        end
+
         doc
       end
     end

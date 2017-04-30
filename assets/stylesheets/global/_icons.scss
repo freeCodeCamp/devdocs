@@ -43,6 +43,7 @@
 %icon-clipboard-white       { background-position: -1rem -2rem; }
 %icon-close-white           { background-position: -2rem -2rem; }
 
+._icon-openjdk:before       { background-position: -2rem 0; }
 ._icon-codeceptjs:before    { background-position: -3rem 0; }
 ._icon-codeception:before   { background-position: -4rem 0; }
 ._icon-sqlite:before        { background-position: -5rem 0; @extend %darkIconFix !optional; }

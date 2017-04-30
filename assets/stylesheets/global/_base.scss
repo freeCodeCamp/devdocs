@@ -123,6 +123,11 @@ table {
   border-radius: 3px;
 }
 
+caption {
+  font-weight: $boldFontWeight;
+  padding: 0 .7em .3em;
+}
+
 th, td {
   vertical-align: top;
   padding: .3em .7em;

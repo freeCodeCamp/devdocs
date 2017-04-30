@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Docs
   class Openjdk
     class CleanUrlsFilter < Filter
@@ -8,10 +10,10 @@ module Docs
 
           # The following code ignores most options that InternalUrlsFilter accepts,
           # only the currently used options are considered here.
-          self.class.parent.versions.each do |v|
-            if v.options[:only_patterns].any? { |pattern| path.match? pattern } &&
-               v.options[:skip_patterns].none? { |pattern| path.match? pattern }
-              node['href'] = "/#{v.slug}/#{path}"
+          self.class.parent.versions.each do |version|
+            if version.options[:only_patterns].any? { |pattern| path.match?(pattern) } &&
+               version.options[:skip_patterns].none? { |pattern| path.match?(pattern) }
+              node['href'] = "/#{version.slug}/#{path}"
               break
             end
           end

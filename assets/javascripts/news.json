@@ -1,5 +1,8 @@
 [
   [
+    "2017-04-30",
+    "New documentation: <a href=\"/openjdk/\">OpenJDK</a>"
+  ], [
     "2017-02-26",
     "Refreshed design.",
     "Added <a href=\"/settings\">Preferences</a>."

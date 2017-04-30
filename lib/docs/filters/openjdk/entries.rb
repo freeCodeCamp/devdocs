@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Docs
   class Openjdk
     class EntriesFilter < Docs::EntriesFilter
@@ -13,24 +15,28 @@ module Docs
       end
 
       def get_type
+        return 'Packages' if slug.end_with?('package-summary')
+
         if subtitle = at_css('.header > .subTitle:last-of-type')
-          subtitle.content.strip
+          type = subtitle.content.strip
         else
-          at_css('.header > .title').content.strip.remove 'Package '
+          type = at_css('.header > .title').content.strip.remove 'Package '
         end
+        type = type.split('.')[0..2].join('.')
+        type
       end
 
       def additional_entries
         # Only keep the first found entry with a unique name,
         # i.e. overloaded methods are skipped in index
         css('a[name$=".summary"]').each_with_object({}) do |summary, entries|
-          next if summary['name'] == 'nested.class.summary'
+          next if summary['name'].include?('nested') || summary['name'].include?('constructor') ||
+                  summary['name'].include?('field') || summary['name'].include?('constant')
           summary.parent.css('.memberNameLink a').each do |node|
-            entry_name = node.parent.parent.content.strip
-            entry_name.sub! %r{\(.+?\)}m, '()'
-            id = node['href']
-            id.remove! %r{.*#}
-            entries[entry_name] ||= [name + '.' + entry_name, id]
+            name = node.parent.parent.content.strip
+            name.sub! %r{\(.+?\)}m, '()'
+            id = node['href'].remove(%r{.*#})
+            entries[name] ||= ["#{self.name}.#{name}", id]
           end
         end.values
       end
