@@ -48,6 +48,10 @@ module Docs
       Licensed under the MIT License.
     HTML
 
+    version '5.1' do
+      self.release = '5.1.0'
+    end
+
     version '5.0' do
       self.release = '5.0.2'
     end
