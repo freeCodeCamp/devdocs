@@ -2,10 +2,8 @@ module Docs
   class Rust
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        if slug.start_with?('book')
-          at_css("#toc a[href='#{File.basename(slug)}']").content
-        elsif slug.start_with?('reference')
-          'Reference'
+        if slug.start_with?('book') || slug.start_with?('reference')
+          at_css("#sidebar a[href='#{File.basename(slug)}']").content
         elsif slug == 'error-index'
           'Compiler Errors'
         else
@@ -37,16 +35,8 @@ module Docs
       end
 
       def additional_entries
-        if slug.start_with?('book')
+        if slug.start_with?('book') || slug.start_with?('reference')
           []
-        elsif slug.start_with?('reference')
-          css('#TOC > ul > li > a', '#TOC > ul > li > ul > li > a').map do |node|
-            name = node.content
-            name.sub! %r{(\d)\ }, '\1. '
-            name.sub! '10.0.', '10.'
-            id = node['href'].remove('#')
-            [name, id]
-          end
         elsif slug == 'error-index'
           css('.error-described h2.section-header').each_with_object [] do |node, entries|
             entries << [node.content, node['id']] unless node.content.include?('Note:')
