@@ -26,8 +26,8 @@ DevDocs requires Ruby 2.4.1, libcurl, and a JavaScript runtime supported by [Exe
 git clone https://github.com/Thibaut/devdocs.git && cd devdocs
 gem install bundler
 bundle install
-thor docs:download --default
-rackup
+bundle exec thor docs:download --default
+bundle exec rackup
 ```
 
 Finally, point your browser at [localhost:9292](http://localhost:9292) (the first request will take a few seconds to compile the assets). You're all set.
@@ -129,6 +129,8 @@ thor test:app       # Run "App" tests
 thor assets:compile # Compile assets (not required in development mode)
 thor assets:clean   # Clean old assets
 ```
+
+If multiple versions of Ruby are installed on your system, commands must be run through `bundle exec`.
 
 ## Contributing
 
