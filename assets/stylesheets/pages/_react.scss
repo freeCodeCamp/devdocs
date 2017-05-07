@@ -4,7 +4,9 @@
   > h4 { @extend %block-label; }
 
   p code, li code { @extend %label; }
-  blockquote { @extend %note; }
+  blockquote, .deprecated { @extend %note; }
+  .deprecated { @extend %note-orange; }
+  .deprecatedTitle { font-weight: $boldFontWeight; }
 
   span.platform { float: right; }
   span.propType, span.platform { font-weight: normal; }
