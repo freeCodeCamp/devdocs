@@ -305,7 +305,7 @@ class App < Sinatra::Application
     CODE
   end
 
-  get %r{\A/feed(?:\.atom)?\z} do
+  get %r{/feed(?:\.atom)?} do
     content_type 'application/atom+xml'
     settings.news_feed
   end
@@ -325,7 +325,7 @@ class App < Sinatra::Application
     'codeigniter~3.0' => 'codeigniter~3'
   }
 
-  get %r{\A/([\w~\.%]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
+  get %r{/([\w~\.%]+)(\-[\w\-]+)?(/.*)?} do |doc, type, rest|
     doc.sub! '%7E', '~'
 
     if DOC_REDIRECTS.key?(doc)
