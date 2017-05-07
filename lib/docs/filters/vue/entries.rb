@@ -5,7 +5,11 @@ module Docs
         if slug == 'api/'
           'API'
         else
-          at_css('h1').content
+          name = at_css('.content h1').content
+          node = at_css(".sidebar .menu-root a[href='#{File.basename(slug)}']")
+          index = node.parent.parent.css('> li > a').to_a.index(node)
+          name.prepend "#{index + 1}. " if index
+          name
         end
       end
 
@@ -21,7 +25,7 @@ module Docs
         return [] if slug.start_with?('guide')
         type = nil
 
-        css('h2, h3').each_with_object [] do |node, entries|
+        css('.content h2, .content h3').each_with_object [] do |node, entries|
           if node.name == 'h2'
             type = node.content.strip
           else

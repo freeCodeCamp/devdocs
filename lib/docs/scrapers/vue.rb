@@ -8,9 +8,10 @@ module Docs
       code: 'https://github.com/vuejs/vue'
     }
 
-    html_filters.push 'vue/clean_html', 'vue/entries'
+    html_filters.push 'vue/entries', 'vue/clean_html'
 
     options[:only_patterns] = [/guide\//, /api\//]
+    options[:replace_paths] = { 'guide/' => 'guide/index.html' }
 
     options[:attribution] = <<-HTML
       &copy; 2013&ndash;2017 Evan You, Vue.js contributors<br>
@@ -18,7 +19,7 @@ module Docs
     HTML
 
     version '2' do
-      self.release = '2.2.6'
+      self.release = '2.3.2'
       self.base_url = 'https://vuejs.org/v2/'
       self.root_path = 'guide/index.html'
       self.initial_paths = %w(api/)
