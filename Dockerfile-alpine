@@ -1,0 +1,17 @@
+FROM ruby:2.4.1-alpine
+MAINTAINER Conor Heine <conor.heine@gmail.com>
+
+WORKDIR /devdocs
+
+COPY . /devdocs
+
+RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev && \
+    gem install bundler && \
+    bundle install --system --without test && \
+    thor docs:download --all && \
+    thor assets:compile && \
+    apk del gzip build-base git zlib-dev && \
+    rm -rf /var/cache/apk/* && rm -rf /tmp && rm -rf ~/.gem
+
+EXPOSE 9292
+CMD rackup -o 0.0.0.0
