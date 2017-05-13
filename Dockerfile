@@ -5,11 +5,13 @@ WORKDIR /devdocs
 
 RUN apt-get update && \
     apt-get -y install git nodejs && \
-    gem install bundler
+    gem install bundler && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY Gemfile Gemfile.lock Rakefile /devdocs/
 
-RUN bundle install --system
+RUN bundle install --system && \
+    rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache
 
 COPY . /devdocs
 

@@ -11,7 +11,8 @@ RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev && \
     thor docs:download --all && \
     thor assets:compile && \
     apk del gzip build-base git zlib-dev && \
-    rm -rf /var/cache/apk/* && rm -rf /tmp && rm -rf ~/.gem
+    rm -rf /var/cache/apk/* /tmp ~/.gem /root/.bundle/cache \
+    /usr/local/bundle/cache /usr/lib/node_modules
 
 EXPOSE 9292
 CMD rackup -o 0.0.0.0
