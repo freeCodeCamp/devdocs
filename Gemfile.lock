@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (5.1.0)
+    activesupport (5.1.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
       minitest (~> 5.1)
@@ -11,7 +11,7 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
-    browser (2.3.0)
+    browser (2.4.0)
     coderay (1.1.1)
     coffee-script (2.4.1)
       coffee-script-source
@@ -33,10 +33,10 @@ GEM
     i18n (0.8.1)
     method_source (0.8.2)
     mini_portile2 (2.1.0)
-    minitest (5.10.1)
+    minitest (5.10.2)
     multi_json (1.12.1)
     mustermann (1.0.0)
-    nokogiri (1.7.1)
+    nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     options (2.3.2)
     progress_bar (1.1.0)
@@ -46,7 +46,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rack (2.0.1)
+    rack (2.0.2)
     rack-protection (2.0.0)
       rack
     rack-test (0.6.3)
