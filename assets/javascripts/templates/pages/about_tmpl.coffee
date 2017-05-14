@@ -324,6 +324,11 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Liquid',
+    '2005, 2006 Tobias Luetke',
+    'MIT',
+    'https://raw.githubusercontent.com/Shopify/liquid/master/LICENSE'
+  ], [
     'Lo-Dash',
     '2012-2016 The Dojo Foundation',
     'MIT',

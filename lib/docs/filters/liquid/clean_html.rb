@@ -2,29 +2,16 @@ module Docs
   class Liquid
     class CleanHtmlFilter < Filter
       def call
-        root_page? ? root : other
-      end
+        @doc = at_css('.content__area > .content')
 
-      def root
-        doc = at_css('.home-banner')
+        css('.home-banner', '.menu-button', '#used-by', '#used-by ~ *').remove
 
-        css('.btn-row').remove
-
-        doc
-      end
-
-      def other
-        doc = at_css('.content__area > .content')
-
-        css('button.menu-button').remove
-
-        css('code').each do |node|
-          node.remove_attribute('class')
-          node.content = node.content
+        css('.highlighter-rouge').each do |node|
+          node.before(node.children).remove
         end
 
-        css('pre', '.highlighter-rouge').each do |node|
-          node.remove_attribute('class')
+        css('pre').each do |node|
+          node.content = node.content.strip
         end
 
         doc

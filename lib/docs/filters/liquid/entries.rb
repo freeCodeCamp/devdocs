@@ -6,23 +6,16 @@ module Docs
       end
 
       def get_type
-        if not root_page?
-          slug.split('/').first.capitalize
-        end
+        slug.split('/').first.capitalize
       end
 
       def additional_entries
-        entries = []
+        return [] unless type == 'Tags'
 
-        if get_type == 'Tags'
-          css('h2').each do |node|
-            entries << [node.content, node['id']]
-          end
+        css('h2').map do |node|
+          [node.content, node['id']]
         end
-
-        entries
       end
-
     end
   end
 end

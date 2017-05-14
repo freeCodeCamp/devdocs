@@ -1,18 +1,5 @@
 ._liquid {
   @extend %simple;
 
-  .code-label {
-    @extend %block-label, %label-green;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: -1px;
-  }
-
-  .code-label ~ div > pre {
-    margin-top: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
+  p.code-label { @extend %pre-heading; }
 }
