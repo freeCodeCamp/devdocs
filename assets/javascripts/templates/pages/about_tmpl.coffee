@@ -284,6 +284,11 @@ credits = [
     'MIT',
     'https://github.com/influxdata/docs.influxdata.com/blob/master/LICENSE'
   ], [
+    'Jest',
+    '2014-present Facebook Inc.',
+    'BSD',
+    'https://raw.githubusercontent.com/facebook/jest/master/LICENSE'
+  ], [
     'jQuery',
     'Packt Publishing<br>&copy; jQuery Foundation and other contributors',
     'MIT',

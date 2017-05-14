@@ -28,6 +28,7 @@ app.views.ExpressPage =
 app.views.GoPage =
 app.views.ImmutablePage =
 app.views.InfluxdataPage =
+app.views.JestPage =
 app.views.KnockoutPage =
 app.views.KotlinPage =
 app.views.LaravelPage =
