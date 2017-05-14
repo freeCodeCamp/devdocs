@@ -11,7 +11,7 @@ app.templates.helpPage = """
     </ul>
   </nav>
 
-  <h1 class="_lined-heading" id="search">Help</h2>
+  <h1 class="_lined-heading">Help</h2>
 
   <h2 class="_block-heading" id="search">Search</h2>
   <p>
