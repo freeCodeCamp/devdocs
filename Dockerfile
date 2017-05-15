@@ -1,5 +1,4 @@
 FROM ruby:2.4.1
-MAINTAINER Conor Heine <conor.heine@gmail.com>
 
 WORKDIR /devdocs
 
