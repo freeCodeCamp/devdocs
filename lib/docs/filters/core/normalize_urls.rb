@@ -13,6 +13,7 @@ module Docs
 
     def update_attribute(tag, attribute)
       css(tag.to_s).each do |node|
+        next if node[attribute].start_with?('data:image')
         next unless value = node[attribute]
         next if fragment_url_string?(value) || data_url_string?(value)
         node[attribute] = normalize_url(value) || (tag == :iframe ? value : '#')
