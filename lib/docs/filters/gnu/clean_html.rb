@@ -11,9 +11,10 @@ module Docs
 
         css('.node > a[name]').each do |node|
           node.parent.next_element['id'] = node['name']
+          node.remove
         end
 
-        css('a[name]').each do |node|
+        css('a[name]:not(:empty)').each do |node|
           node['id'] = node['name']
         end
 
@@ -26,11 +27,31 @@ module Docs
           node.inner_html = node.inner_html.strip_heredoc.strip
         end
 
-        css('dt > em', 'acronym', 'dfn', 'cite', 'h1 code').each do |node|
+        css('dt > em', 'acronym', 'dfn', 'cite', 'h1 code', 'th > pre').each do |node|
           node.before(node.children).remove
         end
 
+        css('.footnote h1').each do |node|
+          node.name = 'div'
+        end
+
+        css('div.header').each do |node|
+          node.name = 'p'
+        end
+
+        css('th[valign]', 'td[valign]').remove_attr('valign')
+        css('th[align]', 'td[align]').remove_attr('valign')
+
         css('.node', 'br', 'hr').remove
+
+        css('a[name]:empty').each do |node|
+          (node.next_element || node.parent)['id'] = node['name']
+          node.remove
+        end
+
+        css('.header + h1').each do |node|
+          node.previous_element.remove
+        end
 
         doc
       end
