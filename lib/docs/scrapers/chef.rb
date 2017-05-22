@@ -1,7 +1,7 @@
 module Docs
   class Chef < UrlScraper
     self.type = 'sphinx_simple'
-    self.base_url = 'https://docs.chef.io/release/'
+    self.base_url = 'https://docs-archive.chef.io/release/'
     self.links = {
       home: 'https://www.chef.io/',
       code: 'https://github.com/chef/chef'
