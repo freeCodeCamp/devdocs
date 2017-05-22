@@ -17,7 +17,7 @@ module Docs
 
         css('hr', '.page__edit', 'hr + h3:contains("Contributors")', 'hr + h2:contains("Contributors")',
             '.contributors', '.icon-link', '#maintainers.header', '#maintainers.header + table',
-            '#maintainer.header', '#maintainer.header + table').remove
+            '#maintainer.header', '#maintainer.header + table', '.page-links__link', '.page-links__gap').remove
 
         css('> div', '.tip-content', '.header span').each do |node|
           node.before(node.children).remove
