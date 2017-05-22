@@ -25,6 +25,7 @@ app.views.DrupalPage =
 app.views.ElixirPage =
 app.views.EmberPage =
 app.views.ExpressPage =
+app.views.FlowPage =
 app.views.GoPage =
 app.views.ImmutablePage =
 app.views.InfluxdataPage =

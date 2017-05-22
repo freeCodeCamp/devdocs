@@ -1,17 +1,18 @@
 module Docs
-  class Flow < React
-    self.type = 'react'
-    self.release = '0.42.0'
-    self.base_url = 'https://flowtype.org/docs/'
-    self.root_path = 'getting-started.html'
+  class Flow < UrlScraper
+    self.type = 'flow'
+    self.release = '0.46.0'
+    self.base_url = 'https://flow.org/en/docs/'
     self.links = {
       home: 'https://flowtype.org/',
       code: 'https://github.com/facebook/flow'
     }
 
-    options[:container] = '.content'
-    options[:root_title] = 'Flow Documentation'
-    options[:only_patterns] = nil
+    html_filters.push 'flow/entries', 'flow/clean_html', 'title'
+
+    options[:trailing_slash] = false
+    options[:root_title] = 'Flow'
+    options[:skip] = %w(libs install)
 
     options[:attribution] = <<-HTML
       &copy; 2013&ndash;present Facebook Inc.<br>
