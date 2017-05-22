@@ -2,7 +2,7 @@ class app.UpdateChecker
   constructor: ->
     @lastCheck = Date.now()
 
-    $.on window, 'focus', @checkForUpdate
+    $.on window, 'focus', @onFocus
     app.appCache.on 'updateready', @onUpdateReady if app.appCache
 
     setTimeout @checkDocs, 0
