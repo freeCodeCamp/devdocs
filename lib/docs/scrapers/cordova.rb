@@ -4,7 +4,8 @@ module Docs
     self.type = 'cordova'
     self.root_path = 'guide/overview/index.html'
     self.links = {
-      home: 'https://cordova.apache.org/'
+      home: 'https://cordova.apache.org/',
+      code: 'https://git-wip-us.apache.org/repos/asf/cordova-cli.git'
     }
 
     html_filters.push 'cordova/entries', 'cordova/clean_html'
@@ -26,6 +27,11 @@ module Docs
       &copy; 2012&ndash;2017 The Apache Software Foundation<br>
       Licensed under the Apache License 2.0.
     HTML
+
+    version '7' do
+      self.release = '7.0.1'
+      self.base_url = 'https://cordova.apache.org/docs/en/7.x/'
+    end
 
     version '6' do
       self.release = '6.5.0'
