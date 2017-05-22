@@ -455,7 +455,7 @@ credits = [
     'http://perldoc.perl.org/index-licence.html'
   ], [
     'Phalcon',
-    '2011-2016 Phalcon Framework Team',
+    '2011-2017 Phalcon Framework Team',
     'CC BY',
     'https://docs.phalconphp.com/en/latest/reference/license.html'
   ], [

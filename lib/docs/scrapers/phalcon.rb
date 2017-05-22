@@ -16,12 +16,12 @@ module Docs
       reference/license.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2016 Phalcon Framework Team<br>
+      &copy; 2011&ndash;2017 Phalcon Framework Team<br>
       Licensed under the Creative Commons Attribution License 3.0.
     HTML
 
     version '3' do
-      self.release = '3.0.2'
+      self.release = '3.1.1'
       self.base_url = 'https://docs.phalconphp.com/en/latest/'
     end
 
