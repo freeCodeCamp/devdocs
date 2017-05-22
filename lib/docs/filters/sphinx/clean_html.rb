@@ -17,10 +17,10 @@ module Docs
           node.before(node.children).remove
         end
 
-        css('div[class*="highlight-"]').each do |node|
+        css('div[class*="highlight-"]', 'div[class*="hl-"]').each do |node|
           pre = node.at_css('pre')
           pre.content = pre.content
-          lang = node['class'][/highlight\-(\w+)/, 1]
+          lang = node['class'][/highlight\-(\w+)/, 1] || node['class'][/hl\-(\w+)/, 1]
           lang = 'php' if lang == 'ci'
           lang = 'markup' if lang == 'html+django'
           lang = 'python' if lang == 'default' || lang.start_with?('python') || lang.start_with?('ipython')

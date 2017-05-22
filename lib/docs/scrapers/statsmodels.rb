@@ -1,11 +1,11 @@
 module Docs
   class Statsmodels < UrlScraper
     self.type = 'sphinx'
-    self.release = '0.6.1'
-    self.base_url = 'http://statsmodels.sourceforge.net/stable/'
+    self.release = '0.8.0'
+    self.base_url = 'http://www.statsmodels.org/stable/'
     self.root_path = 'index.html'
     self.links = {
-      home: 'http://statsmodels.sourceforge.net/',
+      home: 'http://www.statsmodels.org/',
       code: 'https://github.com/statsmodels/statsmodels/'
     }
 

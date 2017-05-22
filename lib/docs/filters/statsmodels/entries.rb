@@ -9,7 +9,7 @@ module Docs
           name.remove! %r{\A(class(method)?) }
           name.remove! %r{\Astatsmodels\.}
         else
-          name = at_css('h1').content.strip
+          name = at_css('h1', 'h2').content.strip
           name.prepend 'Manual: ' if type == 'Manual'
           name.prepend 'Example: ' if type == 'Examples'
         end
