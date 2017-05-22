@@ -8,7 +8,7 @@ module Docs
 
         css('center:last-child').remove # copyright
 
-        css('center').each do |node|
+        css('center', '.example').each do |node|
           node.before(node.children).remove
         end
 
@@ -30,12 +30,10 @@ module Docs
 
         # others
 
-        # css('p > br:last-child').remove
-
         css('a[name]').each do |node|
-          parent = node.parent
-          parent = parent.parent while parent.name == 'span'
-          parent['id'] = node['name']
+          # parent = node.parent
+          # parent = parent.parent while parent.name == 'span'
+          (node.next_element || node.parent)['id'] ||= node['name']
           node.before(node.children).remove
         end
 
@@ -48,10 +46,11 @@ module Docs
         css('p > .bold_code:first-child ~ br:last-child').each do |node|
           parent = node.parent
           parent.name = 'h3'
-          parent['class'] = 'code'
-          parent.css('*:not(a):not(br)').each { |n| n.before(n.children).remove }
-          node.remove
-          parent.inner_html = parent.inner_html.strip
+          parent.css('> br').remove
+          parent.css('> code').each do |code|
+            code.css('*:not(a):not(br)').each { |n| n.before(n.children).remove }
+            code.inner_html = code.inner_html.gsub('<br>', "\n").strip
+          end
         end
 
         css('pre:not(.REFTYPES) *:not(a)', 'a[href^=javascript]').each do |node|
@@ -59,6 +58,7 @@ module Docs
         end
 
         css('pre:not(.REFTYPES)').each do |node|
+          node['data-language'] = 'erlang'
           node.inner_html = node.inner_html.strip_heredoc
         end
 
@@ -80,6 +80,7 @@ module Docs
             node = node.next_element
             node.previous_element.remove
           end
+          html.gsub! %r{\n{2,}}, "\n"
           html.strip!
           html << "</pre>"
           node.before(html)
@@ -97,6 +98,8 @@ module Docs
           node.remove_attribute('align')
           node.remove_attribute('valign')
         end
+
+        css('.bold_code').remove_attr('class')
 
         doc
       end

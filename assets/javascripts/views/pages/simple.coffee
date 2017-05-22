@@ -24,6 +24,7 @@ app.views.DockerPage =
 app.views.DrupalPage =
 app.views.ElixirPage =
 app.views.EmberPage =
+app.views.ErlangPage =
 app.views.ExpressPage =
 app.views.FlowPage =
 app.views.GoPage =

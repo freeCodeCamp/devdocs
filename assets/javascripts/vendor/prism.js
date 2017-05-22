@@ -1066,6 +1066,50 @@ Prism.languages.elixir.string.forEach(function(o) {
 });
 
 
+Prism.languages.erlang = {
+	'comment': /%.+/,
+	'string': {
+		pattern: /"(?:\\?.)*?"/,
+		greedy: true
+	},
+	'quoted-function': {
+		pattern: /'(?:\\.|[^'\\])+'(?=\()/,
+		alias: 'function'
+	},
+	'quoted-atom': {
+		pattern: /'(?:\\.|[^'\\])+'/,
+		alias: 'atom'
+	},
+	'boolean': /\b(?:true|false)\b/,
+	'keyword': /\b(?:fun|when|case|of|end|if|receive|after|try|catch)\b/,
+	'number': [
+		/\$\\?./,
+		/\d+#[a-z0-9]+/i,
+		/(?:\b|-)\d*\.?\d+([Ee][+-]?\d+)?\b/
+	],
+	'function': /\b[a-z][\w@]*(?=\()/,
+	'variable': {
+		// Look-behind is used to prevent wrong highlighting of atoms containing "@"
+		pattern: /(^|[^@])(?:\b|\?)[A-Z_][\w@]*/,
+		lookbehind: true
+	},
+	'operator': [
+		/[=\/<>:]=|=[:\/]=|\+\+?|--?|[=*\/!]|\b(?:bnot|div|rem|band|bor|bxor|bsl|bsr|not|and|or|xor|orelse|andalso)\b/,
+		{
+			// We don't want to match <<
+			pattern: /(^|[^<])<(?!<)/,
+			lookbehind: true
+		},
+		{
+			// We don't want to match >>
+			pattern: /(^|[^>])>(?!>)/,
+			lookbehind: true
+		}
+	],
+	'atom': /\b[a-z][\w@]*/,
+	'punctuation': /[()[\]{}:;,.#|]|<<|>>/
+
+};
 Prism.languages.go = Prism.languages.extend('clike', {
 	'keyword': /\b(break|case|chan|const|continue|default|defer|else|fallthrough|for|func|go(to)?|if|import|interface|map|package|range|return|select|struct|switch|type|var)\b/,
 	'builtin': /\b(bool|byte|complex(64|128)|error|float(32|64)|rune|string|u?int(8|16|32|64|)|uintptr|append|cap|close|complex|copy|delete|imag|len|make|new|panic|print(ln)?|real|recover)\b/,

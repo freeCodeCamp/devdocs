@@ -42,12 +42,14 @@ module Docs
         return [] unless include_default_entry?
 
         if subpath.start_with?('lib/')
-          entry_nodes.map do |node|
+          names = Set.new
+          entry_nodes.each_with_object [] do |node, entries|
             id = node['name']
-            name = id.gsub %r{\-(?<arity>.*)\z}, '/\k<arity>'
+            name = id.remove %r{\-\d*\z}
+            name << ' (type)' if name.sub!(/\Atype-/, '')
             name.remove! 'Module:'
             name.prepend "#{self.name}:"
-            [name, id]
+            entries << [name, id] if names.add?(name)
           end
         elsif subpath.start_with?('doc/')
           []
@@ -65,7 +67,9 @@ module Docs
 
       def entry_nodes
         @entry_nodes ||= if subpath.start_with?('lib/')
-          css('div.REFBODY + p > a')
+          css('p + div.REFBODY').each_with_object [] do |node, result|
+            result.concat(node.previous_element.css('a[name]').to_a)
+          end
         elsif subpath.start_with?('erts')
           link = at_css(".flipMenu a[href='#{File.basename(subpath, '.html')}']")
           list = link.parent.parent
