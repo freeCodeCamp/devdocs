@@ -405,7 +405,7 @@ credits = [
     'http://nginx.org/LICENSE'
   ], [
     'nginx / Lua Module',
-    '2009-2016 Xiaozhe Wang (chaoslawful)<br>&copy; 2009-2016 Yichun "agentzh" Zhang (章亦春), CloudFlare Inc.',
+    '2009-2016 Xiaozhe Wang (chaoslawful)<br>&copy; 2009-2017 Yichun "agentzh" Zhang (章亦春), OpenResty Inc.',
     'BSD',
     'https://github.com/openresty/lua-nginx-module#copyright-and-license'
   ], [
