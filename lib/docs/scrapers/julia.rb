@@ -1,10 +1,10 @@
 module Docs
   class Julia < UrlScraper
     self.type = 'sphinx_simple'
-    self.release = '0.5.0'
-    self.base_url = 'http://docs.julialang.org/en/release-0.5/'
+    self.release = '0.5.2'
+    self.base_url = 'https://docs.julialang.org/en/stable/'
     self.links = {
-      home: 'http://julialang.org/',
+      home: 'https://julialang.org/',
       code: 'https://github.com/JuliaLang/julia'
     }
 
