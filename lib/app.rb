@@ -110,6 +110,10 @@ class App < Sinatra::Application
     include Sinatra::Cookies
     include Sprockets::Helpers
 
+    def memoized_cookies
+      @memoized_cookies ||= cookies.to_hash
+    end
+
     def canonical_origin
       "http://#{request.host_with_port}"
     end
@@ -126,7 +130,7 @@ class App < Sinatra::Application
 
     def docs
       @docs ||= begin
-        cookie = cookies[:docs]
+        cookie = memoized_cookies['docs']
 
         if cookie.nil?
           settings.default_docs
@@ -168,6 +172,21 @@ class App < Sinatra::Application
       request.query_string.empty? ? nil : "?#{request.query_string}"
     end
 
+    def manifest_asset_urls
+      @@manifest_asset_urls ||= [
+        javascript_path('application', asset_host: false),
+        stylesheet_path('application'),
+        stylesheet_path('application-dark'),
+        image_path('icons.png'),
+        image_path('icons@2x.png'),
+        image_path('docs-1.png'),
+        image_path('docs-1@2x.png'),
+        image_path('docs-2.png'),
+        image_path('docs-2@2x.png'),
+        asset_path('docs.js')
+      ]
+    end
+
     def main_stylesheet_path
       stylesheet_paths[dark_theme? ? :dark : :default]
     end
@@ -177,22 +196,22 @@ class App < Sinatra::Application
     end
 
     def stylesheet_paths
-      @stylesheet_paths ||= {
+      @@stylesheet_paths ||= {
         default: stylesheet_path('application'),
         dark: stylesheet_path('application-dark')
       }
     end
 
     def app_size
-      @app_size ||= cookies[:size].nil? ? '20rem' : "#{cookies[:size]}px"
+      @app_size ||= memoized_cookies['size'].nil? ? '20rem' : "#{memoized_cookies['size']}px"
     end
 
     def app_layout
-      cookies[:layout]
+      memoized_cookies['layout']
     end
 
     def app_theme
-      @app_theme ||= cookies[:dark].nil? ? 'default' : 'dark'
+      @app_theme ||= memoized_cookies['dark'].nil? ? 'default' : 'dark'
     end
 
     def dark_theme?
@@ -205,7 +224,7 @@ class App < Sinatra::Application
     end
 
     def supports_js_redirection?
-      browser.modern? && !cookies.empty?
+      browser.modern? && !memoized_cookies.empty?
     end
   end
 
