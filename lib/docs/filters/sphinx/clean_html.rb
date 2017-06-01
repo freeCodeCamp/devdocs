@@ -20,9 +20,10 @@ module Docs
         css('div[class*="highlight-"]', 'div[class*="hl-"]').each do |node|
           pre = node.at_css('pre')
           pre.content = pre.content
-          lang = node['class'][/highlight\-(\w+)/, 1] || node['class'][/hl\-(\w+)/, 1]
+          lang = node['class'][/code (\w+) highlight/, 1] || node['class'][/highlight\-(\w+)/, 1] || node['class'][/hl\-(\w+)/, 1]
           lang = 'php' if lang == 'ci'
           lang = 'markup' if lang == 'html+django'
+          lang = 'bash' if lang == 'bash'
           lang = 'python' if lang == 'default' || lang.start_with?('python') || lang.start_with?('ipython')
           pre['data-language'] = lang
           node.replace(pre)
