@@ -14,7 +14,7 @@ templates.sidebarDoc = (doc, options = {}) ->
   link + "</span></a>"
 
 templates.sidebarType = (type) ->
-  """<a href="#{type.fullPath()}" class="_list-item _list-dir" data-slug="#{type.slug}" tabindex="-1"><span class="_list-arrow"></span><span class="_list-count">#{type.count}</span><span class="_list-text">#{type.name}</span></a>"""
+  """<a href="#{type.fullPath()}" class="_list-item _list-dir" data-slug="#{type.slug}" tabindex="-1"><span class="_list-arrow"></span><span class="_list-count">#{type.count}</span><span class="_list-text">#{$.escape type.name}</span></a>"""
 
 templates.sidebarEntry = (entry) ->
   """<a href="#{entry.fullPath()}" class="_list-item _list-hover" tabindex="-1">#{$.escape entry.name}</a>"""
