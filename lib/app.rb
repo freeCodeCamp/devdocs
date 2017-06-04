@@ -21,27 +21,17 @@ class App < Sinatra::Application
     set :cdn_origin, ''
 
     set :assets_prefix, 'assets'
-    set :assets_path, -> { File.join(public_folder, assets_prefix) }
-    set :assets_manifest_path, -> { File.join(assets_path, 'manifest.json') }
+    set :assets_path, File.join(public_folder, assets_prefix)
+    set :assets_manifest_path, File.join(assets_path, 'manifest.json')
     set :assets_compile, %w(*.png docs.js docs.json application.js application.css application-dark.css)
 
     require 'yajl/json_gem'
     set :docs_prefix, 'docs'
-    set :docs_origin, -> { File.join('', docs_prefix) }
-    set :docs_path, -> { File.join(public_folder, docs_prefix) }
-    set :docs_manifest_path, -> { File.join(docs_path, 'docs.json') }
+    set :docs_origin, File.join('', docs_prefix)
+    set :docs_path, File.join(public_folder, docs_prefix)
+    set :docs_manifest_path, File.join(docs_path, 'docs.json')
     set :default_docs, %w(css dom dom_events html http javascript)
-    set :docs, -> {
-      Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc|
-        doc['full_name'] = doc['name'].dup
-        doc['full_name'] << " #{doc['version']}" if doc['version']
-        doc['slug_without_version'] = doc['slug'].split('~').first
-        [doc['slug'], doc]
-      }]
-    }
-
-    set :news_path, -> { File.join(root, assets_prefix, 'javascripts', 'news.json') }
-    set :news, -> { JSON.parse(File.read(news_path)) }
+    set :news_path, File.join(root, assets_prefix, 'javascripts', 'news.json')
 
     set :csp, false
 
@@ -103,7 +93,30 @@ class App < Sinatra::Application
   end
 
   configure :test do
-    set :docs_manifest_path, -> { File.join(root, 'test', 'files', 'docs.json') }
+    set :docs_manifest_path, File.join(root, 'test', 'files', 'docs.json')
+  end
+
+  def self.parse_docs
+    Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc|
+      doc['full_name'] = doc['name'].dup
+      doc['full_name'] << " #{doc['version']}" if doc['version']
+      doc['slug_without_version'] = doc['slug'].split('~').first
+      [doc['slug'], doc]
+    }]
+  end
+
+  def self.parse_news
+    JSON.parse(File.read(news_path))
+  end
+
+  configure :development, :test do
+    set :docs, -> { parse_docs }
+    set :news, -> { parse_news }
+  end
+
+  configure :production do
+    set :docs, parse_docs
+    set :news, parse_news
   end
 
   helpers do
