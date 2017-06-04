@@ -22,6 +22,7 @@ app.views.CrystalPage =
 app.views.D3Page =
 app.views.DockerPage =
 app.views.DrupalPage =
+app.views.ElectronPage =
 app.views.ElixirPage =
 app.views.EmberPage =
 app.views.ErlangPage =

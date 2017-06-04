@@ -219,15 +219,20 @@ credits = [
     'GPLv2',
     'https://api.drupal.org/api/drupal/LICENSE.txt'
   ], [
-    'Ember.js',
-    '2017 Yehuda Katz, Tom Dale and Ember.js contributors',
+    'Electron',
+    '2013-2017 GitHub Inc.',
     'MIT',
-    'https://raw.githubusercontent.com/emberjs/ember.js/master/LICENSE'
+    'https://raw.githubusercontent.com/electron/electron/master/LICENSE'
   ], [
     'Elixir',
     '2012-2017 Plataformatec',
     'Apache',
     'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
+  ], [
+    'Ember.js',
+    '2017 Yehuda Katz, Tom Dale and Ember.js contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/emberjs/ember.js/master/LICENSE'
   ], [
     'Erlang',
     '2010-2017 Ericsson AB',
