@@ -2,7 +2,7 @@ module Docs
   class Codeception
     class CleanHtmlFilter < Filter
       def call
-        @doc = doc.at_css('div.page, div.content')
+        @doc = doc.at_css('#page')
 
         while doc.element_children.length == 1
           doc.first_element_child.before(doc.first_element_child.children).remove
