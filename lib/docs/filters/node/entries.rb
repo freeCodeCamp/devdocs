@@ -8,6 +8,7 @@ module Docs
         'modules'      => 'module' }
 
       REPLACE_TYPES = {
+        'C++ Addons'                => 'Miscellaneous',
         'C/C++ Addons'              => 'Miscellaneous',
         'Debugger'                  => 'Miscellaneous',
         'Deprecated APIs'           => 'Miscellaneous',
@@ -74,9 +75,9 @@ module Docs
           next unless (name.first.upcase! && !name.include?(' ')) || name.start_with?('Class Method')
 
           # Differentiate server classes (http, https, net, etc.)
-          name.sub!('server.') { "#{(klass || 'https').sub('.', '_').downcase!}." }
+          name.sub!('server.') { "#{(klass || 'https').sub('.', '_').downcase}." }
           # Differentiate socket classes (net, dgram, etc.)
-          name.sub!('socket.') { "#{klass.sub('.', '_').downcase!}." }
+          name.sub!('socket.') { "#{klass.sub('.', '_').downcase}." }
 
           name.remove! 'Class Method:'
           name.sub! 'buf.',     'buffer.'
