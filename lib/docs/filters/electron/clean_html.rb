@@ -4,13 +4,17 @@ module Docs
       def call
         css('.header-link', 'hr + .text-center', 'hr').remove
 
-        css('.grid', '.row', '.col-ms-12').each do |node|
+        css('.grid', '.row', '.col-ms-12', 'ul.docs-list > ul.docs-list').each do |node|
           node.before(node.children).remove
         end
 
-        css('h2 > a').each do |node|
-          node.before(node.children).remove
-        end if root_page?
+        if root_page?
+          doc.child.before('<h1>Electron Documentation</h1>')
+
+          css('h2 > a').each do |node|
+            node.before(node.children).remove
+          end
+        end
 
         at_css('h2').name = 'h1' unless at_css('h1')
 
