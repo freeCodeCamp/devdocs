@@ -29,6 +29,16 @@ module Docs
           node.content = node.content.remove(' (click to show)')
         end
 
+        css('.table-wrap').each do |node|
+          css('.table-td-title').remove
+          css('.table-th').each { |n| n.name = 'th' }
+          css('.table-td').each { |n| n.name = 'td' }
+          css('.table-tr').each { |n| n.name = 'tr' }
+          css('.table-body').each { |n| n.name = 'tbody' }
+          css('.table-header').each { |n| n.name = 'thead' }
+          node.name = 'table'
+        end
+
         css('pre > code').each do |node|
           node.parent['data-language'] = node['class'][/lang-(\w+)/, 1].sub('jsx', 'js') if node['class']
           node.parent.content = node.parent.content

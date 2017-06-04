@@ -4,7 +4,7 @@ module Docs
     self.type = 'webpack'
 
     version '2' do
-      self.release = '2.5.1'
+      self.release = '2.6.1'
       self.base_url = 'https://webpack.js.org/'
       self.root_path = 'guides/get-started/'
       self.initial_paths = %w(
