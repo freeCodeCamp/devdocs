@@ -11,17 +11,17 @@ module Docs
 
     options[:container] = '.body'
 
-    options[:skip_patterns] = [/\Achanges/, /\A_modules/]
+    options[:skip] = %w(user/index.html api/index.html)
+    options[:skip_patterns] = [/\Achanges/, /\A_modules/, /\Acommunity/]
 
     options[:attribution] = <<-HTML
-      &copy; 2016 Falcon Contributors<br>
-      Licensed under the Apache 2 License.
+      &copy; 2012&ndash;2016 by Rackspace Hosting, Inc. and other contributors<br>
+      Licensed under the Apache License, Version 2.0.
     HTML
 
-    version '1.2.0' do
+    version '1.2' do
       self.release = '1.2.0'
-      self.base_url = "https://falcon.readthedocs.io/en/#{self.version}/"
+      self.base_url = "https://falcon.readthedocs.io/en/#{self.release}/"
     end
-
   end
 end

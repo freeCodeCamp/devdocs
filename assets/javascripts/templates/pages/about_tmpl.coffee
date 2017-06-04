@@ -244,6 +244,11 @@ credits = [
     'CC BY-SA',
     'https://raw.githubusercontent.com/expressjs/expressjs.com/gh-pages/LICENSE.md'
   ], [
+    'Falcon',
+    '2012-2016 by Rackspace Hosting, Inc. and other contributors',
+    'Apache',
+    'https://raw.githubusercontent.com/falconry/falcon/master/LICENSE'
+  ], [
     'Fish',
     '2005-2009 Axel Liljencrantz',
     'GPLv2',

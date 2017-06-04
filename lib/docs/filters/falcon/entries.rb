@@ -9,14 +9,10 @@ module Docs
 
       def get_type
         case slug.split('/').first
-        when 'community'
-          'Community Guide'
         when 'user'
-          'User Guide'
+          'Guide'
         when 'api'
-          'Classes and Functions'
-        else
-          'Other'
+          'API'
         end
       end
 
@@ -24,23 +20,33 @@ module Docs
         entries = []
 
         css('.class').each do |node|
+          namespace = node.at_css('.descclassname').content.strip.remove(/\.\z/)
           class_name = node.at_css('dt > .descname').content
           class_id = node.at_css('dt[id]')['id']
-          entries << [class_name, class_id]
+          entries << ["#{namespace}.#{class_name}", class_id, namespace]
+
+           node.css('.attribute').each do |n|
+            next unless n.at_css('dt[id]')
+            name = n.at_css('.descname').content
+            name = "#{namespace}.#{class_name}.#{name}"
+            id = n.at_css('dt[id]')['id']
+            entries << [name, id, namespace]
+          end
 
           node.css('.method').each do |n|
             next unless n.at_css('dt[id]')
             name = n.at_css('.descname').content
-            name = "#{class_name}.#{name}()"
+            name = "#{namespace}.#{class_name}.#{name}()"
             id = n.at_css('dt[id]')['id']
-            entries << [name, id]
+            entries << [name, id, namespace]
           end
         end
 
         css('.function').each do |node|
-          name = "#{node.at_css('.descname').content}()"
+          namespace = node.at_css('.descclassname').content.strip.remove(/\.\z/)
+          name = "#{namespace}.#{node.at_css('.descname').content}()"
           id = node.at_css('dt[id]')['id']
-          entries << [name, id]
+          entries << [name, id, namespace]
         end
 
         entries
