@@ -4,6 +4,8 @@ module Docs
       def call
         @doc = at_css('.content-wrapper')
 
+        at_css('h1').content = 'Meteor Documentation' if root_page?
+
         css('.page-actions', '.anchor').remove
 
         css('.header-content', '.document-formatting', 'h2 > a', '.api', '.api-body', 'div.desc').each do |node|

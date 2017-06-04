@@ -20,24 +20,30 @@ module Docs
     )
 
     options[:fix_urls] = ->(url) {
-      url.sub! 'https://docs.meteor.com/api/blaze.html', 'http://blazejs.org/api/blaze.html'
-      url.sub! 'https://docs.meteor.com/api/templates.html', 'http://blazejs.org/api/templates.html'
+      url.sub! %r{\Ahttps://docs\.meteor\.com/(v[\d\.]*\/)?api/blaze\.html}, 'http://blazejs.org/api/blaze.html'
+      url.sub! %r{\Ahttps://docs\.meteor\.com/(v[\d\.]*\/)?api/templates\.html}, 'http://blazejs.org/api/templates.html'
       url
     }
 
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2016 Meteor Development Group<br>
+      &copy; 2011&ndash;2017 Meteor Development Group, Inc.<br>
       Licensed under the MIT License.
     HTML
 
-    version '1.4' do
-      self.release = '1.4.3'
+    version '1.5' do
+      self.release = '1.5.0'
       self.base_urls = ['https://docs.meteor.com/', 'https://guide.meteor.com/', 'http://blazejs.org/']
+    end
+
+    version '1.4' do
+      self.release = '1.4.4'
+      self.base_urls = ['https://guide.meteor.com/', "https://docs.meteor.com/v#{self.release}/", 'http://blazejs.org/']
     end
 
     version '1.3' do
       self.release = '1.3.5'
-      self.base_urls = ["https://docs.meteor.com/v#{self.release}/", 'https://guide.meteor.com/v1.3/']
+      self.base_urls = ['https://guide.meteor.com/v1.3/', "https://docs.meteor.com/v#{self.release}/"]
+      options[:fix_urls] = nil
     end
   end
 end

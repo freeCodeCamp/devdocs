@@ -370,9 +370,9 @@ credits = [
     'https://raw.githubusercontent.com/matplotlib/matplotlib/master/LICENSE/LICENSE'
   ], [
     'Meteor',
-    '2011-2016 Meteor Development Group',
+    '2011-2017 Meteor Development Group, Inc.',
     'MIT',
-    'https://raw.githubusercontent.com/meteor/meteor/master/LICENSE.txt'
+    'https://raw.githubusercontent.com/meteor/meteor/master/LICENSE'
   ], [
     'Minitest',
     'Ryan Davis, seattle.rb',
