@@ -1,0 +1,9 @@
+._pug {
+  @extend %simple;
+
+  .alert { @extend %note; }
+  .alert-danger { @extend %note-orange; }
+  .alert h6 { margin-top: .25rem; }
+
+  h4 > code { @extend %label; }
+}
