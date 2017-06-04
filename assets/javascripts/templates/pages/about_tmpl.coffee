@@ -140,9 +140,9 @@ credits = [
     'https://raw.githubusercontent.com/cakephp/cakephp/master/LICENSE.txt'
   ], [
     'Chai',
-    '2011-2015 Jake Luer',
+    '2016 Chai.js Assertion Library',
     'MIT',
-    'https://github.com/chaijs/chai/blob/master/README.md#license'
+    'https://raw.githubusercontent.com/chaijs/chai/master/LICENSE'
   ], [
     'Chef&trade;',
     'Chef Software, Inc.',
