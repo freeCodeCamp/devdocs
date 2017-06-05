@@ -1,5 +1,7 @@
-ENV['RACK_ENV'] = 'test'
+require 'simplecov'
+SimpleCov.start
 
+ENV['RACK_ENV'] = 'test'
 require 'bundler/setup'
 Bundler.require :test
 
