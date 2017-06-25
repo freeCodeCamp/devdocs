@@ -34,7 +34,7 @@ module Docs
     HTML
 
     version '5.4' do
-      self.release = '5.4.15'
+      self.release = '5.4.23'
       self.root_path = '/api/5.4/index.html'
       self.initial_paths = %w(/docs/5.4/installation /api/5.4/classes.html)
 
