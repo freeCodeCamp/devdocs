@@ -1,7 +1,7 @@
 module Docs
   class Redux < UrlScraper
     self.type = 'redux'
-    self.release = '3.6.0'
+    self.release = '3.7.0'
     self.base_url = 'http://redux.js.org/docs/'
     self.links = {
       home: 'http://redux.js.org/',
@@ -13,7 +13,7 @@ module Docs
     options[:skip] = %w(Feedback.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2015&ndash;2016 Dan Abramov<br>
+      &copy; 2015&ndash;2017 Dan Abramov<br>
       Licensed under the MIT License.
     HTML
 

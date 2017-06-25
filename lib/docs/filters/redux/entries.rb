@@ -11,7 +11,7 @@ module Docs
         path = slug.split('/')
 
         if path.length > 1
-          path[0].titleize.sub('Api', 'API')
+          path[0].titleize.sub('Api', 'API').sub('Faq', 'FAQ')
         else
           'Miscellaneous'
         end

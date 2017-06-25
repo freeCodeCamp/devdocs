@@ -520,7 +520,7 @@ credits = [
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
     'Redux',
-    '2015-2016 Dan Abramov',
+    '2015-2017 Dan Abramov',
     'MIT',
     'https://raw.githubusercontent.com/reactjs/redux/master/LICENSE.md'
   ], [
