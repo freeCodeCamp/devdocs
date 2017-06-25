@@ -357,6 +357,15 @@ isIOS = null
 $.isIOS = ->
   isIOS ?= navigator.userAgent?.indexOf('iPhone') >= 0 || navigator.userAgent?.indexOf('iPad') >= 0
 
+$.overlayScrollbarsEnabled = ->
+  return false unless $.isMac()
+  div = document.createElement('div')
+  div.setAttribute('style', 'width: 100px; height: 100px; overflow: scroll; position: absolute')
+  document.body.appendChild(div)
+  result = div.offsetWidth is div.clientWidth
+  document.body.removeChild(div)
+  result
+
 HIGHLIGHT_DEFAULTS =
   className: 'highlight'
   delay: 1000

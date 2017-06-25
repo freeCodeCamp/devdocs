@@ -185,6 +185,7 @@
     return
 
   hideLoading: ->
+    document.body.classList.add '_overlay-scrollbars' if $.overlayScrollbarsEnabled()
     document.body.classList.remove '_booting'
     document.body.classList.remove '_loading'
     return

@@ -18,25 +18,20 @@
   @extend %border-box;
   @extend %user-select-none;
 
-  @media (-moz-overlay-scrollbars) {
+  ._overlay-scrollbars & {
     padding-top: 0;
     top: $headerHeight;
   }
 
-  &::-webkit-scrollbar { -webkit-appearance: none; width: 10px; }
-  &::-webkit-scrollbar-button { display: none; }
-  &::-webkit-scrollbar-track { background: $contentBackground; }
-  &::-webkit-scrollbar-thumb {
-    min-height: 2rem;
-    background: $scrollbarColor;
-    background-clip: padding-box;
-    border: 3px solid $contentBackground;
-    border-radius: 5px;
-
-    &:hover,
-    &:active {
-      background-color: $scrollbarColorHover;
-      border-width: 2px;
+  body:not(._native-scrollbars) & {
+    &::-webkit-scrollbar { width: 10px; }
+    &::-webkit-scrollbar-track {
+      background: $contentBackground;
+      border: 0;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-width: 3px;
+      &:hover, &:active { border-width: 2px; }
     }
   }
 

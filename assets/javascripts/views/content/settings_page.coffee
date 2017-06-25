@@ -1,5 +1,5 @@
 class app.views.SettingsPage extends app.View
-  LAYOUTS = ['_max-width', '_sidebar-hidden']
+  LAYOUTS = ['_max-width', '_sidebar-hidden', '_native-scrollbars']
   SIDEBAR_HIDDEN_LAYOUT = '_sidebar-hidden'
 
   @className: '_static'
@@ -33,6 +33,7 @@ class app.views.SettingsPage extends app.View
 
   toggleLayout: (layout, enable) ->
     document.body.classList[if enable then 'add' else 'remove'](layout) unless layout is SIDEBAR_HIDDEN_LAYOUT
+    document.body.classList[if $.overlayScrollbarsEnabled() then 'add' else 'remove']('_overlay-scrollbars')
     app.settings.setLayout(layout, enable)
     app.appCache?.updateInBackground()
     return

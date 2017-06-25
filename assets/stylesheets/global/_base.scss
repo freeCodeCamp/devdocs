@@ -228,3 +228,48 @@ input[type="search"]::-webkit-search-decoration {
 ::-webkit-input-placeholder { color: $textColorLighter; }
 ::-moz-placeholder          { color: $textColorLighter; opacity: 1; }
 :-ms-input-placeholder      { color: $textColorLighter; }
+
+body:not(._native-scrollbars) {
+  *::-webkit-scrollbar { -webkit-appearance: none; }
+  *::-webkit-scrollbar:vertical { width: 16px; }
+  *::-webkit-scrollbar:horizontal { height: 16px; }
+
+  *::-webkit-scrollbar-button,
+  *::-webkit-scrollbar-corner { display: none; }
+
+  *::-webkit-scrollbar-track {
+    background: $contentBackground;
+    border: 1px solid $contentBackground;
+
+    &:hover {
+      background: $sidebarBackground;
+      border-color: $sidebarBorder;
+    }
+
+    &:vertical { border-width: 0 0 0 1px; }
+
+    &:vertical:corner-present {
+      border-width: 0 0 1px 1px;
+      border-radius: 0 0 0 2px;
+    }
+
+    &:horizontal {
+      border-width: 1px 1px 0 1px;
+      border-radius: 2px 2px 0 0;
+    }
+  }
+
+  *::-webkit-scrollbar-thumb {
+    min-height: 2rem;
+    background: $scrollbarColor;
+    background-clip: padding-box;
+    border: 5px solid rgba(black, 0);
+    border-radius: 10px;
+
+    &:hover,
+    &:active {
+      background-color: $scrollbarColorHover;
+      border-width: 4px;
+    }
+  }
+}

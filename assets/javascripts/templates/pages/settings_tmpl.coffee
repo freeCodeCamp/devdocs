@@ -25,6 +25,9 @@ app.templates.settingsPage = (settings) -> """
       <label class="_settings-label">
         <input type="checkbox" form="settings" name="smoothScroll" value="1"#{if settings.smoothScroll then ' checked' else ''}>Use smooth scrolling
       </label>
+      <label class="_settings-label _setting-native-scrollbar">
+        <input type="checkbox" form="settings" name="layout" value="_native-scrollbars"#{if settings['_native-scrollbars'] then ' checked' else ''}>Use native scrollbars
+      </label>
       <label class="_settings-label">
         <input type="checkbox" form="settings" name="arrowScroll" value="1"#{if settings.arrowScroll then ' checked' else ''}>Use arrow keys to scroll the main content area
         <small>With this checked, use <code class="_label">alt</code> + <code class="_label">&uarr;</code><code class="_label">&darr;</code><code class="_label">&larr;</code><code class="_label">&rarr;</code> to navigate the sidebar.</small>

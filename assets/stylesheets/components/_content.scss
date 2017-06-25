@@ -8,12 +8,12 @@
   height: 100%;
   margin-left: $sidebarWidth;
   pointer-events: none;
-  -webkit-margin-end: -1px;
   @extend %border-box;
 
   @media #{$mediumScreen} { margin-left: $sidebarMediumWidth; }
 
   ._sidebar-hidden & { margin-left: 0; }
+  body:not(._native-scrollbars) & { -webkit-margin-end: -1px; }
 }
 
 ._content {
@@ -27,50 +27,19 @@
   -webkit-overflow-scrolling: touch;
   @extend %border-box;
 
-  -webkit-padding-start: .625rem;
-  -webkit-padding-end: .75rem;
-
-  @media (-moz-overlay-scrollbars) { padding-left: .625rem; }
-  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { margin-left: 0; }
-  @supports (-ms-overflow-style: none) { margin-left: 0; }
-
   ._sidebar-hidden &:before {
     content: '';
     display: block;
     margin-top: $headerHeight;
   }
 
-  &::-webkit-scrollbar { -webkit-appearance: none; }
-  &::-webkit-scrollbar:vertical { width: 16px; }
-  &::-webkit-scrollbar:horizontal { height: 16px; }
-  &::-webkit-scrollbar-button,
-  &::-webkit-scrollbar-corner { display: none; }
-  &::-webkit-scrollbar-track {
-    background: $contentBackground;
-    border: 1px solid $contentBackground;
+  ._overlay-scrollbars & { padding-left: .625rem; }
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { margin-left: 0; }
+  @supports (-ms-overflow-style: none) { margin-left: 0; }
 
-    &:hover {
-      background: $sidebarBackground;
-      border-color: $sidebarBorder;
-    }
-
-    &:vertical { border-width: 0 0 0 1px; }
-    &:vertical:corner-present { border-width: 0 0 1px 1px; border-radius: 0 0 0 2px; }
-    &:horizontal { border-width: 1px 1px 0 1px; border-radius: 2px 2px 0 0; }
-  }
-
-  &::-webkit-scrollbar-thumb {
-    min-height: 2rem;
-    background: $scrollbarColor;
-    background-clip: padding-box;
-    border: 5px solid rgba(black, 0);
-    border-radius: 10px;
-
-    &:hover,
-    &:active {
-      background-color: $scrollbarColorHover;
-      border-width: 4px;
-    }
+  body:not(._native-scrollbars) & {
+    -webkit-padding-start: .625rem;
+    -webkit-padding-end: .75rem;
   }
 }
 
