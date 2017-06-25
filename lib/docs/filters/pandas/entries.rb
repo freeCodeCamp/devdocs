@@ -17,7 +17,7 @@ module Docs
 
       def get_type
         if subpath.start_with?('generated')
-          css('.toctree-l2.current > a').last.content
+          css('.toctree-l2.current > a').last.content.remove(/\s\(.+?\)/)
         else
           'Manual'
         end
