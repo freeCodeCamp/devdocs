@@ -32,13 +32,15 @@ module Docs
           node.name = 'th'
         end
 
-        css('.summary', 'span[style]').each do |node|
+        css('.summary', 'span[style]', 'div.doc-description', 'div.property-doc', 'div.class-description', 'th > span').each do |node|
           node.before(node.children).remove
         end
 
         css('a[id]:empty').each do |node|
           node.next_element['id'] = node['id'] if node.next_element && node.next_element.name != 'a'
         end
+
+        css('table', 'pre', 'tr', 'td', 'th').remove_attr('class')
 
         doc
       end
