@@ -2,7 +2,7 @@ module Docs
   class Ansible < UrlScraper
     self.name = 'Ansible'
     self.type = 'sphinx'
-    self.release = '2.3.0'
+    self.release = '2.3.1'
     self.base_url = 'https://docs.ansible.com/ansible/'
     self.links = {
       home: 'https://www.ansible.com/',
