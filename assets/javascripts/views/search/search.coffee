@@ -44,7 +44,11 @@ class app.views.Search extends app.View
       @input.focus() unless document.activeElement?.tagName is 'INPUT'
     return
 
-  reset: ->
+  getScopeDoc: ->
+    @scope.getScope() if @scope.isActive()
+
+  reset: (force) ->
+    @scope.reset() if force or not @input.value
     @el.reset()
     @onInput()
     @autoFocus()
@@ -129,7 +133,8 @@ class app.views.Search extends app.View
     return
 
   afterRoute: (name, context) =>
-    @reset() if not context.init and app.router.isIndex()
+    return if app.shortcuts.eventInProgress?.name is 'escape'
+    @reset(true) if not context.init and app.router.isIndex()
     @delay @searchUrl if context.hash
     @delay @autoFocus
     return

@@ -129,7 +129,8 @@ class app.views.Sidebar extends app.View
 
   onEscape: =>
     @reset()
-    @scrollToTop()
+    @resetDisplay()
+    if doc = @search.getScopeDoc() then @docList.reveal(doc.toEntry()) else @scrollToTop()
     return
 
   onDocEnabled: ->
@@ -137,6 +138,8 @@ class app.views.Sidebar extends app.View
     @reset()
     return
 
-  afterRoute: =>
+  afterRoute: (name, context) =>
+    return if app.shortcuts.eventInProgress?.name is 'escape'
+    @reset() if not context.init and app.router.isIndex()
     @resetDisplay()
     return

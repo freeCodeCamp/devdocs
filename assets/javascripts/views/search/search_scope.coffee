@@ -11,9 +11,6 @@ class app.views.SearchScope extends app.View
   @routes:
     after: 'afterRoute'
 
-  @shortcuts:
-    escape: 'reset'
-
   constructor: (@el) -> super
 
   init: ->
@@ -28,6 +25,9 @@ class app.views.SearchScope extends app.View
 
   getScope: ->
     @doc or app
+
+  isActive: ->
+    !!@doc
 
   name: ->
     @doc?.name

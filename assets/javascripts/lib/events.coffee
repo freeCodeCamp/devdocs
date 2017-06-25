@@ -15,8 +15,10 @@
     @
 
   trigger: (event, args...) ->
+    @eventInProgress = { name: event, args: args }
     if callbacks = @_callbacks?[event]
       callback? args... for callback in callbacks.slice(0)
+    @eventInProgress = null
     @trigger 'all', event, args... unless event is 'all'
     @
 
