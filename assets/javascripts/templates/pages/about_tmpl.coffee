@@ -585,7 +585,7 @@ credits = [
     'https://raw.githubusercontent.com/statsmodels/statsmodels/master/LICENSE.txt'
   ], [
     'Symfony',
-    '2004-2016 Fabien Potencier',
+    '2004-2017 Fabien Potencier',
     'MIT',
     'https://symfony.com/doc/current/contributing/code/license.html'
   ], [
