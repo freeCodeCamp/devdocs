@@ -1,7 +1,7 @@
 module Docs
   class Async < UrlScraper
     self.type = 'async'
-    self.release = '2.4.0'
+    self.release = '2.4.1'
     self.base_url = 'https://caolan.github.io/async/'
     self.root_path = 'docs.html'
     self.links = {
