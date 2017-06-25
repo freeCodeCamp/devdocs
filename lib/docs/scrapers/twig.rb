@@ -4,7 +4,7 @@ module Docs
     self.root_path = 'index.html'
     self.initial_paths = %w(extensions/index.html)
     self.links = {
-      home: 'http://twig.sensiolabs.org/',
+      home: 'https://twig.sensiolabs.org/',
       code: 'https://github.com/twigphp/Twig'
     }
 
@@ -20,13 +20,13 @@ module Docs
     options[:skip] = %w(deprecated.html advanced_legacy.html)
 
     version '2' do
-      self.release = '2.3.0'
-      self.base_url = 'http://twig.sensiolabs.org/doc/2.x/'
+      self.release = '2.4.3'
+      self.base_url = 'https://twig.sensiolabs.org/doc/2.x/'
     end
 
     version '1' do
-      self.release = '1.33.0'
-      self.base_url = 'http://twig.sensiolabs.org/doc/1.x/'
+      self.release = '1.34.3'
+      self.base_url = 'https://twig.sensiolabs.org/doc/1.x/'
     end
   end
 end

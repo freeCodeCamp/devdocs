@@ -602,7 +602,7 @@ credits = [
     'Twig',
     '2009-2017 The Twig Team',
     'BSD',
-    'http://twig.sensiolabs.org/license'
+    'https://twig.sensiolabs.org/license'
   ], [
     'TypeScript',
     'Microsoft and other contributors',
