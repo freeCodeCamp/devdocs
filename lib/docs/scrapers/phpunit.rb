@@ -19,9 +19,14 @@ module Docs
       appendixes.copyright.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2016 Sebastian Bergmann<br>
+      &copy; 2005&ndash;2017 Sebastian Bergmann<br>
       Licensed under the Creative Commons Attribution 3.0 Unported License.
     HTML
+
+    version '6' do
+      self.release = '6.2'
+      self.base_url = "https://phpunit.de/manual/#{release}/en/"
+    end
 
     version '5' do
       self.release = '5.7'

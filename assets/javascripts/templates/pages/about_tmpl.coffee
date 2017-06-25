@@ -485,7 +485,7 @@ credits = [
     'https://secure.php.net/manual/en/copyright.php'
   ], [
     'PHPUnit',
-    '2005-2016 Sebastian Bergmann',
+    '2005-2017 Sebastian Bergmann',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
