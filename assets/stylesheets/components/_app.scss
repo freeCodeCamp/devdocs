@@ -11,7 +11,7 @@
   ._booting > & { opacity: 0; }
   ._noscript > & { display: none; }
 
-  &._max-width  {
+  ._max-width & {
     margin: 0 auto;
     max-width: $maxWidth;
     box-shadow: 1px 0 $headerBorder, -1px 0 $headerBorder;

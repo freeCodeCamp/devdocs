@@ -32,7 +32,7 @@ class app.views.SettingsPage extends app.View
     return
 
   toggleLayout: (layout, enable) ->
-    app.el.classList[if enable then 'add' else 'remove'](layout) unless layout is SIDEBAR_HIDDEN_LAYOUT
+    document.body.classList[if enable then 'add' else 'remove'](layout) unless layout is SIDEBAR_HIDDEN_LAYOUT
     app.settings.setLayout(layout, enable)
     app.appCache?.updateInBackground()
     return
