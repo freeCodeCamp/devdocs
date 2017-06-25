@@ -5,10 +5,10 @@ module Docs
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.release = '2.12.0'
-    self.base_urls = ['http://emberjs.com/api/', 'https://guides.emberjs.com/v2.12.0/']
+    self.release = '2.13.0'
+    self.base_urls = ['https://emberjs.com/api/', 'https://guides.emberjs.com/v2.13.0/']
     self.links = {
-      home: 'http://emberjs.com/',
+      home: 'https://emberjs.com/',
       code: 'https://github.com/emberjs/ember.js'
     }
 
