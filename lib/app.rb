@@ -322,13 +322,16 @@ class App < Sinatra::Application
   end
 
   {
-    '/tips'               => '/help',
-    '/css-data-types/'    => '/css-values-units/',
-    '/css-at-rules/'      => '/?q=css%20%40',
-    '/html/article'       => '/html/element/article',
-    'html-html5/'         => 'html-elements/',
-    'html-standard/'      => 'html-elements/',
-    '/http-status-codes/' => '/http-status/'
+    '/tips'                   => '/help',
+    '/css-data-types/'        => '/css-values-units/',
+    '/css-at-rules/'          => '/?q=css%20%40',
+    '/dom/window/setinterval' => '/dom/windoworworkerglobalscope/setinterval',
+    '/html/article'           => '/html/element/article',
+    '/html-html5/'            => 'html-elements/',
+    '/html-standard/'         => 'html-elements/',
+    '/http-status-codes/'     => '/http-status/',
+    '/ruby/bignum'            => '/ruby~2.3/bignum',
+    '/ruby/fixnum'            => '/ruby~2.3/fixnum',
   }.each do |path, url|
     class_eval <<-CODE, __FILE__, __LINE__ + 1
       get '#{path}' do
@@ -373,12 +376,24 @@ class App < Sinatra::Application
         return redirect "/dom#{rest.sub('windowtimers', 'windoworworkerglobalscope')}", 301
       end
 
+      if rest.start_with?('/window/url.')
+        return redirect "/dom#{rest.sub('window/url.', 'url/')}", 301
+      end
+
       if rest.start_with?('/window.')
         return redirect "/dom#{rest.sub('window.', 'window/')}", 301
       end
 
       if rest.start_with?('/element.')
         return redirect "/dom#{rest.sub('element.', 'element/')}", 301
+      end
+
+      if rest.start_with?('/event.')
+        return redirect "/dom#{rest.sub('event.', 'event/')}", 301
+      end
+
+      if rest.start_with?('/document.')
+        return redirect "/dom#{rest.sub('document.', 'document/')}", 301
       end
     end
 
