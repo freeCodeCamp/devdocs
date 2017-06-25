@@ -14,7 +14,7 @@ class app.views.Search extends app.View
     submit: 'onSubmit'
 
   @shortcuts:
-    typing: 'autoFocus'
+    typing: 'focus'
     altG: 'google'
     altS: 'stackoverflow'
 
@@ -34,9 +34,8 @@ class app.views.Search extends app.View
     $.on window, 'focus', @autoFocus
     return
 
-  focus: ->
-    @delay =>
-      @input.focus() unless document.activeElement is @input
+  focus: =>
+    @input.focus() unless document.activeElement is @input
     return
 
   autoFocus: =>
