@@ -14,9 +14,14 @@ module Docs
     options[:skip_patterns] = [/\Aapi/, /\Ajdiff/]
 
     options[:attribution] = <<-HTML
-      &copy; 2007&ndash;2016 Apache Software Foundation<br>
+      &copy; 2007&ndash;2017 Apache Software Foundation<br>
       Licensed under the Apache Software License version 2.0.
     HTML
+
+    version '0.17' do
+      self.release = '0.17.0'
+      self.base_url = "https://pig.apache.org/docs/r#{release}/"
+    end
 
     version '0.16' do
       self.release = '0.16.0'
