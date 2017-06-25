@@ -15,7 +15,7 @@ class app.views.Results extends app.View
     return
 
   init: ->
-    @addSubview @listFocus  = new app.views.ListFocus @el unless app.isMobile()
+    @addSubview @listFocus  = new app.views.ListFocus @el
     @addSubview @listSelect = new app.views.ListSelect @el
 
     @search
@@ -42,7 +42,7 @@ class app.views.Results extends app.View
     return
 
   focusFirst: ->
-    @listFocus?.focusOnNextFrame @el.firstElementChild
+    @listFocus?.focusOnNextFrame @el.firstElementChild unless app.isMobile()
     return
 
   openFirst: ->

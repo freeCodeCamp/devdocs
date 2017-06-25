@@ -18,7 +18,7 @@ class app.views.DocList extends app.View
   init: ->
     @lists = {}
 
-    @addSubview @listFocus  = new app.views.ListFocus @el unless app.isMobile()
+    @addSubview @listFocus  = new app.views.ListFocus @el
     @addSubview @listFold   = new app.views.ListFold @el
     @addSubview @listSelect = new app.views.ListSelect @el
 

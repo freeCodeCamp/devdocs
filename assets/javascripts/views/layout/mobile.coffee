@@ -7,6 +7,9 @@ class app.views.Mobile extends app.View
     sidebar:   '._sidebar'
     docPicker: '._settings ._sidebar'
 
+  @shortcuts:
+    escape: 'onEscape'
+
   @routes:
     after: 'afterRoute'
 
@@ -128,6 +131,9 @@ class app.views.Mobile extends app.View
 
   onTapSearch: =>
     window.scrollTo 0, 0
+
+  onEscape: =>
+    @hideSidebar()
 
   afterRoute: (route) =>
     @hideSidebar()
