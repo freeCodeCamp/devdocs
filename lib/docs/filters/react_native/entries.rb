@@ -31,7 +31,7 @@ module Docs
           sep = node.content.include?('static') ? '.' : '#'
           name.prepend(self.name + sep)
           name << '()' if node['class'].include?('methodTitle')
-          name.remove! %r{\:\s*\z}
+          name.remove! %r{\??\:\s*\z}
           id = node.at_css('.anchor')['name']
           entries << [name, id]
         end
