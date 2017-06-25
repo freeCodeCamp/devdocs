@@ -56,17 +56,17 @@ module Docs
     HTML
 
     version '9.6' do
-      self.release = '9.6.2'
+      self.release = '9.6.3'
       self.base_url = 'https://www.postgresql.org/docs/9.6/static/'
     end
 
     version '9.5' do
-      self.release = '9.5.6'
+      self.release = '9.5.7'
       self.base_url = 'https://www.postgresql.org/docs/9.5/static/'
     end
 
     version '9.4' do
-      self.release = '9.4.11'
+      self.release = '9.4.12'
       self.base_url = 'https://www.postgresql.org/docs/9.4/static/'
     end
   end

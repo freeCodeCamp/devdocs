@@ -52,7 +52,7 @@ module Docs
           node.content = node.content
         end
 
-        css('pre code', 'pre span').each do |node|
+        css('pre code', 'pre span', 'pre i', 'pre samp', 'code code', 'code span').each do |node|
           node.before(node.children).remove
         end
 

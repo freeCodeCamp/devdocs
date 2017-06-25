@@ -108,6 +108,7 @@ module Docs
           entries.concat get_custom_entries('.TABLE td:first-child > code')
         when 'functions-string'
           entries.concat get_custom_entries('> div[id^="FUNC"] td:first-child > code')
+          entries.concat get_custom_entries('> div[id^="FORMAT"] td:first-child > code')
         else
           if type && type.start_with?('Functions')
             entries.concat get_custom_entries('> .TABLE td:first-child > code.LITERAL:first-child')
