@@ -29,7 +29,7 @@ module Docs
         elsif slug.start_with?('api')
           css('.header[id] code').each_with_object [] do |node, entries|
             next if node.previous.try(:content).present?
-            entries << ["#{self.name}: #{node.content.sub(/\(.*\)/, '()')}", node.parent['id']]
+            entries << ["#{self.name.split(':').first}: #{node.content.sub(/\(.*\)/, '()')}", node.parent['id']]
           end
         else
           []

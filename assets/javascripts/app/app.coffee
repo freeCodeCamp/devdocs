@@ -118,7 +118,8 @@
   migrateDocs: ->
     for slug in @settings.getDocs() when not @docs.findBy('slug', slug)
       needsSaving = true
-      doc = @disabledDocs.findBy('slug_without_version', slug)
+      doc = @disabledDocs.findBy('slug', 'webpack') if slug == 'webpack~2'
+      doc ||= @disabledDocs.findBy('slug_without_version', slug)
       if doc
         @disabledDocs.remove(doc)
         @docs.add(doc)

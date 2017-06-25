@@ -357,7 +357,8 @@ class App < Sinatra::Application
     'angular~1.4' => 'angularjs~1.4',
     'angular~1.3' => 'angularjs~1.3',
     'angular~1.2' => 'angularjs~1.2',
-    'codeigniter~3.0' => 'codeigniter~3'
+    'codeigniter~3.0' => 'codeigniter~3',
+    'webpack~2' => 'webpack'
   }
 
   get %r{/([\w~\.%]+)(\-[\w\-]+)?(/.*)?} do |doc, type, rest|

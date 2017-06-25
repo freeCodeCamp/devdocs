@@ -3,10 +3,10 @@ module Docs
     self.name = 'webpack'
     self.type = 'webpack'
 
-    version '2' do
-      self.release = '2.6.1'
+    version do
+      self.release = '3.0.0'
       self.base_url = 'https://webpack.js.org/'
-      self.root_path = 'guides/get-started/'
+      self.root_path = 'guides/'
       self.initial_paths = %w(
         concepts/
         guides/
@@ -23,7 +23,7 @@ module Docs
       html_filters.push 'webpack/clean_html', 'webpack/entries'
 
       options[:container] = '.page'
-      options[:trailing_slash] = true
+      options[:trailing_slash] = false
       options[:only_patterns] = [
         /\Aconcepts\//,
         /\Aguides\//,
