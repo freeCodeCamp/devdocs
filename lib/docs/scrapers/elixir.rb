@@ -6,7 +6,7 @@ module Docs
     self.type = 'elixir'
     self.root_path = 'api-reference.html'
     self.links = {
-      home: 'http://elixir-lang.org/',
+      home: 'https://elixir-lang.org/',
       code: 'https://github.com/elixir-lang/elixir'
     }
 
@@ -30,11 +30,11 @@ module Docs
         "https://hexdocs.pm/iex/#{self.class.release}/IEx.html",
         "https://hexdocs.pm/logger/#{self.class.release}/Logger.html",
         "https://hexdocs.pm/mix/#{self.class.release}/Mix.html",
-        "http://elixir-lang.org/getting-started/introduction.html" ]
+        "https://elixir-lang.org/getting-started/introduction.html" ]
     end
 
     version '1.4' do
-      self.release = '1.4.4'
+      self.release = '1.4.5'
       self.base_urls = [
         "https://hexdocs.pm/elixir/#{release}/",
         "https://hexdocs.pm/eex/#{release}/",
@@ -42,7 +42,7 @@ module Docs
         "https://hexdocs.pm/iex/#{release}/",
         "https://hexdocs.pm/logger/#{release}/",
         "https://hexdocs.pm/mix/#{release}/",
-        'http://elixir-lang.org/getting-started/'
+        'https://elixir-lang.org/getting-started/'
       ]
     end
 
@@ -55,7 +55,7 @@ module Docs
         "https://hexdocs.pm/iex/#{release}/",
         "https://hexdocs.pm/logger/#{release}/",
         "https://hexdocs.pm/mix/#{release}/",
-        'http://elixir-lang.org/getting-started/'
+        'https://elixir-lang.org/getting-started/'
       ]
     end
   end
