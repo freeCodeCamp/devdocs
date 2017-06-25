@@ -13,6 +13,7 @@ module Docs
 
     options[:title] = false
     options[:root_title] = 'Liquid'
+    options[:trailing_slash] = true
 
     options[:attribution] = <<-HTML
       &copy; 2005, 2006 Tobias Luetke<br>
