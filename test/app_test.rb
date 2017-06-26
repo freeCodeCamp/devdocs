@@ -43,7 +43,7 @@ class AppTest < MiniTest::Spec
     it "sets layout from cookie" do
       set_cookie('layout=foo')
       get '/'
-      assert_includes last_response.body, 'class="_app foo"'
+      assert_includes last_response.body, '<body class="_booting _noscript foo">'
     end
   end
 
