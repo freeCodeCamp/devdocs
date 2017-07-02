@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Docs
   class DocSubscriber < Subscriber
     self.namespace = 'doc'

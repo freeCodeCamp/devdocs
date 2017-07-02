@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Docs
   class StoreSubscriber < Subscriber
     self.namespace = 'store'
