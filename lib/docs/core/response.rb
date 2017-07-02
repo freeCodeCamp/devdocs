@@ -5,7 +5,7 @@ module Docs
     end
 
     def error?
-      code != 404 && code != 403 && code >= 400 && code <= 599
+      code == 0 || code != 404 && code != 403 && code >= 400 && code <= 599
     end
 
     def empty?
