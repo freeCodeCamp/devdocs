@@ -2,7 +2,7 @@ module Docs
   class Vagrant < UrlScraper
     self.name = 'Vagrant'
     self.type = 'vagrant'
-    self.release = '1.9.5'
+    self.release = '1.9.7'
     self.base_url = 'https://www.vagrantup.com/docs/'
     self.root_path = 'index.html'
     self.links = {
@@ -11,6 +11,8 @@ module Docs
     }
 
     html_filters.push 'vagrant/entries', 'vagrant/clean_html'
+
+    options[:skip_patterns] = [/vagrant-cloud/]
 
     options[:attribution] = <<-HTML
       &copy; 2010&ndash;2017 Mitchell Hashimoto<br>
