@@ -10,6 +10,8 @@ module Docs
     end
 
     def call
+      return doc if context[:download_images] == false
+
       @@cache ||= {}
 
       doc.css('img[src]').each do |node|
