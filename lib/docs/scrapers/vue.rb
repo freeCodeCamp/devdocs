@@ -11,6 +11,7 @@ module Docs
     html_filters.push 'vue/entries', 'vue/clean_html'
 
     options[:only_patterns] = [/guide\//, /api\//]
+    options[:skip] = %w(guide/team.html)
     options[:replace_paths] = { 'guide/' => 'guide/index.html' }
 
     options[:attribution] = <<-HTML
@@ -19,7 +20,7 @@ module Docs
     HTML
 
     version '2' do
-      self.release = '2.3.2'
+      self.release = '2.4.1'
       self.base_url = 'https://vuejs.org/v2/'
       self.root_path = 'guide/index.html'
       self.initial_paths = %w(api/)
