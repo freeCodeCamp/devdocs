@@ -6,7 +6,9 @@ module Docs
 
     def index(event)
       before, after = parse_payload(event)
-      log "Entries: (#{(event.payload[:after].bytesize / 1.kilobyte.to_f).ceil} KB)"
+      size = event.payload[:after].bytesize
+      size_diff = size - event.payload[:before].bytesize
+      log "Entries: (#{(size / 1_000.0).ceil} KB, #{'+' if size_diff >= 0}#{(size_diff / 1_000.0).ceil} KB)"
       log_diff before['entries'], after['entries'], 'name'
       log "Types:"
       log_diff before['types'],   after['types'],   'name'
@@ -14,7 +16,9 @@ module Docs
 
     def db(event)
       before, after = parse_payload(event)
-      log "Files: (#{(event.payload[:after].bytesize / 1.megabyte.to_f).ceil(1)} MB)"
+      size = event.payload[:after].bytesize
+      size_diff = size - event.payload[:before].bytesize
+      log "Files: (#{(size / 1_000_000.0).ceil(1)} MB, #{'+' if size_diff >= 0}#{(size_diff / 1_000_000.0).ceil(1)} MB)"
       log_diff before.keys, after.keys
     end
 
