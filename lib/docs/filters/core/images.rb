@@ -4,6 +4,8 @@ module Docs
   class ImagesFilter < Filter
     include Instrumentable
 
+    DEFAULT_MAX_SIZE = 120_000 # 120 kilobytes
+
     def self.optimize_image_data(data)
       @image_optim ||= ImageOptim.new
       @image_optim.optimize_image_data(data)
@@ -48,7 +50,7 @@ module Docs
 
             size = image.bytesize
 
-            if size > max_size
+            if size > (context[:max_image_size] || DEFAULT_MAX_SIZE)
               instrument 'too_big.image', url: url, size: size
               next
             end
@@ -63,12 +65,6 @@ module Docs
       end
 
       doc
-    end
-
-    private
-
-    def max_size
-      @max_size ||= context[:max_image_size] || 100.kilobytes
     end
   end
 end

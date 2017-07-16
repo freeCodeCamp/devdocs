@@ -13,7 +13,7 @@ module Docs
     end
 
     def too_big(event)
-      log "Skipped large image (#{(event.payload[:size] / 1.kilobyte.to_f).round} KB): #{event.payload[:url]}"
+      log "Skipped large image (#{(event.payload[:size] / 1_000.0).round} KB): #{event.payload[:url]}"
     end
 
     def error(event)
