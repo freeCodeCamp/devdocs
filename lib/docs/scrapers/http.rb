@@ -8,26 +8,21 @@ module Docs
     html_filters.push 'http/clean_html', 'http/entries', 'title'
 
     options[:root_title] = 'HTTP'
-    options[:title] = ->(filter) {
-      filter.current_url.host == 'tools.ietf.org' ? false : filter.default_title
-    }
-    options[:container] = ->(filter) {
-      filter.current_url.host == 'tools.ietf.org' ? '.content' : nil
-    }
-    options[:skip_links] = ->(filter) {
-      filter.current_url.host == 'tools.ietf.org' ? true : false
-    }
-    options[:fix_urls] = ->(url) {
+    options[:title] = ->(filter) { filter.current_url.host == 'tools.ietf.org' ? false : filter.default_title }
+    options[:container] = ->(filter) { filter.current_url.host == 'tools.ietf.org' ? '.content' : nil }
+    options[:skip_links] = ->(filter) { filter.current_url.host == 'tools.ietf.org' ? true : false }
+    options[:fix_urls] = ->(url) do
       url.sub! %r{(Status/\d\d\d)_[A-Z].+}, '\1'
       url
-    }
-    options[:attribution] = ->(filter) {
+    end
+
+    options[:attribution] = ->(filter) do
       if filter.current_url.host == 'tools.ietf.org'
         "&copy; document authors. All rights reserved."
       else
         Docs::Mdn.options[:attribution]
       end
-    }
+    end
 
     def initial_urls
       %w(https://developer.mozilla.org/en-US/docs/Web/HTTP
@@ -38,7 +33,8 @@ module Docs
          https://tools.ietf.org/html/rfc7232
          https://tools.ietf.org/html/rfc7233
          https://tools.ietf.org/html/rfc7234
-         https://tools.ietf.org/html/rfc7235)
+         https://tools.ietf.org/html/rfc7235
+         https://tools.ietf.org/html/rfc5023)
     end
   end
 end

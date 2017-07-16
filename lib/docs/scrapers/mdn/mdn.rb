@@ -6,7 +6,7 @@ module Docs
     params[:raw] = 1
     params[:macros] = 1
 
-    html_filters.push 'mdn/clean_html'
+    html_filters.push 'mdn/clean_html', 'images'
     text_filters.insert_before 'attribution', 'mdn/contribute_link'
 
     options[:trailing_slash] = false

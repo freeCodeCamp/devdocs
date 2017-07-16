@@ -225,8 +225,8 @@ module Docs
         entries = []
 
         if slug == 'history' || slug == 'XMLHttpRequest'
-          css('dt a[title*="not yet been written"]').each do |node|
-            next if node.parent.at_css('.obsolete')
+          css('dt a[href^="https://developer.mozilla.org"]').each do |node|
+            next if node.parent.at_css('.obsolete') || node.content.include?('moz')
             name = node.content.sub('History', 'history')
             id = node.parent['id'] = name.parameterize
             entries << [name, id]

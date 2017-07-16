@@ -21,11 +21,15 @@ module Docs
           node.name = 'th'
         end
 
-        css('nobr', 'span[style*="font"]', 'pre code', 'h2 strong').each do |node|
+        css('nobr', 'span[style*="font"]', 'pre code', 'h2 strong', 'div:not([class])', 'span.seoSummary').each do |node|
           node.before(node.children).remove
         end
 
         css('h2[style]', 'pre[style]', 'th[style]', 'div[style*="line-height"]', 'table[style]', 'pre p[style]').remove_attr('style')
+
+        css('a[title]', 'span[title]').remove_attr('title')
+        css('a.glossaryLink').remove_attr('class')
+        css('*[lang]').remove_attr('lang')
 
         css('h2 > a[name]', 'h3 > a[name]').each do |node|
           node.parent['id'] = node['name']
@@ -35,6 +39,16 @@ module Docs
         css('pre[class^="brush"]').each do |node|
           node['data-language'] = node['class'][/brush: ?(\w+)/, 1]
           node.remove_attribute('class')
+        end
+
+        css('pre.eval').each do |node|
+          node.content = node.content
+          node.remove_attribute('class')
+        end
+
+        css('table').each do |node|
+          node.before %(<div class="_table"></div>)
+          node.previous_element << node
         end
 
         doc

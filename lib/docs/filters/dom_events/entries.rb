@@ -8,7 +8,7 @@ module Docs
         'Clipboard'        => 'Clipboard',
         'CSS'              => 'CSS',
         'Drag'             => 'Drag & Drop',
-        'Focus'            => 'Focus',
+        'Fetch'            => 'Fetch',
         'Fullscreen'       => 'Fullscreen',
         'Gamepad'          => 'Gamepad',
         'HashChange'       => 'History',
@@ -43,7 +43,8 @@ module Docs
         'WebRTC'           => 'WebRTC',
         'WebVR'            => 'WebVR',
         'Wheel'            => 'Mouse',
-        'Worker'           => 'Web Workers' }
+        'Worker'           => 'Web Workers',
+        'Focus'            => 'Focus' }
 
       FORM_SLUGS = %w(change compositionend compositionstart compositionupdate
         input invalid reset select submit)

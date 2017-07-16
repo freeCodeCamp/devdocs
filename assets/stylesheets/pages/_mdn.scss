@@ -24,7 +24,7 @@
   > h3 { @extend %block-label, %label-blue; }
   > h4 { font-size: 1em; }
 
-  p > code { @extend %label; }
+  p > code, li > code { @extend %label; }
 
   > .note,
   .notice,
@@ -104,6 +104,4 @@
   .cleared { clear: both; } // CSS/box-shadow
 
   code > strong { font-weight: normal; }
-
-  #compat-desktop, #compat-mobile { @extend ._table; }
 }

@@ -21,6 +21,7 @@ module Docs
       '/var' => '/var()',
       '/element' => '/element()',
       '/Flexbox' => '/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes',
+      '/flexbox' => '/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes',
       '/currentColor' => '/color_value'
     }
 

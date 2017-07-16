@@ -1,5 +1,7 @@
 module Docs
   class Html < Mdn
+    prepend FixInternalUrlsBehavior
+
     self.name = 'HTML'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/HTML'
 

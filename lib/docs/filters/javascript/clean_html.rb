@@ -7,11 +7,6 @@ module Docs
       end
 
       def root
-        # Move "Global Objects" lists to the same level as the other ones
-        css('#Global_Objects + p').remove
-        div = at_css '#Global_Objects + div'
-        div.css('h3').each { |node| node.name = 'h2' }
-        at_css('#Global_Objects').replace(div.children)
       end
 
       def other
