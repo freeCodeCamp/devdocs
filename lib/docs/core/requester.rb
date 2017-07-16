@@ -20,6 +20,7 @@ module Docs
     def initialize(options = {})
       @request_options = options.extract!(:request_options)[:request_options].try(:dup) || {}
       options[:max_concurrency] ||= 20
+      options[:pipelining] = 0
       super
     end
 

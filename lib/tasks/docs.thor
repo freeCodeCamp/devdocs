@@ -35,6 +35,7 @@ class DocsCLI < Thor
       return puts 'ERROR: [path] must be an absolute path.'
     end
 
+    Docs.install_report :image
     Docs.install_report :store if options[:verbose]
     if options[:debug]
       GC.disable
@@ -61,7 +62,7 @@ class DocsCLI < Thor
     Docs.rescue_errors = true
     Docs.install_report :store if options[:verbose]
     Docs.install_report :scraper if options[:debug]
-    Docs.install_report :progress_bar, :doc if $stdout.tty?
+    Docs.install_report :progress_bar, :doc, :image if $stdout.tty?
 
     require 'unix_utils' if options[:package]
 

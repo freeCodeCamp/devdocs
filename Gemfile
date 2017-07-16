@@ -32,6 +32,8 @@ group :docs do
   gem 'typhoeus'
   gem 'nokogiri'
   gem 'html-pipeline'
+  gem 'image_optim'
+  gem 'image_optim_pack', platforms: :ruby
   gem 'progress_bar', require: false
   gem 'unix_utils', require: false
   gem 'tty-pager', require: false
