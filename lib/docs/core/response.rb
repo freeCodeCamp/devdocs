@@ -8,8 +8,8 @@ module Docs
       code == 0 || code != 404 && code != 403 && code >= 400 && code <= 599
     end
 
-    def empty?
-      body.empty?
+    def blank?
+      body.blank?
     end
 
     def mime_type

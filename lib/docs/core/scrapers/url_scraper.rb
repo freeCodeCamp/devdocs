@@ -35,7 +35,9 @@ module Docs
 
     def process_response?(response)
       if response.error?
-        raise "Error status code (#{response.code}): #{response.url}"
+        raise "Error status code (#{response.code}): #{response.return_message}\n#{response.url}"
+      elsif response.blank?
+        raise "Empty response body: #{response.url}"
       end
 
       response.success? && response.html? && process_url?(response.effective_url)
