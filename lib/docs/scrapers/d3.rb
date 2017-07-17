@@ -8,6 +8,7 @@ module Docs
       code: 'https://github.com/d3/d3'
     }
 
+    options[:max_image_size] = 150_000
     options[:container] = '.markdown-body'
 
     options[:attribution] = <<-HTML
@@ -16,7 +17,7 @@ module Docs
     HTML
 
     version '4' do
-      self.release = '4.9.1'
+      self.release = '4.10.0'
       self.base_url = 'https://github.com/d3/'
       self.root_path = 'd3/blob/master/API.md'
 

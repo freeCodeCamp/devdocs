@@ -12,6 +12,7 @@ module Docs
 
         # Make headings for function definitions and add "id" attributes
         css('p > a:first-child').each do |node|
+          next unless node.parent
           next unless node['name'] || node.content == '#'
           parent = node.parent
           parent.name = 'h6'
