@@ -11,20 +11,22 @@ module Docs
       @image_optim.optimize_image_data(data)
     end
 
+    def self.cache
+      @cache ||= {}
+    end
+
     def call
       return doc if context[:download_images] == false
-
-      @@cache ||= {}
 
       doc.css('img[src]').each do |node|
         src = node['src']
 
-        if @@cache.key?(src)
-          node['src'] = @@cache[src] unless @@cache[src] == false
+        if self.class.cache.key?(src)
+          node['src'] = self.class.cache[src] unless self.class.cache[src] == false
           next
         end
 
-        @@cache[src] = false
+        self.class.cache[src] = false
 
         url = Docs::URL.parse(src)
         url.scheme = 'https' if url.scheme.nil?
@@ -57,7 +59,7 @@ module Docs
 
             image = Base64.strict_encode64(image)
             image.prepend "data:#{response.mime_type};base64,"
-            node['src'] = @@cache[src] = image
+            node['src'] = self.class.cache[src] = image
           end
         rescue => exception
           instrument 'error.image', url: url, exception: exception
