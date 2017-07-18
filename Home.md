@@ -7,15 +7,14 @@
 ### Plugins and Extensions
 
 * [Chrome web app](https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe)
-* [Firefox web app](https://marketplace.firefox.com/app/devdocs/)
 * [Ubuntu Touch app](https://uappexplorer.com/app/devdocsunofficial.berkes)
 * [Sublime Text plugin](https://sublime.wbond.net/packages/DevDocs)
 * [Atom plugin](https://atom.io/packages/devdocs)
 * [Brackets extension](https://github.com/gruehle/dev-docs-viewer) 
 * [Fluid](http://fluidapp.com) for turning DevDocs into a real OS X app
 * [GTK shell / Vim integration](https://github.com/naquad/devdocs-shell)
-* [Chrome desktop app](https://github.com/arosemena/DevDocsWrapper)
 * [Emacs lookup](https://github.com/skeeto/devdocs-lookup)
-* [Alfred Workflow](https://github.com/yannickglt/alfred-devdocs) (1)
-* [Alfred Workflow](https://github.com/jeffscottward/DevDocsIO-AlfredWorkflow) (2)
+* [Alfred Workflow](https://github.com/yannickglt/alfred-devdocs)
 * [Vim search plugin with Devdocs in its defaults](https://github.com/waiting-for-dev/vim-www) Just set `let g:www_shortcut_engines = { 'devdocs': ['Devdocs', '<leader>dd'] }` to have a `:Devdocs` command and a `<leader>dd` mapping.
+* [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=akfish.vscode-devdocs ) (1)
+* [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=deibit.devdocs) (2)
