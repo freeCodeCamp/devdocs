@@ -28,6 +28,7 @@ app.views.EmberPage =
 app.views.ErlangPage =
 app.views.ExpressPage =
 app.views.FlowPage =
+app.views.GithubPage =
 app.views.GoPage =
 app.views.ImmutablePage =
 app.views.InfluxdataPage =
