@@ -25,19 +25,24 @@ module Docs
       The Perl logo is a trademark of the Perl Foundation.
     HTML
 
+    version '5.26' do
+      self.release = '5.26.0'
+      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+    end
+
     version '5.24' do
       self.release = '5.24.0'
-      self.base_url = "http://perldoc.perl.org/#{self.release}/"
+      self.base_url = "https://perldoc.perl.org/#{self.release}/"
     end
 
     version '5.22' do
       self.release = '5.22.0'
-      self.base_url = "http://perldoc.perl.org/#{self.release}/"
+      self.base_url = "https://perldoc.perl.org/#{self.release}/"
     end
 
     version '5.20' do
       self.release = '5.20.2'
-      self.base_url = "http://perldoc.perl.org/#{self.release}/"
+      self.base_url = "https://perldoc.perl.org/#{self.release}/"
     end
   end
 end

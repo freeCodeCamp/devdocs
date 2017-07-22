@@ -462,7 +462,7 @@ credits = [
     'Perl',
     '1993-2016 Larry Wall and others',
     'GPLv1',
-    'http://perldoc.perl.org/index-licence.html'
+    'https://perldoc.perl.org/index-licence.html'
   ], [
     'Phalcon',
     '2011-2017 Phalcon Framework Team',
