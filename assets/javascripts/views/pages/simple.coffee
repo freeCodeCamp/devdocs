@@ -30,6 +30,7 @@ app.views.ExpressPage =
 app.views.FlowPage =
 app.views.GithubPage =
 app.views.GoPage =
+app.views.GruntPage =
 app.views.ImmutablePage =
 app.views.InfluxdataPage =
 app.views.JasminePage =

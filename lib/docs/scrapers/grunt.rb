@@ -3,7 +3,7 @@ module Docs
     self.name = 'Grunt'
     self.type = 'grunt'
     self.release = '1.0.1'
-    self.base_url = 'http://gruntjs.com/'
+    self.base_url = 'https://gruntjs.com/'
     self.root_path = 'getting-started'
     self.initial_paths = %w(api/grunt)
 
