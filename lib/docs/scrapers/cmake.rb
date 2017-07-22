@@ -20,10 +20,16 @@ module Docs
       Licensed under the BSD 3-clause License.
     HTML
 
+    version '3.9' do
+      self.release = '3.9.0'
+      self.base_url = 'https://cmake.org/cmake/help/v3.9/'
+    end
+
     version '3.8' do
-      self.release = '3.8.0'
+      self.release = '3.8.2'
       self.base_url = 'https://cmake.org/cmake/help/v3.8/'
     end
+
     version '3.7' do
       self.release = '3.7.2'
       self.base_url = 'https://cmake.org/cmake/help/v3.7/'
