@@ -5,7 +5,7 @@ module Docs
         css('.sectionMark', '.hbox > .sect').remove
         css('h1 + .note').remove if root_page?
 
-        css('.section', 'pre > code').each do |node|
+        css('.section').each do |node|
           node.before(node.children).remove
         end
 
@@ -13,6 +13,11 @@ module Docs
           next unless link = node.at_css('a[name]')
           node['id'] = link['name']
           link.before(link.children).remove
+        end
+
+        css('pre > code').each do |node|
+          node.parent['data-language'] = node.content =~ /\A\s*</ ? 'markup' : 'javascript'
+          node.parent.content = node.content
         end
 
         doc

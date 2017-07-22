@@ -60,6 +60,7 @@ app.views.PostgresPage =
 app.views.RamdaPage =
 app.views.ReactPage =
 app.views.ReduxPage =
+app.views.RequirejsPage =
 app.views.RethinkdbPage =
 app.views.RubydocPage =
 app.views.RustPage =

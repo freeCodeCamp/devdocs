@@ -11,5 +11,4 @@ class app.views.JavascriptWithMarkupCheckPage extends app.views.BasePage
     return
 
 app.views.DojoPage =
-app.views.RequirejsPage =
 app.views.JavascriptWithMarkupCheckPage
