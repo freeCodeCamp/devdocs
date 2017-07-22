@@ -355,7 +355,7 @@ credits = [
     'https://raw.githubusercontent.com/lodash/lodash/master/LICENSE.txt'
   ], [
     'Lua',
-    '1994–2015 Lua.org, PUC-Rio',
+    '1994–2017 Lua.org, PUC-Rio',
     'MIT',
     'http://www.lua.org/license.html'
   ], [

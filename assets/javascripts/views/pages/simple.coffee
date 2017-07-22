@@ -39,6 +39,7 @@ app.views.KotlinPage =
 app.views.LaravelPage =
 app.views.LodashPage =
 app.views.LovePage =
+app.views.LuaPage =
 app.views.MarionettePage =
 app.views.MdnPage =
 app.views.MeteorPage =
