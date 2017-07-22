@@ -210,7 +210,7 @@ credits = [
     'https://raw.githubusercontent.com/docker/docker/master/LICENSE'
   ], [
     'Dojo',
-    '2005-2015 The Dojo Foundation',
+    '2005-2017 JS Foundation',
     'BSD + AFL',
     'http://dojotoolkit.org/license.html'
   ], [
