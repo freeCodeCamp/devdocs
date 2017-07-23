@@ -5,35 +5,56 @@ module Docs
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.release = '2.13.0'
-    self.base_urls = ['https://emberjs.com/api/', 'https://guides.emberjs.com/v2.13.0/']
+    self.release = '2.14.0'
+    self.base_urls = [
+      'https://guides.emberjs.com/v2.14.0/',
+      'https://emberjs.com/api/ember/2.14/',
+      'https://emberjs.com/api/ember-data/2.14/'
+    ]
     self.links = {
       home: 'https://emberjs.com/',
       code: 'https://github.com/emberjs/ember.js'
     }
 
-    html_filters.push 'ember/entries', 'ember/clean_html', 'title'
+    html_filters.push 'ember/entries', 'ember/clean_html'
 
     options[:trailing_slash] = false
 
-    options[:title] = false
-    options[:root_title] = 'Ember.js'
-
     options[:container] = ->(filter) do
       if filter.base_url.path.start_with?('/api')
-        filter.root_page? ? '#toc-list' : '#content'
+        'main article'
       else
         'main'
       end
     end
 
-    # Duplicates
-    options[:skip] = %w(classes/String.html data/classes/DS.html)
-    options[:skip_patterns] = [/\._/, /contributing/]
+    options[:fix_urls] = ->(url) do
+      url.sub! '?anchor=', '#'
+      url.sub! %r{/methods/[^?#/]+}, '/methods'
+      url.sub! %r{/properties/[^?#/]+}, '/properties'
+      url.sub! %r{/events/[^?#/]+}, '/events'
+      url
+    end
+
+    options[:skip_patterns] = [
+      /\._/,
+      /contributing/,
+      /classes\/String/,
+      /namespaces\/Ember/,
+      /namespaces\/DS/
+    ]
 
     options[:attribution] = <<-HTML
       &copy; 2017 Yehuda Katz, Tom Dale and Ember.js contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def initial_urls
+      %w(
+        https://guides.emberjs.com/v2.14.0/
+        https://emberjs.com/api/ember/2.14/classes/Ember
+        https://emberjs.com/api/ember-data/2.14/classes/DS
+      )
+    end
   end
 end

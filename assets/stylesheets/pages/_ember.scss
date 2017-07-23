@@ -1,22 +1,20 @@
 ._ember {
   @extend %simple;
 
-  blockquote.class-info { @extend %note-blue; }
-  blockquote.class-info > p { margin: 0; }
-
   .pre-title { @extend %pre-heading; }
 
-  h2 > .flag, h2 > .type {
-    margin-left: .5em;
+  h3 > .access {
+    float: right;
     color: $textColorLight;
     font-weight: normal;
   }
 
-  h2 > .type { float: right; }
+  h3 > .args,
+  h3 > .return-type {
+    font-weight: normal;
+  }
 
-  .meta { color: $textColorLight; }
-
-  dl { margin: 0 1em; }
-  dt + dt, dd + dt { margin-top: .5em; }
-  dt > code { @extend %label; }
+  p.github-link {
+    color: $textColorLight;
+  }
 }

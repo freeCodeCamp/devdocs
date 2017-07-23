@@ -13,79 +13,69 @@ module Docs
           node['data-language'] = node['data-language'].sub(/(hbs|handlebars)/, 'html')
         end
 
-        if base_url.path.start_with?('/api')
-          root_page? ? root : api
-        else
-          guide
-        end
+        base_url.path.start_with?('/api') ? api : guide
 
         doc
       end
 
-      def root
-        css('#back-to-top').remove
-
-        # Remove "Projects" and "Tag" links
-        css('.level-1:nth-child(1)', '.level-1:nth-child(2)').remove
-
-        # Turn section links (e.g. Modules) into headings
-        css('.level-1 > a').each do |node|
-          node.name = 'h2'
-          node.remove_attribute 'href'
-        end
-
-        # Remove root-level list
-        css('.level-1').each do |node|
-          node.before(node.elements).remove
-        end
-
-        css('ol').each do |node|
-          node.name = 'ul'
-        end
-      end
-
       def api
-        css('#api-options', '.toc-anchor', '.inherited').remove
-
-        # Remove tabs and "Index"
-        css('.tabs').each do |node|
-          panes = node.css '#methods', '#events', '#properties'
-          panes.remove_attr 'style'
-          node.before(panes).remove
+        css('h1 .access').each do |node|
+          node.replace(" (#{node.content})")
         end
 
-        css('.method', '.property', '.event').remove_attr('id')
-
-        css('h3[data-id]').each do |node|
-          heading = Nokogiri::XML::Node.new 'h2', doc
-          heading['id'] = node['data-id']
-          node.before(heading).remove
-          heading.content = node.content
-          heading.add_child(heading.next_element) while heading.next_element.name == 'span'
+        css('*[data-anchor]').each do |node|
+          node['id'] = node['data-anchor']
+          node.remove_attribute('data-anchor')
         end
 
-        css('> .class-info').each do |node|
-          node.name = 'blockquote'
+        css('> h3[id]').each do |node|
+          node.name = 'h2'
         end
 
-        css('div.meta').each do |node|
+        if subpath.end_with?('/methods') || subpath.end_with?('/properties') || subpath.end_with?('/events')
+          css('.attributes ~ *').each do |node|
+            break if node['class'] == 'tabbed-layout'
+            node.remove
+          end
+        end
+
+        css('.attributes').each do |node|
+          html = node.inner_html
+          html.gsub! %r{<span class="attribute-label">(.+?)</span>}, '<th>\1</th>'
+          html.gsub! %r{<span class="attribute-value">(.+?)</span>}, '<td>\1</td>'
+          html.gsub! %r{<div class="attribute">(.+?)</div>}, '<tr>\1</tr>'
+          node.replace("<table>#{html}</table>")
+        end
+
+        css('div.attribute').each do |node|
           node.name = 'p'
         end
 
-        css('span.type').each do |node|
-          node.name = 'code'
+        css('.tabbed-layout').each do |node|
+          node.before(node.at_css('.api__index__content', '.api-index-filter')).remove
         end
 
-        css('.pane', '.item-entry').each do |node|
+        css('div.ember-view', 'dl > div').each do |node|
           node.before(node.children).remove
         end
+
+        css('section > h3').each do |node|
+          node.name = 'h4' if node.previous_element
+        end
+
+        css('section').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('ul', 'h3', 'h4', 'a').remove_attr('class')
+        css('a[id]').remove_attr('id')
       end
 
       def guide
         @doc = at_css('article')
 
         if root_page?
-          at_css('h1').remove
+          at_css('h1').content = 'Ember.js'
         end
 
         css('.previous-guide', '.next-guide').remove
