@@ -1,13 +1,8 @@
-#= require views/pages/base
+#= require views/pages/simple
 
-class app.views.RdocPage extends app.views.BasePage
+class app.views.RdocPage extends app.views.SimplePage
   @events:
     click: 'onClick'
-
-  prepare: ->
-    @highlightCode @findAll('pre.ruby'), 'ruby'
-    @highlightCode @findAll('pre.c'), 'clike'
-    return
 
   onClick: (event) ->
     return unless event.target.classList.contains 'method-click-advice'
