@@ -31,6 +31,7 @@ module Docs
         css('div.syntaxhighlighter').each do |node|
           node.name = 'pre'
           node.content = node.at_css('td.code').css('div.line').map(&:content).join("\n")
+          node['data-language'] = node['class'].include?('javascript') ? 'javascript' : 'markup'
         end
 
         # jQueryMobile/jqmData, etc.

@@ -1,13 +1,7 @@
-#= require views/pages/base
+#= require views/pages/simple
 
-class app.views.JqueryPage extends app.views.BasePage
+class app.views.JqueryPage extends app.views.SimplePage
   @demoClassName: '_jquery-demo'
-
-  prepare: ->
-    for el in @findAllByClass 'syntaxhighlighter'
-      language = if el.classList.contains('javascript') then 'javascript' else 'markup'
-      @highlightCode el, language
-    return
 
   afterRender: ->
     # Prevent jQuery Mobile's demo iframes from scrolling the page

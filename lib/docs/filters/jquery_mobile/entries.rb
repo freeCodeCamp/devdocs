@@ -6,7 +6,7 @@ module Docs
 
       def get_name
         name = at_css('h1').content.strip
-        name.remove! ' Widget'
+        name.remove! ' Widget' unless name.start_with?('Category')
         name.prepend '.' if name.start_with? 'jqm'
         name << ' event' if type == 'Events' && !name.end_with?(' event')
         name
