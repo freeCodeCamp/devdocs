@@ -1,6 +1,6 @@
-#= require views/pages/simple
+#= require views/pages/base
 
-class app.views.SqlitePage extends app.views.SimplePage
+class app.views.SqlitePage extends app.views.BasePage
   @events:
     click: 'onClick'
 

@@ -1,6 +1,6 @@
-#= require views/pages/simple
+#= require views/pages/base
 
-class app.views.JqueryPage extends app.views.SimplePage
+class app.views.JqueryPage extends app.views.BasePage
   @demoClassName: '_jquery-demo'
 
   afterRender: ->

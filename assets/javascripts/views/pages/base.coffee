@@ -10,22 +10,17 @@ class app.views.BasePage extends app.View
     @previousTiming = null
     @addClass "_#{@entry.doc.type}" unless @constructor.className
     @html content
-    @prepare?() unless fromCache
+    @highlightCode() unless fromCache
     @activate()
     @delay @afterRender if @afterRender
     if @highlightNodes.length > 0
       $.requestAnimationFrame => $.requestAnimationFrame(@paintCode)
     return
 
-  highlightCode: (el, language) ->
-    return unless language
-    language = "language-#{language}"
-    if $.isCollection(el)
-      for e in el
-        e.classList.add(language)
-        @highlightNodes.push(e)
-    else if el
-      el.classList.add(language)
+  highlightCode: ->
+    for el in @findAll('pre[data-language]')
+      language = el.getAttribute('data-language')
+      el.classList.add("language-#{language}")
       @highlightNodes.push(el)
     return
 
