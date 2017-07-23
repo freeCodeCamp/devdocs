@@ -269,6 +269,11 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Godot',
+    '2014-2017 Juan Linietsky, Ariel Manzur, Godot Engine contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/godotengine/godot/master/LICENSE.txt'
+  ], [
     'Grunt',
     'GruntJS Team',
     'MIT',

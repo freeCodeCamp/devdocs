@@ -3,6 +3,7 @@
 
   .admonition { @extend %note; }
   .admonition.warning { @extend %note-orange; }
+  .admonition.tip { @extend %note-green; }
   .admonition-title {
     margin: 0 0 .25rem;
     font-weight: $boldFontWeight;

@@ -87,9 +87,7 @@ module Docs
           node.remove_attribute 'cellspacing'
         end
 
-        css('code[class]').each do |node|
-          node.remove_attribute 'class'
-        end
+        css('code', 'tr').remove_attr('class')
 
         css('h1').each do |node|
           node.content = node.content
