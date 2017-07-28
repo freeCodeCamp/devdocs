@@ -33,6 +33,19 @@ module Docs
         "https://elixir-lang.org/getting-started/introduction.html" ]
     end
 
+    version '1.5' do
+      self.release = '1.5.0'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
     version '1.4' do
       self.release = '1.4.5'
       self.base_urls = [
