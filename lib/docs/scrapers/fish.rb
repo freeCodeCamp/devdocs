@@ -17,6 +17,11 @@ module Docs
       Licensed under the GNU General Public License, version 2.
     HTML
 
+    version '2.6' do
+      self.release = '2.6.0'
+      self.base_url = "https://fishshell.com/docs/#{version}/"
+    end
+
     version '2.5' do
       self.release = '2.5.0'
       self.base_url = "https://fishshell.com/docs/#{version}/"
