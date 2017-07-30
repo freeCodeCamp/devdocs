@@ -30,15 +30,15 @@ module Docs
     end
 
     def skip_links?
-      if context[:skip_links].is_a? Proc
-        context[:skip_links].call self
-      else
-        context[:skip_links]
-      end
+      return context[:skip_links].call(self) if context[:skip_links].is_a?(Proc)
+      return true if context[:skip_links]
+      false
     end
 
     def follow_links?
-      !(context[:follow_links] && context[:follow_links].call(self) == false)
+      return false if context[:follow_links] == false
+      return false if context[:follow_links].is_a?(Proc) && context[:follow_links].call(self) == false
+      true
     end
 
     def to_internal_url(str)
