@@ -11,6 +11,10 @@ module Docs
           end
         end
 
+        css('img[src]').each do |node|
+          node['src'] = node['src'].gsub(%r{angularjs\.org/([\d\.]+)/docs/partials/(\w+)/}, 'angularjs.org/\1/docs/\2/')
+        end
+
         doc
       end
 
