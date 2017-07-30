@@ -2,58 +2,23 @@ module Docs
   class Angular
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        if slug.start_with?('tutorial') || slug.start_with?('guide')
-          name = at_css('.nav-list-item.is-selected, header.hero h1').content.strip
-        else
-          name = at_css('header.hero h1').content.strip
-        end
-
-        name = name.split(':').first
-
-        if mod
-          if name == 'Index'
-            return slug.split('/')[1..-2].join('/')
-          elsif name == 'Angular'
-            return slug.split('/').last.split('-').first
-          end
-        end
-
-        subtitle = at_css('.hero-subtitle').try(:content)
-        breadcrumbs = css('.breadcrumbs li').map(&:content)[2..-2]
-
-        name.prepend "#{breadcrumbs.join('.')}#" if breadcrumbs.present? && breadcrumbs[0] != name
-        name << '()' if %w(Function Method Constructor).include?(subtitle)
+        name = at_css('h1').content
+        name.prepend "#{$1}. " if subpath =~ /\-pt(\d+)/
         name
       end
 
       def get_type
-        if slug.start_with?('guide/')
+        if slug.start_with?('guide')
           'Guide'
-        elsif slug.start_with?('cookbook/')
-          'Cookbook'
-        elsif slug == 'glossary'
-          'Guide'
+        elsif slug.start_with?('tutorial')
+          'Tutorial'
+        elsif node = at_css('th:contains("npm Package")')
+          node.next_element.content.remove('@angular/')
+        elsif at_css('.api-type-label.module')
+          name.split('/').first
         else
-          type = at_css('.nav-title.is-selected').content.strip
-          type.remove! ' Reference'
-          type << ": #{mod}" if mod
-          type
+          'Miscellaneous'
         end
-      end
-
-      INDEX = Set.new
-
-      def include_default_entry?
-        INDEX.add?([name, type].join(';')) ? true : false # ¯\_(ツ)_/¯
-      end
-
-      private
-
-      def mod
-        return @mod if defined?(@mod)
-        @mod = slug[/api\/([\w\-\.]+)\//, 1]
-        @mod.remove! 'angular2.' if @mod
-        @mod
       end
     end
   end

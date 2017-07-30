@@ -1,55 +1,22 @@
 ._angular {
-  padding-left: 1rem;
+  @extend %simple;
 
-  h1, h2, > h3, .banner, .badges, .breadcrumbs { margin-left: -1rem; }
+  .pre-title { @extend %pre-heading; }
 
-  ._mobile & {
-    padding-left: 0;
-
-    h1, h2, > h3, .banner, .badges, .breadcrumbs { margin-left: 0; }
-  }
-
-  h2 { @extend %block-heading; }
-  > h3 { @extend %block-label, %label-blue; }
-  .code-example > h4, .pre-title { @extend %pre-heading; }
-
-  p > code, dd > code, .status-badge { @extend %label; }
-
-  .l-sub-section, .alert, .banner, .breadcrumbs { @extend %note; }
+  .breadcrumbs { @extend %note; }
   .banner { @extend %note-green; }
+  code.stable { @extend %label-green; }
+  code.experimental { @extend %label-orange; }
+  code.deprecated { @extend %label-red; }
   .alert.is-important { @extend %note-red; }
   .alert.is-helpful, .breadcrumbs { @extend %note-blue; }
+
   .breadcrumbs { padding-left: 2em; }
 
-  td > h3, .l-sub-section > h3, .l-sub-section > h4, .alert > h3, .alert > h4, .row-margin > h3 {
-    margin-top: .25rem;
-    font-size: 1em;
-  }
-
-  img {
-    display: block;
-    margin: 1em auto;
-
-    &[align="left"] {
-      float: left;
-      margin: 0 1em 0 0;
-    }
-
-    &[align="right"] {
-      float: right;
-      margin: 0 0 0 1em;
-    }
-  }
+  img { margin: 1em 0; }
 
   .location-badge {
-    text-align: right;
     font-style: italic;
-  }
-
-  .filetree {
-    white-space: normal;
-    @extend %pre;
-
-    .children { padding-left: 1em; }
+    text-align: right;
   }
 }

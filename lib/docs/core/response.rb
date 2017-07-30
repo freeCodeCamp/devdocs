@@ -13,7 +13,7 @@ module Docs
     end
 
     def mime_type
-      @mime_type ||= headers['Content-Type'] || 'text/plain'
+      headers['Content-Type'] || 'text/plain'
     end
 
     def html?
