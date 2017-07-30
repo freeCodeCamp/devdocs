@@ -49,10 +49,13 @@ module Docs
 
     def load_capybara_selenium
       require 'capybara/dsl'
-      Capybara.register_driver :selenium_marionette do |app|
-        Capybara::Selenium::Driver.new(app, marionette: true)
+      require 'selenium/webdriver'
+      Capybara.register_driver :chrome do |app|
+        options = Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu])
+        Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
       end
-      Capybara.current_driver = :selenium_marionette
+      Capybara.javascript_driver = :chrome
+      Capybara.current_driver = :chrome
       Capybara.run_server = false
       Capybara
     end
