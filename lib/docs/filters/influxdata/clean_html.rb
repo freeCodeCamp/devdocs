@@ -9,7 +9,7 @@ module Docs
 
         doc = @doc.at_css('article')
 
-        css('.article-footer', 'hr').remove
+        css('.article-footer', 'hr', 'br').remove
 
         css('a.offset-anchor').each do |node|
           node.parent['id'] = node['id']

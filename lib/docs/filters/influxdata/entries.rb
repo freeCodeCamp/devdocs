@@ -2,7 +2,9 @@ module Docs
   class Influxdata
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('.article-heading h1').content
+        name = at_css('.article-heading h1').content
+        name.remove! %r{\s\(.+\)}
+        name
       end
 
       def get_type

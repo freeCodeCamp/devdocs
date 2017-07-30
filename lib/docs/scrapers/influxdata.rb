@@ -2,7 +2,7 @@ module Docs
   class Influxdata < UrlScraper
     self.name = 'InfluxData'
     self.type = 'influxdata'
-    self.release = '1.2'
+    self.release = '1.3'
     self.base_url = 'https://docs.influxdata.com/'
     self.links = {
       home: 'https://www.influxdata.com/',
@@ -17,6 +17,7 @@ module Docs
     options[:title] = false
 
     options[:only_patterns] = [/(telegraf|influxdb|chronograf|kapacitor)\/v#{release}/]
+    options[:skip_patterns] = [/enterprise/]
 
     options[:skip] = [
       "influxdb/v#{release}/sample_data/data_download/",
