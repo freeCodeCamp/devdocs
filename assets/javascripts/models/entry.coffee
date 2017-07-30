@@ -73,6 +73,7 @@ class app.models.Entry extends app.Model
     'python': 'py'
     'ruby.on.rails': 'ror'
     'ruby': 'rb'
+    'rust': 'rs'
     'sass': 'scss'
     'tensorflow': 'tf'
     'typescript': 'ts'
