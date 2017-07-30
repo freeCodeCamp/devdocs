@@ -34,7 +34,7 @@ module Docs
     HTML
 
     version '5.4' do
-      self.release = '5.4.23'
+      self.release = '5.4.30'
       self.root_path = '/api/5.4/index.html'
       self.initial_paths = %w(/docs/5.4/installation /api/5.4/classes.html)
 
@@ -81,6 +81,20 @@ module Docs
 
       options[:fix_urls] = ->(url) do
         url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/5.1/"
+        url
+      end
+    end
+
+
+    version '4.2' do
+      self.release = '4.2.11'
+      self.root_path = '/api/4.2/index.html'
+      self.initial_paths = %w(/docs/4.2/installation /api/4.2/classes.html)
+
+      options[:only_patterns] = [%r{\A/api/4\.2/}, %r{\A/docs/4\.2/}]
+
+      options[:fix_urls] = ->(url) do
+        url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/4.2/"
         url
       end
     end
