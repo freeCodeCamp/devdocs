@@ -1,0 +1,44 @@
+._d {
+  > .description, > .documentation-section { padding-left: 1rem; }
+  > .description > h2, header > h3, > h2 { @extend %block-heading; }
+  .description > h1 { font-size: 1rem; }
+  .method-description > h2, h3, h4, h5, h6 { font-size: 1em; }
+
+  .d_decl {
+    font-weight: $boldFontWeight;
+    @extend %block-label, %label-blue;
+
+    + .d_decl { margin-top: -.5em; }
+  }
+
+  > .meta {
+    @extend %note, %note-blue;
+
+    > dd { margin: 0; }
+    > dd + dt { margin-top: .5em; }
+  }
+
+  a.method-click-advice {
+    float: right;
+    font-size: .75rem;
+    color: $linkColor;
+    cursor: pointer;
+    @extend %user-select-none;
+
+    &:hover { text-decoration: underline; }
+  }
+
+  .method-description { position: relative; }
+
+  .method-source-code {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background: rgba($contentBackground, .95);
+    box-shadow: 0 1em 1em 1em $contentBackground;
+
+    > pre { margin: 0; }
+  }
+}
