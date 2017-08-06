@@ -23,7 +23,6 @@
   position: relative;
   display: inline-block;
   vertical-align: top;
-  margin: 0 1rem 0 0;
   padding: 0 .375rem;
   color: $textColor;
   text-decoration: none;
@@ -36,16 +35,13 @@
     margin: .5rem .375rem 0 0;
     @extend %doc-icon;
   }
+}
 
-  & + &:after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 100%;
-    width: 1rem;
-    height: 1rem;
-    margin: -.5rem 0 0 0;
-    pointer-events: none;
-    @extend %icon, %icon-path;
-  }
+._path-arrow {
+  display: inline-block;
+  vertical-align: top;
+  width: .75rem;
+  height: .75rem;
+  margin: .625rem .25rem;
+  fill: #888;
 }

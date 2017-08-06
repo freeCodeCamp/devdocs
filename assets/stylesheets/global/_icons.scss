@@ -4,7 +4,7 @@
   width: 1rem;
   height: 1rem;
   background-image: image-url('icons.png');
-  background-size: 4rem 3rem;
+  background-size: 4rem 2rem;
 }
 
 %doc-icon {
@@ -33,17 +33,14 @@
   }
 }
 
-%icon-dir                   { background-position: 0 0; }
+%icon-clipboard             { background-position: 0 0; }
 %icon-search                { background-position: -1rem 0; }
 %icon-link                  { background-position: -2.25rem -.25rem; }
 %icon-clear                 { background-position: -3rem 0; }
-%icon-path                  { background-position: 0 -1rem; }
+%icon-clipboard-white       { background-position: 0 -1rem; }
 %icon-search-white          { background-position: -1rem -1rem; }
-%icon-dir-white             { background-position: -2rem -1rem; }
+%icon-close-white           { background-position: -2rem -1rem; }
 %icon-link-white            { background-position: -3.25rem -1.25rem; }
-%icon-clipboard             { background-position: 0 -2rem; }
-%icon-clipboard-white       { background-position: -1rem -2rem; }
-%icon-close-white           { background-position: -2rem -2rem; }
 
 ._icon-jest:before          { background-position: 0 0; }
 ._icon-liquid:before        { background-position: -1rem 0; }

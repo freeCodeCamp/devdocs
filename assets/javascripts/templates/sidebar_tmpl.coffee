@@ -1,5 +1,7 @@
 templates = app.templates
 
+arrow = """<svg class="_list-arrow"><use xlink:href="#dir"/></svg>"""
+
 templates.sidebarDoc = (doc, options = {}) ->
   link  = """<a href="#{doc.fullPath()}" class="_list-item _icon-#{doc.icon} """
   link += if options.disabled then '_list-disabled' else '_list-dir'
@@ -7,14 +9,14 @@ templates.sidebarDoc = (doc, options = {}) ->
   if options.disabled
     link += """<span class="_list-enable" data-enable="#{doc.slug}">Enable</span>"""
   else
-    link += """<span class="_list-arrow"></span>"""
+    link += arrow
   link += """<span class="_list-count">#{doc.release}</span>""" if doc.release
   link += """<span class="_list-text">#{doc.name}"""
   link += " #{doc.version}" if options.fullName or options.disabled and doc.version
   link + "</span></a>"
 
 templates.sidebarType = (type) ->
-  """<a href="#{type.fullPath()}" class="_list-item _list-dir" data-slug="#{type.slug}" tabindex="-1"><span class="_list-arrow"></span><span class="_list-count">#{type.count}</span><span class="_list-text">#{$.escape type.name}</span></a>"""
+  """<a href="#{type.fullPath()}" class="_list-item _list-dir" data-slug="#{type.slug}" tabindex="-1">#{arrow}<span class="_list-count">#{type.count}</span><span class="_list-text">#{$.escape type.name}</span></a>"""
 
 templates.sidebarEntry = (entry) ->
   """<a href="#{entry.fullPath()}" class="_list-item _list-hover" tabindex="-1">#{$.escape entry.name}</a>"""
@@ -47,16 +49,16 @@ templates.sidebarLabel = (doc, options = {}) ->
 templates.sidebarVersionedDoc = (doc, versions, options = {}) ->
   html = """<div class="_list-item _list-dir _list-rdir _icon-#{doc.icon}"""
   html += " open" if options.open
-  html + """" tabindex="0"><span class="_list-arrow"></span>#{doc.name}</div><div class="_list _list-sub">#{versions}</div>"""
+  html + """" tabindex="0">#{arrow}#{doc.name}</div><div class="_list _list-sub">#{versions}</div>"""
 
 templates.sidebarDisabled = (options) ->
-  """<h6 class="_list-title"><span class="_list-arrow"></span>Disabled (#{options.count})</h6>"""
+  """<h6 class="_list-title">#{arrow}Disabled (#{options.count})</h6>"""
 
 templates.sidebarDisabledList = (html) ->
   """<div class="_disabled-list">#{html}</div>"""
 
 templates.sidebarDisabledVersionedDoc = (doc, versions) ->
-  """<a class="_list-item _list-dir _icon-#{doc.icon} _list-disabled" data-slug="#{doc.slug_without_version}" tabindex="-1"><span class="_list-arrow"></span>#{doc.name}</a><div class="_list _list-sub">#{versions}</div>"""
+  """<a class="_list-item _list-dir _icon-#{doc.icon} _list-disabled" data-slug="#{doc.slug_without_version}" tabindex="-1">#{arrow}#{doc.name}</a><div class="_list _list-sub">#{versions}</div>"""
 
 templates.docPickerNote = """
   <div class="_list-note">Tip: for faster and better search results, select only the docs you need.</div>
