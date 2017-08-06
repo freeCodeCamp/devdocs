@@ -63,20 +63,18 @@
   padding-right: .75rem;
   overflow-y: auto;
 
-  &::-webkit-scrollbar { -webkit-appearance: none; width: 10px; }
-  &::-webkit-scrollbar-button { display: none; }
-  &::-webkit-scrollbar-track { background: $notifBackground; }
-  &::-webkit-scrollbar-thumb {
-    min-height: 2rem;
-    background: $scrollbarColor;
-    background-clip: padding-box;
-    border: 3px solid $notifBackground;
-    border-radius: 5px;
+  &::-webkit-scrollbar { width: 10px !important; }
 
-    &:active {
-      background-color: $scrollbarColorHover;
-      border-width: 2px;
-    }
+  &::-webkit-scrollbar-track {
+    background: $notifBackground !important;
+    border: 0 !important;
+    border-radius: 5px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 3px solid $notifBackground !important;
+
+    &:hover, &:active { border-width: 2px !important; }
   }
 
   > ._notif-title {
