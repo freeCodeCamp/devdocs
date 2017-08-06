@@ -6,8 +6,8 @@ textNotif = (title, message) ->
   notif title, """<p class="_notif-text">#{message}"""
 
 app.templates.notifUpdateReady = ->
-  textNotif """ DevDocs has been updated. """,
-            """ <a href="#" data-behavior="reboot">Reload the page</a> to use the new version. """
+  textNotif """<span data-behavior="reboot">DevDocs has been updated.</span>""",
+            """<span data-behavior="reboot"><a href="#" data-behavior="reboot">Reload the page</a> to use the new version.</span>"""
 
 app.templates.notifError = ->
   textNotif """ Oops, an error occured. """,

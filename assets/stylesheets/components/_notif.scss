@@ -55,6 +55,8 @@
     left: .625rem;
     @extend %icon, %icon-close-white;
   }
+
+  &:hover { opacity: 1; }
 }
 
 ._notif-content {
