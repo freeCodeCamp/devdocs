@@ -75,12 +75,21 @@
 ._list-title {
   position: relative;
   margin: .5rem 0 0;
-  padding-left: 2.25rem;
+  padding: 0 .75rem 0 2.25rem;
   line-height: 2rem;
   font-size: .75rem;
   color: $textColorLight;
   text-transform: uppercase;
   cursor: default;
+}
+
+._list-title-link {
+  display: none;
+  float: right;
+  font-weight: normal;
+  text-transform: none;
+
+  ._list-title:hover > & { display: block; }
 }
 
 ._list-item {

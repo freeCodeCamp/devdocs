@@ -52,7 +52,7 @@ templates.sidebarVersionedDoc = (doc, versions, options = {}) ->
   html + """" tabindex="0">#{arrow}#{doc.name}</div><div class="_list _list-sub">#{versions}</div>"""
 
 templates.sidebarDisabled = (options) ->
-  """<h6 class="_list-title">#{arrow}Disabled (#{options.count})</h6>"""
+  """<h6 class="_list-title">#{arrow}Disabled (#{options.count}) <a href="/settings" class="_list-title-link" tabindex="-1">Customize</a></h6>"""
 
 templates.sidebarDisabledList = (html) ->
   """<div class="_disabled-list">#{html}</div>"""

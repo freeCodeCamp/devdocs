@@ -164,7 +164,7 @@ class app.views.DocList extends app.View
     return
 
   onClick: (event) =>
-    if @disabledTitle and $.hasChild(@disabledTitle, event.target)
+    if @disabledTitle and $.hasChild(@disabledTitle, event.target) and event.target.tagName isnt 'A'
       $.stopEvent(event)
       @toggleDisabled()
     else if slug = event.target.getAttribute('data-enable')
