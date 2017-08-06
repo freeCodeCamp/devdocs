@@ -32,7 +32,7 @@
 
   ._header { position: fixed; }
 
-  ._header, ._list, ._sidebar-footer {
+  ._header, ._list {
     width: 100%;
     border-right: 0;
     box-shadow: none;
@@ -42,7 +42,7 @@
 
   ._settings { position: relative; }
   ._settings-tabs { display: block; }
-  ._header ._settings-btn { width: auto; }
+  ._header > ._settings-btn-back { width: auto; }
 
   // Header
 

@@ -11,17 +11,14 @@
 
   &._in { display: block; }
 
-  ._sidebar {
-    display: block !important;
+  ._sidebar { display: block !important; }
 
-    &:after { // padding bottom
-      content: '';
-      display: block;
-      height: $headerHeight;
-    }
+  > ._header { justify-content: space-between; }
+
+  &._dirty > ._header {
+    background: $noteGreenBackground;
+    border-color: $noteGreenBorder;
   }
-
-  ._header { justify-content: space-between; }
 }
 
 //
@@ -79,24 +76,8 @@
 }
 
 //
-// Footer
+// Settings buttons
 //
-
-._sidebar-footer {
-  position: absolute;
-  z-index: $headerZ;
-  bottom: 0;
-  left: 0;
-  width: $sidebarWidth;
-  height: $headerHeight;
-  background: $noteGreenBackground;
-  border-top: 1px solid $noteGreenBorder;
-  border-right: 1px solid $noteGreenBorder;
-  @extend %border-box;
-  @extend %user-select-none;
-
-  @media #{$mediumScreen} { width: $sidebarMediumWidth; }
-}
 
 ._settings-btn {
   display: block;
@@ -122,6 +103,16 @@
   }
 }
 
+._settings-btn-back {
+  ._dirty & { display: none; }
+}
+
+._settings-btn-save {
+  display: none;
+
+  ._dirty & { display: block; }
+}
+
 //
 // Header tabs
 //
@@ -129,6 +120,8 @@
 ._settings-tabs {
   display: none; // mobile only
   margin-right: .5rem;
+
+  ._dirty & { display: none !important; }
 }
 
 ._settings-tab {

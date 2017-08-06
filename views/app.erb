@@ -40,19 +40,17 @@
   </div>
   <form class="_settings" id="settings">
     <div class="_header">
-      <button type="button" aria-label="Back" class="_settings-btn" data-back>
+      <button type="button" aria-label="Back" class="_settings-btn _settings-btn-back" data-back>
         <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg> Back
+      </button>
+      <button type="submit" class="_settings-btn _settings-btn-save">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg> Apply
       </button>
       <nav class="_settings-tabs">
         <button type="button" class="_settings-tab active" data-tab="doc-picker" hidden>Docs</button><button type="button" class="_settings-tab" data-tab="settings" hidden>Settings</button>
       </nav>
     </div>
     <div class="_sidebar" tabindex="-1"></div>
-    <div class="_sidebar-footer">
-      <button type="submit" class="_settings-btn">
-        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg> Apply
-      </button>
-    </div>
   </form>
 </div>
 <svg style="display:none">
@@ -60,7 +58,7 @@
 </svg>
 <style data-size="<%= app_size %>" data-resizer>
   ._container { margin-left: <%= app_size %>; }
-  ._header, ._list, ._sidebar-footer { width: <%= app_size %>; }
+  ._header, ._list { width: <%= app_size %>; }
   ._list-hover.clone { min-width: <%= app_size %>; }
   ._notice, ._path, ._resizer { left: <%= app_size %>; }
 </style>

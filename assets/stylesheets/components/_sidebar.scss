@@ -18,6 +18,8 @@
   @extend %border-box;
   @extend %user-select-none;
 
+  &:focus { outline: none; }
+
   ._overlay-scrollbars & {
     padding-top: 0;
     top: $headerHeight;

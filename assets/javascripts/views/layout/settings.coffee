@@ -9,6 +9,7 @@ class app.views.Settings extends app.View
     backBtn: 'button[data-back]'
 
   @events:
+    change: 'onChange'
     submit: 'onSubmit'
     click: 'onClick'
 
@@ -50,6 +51,10 @@ class app.views.Settings extends app.View
       disabledDocs.uninstall ->
         app.db.migrate()
         app.reload()
+    return
+
+  onChange: =>
+    @addClass('_dirty')
     return
 
   onEnter: =>
