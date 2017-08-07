@@ -50,11 +50,11 @@ class app.views.EntryPage extends app.View
       @clipBoardLink.className = '_pre-clip'
       @clipBoardLink.title = 'Copy to clipboard'
       @clipBoardLink.tabIndex = -1
-    el.appendChild(@clipBoardLink.cloneNode()) for el in @el.querySelectorAll('pre')
+    el.appendChild(@clipBoardLink.cloneNode()) for el in @findAllByTag('pre')
     return
 
   polyfillMathML: ->
-    return unless window.supportsMathML is false and !@polyfilledMathML and @find('math')
+    return unless window.supportsMathML is false and !@polyfilledMathML and @findByTag('math')
     @polyfilledMathML = true
     $.append document.head, """<link rel="stylesheet" href="#{app.config.mathml_stylesheet}">"""
     return
