@@ -144,18 +144,14 @@
 ._lined-heading,
 %lined-heading {
   display: flex;
-  justify-content: center;
   align-items: center;
 
   > * { margin: 0 .3125rem; }
 
   &:after {
     content: '';
-    display: inline-block;
-    vertical-align: middle;
     flex-grow: 1;
     height: 1px;
-    line-height: 0;
     margin-top: .25rem;
     margin-left: 1rem;
     background: $boxBorderLight;
