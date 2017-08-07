@@ -19,7 +19,7 @@ class app.views.Notice extends app.View
 
   show: ->
     @html @tmpl("#{@type}Notice", @args...)
-    @prependTo $('._app')
+    @prependTo app.el
     return
 
   hide: ->
