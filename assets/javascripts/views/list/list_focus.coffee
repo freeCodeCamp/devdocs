@@ -40,7 +40,7 @@ class app.views.ListFocus extends app.View
         $.click(next)
         @findNext cursor
       else if next.tagName is 'DIV' # sub-list
-        if cursor.className.indexOf('open') >= 0
+        if cursor.className.indexOf(' open') >= 0
           @findFirst(next) or @findNext(next)
         else
           @findNext(next)
