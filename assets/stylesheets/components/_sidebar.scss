@@ -37,8 +37,17 @@
     }
   }
 
-  ._sidebar-hidden & { display: none; }
-  &.show { display: block; }
+  ._sidebar-hidden & {
+    transform: translateX(-95%);
+    transform: translateX(calc(.5rem - 100%));
+    opacity: 0;
+  }
+
+  &:hover:not(.no-hover),
+  &.show {
+    transform: none;
+    opacity: 1;
+  }
 }
 
 ._resizer {

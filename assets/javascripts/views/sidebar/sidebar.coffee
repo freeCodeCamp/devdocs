@@ -27,15 +27,30 @@ class app.views.Sidebar extends app.View
     @docList = new app.views.DocList
 
     app.on 'ready', @onReady
+
+    $.on document.documentElement, 'mouseleave', (event) => @display() if event.clientX < 10
+    $.on document.documentElement, 'mouseenter', => @resetDisplay(forceNoHover: false)
     return
 
   display: ->
     @addClass 'show'
     return
 
-  resetDisplay: ->
+  resetDisplay: (options = {}) ->
+    return unless @hasClass 'show'
     @removeClass 'show'
+
+    unless options.forceNoHover is false or @hasClass 'no-hover'
+      @addClass 'no-hover'
+      $.on window, 'mousemove', @resetHoverOnMouseMove
     return
+
+  resetHoverOnMouseMove: =>
+    $.off window, 'mousemove', @resetHoverOnMouseMove
+    $.requestAnimationFrame @resetHover
+
+  resetHover: =>
+    @removeClass 'no-hover'
 
   showView: (view) ->
     unless @view is view
