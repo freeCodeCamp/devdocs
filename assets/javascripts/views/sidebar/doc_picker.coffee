@@ -23,7 +23,7 @@ class app.views.DocPicker extends app.View
     return
 
   render: ->
-    html = ''
+    html = @tmpl('docPickerHeader')
     docs = app.docs.all().concat(app.disabledDocs.all()...)
 
     while doc = docs.shift()
@@ -35,9 +35,7 @@ class app.views.DocPicker extends app.View
 
     @html html + @tmpl('docPickerNote')
 
-    $.requestAnimationFrame =>
-      @addClass '_in'
-      @findByTag('input')?.focus()
+    $.requestAnimationFrame => @findByTag('input')?.focus()
     return
 
   renderVersions: (docs) ->

@@ -322,14 +322,26 @@
 //
 
 ._list-picker {
-  > ._list, > ._list-item {
-    opacity: 0;
-    transition: opacity .2s;
-  }
-  &._in { > ._list, > ._list-item { opacity: 1; } }
-
   ._list-item { cursor: pointer; }
   ._list-sub > ._list-item { padding-left: 2.375rem; }
+}
+
+._list-picker-head {
+  display: flex;
+  justify-content: space-between;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin-right: 1px;
+  padding: .5rem .75rem .25rem .75rem;
+  line-height: 1.5rem;
+  font-size: .75rem;
+  font-weight: $bolderFontWeight;
+  color: $textColorLight;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, $sidebarBackground, $sidebarBackground 75%, rgba($sidebarBackground, 0));
+  cursor: default;
 }
 
 ._list-checkbox {
