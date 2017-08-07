@@ -1,4 +1,4 @@
-arrow = """<svg class="_path-arrow"><use xlink:href="#dir"/></svg>"""
+arrow = """<svg class="_path-arrow"><use xlink:href="#dir-icon"/></svg>"""
 
 app.templates.path = (doc, type, entry) ->
   html = """<a href="#{doc.fullPath()}" class="_path-item _icon-#{doc.icon}">#{doc.fullName}</a>"""

@@ -1,6 +1,6 @@
 templates = app.templates
 
-arrow = """<svg class="_list-arrow"><use xlink:href="#dir"/></svg>"""
+arrow = """<svg class="_list-arrow"><use xlink:href="#dir-icon"/></svg>"""
 
 templates.sidebarDoc = (doc, options = {}) ->
   link  = """<a href="#{doc.fullPath()}" class="_list-item _icon-#{doc.icon} """
