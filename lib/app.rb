@@ -99,7 +99,7 @@ class App < Sinatra::Application
   def self.parse_docs
     Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc|
       doc['full_name'] = doc['name'].dup
-      doc['full_name'] << " #{doc['version']}" if doc['version']
+      doc['full_name'] << " #{doc['version']}" if doc['version'] && !doc['version'].empty?
       doc['slug_without_version'] = doc['slug'].split('~').first
       [doc['slug'], doc]
     }]
