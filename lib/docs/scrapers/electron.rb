@@ -2,7 +2,7 @@ module Docs
   class Electron < UrlScraper
     self.type = 'electron'
     self.base_url = 'https://electron.atom.io/docs/'
-    self.release = '1.6.10'
+    self.release = '1.7.5'
     self.links = {
       home: 'https://electron.atom.io/',
       code: 'https://github.com/electron/electron'
