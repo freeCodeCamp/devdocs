@@ -22,8 +22,13 @@ module Docs
       We are not endorsed by or affiliated with CakePHP.
     HTML
 
+    version '3.5' do
+      self.release = '3.5.0'
+      self.base_url = 'https://api.cakephp.org/3.5/'
+    end
+
     version '3.4' do
-      self.release = '3.4.1'
+      self.release = '3.4.13'
       self.base_url = 'https://api.cakephp.org/3.4/'
     end
 
@@ -40,6 +45,11 @@ module Docs
     version '3.1' do
       self.release = '3.1.13'
       self.base_url = 'https://api.cakephp.org/3.1/'
+    end
+
+    version '2.10' do
+      self.release = '2.10.1'
+      self.base_url = 'https://api.cakephp.org/2.10/'
     end
 
     version '2.9' do
