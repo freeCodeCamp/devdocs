@@ -7,13 +7,13 @@ module Docs
     }
 
     version '7' do
-      self.release = '7.1.0'
+      self.release = '7.2.0'
       self.dir = '/Users/Thibaut/DevDocs/Docs/gfortran7'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gfortran/"
     end
 
     version '6' do
-      self.release = '6.3.0'
+      self.release = '6.4.0'
       self.dir = '/Users/Thibaut/DevDocs/Docs/gfortran6'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gfortran/"
     end
