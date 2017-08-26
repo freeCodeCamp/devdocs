@@ -1,7 +1,7 @@
 module Docs
   class Mocha < UrlScraper
     self.type = 'mocha'
-    self.release = '3.2.0'
+    self.release = '3.5.0'
     self.base_url = 'https://mochajs.org/'
     self.links = {
       home: 'https://mochajs.org/',
