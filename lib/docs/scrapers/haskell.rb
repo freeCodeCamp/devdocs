@@ -4,6 +4,9 @@ module Docs
     self.type = 'haskell'
     self.root_path = 'users_guide/index.html'
     self.initial_paths = %w(libraries/index.html)
+    self.links = {
+      home: 'https://www.haskell.org/'
+    }
 
     html_filters.push 'haskell/entries', 'haskell/clean_html'
 
@@ -26,7 +29,12 @@ module Docs
       /Data-OldTypeable-Internal\.html\z/i,
       /Data-Typeable-Internal\.html\z/i,
       /GHC-IO-Encoding-Types\.html\z/i,
-      /System-Posix-Process-Internals\.html\z/i
+      /System-Posix-Process-Internals\.html\z/i,
+      /Data-Map-Strict-Internal\.html\z/i,
+      /Data-IntMap-Internal\.html\z/i,
+      /Data-Set-Internal\.html\z/i,
+      /Data-Map-Internal\.html\z/i,
+      /Data-Sequence-Internal\.html\z/i
     ]
     options[:skip] = %w(
       users_guide/license.html
@@ -49,7 +57,7 @@ module Docs
     end
 
     version '8' do
-      self.release = '8.0.1'
+      self.release = '8.2.1'
       self.base_url = "https://downloads.haskell.org/~ghc/#{release}/docs/html/"
     end
 
