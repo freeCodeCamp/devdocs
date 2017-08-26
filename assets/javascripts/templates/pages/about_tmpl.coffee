@@ -240,7 +240,7 @@ credits = [
     'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
   ], [
     'Express',
-    '2016 StrongLoop, IBM, and other expressjs.com contributors.',
+    '2017 StrongLoop, IBM, and other expressjs.com contributors.',
     'CC BY-SA',
     'https://raw.githubusercontent.com/expressjs/expressjs.com/gh-pages/LICENSE.md'
   ], [
