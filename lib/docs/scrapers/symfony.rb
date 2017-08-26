@@ -6,7 +6,7 @@ module Docs
     self.root_path = 'namespaces.html'
     self.initial_paths = %w(classes.html)
     self.links = {
-      home: 'http://symfony.com/',
+      home: 'https://symfony.com/',
       code: 'https://github.com/symfony/symfony'
     }
 
@@ -27,12 +27,12 @@ module Docs
     HTML
 
     version '3.3' do
-      self.release = '3.3.2'
+      self.release = '3.3.6'
       self.base_url = "http://api.symfony.com/#{version}/"
     end
 
     version '3.2' do
-      self.release = '3.2.9'
+      self.release = '3.2.13'
       self.base_url = "http://api.symfony.com/#{version}/"
     end
 
@@ -47,12 +47,12 @@ module Docs
     end
 
     version '2.8' do
-      self.release = '2.8.22'
+      self.release = '2.8.26'
       self.base_url = "http://api.symfony.com/#{version}/"
     end
 
     version '2.7' do
-      self.release = '2.7.29'
+      self.release = '2.7.33'
       self.base_url = "http://api.symfony.com/#{version}/"
     end
   end
