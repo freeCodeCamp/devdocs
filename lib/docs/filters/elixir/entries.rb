@@ -5,7 +5,9 @@ module Docs
         if current_url.path.start_with?('/getting-started')
           at_css('h1').content.strip.remove(/\.\z/)
         else
-          at_css('h1').content.split(' ').first.strip
+          name = at_css('h1').content.strip
+          name = name.split(' ').first unless name.start_with?('mix ') # ecto
+          name
         end
       end
 
