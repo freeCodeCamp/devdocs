@@ -157,6 +157,7 @@ th {
 }
 
 td {
+  background: $contentBackground;
   border-bottom: 1px solid $boxBorderLight;
 
   + td { border-left: 1px solid $boxBorderLight; }
