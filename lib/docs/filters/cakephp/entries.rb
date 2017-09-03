@@ -26,7 +26,7 @@ module Docs
         return 'Global' if slug == 'namespace-None'
         case page_type
         when 'class', 'namespace', 'package'
-          if (node = at_css('.info')) && node.content =~ /Located at\s+((?:\w+\/?)+)/ # for 2.x docs
+          if (node = at_css('.info')) && node.content =~ /Location:\s+((?:\w+\/?)+)/ # for 2.x docs
             path = $1.split('/')
           else
             path = slug_without_page_type.split('.')
@@ -46,12 +46,12 @@ module Docs
         return [] if class_name.end_with?('Exception')
         entries = []
 
-        css('.method-name').each do |node|
+        css('h3.method-name').each do |node|
           break if node.parent.previous_element.content =~ /\AMethods.*from/
-          entries << ["#{class_name}::#{node.at_css('.name').content.strip}()", node['id']]
+          entries << ["#{class_name}::#{node.at_css('.name').content.strip}", node['id']]
         end
 
-        css('.property-name').each do |node|
+        css('h3.property-name').each do |node|
           break if node.parent.parent['class'].include?('used')
           entries << ["#{class_name}::#{node.at_css('.name').content.strip}", node['id']]
         end

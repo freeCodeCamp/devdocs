@@ -1,0 +1,53 @@
+._angularjs {
+  h2 { @extend %block-heading; }
+
+  //
+  // Index
+  //
+
+  .nav-index-section {
+    margin: 1.5em 0 1em -2em;
+    list-style: none;
+    font-weight: $boldFontWeight;
+    text-transform: capitalize;
+  }
+
+  //
+  // Other
+  //
+
+  h3, h4 { font-size: 1rem; }
+
+  .alert { @extend %note; }
+  .alert-success { @extend %note-green; }
+  .alert-error { @extend %note-red; }
+
+  p > code, li > code, td > code { @extend %label; }
+
+  .view-source, .improve-docs {
+    order: 1;
+    display: block;
+    vertical-align: top;
+    padding-left: 1em;
+    font-size: .875rem;
+  }
+
+  .defs {
+    padding-left: 1rem;
+    list-style: none;
+
+    > li > h3:first-child {
+      margin: 0 0 1em -1rem;
+      @extend %block-label, %label-blue;
+    }
+
+    > li + li { margin-top: 2em; }
+
+    h4 {
+      margin: 1em 0 .5em;
+      font-size: 1em;
+    }
+
+    ul { list-style-type: disc; }
+  }
+}

@@ -8,9 +8,13 @@ module Docs
         end
 
         css('.highlight > pre').each do |node|
-          node['class'] = node.parent['class']
+          node['data-language'] = node.parent['class'][/highlight-source-(\w+)/, 1]
           node.content = node.content.strip_heredoc.gsub('    ', '  ')
           node.parent.replace(node)
+        end
+
+        css('pre > code').each do |node|
+          node.before(node.children).remove
         end
 
         doc

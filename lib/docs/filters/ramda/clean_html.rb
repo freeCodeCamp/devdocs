@@ -49,13 +49,13 @@ module Docs
           node.parent.content = node.content
         end
 
-        css('.card').each do |node|
-          node.at_css('h2')['id'] = node['id'] if node['id']
+        css('.card', '.panel-body', 'div.params', 'div.description', 'h2 > a').each do |node|
           node.before(node.children).remove
         end
 
-        css('.panel-body', 'div.params', 'div.description', 'h2 > a').each do |node|
-          node.before(node.children).remove
+        css('.section-id[id]').each do |node|
+          node.next_element['id'] = node['id']
+          node.remove
         end
 
         css('h2').each do |node|

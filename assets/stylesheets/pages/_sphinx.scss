@@ -1,31 +1,42 @@
 %sphinx {
-  h2, h3 { @extend %block-heading; }
-  dl:not(.docutils) > dt { @extend %block-label, %label-blue; }
+  h2 { @extend %block-heading; }
+  h3 { @extend %block-label; }
+  h4 { font-size: 1em; }
+  > dl:not(.docutils) > dt { @extend %block-label, %label-blue; }
+  dd > dl:not(.docutils) > dt { @extend %block-label; }
   dt + dt { margin-top: -.5em; }
 
-  .note, .admonition, .versionadded, .versionchanged, .deprecated-removed { @extend %note; }
-  .important { @extend %note-orange; }
-  .warning, .deprecated-removed { @extend %note-red; }
-  .versionmodified { font-weight: bold; }
+  .note, .admonition, div.versionadded, div.versionchanged, .deprecated-removed, .deprecated, .topic { @extend %note; }
 
-  p > code, li > code { @extend %label; }
+  .important { @extend %note-orange; }
+  .warning, .deprecated-removed, .deprecated { @extend %note-red; }
+
+  .versionmodified, span.title, .topic-title {
+    display: block;
+    font-weight: $boldFontWeight;
+  }
+
+  p > code, li > code, dd > code, .docutils > dt > code { @extend %label; }
+
+  ul.simple { margin: 1em 0; }
+
+  h2 > a, h3 > a, dt[id] > a.external, dt[id] > a.internal { float: right; }
 
   .admonition-title {
     float: left;
     margin: 0 .5em 0 0;
-    font-weight: bold;
+    font-weight: $boldFontWeight;
 
     &:after { content: ':'; }
   }
 
-  .admonition > dl {
+  .admonition > dl, .admonition > ul {
     clear: left;
     margin: 0;
   }
+  .admonition-title + dl { padding-top: .5em; }
 
-  ul.simple { margin: 1em 0; }
-
-  dt > a.external { float: right; }
+  td > div { margin: 0 !important; }
 }
 
 ._sphinx {

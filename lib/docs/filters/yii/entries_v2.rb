@@ -26,6 +26,7 @@ module Docs
           name = node.child.content.strip
           name.prepend "#{self.name} "
           entries << [name, node['id']]
+          node.remove_attribute('class')
         end
       end
     end

@@ -9,12 +9,22 @@ module Docs
           css('meta', '.colophon').remove
         end
 
-        css('> section', '.deep-link > a').each do |node|
+        css('a.deep-link[id]').each do |node|
+          node.parent['id'] = node['id']
+          node.remove
+        end
+
+        css('> section').each do |node|
           node.before(node.children).remove
         end
 
         css('pre.editor').each do |node|
           node.inner_html = node.inner_html.gsub(/<\/div>(?!\n|\z)/, "</div>\n")
+        end
+
+        css('h1 + h1.subtitle').each do |node|
+          node.name = 'p'
+          node.inner_html += '.'
         end
 
         css('pre').each do |node|

@@ -14,12 +14,23 @@ module Docs
           end
         end
 
-        css('#plusone', '#nav', '.pkgGopher', '#footer', '.collapsed').remove
+        css('#plusone', '#nav', '.pkgGopher', '#footer', '.collapsed', '.permalink', '#pkg-callgraph').remove
+
+        css('span[style]', '.toggleVisible', '.expanded', 'div.toggle').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('h2 a', 'h3 a').each do |node|
+          if node['href'].include?('/src/')
+            node.after %(<a href="#{node['href']}" class="source">Source</a>)
+            node.before(node.children).remove
+          end
+        end
 
         # Remove triangle character
         css('h2', '.exampleHeading').each do |node|
-          node.content = node.content.remove("\u25BE")
-          node.name = 'h2'
+          node.inner_html = node.inner_html.remove("\u25BE")
+          node.name = 'h4' unless node.name == 'h2'
         end
 
         # Turn <dl> into <ul>
@@ -28,21 +39,21 @@ module Docs
           node.name = 'ul'
         end
 
-        # Remove code highlighting
-        css('pre').each do |node|
-          node['data-language'] = 'go'
-          node.content = node.content
-        end
-
         # Fix example markup
         css('.play').each do |node|
           node.children = node.at_css('.code').children
           node.name = 'pre'
         end
 
-        css('td[style]').each do |node|
-          node.remove_attribute('style')
+        # Remove code highlighting
+        css('pre').each do |node|
+          node['data-language'] = 'go'
+          node.content = node.content
         end
+
+        css('td[style]', 'ul[style]').remove_attr('style')
+        css('.toggleButton[title]').remove_attr('title')
+        css('.toggleButton').remove_attr('class')
 
         doc
       end

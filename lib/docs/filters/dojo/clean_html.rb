@@ -39,6 +39,21 @@ module Docs
           node.replace(node.content)
         end
 
+        css('.functionIcon', '.parameters').each do |node|
+          node.name = 'code'
+          node.content = node.content.strip
+        end
+
+        css('pre').each do |node|
+          node['data-language'] = node.content =~ /\A\s*</ ? 'markup' : 'javascript'
+        end
+
+        css('.jsdoc-function-information', '.jsdoc-examples', '.jsdoc-example', 'span').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('table', 'a', 'h2', 'h3', 'td', 'strong').remove_attr('class')
+
         doc
       end
     end

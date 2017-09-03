@@ -2,25 +2,47 @@ module Docs
   class Tensorflow
     class CleanHtmlFilter < Filter
       def call
-        css('hr').remove
+        @doc = at_css('.devsite-article-inner')
 
-        css('pre > code').each do |node|
-          node.parent['class'] = node['class']
-          node.parent.content = node.content
+        css('hr', '.devsite-nav', '.devsite-content-footer', '.devsite-article-body > br').remove
+
+        css('.devsite-article-body', 'blockquote > blockquote', 'th > h2', 'th > h3').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('code[class] > pre').each do |node|
+          node = node.parent
+          node.content = node.content
+          node.name = 'pre'
+        end
+
+        css('blockquote > pre:only-child', 'p > pre:only-child').each do |node|
+          next if node.previous.try(:content).present? || node.next.try(:content).present?
+          node.parent.before(node).remove
+        end
+
+        css('aside.note').each do |node|
+          node.name = 'blockquote'
         end
 
         css('pre').each do |node|
-          node.inner_html = node.inner_html.strip_heredoc
+          node.content = node.content.strip_heredoc
 
-          if node['class'].include?('lang-c++')
+          if node['class'] && node['class'] =~ /lang-c++/i
             node['data-language'] = 'cpp'
-          elsif node['class'].include?('lang-python')
+          elsif node['class'] && node['class'] =~ /lang-python/i
             node['data-language'] = 'python'
+          else
+            node['data-language'] = version == 'Python' ? 'python' : 'cpp'
           end
         end
 
-        css('b').each do |node|
-          node.before(node.children).remove
+        css('code').each do |node|
+          node.inner_html = node.inner_html.gsub(/\s+/, ' ')
+        end
+
+        css('> code', '> b').each do |node|
+          node.replace("<p>#{node.to_html}</p>")
         end
 
         doc

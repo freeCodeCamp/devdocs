@@ -16,15 +16,14 @@ module Docs
       }
 
       def get_name
-        if slug == 'contents.htm'
-          TYPE_MAP[slug.split('/').first]
+        if slug.end_with?('contents.htm')
+          slug.split('/').first
         else
           slug.split('/').last.remove('.htm')
         end
       end
 
       def get_type
-        return nil if name == 'contents'
         TYPE_MAP.fetch(slug.split('/').first)
       end
 

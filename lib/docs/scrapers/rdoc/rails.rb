@@ -1,5 +1,7 @@
 module Docs
   class Rails < Rdoc
+    include FixInternalUrlsBehavior
+
     self.name = 'Ruby on Rails'
     self.slug = 'rails'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Rails'
@@ -13,60 +15,53 @@ module Docs
     options[:root_title] = 'Ruby on Rails'
 
     options[:skip] += %w(
-      AbstractController/Callbacks.html
-      AbstractController/UrlFor.html
       ActionController/Instrumentation.html
       ActionController/Rendering.html
       ActionDispatch/DebugExceptions.html
-      ActionDispatch/Http/URL.html
       ActionDispatch/Journey/Parser.html
       ActionDispatch/Reloader.html
-      ActionDispatch/RequestId.html
       ActionDispatch/Routing/HtmlTableFormatter.html
-      ActionDispatch/Routing/Mapper.html
-      ActionDispatch/Routing/RouteSet.html
       ActionDispatch/ShowExceptions.html
-      ActionView/FileSystemResolver.html
       ActionView/FixtureResolver.html
       ActionView/LogSubscriber.html
-      ActionView/Template/Handlers/Erubis.html
       ActionView/TestCase/Behavior/RenderedViewsCollection.html
-      ActiveRecord/DynamicMatchers/Finder.html
-      ActiveRecord/Sanitization.html
       ActiveRecord/Tasks/DatabaseTasks.html
-      ActiveSupport/Configurable/Configuration.html
       ActiveSupport/Dependencies/WatchStack.html
-      ActiveSupport/DescendantsTracker.html
-      ActiveSupport/FileUpdateChecker.html
-      ActiveSupport/Notifications/Fanout.html
-      ActiveSupport/Testing/Isolation/Subprocess.html
-      Rails/API/Task.html)
+      ActiveSupport/Notifications/Fanout.html)
 
     options[:skip_patterns] += [
-      /\AActionController\/Caching(?!\/Fragments|\.)/,
-      /\AActionController\/RequestForgeryProtection\/ProtectionMethods/,
       /\AActionController\/Testing/,
-      /\AActionDispatch\/RemoteIp/,
       /\AActionView\/LookupContext/,
       /\AActionView\/Resolver/,
       /\AActiveSupport\/Multibyte\/Unicode\//,
       /\AActiveSupport\/XML/i,
       /\ASourceAnnotationExtractor/,
       /\AI18n\/Railtie/,
+      /\AMinitest/,
+      /\ARails\/API/,
       /\ARails\/AppBuilder/,
-      /\ARails\/PluginBuilder/]
+      /\ARails\/PluginBuilder/,
+      /\ARails\/Generators\/Testing/]
 
     options[:attribution] = <<-HTML
-      &copy; 2004&ndash;2016 David Heinemeier Hansson<br>
+      &copy; 2004&ndash;2017 David Heinemeier Hansson<br>
       Licensed under the MIT License.
     HTML
 
+    version '5.1' do
+      self.release = '5.1.0'
+    end
+
+    version '5.0' do
+      self.release = '5.0.2'
+    end
+
     version '4.2' do
-      self.release = '4.2.6'
+      self.release = '4.2.8'
     end
 
     version '4.1' do
-      self.release = '4.1.15'
+      self.release = '4.1.16'
     end
   end
 end

@@ -8,10 +8,11 @@ module Docs
 
     html_filters.push 'title'
 
-    options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
+    options[:root_title] = false
     options[:title] = false
 
     options[:replace_paths] = {
+      'aarch64_002dfeature_002dmodifiers.html' => 'AArch64-Options.html',
       'AssemblerTemplate.html' => 'Extended-Asm.html',
       'AVR-Named-Address-Spaces.html' => 'Named-Address-Spaces.html',
       'AVR-Variable-Attributes.html' => 'Variable-Attributes.html',
@@ -45,18 +46,49 @@ module Docs
       'Wtrigraphs.html' => 'Invocation.html'
     }
 
-    version '5' do
-      self.release = '5.3.0'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/gcc5'
+    version '7' do
+      self.release = '7.1.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/gcc7'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
+    version '7 CPP' do
+      self.release = '7.1.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/gcpp7'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
+
+      options[:replace_paths] = CPP_PATHS
+    end
+
+    version '6' do
+      self.release = '6.3.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/gcc6'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
+
+      options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
+    end
+
+    version '6 CPP' do
+      self.release = '6.3.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/gcpp6'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
+
+      options[:replace_paths] = CPP_PATHS
+    end
+
+    version '5' do
+      self.release = '5.4.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/gcc5'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
+
+      options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
+    end
+
     version '5 CPP' do
-      self.release = '5.3.0'
+      self.release = '5.4.0'
       self.dir = '/Users/Thibaut/DevDocs/Docs/gcpp5'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
-      options[:root_title] = false
       options[:replace_paths] = CPP_PATHS
     end
 
@@ -64,6 +96,8 @@ module Docs
       self.release = '4.9.3'
       self.dir = '/Users/Thibaut/DevDocs/Docs/gcc4'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
+
+      options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
     end
 
     version '4 CPP' do
@@ -71,7 +105,6 @@ module Docs
       self.dir = '/Users/Thibaut/DevDocs/Docs/gcpp4'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
-      options[:root_title] = false
       options[:replace_paths] = CPP_PATHS
     end
   end

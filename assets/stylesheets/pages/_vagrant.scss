@@ -1,9 +1,0 @@
-._vagrant {
-  @extend %simple;
-
-  .alert { @extend %note; }
-  .prev-button { float: left; }
-  .prev-button:before { content: '\2190  '; }
-  .next-button { float: right; }
-  .next-button:after { content: ' \2192'; }
-}

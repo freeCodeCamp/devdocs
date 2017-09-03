@@ -35,6 +35,7 @@ class DocsCLI < Thor
       return puts 'ERROR: [path] must be an absolute path.'
     end
 
+    Docs.install_report :image
     Docs.install_report :store if options[:verbose]
     if options[:debug]
       GC.disable
@@ -58,9 +59,10 @@ class DocsCLI < Thor
   option :force, type: :boolean
   option :package, type: :boolean
   def generate(name)
+    Docs.rescue_errors = true
     Docs.install_report :store if options[:verbose]
     Docs.install_report :scraper if options[:debug]
-    Docs.install_report :progress_bar, :doc if $stdout.tty?
+    Docs.install_report :progress_bar, :doc, :image if $stdout.tty?
 
     require 'unix_utils' if options[:package]
 
@@ -93,6 +95,8 @@ class DocsCLI < Thor
     generate_manifest if result
   rescue Docs::DocNotFound => error
     handle_doc_not_found_error(error)
+  ensure
+    Docs.rescue_errors = false
   end
 
   desc 'manifest', 'Create the manifest'
@@ -228,23 +232,16 @@ class DocsCLI < Thor
   end
 
   def download_doc(doc)
-    target = File.join(Docs.store_path, "#{doc.path}.tar.gz")
+    target_path = File.join(Docs.store_path, doc.path)
     open "http://dl.devdocs.io/#{doc.path}.tar.gz" do |file|
-      FileUtils.mkpath(Docs.store_path)
-      FileUtils.mv(file, target)
-      unpackage_doc(doc)
+      FileUtils.mkpath(target_path)
+      file.close
+      tar = UnixUtils.gunzip(file.path)
+      dir = UnixUtils.untar(tar)
+      FileUtils.rm_rf(target_path)
+      FileUtils.mv(dir, target_path)
+      FileUtils.rm(file.path)
     end
-  end
-
-  def unpackage_doc(doc)
-    path = File.join(Docs.store_path, doc.path)
-    FileUtils.mkpath(path)
-    tar = UnixUtils.gunzip("#{path}.tar.gz")
-    dir = UnixUtils.untar(tar)
-    FileUtils.rm_rf(path)
-    FileUtils.mv(dir, path)
-    FileUtils.rm(tar)
-    FileUtils.rm("#{path}.tar.gz")
   end
 
   def package_doc(doc)

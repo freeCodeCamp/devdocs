@@ -6,13 +6,13 @@ class app.views.Content extends app.View
     click: 'onClick'
 
   @shortcuts:
-    altUp:    'scrollStepUp'
-    altDown:  'scrollStepDown'
-    pageUp:   'scrollPageUp'
-    pageDown: 'scrollPageDown'
-    home:     'scrollToTop'
-    end:      'scrollToBottom'
-    altF:     'onAltF'
+    altUp:      'scrollStepUp'
+    altDown:    'scrollStepDown'
+    pageUp:     'scrollPageUp'
+    pageDown:   'scrollPageDown'
+    pageTop:    'scrollToTop'
+    pageBottom: 'scrollToBottom'
+    altF:       'onAltF'
 
   @routes:
     before: 'beforeRoute'
@@ -23,11 +23,12 @@ class app.views.Content extends app.View
     @scrollMap = {}
     @scrollStack = []
 
-    @rootPage    = new app.views.RootPage
-    @staticPage  = new app.views.StaticPage
-    @offlinePage = new app.views.OfflinePage
-    @typePage    = new app.views.TypePage
-    @entryPage   = new app.views.EntryPage
+    @rootPage     = new app.views.RootPage
+    @staticPage   = new app.views.StaticPage
+    @settingsPage = new app.views.SettingsPage
+    @offlinePage  = new app.views.OfflinePage
+    @typePage     = new app.views.TypePage
+    @entryPage    = new app.views.EntryPage
 
     @entryPage
       .on 'loading', @onEntryLoading
@@ -51,6 +52,9 @@ class app.views.Content extends app.View
     @addClass @constructor.loadingClass
     return
 
+  isLoading: ->
+    @el.classList.contains @constructor.loadingClass
+
   hideLoading: ->
     @removeClass @constructor.loadingClass
     return
@@ -59,38 +63,45 @@ class app.views.Content extends app.View
     @scrollEl.scrollTop = value or 0
     return
 
+  smoothScrollTo: (value) ->
+    if app.settings.get('fastScroll')
+      @scrollTo value
+    else
+      $.smoothScroll @scrollEl, value or 0
+    return
+
   scrollBy: (n) ->
-    @scrollEl.scrollTop += n
+    @smoothScrollTo @scrollEl.scrollTop + n
     return
 
   scrollToTop: =>
-    @scrollTo 0
+    @smoothScrollTo 0
     return
 
   scrollToBottom: =>
-    @scrollTo @scrollEl.scrollHeight
+    @smoothScrollTo @scrollEl.scrollHeight
     return
 
   scrollStepUp: =>
-    @scrollBy -50
+    @scrollBy -80
     return
 
   scrollStepDown: =>
-    @scrollBy 50
+    @scrollBy 80
     return
 
   scrollPageUp: =>
-    @scrollBy 80 - @scrollEl.clientHeight
+    @scrollBy 40 - @scrollEl.clientHeight
     return
 
   scrollPageDown: =>
-    @scrollBy @scrollEl.clientHeight - 80
+    @scrollBy @scrollEl.clientHeight - 40
     return
 
   scrollToTarget: ->
     if @routeCtx.hash and el = @findTargetByHash @routeCtx.hash
       $.scrollToWithImageLock el, @scrollEl, 'top',
-        margin: 20 + if @scrollEl is @el then 0 else $.offset(@el).top
+        margin: if @scrollEl is @el then 0 else $.offset(@el).top
       $.highlight el, className: '_highlight'
     else
       @scrollTo @scrollMap[@routeCtx.state.id]
@@ -107,21 +118,28 @@ class app.views.Content extends app.View
 
   onEntryLoading: =>
     @showLoading()
+    if @scrollToTargetTimeout
+      clearTimeout @scrollToTargetTimeout
+      @scrollToTargetTimeout = null
     return
 
   onEntryLoaded: =>
     @hideLoading()
+    if @scrollToTargetTimeout
+      clearTimeout @scrollToTargetTimeout
+      @scrollToTargetTimeout = null
     @scrollToTarget()
     return
 
   beforeRoute: (context) =>
     @cacheScrollPosition()
     @routeCtx = context
-    @delay @scrollToTarget
+    @scrollToTargetTimeout = @delay @scrollToTarget
     return
 
   cacheScrollPosition: ->
     return if not @routeCtx or @routeCtx.hash
+    return if @routeCtx.path is '/'
 
     unless @scrollMap[@routeCtx.state.id]?
       @scrollStack.push @routeCtx.state.id
@@ -139,6 +157,8 @@ class app.views.Content extends app.View
         @show @entryPage
       when 'type'
         @show @typePage
+      when 'settings'
+        @show @settingsPage
       when 'offline'
         @show @offlinePage
       else

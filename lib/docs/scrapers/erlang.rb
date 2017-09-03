@@ -10,13 +10,18 @@ module Docs
     html_filters.insert_after 'container', 'erlang/pre_clean_html'
     html_filters.push 'erlang/entries', 'erlang/clean_html'
 
-    options[:only_patterns] = [/\Alib/]
+    options[:only_patterns] = [
+      /\Alib/,
+      /\Adoc\/\w+\//,
+      /\Aerts.+\/html/
+    ]
 
     options[:skip_patterns] = [
       /pdf/,
       /release_notes/,
       /result/,
       /java/,
+      /\.erl\z/,
       /\/html\/.*_app\.html\z/,
       /_examples\.html\z/,
       /\Alib\/edoc/,
@@ -31,9 +36,19 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 1999&ndash;2016 Ericsson AB<br>
+      &copy; 2010&ndash;2017 Ericsson AB<br>
       Licensed under the Apache License, Version 2.0.
     HTML
+
+    version '20' do
+      self.release = '20.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/Erlang20'
+    end
+
+    version '19' do
+      self.release = '19.3'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/Erlang19'
+    end
 
     version '18' do
       self.release = '18.3'

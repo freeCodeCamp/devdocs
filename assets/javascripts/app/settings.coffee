@@ -1,101 +1,80 @@
 class app.Settings
-  SETTINGS_KEY = 'settings'
   DOCS_KEY = 'docs'
   DARK_KEY = 'dark'
   LAYOUT_KEY = 'layout'
   SIZE_KEY = 'size'
+  TIPS_KEY = 'tips'
 
   @defaults:
     count: 0
     hideDisabled: false
     hideIntro: false
     news: 0
-    autoUpdate: true
+    manualUpdate: false
     schema: 1
 
-  constructor: (@store) ->
-    @create() unless @settings = @store.get(SETTINGS_KEY)
-
-  create: ->
-    @settings = $.extend({}, @constructor.defaults)
-    @applyLegacyValues @settings
-    @save()
-    return
-
-  applyLegacyValues: (settings) ->
-    for key, v of settings when (value = @store.get(key))?
-      settings[key] = value
-      @store.del(key)
-    return
-
-  save: ->
-    @store.set SETTINGS_KEY, @settings
-
-  set: (key, value) ->
-    @settings[key] = value
-    @save()
+  constructor: ->
+    @store = new CookieStore
+    @cache = {}
 
   get: (key) ->
-    @settings[key] ? @constructor.defaults[key]
+    return @cache[key] if @cache.hasOwnProperty(key)
+    @cache[key] = @store.get(key) ? @constructor.defaults[key]
 
-  hasDocs: ->
-    try !!Cookies.get DOCS_KEY
-
-  getDocs: ->
-    try
-      Cookies.get(DOCS_KEY)?.split('/') or app.config.default_docs
-    catch
-      app.config.default_docs
-
-  setDocs: (docs) ->
-    try
-      Cookies.set DOCS_KEY, docs.join('/'), path: '/', expires: 1e8
-    catch
+  set: (key, value) ->
+    @store.set(key, value)
+    delete @cache[key]
     return
 
-  setDark: (value) ->
-    try
-      if value
-        Cookies.set DARK_KEY, '1', path: '/', expires: 1e8
-      else
-        Cookies.expire DARK_KEY
-    catch
+  del: (key) ->
+    @store.del(key)
+    delete @cache[key]
+    return
+
+  hasDocs: ->
+    try !!@store.get(DOCS_KEY)
+
+  getDocs: ->
+    @store.get(DOCS_KEY)?.split('/') or app.config.default_docs
+
+  setDocs: (docs) ->
+    @set DOCS_KEY, docs.join('/')
+    return
+
+  getTips: ->
+    @store.get(TIPS_KEY)?.split('/') or []
+
+  setTips: (tips) ->
+    @set TIPS_KEY, tips.join('/')
     return
 
   setLayout: (name, enable) ->
-    try
-      layout = (Cookies.get(LAYOUT_KEY) || '').split(' ')
-      $.arrayDelete(layout, '')
+    layout = (@store.get(LAYOUT_KEY) || '').split(' ')
+    $.arrayDelete(layout, '')
 
-      if enable
-        layout.push(name) if layout.indexOf(name) is -1
-      else
-        $.arrayDelete(layout, name)
+    if enable
+      layout.push(name) if layout.indexOf(name) is -1
+    else
+      $.arrayDelete(layout, name)
 
-      if layout.length > 0
-        Cookies.set LAYOUT_KEY, layout.join(' '), path: '/', expires: 1e8
-      else
-        Cookies.expire LAYOUT_KEY
-    catch
+    if layout.length > 0
+      @set LAYOUT_KEY, layout.join(' ')
+    else
+      @del LAYOUT_KEY
     return
 
   hasLayout: (name) ->
-    try
-      layout = (Cookies.get(LAYOUT_KEY) || '').split(' ')
-      layout.indexOf(name) isnt -1
-    catch
-      false
+    layout = (@store.get(LAYOUT_KEY) || '').split(' ')
+    layout.indexOf(name) isnt -1
 
   setSize: (value) ->
-    try
-      Cookies.set SIZE_KEY, value, path: '/', expires: 1e8
-    catch
+    @set SIZE_KEY, value
     return
 
+  dump: ->
+    @store.dump()
+
   reset: ->
-    try Cookies.expire DOCS_KEY
-    try Cookies.expire DARK_KEY
-    try Cookies.expire LAYOUT_KEY
-    try Cookies.expire SIZE_KEY
-    try @store.del(SETTINGS_KEY)
+    @store.reset()
+    @cache = {}
     return

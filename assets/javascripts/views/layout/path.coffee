@@ -1,5 +1,7 @@
 class app.views.Path extends app.View
   @className: '_path'
+  @attributes:
+    role: 'complementary'
 
   @events:
     click: 'onClick'
@@ -8,17 +10,21 @@ class app.views.Path extends app.View
     after: 'afterRoute'
 
   render: (args...) ->
-    @show()
     @html @tmpl 'path', args...
+    @show()
+    return
 
   show: ->
-    $.prepend $('._app'), @el unless @el.parentNode
+    @prependTo app.el unless @el.parentNode
+    return
 
   hide: ->
     $.remove @el if @el.parentNode
+    return
 
   onClick: (event) =>
     @clicked = true if link = $.closestLink event.target, @el
+    return
 
   afterRoute: (route, context) =>
     if context.type
@@ -34,3 +40,4 @@ class app.views.Path extends app.View
     if @clicked
       @clicked = null
       app.document.sidebar.reset()
+    return

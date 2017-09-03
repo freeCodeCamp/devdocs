@@ -3,21 +3,33 @@ module Docs
     self.name = 'Marionette.js'
     self.slug = 'marionette'
     self.type = 'marionette'
-    self.release = '2.5.6'
-    self.base_url = "http://marionettejs.com/docs/v#{release}/"
     self.root_path = 'index'
     self.links = {
-      home: 'http://marionettejs.com/',
+      home: 'https://marionettejs.com/',
       code: 'https://github.com/marionettejs/backbone.marionette'
     }
 
-    html_filters.push 'marionette/clean_html', 'marionette/entries'
+    html_filters.push 'marionette/clean_html'
 
     options[:container] = '.docs__content'
 
     options[:attribution] = <<-HTML
-      &copy; 2016 Muted Solutions, LLC<br>
+      &copy; 2017 Muted Solutions, LLC<br>
       Licensed under the MIT License.
     HTML
+
+    version '3' do
+      self.release = '3.3.1'
+      self.base_url = "https://marionettejs.com/docs/v#{release}/"
+
+      html_filters.push 'marionette/entries_v3'
+    end
+
+    version '2' do
+      self.release = '2.4.7'
+      self.base_url = "https://marionettejs.com/docs/v#{release}/"
+
+      html_filters.push 'marionette/entries_v2'
+    end
   end
 end

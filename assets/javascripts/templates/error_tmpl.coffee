@@ -3,7 +3,7 @@ error = (title, text = '', links = '') ->
   links = """<p class="_error-links">#{links}</p>""" if links
   """<div class="_error"><h1 class="_error-title">#{title}</h1>#{text}#{links}</div>"""
 
-back = '<a href="javascript:history.back()" class="_error-link">Go back</a>'
+back = '<a href="#" data-behavior="back" class="_error-link">Go back</a>'
 
 app.templates.notFoundPage = ->
   error """ Page not found. """,
@@ -19,22 +19,37 @@ app.templates.pageLoadError = ->
 
 app.templates.bootError = ->
   error """ The app failed to load. """,
-        """ Check your Internet connection and try <a href="javascript:location.reload()">reloading</a>.<br>
+        """ Check your Internet connection and try <a href="#" data-behavior="reload">reloading</a>.<br>
             If you keep seeing this, you're likely behind a proxy or firewall that blocks cross-domain requests. """
 
-app.templates.offlineError = (reason) ->
+app.templates.offlineError = (reason, exception) ->
+  if reason is 'cookie_blocked'
+    return error """ Cookies must be enabled to use offline mode. """
+
   reason = switch reason
     when 'not_supported'
-      """ Unfortunately your browser either doesn't support it or does not make it available. """
+      """ DevDocs requires IndexedDB to cache documentations for offline access.<br>
+          Unfortunately your browser either doesn't support IndexedDB or doesn't make it available. """
+    when 'buggy'
+      """ DevDocs requires IndexedDB to cache documentations for offline access.<br>
+          Unfortunately your browser's implementation of IndexedDB contains bugs that prevent DevDocs from using it. """
+    when 'private_mode'
+      """ Your browser appears to be running in private mode.<br>
+          This prevents DevDocs from caching documentations for offline access."""
+    when 'exception'
+      """ An error occured when trying to open the IndexedDB database:<br>
+          <code class="_label">#{exception.name}: #{exception.message}</code> """
     when 'cant_open'
-      """ Although your browser appears to support it, DevDocs couldn't open the database.<br>
-          This could be because you're browsing in private mode and have disallowed offline storage on the domain. """
-    when 'apple'
-      """ Unfortunately Safari's implementation of IndexedDB is <a href="https://bugs.webkit.org/show_bug.cgi?id=136937">badly broken</a>.<br>
-          This message will automatically go away when Apple fix their code. """
+      """ An error occured when trying to open the IndexedDB database:<br>
+          <code class="_label">#{exception.name}: #{exception.message}</code><br>
+          This could be because you're browsing in private mode or have disallowed offline storage on the domain. """
+    when 'version'
+      """ The IndexedDB database was modified with a newer version of the app.<br>
+          <a href="#" data-behavior="reload">Reload the page</a> to use offline mode. """
+    when 'empty'
+      """ The IndexedDB database appears to be corrupted. Try <a href="#" data-behavior="reset">resetting the app</a>. """
 
-  error """ Offline mode is unavailable. """,
-        """ DevDocs requires IndexedDB to cache documentations for offline access.<br>#{reason} """
+  error 'Offline mode is unavailable.', reason
 
 app.templates.unsupportedBrowser = """
   <div class="_fail">

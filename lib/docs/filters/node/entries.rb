@@ -2,18 +2,23 @@ module Docs
   class Node
     class EntriesFilter < Docs::EntriesFilter
       REPLACE_NAMES = {
-        'debugger' => 'Debugger',
-        'addons'   => 'C/C++ Addons',
-        'modules'  => 'module' }
+        'addons'       => 'C/C++ Addons',
+        'debugger'     => 'Debugger',
+        'deprecations' => 'Deprecated APIs',
+        'modules'      => 'module' }
 
       REPLACE_TYPES = {
-        'Addons'                 => 'Miscellaneous',
-        'Debugger'               => 'Miscellaneous',
-        'os'                     => 'OS',
-        'StringDecoder'          => 'String Decoder',
-        'TLS (SSL)'              => 'TLS/SSL',
-        'UDP / Datagram Sockets' => 'UDP/Datagram',
-        'Executing JavaScript'   => 'VM' }
+        'C++ Addons'                => 'Miscellaneous',
+        'C/C++ Addons'              => 'Miscellaneous',
+        'Debugger'                  => 'Miscellaneous',
+        'Deprecated APIs'           => 'Miscellaneous',
+        'Tracing'                   => 'Miscellaneous',
+        'os'                        => 'OS',
+        'StringDecoder'             => 'String Decoder',
+        'TLS (SSL)'                 => 'TLS/SSL',
+        'UDP / Datagram Sockets'    => 'UDP/Datagram',
+        'VM (Executing JavaScript)' => 'VM',
+        'Executing JavaScript'      => 'VM' }
 
       def get_name
         REPLACE_NAMES[slug] || slug
@@ -70,9 +75,9 @@ module Docs
           next unless (name.first.upcase! && !name.include?(' ')) || name.start_with?('Class Method')
 
           # Differentiate server classes (http, https, net, etc.)
-          name.sub!('server.') { "#{(klass || 'https').sub('.', '_').downcase!}." }
+          name.sub!('server.') { "#{(klass || 'https').sub('.', '_').downcase}." }
           # Differentiate socket classes (net, dgram, etc.)
-          name.sub!('socket.') { "#{klass.sub('.', '_').downcase!}." }
+          name.sub!('socket.') { "#{klass.sub('.', '_').downcase}." }
 
           name.remove! 'Class Method:'
           name.sub! 'buf.',     'buffer.'

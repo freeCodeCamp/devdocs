@@ -1,0 +1,7 @@
+._openjdk {
+  @extend %simple;
+
+  ul.inheritance { list-style: none; }
+  > ul.inheritance { @extend %note, %note-blue; }
+  > ul.inheritance ul.inheritance { margin: 0; }
+}

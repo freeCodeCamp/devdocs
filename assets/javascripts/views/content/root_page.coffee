@@ -9,7 +9,6 @@ class app.views.RootPage extends app.View
 
   render: ->
     @empty()
-    @append @tmpl('mobileNav') if app.isMobile()
     if app.isAndroidWebview()
       @append @tmpl('androidWarning')
     else

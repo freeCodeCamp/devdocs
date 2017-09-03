@@ -1,4 +1,4 @@
-._haskell {
+._haskell-api {
   > h2 { @extend %block-heading; }
   > h3 { @extend %block-label; }
   h4 { font-size: 1em; }
@@ -9,10 +9,13 @@
     white-space: normal;
     @extend %code;
   }
-  p.src { @extend %block-label, %label-blue; }
+  p.src {
+    font-size: .8125rem;
+    @extend %block-label, %label-blue;
+  }
   dt.src { white-space: normal; }
 
-  .top > .subs { margin-left: 2em; }
+  > .subs { margin-left: 2em; }
   .subs p.src { margin-top: 1em; }
 
   dt > code, .complexity, .version { @extend %label; }

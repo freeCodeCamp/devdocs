@@ -1,0 +1,22 @@
+verbose: false
+skip_missing_workers: true
+allow_lossy: true
+threads: 1
+advpng: false
+gifsicle:
+  interlace: false
+  level: 3
+  careful: true
+jhead: false
+jpegoptim:
+  strip: all
+  max_quality: 100
+jpegrecompress: false
+jpegtran: false
+optipng: false
+pngcrush: false
+pngout: false
+pngquant:
+  quality: !ruby/range 80..99
+  speed: 3
+svgo: false

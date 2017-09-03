@@ -1,10 +1,14 @@
+# frozen_string_literal: true
+
 module Docs
   class DocSubscriber < Subscriber
     self.namespace = 'doc'
 
     def index(event)
       before, after = parse_payload(event)
-      log "Entries:"
+      size = event.payload[:after].bytesize
+      size_diff = size - event.payload[:before].bytesize
+      log "Entries: (#{(size / 1_000.0).ceil} KB, #{'+' if size_diff >= 0}#{(size_diff / 1_000.0).ceil} KB)"
       log_diff before['entries'], after['entries'], 'name'
       log "Types:"
       log_diff before['types'],   after['types'],   'name'
@@ -12,12 +16,23 @@ module Docs
 
     def db(event)
       before, after = parse_payload(event)
-      log "Files:"
+      size = event.payload[:after].bytesize
+      size_diff = size - event.payload[:before].bytesize
+      log "Files: (#{(size / 1_000_000.0).ceil(1)} MB, #{'+' if size_diff >= 0}#{(size_diff / 1_000_000.0).ceil(1)} MB)"
       log_diff before.keys, after.keys
     end
 
     def info(event)
       log event.payload[:msg]
+    end
+
+    def error(event)
+      exception = event.payload[:exception]
+      log "ERROR:"
+      puts "  #{event.payload[:url]}"
+      puts "  #{exception.class}: #{exception.message.gsub("\n", "\n    ")}"
+      puts exception.backtrace.select { |line| line.start_with?(Docs.root_path) }.join("\n  ").prepend("\n  ")
+      puts "\n"
     end
 
     private

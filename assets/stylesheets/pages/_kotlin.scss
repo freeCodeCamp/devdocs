@@ -1,0 +1,9 @@
+._kotlin {
+  h2 { @extend %block-heading; }
+  h3 { @extend %block-label, %label-blue; }
+  code { @extend %label; }
+
+  td > pre { margin: .5em 0; }
+
+  .api-docs-breadcrumbs { @extend %note; }
+}

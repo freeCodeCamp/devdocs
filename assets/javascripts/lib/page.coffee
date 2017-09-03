@@ -38,10 +38,15 @@ page.stop = ->
 page.show = (path, state) ->
   return if path is currentState?.path
   context = new Context(path, state)
+  previousState = currentState
   currentState = context.state
-  page.dispatch(context)
-  context.pushState()
-  track()
+  if res = page.dispatch(context)
+    currentState = previousState
+    location.assign(res)
+  else
+    context.pushState()
+    updateCanonicalLink()
+    track()
   context
 
 page.replace = (path, state, skipDispatch, init) ->
@@ -50,16 +55,22 @@ page.replace = (path, state, skipDispatch, init) ->
   currentState = context.state
   page.dispatch(context) unless skipDispatch
   context.replaceState()
-  track() unless init or skipDispatch
+  updateCanonicalLink()
+  track() unless skipDispatch
   context
 
 page.dispatch = (context) ->
   i = 0
   next = ->
-    fn(context, next) if fn = callbacks[i++]
-    return
-  next()
-  return
+    res = fn(context, next) if fn = callbacks[i++]
+    return res
+  return next()
+
+page.canGoBack = ->
+  not Context.isIntialState(currentState)
+
+page.canGoForward = ->
+  not Context.isLastState(currentState)
 
 currentPath = ->
   location.pathname + location.search + location.hash
@@ -68,6 +79,12 @@ class Context
   @initialPath: currentPath()
   @sessionId: Date.now()
   @stateId: 0
+
+  @isIntialState: (state) ->
+    state.id == 0
+
+  @isLastState: (state) ->
+    state.id == @stateId - 1
 
   @isInitialPopState: (state) ->
     state.path is @initialPath and @stateId is 1
@@ -102,10 +119,9 @@ class Route
     (context, next) =>
       if @match context.pathname, params = []
         context.params = params
-        fn(context, next)
+        return fn(context, next)
       else
-        next()
-      return
+        return next()
 
   match: (path, params) ->
     return unless matchData = @regexp.exec(path)
@@ -159,13 +175,24 @@ onclick = (event) ->
 
   if link and not link.target and isSameOrigin(link.href)
     event.preventDefault()
-    page.show link.pathname + link.search + link.hash
+    path = link.pathname + link.search + link.hash
+    path = path.replace /^\/\/+/, '/' # IE11 bug
+    page.show(path)
   return
 
 isSameOrigin = (url) ->
   url.indexOf("#{location.protocol}//#{location.hostname}") is 0
 
+updateCanonicalLink = ->
+  @canonicalLink ||= document.head.querySelector('link[rel="canonical"]')
+  @canonicalLink.setAttribute('href', "http://#{location.host}#{location.pathname}")
+
+trackers = []
+
+page.track = (fn) ->
+  trackers.push(fn)
+  return
+
 track = ->
-  ga?('send', 'pageview', location.pathname + location.search + location.hash)
-  _gauges?.push(['track'])
+  tracker.call() for tracker in trackers
   return

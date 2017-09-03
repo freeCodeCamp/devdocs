@@ -5,8 +5,13 @@ class app.models.Entry extends app.Model
 
   constructor: ->
     super
-    @text = app.Searcher.normalizeString(@name)
-    @text = applyAliases(@text)
+    @text = applyAliases(app.Searcher.normalizeString(@name))
+
+  addAlias: (name) ->
+    text = applyAliases(app.Searcher.normalizeString(name))
+    @text = [@text] unless Array.isArray(@text)
+    @text.push(if Array.isArray(text) then text[1] else text)
+    return
 
   fullPath: ->
     @doc.fullPath if @isIndex() then '' else @path
@@ -45,8 +50,9 @@ class app.models.Entry extends app.Model
     return string
 
   @ALIASES = ALIASES =
+    'angular': 'ng'
     'angular.js': 'ng'
-    'backbone': 'bb'
+    'backbone.js': 'bb'
     'c++': 'cpp'
     'coffeescript': 'cs'
     'elixir': 'ex'
@@ -59,10 +65,16 @@ class app.models.Entry extends app.Model
     'markdown': 'md'
     'modernizr': 'mdr'
     'moment.js': 'mt'
+    'openjdk': 'java'
     'nginx': 'ngx'
+    'numpy': 'np'
+    'pandas': 'pd'
     'postgresql': 'pg'
     'python': 'py'
     'ruby.on.rails': 'ror'
     'ruby': 'rb'
+    'rust': 'rs'
     'sass': 'scss'
+    'tensorflow': 'tf'
+    'typescript': 'ts'
     'underscore.js': '_'

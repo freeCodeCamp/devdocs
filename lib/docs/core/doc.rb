@@ -44,15 +44,16 @@ module Docs
       end
 
       def name
-        @name || super.try(:demodulize)
+        @name || super.demodulize
       end
 
       def slug
-        slug = @slug || name.try(:downcase)
+        slug = @slug || default_slug || raise('slug is required')
         version? ? "#{slug}~#{version_slug}" : slug
       end
 
       def version_slug
+        return if version.blank?
         slug = version.downcase
         slug.gsub! '+', 'p'
         slug.gsub! '#', 's'
@@ -114,6 +115,11 @@ module Docs
       end
 
       private
+
+      def default_slug
+        return if name =~ /[^A-Za-z0-9_]/
+        name.downcase
+      end
 
       def store_page?(page)
         page[:entries].present?

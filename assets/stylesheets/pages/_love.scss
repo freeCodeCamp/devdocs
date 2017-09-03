@@ -1,0 +1,17 @@
+._love {
+  @extend %simple;
+
+  .note { @extend %note; }
+  .note-green { @extend %note-green; }
+  .note-red { @extend %note-red; }
+
+  .label, dt > code { @extend %label; }
+  .label-green { @extend %label-green; }
+  .label-red { @extend %label-red; }
+
+  .smwtable { width: 100%; }
+  .smwtable td:nth-last-child(2), .smwtable td:last-child { width: 2.5em; }
+
+  .cell-green { background: $noteGreenBackground; }
+  .cell-red { background: $noteRedBackground; }
+}

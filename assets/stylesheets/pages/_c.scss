@@ -4,6 +4,8 @@
   .fmbox { @extend %note; }
   code, .t-mark, .t-mark-rev { @extend %label; }
 
+  .t-li1 { margin: 0 0 1em; }
+
   .t-mark, .t-mark-rev {
     white-space: nowrap;
     @extend %label-green;
@@ -27,11 +29,17 @@
 
   td {
     > h3, > h5 {
-      margin: 0;
+      margin: 0 0 .5em;
       line-height: inherit;
+
+      &:only-child { margin: 0; }
     }
 
-    > ul { margin: 0; }
+    > ul, > dl {
+      margin: .5em 0;
+
+      &:only-child { margin: 0; }
+    }
 
     > .t-dsc-member-div > div { // utility/functional
       float: left;
@@ -39,6 +47,8 @@
       + div { margin-left: .5em; }
     }
   }
+
+  .t-dcl-rev-aux > td:empty { padding: 0; }
 
   .t-inheritance-diagram {
     display: table;
@@ -48,4 +58,6 @@
     border: 1px solid $boxBorder;
     border-radius: 2px;
   }
+
+  ul > ul { margin: 0 0 .5em; }
 }

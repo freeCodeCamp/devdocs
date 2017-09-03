@@ -2,7 +2,6 @@
   position: relative;
   z-index: 1;
   height: 100%;
-  padding-top: $headerHeight;
   overflow: hidden;
   background: $contentBackground;
   -webkit-transition: opacity .2s;
@@ -12,7 +11,7 @@
   ._booting > & { opacity: 0; }
   ._noscript > & { display: none; }
 
-  &._max-width {
+  ._max-width & {
     margin: 0 auto;
     max-width: $maxWidth;
     box-shadow: 1px 0 $headerBorder, -1px 0 $headerBorder;
@@ -31,11 +30,12 @@
     left: 0;
     right: 0;
     line-height: 1;
-    margin-top: -.75em;
+    margin-top: -.6em;
     font-size: 4rem;
+    font-weight: 300;
+    letter-spacing: -.125rem;
     color: $loadingText;
     text-align: center;
-    letter-spacing: -.125rem;
     opacity: 0;
     -webkit-transition: opacity .1s .3s;
             transition: opacity .1s .3s;

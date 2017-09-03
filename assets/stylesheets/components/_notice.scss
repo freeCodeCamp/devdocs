@@ -11,18 +11,9 @@
 
   @media #{$mediumScreen} { left: $sidebarMediumWidth; }
 
-  ._sidebar-hidden & { left: $sidebarHiddenWidth; }
+  ._sidebar-hidden & { left: 0; }
 
-  &:not(._top) ~ ._container { padding-bottom: 2.5rem; }
-
-  &._top {
-    bottom: auto;
-    top: $headerHeight;
-    margin-top: 1px;
-    box-shadow: inset 0 -1px $noticeBorder;
-
-    ~ ._container { padding-top: 2.5rem; }
-  }
+  ~ ._container { padding-bottom: 2.5rem; }
 }
 
 ._notice-text {

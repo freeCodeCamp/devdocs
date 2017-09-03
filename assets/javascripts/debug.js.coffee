@@ -70,13 +70,16 @@ app.Searcher.prototype = _proto
 # View tree
 #
 
-@viewTree = (view = app.document, level = 0) ->
-  console.log "%c #{Array(level + 1).join('  ')}#{view.constructor.name}: #{view.activated}",
+@viewTree = (view = app.document, level = 0, visited = []) ->
+  return if visited.indexOf(view) >= 0
+  visited.push(view)
+
+  console.log "%c #{Array(level + 1).join('  ')}#{view.constructor.name}: #{!!view.activated}",
               'color:' + (view.activated and 'green' or 'red')
 
-  for key, value of view when key isnt 'view' and value
+  for own key, value of view when key isnt 'view' and value
     if typeof value is 'object' and value.setupElement
-      @viewTree(value, level + 1)
+      @viewTree(value, level + 1, visited)
     else if value.constructor.toString().match(/Object\(\)/)
-      @viewTree(v, level + 1) for k, v of value when value and typeof value is 'object' and value.setupElement
+      @viewTree(v, level + 1, visited) for own k, v of value when v and typeof v is 'object' and v.setupElement
   return

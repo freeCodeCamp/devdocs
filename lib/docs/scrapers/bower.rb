@@ -2,11 +2,11 @@ module Docs
   class Bower < UrlScraper
     self.name = 'Bower'
     self.type = 'bower'
-    self.release = '1.7.7'
-    self.base_url = 'http://bower.io/docs/'
+    self.release = '1.8.0'
+    self.base_url = 'https://bower.io/docs/'
     self.root_path = 'api'
     self.links = {
-      home: 'http://bower.io/',
+      home: 'https://bower.io/',
       code: 'https://github.com/bower/bower'
     }
 

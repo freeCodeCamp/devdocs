@@ -17,10 +17,6 @@ class app.views.SidebarHover extends app.View
       delete @constructor.events.mouseover
     super
 
-  init: ->
-    @offsetTop = @el.offsetTop
-    return
-
   show: (el) ->
     unless el is @cursor
       @hide()
@@ -28,6 +24,7 @@ class app.views.SidebarHover extends app.View
         @cursor = el
         @clone = @makeClone @cursor
         $.append document.body, @clone
+        @offsetTop ?= @el.offsetTop
         @position()
     return
 

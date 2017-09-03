@@ -3,59 +3,90 @@ class app.views.Sidebar extends app.View
 
   @events:
     focus: 'onFocus'
+    select: 'onSelect'
     click: 'onClick'
+
+  @routes:
+    after: 'afterRoute'
 
   @shortcuts:
     altR: 'onAltR'
     escape: 'onEscape'
 
   init: ->
-    @addSubview @hover  = new app.views.SidebarHover @el unless app.isMobile() or $.isTouchScreen()
+    @addSubview @hover  = new app.views.SidebarHover @el unless app.isMobile()
     @addSubview @search = new app.views.Search
 
     @search
-      .on 'searching', @showResults
-      .on 'clear', @showDocList
+      .on 'searching', @onSearching
+      .on 'clear', @onSearchClear
     .scope
       .on 'change', @onScopeChange
 
     @results = new app.views.Results @, @search
     @docList = new app.views.DocList
-    @docPicker = new app.views.DocPicker unless app.isSingleDoc()
 
-    app.on 'ready', @showDocList
-    $.on document, 'click', @onGlobalClick if @docPicker
+    app.on 'ready', @onReady
+
+    $.on document.documentElement, 'mouseleave', (event) => @display() if event.clientX < 10
+    $.on document.documentElement, 'mouseenter', => @resetDisplay(forceNoHover: false)
     return
 
-  show: (view) ->
+  display: ->
+    @addClass 'show'
+    return
+
+  resetDisplay: (options = {}) ->
+    return unless @hasClass 'show'
+    @removeClass 'show'
+
+    unless options.forceNoHover is false or @hasClass 'no-hover'
+      @addClass 'no-hover'
+      $.on window, 'mousemove', @resetHoverOnMouseMove
+    return
+
+  resetHoverOnMouseMove: =>
+    $.off window, 'mousemove', @resetHoverOnMouseMove
+    $.requestAnimationFrame @resetHover
+
+  resetHover: =>
+    @removeClass 'no-hover'
+
+  showView: (view) ->
     unless @view is view
       @hover?.hide()
       @saveScrollPosition()
       @view?.deactivate()
-      @html @view = view
-      @append @tmpl('sidebarSettings') if @view is @docList and @docPicker
+      @view = view
+      @render()
       @view.activate()
       @restoreScrollPosition()
-      if view is @docPicker then @search.disable() else @search.enable()
     return
 
-  showDocList: (reset) =>
-    @show @docList
-    if reset is true
-      @docList.reset(revealCurrent: true)
-      @search.reset()
+  render: ->
+    @html @view
     return
 
-  showDocPicker: =>
-    @show @docPicker
+  showDocList: ->
+    @showView @docList
     return
 
   showResults: =>
-    @show @results
+    @display()
+    @showView @results
     return
 
   reset: ->
-    @showDocList true
+    @display()
+    @showDocList()
+    @docList.reset()
+    @search.reset()
+    return
+
+  onReady: =>
+    @view = @docList
+    @render()
+    @view.activate()
     return
 
   onScopeChange: (newDoc, previousDoc) =>
@@ -80,41 +111,50 @@ class app.views.Sidebar extends app.View
     @el.scrollTop = 0
     return
 
+  onSearching: =>
+    @showResults()
+    return
+
+  onSearchClear: =>
+    @resetDisplay()
+    @showDocList()
+    return
+
   onFocus: (event) =>
-    $.scrollTo event.target, @el, 'continuous', bottomGap: 2
+    @display()
+    $.scrollTo event.target, @el, 'continuous', bottomGap: 2 unless event.target is @el
+    return
+
+  onSelect: =>
+    @resetDisplay()
     return
 
   onClick: (event) =>
     return if event.which isnt 1
     if event.target.hasAttribute? 'data-reset-list'
       $.stopEvent(event)
-      @reset()
-    else if event.target.hasAttribute? 'data-light'
-      $.stopEvent(event)
-      app.document.toggleLight()
-    else if event.target.hasAttribute? 'data-layout'
-      $.stopEvent(event)
-      app.document.toggleLayout()
-    return
-
-  onGlobalClick: (event) =>
-    return if event.which isnt 1
-    if event.target.hasAttribute? 'data-pick-docs'
-      $.stopEvent(event)
-      @showDocPicker()
-    else if @view is @docPicker
-      @showDocList() unless $.hasChild @el, event.target
+      @onAltR()
     return
 
   onAltR: =>
     @reset()
+    @docList.reset(revealCurrent: true)
+    @display()
     return
 
   onEscape: =>
     @reset()
-    @scrollToTop()
+    @resetDisplay()
+    if doc = @search.getScopeDoc() then @docList.reveal(doc.toEntry()) else @scrollToTop()
     return
 
   onDocEnabled: ->
     @docList.onEnabled()
     @reset()
+    return
+
+  afterRoute: (name, context) =>
+    return if app.shortcuts.eventInProgress?.name is 'escape'
+    @reset() if not context.init and app.router.isIndex()
+    @resetDisplay()
+    return

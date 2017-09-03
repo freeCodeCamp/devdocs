@@ -2,13 +2,10 @@ module Docs
   class Lodash
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('h1+div+div')
+        @doc = at_css('.doc-container')
 
-        css('h3 + p', 'hr').remove
-
-        # Set id attributes on <h3> instead of an empty <a>
-        css('h3').each do |node|
-          node['id'] = node.at_css('a')['id']
+        css('> div', '> div > div', '.highlight').each do |node|
+          node.before(node.children).remove
         end
 
         # Remove <code> inside headings
@@ -16,10 +13,15 @@ module Docs
           node.content = node.content
         end
 
+        css('h3 + p > a:first-child').each do |node|
+          node.parent.previous_element << %(<div class="_heading-links">#{node.parent.inner_html}</div>)
+          node.parent.remove
+        end
+
         # Remove code highlighting
         css('pre').each do |node|
-          node.inner_html = node.inner_html.gsub('<br>', "\n").gsub('&nbsp;', ' ')
-          node.content = node.content
+          node.inner_html = node.inner_html.gsub('</div>', "</div>\n").gsub('&nbsp;', ' ').gsub('&amp;ampamp;', '&amp;amp;')
+          node.content = node.content.strip
           node['data-language'] = 'javascript'
         end
 

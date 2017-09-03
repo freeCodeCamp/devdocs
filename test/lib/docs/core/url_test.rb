@@ -197,7 +197,7 @@ class DocsUrlTest < MiniTest::Spec
       end
 
       it "returns nil with 'http://example.com'" do
-        assert_equal nil, url.subpath_to('http://example.com')
+        assert_nil url.subpath_to('http://example.com')
       end
     end
 

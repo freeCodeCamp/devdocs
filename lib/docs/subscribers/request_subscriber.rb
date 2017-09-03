@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Docs
   class RequestSubscriber < Subscriber
     self.namespace = 'request'

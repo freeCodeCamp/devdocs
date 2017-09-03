@@ -1,6 +1,7 @@
 module Docs
   class Svg < Mdn
-    include FixRedirectionsBehavior
+    prepend FixInternalUrlsBehavior
+    prepend FixRedirectionsBehavior
 
     self.name = 'SVG'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/SVG'

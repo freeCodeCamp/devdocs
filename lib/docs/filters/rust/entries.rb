@@ -2,10 +2,10 @@ module Docs
   class Rust
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        if slug.start_with?('book')
-          at_css("#toc a[href='#{File.basename(slug)}']").content
-        elsif slug.start_with?('reference')
-          'Reference'
+        if slug.start_with?('book') || slug.start_with?('reference')
+          at_css("#sidebar a[href='#{File.basename(slug)}']").content
+        elsif slug == 'error-index'
+          'Compiler Errors'
         else
           name = at_css('h1.fqn .in-band').content.remove(/\A.+\s/)
           mod = slug.split('/').first
@@ -21,6 +21,8 @@ module Docs
           'Guide'
         elsif slug.start_with?('reference')
           'Reference'
+        elsif slug == 'error-index'
+          'Compiler Errors'
         else
           path = name.split('::')
           heading = at_css('h1.fqn .in-band').content.strip
@@ -33,15 +35,11 @@ module Docs
       end
 
       def additional_entries
-        if slug.start_with?('book')
+        if slug.start_with?('book') || slug.start_with?('reference')
           []
-        elsif slug.start_with?('reference')
-          css('#TOC > ul > li > a', '#TOC > ul > li > ul > li > a').map do |node|
-            name = node.content
-            name.sub! %r{(\d)\ }, '\1. '
-            name.sub! '10.0.', '10.'
-            id = node['href'].remove('#')
-            [name, id]
+        elsif slug == 'error-index'
+          css('.error-described h2.section-header').each_with_object [] do |node, entries|
+            entries << [node.content, node['id']] unless node.content.include?('Note:')
           end
         else
           css('#methods + * + div > .method', '#required-methods + div > .method', '#provided-methods + div > .method').map do |node|

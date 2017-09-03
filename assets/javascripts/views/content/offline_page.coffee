@@ -11,10 +11,14 @@ class app.views.OfflinePage extends app.View
     return
 
   render: ->
+    if app.cookieBlocked
+      @html @tmpl('offlineError', 'cookie_blocked')
+      return
+
     app.docs.getInstallStatuses (statuses) =>
       return unless @activated
       if statuses is false
-        @html @tmpl('offlineError', app.db.reason)
+        @html @tmpl('offlineError', app.db.reason, app.db.error)
       else
         html = ''
         html += @renderDoc(doc, statuses[doc.slug]) for doc in app.docs.all()
@@ -31,7 +35,7 @@ class app.views.OfflinePage extends app.View
 
   refreshLinks: ->
     for action in ['install', 'update', 'uninstall']
-      @find("a[data-action-all='#{action}']").classList[if @find("a[data-action='#{action}']") then 'add' else 'remove']('_show')
+      @find("[data-action-all='#{action}']").classList[if @find("[data-action='#{action}']") then 'add' else 'remove']('_show')
     return
 
   docByEl: (el) ->
@@ -41,24 +45,20 @@ class app.views.OfflinePage extends app.View
   docEl: (doc) ->
     @find("[data-slug='#{doc.slug}']")
 
-  onRoute: (route) ->
-    if app.isSingleDoc()
-      window.location = "/#/#{route.path}"
-    else
-      @render()
+  onRoute: (context) ->
+    @render()
     return
 
   onClick: (event) =>
-    return unless link = $.closestLink(event.target)
-    if action = link.getAttribute('data-action')
-      $.stopEvent(event)
-      doc = @docByEl(link)
+    el = event.target
+    if action = el.getAttribute('data-action')
+      doc = @docByEl(el)
       action = 'install' if action is 'update'
-      doc[action](@onInstallSuccess.bind(@, doc), @onInstallError.bind(@, doc))
-      link.parentNode.innerHTML = "#{link.textContent.replace(/e$/, '')}ing…"
-    else if action = link.getAttribute('data-action-all')
-      $.stopEvent(event)
-      el.click() for el in @findAll("a[data-action='#{action}']")
+      doc[action](@onInstallSuccess.bind(@, doc), @onInstallError.bind(@, doc), @onInstallProgress.bind(@, doc))
+      el.parentNode.innerHTML = "#{el.textContent.replace(/e$/, '')}ing…"
+    else if action = el.getAttribute('data-action-all')
+      app.db.migrate()
+      $.click(el) for el in @findAll("[data-action='#{action}']")
     return
 
   onInstallSuccess: (doc) ->
@@ -78,7 +78,14 @@ class app.views.OfflinePage extends app.View
       el.lastElementChild.textContent = 'Error'
     return
 
+  onInstallProgress: (doc, event) ->
+    return unless @activated and event.lengthComputable
+    if el = @docEl(doc)
+      percentage = Math.round event.loaded * 100 / event.total
+      el.lastElementChild.textContent = el.lastElementChild.textContent.replace(/(\s.+)?$/, " (#{percentage}%)")
+    return
+
   onChange: (event) ->
     if event.target.name is 'autoUpdate'
-      app.settings.set 'autoUpdate', !!event.target.checked
+      app.settings.set 'manualUpdate', !event.target.checked
     return

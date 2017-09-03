@@ -1,0 +1,26 @@
+._crystal {
+  @extend %simple;
+
+  .signature { @extend %code; }
+  a.signature, .superclass > a { @extend %label; }
+
+  .entry-detail { margin-top: 1em; }
+  .view-source { float: right; }
+
+  .superclass-hierarchy {
+    list-style: none;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  li.superclass {
+    float: left;
+    margin: 0 .5em 0 0;
+    padding: 0;
+  }
+
+  li.superclass + li.superclass:before {
+    content: '<';
+    margin-right: .5em;
+  }
+}

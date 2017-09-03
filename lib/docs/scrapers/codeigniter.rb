@@ -9,7 +9,7 @@ module Docs
       code: 'https://github.com/bcit-ci/CodeIgniter'
     }
 
-    html_filters.push 'codeigniter/clean_html', 'codeigniter/entries'
+    html_filters.push 'codeigniter/entries', 'sphinx/clean_html'
 
     options[:container] = '.document'
 
@@ -31,12 +31,12 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2014&ndash;2016 British Columbia Institute of Technology<br>
+      &copy; 2014&ndash;2017 British Columbia Institute of Technology<br>
       Licensed under the MIT License.
     HTML
 
-    version '3.0' do
-      self.release = '3.0.4'
+    version '3' do
+      self.release = '3.1.5'
     end
   end
 end

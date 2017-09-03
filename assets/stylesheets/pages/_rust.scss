@@ -7,4 +7,5 @@
   div.stability { margin-bottom: 1em; }
   em.stab, span.stab { @extend %label; }
   em.stab.unstable, span.stab.unstable { @extend %label-orange; }
+  .since, .out-of-band { float: right; }
 }

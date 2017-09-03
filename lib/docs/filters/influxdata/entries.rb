@@ -2,15 +2,19 @@ module Docs
   class Influxdata
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('#page-title h1').content
+        name = at_css('.article-heading h1').content
+        name.remove! %r{\s\(.+\)}
+        name
       end
 
       def get_type
-        product = at_css('.product-switcher--current').content.strip
+        product = at_css('.navbar--current-product').content.split(' ').first.capitalize.sub('db', 'DB')
         return product if %w(Chronograf Telegraf).include?(product)
+        return "#{product}: Tools" if subpath.include?('tools/')
 
-        node = at_css('#product-sidebar a[href="index"]')
-        node = node.parent.previous_element unless node.parent['class'] == 'product-sidebar--section-title'
+        node = at_css('a.sidebar--page[href="index"]')
+        node ||= at_css('.sidebar--section-title a[href="index"]').parent
+        node = node.previous_element until node['class'] == 'sidebar--section-title'
 
         type = node.content.strip
         type.remove! ' Reference'

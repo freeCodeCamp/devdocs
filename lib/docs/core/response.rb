@@ -5,15 +5,15 @@ module Docs
     end
 
     def error?
-      code != 404 && code != 403 && code >= 400 && code <= 599
+      code == 0 || code != 404 && code != 403 && code >= 400 && code <= 599
     end
 
-    def empty?
-      body.empty?
+    def blank?
+      body.blank?
     end
 
     def mime_type
-      @mime_type ||= headers['Content-Type'] || 'text/plain'
+      headers['Content-Type'] || 'text/plain'
     end
 
     def html?

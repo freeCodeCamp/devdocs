@@ -8,7 +8,7 @@ module Docs
     options[:title] = false
     options[:container] = '#content'
     options[:trailing_slash] = false
-    options[:skip_patterns] = [/category/]
+    options[:skip_patterns] = [/deprecated/, /category\/version/]
 
     options[:attribution] = <<-HTML
       &copy; The jQuery Foundation and other contributors<br>

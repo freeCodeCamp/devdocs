@@ -25,13 +25,16 @@ module Docs
   mattr_accessor :store_path
   self.store_path = File.expand_path '../public/docs', @@root_path
 
+  mattr_accessor :rescue_errors
+  self.rescue_errors = false
+
   class DocNotFound < NameError; end
 
   def self.all
     Dir["#{root_path}/docs/scrapers/**/*.rb"].
       map { |file| File.basename(file, '.rb') }.
-      sort!.
       map { |name| const_get(name.camelize) }.
+      sort { |a, b| a.name.casecmp(b.name) }.
       reject(&:abstract)
   end
 

@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
-ruby '2.3.0'
+ruby '2.4.1'
 
 gem 'rake'
 gem 'thor'
 gem 'pry', '~> 0.10.0'
-gem 'activesupport', '~> 4.2', require: false
+gem 'activesupport', '~> 5.0', require: false
 gem 'yajl-ruby', require: false
 
 group :app do
@@ -14,7 +14,7 @@ group :app do
   gem 'thin'
   gem 'sprockets'
   gem 'sprockets-helpers'
-  gem 'erubis'
+  gem 'erubi'
   gem 'browser'
   gem 'sass'
   gem 'coffee-script'
@@ -32,6 +32,8 @@ group :docs do
   gem 'typhoeus'
   gem 'nokogiri'
   gem 'html-pipeline'
+  gem 'image_optim'
+  gem 'image_optim_pack', platforms: :ruby
   gem 'progress_bar', require: false
   gem 'unix_utils', require: false
   gem 'tty-pager', require: false

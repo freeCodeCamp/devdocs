@@ -7,7 +7,7 @@
     > span {
       display: block;
       font-size: 1rem;
-      font-weight: bold;
+      font-weight: $boldFontWeight;
     }
 
     ul, ol {
@@ -21,9 +21,14 @@
   }
 
   > h2 { @extend %block-heading; }
+  > h3 { @extend %block-label, %label-blue; }
+  > h4 { font-size: 1em; }
+
+  p > code, li > code { @extend %label; }
 
   > .note,
   .notice,
+  .warning,
   .overheadIndicator,
   .syntaxbox,           // CSS, JavaScript
   .twopartsyntaxbox,    // CSS
@@ -32,10 +37,12 @@
     @extend %note;
   }
 
+  .warning { @extend %note-red; }
+
   > .note {
     em {
       font-style: normal;
-      font-weight: bold;
+      font-weight: $boldFontWeight;
     }
 
     > ul { margin: 1em 0; }
@@ -86,7 +93,8 @@
   dt > strong > code, // HTML element attribute
   dl > dt > code {    // CSS property value, Javascript function argument
     font-family: inherit;
-    font-weight: bold;
+    font-weight: $boldFontWeight;
+    font-size: inherit;
   }
 
   .eventinfo { // DOM event

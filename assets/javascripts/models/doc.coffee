@@ -7,6 +7,7 @@ class app.models.Doc extends app.Model
     @slug_without_version = @slug.split('~')[0]
     @fullName = "#{@name}" + if @version then " #{@version}" else ''
     @icon = @slug_without_version
+    @short_version = @version.split(' ')[0] if @version
     @text = @toEntry().text
 
   reset: (data) ->
@@ -29,19 +30,22 @@ class app.models.Doc extends app.Model
     "/#{@slug}#{path}"
 
   fileUrl: (path) ->
-    "#{app.config.docs_host}#{@fullPath(path)}?#{@mtime}"
+    "#{app.config.docs_origin}#{@fullPath(path)}?#{@mtime}"
 
   dbUrl: ->
-    "#{app.config.docs_host}/#{@slug}/#{app.config.db_filename}?#{@mtime}"
+    "#{app.config.docs_origin}/#{@slug}/#{app.config.db_filename}?#{@mtime}"
 
   indexUrl: ->
     "#{app.indexHost()}/#{@slug}/#{app.config.index_filename}?#{@mtime}"
 
   toEntry: ->
-    @entry ||= new app.models.Entry
+    return @entry if @entry
+    @entry = new app.models.Entry
       doc: @
       name: @fullName
       path: 'index'
+    @entry.addAlias(@name) if @version
+    @entry
 
   findEntryByPathAndHash: (path, hash) ->
     if hash and entry = @entries.findBy 'path', "#{path}##{hash}"
@@ -66,7 +70,7 @@ class app.models.Doc extends app.Model
       error: onError
 
   clearCache: ->
-    app.store.del @slug
+    app.localStorage.del @slug
     return
 
   _loadFromCache: (onSuccess) ->
@@ -81,7 +85,7 @@ class app.models.Doc extends app.Model
     true
 
   _getCache: ->
-    return unless data = app.store.get @slug
+    return unless data = app.localStorage.get @slug
 
     if data[0] is @mtime
       return data[1]
@@ -90,10 +94,10 @@ class app.models.Doc extends app.Model
       return
 
   _setCache: (data) ->
-    app.store.set @slug, [@mtime, data]
+    app.localStorage.set @slug, [@mtime, data]
     return
 
-  install: (onSuccess, onError) ->
+  install: (onSuccess, onError, onProgress) ->
     return if @installing
     @installing = true
 
@@ -111,6 +115,7 @@ class app.models.Doc extends app.Model
       url: @dbUrl()
       success: success
       error: error
+      progress: onProgress
       timeout: 3600
     return
 

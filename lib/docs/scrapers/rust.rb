@@ -1,13 +1,14 @@
 module Docs
   class Rust < UrlScraper
     self.type = 'rust'
-    self.release = '1.9.0'
+    self.release = '1.19.0'
     self.base_url = 'https://doc.rust-lang.org/'
-    self.root_path = 'book/index.html'
+    self.root_path = 'book/first-edition/index.html'
     self.initial_paths = %w(
-      reference.html
+      reference/introduction.html
       collections/index.html
-      std/index.html)
+      std/index.html
+      error-index.html)
     self.links = {
       home: 'https://www.rust-lang.org/',
       code: 'https://github.com/rust-lang/rust'
@@ -16,11 +17,12 @@ module Docs
     html_filters.push 'rust/entries', 'rust/clean_html'
 
     options[:only_patterns] = [
-      /\Abook\//,
+      /\Abook\/first-edition\//,
+      /\Areference\//,
       /\Acollections\//,
       /\Astd\// ]
 
-    options[:skip] = %w(book/README.html)
+    options[:skip] = %w(book/first-edition/README.html)
     options[:skip_patterns] = [/(?<!\.html)\z/]
 
     options[:fix_urls] = ->(url) do
@@ -30,7 +32,7 @@ module Docs
     end
 
     options[:attribution] = <<-HTML
-      &copy; 2016 The Rust Project Developers<br>
+      &copy; 2010 The Rust Project Developers<br>
       Licensed under the Apache License, Version 2.0 or the MIT license, at your option.
     HTML
 

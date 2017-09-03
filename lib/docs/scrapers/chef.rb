@@ -1,7 +1,7 @@
 module Docs
   class Chef < UrlScraper
     self.type = 'sphinx_simple'
-    self.base_url = 'https://docs.chef.io/release/'
+    self.base_url = 'https://docs-archive.chef.io/release/'
     self.links = {
       home: 'https://www.chef.io/',
       code: 'https://github.com/chef/chef'
@@ -13,7 +13,8 @@ module Docs
       /\A[^\/]+\/\z/,
       /\A[^\/]+\/index\.html\z/,
       /\A[^\/]+\/release_notes\.html\z/,
-      /\Aserver[^\/]+\/chef_overview\.html\z/ ]
+      /\Aserver[^\/]+\/chef_overview\.html\z/,
+      /\A[\d\-]+\/server_components\.html\z/ ]
 
     options[:attribution] = <<-HTML
       &copy; Chef Software, Inc.<br>
@@ -24,10 +25,10 @@ module Docs
     HTML
 
     version '12' do
-      self.release = '12.9'
+      self.release = '12.13'
 
-      options[:client_path] = client_path = '12-9'
-      options[:server_path] = server_path = 'server_12-5'
+      options[:client_path] = client_path = '12-13'
+      options[:server_path] = server_path = 'server_12-8'
 
       self.root_path = "#{client_path}/chef_overview.html"
       self.initial_paths = ["#{server_path}/server_components.html"]
@@ -39,7 +40,7 @@ module Docs
       self.release = '11.18'
 
       options[:client_path] = client_path = '11-18'
-      options[:server_path] = server_path = 'server_12-5'
+      options[:server_path] = server_path = 'server_12-8'
 
       self.root_path = "#{client_path}/chef_overview.html"
       self.initial_paths = ["#{server_path}/server_components.html"]

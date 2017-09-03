@@ -10,7 +10,7 @@ module Docs
 
         css('.highlight').each do |node|
           node.name = 'pre'
-          node['data-lang'] = node.at_css('[data-lang]')['data-lang']
+          node['data-language'] = node.at_css('[data-lang]')['data-lang']
           node.content = node.content
         end
 

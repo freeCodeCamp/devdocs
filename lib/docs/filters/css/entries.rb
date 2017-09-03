@@ -6,12 +6,17 @@ module Docs
         'CSS_Background_and_Borders' => 'Backgrounds & Borders',
         'CSS_Columns' => 'Multi-column Layout',
         'CSS_Flexible_Box_Layout' => 'Flexible Box Layout',
+        'CSS_Grid_Layout' => 'Grid Layout',
         'CSS_Images' => 'Image Values',
         'CSS_Lists_and_Counters' => 'Lists & Counters',
         'CSS_Transforms' => 'Transforms',
         'Media_Queries' => 'Media Queries',
+        'transform-function' => 'Transforms',
         '@media' => 'Media Queries',
-        'transform-function' => 'Transforms'
+        'text-size-adjust' => 'Miscellaneous',
+        'resolved_value' => 'Miscellaneous',
+        'touch-action' => 'Miscellaneous',
+        'will-change' => 'Miscellaneous'
       }
 
       DATA_TYPE_SLUGS = %w(angle basic-shape color_value counter frequency
@@ -37,19 +42,24 @@ module Docs
       end
 
       def get_type
-        if type = get_spec
+        if slug.include?('-webkit') || slug.include?('-moz')
+          'Extensions'
+        elsif type = TYPE_BY_PATH[slug.split('/').first]
+          type
+        elsif type = get_spec
           type.remove! 'CSS '
           type.remove! ' Module'
           type.remove! %r{ Level \d\z}
           type.remove! %r{\(.*\)}
           type.sub! 'and', '&'
           type.strip!
+          type = 'Grid Layout' if type.include?('Grid Layout')
+          type = 'Scroll Snap' if type.include?('Scroll Snap')
+          type = 'Compositing & Blending' if type.include?('Compositing')
           type = 'Animations & Transitions' if type.in?(%w(Animations Transitions))
           type = 'Image Values' if type == 'Image Values & Replaced Content'
           type = 'Variables' if type == 'Custom Properties for Cascading Variables'
           type.prepend 'Miscellaneous ' if type =~ /\ALevel \d\z/
-          type
-        elsif type = TYPE_BY_PATH[slug.split('/').first]
           type
         elsif name.start_with?('::')
           'Pseudo-Elements'
@@ -109,14 +119,19 @@ module Docs
           %w(step-end step-end) ],
         'color_value' => [
           %w(transparent transparent_keyword),
-          %w(currentColor currentColor_keyword),
-          %w(rgb() rgb()),
-          %w(hsl() hsl()),
-          %w(rgba() rgba()),
-          %w(hsla() hsla()) ]}
+          %w(currentColor currentcolor_keyword),
+          %w(rgb() rgb),
+          %w(hsl() hsl),
+          %w(rgba() rgba),
+          %w(hsla() hsla) ]}
 
       def additional_entries
         ADDITIONAL_ENTRIES[slug] || []
+      end
+
+      def include_default_entry?
+        return true unless warning = at_css('.warning').try(:content)
+        !warning.include?('CSS Flexible Box') && !warning.include?('replaced in newer drafts')
       end
     end
   end

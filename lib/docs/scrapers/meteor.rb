@@ -1,9 +1,9 @@
 module Docs
   class Meteor < UrlScraper
+    include MultipleBaseUrls
+
     self.type = 'meteor'
-    self.release = '1.3.2'
-    self.base_url = 'https://guide.meteor.com/v1.3/'
-    self.initial_paths = %w(guide)
+    self.root_path = 'index.html'
     self.links = {
       home: 'https://www.meteor.com/',
       code: 'https://github.com/meteor/meteor/'
@@ -11,26 +11,39 @@ module Docs
 
     html_filters.push 'meteor/entries', 'meteor/clean_html'
 
-    options[:skip_links] = ->(filter) { filter.root_page? }
+    options[:skip_patterns] = [/\Av\d/]
+    options[:skip] = %w(
+      CONTRIBUTING.html
+      CHANGELOG.html
+      using-packages.html
+      writing-packages.html
+    )
+
+    options[:fix_urls] = ->(url) {
+      url.sub! %r{\Ahttps://docs\.meteor\.com/(v[\d\.]*\/)?api/blaze\.html}, 'http://blazejs.org/api/blaze.html'
+      url.sub! %r{\Ahttps://docs\.meteor\.com/(v[\d\.]*\/)?api/templates\.html}, 'http://blazejs.org/api/templates.html'
+      url
+    }
 
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2016 Meteor Development Group<br>
+      &copy; 2011&ndash;2017 Meteor Development Group, Inc.<br>
       Licensed under the MIT License.
     HTML
 
-    stub '' do
-      require 'capybara/dsl'
-      Capybara.current_driver = :selenium
-      Capybara.run_server = false
-      Capybara.app_host = 'https://docs.meteor.com'
-      Capybara.visit('/#/full/')
-      Capybara.find('.body')['innerHTML']
+    version '1.5' do
+      self.release = '1.5.1'
+      self.base_urls = ['https://docs.meteor.com/', 'https://guide.meteor.com/', 'http://blazejs.org/']
     end
 
-    stub 'guide' do
-      request_one(url_for('index.html')).body
+    version '1.4' do
+      self.release = '1.4.4'
+      self.base_urls = ['https://guide.meteor.com/', "https://docs.meteor.com/v#{self.release}/", 'http://blazejs.org/']
     end
 
-    options[:replace_paths] = { 'index.html' => 'guide' }
+    version '1.3' do
+      self.release = '1.3.5'
+      self.base_urls = ['https://guide.meteor.com/v1.3/', "https://docs.meteor.com/v#{self.release}/"]
+      options[:fix_urls] = nil
+    end
   end
 end

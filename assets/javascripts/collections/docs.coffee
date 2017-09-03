@@ -4,11 +4,19 @@ class app.collections.Docs extends app.Collection
   findBySlug: (slug) ->
     @findBy('slug', slug) or @findBy('slug_without_version', slug)
 
+  NORMALIZE_VERSION_RGX = /\.(\d)$/
+  NORMALIZE_VERSION_SUB = '.0$1'
   sort: ->
     @models.sort (a, b) ->
-      a = a.name.toLowerCase()
-      b = b.name.toLowerCase()
-      if a < b then -1 else if a > b then 1 else 0
+      if a.name is b.name
+        if not a.version or a.version.replace(NORMALIZE_VERSION_RGX, NORMALIZE_VERSION_SUB) > b.version.replace(NORMALIZE_VERSION_RGX, NORMALIZE_VERSION_SUB)
+          -1
+        else
+          1
+      else if a.name.toLowerCase() > b.name.toLowerCase()
+        1
+      else
+        -1
 
   # Load models concurrently.
   # It's not pretty but I didn't want to import a promise library only for this.

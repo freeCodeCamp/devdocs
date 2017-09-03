@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support/subscriber'
 
 module Docs
@@ -26,6 +28,7 @@ module Docs
 
     def justify(str)
       return str unless terminal_width
+      str = str.dup
 
       max_length = if tag = str.slice!(/ \[.+\]\z/)
         terminal_width - tag.length

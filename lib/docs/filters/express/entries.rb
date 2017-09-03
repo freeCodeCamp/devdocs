@@ -4,11 +4,14 @@ module Docs
       TYPES_BY_PATH = {
         'starter' => 'Getting started',
         'guide' => 'Guide',
-        'advanced' => 'Guide'
+        'advanced' => 'Advanced topics'
       }
 
       def get_name
-        at_css('h1').content
+        node = at_css('h1')
+        name = node.content
+        name.prepend "#{node['data-level']}. " if type.in?(%w(Guide Getting\ started Advanced\ topics))
+        name
       end
 
       def get_type
@@ -19,7 +22,7 @@ module Docs
         return [] unless root_page?
         type = 'Application'
 
-        doc.children.each_with_object [] do |node, entries|
+        at_css('#api-doc').children.each_with_object [] do |node, entries|
           if node.name == 'h2'
             type = node.content
             entries << [type, node['id'], 'Application'] if type == 'Middleware'

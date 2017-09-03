@@ -1,32 +1,60 @@
 module Docs
   class Ember < UrlScraper
+    include MultipleBaseUrls
+
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.release = '2.5.0'
-    self.base_url = 'http://emberjs.com/api/'
+    self.release = '2.14.0'
+    self.base_urls = [
+      'https://guides.emberjs.com/v2.14.0/',
+      'https://emberjs.com/api/ember/2.14/',
+      'https://emberjs.com/api/ember-data/2.14/'
+    ]
     self.links = {
-      home: 'http://emberjs.com/',
+      home: 'https://emberjs.com/',
       code: 'https://github.com/emberjs/ember.js'
     }
 
-    html_filters.push 'ember/clean_html', 'ember/entries', 'title'
+    html_filters.push 'ember/entries', 'ember/clean_html'
 
-    options[:title] = false
-    options[:root_title] = 'Ember.js'
+    options[:trailing_slash] = false
 
     options[:container] = ->(filter) do
-      filter.root_page? ? '#toc-list' : '#content'
+      if filter.base_url.path.start_with?('/api')
+        'main article'
+      else
+        'main'
+      end
     end
 
-    # Duplicates
-    options[:skip] = %w(classes/String.html data/classes/DS.html)
+    options[:fix_urls] = ->(url) do
+      url.sub! '?anchor=', '#'
+      url.sub! %r{/methods/[^?#/]+}, '/methods'
+      url.sub! %r{/properties/[^?#/]+}, '/properties'
+      url.sub! %r{/events/[^?#/]+}, '/events'
+      url
+    end
 
-    options[:skip_patterns] = [/\._/]
+    options[:skip_patterns] = [
+      /\._/,
+      /contributing/,
+      /classes\/String/,
+      /namespaces\/Ember/,
+      /namespaces\/DS/
+    ]
 
     options[:attribution] = <<-HTML
-      &copy; 2016 Yehuda Katz, Tom Dale and Ember.js contributors<br>
+      &copy; 2017 Yehuda Katz, Tom Dale and Ember.js contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def initial_urls
+      %w(
+        https://guides.emberjs.com/v2.14.0/
+        https://emberjs.com/api/ember/2.14/classes/Ember
+        https://emberjs.com/api/ember-data/2.14/classes/DS
+      )
+    end
   end
 end

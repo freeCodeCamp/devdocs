@@ -6,28 +6,36 @@ module Docs
         'hooks' => ['before()', 'after()', 'beforeEach()', 'afterEach()', 'suiteSetup()', 'suiteTeardown()', 'setup()', 'teardown()'],
         'exclusive-tests' => ['only()'],
         'inclusive-tests' => ['skip()'],
-        'usage' => ['mocha'],
-        'bdd-interface' => ['describe()', 'context()', 'it()'],
-        'tdd-interface' => ['suite()', 'test()'],
-        'exports-interface' => ['exports'],
-        'qunit-interface' => ['QUnit'],
-        'require-interface' => ['require'],
-        'browser-setup' => ['setup()'],
-        'mocha.opts' => ['mocha.opts'],
-        'suite-specific-timeouts' => ['timeout()']
+        'bdd' => ['describe()', 'context()', 'it()', 'specify()'],
+        'tdd' => ['suite()', 'test()'],
+        'exports' => ['exports'],
+        'qunit' => ['QUnit'],
+        'require' => ['require'],
+        'browser-specific-methods' => ['mocha.allowUncaught()', 'mocha.setup()', 'mocha.run()', 'mocha.globals()', 'mocha.checkLeaks()'],
+        'timeouts' => ['timeout()']
       }
 
       def additional_entries
-        ENTRIES.each_with_object [] do |(id, names), entries|
-          type = case id
-            when 'hooks' then 'Hooks'
-            when /interface/ then 'Interfaces'
-            else 'Miscellaneous' end
+        entries = []
 
+        ENTRIES.each do |id, names|
           names.each do |name|
-            entries << [name, id, type]
+            entries << [name, id] if at_css("[id='#{id}']")
           end
         end
+
+        css('h2').each do |node|
+          name = node.content.strip
+          next if name.in?(%w(Examples Getting\ Started Installation More\ Information Testing\ Mocha))
+          name = 'mocha' if name == 'Usage'
+          entries << [name, node['id']]
+        end
+
+        entries.each do |entry|
+          entry[2] = entry[0] =~ /\A[a-z]/ ? 'API' : 'Manual'
+        end
+
+        entries
       end
     end
   end

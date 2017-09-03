@@ -4,6 +4,7 @@ require 'docs'
 class ContainerFilterTest < MiniTest::Spec
   include FilterTestHelper
   self.filter_class = Docs::ContainerFilter
+  self.filter_type = 'html'
 
   before do
     @body = '<div>Test</div>'
@@ -56,8 +57,17 @@ class ContainerFilterTest < MiniTest::Spec
   end
 
   context "when context[:container] is nil" do
-    it "returns the document" do
-      assert_equal @body, filter_output.inner_html
+    context "and the document is an HTML fragment" do
+      it "returns the document" do
+        assert_equal @body, filter_output.inner_html
+      end
+    end
+
+    context "and the document is an HTML document" do
+      it "returns the <body>" do
+        @body = '<html><meta charset=utf-8><title></title><div>Test</div></html>'
+        assert_equal '<div>Test</div>', filter_output.inner_html
+      end
     end
   end
 end

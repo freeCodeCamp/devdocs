@@ -1,6 +1,14 @@
 ._d3 {
   > h2 { @extend %block-heading; }
-  > h3, > h4 { font-size: 1rem; }
+  > h3 { @extend %block-label; }
+  > h4 { font-size: 1rem; }
   > h6 { @extend %block-label, %label-blue; }
+
+  > h6 > .source {
+    float: right;
+    font-weight: normal;
+  }
+
   code { @extend %label; }
+  blockquote { @extend %note, %note-blue; }
 }

@@ -1,0 +1,137 @@
+//
+// Settings
+//
+
+._settings {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: $headerZ;
+
+  &._in { display: block; }
+
+  > ._header { justify-content: space-between; }
+
+  &._dirty > ._header {
+    background: $noteGreenBackground;
+    border-color: $noteGreenBorder;
+  }
+}
+
+//
+// Settings page
+//
+
+._settings-fieldset {
+  display: -ms-flexbox;
+  display: flex;
+  margin: 1.5rem 0;
+  line-height: 1.5rem;
+}
+
+._settings-legend {
+  -ms-flex: 0 1 10rem;
+      flex: 0 1 10rem;
+  margin: 0;
+  padding-right: .5rem;
+  line-height: inherit;
+  font-size: inherit;
+  font-weight: $boldFontWeight;
+  text-align: right;
+  @extend %border-box;
+}
+
+._settings-inputs {
+  -ms-flex: 1 1 20rem;
+      flex: 1 1 20rem;
+}
+
+._settings-label {
+  margin: 0 0 .375rem;
+
+  > small {
+    display: block;
+    color: $textColorLight;
+    margin-left: 1.75rem;
+  }
+
+  input[type=checkbox] {
+    vertical-align: top;
+    margin: .25rem .375rem;
+  }
+}
+
+@media (max-width: $maxWidth) {
+  ._setting-max-width { display: none; }
+}
+
+._setting-native-scrollbar { display: none; }
+@supports (-webkit-margin-end: 1px) { ._setting-native-scrollbar { display: block; } }
+
+._reset-link {
+  color: $textColorRed;
+}
+
+//
+// Settings buttons
+//
+
+._settings-btn {
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 1.5rem;
+  padding: 0 .75rem;
+  font-size: .875rem;
+  font-weight: $boldFontWeight;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  @extend %border-box;
+
+  > svg {
+    display: inline-block;
+    vertical-align: top;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: .125rem;
+    fill: currentColor;
+    pointer-events: none;
+  }
+}
+
+._settings-btn-back {
+  ._dirty & { display: none; }
+}
+
+._settings-btn-save {
+  display: none;
+
+  ._dirty & { display: block; }
+}
+
+//
+// Header tabs
+//
+
+._settings-tabs {
+  display: none; // mobile only
+  margin-right: .5rem;
+
+  ._dirty & { display: none !important; }
+}
+
+._settings-tab {
+  position: relative;
+  vertical-align: top;
+  padding: 0 .75rem;
+  line-height: $headerHeight;
+  color: $textColorLight;
+
+  &.active {
+    color: $textColor;
+    font-weight: $boldFontWeight;
+    box-shadow: inset 0 -2px $linkColor;
+  }
+}

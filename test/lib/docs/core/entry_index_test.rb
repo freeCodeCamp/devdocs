@@ -110,8 +110,17 @@ class DocsEntryIndexTest < MiniTest::Spec
         entry.name = 'B'; index.add(entry)
         entry.name = 'a'; index.add(entry)
         entry.name = 'c'; index.add(entry)
-        entry.name = nil; index.add(entry)
-        assert_equal [nil, 'a', 'B', 'c'], index.as_json[:entries].map { |e| e[:name] }
+        assert_equal ['a', 'B', 'c'], index.as_json[:entries].map { |e| e[:name] }
+      end
+
+      it "sorts numbered names" do
+        entry.name = '4.2.2. Test'; index.add(entry)
+        entry.name = '4.20. Test'; index.add(entry)
+        entry.name = '4.3. Test'; index.add(entry)
+        entry.name = '4. Test'; index.add(entry)
+        entry.name = '2 Test'; index.add(entry)
+        entry.name = 'Test'; index.add(entry)
+        assert_equal ['4. Test', '4.2.2. Test', '4.3. Test', '4.20. Test', '2 Test', 'Test'], index.as_json[:entries].map { |e| e[:name] }
       end
     end
 
@@ -131,6 +140,16 @@ class DocsEntryIndexTest < MiniTest::Spec
         entry.type = 'a'; index.add(entry)
         entry.type = 'c'; index.add(entry)
         assert_equal ['a', 'B', 'c'], index.as_json[:types].map { |e| e[:name] }
+      end
+
+      it "sorts numbered names" do
+        entry.type = '1.8.2. Test'; index.add(entry)
+        entry.type = '1.90. Test'; index.add(entry)
+        entry.type = '1.9. Test'; index.add(entry)
+        entry.type = '9. Test'; index.add(entry)
+        entry.type = '1 Test'; index.add(entry)
+        entry.type = 'Test'; index.add(entry)
+        assert_equal ['1.8.2. Test', '1.9. Test', '1.90. Test', '9. Test', '1 Test', 'Test'], index.as_json[:types].map { |e| e[:name] }
       end
     end
   end

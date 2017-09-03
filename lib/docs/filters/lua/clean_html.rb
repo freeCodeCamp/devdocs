@@ -14,6 +14,10 @@ module Docs
           node.before(node.children).remove
         end
 
+        css('b > code').each do |node|
+          node.parent.before(node.parent.children).remove
+        end
+
         3.times { at_css('h1[id="1"]').previous_element.remove }
 
         css('.apii').each do |node|
@@ -22,6 +26,7 @@ module Docs
 
         css('pre').each do |node|
           node.content = node.content.remove(/\A\s*\n/).rstrip.strip_heredoc
+          node['data-language'] = 'lua'
         end
 
         doc

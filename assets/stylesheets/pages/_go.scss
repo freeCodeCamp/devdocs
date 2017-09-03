@@ -2,4 +2,9 @@
   @extend %simple;
 
   #short-nav, table.dir { margin-left: -1rem; }
+
+  a.source {
+    float: right;
+    font-size: .9em;
+  }
 }

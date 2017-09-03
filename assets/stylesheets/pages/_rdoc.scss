@@ -6,7 +6,7 @@
   .method-description > h2, h3, h4, h5, h6 { font-size: 1em; }
 
   .method-heading {
-    font-weight: bold;
+    font-weight: $boldFontWeight;
     @extend %block-label, %label-blue;
 
     + .method-heading { margin-top: -.5em; }

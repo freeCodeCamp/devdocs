@@ -2,17 +2,29 @@ module Docs
   class Haskell
     class CleanHtmlFilter < Filter
       def call
-        root_page? ? root : other
+        if root_page? || !result[:entries].empty?
+          subpath.start_with?('users_guide') ? guide : api
+          doc.inner_html = %(<div class="#{subpath.start_with?('users_guide') ? '_sphinx' : '_haskell-api'}">#{doc.inner_html}</div>)
+          doc.child.before(at_css('h1'))
+        end
+
         doc
       end
 
-      def root
-        css('#description', '#module-list').each do |node|
-          node.before(node.children).remove
-        end
+      def guide
+        css('#indices-and-tables + ul', '#indices-and-tables').remove
+
+        Docs::Sphinx::CleanHtmlFilter.new(doc, context, result).call
       end
 
-      def other
+      def api
+        if root_page?
+          css('#description', '#module-list').each do |node|
+            node.before(node.children).remove
+          end
+          return doc
+        end
+
         css('h1').each do |node|
           node.remove if node.content == 'Documentation'
         end
@@ -28,9 +40,9 @@ module Docs
           node.before(node.children).remove
         end
 
-        css('#synopsis').remove
+        css('#synopsis', '.selflink').remove
 
-        css('#interface', 'h2 code').each do |node|
+        css('#interface', 'h2 code', 'span.keyword', 'div.top', 'div.doc', 'code code', '.inst-left').each do |node|
           node.before(node.children).remove
         end
 

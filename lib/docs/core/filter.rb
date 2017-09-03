@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Docs
   class Filter < ::HTML::Pipeline::Filter
     def css(*args)
@@ -36,6 +38,14 @@ module Docs
       context[:root_path]
     end
 
+    def version
+      context[:version]
+    end
+
+    def release
+      context[:release]
+    end
+
     def subpath
       @subpath ||= subpath_to(current_url)
     end
@@ -62,8 +72,14 @@ module Docs
       str[0] == '#'
     end
 
+    DATA_URL = 'data:'.freeze
+
+    def data_url_string?(str)
+      str.start_with?(DATA_URL)
+    end
+
     def relative_url_string?(str)
-      !fragment_url_string?(str) && str !~ SCHEME_RGX
+      str !~ SCHEME_RGX && !fragment_url_string?(str) && !data_url_string?(str)
     end
 
     def absolute_url_string?(str)

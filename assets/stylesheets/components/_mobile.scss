@@ -6,45 +6,53 @@
   font-size: 100%;
   background: $contentBackground;
 
+  ._hide-on-mobile { display: none; }
+
   // Layout
 
   body { -ms-overflow-style: -ms-autohiding-scrollbar; }
 
-  ._app, ._container, ._content { overflow: visible; }
+  ._app, ._content { overflow: visible; }
 
   ._container {
     margin: 0;
-    border: 0;
+    padding-top: $headerHeight;
   }
 
   ._content {
     position: static;
     height: auto;
     margin: 0;
-    padding: .75rem 1rem 2.5rem;
+    padding: .75rem 1rem 1px;
+
+    &:before { content: none; }
   }
 
   ._booting:before, ._content-loading:before { font-size: 3rem; }
 
-  // Header
+  ._header { position: fixed; }
 
-  ._header {
-    position: fixed;
-    max-width: 100vw;
+  ._header, ._list {
+    width: 100%;
+    border-right: 0;
+    box-shadow: none;
   }
 
-  ._logo, ._nav { display: none; }
-  ._home-link, ._menu-link { display: block; }
+  // Settings
+
+  ._settings { position: relative; }
+  ._settings-tabs { display: block; }
+  ._header > ._settings-btn-back { width: auto; }
+
+  // Header
+
+  ._header-btn[hidden] { display: block; }
 
   ._search {
-    float: none;
-    width: auto;
-    overflow: hidden;
-    padding-left: 2px;
-    padding-right: 2px;
-    border-right: 0;
+    padding-right: .125rem;
+    padding-left: .125rem;
 
-    &:before { left: .5rem; }
+    &:before { left: .625rem; }
   }
 
   ._search-tag { left: .5rem; }
@@ -52,15 +60,12 @@
   // Sidebar
 
   ._sidebar {
-    position: static;
+    position: relative;
     min-height: 100%;
     overflow: visible;
-    padding-bottom: 2rem;
-
-    > ._list { padding-bottom: 0; }
   }
 
-  ._list, ._sidebar-footer { width: 100%; }
+  ._resizer { display: none; }
 
   ._list-item {
     white-space: normal;
@@ -79,45 +84,12 @@
     }
   }
 
-  ._list-link { display: none; }
-
-  ._sidebar-footer {
-    position: static;
-    margin-top: .5rem;
-    font-weight: bold;
-
-    &:before { content: none; }
-  }
-
-  ._sidebar-footer-save {
-    margin-top: 1rem;
-    box-shadow: 0 1px $noteGreenBorder, 0 -1px $noteGreenBorder;
-  }
-
-  // Splash
-
-  ._splash-sponsors { margin-top: 1rem; }
-
-  ._splash-sponsor {
-    position: static;
-
-    ._logo-info {
-      left: 1rem;
-      right: 1rem;
-      width: auto;
-      max-width: none;
-      margin: 0;
-    }
-  }
-
   // Notice
 
   ._notice {
     position: fixed;
     left: 0;
     padding: 0 .5rem;
-
-    ~ ._sidebar { padding-bottom: 4rem; }
   }
 
   ._notice-text { font-size: .75em; }
@@ -149,52 +121,10 @@
 // Header buttons
 //
 
-%mobile-link {
-  display: none;
-  position: relative;
-  float: left;
-  width: 2.5rem;
-  height: 100%;
+._forward-btn {
+  margin-right: -.5rem;
 
-  &:before {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -.5rem 0 0 -.5rem;
-    @extend %icon;
-  }
-}
-
-._home-link {
-  @extend %mobile-link;
-
-  &:before { @extend %icon-home; }
-}
-
-._menu-link {
-  float: right;
-  @extend %mobile-link;
-
-  &:before { @extend %icon-menu; }
-}
-
-//
-// Navigation menu
-//
-
-._mobile-nav {
-  margin: .25rem 0 1.25rem;
-  padding: 0;
-  line-height: 2.8;
-  overflow: hidden;
-  @extend %box;
-}
-
-._mobile-nav-link {
-  float: left;
-  width: 25%;
-  text-align: center;
-  font-weight: bold;
+  > svg { margin-left: -.375rem; }
 }
 
 //
@@ -204,14 +134,11 @@
 ._mobile-intro {
   > ._intro-list { padding-left: 1.5rem; }
 
-  > ._intro-hide,
-  > ._intro-sponsors {
+  ._intro-hide {
     position: static;
     float: none;
     display: block;
     margin-top: .75rem;
     text-align: center;
   }
-
-  ._intro-sponsor { margin: .5em .75em; }
 }

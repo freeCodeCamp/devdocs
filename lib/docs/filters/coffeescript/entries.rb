@@ -22,25 +22,34 @@ module Docs
         ['Array slicing and splicing',  'slices',                   'Language'],
         ['Ranges',                      'slices',                   'Language'],
         ['Expressions',                 'expressions',              'Language'],
-        ['?',                           'the-existential-operator', 'Operators'],
-        ['?=',                          'the-existential-operator', 'Operators'],
-        ['?.',                          'the-existential-operator', 'Operators'],
+        ['?',                           'existential-operator',     'Operators'],
+        ['?=',                          'existential-operator',     'Operators'],
+        ['?.',                          'existential-operator',     'Operators'],
         ['class',                       'classes',                  'Statements'],
         ['extends',                     'classes',                  'Operators'],
         ['super',                       'classes',                  'Statements'],
         ['::',                          'classes',                  'Operators'],
         ['Destructuring assignment',    'destructuring',            'Language'],
+        ['Bound Functions',             'fat-arrow',                'Language'],
+        ['Generator Functions',         'fat-arrow',                'Language'],
         ['=>',                          'fat-arrow',                'Statements'],
+        ['yield',                       'fat-arrow',                'Statements'],
+        ['for...from',                  'fat-arrow',                'Statements'],
         ['Embedded JavaScript',         'embedded',                 'Language'],
         ['switch...when...else',        'switch',                   'Statements'],
-        ['try...catch...finally',       'try',                      'Statements'],
+        ['try...catch...finally',       'try-catch',                'Statements'],
         ['Chained comparisons',         'comparisons',              'Language'],
         ['#{} interpolation',           'strings',                  'Language'],
         ['Block strings',               'strings',                  'Language'],
         ['"""',                         'strings',                  'Language'],
         ['Block comments',              'strings',                  'Language'],
         ['###',                         'strings',                  'Language'],
+        ['Tagged Template Literals',    'tagged-template-literals', 'Language'],
         ['Block regexes',               'regexes',                  'Language'],
+        ['///',                         'regexes',                  'Language'],
+        ['Modules',                     'modules',                  'Language'],
+        ['import',                      'modules',                  'Language'],
+        ['export',                      'modules',                  'Language'],
         ['cake command',                'cake',                     'Miscellaneous'],
         ['Cakefile',                    'cake',                     'Miscellaneous'],
         ['Source maps',                 'source-maps',              'Miscellaneous']
@@ -50,7 +59,7 @@ module Docs
         entries = ENTRIES.dup
 
         # Operators
-        css('.definitions td:first-child > code').each do |node|
+        at_css('#operators ~ table').css('td:first-child > code').each do |node|
           node.content.split(', ').each do |name|
             next if %w(true false yes no on off this).include?(name)
             name.sub! %r{\Aa (.+) b\z}, '\1'
@@ -68,6 +77,7 @@ module Docs
           when '**' then 'pow'
           when '//' then 'floor'
           when '%%' then 'mod'
+          when '@' then 'this'
           else name.parameterize
         end
       end

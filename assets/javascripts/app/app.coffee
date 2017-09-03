@@ -13,9 +13,9 @@
     @showLoading()
 
     @el = $('._app')
-    @store = new Store
+    @localStorage = new LocalStorageStore
     @appCache = new app.AppCache if app.AppCache.isEnabled()
-    @settings = new app.Settings @store
+    @settings = new app.Settings
     @db = new app.DB()
 
     @docs = new app.collections.Docs
@@ -27,7 +27,8 @@
     @document = new app.views.Document
     @mobile = new app.views.Mobile if @isMobile()
 
-    if @DOC
+    if document.body.hasAttribute('data-doc')
+      @DOC = JSON.parse(document.body.getAttribute('data-doc'))
       @bootOne()
     else if @DOCS
       @bootAll()
@@ -50,26 +51,33 @@
     else
       if @config.sentry_dsn
         Raven.config @config.sentry_dsn,
+          release: @config.release
           whitelistUrls: [/devdocs/]
           includePaths: [/devdocs/]
-          ignoreErrors: [/dpQuery/, /NPObject/, /NS_ERROR/, /^null$/]
+          ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/, /EvalError/]
           tags:
-            mode: if @DOC then 'single' else 'full'
+            mode: if @isSingleDoc() then 'single' else 'full'
             iframe: (window.top isnt window).toString()
+            electron: (!!window.process?.versions?.electron).toString()
           shouldSendCallback: =>
             try
               if @isInjectionError()
                 @onInjectionError()
                 return false
+              if @isAndroidWebview()
+                return false
             true
           dataCallback: (data) ->
             try
-              $.extend(data.user ||= {}, app.settings.settings)
+              $.extend(data.user ||= {}, app.settings.dump())
+              data.user.docs = data.user.docs.split('/') if data.user.docs
               data.user.lastIDBTransaction = app.lastIDBTransaction if app.lastIDBTransaction
+              data.tags.scriptCount = document.scripts.length
             data
         .install()
       @previousErrorHandler = onerror
       window.onerror = @onWindowError.bind(@)
+      CookieStore.onBlocked = @onCookieBlocked
     return
 
   bootOne: ->
@@ -85,8 +93,6 @@
     for doc in @DOCS
       (if docs.indexOf(doc.slug) >= 0 then @docs else @disabledDocs).add(doc)
     @migrateDocs()
-    @docs.sort()
-    @disabledDocs.sort()
     @docs.load @start.bind(@), @onBootError.bind(@), readCache: true, writeCache: true
     delete @DOCS
     return
@@ -98,21 +104,23 @@
     @trigger 'ready'
     @router.start()
     @hideLoading()
-    @welcomeBack() unless @doc
-    @removeEvent 'ready bootError'
-    try navigator.mozApps?.getSelf().onsuccess = -> app.mozApp = true catch
+    setTimeout =>
+      @welcomeBack() unless @doc
+      @removeEvent 'ready bootError'
+    , 50
     return
 
   initDoc: (doc) ->
-    @entries.add type.toEntry() for type in doc.types.all()
+    doc.entries.add type.toEntry() for type in doc.types.all()
     @entries.add doc.entries.all()
     return
 
   migrateDocs: ->
     for slug in @settings.getDocs() when not @docs.findBy('slug', slug)
       needsSaving = true
-      doc = @disabledDocs.findBy('slug', 'node~4_lts') if slug == 'node~4.2_lts'
-      doc = @disabledDocs.findBy('slug', 'xslt_xpath') if slug == 'xpath'
+      doc = @disabledDocs.findBy('slug', 'webpack') if slug == 'webpack~2'
+      doc = @disabledDocs.findBy('slug', 'angular') if slug == 'angular~4_typescript'
+      doc = @disabledDocs.findBy('slug', 'angular~2') if slug == 'angular~2_typescript'
       doc ||= @disabledDocs.findBy('slug_without_version', slug)
       if doc
         @disabledDocs.remove(doc)
@@ -157,7 +165,7 @@
     return
 
   reset: ->
-    @store.clear()
+    @localStorage.reset()
     @settings.reset()
     @db?.reset()
     @appCache?.update()
@@ -166,10 +174,10 @@
 
   showTip: (tip) ->
     return if @isSingleDoc()
-    tips = @settings.get('tips') || []
+    tips = @settings.getTips()
     if tips.indexOf(tip) is -1
       tips.push(tip)
-      @settings.set('tips', tips)
+      @settings.setTips(tips)
       new app.views.Tip(tip)
     return
 
@@ -179,6 +187,7 @@
     return
 
   hideLoading: ->
+    document.body.classList.add '_overlay-scrollbars' if $.overlayScrollbarsEnabled()
     document.body.classList.remove '_booting'
     document.body.classList.remove '_loading'
     return
@@ -186,7 +195,7 @@
   indexHost: ->
     # Can't load the index files from the host/CDN when applicationCache is
     # enabled because it doesn't support caching URLs that use CORS.
-    @config[if @appCache and @settings.hasDocs() then 'index_path' else 'docs_host']
+    @config[if @appCache and @settings.hasDocs() then 'index_path' else 'docs_origin']
 
   onBootError: (args...) ->
     @trigger 'bootError'
@@ -197,9 +206,17 @@
     return if @quotaExceeded
     @quotaExceeded = true
     new app.views.Notif 'QuotaExceeded', autoHide: null
-    Raven.captureMessage 'QuotaExceededError'
+    return
+
+  onCookieBlocked: (key, value, actual) ->
+    return if @cookieBlocked
+    @cookieBlocked = true
+    new app.views.Notif 'CookieBlocked', autoHide: null
+    Raven.captureMessage "CookieBlocked/#{key}", level: 'warning', extra: {value, actual}
+    return
 
   onWindowError: (args...) ->
+    return if @cookieBlocked
     if @isInjectionError args...
       @onInjectionError()
     else if @isAppError args...
@@ -215,7 +232,7 @@
       alert """
         JavaScript code has been injected in the page which prevents DevDocs from running correctly.
         Please check your browser extensions/addons. """
-      Raven.captureMessage 'injection error'
+      Raven.captureMessage 'injection error', level: 'info'
     return
 
   isInjectionError: ->
@@ -239,16 +256,16 @@
         cssGradients:         supportsCssGradients()
 
       for key, value of features when not value
-        Raven.captureMessage "unsupported/#{key}"
+        Raven.captureMessage "unsupported/#{key}", level: 'info'
         return false
 
       true
     catch error
-      Raven.captureMessage 'unsupported/exception', extra: { error: error }
+      Raven.captureMessage 'unsupported/exception', level: 'info', extra: { error: error }
       false
 
   isSingleDoc: ->
-    !!(@DOC or @doc)
+    document.body.hasAttribute('data-doc')
 
   isMobile: ->
     @_isMobile ?= app.views.Mobile.detect()

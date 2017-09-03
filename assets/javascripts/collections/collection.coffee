@@ -48,3 +48,8 @@ class app.Collection
 
   findAllBy: (attr, value) ->
     model for model in @models when model[attr] is value
+
+  countAllBy: (attr, value) ->
+    i = 0
+    i += 1 for model in @models when model[attr] is value
+    i

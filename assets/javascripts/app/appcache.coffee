@@ -16,21 +16,25 @@ class app.AppCache
 
   update: ->
     @notifyUpdate = true
+    @notifyProgress = true
     try @cache.update() catch
     return
 
   updateInBackground: ->
     @notifyUpdate = false
+    @notifyProgress = false
     try @cache.update() catch
     return
 
   reload: ->
     $.on @cache, 'updateready noupdate error', -> window.location = '/'
-    @updateInBackground()
+    @notifyUpdate = false
+    @notifyProgress = true
+    try @cache.update() catch
     return
 
   onProgress: (event) =>
-    @trigger 'progress', event
+    @trigger 'progress', event if @notifyProgress
     return
 
   onUpdateReady: =>

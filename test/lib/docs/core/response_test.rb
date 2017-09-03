@@ -51,15 +51,15 @@ class DocsResponseTest < MiniTest::Spec
     end
   end
 
-  describe "#empty?" do
-    it "returns true when the body is empty" do
-      options.body = ''
-      assert response.empty?
+  describe "#blank?" do
+    it "returns true when the body is blank" do
+      options.body = ' '
+      assert response.blank?
     end
 
-    it "returns false when the body isn't empty" do
+    it "returns false when the body isn't blank" do
       options.body = 'body'
-      refute response.empty?
+      refute response.blank?
     end
   end
 

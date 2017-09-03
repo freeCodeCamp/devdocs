@@ -4,11 +4,6 @@ class app.views.RdocPage extends app.views.BasePage
   @events:
     click: 'onClick'
 
-  prepare: ->
-    @highlightCode @findAll('pre.ruby'), 'ruby'
-    @highlightCode @findAll('pre.c'), 'clike'
-    return
-
   onClick: (event) ->
     return unless event.target.classList.contains 'method-click-advice'
     $.stopEvent(event)

@@ -5,6 +5,9 @@ class app.views.EntryPage extends app.View
   @events:
     click: 'onClick'
 
+  @shortcuts:
+    altO: 'onAltO'
+
   @routes:
     before: 'beforeRoute'
 
@@ -37,14 +40,23 @@ class app.views.EntryPage extends app.View
     if app.disabledDocs.findBy 'slug', @entry.doc.slug
       @hiddenView = new app.views.HiddenPage @el, @entry
 
+    @delay @polyfillMathML
     @trigger 'loaded'
     return
 
-  CLIPBOARD_LINK = '<a class="_pre-clip" title="Copy to clipboard" tabindex="-1"></a>'
-
   addClipboardLinks: ->
-    for el in @findAllByTag('pre')
-      el.insertAdjacentHTML('afterbegin', CLIPBOARD_LINK)
+    unless @clipBoardLink
+      @clipBoardLink = document.createElement('a')
+      @clipBoardLink.className = '_pre-clip'
+      @clipBoardLink.title = 'Copy to clipboard'
+      @clipBoardLink.tabIndex = -1
+    el.appendChild(@clipBoardLink.cloneNode()) for el in @findAllByTag('pre')
+    return
+
+  polyfillMathML: ->
+    return unless window.supportsMathML is false and !@polyfilledMathML and @findByTag('math')
+    @polyfilledMathML = true
+    $.append document.head, """<link rel="stylesheet" href="#{app.config.mathml_stylesheet}">"""
     return
 
   LINKS =
@@ -77,8 +89,8 @@ class app.views.EntryPage extends app.View
     @entry.doc.fullName + if @entry.isIndex() then ' documentation' else " / #{@entry.name}"
 
   beforeRoute: =>
-    @abort()
     @cache()
+    @abort()
     return
 
   onRoute: (context) ->
@@ -95,7 +107,7 @@ class app.views.EntryPage extends app.View
   abort: ->
     if @xhr
       @xhr.abort()
-      @xhr = null
+      @xhr = @entry = null
     return
 
   onSuccess: (response) =>
@@ -113,7 +125,7 @@ class app.views.EntryPage extends app.View
     return
 
   cache: ->
-    return if not @entry or @cacheMap[path = @entry.filePath()]
+    return if @xhr or not @entry or @cacheMap[path = @entry.filePath()]
 
     @cacheMap[path] = @el.innerHTML
     @cacheStack.push(path)
@@ -136,4 +148,9 @@ class app.views.EntryPage extends app.View
       $.stopEvent(event)
       target.classList.add if $.copyToClipboard(target.parentNode.textContent) then '_pre-clip-success' else '_pre-clip-error'
       setTimeout (-> target.className = '_pre-clip'), 2000
+    return
+
+  onAltO: =>
+    return unless link = @find('._attribution:last-child ._attribution-link')
+    $.popup(link.href + location.hash)
     return

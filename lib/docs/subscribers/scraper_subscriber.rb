@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Docs
   class ScraperSubscriber < Subscriber
     self.namespace = 'scraper'
@@ -12,7 +14,7 @@ module Docs
 
     def ignore_response(event)
       msg = "Ignore:  #{format_url event.payload[:response].url}"
-      msg << " [#{event.payload[:response].code}]" if event.payload[:response].respond_to?(:code)
+      msg += " [#{event.payload[:response].code}]" if event.payload[:response].respond_to?(:code)
       log(msg)
     end
 

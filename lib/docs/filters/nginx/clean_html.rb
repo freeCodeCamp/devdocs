@@ -26,6 +26,10 @@ module Docs
           node.name = 'code'
         end
 
+        css('pre').each do |node|
+          node['data-language'] = 'nginx'
+        end
+
         doc
       end
     end

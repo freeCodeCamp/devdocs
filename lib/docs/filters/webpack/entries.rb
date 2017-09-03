@@ -2,28 +2,38 @@ module Docs
   class Webpack
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        entry_link.content
+        name = at_css('h1').content
+        name.sub! ' - ', ': '
+        name
       end
+
+      TYPE_BY_DIRECTORY = {
+        'concepts'      => 'Concepts',
+        'guides'        => 'Guides',
+        'api'           => 'API',
+        'configuration' => 'Configuration',
+        'loaders'       => 'Loaders',
+        'plugins'       => 'Plugins'
+      }
 
       def get_type
-        link_li = entry_link.parent
-        type_links_list = link_li.parent
-        current_type = type_links_list.parent
-
-        # current type is a
-        # <li>
-        #   TYPE
-        #   <li> <ul> .. links .. </ul> </li>
-        # </li>
-        #
-        # Grab the first children (which is the text nodes whose contains the type)
-        current_type.children.first.content.strip.titleize
+        TYPE_BY_DIRECTORY[slug.split('/').first]
       end
 
-      private
-
-      def entry_link
-        at_css("a[href='#{self.path}']")
+      def additional_entries
+        if slug.start_with?('configuration')
+          css('h2[id] code').each_with_object [] do |node, entries|
+            next if node.previous.try(:content).present?
+            entries << [node.content, node.parent['id']]
+          end
+        elsif slug.start_with?('api')
+          css('.header[id] code').each_with_object [] do |node, entries|
+            next if node.previous.try(:content).present?
+            entries << ["#{self.name.split(':').first}: #{node.content.sub(/\(.*\)/, '()')}", node.parent['id']]
+          end
+        else
+          []
+        end
       end
     end
   end

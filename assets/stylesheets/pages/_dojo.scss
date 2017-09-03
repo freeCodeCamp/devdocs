@@ -1,6 +1,5 @@
 ._dojo {
   @extend %simple;
 
-  .functionIcon, .parameters { @extend %code; }
   .jsdoc-inheritance { color: $textColorLight; }
 }

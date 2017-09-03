@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'progress_bar'
 
 module Docs

@@ -12,11 +12,11 @@ module Docs
     options[:trailing_slash] = false
 
     options[:skip_link] = ->(link) {
-      link['title'].try(:include?, 'written'.freeze) && !link['href'].try(:include?, 'transform-function'.freeze)
+      link['title'].try(:include?, 'not yet been written'.freeze) && !link['href'].try(:include?, 'transform-function'.freeze)
     }
 
     options[:attribution] = <<-HTML
-      &copy; 2016 Mozilla Contributors<br>
+      &copy; 2005&ndash;2017 Mozilla Developer Network and individual contributors.<br>
       Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.
     HTML
 

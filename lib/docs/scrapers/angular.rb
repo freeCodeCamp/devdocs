@@ -1,69 +1,123 @@
+require 'yajl/json_gem'
+
 module Docs
   class Angular < UrlScraper
-    self.name = 'Angular.js'
-    self.slug = 'angular'
     self.type = 'angular'
-    self.root_path = 'api.html'
-    self.initial_paths = %w(guide.html)
+    self.links = {
+      home: 'https://angular.io/',
+      code: 'https://github.com/angular/angular'
+    }
 
-    html_filters.push 'angular/clean_html', 'angular/entries', 'title'
-    text_filters.push 'angular/clean_urls'
-
-    options[:title] = false
-    options[:root_title] = 'Angular.js'
-
-    options[:decode_and_clean_paths] = true
-    options[:fix_urls_before_parse] = ->(str) do
-      str.gsub!('[', '%5B')
-      str.gsub!(']', '%5D')
-      str
-    end
-
-    options[:fix_urls] = ->(url) do
-      %w(api guide).each do |str|
-        url.sub! "/partials/#{str}/#{str}/", "/partials/#{str}/"
-        url.sub! %r{/#{str}/img/}, "/img/"
-        url.sub! %r{/#{str}/(.+?)/#{str}/}, "/#{str}/"
-        url.sub! %r{/partials/#{str}/(.+?)(?<!\.html)(?:\z|(#.*))}, "/partials/#{str}/\\1.html\\2"
-      end
-      url
-    end
-
-    options[:only_patterns] = [%r{\Aapi/}, %r{\Aguide/}]
-    options[:skip] = %w(api/ng.html)
+    options[:max_image_size] = 256_000
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2016 Google, Inc.<br>
+      &copy; 2010&ndash;2017 Google, Inc.<br>
       Licensed under the Creative Commons Attribution License 4.0.
     HTML
 
-    stub '' do
-      require 'capybara/dsl'
-      Capybara.current_driver = :selenium
-      Capybara.run_server = false
-      Capybara.app_host = 'https://code.angularjs.org'
-      Capybara.visit("/#{self.class.release}/docs/api")
-      Capybara.find('.side-navigation')['innerHTML']
+    version do
+      self.release = '4.3.2'
+      self.base_url = 'https://angular.io/'
+      self.root_path = 'docs'
+
+      html_filters.push 'angular/clean_html', 'angular/entries'
+
+      options[:follow_links] = false
+      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
+      options[:fix_urls_before_parse] = ->(url) do
+        url.sub! %r{\Aguide/}, '/guide/'
+        url.sub! %r{\Atutorial/}, '/tutorial/'
+        url.sub! %r{\Aapi/}, '/api/'
+        url.sub! %r{\Agenerated/}, '/generated/'
+        url
+      end
+
+      private
+
+      def initial_urls
+        initial_urls = []
+
+        Request.run 'https://angular.io/generated/navigation.json' do |response|
+          data = JSON.parse(response.body)
+          dig = ->(entry) do
+            initial_urls << url_for("generated/docs/#{entry['url']}.json") if entry['url'] && entry['url'] != 'api'
+            entry['children'].each(&dig) if entry['children']
+          end
+          data['SideNav'].each(&dig)
+        end
+
+        Request.run 'https://angular.io/generated/docs/api/api-list.json' do |response|
+          data = JSON.parse(response.body)
+          dig = ->(entry) do
+            initial_urls << url_for("generated/docs/#{entry['path']}.json") if entry['path']
+            initial_urls << url_for("generated/docs/api/#{entry['name']}.json") if entry['name'] && !entry['path']
+            entry['items'].each(&dig) if entry['items']
+          end
+          data.each(&dig)
+        end
+
+        initial_urls
+      end
+
+      def handle_response(response)
+        if response.mime_type.include?('json')
+          response.options[:response_body] = JSON.parse(response.body)['contents']
+          response.headers['Content-Type'] = 'text/html'
+          response.url.path = response.url.path.sub('/generated/docs/', '/').remove('.json')
+          response.effective_url.path = response.effective_url.path.sub('/generated/docs/', '/').remove('.json')
+        end
+        super
+      end
     end
 
-    version '1.5' do
-      self.release = '1.5.5'
-      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
+    version '2' do
+      self.release = '2.4.10'
+      self.base_url = 'https://v2.angular.io/docs/ts/latest/'
+      self.root_path = 'api/'
+
+      html_filters.push 'angular/entries_v2', 'angular/clean_html_v2'
+
+      stub 'api/' do
+        base_url = URL.parse(self.base_url)
+        capybara = load_capybara_selenium
+        capybara.app_host = base_url.origin
+        capybara.visit(base_url.path + 'api/')
+        capybara.execute_script('return document.body.innerHTML')
+      end
+
+      options[:skip_patterns] = [/deprecated/, /VERSION-let/]
+      options[:skip] = %w(
+        index.html
+        styleguide.html
+        quickstart.html
+        cheatsheet.html
+        guide/cheatsheet.html
+        guide/style-guide.html)
+
+      options[:replace_paths] = {
+        'testing/index.html'  => 'guide/testing.html',
+        'guide/glossary.html' => 'glossary.html',
+        'tutorial'            => 'tutorial/',
+        'api'                 => 'api/'
+      }
+
+      options[:fix_urls] = -> (url) do
+        url.sub! %r{\A(https://(?:v2\.)?angular\.io/docs/.+/)index\.html\z}, '\1'
+        url
+      end
     end
 
-    version '1.4' do
-      self.release = '1.4.10'
-      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
-    end
+    private
 
-    version '1.3' do
-      self.release = '1.3.20'
-      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
-    end
-
-    version '1.2' do
-      self.release = '1.2.29'
-      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
+    def parse(response)
+      response.body.gsub! '<code-example', '<pre'
+      response.body.gsub! '</code-example', '</pre'
+      response.body.gsub! '<code-pane', '<pre'
+      response.body.gsub! '</code-pane', '</pre'
+      response.body.gsub! '<live-example></live-example>', 'live example'
+      response.body.gsub! '<live-example', '<span'
+      response.body.gsub! '</live-example', '</span'
+      super
     end
   end
 end

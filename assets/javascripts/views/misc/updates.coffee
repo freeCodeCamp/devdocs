@@ -10,7 +10,7 @@ class app.views.Updates extends app.views.Notif
     @lastUpdateTime = @getLastUpdateTime()
     @updatedDocs = @getUpdatedDocs()
     @updatedDisabledDocs = @getUpdatedDisabledDocs()
-    @show() if @updatedDocs.length
+    @show() if @updatedDocs.length > 0 or @updatedDisabledDocs.length > 0
     @markAllAsRead()
     return
 

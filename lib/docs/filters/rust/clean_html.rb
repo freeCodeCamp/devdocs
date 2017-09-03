@@ -2,21 +2,49 @@ module Docs
   class Rust
     class CleanHtmlFilter < Filter
       def call
-        if slug.start_with?('book')
-          book
-        elsif slug.start_with?('reference')
-          reference
+        puts subpath if at_css('#versioninfo')
+
+        if slug.start_with?('book') ||  slug.start_with?('reference')
+          @doc = at_css('#content')
+        elsif slug == 'error-index'
+          css('.error-undescribed').remove
+
+          css('.error-described').each do |node|
+            node.before(node.children).remove
+          end
         else
-          api
+          @doc = at_css('#main')
+
+          css('.toggle-wrapper').remove
+
+          css('h1.fqn').each do |node|
+            node.content = node.at_css('.in-band').content
+          end
+
+          css('.stability .stab').each do |node|
+            node.name = 'span'
+            node.content = node.content
+          end
         end
 
-        css('.rusttest', 'hr').remove
+        css('.rusttest', '.test-arrow', 'hr').remove
+
+        css('a.header').each do |node|
+          node.first_element_child['id'] = node['name']
+          node.before(node.children).remove
+        end
 
         css('.docblock > h1').each { |node| node.name = 'h4' }
         css('h2.section-header').each { |node| node.name = 'h3' }
         css('h1.section-header').each { |node| node.name = 'h2' }
 
-        css('> .impl-items', '> .docblock').each do |node|
+        if at_css('h1 ~ h1')
+          css('h1 ~ h1', 'h2', 'h3').each do |node|
+            node.name = node.name.sub(/\d/) { |i| i.to_i + 1 }
+          end
+        end
+
+        css('> .impl-items', '> .docblock', 'pre > pre').each do |node|
           node.before(node.children).remove
         end
 
@@ -25,38 +53,16 @@ module Docs
         end
 
         css('pre > code').each do |node|
-          node.parent['class'] = node['class']
+          node.parent['data-language'] = 'rust' if node['class'] && node['class'].include?('rust')
           node.before(node.children).remove
         end
 
         css('pre').each do |node|
           node.content = node.content
+          node['data-language'] = 'rust' if node['class'] && node['class'].include?('rust')
         end
 
         doc
-      end
-
-      def book
-        @doc = at_css('#page')
-      end
-
-      def reference
-        css('#versioninfo').remove
-      end
-
-      def api
-        @doc = at_css('#main')
-
-        css('.toggle-wrapper').remove
-
-        css('h1.fqn').each do |node|
-          node.content = node.at_css('.in-band').content
-        end
-
-        css('.stability .stab').each do |node|
-          node.name = 'span'
-          node.content = node.content
-        end
       end
     end
   end

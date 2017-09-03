@@ -14,6 +14,23 @@
           user-select: none;
 }
 
+%hide-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-indent: 100%;
+  word-wrap: normal;
+  overflow-wrap: normal;
+  @extend %user-select-none;
+}
+
+%truncate-text {
+  overflow: hidden;
+  white-space: nowrap;
+  word-wrap: normal;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+}
+
 //
 // Boxes
 //
@@ -25,6 +42,7 @@
 }
 
 %heading-box {
+  color: $boxHeaderColor;
   background: $boxHeaderBackground;
   border: 1px solid $boxBorder;
   border-radius: 3px;
@@ -37,6 +55,24 @@
   font-size: 1rem;
   overflow: hidden;
   @extend %heading-box;
+}
+
+%pre-heading {
+  margin: 0;
+  padding: .375rem .625rem;
+  font-size: inherit;
+  font-weight: normal;
+  line-height: 1.5;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  @extend %heading-box;
+
+  + pre {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: 0;
+    margin-top: 0;
+  }
 }
 
 //
@@ -64,7 +100,9 @@
   margin: 2em 0 1em;
   padding-left: .5em;
   padding-right: .5em;
+  overflow: hidden;
   font-size: inherit;
+  color: $boxHeaderColor;
   border: 1px solid $boxBorder;
   border-radius: 2px;
   @extend %label;

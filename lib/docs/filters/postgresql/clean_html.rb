@@ -13,24 +13,33 @@ module Docs
       def other
         @doc = at_css('#docContent')
 
-        css('.NAVHEADER', '.NAVFOOTER').remove
+        css('.NAVHEADER', 'hr', '.NAVFOOTER a[accesskey="H"]').remove
 
         css('a[name]').each do |node|
           node.parent['id'] = node['name']
           node.before(node.children).remove
         end
 
-        css('div.SECT1', 'pre > kbd', 'tt > code', 'h1 > tt', '> .CHAPTER').each do |node|
+        css('div.SECT1', 'pre > kbd', 'tt > code', 'h1 > tt', '> .CHAPTER', 'div.NOTE', '.APPENDIX').each do |node|
           node.before(node.children).remove
+        end
+
+        css('div.CAUTION table.CAUTION').each do |node|
+          parent = node.parent
+          title = node.at_css('.c2, .c3, .c4, .c5').content
+          node.replace(node.css('p'))
+          parent.first_element_child.inner_html = "<strong>#{title}:</strong> #{parent.first_element_child.inner_html}"
+          parent.name = 'blockquote'
         end
 
         css('table').each do |node|
           node.remove_attribute 'border'
           node.remove_attribute 'width'
+          node.remove_attribute 'cellspacing'
+          node.remove_attribute 'cellpadding'
         end
 
         css('td').each do |node|
-          node.remove_attribute 'align'
           node.remove_attribute 'valign'
         end
 
@@ -43,7 +52,7 @@ module Docs
           node.content = node.content
         end
 
-        css('pre code', 'pre span').each do |node|
+        css('pre code', 'pre span', 'pre i', 'pre samp', 'code code', 'code span').each do |node|
           node.before(node.children).remove
         end
 

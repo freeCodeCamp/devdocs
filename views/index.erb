@@ -3,35 +3,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no">
-  <meta name="description" content="DevDocs is a fast, offline API documentation browser with 80+ docs including HTML, CSS, JavaScript, PHP, Ruby, Python, Go, C, C++, jQuery, and more.">
+  <meta name="description" content="DevDocs is a fast, offline, and free documentation browser for developers. Search 100+ docs in one web app: HTML, CSS, JavaScript, PHP, Ruby, Python, Go, C, C++…">
+  <meta property="application-name" content="DevDocs">
   <meta property="og:title" content="DevDocs">
-  <meta property="og:description" content="DevDocs is an API documentation browser that combines 80+ docs in a single UI with offline mode, instant search, keyboard shortcuts, and more.">
+  <meta property="og:description" content="DevDocs is a free API documentation browser that combines 100+ docs in a single UI with offline mode, instant search, keyboard navigation, and more.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://devdocs.io">
-  <meta property="og:image" content="https://cdn.devdocs.io/images/icon-128.png">
+  <meta property="og:url" content="<%= canonical_origin %>">
+  <meta property="og:image" content="<%= App.cdn_origin %>/images/icon-128.png">
+  <meta name="apple-mobile-web-app-title" content="DevDocs">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no">
   <meta name="robots" content="noodp">
   <title>DevDocs API Documentation</title>
-  <link rel="canonical" href="http://devdocs.io">
+  <link rel="canonical" href="<%= canonical_origin %>">
   <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="DevDocs Search">
-  <link rel="alternate" href="http://devdocs.io/feed" title="DevDocs" type="application/atom+xml">
-  <link rel="icon" type="image/x-icon" href="https://cdn.devdocs.io/favicon.ico">
-  <link rel="fluid-icon" href="https://cdn.devdocs.io/images/fluid-icon.png" title="DevDocs">
-  <link rel="apple-touch-icon" sizes="72x72" href="https://cdn.devdocs.io/images/apple-icon-72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.devdocs.io/images/apple-icon-76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="https://cdn.devdocs.io/images/apple-icon-114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="https://cdn.devdocs.io/images/apple-icon-120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="https://cdn.devdocs.io/images/apple-icon-144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="https://cdn.devdocs.io/images/apple-icon-152.png">
-  <link rel="apple-touch-icon" sizes="160x160" href="https://cdn.devdocs.io/images/apple-icon-160.png">
+  <link rel="alternate" href="<%= canonical_origin %>/feed" title="DevDocs" type="application/atom+xml">
+  <link rel="icon" type="image/x-icon" href="<%= App.cdn_origin %>/favicon.ico">
+  <link rel="fluid-icon" href="<%= App.cdn_origin %>/images/fluid-icon.png" title="DevDocs">
+  <link rel="apple-touch-icon" sizes="72x72" href="<%= App.cdn_origin %>/images/apple-icon-72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="<%= App.cdn_origin %>/images/apple-icon-76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="<%= App.cdn_origin %>/images/apple-icon-114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="<%= App.cdn_origin %>/images/apple-icon-120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="<%= App.cdn_origin %>/images/apple-icon-144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="<%= App.cdn_origin %>/images/apple-icon-152.png">
+  <link rel="apple-touch-icon" sizes="160x160" href="<%= App.cdn_origin %>/images/apple-icon-160.png">
+  <link rel="mask-icon" href="<%= App.cdn_origin %>/images/webkit-mask-icon.svg" color="#398df0">
   <link rel="stylesheet" href="<%= main_stylesheet_path %>" data-alt="<%= alternate_stylesheet_path %>">
   <%= javascript_tag 'application', asset_host: false %>
   <%= javascript_tag 'docs' %><% unless App.production? %>
   <%= javascript_tag 'debug' %><% end %>
 </head>
-<body class="_booting _noscript">
+<body class="_booting _noscript<%= " #{app_layout}" if app_layout %>">
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
 <%= erb :app %></body>
 </html>

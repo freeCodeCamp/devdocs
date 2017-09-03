@@ -1,7 +1,7 @@
 module Docs
   class Go < UrlScraper
     self.type = 'go'
-    self.release = '1.6.0'
+    self.release = '1.8.3'
     self.base_url = 'https://golang.org/pkg/'
     self.links = {
       home: 'https://golang.org/',
@@ -12,6 +12,7 @@ module Docs
 
     options[:trailing_slash] = true
     options[:container] = '#page .container'
+    options[:skip] = %w(runtime/msan/)
 
     options[:attribution] = <<-HTML
       &copy; Google, Inc.<br>
@@ -20,8 +21,9 @@ module Docs
 
     private
 
-    def parse(html) # Hook here because Nokogori removes whitespace from textareas
-      super html.gsub %r{<textarea\ class="code"[^>]*>([\W\w]+?)</textarea>}, '<pre class="code">\1</pre>'
+    def parse(response) # Hook here because Nokogori removes whitespace from textareas
+      response.body.gsub! %r{<textarea\ class="code"[^>]*>([\W\w]+?)</textarea>}, '<pre class="code">\1</pre>'
+      super
     end
   end
 end

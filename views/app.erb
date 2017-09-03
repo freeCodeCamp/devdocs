@@ -1,52 +1,64 @@
-<div class="_app<%= " #{app_layout}" if app_layout %>">
-  <header class="_header">
-    <a class="_home-link"></a>
-    <a class="_menu-link"></a>
-    <form class="_search">
-      <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="30" aria-label="Search">
-      <a class="_search-clear"></a>
+<div class="_app" role="application">
+  <header class="_header" role="banner">
+    <button type="button" aria-label="Toggle navigation" class="_header-btn" data-toggle-sidebar hidden>
+      <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+    </button>
+    <form class="_search" role="search">
+      <input type="search" name="q" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="30" aria-label="Search">
+      <button type="reset" class="_search-clear" title="Clear search">Clear search</button>
       <div class="_search-tag"></div>
     </form>
-    <h1 class="_logo">
-      <a href="/" class="_nav-link" title="Offline API Documentation Browser">DevDocs</a><%= "/ #{@doc['full_name']}" if @doc %>
-    </h1>
-    <nav class="_nav">
-      <a href="/offline" class="_nav-link">Offline</a>
-      <a href="/about" class="_nav-link">About</a>
-      <a href="/news" class="_nav-link">News</a>
-      <a href="/help" class="_nav-link">Tips</a>
+    <button type="button" aria-label="Back" class="_header-btn" data-back hidden>
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+    </button>
+    <button type="button" aria-label="Forward" class="_header-btn _forward-btn" data-forward hidden>
+      <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></path></svg>
+    </button>
+    <button type="button" aria-label="Toggle menu" title="Toggle menu" class="_header-btn _menu-btn" data-toggle-menu>
+      <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+    </button>
+    <nav class="_menu" role="navigation">
+      <h1 class="_menu-title"><a href="/" class="_menu-title-link">DevDocs</a></h1>
+      <a href="/settings" class="_menu-link">Preferences</a>
+      <a href="/offline" class="_menu-link">Offline Data</a>
+      <a href="/news" class="_menu-link">Changelog</a>
+      <a href="/help" class="_menu-link">Help</a>
+      <a href="/about" class="_menu-link">About</a>
     </nav>
   </header>
-  <section class="_sidebar">
-    <div class="_list">
+  <section class="_sidebar" tabindex="-1">
+    <div class="_list" role="navigation">
       <% unless @doc %>
       <% App.docs.each do |slug, doc| %>
-      <a href="/<%= slug %>/" class="_list-item"><span class="_list-arrow"></span><%= doc['full_name'] %></a>
+      <a href="/<%= slug %>/" class="_list-item"><%= doc['full_name'] %></a>
       <% end %>
       <% end %>
     </div>
   </section>
-  <section class="_container">
-    <div class="_content _content-loading"></div>
-  </section>
+  <div class="_container" role="document">
+    <main class="_content _content-loading" role="main"></main>
+  </div>
+  <form class="_settings" id="settings">
+    <div class="_header">
+      <button type="button" aria-label="Back" class="_settings-btn _settings-btn-back" data-back>
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg> Back
+      </button>
+      <button type="submit" class="_settings-btn _settings-btn-save">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg> Apply
+      </button>
+      <nav class="_settings-tabs">
+        <button type="button" class="_settings-tab active" data-tab="doc-picker" hidden>Docs</button><button type="button" class="_settings-tab" data-tab="settings" hidden>Settings</button>
+      </nav>
+    </div>
+    <div class="_sidebar" tabindex="-1"></div>
+  </form>
 </div>
-<% if App.production? %><script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-5544833-12', 'devdocs.io');
-  ga('send', 'pageview');
-</script><script>
-  var _gauges=_gauges||[];!function(){var a=document.createElement("script");
-  a.type="text/javascript",a.async=!0,a.id="gauges-tracker",
-  a.setAttribute("data-site-id","51c15f82613f5d7819000067"),
-  a.src="https://secure.gaug.es/track.js";var b=document.getElementsByTagName("script")[0];
-  b.parentNode.insertBefore(a,b)}();
-</script><% end %>
+<svg style="display:none">
+  <symbol id="dir-icon"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+</svg>
 <style data-size="<%= app_size %>" data-resizer>
   ._container { margin-left: <%= app_size %>; }
-  ._search, ._list, ._sidebar-footer { width: <%= app_size %>; }
+  ._header, ._list { width: <%= app_size %>; }
   ._list-hover.clone { min-width: <%= app_size %>; }
   ._notice, ._path, ._resizer { left: <%= app_size %>; }
 </style>

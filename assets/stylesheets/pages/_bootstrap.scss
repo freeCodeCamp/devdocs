@@ -1,0 +1,54 @@
+._bootstrap {
+  @extend %simple;
+
+  h4 > code, h5 > code, strong > code { @extend %label; }
+
+  h2 > small {
+    color: $textColorLight;
+    float: right;
+  }
+
+  .bs-callout { @extend %note; }
+  .bs-callout-info { @extend %note-blue; }
+  .bs-callout-danger { @extend %note-red; }
+  .bs-callout > h4, .bs-callout > h5 { margin-top: .25rem; }
+
+  .text-danger { @extend %label, %label-red; }
+
+  p.bs-example {
+    padding: .375rem .625rem;
+    line-height: 1.5;
+    @extend %heading-box;
+  }
+
+  div.bs-example {
+    @extend %pre-heading;
+  }
+
+  a.thumbnail {
+    display: block;
+    padding: .25em;
+    @extend %box;
+
+    &:after { content: none; }
+    + h4 { margin: .75em 0 .5em; }
+    > img { display: block; }
+  }
+
+  .col { margin-bottom: 1.5em; }
+
+  @media (min-width: 800px) {
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .col {
+      flex: 0 1 auto;
+      padding: 0 1em;
+      width: 33.33%;
+      -moz-box-sizing: border-box;
+           box-sizing: border-box;
+    }
+  }
+}

@@ -14,7 +14,7 @@ class DocsDocTest < MiniTest::Spec
   end
 
   let :entry do
-    Docs::Entry.new
+    Docs::Entry.new 'name', 'path', 'type'
   end
 
   let :store do
@@ -54,6 +54,18 @@ class DocsDocTest < MiniTest::Spec
       doc.slug = 'foo'
       doc.version = '42'
       assert_equal 'foo~42', doc.slug
+    end
+
+    it "returns 'foobar' when #name has been set to 'FooBar'" do
+      doc.name = 'FooBar'
+      assert_equal 'foobar', doc.slug
+    end
+
+    it "raises error when #name has unsluggable characters" do
+      assert_raises do
+        doc.name = 'Foo-Bar'
+        doc.slug
+      end
     end
   end
 
@@ -262,7 +274,7 @@ class DocsDocTest < MiniTest::Spec
           mock(store).write('index.json', anything) do |path, json|
             json = JSON.parse(json)
             assert_equal pages.length, json['entries'].length
-            assert_includes json['entries'], Docs::Entry.new('one').as_json.stringify_keys
+            assert_includes json['entries'], Docs::Entry.new('one', 'path', 'type').as_json.stringify_keys
           end
           doc.store_pages(store)
         end

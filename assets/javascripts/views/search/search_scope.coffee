@@ -11,9 +11,6 @@ class app.views.SearchScope extends app.View
   @routes:
     after: 'afterRoute'
 
-  @shortcuts:
-    escape: 'reset'
-
   constructor: (@el) -> super
 
   init: ->
@@ -29,22 +26,29 @@ class app.views.SearchScope extends app.View
   getScope: ->
     @doc or app
 
+  isActive: ->
+    !!@doc
+
   name: ->
     @doc?.name
 
-  search: (value) ->
-    unless @doc
-      @searcher.find app.docs.all(), 'text', value
+  search: (value, searchDisabled = false) ->
+    return if @doc
+    @searcher.find app.docs.all(), 'text', value
+    @searcher.find app.disabledDocs.all(), 'text', value if not @doc and searchDisabled
     return
 
   searchUrl: ->
     if value = @extractHashValue()
-      @search value
+      @search value, true
     return
 
   onResults: (results) =>
-    if results.length
-      @selectDoc results[0]
+    return unless doc = results[0]
+    if app.docs.contains(doc)
+      @selectDoc(doc)
+    else
+      @redirectToDoc(doc)
     return
 
   selectDoc: (doc) ->
@@ -63,6 +67,12 @@ class app.views.SearchScope extends app.View
     @trigger 'change', @doc, previousDoc
     return
 
+  redirectToDoc: (doc) ->
+    hash = location.hash
+    app.router.replaceHash('')
+    location.assign doc.fullPath() + hash
+    return
+
   reset: =>
     return unless @doc
     previousDoc = @doc
@@ -78,16 +88,16 @@ class app.views.SearchScope extends app.View
     return
 
   onKeydown: (event) =>
-    return if event.ctrlKey or event.metaKey or event.altKey or event.shiftKey
-
     if event.which is 8 # backspace
       if @doc and not @input.value
         $.stopEvent(event)
         @reset()
-    else if event.which is 9 or # tab
-            event.which is 32 and (app.isMobile() or $.isTouchScreen()) # space
-      $.stopEvent(event)
-      @search @input.value[0...@input.selectionStart]
+    else if not @doc and @input.value
+      return if event.ctrlKey or event.metaKey or event.altKey or event.shiftKey
+      if event.which is 9 or # tab
+         (event.which is 32 and app.isMobile()) # space
+        @search @input.value[0...@input.selectionStart]
+        $.stopEvent(event) if @doc
     return
 
   extractHashValue: ->
@@ -96,8 +106,10 @@ class app.views.SearchScope extends app.View
       app.router.replaceHash(newHash)
       value
 
+  HASH_RGX = new RegExp "^##{SEARCH_PARAM}=(.+?) ."
+
   getHashValue: ->
-    try (new RegExp "^##{SEARCH_PARAM}=(.+?) .").exec($.urlDecode location.hash)?[1] catch
+    try HASH_RGX.exec($.urlDecode location.hash)?[1] catch
 
   afterRoute: (name, context) =>
     if !app.isSingleDoc() and context.init and context.doc

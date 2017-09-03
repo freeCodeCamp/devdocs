@@ -9,6 +9,7 @@
   font-size: .75rem;
   color: $notifColor;
   background: $notifBackground;
+  border: $notifBorder;
   border-radius: .25rem;
   transition: opacity .2s;
   opacity: 0;
@@ -43,11 +44,19 @@
   position: absolute;
   top: 0;
   right: 0;
-  padding: .625rem;
+  width: 2.25rem;
+  height: 2.25rem;
   opacity: .9;
-  cursor: pointer;
+  @extend %hide-text;
 
-  &:before { @extend %icon, %icon-close-white; }
+  &:before {
+    position: absolute;
+    top: .625rem;
+    left: .625rem;
+    @extend %icon, %icon-close-white;
+  }
+
+  &:hover { opacity: 1; }
 }
 
 ._notif-content {
@@ -56,20 +65,18 @@
   padding-right: .75rem;
   overflow-y: auto;
 
-  &::-webkit-scrollbar { -webkit-appearance: none; width: 10px; }
-  &::-webkit-scrollbar-button { display: none; }
-  &::-webkit-scrollbar-track { background: $notifBackground; }
-  &::-webkit-scrollbar-thumb {
-    min-height: 2rem;
-    background: $scrollbarColor;
-    background-clip: padding-box;
-    border: 3px solid $notifBackground;
-    border-radius: 5px;
+  &::-webkit-scrollbar { width: 10px !important; }
 
-    &:active {
-      background-color: $scrollbarColorHover;
-      border-width: 2px;
-    }
+  &::-webkit-scrollbar-track {
+    background: $notifBackground !important;
+    border: 0 !important;
+    border-radius: 5px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 3px solid $notifBackground !important;
+
+    &:hover, &:active { border-width: 2px !important; }
   }
 
   > ._notif-title {
@@ -99,7 +106,7 @@
   ._news-date {
     float: right;
     margin-left: 1rem;
-    font-weight: bold;
+    font-weight: $boldFontWeight;
   }
 
   code {
@@ -121,8 +128,8 @@
 
 ._notif-tip {
   color: $textColor;
-  background: rgba($tipBackground, .95);
-  border: 1px solid $tipBorder;
+  background: $tipBackground;
+  border: $tipBorder;
 
   ._notif-info { color: $textColorLight; }
 }

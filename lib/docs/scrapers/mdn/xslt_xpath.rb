@@ -8,6 +8,8 @@ module Docs
 
     html_filters.push 'xslt_xpath/clean_html', 'xslt_xpath/entries', 'title'
 
+    options[:root_title] = 'XSLT'
+
     options[:only_patterns] = [/\A\/XSLT/, /\A\/XPath/]
 
     options[:fix_urls] = ->(url) do

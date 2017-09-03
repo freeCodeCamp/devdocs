@@ -1,53 +1,20 @@
 ._ember {
-  > .class-info { @extend %note, %note-blue; }
-  > .class-info > p { margin: 0; }
+  @extend %simple;
 
-  > .description > h2, > .description > h3 { font-size: 1rem; }
+  .pre-title { @extend %pre-heading; }
 
-  .item-entry { padding-left: 1rem; }
-
-  .title {
-    margin-left: -1rem;
-    @extend %block-heading;
-
-    > h2, > .args, > .flag {
-      display: inline-block;
-      vertical-align: top;
-      margin: 0;
-      line-height: inherit;
-      font-size: inherit;
-    }
-
-    > .flag { // "static"
-      margin-left: .5em;
-      color: $textColorLight;
-    }
-
-    > .type {
-      float: right;
-      font-weight: normal;
-    }
-  }
-
-  .meta { // "defined in"
+  h3 > .access {
+    float: right;
     color: $textColorLight;
-    margin-bottom: 1em;
+    font-weight: normal;
   }
 
-  .return, .params {
-    margin-top: 1.5em;
-
-    > h3 {
-      display: inline-block;
-      vertical-align: top;
-      margin: 0 0 1em;
-      font-size: inherit;
-      @extend %label, %label-blue;
-    }
+  h3 > .args,
+  h3 > .return-type {
+    font-weight: normal;
   }
 
-  dl { margin: 0 1em; }
-  dt + dt, dd + dt { margin-top: .5em; }
-
-  p > code { @extend %label; }
+  p.github-link {
+    color: $textColorLight;
+  }
 }

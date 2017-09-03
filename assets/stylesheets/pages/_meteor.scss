@@ -1,15 +1,18 @@
 ._meteor {
   @extend %simple;
 
-  .note, .warning { @extend %note; }
+  .note, .warning, .subtitle-page { @extend %note; }
+  .subtitle-page { @extend %note-blue; }
   .warning { @extend %note-red; }
 
   dl.args { margin-left: 1rem; }
+  dt > code { @extend %label; }
 
+  .api-heading { overflow: hidden; }
+  .api-heading > code { font-weight: $boldFontWeight; }
   .locus, .src-code { float: right; }
-  .locus, .type, .src-code {
-    margin-left: .5em;
-    font-size: .9em;
-  }
+  .locus, .type, .src-code { margin-left: .5em; }
+  h2 .subtext-api { margin-top: .25rem; }
+  .locus, .subtext-api, .subtext-api > code { font-size: .75rem; }
   .locus, .type { color: $textColorLight; }
 }

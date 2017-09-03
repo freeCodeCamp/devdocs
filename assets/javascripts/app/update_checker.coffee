@@ -2,10 +2,10 @@ class app.UpdateChecker
   constructor: ->
     @lastCheck = Date.now()
 
-    $.on window, 'focus', @checkForUpdate
+    $.on window, 'focus', @onFocus
     app.appCache.on 'updateready', @onUpdateReady if app.appCache
 
-    @checkDocs()
+    setTimeout @checkDocs, 0
 
   check: ->
     if app.appCache
@@ -21,8 +21,8 @@ class app.UpdateChecker
     new app.views.Notif 'UpdateReady', autoHide: null
     return
 
-  checkDocs: ->
-    if app.settings.get('autoUpdate')
+  checkDocs: =>
+    unless app.settings.get('manualUpdate')
       app.docs.updateInBackground()
     else
       app.docs.checkForUpdates (i) => @onDocsUpdateReady() if i > 0

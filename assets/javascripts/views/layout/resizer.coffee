@@ -4,7 +4,6 @@ class app.views.Resizer extends app.View
   @events:
     dragstart: 'onDragStart'
     dragend: 'onDragEnd'
-    dblclick: 'onDblClick'
 
   @isSupported: ->
     'ondragstart' of document.createElement('div') and !app.isMobile()
@@ -30,10 +29,6 @@ class app.views.Resizer extends app.View
     if save
       app.settings.setSize(value)
       app.appCache?.updateInBackground()
-    return
-
-  onDblClick: (event) ->
-    app.document.toggleSidebar(save: true)
     return
 
   onDragStart: (event) =>

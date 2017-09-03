@@ -3,19 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <% if doc_index_page? %><meta name="description" content="<%= @doc['full_name'] %> API documentation with instant search, offline mode, keyboard shortcuts, mobile version, and more."><% else %><meta name="robots" content="noindex"><% end %>
+  <% if doc_index_page? %><meta name="description" content="<%= @doc['full_name'] %> API documentation with instant search, offline mode, keyboard navigation, mobile version, and more."><% else %><meta name="robots" content="noindex"><% end %>
   <meta name="format-detection" content="telephone=no">
-  <meta property="og:image" content="https://cdn.devdocs.io/images/icon-128.png">
-  <title>DevDocs<%= " - #{@doc['full_name']} documentation" if doc_index_page? %></title>
-  <link rel="canonical" href="http://devdocs.io<%= request.path %>">
-  <link rel="icon" type="image/x-icon" href="https://cdn.devdocs.io/favicon.ico">
+  <meta property="og:image" content="<%= App.cdn_origin %>/images/icon-128.png">
+  <title>DevDocs<%= " &mdash; #{@doc['full_name']} documentation (fast, offline)" if doc_index_page? %></title>
+  <link rel="canonical" href="<%= canonical_origin %><%= request.path %>">
+  <link rel="icon" type="image/x-icon" href="<%= App.cdn_origin %>/favicon.ico">
   <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Search DevDocs">
   <link rel="stylesheet" href="<%= main_stylesheet_path %>" data-alt="<%= alternate_stylesheet_path %>">
   <%= javascript_tag 'application', asset_host: false %><% unless App.production? %>
   <%= javascript_tag 'debug' %><% end %>
-  <script>app.DOC = <%= @doc.to_json %>;</script>
 </head>
-<body class="_booting _noscript">
+<body class="_booting _noscript<%= " #{app_layout}" if app_layout %>" data-doc="<%= CGI::escape_html @doc.to_json %>">
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
 <%= erb :app %></body>
 </html>

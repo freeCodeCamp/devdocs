@@ -10,7 +10,7 @@ module Docs
 
       def get_name
         name = at_css('h1').content
-        name.remove! %r{\A[\d\.]*}
+        name.sub! %r{\A([\d\.]*\d)}, '\1.'
         name.split('—').first.strip
       end
 

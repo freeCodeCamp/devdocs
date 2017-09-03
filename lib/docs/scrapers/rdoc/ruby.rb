@@ -12,6 +12,8 @@ module Docs
     #     --no-line-numbers \
     #     --op html .
 
+    include FixInternalUrlsBehavior
+
     self.links = {
       home: 'https://www.ruby-lang.org/',
       code: 'https://github.com/ruby/ruby'
@@ -51,8 +53,6 @@ module Docs
       /\AIRB/,
       /\AMakeMakefile/i,
       /\ANQXML/,
-      /\AOptionParser\//,
-      /\APrettyPrint/,
       /\APride/,
       /\AProfiler__/,
       /\APsych\//,
@@ -63,7 +63,6 @@ module Docs
       /\AREXML/,
       /\ARSS/,
       /\AShell\//,
-      /\ASocket\//,
       /\ATest/,
       /\AWEBrick/,
       /win32/i,
@@ -71,19 +70,24 @@ module Docs
       /\AXMP/]
 
     options[:attribution] = <<-HTML
-      Ruby Core &copy; 1993&ndash;2016 Yukihiro Matsumoto<br>
+      Ruby Core &copy; 1993&ndash;2017 Yukihiro Matsumoto<br>
       Licensed under the Ruby License.<br>
       Ruby Standard Library &copy; contributors<br>
       Licensed under their own licenses.
     HTML
 
+    version '2.4' do
+      self.release = '2.4.1'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby24'
+    end
+
     version '2.3' do
-      self.release = '2.3.0'
+      self.release = '2.3.4'
       self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby23'
     end
 
     version '2.2' do
-      self.release = '2.2.4'
+      self.release = '2.2.7'
       self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby22'
     end
   end

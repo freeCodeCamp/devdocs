@@ -17,6 +17,12 @@ class AppTest < MiniTest::Spec
       assert last_response.ok?
     end
 
+    it "redirects to /#q= when there is a 'q' query param" do
+      get '/search', q: 'foo'
+      assert last_response.redirect?
+      assert_equal 'http://example.org/#q=foo', last_response['Location']
+    end
+
     it "redirects without the query string" do
       get '/', foo: 'bar'
       assert last_response.redirect?
@@ -25,7 +31,7 @@ class AppTest < MiniTest::Spec
 
     it "sets default size" do
       get '/'
-      assert_includes last_response.body, 'data-size="18rem"'
+      assert_includes last_response.body, 'data-size="20rem"'
     end
 
     it "sets size from cookie" do
@@ -37,7 +43,7 @@ class AppTest < MiniTest::Spec
     it "sets layout from cookie" do
       set_cookie('layout=foo')
       get '/'
-      assert_includes last_response.body, 'class="_app foo"'
+      assert_includes last_response.body, '<body class="_booting _noscript foo">'
     end
   end
 
@@ -109,7 +115,7 @@ class AppTest < MiniTest::Spec
 
     it "sets default size" do
       get '/manifest.appcache'
-      assert_includes last_response.body, '18rem'
+      assert_includes last_response.body, '20rem'
     end
 
     it "sets size from cookie" do
@@ -129,6 +135,12 @@ class AppTest < MiniTest::Spec
     it "renders when the doc exists and isn't enabled" do
       set_cookie('docs=html~5')
       get '/html~4/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
+      assert last_response.ok?
+    end
+
+    it "renders when the doc exists, is a default doc, and all docs are enabled" do
+      set_cookie('docs=')
+      get '/css/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
       assert last_response.ok?
     end
 
@@ -164,6 +176,14 @@ class AppTest < MiniTest::Spec
       assert last_response.not_found?
     end
 
+    it "decodes '~' properly" do
+      get '/html%7E5/'
+      assert last_response.ok?
+
+      get '/html%7E42/'
+      assert last_response.not_found?
+    end
+
     it "redirects with trailing slash" do
       get '/html'
       assert last_response.redirect?
@@ -185,13 +205,13 @@ class AppTest < MiniTest::Spec
     it "works when the doc exists" do
       get '/html~4-foo-bar_42/'
       assert last_response.ok?
-      assert_includes last_response.body, 'app.DOC = {"name":"HTML","slug":"html~4"'
+      assert_includes last_response.body, 'data-doc="{&quot;name&quot;:&quot;HTML&quot;,&quot;slug&quot;:&quot;html~4&quot;'
     end
 
     it "works when the doc has no version in the path and a version exists" do
       get '/html-foo-bar_42/'
       assert last_response.ok?
-      assert_includes last_response.body, 'app.DOC = {"name":"HTML","slug":"html~5"'
+      assert_includes last_response.body, 'data-doc="{&quot;name&quot;:&quot;HTML&quot;,&quot;slug&quot;:&quot;html~5&quot;'
     end
 
     it "returns 404 when the type is blank" do

@@ -3,12 +3,7 @@ CACHE MANIFEST
 
 CACHE:
 /
-<%= javascript_path 'application', asset_host: false %>
-<%= stylesheet_path 'application' %>
-<%= stylesheet_path 'application-dark' %>
-<%= image_path 'icons.png' %>
-<%= image_path 'icons@2x.png' %>
-<%= asset_path 'docs.js' %>
+<%= manifest_asset_urls.join "\n" %>
 <%= doc_index_urls.join "\n" %>
 
 NETWORK:

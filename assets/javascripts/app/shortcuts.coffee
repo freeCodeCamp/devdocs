@@ -2,7 +2,7 @@ class app.Shortcuts
   $.extend @prototype, Events
 
   constructor: ->
-    @isWindows = $.isWindows()
+    @isMac = $.isMac()
     @start()
 
   start: ->
@@ -15,11 +15,15 @@ class app.Shortcuts
     $.off document, 'keypress', @onKeypress
     return
 
+  swapArrowKeysBehavior: ->
+    app.settings.get('arrowScroll')
+
   showTip: ->
     app.showTip('KeyNav')
     @showTip = null
 
   onKeydown: (event) =>
+    return if @buggyEvent(event)
     result = if event.ctrlKey or event.metaKey
       @handleKeydownSuperEvent event unless event.altKey or event.shiftKey
     else if event.shiftKey
@@ -33,12 +37,15 @@ class app.Shortcuts
     return
 
   onKeypress: (event) =>
+    return if @buggyEvent(event)
     unless event.ctrlKey or event.metaKey
       result = @handleKeypressEvent event
       event.preventDefault() if result is false
     return
 
-  handleKeydownEvent: (event) ->
+  handleKeydownEvent: (event, _force) ->
+    return @handleKeydownAltEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+
     if not event.target.form and (48 <= event.which <= 57 or 65 <= event.which <= 90)
       @trigger 'typing'
       return
@@ -50,8 +57,9 @@ class app.Shortcuts
         @trigger 'enter'
       when 27
         @trigger 'escape'
+        false
       when 32
-        if not @lastKeypress or @lastKeypress < Date.now() - 500
+        if event.target.type is 'search' and (not @lastKeypress or @lastKeypress < Date.now() - 500)
           @trigger 'pageDown'
           false
       when 33
@@ -59,9 +67,9 @@ class app.Shortcuts
       when 34
         @trigger 'pageDown'
       when 35
-        @trigger 'end'
+        @trigger 'pageBottom' unless event.target.form
       when 36
-        @trigger 'home'
+        @trigger 'pageTop' unless event.target.form
       when 37
         @trigger 'left' unless event.target.value
       when 38
@@ -74,27 +82,36 @@ class app.Shortcuts
         @trigger 'down'
         @showTip?()
         false
+      when 191
+        unless event.target.form
+          @trigger 'typing'
+          false
 
   handleKeydownSuperEvent: (event) ->
     switch event.which
       when 13
         @trigger 'superEnter'
       when 37
-        unless @isWindows
+        if @isMac
           @trigger 'superLeft'
           false
       when 38
-        @trigger 'home'
+        @trigger 'pageTop'
         false
       when 39
-        unless @isWindows
+        if @isMac
           @trigger 'superRight'
           false
       when 40
-        @trigger 'end'
+        @trigger 'pageBottom'
+        false
+      when 188
+        @trigger 'preferences'
         false
 
-  handleKeydownShiftEvent: (event) ->
+  handleKeydownShiftEvent: (event, _force) ->
+    return @handleKeydownEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+
     if not event.target.form and 65 <= event.which <= 90
       @trigger 'typing'
       return
@@ -112,19 +129,21 @@ class app.Shortcuts
           @trigger 'altDown'
           false
 
-  handleKeydownAltEvent: (event) ->
+  handleKeydownAltEvent: (event, _force) ->
+    return @handleKeydownEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+
     switch event.which
       when 9
         @trigger 'altRight', event
       when 37
-        if @isWindows
+        unless @isMac
           @trigger 'superLeft'
           false
       when 38
         @trigger 'altUp'
         false
       when 39
-        if @isWindows
+        unless @isMac
           @trigger 'superRight'
           false
       when 40
@@ -134,6 +153,9 @@ class app.Shortcuts
         @trigger 'altF', event
       when 71
         @trigger 'altG'
+        false
+      when 79
+        @trigger 'altO'
         false
       when 82
         @trigger 'altR'
@@ -148,3 +170,12 @@ class app.Shortcuts
       false
     else
       @lastKeypress = Date.now()
+
+  buggyEvent: (event) ->
+    try
+      event.target
+      event.ctrlKey
+      event.which
+      return false
+    catch
+      return true

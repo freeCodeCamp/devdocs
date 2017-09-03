@@ -4,6 +4,7 @@ module Docs
       REPLACE_NAMES = {
         'Sorting Rows'                    => 'ORDER BY',
         'Select Lists'                    => 'SELECT Lists',
+        'Comparison Functions and Operators' => 'Comparisons',
         'Data Type Formatting Functions'  => 'Formatting Functions',
         'Enum Support Functions'          => 'Enum Functions',
         'Row and Array Comparisons'       => 'Array Comparisons',
@@ -43,8 +44,14 @@ module Docs
         @base_name ||= clean_heading_name(at_css('h1').content)
       end
 
+      def heading_level
+        @heading_level ||= at_css('h1').content.scan(/\d+(?=\.)/).last
+      end
+
       def get_name
-        if %w(Overview Introduction).include?(base_name)
+        if type.start_with?('Tutorial')
+          "#{heading_level}. #{base_name}"
+        elsif %w(Overview Introduction).include?(base_name)
           result[:pg_chapter_name]
         elsif PREPEND_TYPES.include?(type) || type.start_with?('Internals')
           "#{type.remove('Internals: ')}: #{base_name}"
@@ -58,17 +65,23 @@ module Docs
 
         if result[:pg_up_path] == 'sql-commands.html'
           'Commands'
+        elsif result[:pg_up_path] == 'appendixes.html'
+          'Appendixes'
         elsif result[:pg_up_path].start_with?('reference-')
           'Applications'
         elsif type = result[:pg_chapter_name]
-          if type.start_with?('Func') && (match = base_name.match(/\A(?!Form|Seq|Set|Enum)(.+) Func/))
+          if type.start_with?('Func') && (match = base_name.match(/\A(?!Form|Seq|Set|Enum|Comp)(.+) Func/))
             "Functions: #{match[1]}"
           else
             type.remove! %r{\ASQL }
             type = REPLACE_TYPES[type] || type
-            type = "Internals: #{type}" if INTERNAL_TYPES.include?(type)
+            type.prepend 'Internals: ' if INTERNAL_TYPES.include?(type)
+            type.prepend 'Tutorial: ' if slug.start_with?('tutorial')
             type
           end
+        elsif type = result[:pg_appendix_name]
+          type.prepend 'Appendix: '
+          type
         end
       end
 
@@ -95,11 +108,18 @@ module Docs
           entries.concat get_custom_entries('.TABLE td:first-child > code')
         when 'functions-string'
           entries.concat get_custom_entries('> div[id^="FUNC"] td:first-child > code')
+          entries.concat get_custom_entries('> div[id^="FORMAT"] td:first-child > code')
         else
           if type && type.start_with?('Functions')
-            entries.concat get_custom_entries('> .TABLE td:first-child > code:first-child')
-            entries.concat get_custom_entries('> .TABLE td:first-child > p > code:first-child')
-            entries.concat %w(IS NULL BETWEEN DISTINCT\ FROM).map { |name| ["#{self.name}: #{name}"] } if slug == 'functions-comparison'
+            entries.concat get_custom_entries('> .TABLE td:first-child > code.LITERAL:first-child')
+            entries.concat get_custom_entries('> .TABLE td:first-child > code.FUNCTION:first-child')
+            entries.concat get_custom_entries('> .TABLE td:first-child > code:not(.LITERAL):first-child + code.LITERAL')
+            entries.concat get_custom_entries('> .TABLE td:first-child > p > code.LITERAL:first-child')
+            entries.concat get_custom_entries('> .TABLE td:first-child > p > code.FUNCTION:first-child')
+            entries.concat get_custom_entries('> .TABLE td:first-child > p > code:not(.LITERAL):first-child + code.LITERAL')
+            if slug == 'functions-comparison' && !at_css('#FUNCTIONS-COMPARISON-PRED-TABLE') # before 9.6
+              entries.concat %w(IS NULL BETWEEN DISTINCT\ FROM).map { |name| ["#{self.name}: #{name}"] }
+            end
           end
         end
 
@@ -157,12 +177,18 @@ module Docs
 
       def skip_additional_entries?
         return true unless type
-        SKIP_ENTRIES_SLUGS.include?(slug) || SKIP_ENTRIES_TYPES.include?(type) || type.start_with?('Internals')
+        SKIP_ENTRIES_SLUGS.include?(slug) ||
+        SKIP_ENTRIES_TYPES.include?(type) ||
+        type.start_with?('Internals') ||
+        type.start_with?('Tutorial') ||
+        type.start_with?('Appendix')
       end
 
       def clean_heading_name(name)
         name.remove! 'Chapter '
         name.remove! %r{\A[\d\.\s]+}
+        name.remove! 'Appendix '
+        name.remove! %r{\A[A-Z]\.[\d\.\s]*}
         name.remove! 'Using '
         name.remove! %r{\AThe }
         name.remove! ' (Common Table Expressions)'
@@ -185,7 +211,7 @@ module Docs
           name.squeeze! ' '
           name.remove! %r{\([^\)]*\z} # bug fix: json_populate_record
           name = '||' if name.include? ' || '
-          id = name.gsub(/[^a-z0-9\-_]/) { |char| char.ord }
+          id = name.gsub(/[^a-zA-Z0-9\-_]/) { |char| char.ord }
           id = id.parameterize
           name.prepend "#{additional_entry_prefix}: "
 

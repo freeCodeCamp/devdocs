@@ -1,0 +1,5 @@
+._liquid {
+  @extend %simple;
+
+  p.code-label { @extend %pre-heading; }
+}

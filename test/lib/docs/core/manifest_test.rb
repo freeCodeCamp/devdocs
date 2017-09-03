@@ -3,7 +3,9 @@ require 'docs'
 
 class ManifestTest < MiniTest::Spec
   let :doc do
-    Class.new Docs::Doc
+    doc = Class.new Docs::Doc
+    doc.name = 'TestDoc'
+    doc
   end
 
   let :store do

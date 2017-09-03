@@ -25,7 +25,7 @@ module Docs
     options[:skip_patterns] = [/dijit/, /dojox/]
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2015 The Dojo Foundation<br>
+      &copy; 2005&ndash;2017 JS Foundation<br>
       Licensed under the AFL 2.1 and BSD 3-Clause licenses.
     HTML
 

@@ -22,22 +22,17 @@ module Docs
       end
 
       def get_type
-        if type = at_css('.t-navbar > div:nth-child(4) > :first-child').try(:content)
-          type.strip!
-          type.remove! ' library'
-          type.remove! ' utilities'
-          type
-        end
+        type = at_css('.t-navbar > div:nth-child(4) > :first-child').try(:content)
+        type.strip!
+        type.remove! ' library'
+        type.remove! ' utilities'
+        type
       end
 
       def additional_entries
         names = at_css('#firstHeading').content.split(',')[1..-1]
         names.concat ADDITIONAL_NAMES[name] || []
         names.map { |name| [name] }
-      end
-
-      def include_default_entry?
-        at_css '.t-navbar > div:nth-child(4) > a'
       end
     end
   end

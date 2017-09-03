@@ -7,9 +7,13 @@
   h2 { @extend %block-heading; }
   h3.title { @extend %block-heading; }
 
+  .manualnavbar {
+    margin-top: 1rem;
+  }
+
   .verinfo {
     float: right;
-    font-weight: bold;
+    font-weight: $boldFontWeight;
   }
 
   .classsynopsis,
@@ -28,5 +32,8 @@
   blockquote.note > p { margin-bottom: 0; }
 
   div.warning { @extend %note, %note-red; }
+  div.caution { @extend %note, %note-orange; }
   div.tip { @extend %note, %note-green; }
+
+  strong > code, dt > code { @extend %label; }
 }

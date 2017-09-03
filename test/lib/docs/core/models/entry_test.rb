@@ -5,20 +5,35 @@ class DocsEntryTest < MiniTest::Spec
   Entry = Docs::Entry
 
   let :entry do
-    Entry.new
+    Entry.new('name', 'path', 'type')
+  end
+
+  def build_entry(name = 'name', path = 'path', type = 'type')
+    Entry.new(name, path, type)
   end
 
   describe ".new" do
-    it "stores a name" do
-      assert_equal 'name', Entry.new('name').name
+    it "stores #name, #path and #type" do
+      entry = Entry.new('name', 'path', 'type')
+      assert_equal 'name', entry.name
+      assert_equal 'path', entry.path
+      assert_equal 'type', entry.type
     end
 
-    it "stores a path" do
-      assert_equal 'path', Entry.new(nil, 'path').path
+    it "raises an error when #name, #path or #type is nil or empty" do
+      assert_raises(Docs::Entry::Invalid) { Entry.new(nil, 'path', 'type') }
+      assert_raises(Docs::Entry::Invalid) { Entry.new('', 'path', 'type') }
+      assert_raises(Docs::Entry::Invalid) { Entry.new('name', nil, 'type') }
+      assert_raises(Docs::Entry::Invalid) { Entry.new('name', '', 'type') }
+      assert_raises(Docs::Entry::Invalid) { Entry.new('name', 'path', nil) }
+      assert_raises(Docs::Entry::Invalid) { Entry.new('name', 'path', '') }
     end
 
-    it "stores a type" do
-      assert_equal 'type', Entry.new(nil, nil, 'type').type
+    it "don't raise an error when #path is 'index' and #name or #type is nil or empty" do
+      Entry.new(nil, 'index', 'type')
+      Entry.new('', 'index', 'type')
+      Entry.new('name', 'index', nil)
+      Entry.new('name', 'index', '')
     end
   end
 
@@ -48,40 +63,22 @@ class DocsEntryTest < MiniTest::Spec
 
   describe "#==" do
     it "returns true when the other has the same name, path and type" do
-      assert_equal Entry.new, Entry.new
+      assert_equal build_entry, build_entry
     end
 
     it "returns false when the other has a different name" do
-      entry.name = 'name'
-      refute_equal Entry.new, entry
+      entry.name = 'other_name'
+      refute_equal build_entry, entry
     end
 
     it "returns false when the other has a different path" do
-      entry.path = 'path'
-      refute_equal Entry.new, entry
+      entry.path = 'other_path'
+      refute_equal build_entry, entry
     end
 
     it "returns false when the other has a different type" do
-      entry.type = 'type'
-      refute_equal Entry.new, entry
-    end
-  end
-
-  describe "#<=>" do
-    it "returns 1 when the other's name is less" do
-      assert_equal 1, Entry.new('b') <=> Entry.new('a')
-    end
-
-    it "returns -1 when the other's name is greater" do
-      assert_equal -1, Entry.new('a') <=> Entry.new('b')
-    end
-
-    it "returns 0 when the other's name is equal" do
-      assert_equal 0, Entry.new('a') <=> Entry.new('a')
-    end
-
-    it "is case-insensitive" do
-      assert_equal 0, Entry.new('a') <=> Entry.new('A')
+      entry.type = 'other_type'
+      refute_equal build_entry, entry
     end
   end
 

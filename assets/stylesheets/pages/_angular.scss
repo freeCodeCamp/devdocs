@@ -1,54 +1,22 @@
 ._angular {
-  h2 { @extend %block-heading; }
+  @extend %simple;
 
-  //
-  // Index
-  //
+  .pre-title { @extend %pre-heading; }
 
-  .nav-index-section {
-    margin: 1.5em 0 1em -2em;
-    list-style: none;
-    font-weight: bold;
-    text-transform: capitalize;
-  }
+  .breadcrumbs { @extend %note; }
+  .banner { @extend %note-green; }
+  code.stable { @extend %label-green; }
+  code.experimental { @extend %label-orange; }
+  code.deprecated { @extend %label-red; }
+  .alert.is-important { @extend %note-red; }
+  .alert.is-helpful, .breadcrumbs { @extend %note-blue; }
 
-  //
-  // Other
-  //
+  .breadcrumbs { padding-left: 2em; }
 
-  h3, h4 { font-size: 1rem; }
+  img { margin: 1em 0; }
 
-  .alert { @extend %note; }
-  .alert-success { @extend %note-green; }
-  .alert-error { @extend %note-red; }
-
-  p > code, li > code, td > code { @extend %label; }
-
-  .view-source, .improve-docs {
-    position: relative;
-    float: right;
-    line-height: 1.7rem;
-    padding-left: 1em;
-    font-size: .875rem;
-    background: $contentBackground;
-  }
-
-  .defs {
-    padding-left: 1rem;
-    list-style: none;
-
-    > li > h3:first-child {
-      margin: 0 0 1em -1rem;
-      @extend %block-label, %label-blue;
-    }
-
-    > li + li { margin-top: 2em; }
-
-    h4 {
-      margin: 1em 0 .5em;
-      font-size: 1em;
-    }
-
-    ul { list-style-type: disc; }
+  .location-badge {
+    font-style: italic;
+    text-align: right;
   }
 }

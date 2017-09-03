@@ -3,12 +3,6 @@
 class app.views.JqueryPage extends app.views.BasePage
   @demoClassName: '_jquery-demo'
 
-  prepare: ->
-    for el in @findAllByClass 'syntaxhighlighter'
-      language = if el.classList.contains('javascript') then 'javascript' else 'markup'
-      @highlightCode el, language
-    return
-
   afterRender: ->
     # Prevent jQuery Mobile's demo iframes from scrolling the page
     for iframe in @findAllByTag 'iframe'
@@ -45,7 +39,7 @@ class app.views.JqueryPage extends app.views.BasePage
 
   fixIframeSource: (source) ->
     source = source.replace '"/resources/', '"https://api.jquery.com/resources/' # attr(), keydown()
-    source.replace '</head>', """
+    source = source.replace '</head>', """
       <style>
         html, body { border: 0; margin: 0; padding: 0; }
         body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
@@ -60,3 +54,4 @@ class app.views.JqueryPage extends app.views.BasePage
       </script>
       </head>
     """
+    source.replace /<script>/gi, '<script nonce="devdocs">'

@@ -1,0 +1,7 @@
+._codeception {
+  @extend %simple;
+
+  h4 { @extend %block-label; }
+  .warning, .alert { @extend %note; }
+  .alert-danger { @extend %note-red; }
+}

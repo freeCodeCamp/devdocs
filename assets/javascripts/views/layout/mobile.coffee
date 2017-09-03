@@ -2,9 +2,13 @@ class app.views.Mobile extends app.View
   @className: '_mobile'
 
   @elements:
-    body:     'body'
-    content:  '._container'
-    sidebar:  '._sidebar'
+    body:      'body'
+    content:   '._container'
+    sidebar:   '._sidebar'
+    docPicker: '._settings ._sidebar'
+
+  @shortcuts:
+    escape: 'onEscape'
 
   @routes:
     after: 'afterRoute'
@@ -32,62 +36,120 @@ class app.views.Mobile extends app.View
     super
 
   init: ->
-    if $.isTouchScreen()
-      FastClick.attach @body
-      app.shortcuts.stop()
+    window.FastClick?.attach @body
 
-    $.on @body, 'click', @onClick
-    $.on $('._home-link'), 'click', @onClickHome
-    $.on $('._menu-link'), 'click', @onClickMenu
     $.on $('._search'), 'touchend', @onTapSearch
+
+    @toggleSidebar = $('button[data-toggle-sidebar]')
+    @toggleSidebar.removeAttribute('hidden')
+    $.on @toggleSidebar, 'click', @onClickToggleSidebar
+
+    @back = $('button[data-back]')
+    @back.removeAttribute('hidden')
+    $.on @back, 'click', @onClickBack
+
+    @forward = $('button[data-forward]')
+    @forward.removeAttribute('hidden')
+    $.on @forward, 'click', @onClickForward
+
+    @docPickerTab = $('button[data-tab="doc-picker"]')
+    @docPickerTab.removeAttribute('hidden')
+    $.on @docPickerTab, 'click', @onClickDocPickerTab
+
+    @settingsTab = $('button[data-tab="settings"]')
+    @settingsTab.removeAttribute('hidden')
+    $.on @settingsTab, 'click', @onClickSettingsTab
 
     app.document.sidebar.search
       .on 'searching', @showSidebar
-      .on 'clear', @hideSidebar
 
     @activate()
     return
 
   showSidebar: =>
-    return if @isSidebarShown()
-    @contentTop = @body.scrollTop
+    if @isSidebarShown()
+      window.scrollTo 0, 0
+      return
+
+    @contentTop = window.scrollY
     @content.style.display = 'none'
     @sidebar.style.display = 'block'
 
     if selection = @findByClass app.views.ListSelect.activeClass
-      $.scrollTo selection, @body, 'center'
+      scrollContainer = if window.scrollY is @body.scrollTop then @body else document.documentElement
+      $.scrollTo selection, scrollContainer, 'center'
     else
-      @body.scrollTop = @findByClass(app.views.ListFold.activeClass) and @sidebarTop or 0
+      window.scrollTo 0, @findByClass(app.views.ListFold.activeClass) and @sidebarTop or 0
     return
 
   hideSidebar: =>
     return unless @isSidebarShown()
-    @sidebarTop = @body.scrollTop
+    @sidebarTop = window.scrollY
     @sidebar.style.display = 'none'
     @content.style.display = 'block'
-    @body.scrollTop = @contentTop or 0
+    window.scrollTo 0, @contentTop or 0
     return
 
   isSidebarShown: ->
     @sidebar.style.display isnt 'none'
 
-  onClick: (event) =>
-    if event.target.hasAttribute 'data-pick-docs'
-      @showSidebar()
-    return
+  onClickBack: =>
+    history.back()
 
-  onClickHome: =>
-    app.shortcuts.trigger 'escape'
-    @hideSidebar()
-    return
+  onClickForward: =>
+    history.forward()
 
-  onClickMenu: =>
+  onClickToggleSidebar: =>
     if @isSidebarShown() then @hideSidebar() else @showSidebar()
     return
 
-  onTapSearch: =>
-    @body.scrollTop = 0
+  onClickDocPickerTab: (event) =>
+    $.stopEvent(event)
+    @showDocPicker()
+    return
 
-  afterRoute: =>
+  onClickSettingsTab: (event) =>
+    $.stopEvent(event)
+    @showSettings()
+    return
+
+  showDocPicker: ->
+    window.scrollTo 0, 0
+    @docPickerTab.classList.add 'active'
+    @settingsTab.classList.remove 'active'
+    @docPicker.style.display = 'block'
+    @content.style.display = 'none'
+    return
+
+  showSettings: ->
+    window.scrollTo 0, 0
+    @docPickerTab.classList.remove 'active'
+    @settingsTab.classList.add 'active'
+    @docPicker.style.display = 'none'
+    @content.style.display = 'block'
+    return
+
+  onTapSearch: =>
+    window.scrollTo 0, 0
+
+  onEscape: =>
     @hideSidebar()
+
+  afterRoute: (route) =>
+    @hideSidebar()
+
+    if route is 'settings'
+      @showDocPicker()
+    else
+      @content.style.display = 'block'
+
+    if page.canGoBack()
+      @back.removeAttribute('disabled')
+    else
+      @back.setAttribute('disabled', 'disabled')
+
+    if page.canGoForward()
+      @forward.removeAttribute('disabled')
+    else
+      @forward.setAttribute('disabled', 'disabled')
     return

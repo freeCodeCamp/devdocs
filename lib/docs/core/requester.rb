@@ -3,9 +3,16 @@ module Docs
     attr_reader :request_options
 
     def self.run(urls, options = {}, &block)
+      urls = urls.dup
       requester = new(options)
       requester.on_response(&block) if block
-      requester.request(urls)
+      requester.on_response do # cheap hack to ensure root page is processed first
+        if urls
+          requester.request(urls)
+          urls = nil
+        end
+      end
+      requester.request(urls.shift)
       requester.run
       requester
     end
@@ -13,6 +20,7 @@ module Docs
     def initialize(options = {})
       @request_options = options.extract!(:request_options)[:request_options].try(:dup) || {}
       options[:max_concurrency] ||= 20
+      options[:pipelining] = false
       super
     end
 

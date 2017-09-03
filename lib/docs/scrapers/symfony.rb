@@ -22,9 +22,24 @@ module Docs
       Symfony.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2004&ndash;2016 Fabien Potencier<br>
+      &copy; 2004&ndash;2017 Fabien Potencier<br>
       Licensed under the MIT License.
     HTML
+
+    version '3.3' do
+      self.release = '3.3.2'
+      self.base_url = "http://api.symfony.com/#{version}/"
+    end
+
+    version '3.2' do
+      self.release = '3.2.9'
+      self.base_url = "http://api.symfony.com/#{version}/"
+    end
+
+    version '3.1' do
+      self.release = '3.1.8'
+      self.base_url = "http://api.symfony.com/#{version}/"
+    end
 
     version '3.0' do
       self.release = '3.0.1'
@@ -32,12 +47,12 @@ module Docs
     end
 
     version '2.8' do
-      self.release = '2.8.2'
+      self.release = '2.8.22'
       self.base_url = "http://api.symfony.com/#{version}/"
     end
 
     version '2.7' do
-      self.release = '2.7.9'
+      self.release = '2.7.29'
       self.base_url = "http://api.symfony.com/#{version}/"
     end
   end

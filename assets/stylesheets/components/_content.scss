@@ -12,7 +12,8 @@
 
   @media #{$mediumScreen} { margin-left: $sidebarMediumWidth; }
 
-  ._sidebar-hidden & { margin-left: $sidebarHiddenWidth; }
+  ._sidebar-hidden & { margin-left: 0; }
+  body:not(._native-scrollbars) & { -webkit-margin-end: -1px; }
 }
 
 ._content {
@@ -20,40 +21,25 @@
   height: 100%;
   overflow-y: scroll;
   margin-left: .875rem;
-  padding: 1.25rem 1.5rem 0;
+  padding: 1.125rem 1.5rem 0;
   font-size: .875rem;
   pointer-events: auto;
   -webkit-overflow-scrolling: touch;
   @extend %border-box;
 
-  -webkit-padding-start: .75rem;
-  -webkit-padding-end: 1rem;
-
-  @media (-moz-overlay-scrollbars) { padding-left: .75rem; }
-  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { margin-left: 0; }
-
-  &:after { // padding bottom
+  ._sidebar-hidden &:before {
     content: '';
     display: block;
-    margin-bottom: 1.25rem;
+    margin-top: $headerHeight;
   }
 
-  &::-webkit-scrollbar { -webkit-appearance: none; }
-  &::-webkit-scrollbar:vertical { width: 14px; }
-  &::-webkit-scrollbar:horizontal { height: 14px }
-  &::-webkit-scrollbar-button { display: none; }
-  &::-webkit-scrollbar-track { background: $contentBackground; }
-  &::-webkit-scrollbar-thumb {
-    min-height: 2rem;
-    background: $scrollbarColor;
-    background-clip: padding-box;
-    border: 5px solid $contentBackground;
-    border-radius: 10px;
+  ._overlay-scrollbars & { padding-left: .625rem; }
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { margin-left: 0; }
+  @supports (-ms-overflow-style: none) { margin-left: 0; }
 
-    &:active {
-      background-color: $scrollbarColorHover;
-      border-width: 4px;
-    }
+  body:not(._native-scrollbars) & {
+    -webkit-padding-start: .625rem;
+    -webkit-padding-end: .75rem;
   }
 }
 
@@ -77,15 +63,26 @@
 // Intro
 //
 
-._intro { text-align: center; }
+._intro {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+    -ms-flex-pack: center;
+  justify-content: center;
+   -ms-flex-align: center;
+      align-items: center;
+  min-height: calc(100vh - 2.375rem);
+
+  ._sidebar-hidden & {
+    min-height: calc(100vh - 2.375rem - #{$headerHeight});
+  }
+}
 
 ._intro-message {
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
   max-width: 37rem;
+  margin: .5rem 0;
   padding: 1rem 1.25rem;
-  text-align: left;
   @extend %note, %note-green;
 }
 
@@ -135,7 +132,7 @@
 
 ._error-links {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: $boldFontWeight;
 }
 
 ._error-link { padding: 0 .5rem; }
@@ -146,21 +143,28 @@
 
 ._lined-heading,
 %lined-heading {
-  white-space: nowrap;
-  overflow: hidden;
-  word-wrap: normal;
-  overflow-wrap: normal;
+  display: flex;
+  align-items: center;
+
+  > * { margin: 0 .3125rem; }
 
   &:after {
     content: '';
-    display: inline-block;
-    vertical-align: middle;
-    width: 100%;
+    flex-grow: 1;
     height: 1px;
-    line-height: 0;
+    margin-top: .25rem;
     margin-left: 1rem;
     background: $boxBorderLight;
   }
+}
+
+._block-heading { @extend %block-heading; }
+
+._heading-links {
+  float: right;
+  font-weight: normal;
+
+  > a + a { margin-left: .25rem; }
 }
 
 //
@@ -180,7 +184,7 @@
 ._toc-title {
   margin: 0 0 .5rem;
   font-size: inherit;
-  font-weight: bold;
+  font-weight: $boldFontWeight;
 }
 
 ._toc-list {
@@ -207,8 +211,6 @@
 
 ._credits {
   width: 100%;
-
-  td:first-child, td:last-child { white-space: nowrap; }
 }
 
 //
@@ -217,62 +219,60 @@
 
 ._docs {
   width: 100%;
-  margin-top: .75rem;
+  margin-top: .25rem;
   line-height: 1.5rem;
 
   th, td {
     width: 1%;
-    white-space: nowrap;
 
     &:first-child { width: auto; }
     &:last-child { width: 12rem; }
   }
-
-  td > a { cursor: pointer; }
 }
 
 ._docs-name:before {
   float: left;
   margin: .25rem .5rem .25rem 0;
-  @extend %icon;
+  @extend %doc-icon;
 }
 
-._docs-size { text-align: right; }
+._docs-size {
+  text-align: right;
+
+  > small { color: $textColorLight; }
+}
 
 ._docs-tools {
-  overflow: hidden;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+    -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: center;
+     align-items: center;
   line-height: 1.5rem;
+  margin-top: -.5rem;
+
+  input[type=checkbox] {
+    vertical-align: top;
+    margin: .25rem;
+  }
 }
 
 ._docs-links {
-  float: right;
-  padding: .375rem .125rem;
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+  margin: .5rem 0;
+  padding: .25rem 0;
   @extend %box;
-}
 
-._docs-link {
-  display: none;
-  vertical-align: top;
-  padding: 0 .75rem;
-  cursor: pointer;
-
-  &._show { display: inline-block; }
-  &._show ~ &._show { border-left: 1px solid $boxBorder; }
-}
-
-._docs-label {
-  display: block;
-  overflow: hidden;
-  margin: 1px 0;
-  padding: .375rem .5rem;
-
-  > input {
-    display: inline-block;
+  ._btn-link {
     vertical-align: top;
-    margin: .25rem;
-    width: 1rem;
-    height: 1rem;
+    padding: 0 .75rem;
   }
+  ._btn-link:not(._show) { display: none; }
+  ._btn-link._show ~ ._btn-link._show { border-left: 1px solid $boxBorder; }
 }
 
 //
@@ -342,19 +342,18 @@
 }
 
 //
-// Abbreviations
-//
-
-._abbreviations td { @extend %code; }
-
-//
 // Utilities
 //
 
+._bold { font-weight: $boldFontWeight; }
 ._note { @extend %note; }
 ._note-green { @extend %note-green; }
 ._label { @extend %label; }
+._code { @extend %code; }
 ._highlight { background: $highlightBackground !important; }
+
+._table { width: 100%; }
+._mobile ._table { overflow-x: auto; }
 
 ._pre-clip {
   display: none;
@@ -382,6 +381,30 @@
     }
   }
   &._pre-clip-error:after { content: 'Error'; }
+}
+
+._btn {
+  white-space: nowrap;
+  padding: .125rem .375rem;
+  background-image: linear-gradient(lighten($boxBackground, 3%), darken($boxBackground, 4%));
+  border: 1px solid $boxBorder;
+  border-radius: 3px;
+
+  &:active {
+    background-color: $boxBackground;
+    box-shadow: inset 0 1px 3px rgba(black, .15);
+  }
+}
+
+._btn-link {
+  line-height: inherit;
+  color: $linkColor;
+  text-decoration: $linkTextDecoration;
+
+  &:hover {
+    color: $linkColorHover;
+    text-decoration: underline;
+  }
 }
 
 ._github-btn {

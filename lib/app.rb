@@ -6,7 +6,8 @@ Bundler.require :app
 class App < Sinatra::Application
   Bundler.require environment
   require 'sinatra/cookies'
-  require 'tilt/erubis'
+  require 'tilt/erubi'
+  require 'active_support/notifications'
 
   Rack::Mime::MIME_TYPES['.webapp'] = 'application/x-web-app-manifest+json'
 
@@ -17,28 +18,20 @@ class App < Sinatra::Application
     set :root, Pathname.new(File.expand_path('../..', __FILE__))
     set :sprockets, Sprockets::Environment.new(root)
 
+    set :cdn_origin, ''
+
     set :assets_prefix, 'assets'
-    set :assets_path, -> { File.join(public_folder, assets_prefix) }
-    set :assets_manifest_path, -> { File.join(assets_path, 'manifest.json') }
+    set :assets_path, File.join(public_folder, assets_prefix)
+    set :assets_manifest_path, File.join(assets_path, 'manifest.json')
     set :assets_compile, %w(*.png docs.js docs.json application.js application.css application-dark.css)
 
     require 'yajl/json_gem'
     set :docs_prefix, 'docs'
-    set :docs_host, -> { File.join('', docs_prefix) }
-    set :docs_path, -> { File.join(public_folder, docs_prefix) }
-    set :docs_manifest_path, -> { File.join(docs_path, 'docs.json') }
+    set :docs_origin, File.join('', docs_prefix)
+    set :docs_path, File.join(public_folder, docs_prefix)
+    set :docs_manifest_path, File.join(docs_path, 'docs.json')
     set :default_docs, %w(css dom dom_events html http javascript)
-    set :docs, -> {
-      Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc|
-        doc['full_name'] = doc['name'].dup
-        doc['full_name'] << " #{doc['version']}" if doc['version']
-        doc['slug_without_version'] = doc['slug'].split('~').first
-        [doc['slug'], doc]
-      }]
-    }
-
-    set :news_path, -> { File.join(root, assets_prefix, 'javascripts', 'news.json') }
-    set :news, -> { JSON.parse(File.read(news_path)) }
+    set :news_path, File.join(root, assets_prefix, 'javascripts', 'news.json')
 
     set :csp, false
 
@@ -66,23 +59,27 @@ class App < Sinatra::Application
     use BetterErrors::Middleware
     BetterErrors.application_root = File.expand_path('..', __FILE__)
     BetterErrors.editor = :sublime
+
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' *; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
   end
 
   configure :production do
     set :static, false
-    set :docs_host, '//docs.devdocs.io'
-    set :csp, "default-src 'self' *; script-src 'self' 'unsafe-inline' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src data:; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+    set :cdn_origin, 'https://cdn.devdocs.io'
+    set :docs_origin, '//docs.devdocs.io'
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
     use Rack::ETag
     use Rack::Deflater
     use Rack::Static,
       root: 'public',
-      urls: %w(/assets /docs/ /images /favicon.ico /robots.txt /opensearch.xml /manifest.webapp),
+      urls: %w(/assets /docs/ /images /favicon.ico /robots.txt /opensearch.xml /manifest.webapp /mathml.css),
       header_rules: [
         [:all,           {'Cache-Control' => 'no-cache, max-age=0'}],
         ['/assets',      {'Cache-Control' => 'public, max-age=604800'}],
         ['/favicon.ico', {'Cache-Control' => 'public, max-age=86400'}],
+        ['/mathml.css',  {'Cache-Control' => 'public, max-age=604800'}],
         ['/images',      {'Cache-Control' => 'public, max-age=86400'}] ]
 
     sprockets.js_compressor = Uglifier.new output: { beautify: true, indent_level: 0 }
@@ -96,12 +93,43 @@ class App < Sinatra::Application
   end
 
   configure :test do
-    set :docs_manifest_path, -> { File.join(root, 'test', 'files', 'docs.json') }
+    set :docs_manifest_path, File.join(root, 'test', 'files', 'docs.json')
+  end
+
+  def self.parse_docs
+    Hash[JSON.parse(File.read(docs_manifest_path)).map! { |doc|
+      doc['full_name'] = doc['name'].dup
+      doc['full_name'] << " #{doc['version']}" if doc['version'] && !doc['version'].empty?
+      doc['slug_without_version'] = doc['slug'].split('~').first
+      [doc['slug'], doc]
+    }]
+  end
+
+  def self.parse_news
+    JSON.parse(File.read(news_path))
+  end
+
+  configure :development, :test do
+    set :docs, -> { parse_docs }
+    set :news, -> { parse_news }
+  end
+
+  configure :production do
+    set :docs, parse_docs
+    set :news, parse_news
   end
 
   helpers do
     include Sinatra::Cookies
     include Sprockets::Helpers
+
+    def memoized_cookies
+      @memoized_cookies ||= cookies.to_hash
+    end
+
+    def canonical_origin
+      "http://#{request.host_with_port}"
+    end
 
     def browser
       @browser ||= Browser.new(request.user_agent)
@@ -115,9 +143,9 @@ class App < Sinatra::Application
 
     def docs
       @docs ||= begin
-        cookie = cookies[:docs]
+        cookie = memoized_cookies['docs']
 
-        if cookie.nil? || cookie.empty?
+        if cookie.nil?
           settings.default_docs
         else
           cookie.split('/')
@@ -157,6 +185,21 @@ class App < Sinatra::Application
       request.query_string.empty? ? nil : "?#{request.query_string}"
     end
 
+    def manifest_asset_urls
+      @@manifest_asset_urls ||= [
+        javascript_path('application', asset_host: false),
+        stylesheet_path('application'),
+        stylesheet_path('application-dark'),
+        image_path('icons.png'),
+        image_path('icons@2x.png'),
+        image_path('docs-1.png'),
+        image_path('docs-1@2x.png'),
+        image_path('docs-2.png'),
+        image_path('docs-2@2x.png'),
+        asset_path('docs.js')
+      ]
+    end
+
     def main_stylesheet_path
       stylesheet_paths[dark_theme? ? :dark : :default]
     end
@@ -166,22 +209,22 @@ class App < Sinatra::Application
     end
 
     def stylesheet_paths
-      @stylesheet_paths ||= {
+      @@stylesheet_paths ||= {
         default: stylesheet_path('application'),
         dark: stylesheet_path('application-dark')
       }
     end
 
     def app_size
-      @app_size ||= cookies[:size].nil? ? '18rem' : "#{cookies[:size]}px"
+      @app_size ||= memoized_cookies['size'].nil? ? '20rem' : "#{memoized_cookies['size']}px"
     end
 
     def app_layout
-      cookies[:layout]
+      memoized_cookies['layout']
     end
 
     def app_theme
-      @app_theme ||= cookies[:dark].nil? ? 'default' : 'dark'
+      @app_theme ||= memoized_cookies['dark'].nil? ? 'default' : 'dark'
     end
 
     def dark_theme?
@@ -194,7 +237,7 @@ class App < Sinatra::Application
     end
 
     def supports_js_redirection?
-      browser.modern? && !cookies.empty?
+      browser.modern? && !memoized_cookies.empty?
     end
   end
 
@@ -218,12 +261,13 @@ class App < Sinatra::Application
   end
 
   get '/' do
+    return redirect "/#q=#{params[:q]}" if params[:q]
     return redirect '/' unless request.query_string.empty? # courtesy of HTML5 App Cache
     response.headers['Content-Security-Policy'] = settings.csp if settings.csp
     erb :index
   end
 
-  %w(offline about news help).each do |page|
+  %w(settings offline about news help).each do |page|
     get "/#{page}" do
       if supports_js_redirection?
         redirect_via_js "/#{page}"
@@ -258,9 +302,9 @@ class App < Sinatra::Application
     '/s/jetbrains/c'      => 'https://www.jetbrains.com/clion/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
     '/s/jetbrains/web'    => 'https://www.jetbrains.com/webstorm/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs',
     '/s/code-school'      => 'http://www.codeschool.com/?utm_campaign=devdocs&utm_content=homepage&utm_source=devdocs&utm_medium=sponsorship',
-    '/s/tw'               => 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%2C%20offline%20API%20documentation%20browser%3A',
+    '/s/tw'               => 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%20API%20documentation%20browser%20with%20offline%20mode%20and%20instant%20search%3A',
     '/s/fb'               => 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdevdocs.io',
-    '/s/re'               => 'http://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%2C%20offline%20API%20documentation%20browser&resubmit=true'
+    '/s/re'               => 'https://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%20API%20documentation%20browser%20with%20offline%20mode%20and%20instant%20search&resubmit=true'
   }.each do |path, url|
     class_eval <<-CODE, __FILE__, __LINE__ + 1
       get '#{path}' do
@@ -269,21 +313,93 @@ class App < Sinatra::Application
     CODE
   end
 
-  get %r{\A/feed(?:\.atom)?\z} do
+  %w(/maxcdn /maxcdn/).each do |path|
+    class_eval <<-CODE, __FILE__, __LINE__ + 1
+      get '#{path}' do
+        410
+      end
+    CODE
+  end
+
+  {
+    '/tips'                   => '/help',
+    '/css-data-types/'        => '/css-values-units/',
+    '/css-at-rules/'          => '/?q=css%20%40',
+    '/dom/window/setinterval' => '/dom/windoworworkerglobalscope/setinterval',
+    '/html/article'           => '/html/element/article',
+    '/html-html5/'            => 'html-elements/',
+    '/html-standard/'         => 'html-elements/',
+    '/http-status-codes/'     => '/http-status/',
+    '/ruby/bignum'            => '/ruby~2.3/bignum',
+    '/ruby/fixnum'            => '/ruby~2.3/fixnum',
+  }.each do |path, url|
+    class_eval <<-CODE, __FILE__, __LINE__ + 1
+      get '#{path}' do
+        redirect '#{url}', 301
+      end
+    CODE
+  end
+
+  get %r{/feed(?:\.atom)?} do
     content_type 'application/atom+xml'
     settings.news_feed
   end
 
   DOC_REDIRECTS = {
     'iojs' => 'node',
+    'node_lts' => 'node~6_lts',
+    'node~4.2_lts' => 'node~4_lts',
     'yii1' => 'yii~1.1',
     'python2' => 'python~2.7',
-    'xpath' => 'xslt_xpath'
+    'xpath' => 'xslt_xpath',
+    'angular~4_typescript' => 'angular',
+    'angular~2_typescript' => 'angular~2',
+    'angular~2.0_typescript' => 'angular~2',
+    'angular~1.5' => 'angularjs~1.5',
+    'angular~1.4' => 'angularjs~1.4',
+    'angular~1.3' => 'angularjs~1.3',
+    'angular~1.2' => 'angularjs~1.2',
+    'codeigniter~3.0' => 'codeigniter~3',
+    'webpack~2' => 'webpack'
   }
 
-  get %r{\A/([\w~\.]+)(\-[\w\-]+)?(/.*)?\z} do |doc, type, rest|
-    return redirect "/#{DOC_REDIRECTS[doc]}#{type}#{rest}" if DOC_REDIRECTS.key?(doc)
-    return redirect "/angular/api#{rest}", 301 if doc == 'angular' && rest.start_with?('/ng')
+  get %r{/([\w~\.%]+)(\-[\w\-]+)?(/.*)?} do |doc, type, rest|
+    doc.sub! '%7E', '~'
+
+    if DOC_REDIRECTS.key?(doc)
+      return redirect "/#{DOC_REDIRECTS[doc]}#{type}#{rest}", 301
+    end
+
+    if rest && doc == 'angular' && rest.start_with?('/ng')
+      return redirect "/angularjs/api#{rest}", 301
+    end
+
+    if rest && doc == 'dom'
+      if rest.start_with?('/windowtimers')
+        return redirect "/dom#{rest.sub('windowtimers', 'windoworworkerglobalscope')}", 301
+      end
+
+      if rest.start_with?('/window/url.')
+        return redirect "/dom#{rest.sub('window/url.', 'url/')}", 301
+      end
+
+      if rest.start_with?('/window.')
+        return redirect "/dom#{rest.sub('window.', 'window/')}", 301
+      end
+
+      if rest.start_with?('/element.')
+        return redirect "/dom#{rest.sub('element.', 'element/')}", 301
+      end
+
+      if rest.start_with?('/event.')
+        return redirect "/dom#{rest.sub('event.', 'event/')}", 301
+      end
+
+      if rest.start_with?('/document.')
+        return redirect "/dom#{rest.sub('document.', 'document/')}", 301
+      end
+    end
+
     return 404 unless @doc = find_doc(doc)
 
     if rest.nil?

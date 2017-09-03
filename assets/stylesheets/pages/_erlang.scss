@@ -1,8 +1,9 @@
 ._erlang {
   @extend %simple;
 
-  h3.code { @extend %code; }
+  h3 > code { display: block; }
+  code.code { @extend %label; }
   .note { @extend %note; }
   .warning { @extend %note, %note-red; }
-  .note .label, .warning .label { font-weight: bold; }
+  .note .label, .warning .label { font-weight: $boldFontWeight; }
 }

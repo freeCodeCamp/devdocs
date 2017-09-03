@@ -41,7 +41,8 @@ module Docs
     self.html_filters = FilterStack.new
     self.text_filters = FilterStack.new
 
-    html_filters.push 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths'
+    html_filters.push 'apply_base_url', 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths'
+    text_filters.push 'images' # ensure the images filter runs after all html filters
     text_filters.push 'inner_html', 'clean_text', 'attribution'
 
     def initialize
@@ -115,7 +116,8 @@ module Docs
     def options
       @options ||= self.class.options.deep_dup.tap do |options|
         options.merge! base_url: base_url, root_url: root_url,
-                       root_path: root_path, initial_paths: initial_paths
+                       root_path: root_path, initial_paths: initial_paths,
+                       version: self.class.version, release: self.class.release
 
         if root_path?
           (options[:skip] ||= []).concat ['', '/']
@@ -125,7 +127,7 @@ module Docs
           (options[:only] ||= []).concat initial_paths + (root_path? ? [root_path] : ['', '/'])
         end
 
-        options.merge!(additional_options) if respond_to?(:additional_options, true)
+        options.merge!(additional_options)
         options.freeze
       end
     end
@@ -161,13 +163,20 @@ module Docs
         instrument 'ignore_response.scraper', response: response
       end
     rescue => e
-      puts "URL: #{response.url}"
-      raise e
+      if Docs.rescue_errors
+        instrument 'error.doc', exception: e, url: response.url
+        nil
+      else
+        raise e
+      end
     end
 
     def process_response(response)
       data = {}
-      pipeline.call(parse(response.body), pipeline_context(response), data)
+      html, title = parse(response)
+      context = pipeline_context(response)
+      context[:html_title] = title
+      pipeline.call(html, context, data)
       data
     end
 
@@ -175,8 +184,9 @@ module Docs
       options.merge url: response.url
     end
 
-    def parse(string)
-      Parser.new(string).html
+    def parse(response)
+      parser = Parser.new(response.body)
+      [parser.html, parser.title]
     end
 
     def with_filters(*filters)
@@ -188,18 +198,30 @@ module Docs
       @pipeline = nil
     end
 
+    def additional_options
+      {}
+    end
+
     module FixInternalUrlsBehavior
       def self.included(base)
         base.extend ClassMethods
       end
 
+      def self.prepended(base)
+        class << base
+          prepend ClassMethods
+        end
+      end
+
       module ClassMethods
-        attr_reader :internal_urls
+        def internal_urls
+          @internal_urls
+        end
 
         def store_pages(store)
           instrument 'info.doc', msg: 'Building internal urls...'
           with_internal_urls do
-            instrument 'info.doc', msg: 'Building pages...'
+            instrument 'info.doc', msg: 'Continuing...'
             super
           end
         end
@@ -217,7 +239,7 @@ module Docs
       def fetch_internal_urls
         result = []
         build_pages do |page|
-          result << base_url.subpath_to(page[:response_url]) if page[:entries].present?
+          result << page[:subpath] if page[:entries].present?
         end
         result
       end
@@ -231,16 +253,15 @@ module Docs
 
       def additional_options
         if self.class.internal_urls
-          {
+          super.merge! \
             only: self.class.internal_urls.to_set,
             only_patterns: nil,
             skip: nil,
             skip_patterns: nil,
             skip_links: nil,
             fixed_internal_urls: true
-          }
         else
-          {}
+          super
         end
       end
 

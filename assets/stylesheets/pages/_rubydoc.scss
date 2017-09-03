@@ -1,0 +1,9 @@
+._rubydoc {
+  @extend %simple;
+
+  p.note { @extend %note; }
+  span.note { @extend %label; }
+  span.note.private { @extend %label-red; }
+
+  h4 + ul { margin-top: 1em; }
+}

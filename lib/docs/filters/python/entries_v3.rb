@@ -63,7 +63,7 @@ module Docs
           end
         end
 
-        css('.function > dt[id]', '.method > dt[id]', '.classmethod > dt[id]').each do |node|
+        css('.function > dt[id]', '.method > dt[id]', '.staticmethod > dt[id]', '.classmethod > dt[id]').each do |node|
           entries << [node['id'] + '()', node['id']]
         end
 

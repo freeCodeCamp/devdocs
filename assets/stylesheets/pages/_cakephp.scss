@@ -13,5 +13,5 @@
 
   .info { @extend %note; }
   code { @extend %label; }
-  p > .label, dt > .label { @extend %label, %label-yellow; }
+  p > .label, dt > .label, div > .label { @extend %label, %label-yellow; }
 }

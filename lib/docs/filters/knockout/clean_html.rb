@@ -5,6 +5,16 @@ module Docs
         root_page? ? root : other
 
         css('pre > code').each do |node|
+          node.parent['data-language'] = node.content =~ /\A\s*</ || node.content.include?('data-bind="') ? 'markup' : 'javascript'
+          node.before(node.children).remove
+        end
+
+        css('pre').each do |node|
+          node.content = node.content.strip_heredoc
+          node['data-language'] ||= node['class'].try(:[], /brush:(.*)/, 1)
+        end
+
+        css('.highlighter-rouge').each do |node|
           node.before(node.children).remove
         end
 

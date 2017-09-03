@@ -2,7 +2,7 @@ module Docs
   class Chai < UrlScraper
     self.name = 'Chai'
     self.type = 'chai'
-    self.release = '3.5.0'
+    self.release = '4.1.0'
     self.base_url = 'http://chaijs.com'
     self.root_path = '/api/'
     self.initial_paths = %w(/guide/installation/)
@@ -20,7 +20,7 @@ module Docs
     options[:skip] = %w(/api/test/ /guide/ /guide/resources/)
 
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2015 Jake Luer<br>
+      &copy; 2016 Chai.js Assertion Library<br>
       Licensed under the MIT License.
     HTML
   end

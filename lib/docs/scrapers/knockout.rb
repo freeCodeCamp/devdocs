@@ -3,7 +3,7 @@ module Docs
     self.name = 'Knockout.js'
     self.slug = 'knockout'
     self.type = 'knockout'
-    self.release = '3.4.0'
+    self.release = '3.4.2'
     self.base_url = 'http://knockoutjs.com/documentation/'
     self.root_path = 'introduction.html'
 
@@ -17,9 +17,9 @@ module Docs
       extenders.html
       deferred-updates.html
       unobtrusive-event-handling.html
+      fn.html
       microtasks.html
       asynchronous-error-handling.html
-      fn.html
       amd-loading.html)
 
     options[:only_patterns] = [
