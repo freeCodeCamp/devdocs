@@ -1,49 +1,62 @@
 module Docs
   class Nim
     class EntriesFilter < Docs::EntriesFilter
-      def get_type
-        at_css('h1').content
+      def get_name
+        name = at_css('h1').content
+        name.remove! 'Module '
+        name.remove! ' User Guide'
+        name.remove! ' User\'s manual'
+        name.remove! %r{ \-.*}
+        name.strip!
+        name
       end
 
-      def get_name
-        at_css('h1').content
+      def get_type
+        if name.include?('Tutorial')
+          'Tutorial'
+        elsif slug == 'manual'
+          'Manual'
+        elsif at_css('h1').content.include?('Module ')
+          name
+        else
+          'Reference'
+        end
       end
 
       def additional_entries
         entries = []
-        if get_name.start_with? 'Module '
-          module_name = get_name[7..-1]
-          css('div .section').map do |node|
-            section_node = node.at_css('h1 a')
-            if section_node != nil
-              section_name = section_node.content.strip
-              items_node = node.at_css('dl.item')
-              if items_node != nil
-                items_node.css('dt a').map do |item_node|
-                  item_name = item_node['name']
-                  if item_name.include? ','
-                    item_name = item_name.sub(',', '(') + ')'
-                  end
-                  entries << [module_name + '.' + item_name, item_node.parent['id']]
-                end
-              end
+
+        if at_css('h1').content.include?('Module ')
+          css('#toc-list > li > .simple-toc-section').each do |node|
+            type = node.previous_element.content.strip
+
+            node.css('a.reference:not(.reference-toplevel)').each do |n|
+              n.css('span').remove
+              name = n.content.strip
+              name << '()' if (type == 'Procs' || type == 'Templates') && !name.include?('`')
+              name.remove! '`'
+              name.prepend "#{self.name}."
+              id = n['href'].remove('#')
+              entries << [name, id] unless entries.any? { |e| e[0] == name }
             end
           end
-        else
-          css('h1', 'h2', 'h3').map do |node|
-            id = node['id']
+        elsif slug == 'manual'
+          css('#toc-list > li > a').each do |node|
             name = node.content.strip
-            if id != nil
-              entries << [name, id]
-            else
-              a = node.at_css('a')
-              if a != nil
-                id = a['id']
-                entries << [name, id]
-              end
+            next if name.start_with?('About')
+            id = node['href'].remove('#')
+            entries << [name, id]
+          end
+
+          css('#toc-list > ul').each do |node|
+            type = node.previous_element.content.strip
+
+            node.css('> li > a').each do |n|
+              entries << [n.content.strip, n['href'].remove('#'), "Manual: #{type}"]
             end
           end
         end
+
         entries
       end
     end

@@ -424,6 +424,11 @@ credits = [
     'BSD',
     'https://github.com/openresty/lua-nginx-module#copyright-and-license'
   ], [
+    'Nim',
+    '2006-2017 Andreas Rumpf',
+    'MIT',
+    'https://github.com/nim-lang/Nim#license'
+  ], [
     'Node.js',
     'Joyent, Inc. and other Node contributors<br>Node.js is a trademark of Joyent, Inc.',
     'MIT',

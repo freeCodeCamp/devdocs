@@ -77,6 +77,11 @@
   }
 }
 
-.token.important {
+.token.important,
+.token.bold {
   font-weight: $boldFontWeight;
+}
+
+.token.italic {
+  font-style: italic;
 }
