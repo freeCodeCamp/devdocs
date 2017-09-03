@@ -634,6 +634,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
   ], [
+    'Vulkan',
+    '2014-2017 Khronos Group Inc.<br>Vulkan and the Vulkan logo are registered trademarks of the Khronos Group Inc.',
+    'CC BY',
+    'https://creativecommons.org/licenses/by/4.0/'
+  ], [
     'webpack',
     'JS Foundation and other contributors',
     'CC BY',
