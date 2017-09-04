@@ -250,7 +250,6 @@
         bind:               !!Function::bind
         pushState:          !!history.pushState
         matchMedia:         !!window.matchMedia
-        classList:          !!document.body.classList
         insertAdjacentHTML: !!document.body.insertAdjacentHTML
         defaultPrevented:     document.createEvent('CustomEvent').defaultPrevented is false
         cssGradients:         supportsCssGradients()
