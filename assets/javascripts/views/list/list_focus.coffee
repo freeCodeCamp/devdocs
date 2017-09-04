@@ -46,8 +46,8 @@ class app.views.ListFocus extends app.View
           @findNext(next)
       else if next.tagName is 'H6' # title
         @findNext(next)
-    else if cursor.parentElement isnt @el
-      @findNext cursor.parentElement
+    else if cursor.parentNode isnt @el
+      @findNext cursor.parentNode
 
   findFirst: (cursor) ->
     return unless first = cursor.firstChild
@@ -72,8 +72,8 @@ class app.views.ListFocus extends app.View
           @findPrev(prev)
       else if prev.tagName is 'H6' # title
         @findPrev(prev)
-    else if cursor.parentElement isnt @el
-      @findPrev cursor.parentElement
+    else if cursor.parentNode isnt @el
+      @findPrev cursor.parentNode
 
   findLast: (cursor) ->
     return unless last = cursor.lastChild
@@ -101,8 +101,8 @@ class app.views.ListFocus extends app.View
 
   onLeft: =>
     cursor = @getCursor()
-    if cursor and not cursor.classList.contains(app.views.ListFold.activeClass) and cursor.parentElement isnt @el
-      @focusOnNextFrame cursor.parentElement.previousSibling
+    if cursor and not cursor.classList.contains(app.views.ListFold.activeClass) and cursor.parentNode isnt @el
+      @focusOnNextFrame cursor.parentNode.previousSibling
     return
 
   onEnter: =>

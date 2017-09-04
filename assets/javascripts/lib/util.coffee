@@ -16,13 +16,13 @@ $.hasChild = (parent, el) ->
   while el
     return true if el is parent
     return if el is document.body
-    el = el.parentElement
+    el = el.parentNode
 
 $.closestLink = (el, parent = document.body) ->
   while el
     return el if el.tagName is 'A'
     return if el is parent
-    el = el.parentElement
+    el = el.parentNode
 
 #
 # Events
@@ -96,7 +96,7 @@ $.before = (el, value) ->
   if typeof value is 'string' or $.isCollection(value)
     value = buildFragment(value)
 
-  el.parentElement.insertBefore(value, el)
+  el.parentNode.insertBefore(value, el)
   return
 
 $.after = (el, value) ->
@@ -104,16 +104,16 @@ $.after = (el, value) ->
     value = buildFragment(value)
 
   if el.nextSibling
-    el.parentElement.insertBefore(value, el.nextSibling)
+    el.parentNode.insertBefore(value, el.nextSibling)
   else
-    el.parentElement.appendChild(value)
+    el.parentNode.appendChild(value)
   return
 
 $.remove = (value) ->
   if $.isCollection(value)
-    el.parentElement?.removeChild(el) for el in $.makeArray(value)
+    el.parentNode?.removeChild(el) for el in $.makeArray(value)
   else
-    value.parentElement?.removeChild(value)
+    value.parentNode?.removeChild(value)
   return
 
 $.empty = (el) ->
@@ -155,7 +155,7 @@ $.offset = (el, container = document.body) ->
   left: left
 
 $.scrollParent = (el) ->
-  while el = el.parentElement
+  while el = el.parentNode
     break if el.scrollTop > 0
     break if getComputedStyle(el)?.overflowY in ['auto', 'scroll']
   el

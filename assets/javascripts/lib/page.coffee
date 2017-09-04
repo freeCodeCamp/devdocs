@@ -171,7 +171,7 @@ onclick = (event) ->
     return
 
   link = event.target
-  link = link.parentElement while link and link.tagName isnt 'A'
+  link = link.parentNode while link and link.tagName isnt 'A'
 
   if link and not link.target and isSameOrigin(link.href)
     event.preventDefault()

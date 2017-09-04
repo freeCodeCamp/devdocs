@@ -55,11 +55,11 @@ class app.views.ListFold extends app.View
     return if event.which isnt 1 or event.metaKey or event.ctrlKey
     return unless event.pageY # ignore fabricated clicks
     el = event.target
-    el = el.parentElement if el.parentElement.tagName.toUpperCase() is 'SVG'
+    el = el.parentNode if el.parentNode.tagName.toUpperCase() is 'SVG'
 
     if el.classList.contains @constructor.handleClass
       $.stopEvent(event)
-      @toggle el.parentElement
+      @toggle el.parentNode
     else if el.classList.contains @constructor.targetClass
       if el.hasAttribute('href')
         if el.classList.contains(@constructor.activeClass)
