@@ -158,7 +158,7 @@ $.offset = (el, container = document.body) ->
   left: left
 
 $.scrollParent = (el) ->
-  while el = el.parentNode
+  while el.nodeType is 1 and el = el.parentNode
     break if el.scrollTop > 0
     break if getComputedStyle(el)?.overflowY in ['auto', 'scroll']
   el
