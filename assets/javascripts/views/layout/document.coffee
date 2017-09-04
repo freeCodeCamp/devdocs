@@ -71,9 +71,10 @@ class app.views.Document extends app.View
     return
 
   onClick: (event) ->
-    return unless event.target.hasAttribute('data-behavior')
+    target = $.eventTarget(event)
+    return unless target.hasAttribute('data-behavior')
     $.stopEvent(event)
-    switch event.target.getAttribute('data-behavior')
+    switch target.getAttribute('data-behavior')
       when 'back'         then history.back()
       when 'reload'       then window.location.reload()
       when 'reboot'       then window.location = '/'

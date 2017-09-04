@@ -60,6 +60,9 @@ $.stopEvent = (event) ->
   event.stopImmediatePropagation()
   return
 
+$.eventTarget = (event) ->
+  event.target.correspondingUseElement || event.target
+
 #
 # Manipulation
 #

@@ -170,7 +170,7 @@ onclick = (event) ->
   catch
     return
 
-  link = event.target
+  link = $.eventTarget(event)
   link = link.parentNode while link and link.tagName isnt 'A'
 
   if link and not link.target and isSameOrigin(link.href)

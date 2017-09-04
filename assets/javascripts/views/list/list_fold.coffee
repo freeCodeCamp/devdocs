@@ -54,7 +54,7 @@ class app.views.ListFold extends app.View
   onClick: (event) =>
     return if event.which isnt 1 or event.metaKey or event.ctrlKey
     return unless event.pageY # ignore fabricated clicks
-    el = event.target
+    el = $.eventTarget(event)
     el = el.parentNode if el.parentNode.tagName.toUpperCase() is 'SVG'
 
     if el.classList.contains @constructor.handleClass

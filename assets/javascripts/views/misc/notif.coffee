@@ -51,8 +51,9 @@ class app.views.Notif extends app.View
 
   onClick: (event) =>
     return if event.which isnt 1
-    return if event.target.hasAttribute('data-behavior')
-    if event.target.tagName isnt 'A' or event.target.classList.contains('_notif-close')
+    target = $.eventTarget(event)
+    return if target.hasAttribute('data-behavior')
+    if target.tagName isnt 'A' or target.classList.contains('_notif-close')
       $.stopEvent(event)
       @hide()
     return

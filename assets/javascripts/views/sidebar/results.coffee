@@ -62,7 +62,7 @@ class app.views.Results extends app.View
 
   onClick: (event) =>
     return if event.which isnt 1
-    if slug = event.target.getAttribute('data-enable')
+    if slug = $.eventTarget(event).getAttribute('data-enable')
       $.stopEvent(event)
       doc = app.disabledDocs.findBy('slug', slug)
       app.enableDoc(doc, @onDocEnabled.bind(@, doc), $.noop) if doc

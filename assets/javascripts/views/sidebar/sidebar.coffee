@@ -131,7 +131,7 @@ class app.views.Sidebar extends app.View
 
   onClick: (event) =>
     return if event.which isnt 1
-    if event.target.hasAttribute? 'data-reset-list'
+    if $.eventTarget(event).hasAttribute? 'data-reset-list'
       $.stopEvent(event)
       @onAltR()
     return

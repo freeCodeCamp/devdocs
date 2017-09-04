@@ -83,7 +83,8 @@ class app.views.PaginatedList extends app.View
     return
 
   onClick: (event) =>
-    if event.target.tagName is 'SPAN' # link
+    target = $.eventTarget(event)
+    if target.tagName is 'SPAN' # link
       $.stopEvent(event)
-      @paginate event.target
+      @paginate target
     return

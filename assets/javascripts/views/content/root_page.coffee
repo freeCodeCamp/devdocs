@@ -30,7 +30,7 @@ class app.views.RootPage extends app.View
   onRoute: ->
 
   onClick: (event) =>
-    if event.target.hasAttribute 'data-hide-intro'
+    if $.eventTarget(event).hasAttribute 'data-hide-intro'
       $.stopEvent(event)
       @hideIntro()
     return

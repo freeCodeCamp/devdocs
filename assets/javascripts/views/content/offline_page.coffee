@@ -50,7 +50,7 @@ class app.views.OfflinePage extends app.View
     return
 
   onClick: (event) =>
-    el = event.target
+    el = $.eventTarget(event)
     if action = el.getAttribute('data-action')
       doc = @docByEl(el)
       action = 'install' if action is 'update'

@@ -140,7 +140,7 @@ class app.views.EntryPage extends app.View
       true
 
   onClick: (event) =>
-    target = event.target
+    target = $.eventTarget(event)
     if target.hasAttribute 'data-retry'
       $.stopEvent(event)
       @load()

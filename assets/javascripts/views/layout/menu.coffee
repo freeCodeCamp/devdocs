@@ -10,7 +10,8 @@ class app.views.Menu extends app.View
     return
 
   onClick: (event) ->
-    event.target.blur() if event.target.tagName is 'A'
+    target = $.eventTarget(event)
+    target.blur() if target.tagName is 'A'
     return
 
   onGlobalClick: (event) =>

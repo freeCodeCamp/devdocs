@@ -37,6 +37,7 @@ class app.views.ListSelect extends app.View
 
   onClick: (event) =>
     return if event.which isnt 1 or event.metaKey or event.ctrlKey
-    if event.target.tagName is 'A'
-      @select event.target
+    target = $.eventTarget(event)
+    if target.tagName is 'A'
+      @select target
     return

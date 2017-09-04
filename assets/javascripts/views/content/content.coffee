@@ -169,7 +169,7 @@ class app.views.Content extends app.View
     return
 
   onClick: (event) =>
-    link = $.closestLink event.target, @el
+    link = $.closestLink $.eventTarget(event), @el
     if link and @isExternalUrl link.getAttribute('href')
       $.stopEvent(event)
       $.popup(link)
