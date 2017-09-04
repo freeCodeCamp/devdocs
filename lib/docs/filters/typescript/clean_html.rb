@@ -4,6 +4,10 @@ module Docs
       def call
         @doc = at_css('.doc-content-container')
 
+        if root_page?
+          at_css('h1').content = 'TypeScript Documentation'
+        end
+
         css('.xs-toc-container').remove
 
         css('article h1').each do |node|
