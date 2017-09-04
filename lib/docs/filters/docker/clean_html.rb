@@ -7,7 +7,7 @@ module Docs
           return doc
         end
 
-        @doc = at_css('#DocumentationText')
+        @doc = at_css('main .section')
 
         at_css('h2').name = 'h1' unless at_css('h1')
 
@@ -30,8 +30,14 @@ module Docs
           node.content = node.content.gsub(/\s+/, ' ').strip
         end
 
+        css('> span').each do |node|
+          node.name = 'p'
+          node.remove_attribute('style')
+        end
+
         doc
       end
     end
   end
 end
+

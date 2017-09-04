@@ -210,9 +210,9 @@ credits = [
     'https://raw.githubusercontent.com/django/django/master/LICENSE'
   ], [
     'Docker',
-    '2013-2016 Docker, Inc.<br>Docker and the Docker logo are trademarks of Docker, Inc.',
+    '2017 Docker, Inc.<br>Docker and the Docker logo are trademarks of Docker, Inc.',
     'Apache',
-    'https://raw.githubusercontent.com/docker/docker/master/LICENSE'
+    'https://raw.githubusercontent.com/docker/docker.github.io/master/LICENSE'
   ], [
     'Dojo',
     '2005-2017 JS Foundation',
