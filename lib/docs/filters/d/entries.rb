@@ -2,25 +2,46 @@ module Docs
   class D
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        slug.to_s.gsub('_', '.').gsub('/', '.').squish!
+        name = at_css('h1').content
+
+        if base_url.path == '/spec/'
+          index = css('.subnav li a').to_a.index(at_css(".subnav li a[href='#{result[:path]}']")) + 1
+          name.prepend "#{index}. "
+        end
+
+        name
       end
 
       def get_type
-        slug.to_s.sub(/_(.*)/, '')
+        return 'Reference' if base_url.path == '/spec/'
+
+        if name.start_with?('etc') || name.start_with?('core.stdc.')
+          name.split('.')[0..2].join('.')
+        elsif name.start_with?('ddmd')
+          'ddmd'
+        else
+          name.split('.')[0..1].join('.')
+        end
       end
 
       def additional_entries
-        names = []
-        css('.book > tr > td > a').each do |x|
-          span_block = x.at_css('span')
-          if span_block != nil
-            elem_name = span_block.text
-            name = "#{get_name}.#{elem_name}"
-            type = name.sub(/\..*/,'')
-            names << [name, "#{slug}#{x['href']}", type]
+        return [] if root_page? || base_url.path == '/spec/'
+
+        entries = []
+
+        css('.book > tr > td > a').each do |node|
+          entries << ["#{self.name}.#{node.content}", node['href'].remove(/\A#/).remove(/\A\./)]
+        end
+
+        if entries.empty?
+          css('.quickindex[id]').each do |node|
+            name = node['id'].remove(/quickindex\.?/)
+            next if name.empty? || name =~ /\.\d+\z/
+            entries << ["#{self.name}.#{name}", name]
           end
         end
-        names
+
+        entries
       end
     end
   end

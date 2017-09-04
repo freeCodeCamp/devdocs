@@ -1,18 +1,30 @@
 module Docs
   class D < UrlScraper
-    self.release = '2.075.1'
+    include MultipleBaseUrls
+
+    self.release = '2.076.0'
     self.type = 'd'
-    self.base_url = 'http://dlang.org/phobos/'
+    self.base_urls = ['https://dlang.org/phobos/', 'https://dlang.org/spec/']
+    self.root_path = 'index.html'
+    self.links = {
+      home: 'https://dlang.org/',
+      code: 'https://github.com/dlang/phobos'
+    }
 
     html_filters.push 'd/entries', 'd/clean_html'
 
-    options[:container] = '#content'
+    options[:skip] = %w(spec.html)
+    options[:container] = '.container'
+    options[:root_title] = 'D Programming Language'
     options[:title] = false
-    options[:root_title] = 'D Language'
-    options[:skip_patterns] = [/#.*/]
 
     options[:attribution] = <<-HTML
-      Copyright &copy; 1999-2017 by the D Language Foundation
+      &copy; 1999&ndash;2017 The D Language Foundation<br>
+      Licensed under the Boost License 1.0.
     HTML
+
+    def initial_urls
+      %w(https://dlang.org/phobos/index.html https://dlang.org/spec/intro.html)
+    end
   end
 end
