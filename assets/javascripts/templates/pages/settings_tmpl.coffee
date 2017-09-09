@@ -35,6 +35,5 @@ app.templates.settingsPage = (settings) -> """
     </div>
   </div>
 
-  <p>
-    <a href="#" class="_reset-link" data-behavior="reset">Reset all preferences and data</a>
+  <button type="button" class="_btn-link _reset-btn" data-behavior="reset">Reset all preferences and data</button>
 """

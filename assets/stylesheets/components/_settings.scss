@@ -69,10 +69,6 @@
 ._setting-native-scrollbar { display: none; }
 @supports (-webkit-margin-end: 1px) { ._setting-native-scrollbar { display: block; } }
 
-._reset-link {
-  color: $textColorRed;
-}
-
 //
 // Settings buttons
 //

@@ -408,6 +408,11 @@
   }
 }
 
+._reset-btn,
+._reset-btn:hover {
+  color: $textColorRed;
+}
+
 ._github-btn {
   display: inline-block;
   vertical-align: text-top;
