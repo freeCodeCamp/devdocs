@@ -74,7 +74,7 @@ class App < Sinatra::Application
     use Rack::Deflater
     use Rack::Static,
       root: 'public',
-      urls: %w(/assets /docs/ /images /favicon.ico /robots.txt /opensearch.xml /mathml.css),
+      urls: %w(/assets /docs/ /images /favicon.ico /robots.txt /opensearch.xml /mathml.css /manifest.json),
       header_rules: [
         [:all,           {'Cache-Control' => 'no-cache, max-age=0'}],
         ['/assets',      {'Cache-Control' => 'public, max-age=604800'}],

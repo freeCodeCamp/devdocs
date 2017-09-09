@@ -8,6 +8,7 @@
   <meta property="og:image" content="<%= App.cdn_origin %>/images/icon-128.png">
   <title>DevDocs<%= " &mdash; #{@doc['full_name']} documentation (fast, offline)" if doc_index_page? %></title>
   <link rel="canonical" href="<%= canonical_origin %><%= request.path %>">
+  <link rel="manifest" href="<%= App.cdn_origin %>/manifest.json">
   <link rel="icon" type="image/x-icon" href="<%= App.cdn_origin %>/favicon.ico">
   <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Search DevDocs">
   <link rel="stylesheet" href="<%= main_stylesheet_path %>" data-alt="<%= alternate_stylesheet_path %>">

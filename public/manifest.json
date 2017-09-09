@@ -1,0 +1,34 @@
+{
+  "name": "DevDocs",
+  "short_name": "DevDocs",
+  "description": "API Documentation Browser",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/images/webapp-icon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/webapp-icon-60.png",
+      "sizes": "60x60",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/webapp-icon-80.png",
+      "sizes": "80x80",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/webapp-icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/webapp-icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ]
+}
