@@ -102,7 +102,8 @@ class app.views.ListFocus extends app.View
   onLeft: =>
     cursor = @getCursor()
     if cursor and not cursor.classList.contains(app.views.ListFold.activeClass) and cursor.parentNode isnt @el
-      @focusOnNextFrame cursor.parentNode.previousSibling
+      prev = cursor.parentNode.previousSibling
+      @focusOnNextFrame cursor.parentNode.previousSibling if prev and prev.classList.contains(app.views.ListFold.targetClass)
     return
 
   onEnter: =>
