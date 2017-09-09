@@ -10,7 +10,6 @@
   init: ->
     try @initErrorTracking() catch
     return unless @browserCheck()
-    @showLoading()
 
     @el = $('._app')
     @localStorage = new LocalStorageStore
@@ -38,8 +37,8 @@
 
   browserCheck: ->
     return true if @isSupportedBrowser()
-    document.body.className = ''
     document.body.innerHTML = app.templates.unsupportedBrowser
+    @hideLoadingScreen()
     false
 
   initErrorTracking: ->
@@ -103,7 +102,7 @@
     @initDoc(doc) for doc in @docs.all()
     @trigger 'ready'
     @router.start()
-    @hideLoading()
+    @hideLoadingScreen()
     setTimeout =>
       @welcomeBack() unless @doc
       @removeEvent 'ready bootError'
@@ -181,15 +180,9 @@
       new app.views.Tip(tip)
     return
 
-  showLoading: ->
-    document.body.classList.remove '_noscript'
-    document.body.classList.add '_loading'
-    return
-
-  hideLoading: ->
+  hideLoadingScreen: ->
     document.body.classList.add '_overlay-scrollbars' if $.overlayScrollbarsEnabled()
-    document.body.classList.remove '_booting'
-    document.body.classList.remove '_loading'
+    document.documentElement.classList.remove '_booting'
     return
 
   indexHost: ->
@@ -199,7 +192,7 @@
 
   onBootError: (args...) ->
     @trigger 'bootError'
-    @hideLoading()
+    @hideLoadingScreen()
     return
 
   onQuotaExceeded: ->
@@ -221,7 +214,7 @@
       @onInjectionError()
     else if @isAppError args...
       @previousErrorHandler? args...
-      @hideLoading()
+      @hideLoadingScreen()
       @errorNotif or= new app.views.Notif 'Error'
       @errorNotif.show()
     return

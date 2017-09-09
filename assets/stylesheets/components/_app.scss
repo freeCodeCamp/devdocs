@@ -3,13 +3,11 @@
   z-index: 1;
   height: 100%;
   overflow: hidden;
-  background: $contentBackground;
   -webkit-transition: opacity .2s;
           transition: opacity .2s;
   @extend %border-box;
 
-  ._booting > & { opacity: 0; }
-  ._noscript > & { display: none; }
+  ._booting & { opacity: 0; }
 
   ._max-width & {
     margin: 0 auto;
@@ -17,29 +15,3 @@
     box-shadow: 1px 0 $headerBorder, -1px 0 $headerBorder;
   }
 }
-
-._booting {
-  opacity: 0;
-
-  &._loading, &._loading:before { opacity: 1; }
-
-  &:before {
-    content: 'Loading\2026';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    line-height: 1;
-    margin-top: -.6em;
-    font-size: 4rem;
-    font-weight: 300;
-    letter-spacing: -.125rem;
-    color: $loadingText;
-    text-align: center;
-    opacity: 0;
-    -webkit-transition: opacity .1s .3s;
-            transition: opacity .1s .3s;
-  }
-}
-
-._noscript { opacity: 1; }

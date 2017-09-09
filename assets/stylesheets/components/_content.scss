@@ -43,9 +43,24 @@
   }
 }
 
+%loading {
+  content: 'Loading\2026';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  line-height: 1;
+  margin-top: -.6em;
+  font-size: 4rem;
+  font-weight: 300;
+  letter-spacing: -.125rem;
+  color: $loadingText;
+  text-align: center;
+  cursor: default;
+}
+
 ._content-loading:before {
-  opacity: 1;
-  @extend ._booting:before;
+  @extend %loading;
 }
 
 //
@@ -54,9 +69,7 @@
 
 ._splash-title {
   color: $splashText;
-  cursor: default;
-  opacity: 1;
-  @extend ._booting:before, %user-select-none;
+  @extend %loading, %user-select-none;
 }
 
 //
