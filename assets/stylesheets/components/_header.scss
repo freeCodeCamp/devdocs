@@ -46,12 +46,9 @@
   }
 
   > svg {
-    display: inline-block;
-    vertical-align: top;
     width: 1.5rem;
     height: 1.5rem;
-    fill: currentColor;
-    pointer-events: none;
+    @extend %svg-icon;
   }
 }
 
@@ -144,17 +141,20 @@
   padding: .5rem 0 .5rem .5rem;
   @extend %border-box;
 
-  &:before {
+  > svg {
     position: absolute;
     z-index: 1;
-    top: calc(1rem - 1px);
-    left: 1rem;
-    opacity: .4;
-    pointer-events: none;
+    top: .875rem;
+    left: .875rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    opacity: .42;
+    @extend %svg-icon;
+
     @if $style == 'dark' {
-      @extend %icon, %icon-search-white;
+      fill: white;
     } @else {
-      @extend %icon, %icon-search;
+      fill: black;
     }
   }
 }
@@ -190,24 +190,24 @@
   position: absolute;
   top: .5em;
   right: 0;
-  width: 2rem;
+  width: 1.75rem;
   height: 2rem;
-  opacity: .3;
+  opacity: .42;
   @extend %hide-text;
 
-  &:hover { opacity: .5; }
+  &:hover { opacity: .7; }
 
-  &:before {
+  > svg {
     position: absolute;
     top: .5rem;
-    left: .5rem;
-    @extend %icon;
+    left: .375rem;
+    @extend %svg-icon;
   }
 
   @if $style == 'dark' {
-    &:before { @extend %icon-close-white; }
+    > svg { fill: white; }
   } @else {
-    &:before { @extend %icon-clear; }
+    > svg { fill: black; }
   }
   ._search-active > & { display: block; }
 }

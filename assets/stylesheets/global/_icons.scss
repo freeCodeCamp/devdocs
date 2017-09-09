@@ -1,10 +1,10 @@
-%icon {
-  content: '';
-  display: block;
+%svg-icon {
+  display: inline-block;
+  vertical-align: top;
   width: 1rem;
   height: 1rem;
-  background-image: image-url('icons.png');
-  background-size: 4rem 2rem;
+  pointer-events: none;
+  fill: currentColor;
 }
 
 %doc-icon {
@@ -16,12 +16,9 @@
   background-size: 10rem 10rem;
 }
 
-%doc-icon-2 {
-  background-image: image-url('docs-2.png') !important;
-}
+%doc-icon-2 { background-image: image-url('docs-2.png') !important; }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
-  %icon { background-image: image-url('icons@2x.png'); }
   %doc-icon { background-image: image-url('docs-1@2x.png'); }
   %doc-icon-2 { background-image: image-url('docs-2@2x.png') !important; }
 }
@@ -32,15 +29,6 @@
     -webkit-filter: invert(100%) grayscale(100%);
   }
 }
-
-%icon-clipboard             { background-position: 0 0; }
-%icon-search                { background-position: -1rem 0; }
-%icon-link                  { background-position: -2.25rem -.25rem; }
-%icon-clear                 { background-position: -3rem 0; }
-%icon-clipboard-white       { background-position: 0 -1rem; }
-%icon-search-white          { background-position: -1rem -1rem; }
-%icon-close-white           { background-position: -2rem -1rem; }
-%icon-link-white            { background-position: -3.25rem -1.25rem; }
 
 ._icon-jest:before          { background-position: 0 0; }
 ._icon-liquid:before        { background-position: -1rem 0; }

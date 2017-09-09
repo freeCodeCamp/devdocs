@@ -190,8 +190,6 @@ class App < Sinatra::Application
         javascript_path('application', asset_host: false),
         stylesheet_path('application'),
         stylesheet_path('application-dark'),
-        image_path('icons.png'),
-        image_path('icons@2x.png'),
         image_path('docs-1.png'),
         image_path('docs-1@2x.png'),
         image_path('docs-2.png'),

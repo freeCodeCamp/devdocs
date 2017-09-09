@@ -91,13 +91,10 @@
   @extend %border-box;
 
   > svg {
-    display: inline-block;
-    vertical-align: top;
     width: 1.5rem;
     height: 1.5rem;
     margin-right: .125rem;
-    fill: currentColor;
-    pointer-events: none;
+    @extend %svg-icon;
   }
 }
 

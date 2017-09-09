@@ -34,7 +34,7 @@ class app.views.EntryPage extends app.View
 
     $.batchUpdate @el, =>
       @subview.render(content, fromCache)
-      @addClipboardLinks() unless fromCache
+      @addCopyButtons() unless fromCache
       return
 
     if app.disabledDocs.findBy 'slug', @entry.doc.slug
@@ -44,13 +44,15 @@ class app.views.EntryPage extends app.View
     @trigger 'loaded'
     return
 
-  addClipboardLinks: ->
-    unless @clipBoardLink
-      @clipBoardLink = document.createElement('a')
-      @clipBoardLink.className = '_pre-clip'
-      @clipBoardLink.title = 'Copy to clipboard'
-      @clipBoardLink.tabIndex = -1
-    el.appendChild(@clipBoardLink.cloneNode()) for el in @findAllByTag('pre')
+  addCopyButtons: ->
+    unless @copyButton
+      @copyButton = document.createElement('button')
+      @copyButton.innerHTML = '<svg><use xlink:href="#icon-copy"/></svg>'
+      @copyButton.type = 'button'
+      @copyButton.className = '_pre-clip'
+      @copyButton.title = 'Copy to clipboard'
+      @copyButton.setAttribute 'aria-label', 'Copy to clipboard'
+    el.appendChild @copyButton.cloneNode(true) for el in @findAllByTag('pre')
     return
 
   polyfillMathML: ->

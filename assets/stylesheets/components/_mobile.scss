@@ -52,10 +52,11 @@
     padding-right: .125rem;
     padding-left: .125rem;
 
-    &:before { left: .625rem; }
+    > svg { left: .5rem; }
   }
 
   ._search-tag { left: .5rem; }
+  ._search-clear > svg { left: .25rem; }
 
   // Sidebar
 

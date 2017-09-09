@@ -49,11 +49,12 @@
   opacity: .9;
   @extend %hide-text;
 
-  &:before {
+  > svg {
     position: absolute;
     top: .625rem;
     left: .625rem;
-    @extend %icon, %icon-close-white;
+    fill: white;
+    @extend %svg-icon;
   }
 
   &:hover { opacity: 1; }
