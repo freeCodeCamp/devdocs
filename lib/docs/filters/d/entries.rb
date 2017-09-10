@@ -29,14 +29,10 @@ module Docs
 
         entries = []
 
-        css('.book > tr > td > a').each do |node|
-          entries << ["#{self.name}.#{node.content}", node['href'].remove(/\A#/).remove(/\A\./)]
-        end
-
         if entries.empty?
           css('.quickindex[id]').each do |node|
             name = node['id'].remove(/quickindex\.?/)
-            next if name.empty? || name =~ /\.\d+\z/
+            next if name.empty? || name =~ /\.\d+\z/ || name =~ /\A([^\.]+)\.\1\z/
             entries << ["#{self.name}.#{name}", name]
           end
         end

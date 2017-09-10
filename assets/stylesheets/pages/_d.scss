@@ -2,6 +2,8 @@
   h2 { @extend %block-heading; }
   h3, .d_decl { @extend %block-label, %label-blue; }
   .d_decl { @extend %code; }
+  .d_decl > small { color: $textColorLight; }
+  .d_decl > strong { font-weight: $bolderFontWeight; }
 
   p > code, li > code, td > code, dd > code { @extend %label; }
 

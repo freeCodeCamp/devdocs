@@ -28,17 +28,40 @@ module Docs
           node.replace("<dl><dt>#{dt}</dt><dd>#{dd}</dd></dl>")
         end
 
+        css('.description > .blankline:first-child + .quickindex').each do |node|
+          node.next_element.remove if node.next_element && node.next_element['class'] == 'blankline'
+          node.previous_element.remove
+          node.parent.before(node)
+        end
+
         css('div.summary', 'div.description').each do |node|
           node.name = 'p' unless node.at_css('p')
           node.css('.blankline').each { |n| n.replace('<br><br>') }
         end
 
         css('.d_decl').each do |node|
-          node['id'] = node.at_css('.def-anchor')['id'].remove(/\A\./)
-          constraints = node.css('.constraint').remove
-          node.content = node.content.strip
-          node.inner_html = node.inner_html.gsub(/;\s*/, '<br>').remove(/<br>\z/)
-          node << "<br><br>  Constraints:<br>    #{constraints.map(&:content).join('<br>    ')}" unless constraints.empty?
+          node['id'] ||= node.at_css('.quickindex[id]')['id'].remove('quickindex.')
+
+          node.css('.def-anchor[id]').each do |n|
+            n.next_element['id'] ||= n['id']
+          end
+
+          node.css('.constraint').each do |n|
+            n.content = "  Constraints: #{n.content}#{n.next.remove.content if n.next.text?}"
+            n.name = 'small'
+            n.remove_attribute('class')
+          end
+
+          node.css('code[id]').each do |n|
+            n.name = 'strong'
+            n.remove_attribute('class')
+          end
+
+          node.css('*').each do |n|
+            n.before(n.children).remove unless n.name == 'br' || n.name == 'small' || n.name == 'strong'
+          end
+
+          node.inner_html = node.inner_html.remove(/<br>\z/)
         end
 
         css('pre').each do |node|
