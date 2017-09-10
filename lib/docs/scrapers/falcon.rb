@@ -19,6 +19,11 @@ module Docs
       Licensed under the Apache License, Version 2.0.
     HTML
 
+    version '1.3' do
+      self.release = '1.3.0'
+      self.base_url = "https://falcon.readthedocs.io/en/#{self.release}/"
+    end
+
     version '1.2' do
       self.release = '1.2.0'
       self.base_url = "https://falcon.readthedocs.io/en/#{self.release}/"
