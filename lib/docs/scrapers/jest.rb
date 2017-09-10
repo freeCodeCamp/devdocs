@@ -1,7 +1,7 @@
 module Docs
   class Jest < UrlScraper
     self.type = 'jest'
-    self.release = '20.0.1'
+    self.release = '21.0.2'
     self.base_url = 'https://facebook.github.io/jest/docs/en/'
     self.root_path = 'getting-started.html'
     self.links = {
