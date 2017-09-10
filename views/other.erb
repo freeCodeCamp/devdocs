@@ -13,7 +13,7 @@
   <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Search DevDocs">
   <link rel="stylesheet" href="<%= main_stylesheet_path %>" data-alt="<%= alternate_stylesheet_path %>">
 </head>
-<body<%= %w( class="#{app_layout}") if app_layout %> data-doc="<%= CGI::escape_html @doc.to_json %>">
+<body<%= %( class="#{app_layout}") if app_layout %> data-doc="<%= CGI::escape_html @doc.to_json %>">
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
 <%= erb :app -%>
 <%= javascript_tag 'application', asset_host: false %><% unless App.production? %>

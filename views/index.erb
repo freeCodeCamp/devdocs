@@ -32,7 +32,7 @@
   <link rel="mask-icon" href="<%= App.cdn_origin %>/images/webkit-mask-icon.svg" color="#398df0">
   <link rel="stylesheet" href="<%= main_stylesheet_path %>" data-alt="<%= alternate_stylesheet_path %>">
 </head>
-<body<%= %w( class="#{app_layout}") if app_layout %>>
+<body<%= %( class="#{app_layout}") if app_layout %>>
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
 <%= erb :app -%>
 <%= javascript_tag 'application', asset_host: false %>
