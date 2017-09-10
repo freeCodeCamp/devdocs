@@ -14,6 +14,7 @@ class @CookieStore
       return
 
     value = 1 if value == true
+    value = parseInt(value, 10) if value and INT.test?(value)
     Cookies.set(key, '' + value, path: '/', expires: 1e8)
     @constructor.onBlocked(key, value, @get(key)) if @get(key) != value
     return

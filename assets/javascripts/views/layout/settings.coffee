@@ -9,6 +9,7 @@ class app.views.Settings extends app.View
     backBtn: 'button[data-back]'
 
   @events:
+    import: 'onImport'
     change: 'onChange'
     submit: 'onSubmit'
     click: 'onClick'
@@ -41,11 +42,16 @@ class app.views.Settings extends app.View
     @addClass '_in'
     return
 
-  save: ->
+  save: (options = {}) ->
     unless @saving
       @saving = true
-      docs = @docPicker.getSelectedDocs()
-      app.settings.setDocs(docs)
+
+      if options.import
+        docs = app.settings.getDocs()
+      else
+        docs = @docPicker.getSelectedDocs()
+        app.settings.setDocs(docs)
+
       @saveBtn.textContent = if app.appCache then 'Downloading\u2026' else 'Saving\u2026'
       disabledDocs = new app.collections.Docs(doc for doc in app.docs.all() when docs.indexOf(doc.slug) is -1)
       disabledDocs.uninstall ->
@@ -64,6 +70,11 @@ class app.views.Settings extends app.View
   onSubmit: (event) =>
     event.preventDefault()
     @save()
+    return
+
+  onImport: =>
+    @addClass('_dirty')
+    @save(import: true)
     return
 
   onClick: (event) =>

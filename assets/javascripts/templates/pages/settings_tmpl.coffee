@@ -35,5 +35,10 @@ app.templates.settingsPage = (settings) -> """
     </div>
   </div>
 
-  <button type="button" class="_btn-link _reset-btn" data-behavior="reset">Reset all preferences and data</button>
+  <p class="_hide-on-mobile">
+    <button type="button" class="_btn" data-action="export">Export</button>
+    <label class="_btn _file-btn"><input type="file" form="settings" name="import" accept=".json">Import</label>
+
+  <p>
+    <button type="button" class="_btn-link _reset-btn" data-behavior="reset">Reset all preferences and data</button>
 """

@@ -30,6 +30,10 @@ app.templates.notifInvalidLocation = ->
   textNotif """ DevDocs must be loaded from #{app.config.production_host} """,
             """ Otherwise things are likely to break. """
 
+app.templates.notifImportInvalid = ->
+  textNotif """ Oops, an error occured. """,
+            """ The file you selected is invalid. """
+
 app.templates.notifNews = (news) ->
   notif 'Changelog', """<div class="_notif-content _notif-news">#{app.templates.newsList(news, years: false)}</div>"""
 

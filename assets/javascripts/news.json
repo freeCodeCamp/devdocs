@@ -1,5 +1,8 @@
 [
   [
+    "2017-09-10",
+    "<a href=\"/settings\">Preferences</a> can now be exported and imported."
+  ], [
     "2017-09-03",
     "New documentations: <a href=\"/d/\">D</a>, <a href=\"/nim/\">Nim</a> and <a href=\"/vulkan/\">Vulkan</a>"
   ], [

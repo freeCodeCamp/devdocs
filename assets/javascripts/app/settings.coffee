@@ -1,9 +1,23 @@
 class app.Settings
-  DOCS_KEY = 'docs'
-  DARK_KEY = 'dark'
-  LAYOUT_KEY = 'layout'
-  SIZE_KEY = 'size'
-  TIPS_KEY = 'tips'
+  PREFERENCE_KEYS = [
+    'hideDisabled'
+    'hideIntro'
+    'manualUpdate'
+    'fastScroll'
+    'arrowScroll'
+    'docs'
+    'dark'
+    'layout'
+    'size'
+    'tips'
+  ]
+
+  INTERNAL_KEYS = [
+    'count'
+    'schema'
+    'version'
+    'news'
+  ]
 
   @defaults:
     count: 0
@@ -32,24 +46,24 @@ class app.Settings
     return
 
   hasDocs: ->
-    try !!@store.get(DOCS_KEY)
+    try !!@store.get('docs')
 
   getDocs: ->
-    @store.get(DOCS_KEY)?.split('/') or app.config.default_docs
+    @store.get('docs')?.split('/') or app.config.default_docs
 
   setDocs: (docs) ->
-    @set DOCS_KEY, docs.join('/')
+    @set 'docs', docs.join('/')
     return
 
   getTips: ->
-    @store.get(TIPS_KEY)?.split('/') or []
+    @store.get('tips')?.split('/') or []
 
   setTips: (tips) ->
-    @set TIPS_KEY, tips.join('/')
+    @set 'tips', tips.join('/')
     return
 
   setLayout: (name, enable) ->
-    layout = (@store.get(LAYOUT_KEY) || '').split(' ')
+    layout = (@store.get('layout') || '').split(' ')
     $.arrayDelete(layout, '')
 
     if enable
@@ -58,21 +72,33 @@ class app.Settings
       $.arrayDelete(layout, name)
 
     if layout.length > 0
-      @set LAYOUT_KEY, layout.join(' ')
+      @set 'layout', layout.join(' ')
     else
-      @del LAYOUT_KEY
+      @del 'layout'
     return
 
   hasLayout: (name) ->
-    layout = (@store.get(LAYOUT_KEY) || '').split(' ')
+    layout = (@store.get('layout') || '').split(' ')
     layout.indexOf(name) isnt -1
 
   setSize: (value) ->
-    @set SIZE_KEY, value
+    @set 'size', value
     return
 
   dump: ->
     @store.dump()
+
+  export: ->
+    data = @dump()
+    delete data[key] for key in INTERNAL_KEYS
+    data
+
+  import: (data) ->
+    for key, value of @export()
+      @del key unless data.hasOwnProperty(key)
+    for key, value of data
+      @set key, value if PREFERENCE_KEYS.indexOf(key) isnt -1
+    return
 
   reset: ->
     @store.reset()
