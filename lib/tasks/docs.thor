@@ -165,7 +165,7 @@ class DocsCLI < Thor
   option :amend, type: :boolean
   def commit(name)
     doc = Docs.find(name, false)
-    message = options[:message] || "Update #{doc.name} documentation (#{doc.versions.map(&:release).join(', ')})"
+    message = options[:message] || "Update #{doc.name} documentation (#{doc.versions.first.release})"
     amend = " --amend" if options[:amend]
     system("git add assets/ *#{name}*") && system("git commit -m '#{message}'#{amend}")
   rescue Docs::DocNotFound => error
