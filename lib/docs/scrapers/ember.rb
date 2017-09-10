@@ -5,10 +5,10 @@ module Docs
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.release = '2.14.0'
+    self.release = '2.15.0'
     self.base_urls = [
-      'https://guides.emberjs.com/v2.14.0/',
-      'https://emberjs.com/api/ember/2.14/',
+      'https://guides.emberjs.com/v2.15.0/',
+      'https://emberjs.com/api/ember/2.15/',
       'https://emberjs.com/api/ember-data/2.14/'
     ]
     self.links = {
@@ -51,8 +51,8 @@ module Docs
 
     def initial_urls
       %w(
-        https://guides.emberjs.com/v2.14.0/
-        https://emberjs.com/api/ember/2.14/classes/Ember
+        https://guides.emberjs.com/v2.15.0/
+        https://emberjs.com/api/ember/2.15/classes/Ember
         https://emberjs.com/api/ember-data/2.14/classes/DS
       )
     end
