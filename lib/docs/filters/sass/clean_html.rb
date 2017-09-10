@@ -6,13 +6,17 @@ module Docs
           node.name = 'code'
         end
 
+        css('pre').each do |node|
+          node.content = node.content
+        end
+
         root_page? ? root : other
 
         doc
       end
 
       def root
-        at_css('.maruku_toc').remove
+        at_css('h1 + ul').remove
       end
 
       def other
@@ -45,6 +49,14 @@ module Docs
         # Remove links to type classes (e.g. Number)
         css('.type > code').each do |node|
           node.before(node.content.remove('Sass::Script::Value::').remove('Sass::Script::')).remove
+        end
+
+        css('li > span.signature').each do |node|
+          node.name = 'p'
+        end
+
+        css('h3 strong', 'span.overload').each do |node|
+          node.before(node.children).remove
         end
       end
     end

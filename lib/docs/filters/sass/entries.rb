@@ -15,8 +15,12 @@ module Docs
         'The !optional Flag' => '!optional'
       }
 
-      def include_default_entry?
-        false
+      def get_name
+        'Functions'
+      end
+
+      def get_type
+        'Functions'
       end
 
       def additional_entries
@@ -27,9 +31,11 @@ module Docs
         entries = []
         type = ''
 
-        css('> [id]').each do |node|
+        css('*').each do |node|
           if node.name == 'h2'
             type = node.content.strip
+            type.remove! %r{\s#.*}
+            node['id'] = type.parameterize
 
             if type == 'Function Directives'
               entries << ['@function', node['id'], '@-Rules and Directives']
@@ -42,23 +48,26 @@ module Docs
             end
 
             next
+          elsif node.name == 'h3' || node.name == 'h4'
+            next unless TYPES.include?(type)
+
+            name = node.content.strip
+            name.remove! %r{\A.+?: }
+            name.remove! %r{\s#.*}
+
+            node['id'] = name.parameterize
+
+            next if SKIP_NAMES.include?(name)
+
+            name = REPLACE_NAMES[name] if REPLACE_NAMES[name]
+            name.gsub!(/ [A-Z]/) { |str| str.downcase! }
+
+            if type == '@-Rules and Directives'
+              next unless name =~ /\A@[\w\-]+\z/ || name == '!optional'
+            end
+
+            entries << [name, node['id'], type]
           end
-
-          next unless TYPES.include?(type)
-
-          name = node.content.strip
-          name.remove! %r{\A.+?: }
-
-          next if SKIP_NAMES.include?(name)
-
-          name = REPLACE_NAMES[name] if REPLACE_NAMES[name]
-          name.gsub!(/ [A-Z]/) { |str| str.downcase! }
-
-          if type == '@-Rules and Directives'
-            next unless name =~ /\A@[\w\-]+\z/ || name == '!optional'
-          end
-
-          entries << [name, node['id'], type]
         end
 
         entries
@@ -66,7 +75,7 @@ module Docs
 
       def function_entries
         css('.method_details > .signature').inject [] do |entries, node|
-          name = node.at_css('strong').content.strip
+          name = node.content.strip.remove(%r{\(.*})
 
           unless name == entries.last.try(:first)
             entries << [name, node['id'], 'Functions']

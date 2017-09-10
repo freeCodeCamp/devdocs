@@ -1,16 +1,5 @@
 ._yard {
-  > h2 { @extend %block-heading; }
-  .signature { @extend %block-label, %label-blue; }
-
-  > .method_details {
-    padding-left: 1rem;
-
-    > .signature { margin-left: -1rem; }
-    > .signature .overload { display: block; }
-
-    h3 { font-size: inherit; }
-    ul, pre { margin: 1em 0; }
-  }
+  @extend %simple;
 
   .tag_title { font-weight: $boldFontWeight; }
 }
