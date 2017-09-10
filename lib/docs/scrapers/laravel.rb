@@ -1,11 +1,7 @@
 module Docs
   class Laravel < UrlScraper
-    self.name = 'Laravel'
-    self.slug = 'laravel'
     self.type = 'laravel'
-
     self.base_url = 'https://laravel.com'
-
     self.links = {
       home: 'https://laravel.com/',
       code: 'https://github.com/laravel/laravel'
@@ -32,6 +28,19 @@ module Docs
       Licensed under the MIT License.<br>
       Laravel is a trademark of Taylor Otwell.
     HTML
+
+    version '5.5' do
+      self.release = '5.5.0'
+      self.root_path = '/api/5.5/index.html'
+      self.initial_paths = %w(/docs/5.5/installation /api/5.5/classes.html)
+
+      options[:only_patterns] = [%r{\A/api/5\.5/}, %r{\A/docs/5\.5/}]
+
+      options[:fix_urls] = ->(url) do
+        url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/5.5/"
+        url
+      end
+    end
 
     version '5.4' do
       self.release = '5.4.30'
