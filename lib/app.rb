@@ -76,11 +76,16 @@ class App < Sinatra::Application
       root: 'public',
       urls: %w(/assets /docs/ /images /favicon.ico /robots.txt /opensearch.xml /mathml.css /manifest.json),
       header_rules: [
-        [:all,           {'Cache-Control' => 'no-cache, max-age=0'}],
-        ['/assets',      {'Cache-Control' => 'public, max-age=604800'}],
-        ['/favicon.ico', {'Cache-Control' => 'public, max-age=86400'}],
-        ['/mathml.css',  {'Cache-Control' => 'public, max-age=604800'}],
-        ['/images',      {'Cache-Control' => 'public, max-age=86400'}] ]
+        [:all,              { 'Cache-Control' => 'no-cache, max-age=0'    }],
+        ['/assets',         { 'Cache-Control' => 'public, max-age=604800' }],
+        ['/docs',           { 'Cache-Control' => 'public, max-age=86400'  }],
+        ['/images',         { 'Cache-Control' => 'public, max-age=86400'  }],
+        ['/favicon.ico',    { 'Cache-Control' => 'public, max-age=86400'  }],
+        ['/robots.txt',     { 'Cache-Control' => 'public, max-age=86400'  }],
+        ['/opensearch.xml', { 'Cache-Control' => 'public, max-age=86400'  }],
+        ['/mathml.css',     { 'Cache-Control' => 'public, max-age=86400'  }],
+        ['/manifest.json',  { 'Cache-Control' => 'public, max-age=86400'  }]
+      ]
 
     sprockets.js_compressor = Uglifier.new output: { beautify: true, indent_level: 0 }
     sprockets.css_compressor = :sass
