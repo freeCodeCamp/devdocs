@@ -35,13 +35,13 @@ module Docs
     HTML
 
     version '1.11' do
-      self.release = '1.11.3'
+      self.release = '1.11.5'
       self.dir = '/Users/Thibaut/DevDocs/Docs/Django111'
       self.base_url = 'https://docs.djangoproject.com/en/1.11/'
     end
 
     version '1.10' do
-      self.release = '1.10.7'
+      self.release = '1.10.8'
       self.dir = '/Users/Thibaut/DevDocs/Docs/Django110'
       self.base_url = 'https://docs.djangoproject.com/en/1.10/'
     end
