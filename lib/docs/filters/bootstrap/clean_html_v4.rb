@@ -53,6 +53,10 @@ module Docs
           node.name = 'h4'
         end
 
+        css('thead td').each do |node|
+          node.name = 'th'
+        end
+
         css('table, tr, td, th, pre, code').each do |node|
           node.remove_attribute('class')
           node.remove_attribute('style')

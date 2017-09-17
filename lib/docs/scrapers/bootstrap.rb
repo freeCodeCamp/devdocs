@@ -6,7 +6,7 @@ module Docs
       code: 'https://github.com/twbs/bootstrap'
     }
 
-    options[:trailing_slash] = false
+    options[:trailing_slash] = true
 
     options[:attribution] = <<-HTML
       &copy; 2011&ndash;2017 Twitter, Inc.<br>
@@ -16,31 +16,23 @@ module Docs
     HTML
 
     version '4' do
-      self.release = 'alpha.6'
-      self.base_url = 'https://v4-alpha.getbootstrap.com/'
-      self.root_path = 'getting-started/introduction'
+      self.release = '4.0.0-beta'
+      self.base_url = 'https://getbootstrap.com/docs/4.0/'
+      self.root_path = 'getting-started/introduction/'
 
       html_filters.push 'bootstrap/entries_v4', 'bootstrap/clean_html_v4'
 
-      options[:only_patterns] = [/\Agetting-started\//, /\Alayout\//, /\Acontent\//, /\Acomponents\//, /\Autilities\//]
+      options[:only_patterns] = [/\Agetting-started\//, /\Alayout\//, /\Acontent\//, /\Acomponents\//, /\Autilities\//, /\Amigration\//]
     end
 
     version '3' do
       self.release = '3.3.7'
-      self.base_url = 'https://getbootstrap.com/'
-      self.root_path = 'getting-started'
+      self.base_url = 'https://getbootstrap.com/docs/3.3/'
+      self.root_path = 'getting-started/'
 
       html_filters.push 'bootstrap/entries_v3', 'bootstrap/clean_html_v3'
 
-      options[:only] = %w(getting-started css components javascript)
-    end
-
-    private
-
-    def handle_response(response)
-      response.effective_url.scheme = 'https'
-      response.effective_url.path = response.effective_url.path.remove(/\/\z/)
-      super
+      options[:only] = %w(getting-started/ css/ components/ javascript/)
     end
   end
 end

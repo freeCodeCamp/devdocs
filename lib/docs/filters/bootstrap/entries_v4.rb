@@ -4,24 +4,22 @@ module Docs
       def get_name
         name = at_css('.bd-content h1').content.strip
         name.remove! ' system'
-        return type if name == 'Overview'
-        name.prepend 'Utilities: ' if subpath.start_with?('utilities')
-        name
+        name == 'Overview' ? type : name
       end
 
       def get_type
         if subpath.start_with?('components')
           at_css('.bd-content h1').content.strip.prepend 'Components: '
         else
-          at_css('.bd-pageheader h1').content
+          at_css('.bd-toc-item.active > .bd-toc-link').content
         end
       end
 
       def additional_entries
-        return [] if root_page? || subpath.start_with?('getting-started')
+        return [] if root_page? || subpath.start_with?('getting-started') || subpath.start_with?('migration')
         entries = []
 
-        css('#markdown-toc > li > a', '#markdown-toc > li li #markdown-toc-events').each do |node|
+        css('.bd-toc > ul > li > a', '.bd-toc a[href="#events"]', '.bd-toc a[href="#methods"]', '.bd-toc a[href="#triggers"]').each do |node|
           name = node.content
           next if name =~ /example/i || IGNORE_ENTRIES.include?(name)
           name.downcase!
@@ -48,17 +46,26 @@ module Docs
           entries << [name, id]
         end
 
+        css("#events ~ table tbody td:first-child").each do |node|
+          name = node.content.strip
+          unless id = node.parent['id']
+            id = node.parent['id'] = "#{name.parameterize}-event"
+          end
+          name.prepend "#{self.name}: "
+          name << ' (event)'
+          entries << [name, id]
+        end
+
         entries
       end
 
       IGNORE_ENTRIES = %w(
-        Contents
         How\ it\ works
         Approach
         JavaScript\ behavior
         Usage
-        Basics
         Overview
+        About
       )
     end
   end
