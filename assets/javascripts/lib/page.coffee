@@ -53,7 +53,12 @@ page.replace = (path, state, skipDispatch, init) ->
   context = new Context(path, state or currentState)
   context.init = init
   currentState = context.state
-  page.dispatch(context) unless skipDispatch
+  result = page.dispatch(context) unless skipDispatch
+  if result
+    context = new Context(result)
+    context.init = init
+    currentState = context.state
+    page.dispatch(context)
   context.replaceState()
   updateCanonicalLink()
   track() unless skipDispatch

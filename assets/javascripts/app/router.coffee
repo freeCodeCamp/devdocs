@@ -66,14 +66,23 @@ class app.Router
 
   entry: (context, next) ->
     doc = app.docs.findBySlug(context.params.doc)
+    return next() unless doc
+    path = context.params.path
+    hash = context.hash
 
-    if entry = doc?.findEntryByPathAndHash(context.params.path, context.hash)
+    if entry = doc.findEntryByPathAndHash(path, hash)
       context.doc = doc
       context.entry = entry
       @triggerRoute 'entry'
       return
+    else if path.slice(-6) is '/index'
+      path = path.substr(0, path.length - 6)
+      return entry.fullPath() if entry = doc.findEntryByPathAndHash(path, hash)
     else
-      return next()
+      path = "#{path}/index"
+      return entry.fullPath() if entry = doc.findEntryByPathAndHash(path, hash)
+
+    return next()
 
   root: ->
     return '/' if app.isSingleDoc()
