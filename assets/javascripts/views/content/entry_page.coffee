@@ -154,5 +154,5 @@ class app.views.EntryPage extends app.View
 
   onAltO: =>
     return unless link = @find('._attribution:last-child ._attribution-link')
-    $.popup(link.href + location.hash)
+    @delay -> $.popup(link.href + location.hash)
     return
