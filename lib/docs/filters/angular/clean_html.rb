@@ -56,6 +56,8 @@ module Docs
           node['data-language'] = 'typescript' if node['path'].try(:ends_with?, '.ts')
           node['data-language'] = 'html' if node['path'].try(:ends_with?, '.html')
           node['data-language'] = 'css' if node['path'].try(:ends_with?, '.css')
+          node['data-language'] = 'js' if node['path'].try(:ends_with?, '.js')
+          node['data-language'] = 'json' if node['path'].try(:ends_with?, '.json')
           node['data-language'] = node['language'].sub(/\Ats/, 'typescript').strip if node['language']
           node['data-language'] ||= 'typescript' if node.content.start_with?('@')
 
