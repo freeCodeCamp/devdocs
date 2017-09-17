@@ -125,7 +125,7 @@ credits = [
     'https://raw.githubusercontent.com/bottlepy/bottle/master/LICENSE'
   ], [
     'Bower',
-    '2016 Bower contributors',
+    '2017 Bower contributors',
     'MIT',
     'https://github.com/bower/bower.github.io/blob/1057905c18d899106f91372e6cca7ef54a91d60f/package.json#L20'
   ], [
