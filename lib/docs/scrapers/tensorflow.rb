@@ -4,7 +4,7 @@ module Docs
   class Tensorflow < UrlScraper
     self.name = 'TensorFlow'
     self.type = 'tensorflow'
-    self.release = '1.2'
+    self.release = '1.3'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://www.tensorflow.org/',
@@ -13,6 +13,7 @@ module Docs
 
     html_filters.push 'tensorflow/entries', 'tensorflow/clean_html'
 
+    options[:max_image_size] = 300_000
     options[:container] = '.devsite-main-content'
 
     options[:fix_urls] = ->(url) do

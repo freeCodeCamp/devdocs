@@ -6,6 +6,10 @@ module Docs
 
         css('hr', '.devsite-nav', '.devsite-content-footer', '.devsite-article-body > br').remove
 
+        css('aside.note').each do |node|
+          node.name = 'blockquote'
+        end
+
         css('.devsite-article-body', 'blockquote > blockquote', 'th > h2', 'th > h3').each do |node|
           node.before(node.children).remove
         end
@@ -19,10 +23,6 @@ module Docs
         css('blockquote > pre:only-child', 'p > pre:only-child').each do |node|
           next if node.previous.try(:content).present? || node.next.try(:content).present?
           node.parent.before(node).remove
-        end
-
-        css('aside.note').each do |node|
-          node.name = 'blockquote'
         end
 
         css('pre').each do |node|
