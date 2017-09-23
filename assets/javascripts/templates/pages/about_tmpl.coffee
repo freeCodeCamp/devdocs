@@ -11,7 +11,7 @@ app.templates.aboutPage = -> """
   </nav>
 
   <h1 class="_lined-heading">DevDocs: API Documentation Browser</h1>
-  <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
+  <p>DevDocs combines multiple API documentations in a clean and organized web UI with instant search, offline support, mobile version, dark theme, keyboard shortcuts, and more.
   <ul>
     <li>Created and maintained by <a href="http://thibaut.me">Thibaut Courouble</a>
     <li>Free and <a href="https://github.com/Thibaut/devdocs">open source</a>
@@ -23,7 +23,7 @@ app.templates.aboutPage = -> """
     <li>Watch the repository on <a href="https://github.com/Thibaut/devdocs/subscription">GitHub</a>
     <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
   </ul>
-  <p class="_note _note-green">If you like DevDocs, please consider supporting my work on
+  <p class="_note _note-green">If you like DevDocs, please spread the word and consider supporting my work on
     <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!<br>
 
   <h2 class="_block-heading" id="copyright">Copyright and License</h2>
@@ -63,7 +63,6 @@ app.templates.aboutPage = -> """
     <li><a href="https://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="https://sentry.io/">Sentry</a> and <a href="http://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
     <li><a href="https://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="https://out.devdocs.io/s/shopify">Shopify</a>, <a href="https://out.devdocs.io/s/jetbrains">JetBrains</a> and <a href="https://out.devdocs.io/s/code-school">Code School</a> for sponsoring DevDocs in the past
     <li><a href="https://www.heroku.com">Heroku</a> and <a href="http://newrelic.com">New Relic</a> for providing awesome free service
-    <li>Daniel Bruce for the <a href="http://www.entypo.com">Entypo</a> pictograms
     <li><a href="https://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
   </ul>
 
