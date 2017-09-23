@@ -62,8 +62,8 @@ app.templates.notifUpdates = (docs, disabledDocs) ->
 app.templates.notifShare = ->
   textNotif """ Hi there! """,
             """ Like DevDocs? Help us reach more developers by sharing the link with your friends on
-                <a href="http://out.devdocs.io/s/tw" target="_blank" rel="noopener">Twitter</a>, <a href="http://out.devdocs.io/s/fb" target="_blank" rel="noopener">Facebook</a>,
-                <a href="http://out.devdocs.io/s/re" target="_blank" rel="noopener">Reddit</a>, etc.<br>Thanks :) """
+                <a href="https://out.devdocs.io/s/tw" target="_blank" rel="noopener">Twitter</a>, <a href="https://out.devdocs.io/s/fb" target="_blank" rel="noopener">Facebook</a>,
+                <a href="https://out.devdocs.io/s/re" target="_blank" rel="noopener">Reddit</a>, etc.<br>Thanks :) """
 
 app.templates.notifUpdateDocs = ->
   textNotif """ Documentation updates available. """,
