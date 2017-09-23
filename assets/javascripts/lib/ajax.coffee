@@ -75,9 +75,6 @@ applyHeaders = (xhr, options) ->
   if options.dataType
     options.headers['Accept'] = MIME_TYPES[options.dataType] or options.dataType
 
-  if isSameOrigin(options.url)
-    options.headers['X-Requested-With'] = 'XMLHttpRequest'
-
   for key, value of options.headers
     xhr.setRequestHeader(key, value)
   return
@@ -110,9 +107,6 @@ abort = (xhr) ->
   xhr.onreadystatechange = null
   xhr.abort()
   return
-
-isSameOrigin = (url) ->
-  url.indexOf('http') isnt 0 or url.indexOf(location.origin) is 0
 
 parseResponse = (xhr, options) ->
   if options.dataType is 'json'
