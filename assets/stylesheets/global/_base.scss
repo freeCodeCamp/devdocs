@@ -1,7 +1,7 @@
 html {
   height: 100%;
   font-size: 100%;
-  background: $contentBackground;
+  background: $documentBackground;
 
   @media #{$mediumScreen} { font-size: 93.75%; }
 }
@@ -17,6 +17,7 @@ body {
   color: $textColor;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  background: $contentBackground;
   touch-action: manipulation;
   -webkit-tap-highlight-color: rgba(black, 0);
   -webkit-touch-callout: none;
