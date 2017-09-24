@@ -105,8 +105,6 @@ module Docs
       ADDITIONAL_ENTRIES = {
         'shape' => [
           %w(rect() Syntax) ],
-        'uri' => [
-          %w(url() The_url()_functional_notation) ],
         'timing-function' => [
           %w(cubic-bezier() The_cubic-bezier()_class_of_timing-functions),
           %w(steps() The_steps()_class_of_timing-functions),
@@ -118,12 +116,12 @@ module Docs
           %w(step-start step-start),
           %w(step-end step-end) ],
         'color_value' => [
-          %w(transparent transparent_keyword),
-          %w(currentColor currentcolor_keyword),
-          %w(rgb() rgb),
-          %w(hsl() hsl),
-          %w(rgba() rgba),
-          %w(hsla() hsla) ]}
+          %w(transparent transparent),
+          %w(currentColor currentColor),
+          %w(rgb() rgba()),
+          %w(hsl() hsla()),
+          %w(rgba() rgba()),
+          %w(hsla() hsla()) ]}
 
       def additional_entries
         ADDITIONAL_ENTRIES[slug] || []
