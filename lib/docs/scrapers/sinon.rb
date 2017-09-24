@@ -19,7 +19,7 @@ module Docs
     HTML
 
     version '3' do
-      self.release = '3.2.1'
+      self.release = '3.3.0'
       self.base_url = "http://sinonjs.org/releases/v#{release}/"
     end
 
