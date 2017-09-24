@@ -2,7 +2,6 @@ module Docs
   class Cakephp < UrlScraper
     self.name = 'CakePHP'
     self.type = 'cakephp'
-    # self.dir = '/Users/Thibaut/DevDocs/Docs/CakePHP'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://cakephp.org/',
@@ -23,7 +22,7 @@ module Docs
     HTML
 
     version '3.5' do
-      self.release = '3.5.0'
+      self.release = '3.5.2'
       self.base_url = 'https://api.cakephp.org/3.5/'
     end
 
@@ -48,7 +47,7 @@ module Docs
     end
 
     version '2.10' do
-      self.release = '2.10.1'
+      self.release = '2.10.3'
       self.base_url = 'https://api.cakephp.org/2.10/'
     end
 
