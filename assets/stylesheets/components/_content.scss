@@ -355,6 +355,20 @@
 }
 
 //
+// Search aliases
+//
+
+._aliases {
+  display: flex;
+  justify-content: space-between;
+
+  > table {
+    margin-top: 0;
+    width: calc(50% - 0.5rem);
+  }
+}
+
+//
 // Utilities
 //
 

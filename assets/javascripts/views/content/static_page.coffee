@@ -4,7 +4,7 @@ class app.views.StaticPage extends app.View
   @titles:
     about:    'About'
     news:     'News'
-    help:     'Help'
+    help:     'User Guide'
     notFound: '404'
 
   deactivate: ->
