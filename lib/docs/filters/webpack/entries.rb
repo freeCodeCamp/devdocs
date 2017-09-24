@@ -26,10 +26,12 @@ module Docs
             next if node.previous.try(:content).present?
             entries << [node.content, node.parent['id']]
           end
-        elsif slug.start_with?('api')
+        elsif slug.start_with?('api') && slug != 'api/plugins/parser'
           css('.header[id] code').each_with_object [] do |node, entries|
             next if node.previous.try(:content).present?
-            entries << ["#{self.name.split(':').first}: #{node.content.sub(/\(.*\)/, '()')}", node.parent['id']]
+            name = node.content.sub(/\(.*\)/, '()')
+            name.prepend "#{self.name.split(':').first}: "
+            entries << [name, node.parent['id']]
           end
         else
           []
