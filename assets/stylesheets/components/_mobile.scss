@@ -4,6 +4,7 @@
 
 ._mobile {
   font-size: 100%;
+  background: $contentBackground;
 
   ._hide-on-mobile { display: none; }
 
@@ -106,6 +107,14 @@
     float: none;
     max-width: none;
     margin-left: 0;
+  }
+
+  // Search Aliases
+
+  ._aliases {
+    display: block;
+
+    > table { width: 100%; }
   }
 }
 
