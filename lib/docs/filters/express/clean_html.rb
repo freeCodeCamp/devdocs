@@ -15,7 +15,10 @@ module Docs
 
         @doc = at_css('#page-doc') unless root_page?
 
-        at_css('h1').remove if root_page?
+        if root_page?
+          at_css('h1').remove
+          css('> header', '#menu').remove
+        end
 
         # Put id attributes on headings
         css('h2 + a[name]').each do |node|
