@@ -3,8 +3,8 @@ ruby '2.4.2'
 
 gem 'rake'
 gem 'thor'
-gem 'pry', '~> 0.10.0'
-gem 'activesupport', '~> 5.0', require: false
+gem 'pry', '~> 0.11.0'
+gem 'activesupport', '~> 5.1', require: false
 gem 'yajl-ruby', require: false
 
 group :app do
