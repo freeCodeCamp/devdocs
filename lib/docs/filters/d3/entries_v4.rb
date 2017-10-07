@@ -21,7 +21,7 @@ module Docs
           name.remove! 'Source'
           name.remove! '<>'
           name.remove! %r{\s\-.*}
-          name.remove! %r{\s\[.*\]}
+          name.remove! %r{\s*\[.*\]}
           name.gsub! %r{\(.+?\)\)?}, '()'
           name.sub! %r{\A(svg:\w+)\s+.+}, '\1'
           name.split(/\s+/).each do |n|
