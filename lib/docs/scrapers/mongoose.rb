@@ -2,7 +2,7 @@ module Docs
   class Mongoose < UrlScraper
     self.name = 'Mongoose'
     self.type = 'mongoose'
-    self.release = '4.11.8'
+    self.release = '4.12.0'
     self.base_url = 'http://mongoosejs.com/docs/'
     self.root_path = 'index.html'
     self.initial_paths = %w(guide.html api.html)
