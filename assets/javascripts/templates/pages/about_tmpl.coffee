@@ -13,7 +13,7 @@ app.templates.aboutPage = -> """
   <h1 class="_lined-heading">DevDocs: API Documentation Browser</h1>
   <p>DevDocs combines multiple API documentations in a clean and organized web UI with instant search, offline support, mobile version, dark theme, keyboard shortcuts, and more.
   <ul>
-    <li>Created and maintained by <a href="http://thibaut.me">Thibaut Courouble</a>
+    <li>Created and maintained by <a href="https://thibaut.me">Thibaut Courouble</a>
     <li>Free and <a href="https://github.com/Thibaut/devdocs">open source</a>
         <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20" tabindex="-1"></iframe>
   </ul>
