@@ -2,6 +2,8 @@ module Docs
   class Rdoc
     class ContainerFilter < Filter
       def call
+        return doc if context[:skip_rdoc_filters?].try(:call, self)
+
         if root_page?
           at_css 'main'
         else

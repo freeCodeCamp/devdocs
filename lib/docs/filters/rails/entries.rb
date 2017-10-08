@@ -38,7 +38,19 @@ module Docs
         'Rails::Generators'             => 'Rails/Generators',
         'Rails::Railtie'                => 'Rails/Railtie' }
 
+      def get_name
+        if slug.start_with?('guides')
+          name = at_css('#feature h2').content.strip
+          name.remove! %r{\s\(.+\)\z}
+          return name
+        end
+
+        super
+      end
+
       def get_type
+        return 'Guides' if slug.start_with?('guides')
+
         parent = at_css('.meta-parent').try(:content).to_s
 
         if [name, parent].any? { |str| str.end_with?('Error') || str.end_with?('Exception') }
@@ -57,10 +69,14 @@ module Docs
       end
 
       def include_default_entry?
+        return true if slug.start_with?('guides')
+
         super && !skip?
       end
 
       def additional_entries
+        return [] if slug.start_with?('guides')
+
         skip? ? [] : super
       end
 

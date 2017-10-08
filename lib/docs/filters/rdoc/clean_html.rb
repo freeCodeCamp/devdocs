@@ -2,6 +2,8 @@ module Docs
   class Rdoc
     class CleanHtmlFilter < Filter
       def call
+        return doc if context[:skip_rdoc_filters?].try(:call, self)
+
         root_page? ? root : other
         doc
       end

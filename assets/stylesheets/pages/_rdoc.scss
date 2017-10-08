@@ -43,4 +43,9 @@
 
     > pre { margin: 0; }
   }
+
+  // Rails guides
+  .note { @extend %note; }
+  .info { @extend %note, %note-blue; }
+  .warning { @extend %note, %note-red; }
 }
