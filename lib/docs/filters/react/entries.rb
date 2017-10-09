@@ -2,28 +2,24 @@ module Docs
   class React
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('h1').children.select(&:text?).map(&:content).join.strip
+        at_css('article h1').content
       end
 
       def get_type
-        link = at_css('.nav-docs-section .active, .toc .active')
-        return 'Miscellaneous' unless link
-        section = link.ancestors('.nav-docs-section, section').first
-        type = section.at_css('h3').content.strip
-        type
+        link = at_css("nav a[href='#{result[:path].split('/').last}']")
+        link.ancestors('ul').last.previous_element.content
       end
 
       def additional_entries
         entries = []
 
-        css('.inner-content h3 code, .inner-content h4 code').each do |node|
-          name = node.content
-          name.remove! %r{[#\(\)]}
-          name.remove! %r{\w+\:}
-          name.strip!
-          name = 'createFragmentobject' if name.include?('createFragmentobject')
-          id = name.parameterize
-          node.parent['id'] = id
+        css('article h3 code, article h4 code').each do |node|
+          next if node.previous.try(:content).present?
+          name = node.content.strip
+          # name.remove! %r{[#\(\)]}
+          # name.remove! %r{\w+\:}
+          # name.strip!
+          # name = 'createFragmentobject' if name.include?('createFragmentobject')
           type = if slug == 'react-component'
             'Reference: Component'
           elsif slug == 'react-api'
@@ -31,18 +27,7 @@ module Docs
           else
             'Reference'
           end
-          entries << [name, id, type]
-        end
-
-        css('.apiIndex a pre').each do |node| # relay
-          next unless node.parent['href'].start_with?('#')
-          id = node.parent['href'].remove('#')
-          name = node.content.strip
-          sep = name.start_with?('static') ? '.' : '#'
-          name.remove! %r{(abstract|static) }
-          name.sub! %r{\(.*\)}, '()'
-          name.prepend(self.name + sep)
-          entries << [name, id]
+          entries << [name, node.parent['id'], type]
         end
 
         entries
