@@ -1,8 +1,7 @@
 module Docs
-  class ReactNative < React
-    self.name = 'React Native'
+  class ReactNative < UrlScraper
     self.slug = 'react_native'
-    self.type = 'react'
+    self.type = 'react_native'
     self.release = '0.49'
     self.base_url = 'https://facebook.github.io/react-native/docs/'
     self.root_path = 'getting-started.html'
@@ -11,10 +10,9 @@ module Docs
       code: 'https://github.com/facebook/react-native'
     }
 
-    html_filters.replace 'react/entries', 'react_native/entries'
-    html_filters.push 'react_native/clean_html'
+    html_filters.push 'react_native/entries', 'react_native/clean_html'
 
-    options[:root_title] = 'React Native Documentation'
+    options[:container] = '.documentationContent'
     options[:skip_patterns] = [/\Asample\-/]
     options[:skip] = %w(
       videos.html
