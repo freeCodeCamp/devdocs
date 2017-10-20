@@ -16,7 +16,7 @@ module Docs
     HTML
 
     version do
-      self.release = '4.4.4'
+      self.release = '4.4.6'
       self.base_url = 'https://angular.io/'
       self.root_path = 'docs'
 
