@@ -124,7 +124,7 @@ $.empty = (el) ->
   return
 
 # Calls the function while the element is off the DOM to avoid triggering
-# unecessary reflows and repaints.
+# unnecessary reflows and repaints.
 $.batchUpdate = (el, fn) ->
   parent = el.parentNode
   sibling = el.nextSibling
