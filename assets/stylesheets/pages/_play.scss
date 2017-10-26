@@ -1,0 +1,6 @@
+/**
+ * Play uses the same styles as Scala (since it uses Scaladoc)
+ */
+._play {
+  @extend ._scala;
+}

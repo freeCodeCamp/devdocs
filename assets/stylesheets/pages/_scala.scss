@@ -1,0 +1,145 @@
+/**
+ * Note that there are currently two documentation themes.
+ * * Scala 2.10, 2.11
+ * * Scala 2.12
+ *
+ * The styles defined here somewhat reflect that. A future change should add
+ * some sort of class at the top-most container that specifies what theme we
+ * are using, to further namespace and group the styles.
+ */
+._scala {
+  @extend %simple;
+  $value-header-color: #2C475C;
+  $type-header-color: #316555;
+
+  // this is useful for the index. The index package listing is a deeply nested
+  // list, and this pulls all of those lists to the left margin. On the Scala
+  // documentation site, this seems to be accomplished using JavaScript
+  ol.packages, ol.templates {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  // this is also for the index. These make the package headings more visible.
+  li.pack > a.tplshow {
+    display: block;
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+  }
+
+  // these styles are for individual type pages
+
+  // this is something that is not shown on the site, such as deprecated members
+  li[visbl=prt] {
+    display: none;
+  }
+
+  // on 2.10, 2.11 docs, this is the trait/class/object at the top
+  .img_kind {
+    color: white;
+  }
+
+  // this is the type definition at the start of the page
+  #definition {
+    padding-top: 1em;
+    padding-left: 1em;
+    margin-left: -1rem;
+
+    & > a, & > h1, & > h1 > a, & > a:after {
+      color: white;
+    }
+    // we collapse the parts of the type definition
+    p#owner, h1 {
+      display: inline-block;
+    }
+    // We add a "." because we join the primary type with the package name
+    p#owner {
+      color: white;
+
+      &:after {
+        content: '.';
+      }
+      a {
+        color: white;
+      }
+    }
+    // Add a little padding for the primary type
+    h1 {
+      margin: 0px;
+      margin-left: 5px;
+    }
+    &.type {
+      background-color: $type-header-color;
+    }
+    &.value {
+      background-color: $value-header-color;
+    }
+  }
+
+  // this is the main information
+  #template {
+    // this is a default style for h3 elements which are headings for type members
+    h3 {
+      color: white;
+      background-color: black;
+    }
+
+    // this is the heading for type members
+    .types > h3 {
+      background: $type-header-color;
+    }
+
+    // this is the heading for value members
+    .values > h3 {
+      background: $value-header-color;
+    }
+
+    // these are the member signatures
+    h4 { @extend %block-label;}
+
+    // this is the list of members
+    div.members > ol {
+      list-style: none;
+    }
+  }
+
+  // 2.12 classes
+  %deprecated {
+    font-weight: normal;
+    text-decoration: line-through;
+  }
+  #definition {
+    .big-circle {
+      display: none;
+    }
+  }
+  // I'm assuming we don't need permalinks for dev-docs
+  .permalink, .hiddenContent, .material-icons {
+    display: none;
+  }
+  div.members li.indented0 {
+    display: table;
+    .modifier_kind {
+      // these match the styles from the original documentation
+      display: table-cell;
+      width: 8em;
+    }
+    .symbol {
+      // default to making the entire symbol bold
+      // the symbol is like
+      // onFailure[U](pf: PartialFunction[Throwable, U])(implicit executor: ExecutionContext): Unit
+      font-weight: bold;
+
+      // but if the method is deprecated, we want to undo that, and add a line-through.
+      // unfortunately, the deprecated class is on a sub-element of symbol.
+      .name.deprecated {
+        @extend %deprecated;
+        & ~ span {
+          @extend %deprecated;
+        }
+      }
+    }
+  }
+
+}
