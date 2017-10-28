@@ -1,0 +1,85 @@
+// Style overrides for printing
+
+@include print {
+
+  ._header, ._sidebar, ._path, ._notif, ._toc, ._pre-clip, ._notice {
+    display: none !important;
+  }
+
+  // make the docs fill the page and scroll the <body> instead of ._container
+  body {
+    height: initial;
+    &::after {
+      content: '';
+      clear: both;
+    }
+  }
+  ._app {
+    height: initial;
+  }
+  ._container {
+    margin: 0;
+    padding: 0;
+    height: initial;
+
+    ._content {
+      margin: 0;
+    }
+  }
+
+  // Hide the scrollbars
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  // empty the boxes.
+  %box,
+  %heading-box {
+    background: transparent;
+  }
+  %heading-box {
+    border-radius: 0;
+    border: {
+      top: none;
+      left: none;
+      right: none;
+    }
+  }
+
+
+  // Underline links, put the destination after the link text
+  %external-link {
+    text-decoration: underline;
+    &::after {
+      content: ' (' attr(href) ')';
+      background-image: none;
+      display: inline;
+      margin: 0;
+    }
+  }
+
+  // Link back to DevDocs
+  ._attribution-p {
+    background: transparent;
+    border: 2px solid $labelBackground;
+
+    &:after {
+      content: 'Exported from DevDocs (https://devdocs.io)';
+      font-style: italic;
+    }
+  }
+
+  // Fix page breaks
+  pre {
+    page-break-before: avoid;
+  }
+  pre {
+    orphans: 5;
+    widows: 5;
+  }
+
+  p {
+    orphans: 2;
+    widows: 2;
+  }
+}
