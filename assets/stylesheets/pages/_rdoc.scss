@@ -27,6 +27,10 @@
     @extend %user-select-none;
 
     &:hover { text-decoration: underline; }
+
+    @include print {
+      display: none;
+    }
   }
 
   .method-description { position: relative; }

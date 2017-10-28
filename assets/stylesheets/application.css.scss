@@ -98,3 +98,7 @@
         'pages/webpack',
         'pages/yard',
         'pages/yii';
+
+html { // specificity hack
+  @import 'global/print';
+}
