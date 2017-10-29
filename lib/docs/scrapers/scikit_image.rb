@@ -3,7 +3,7 @@ module Docs
     self.name = 'scikit-image'
     self.slug = 'scikit_image'
     self.type = 'sphinx'
-    self.release = '0.13.0'
+    self.release = '0.13.1'
     self.base_url = 'http://scikit-image.org/docs/0.13.x/'
     self.links = {
       home: 'http://scikit-image.org/',
