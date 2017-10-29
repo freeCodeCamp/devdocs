@@ -2,7 +2,7 @@ module Docs
   class Padrino < UrlScraper
     self.slug = 'padrino'
     self.type = 'rubydoc'
-    self.release = '0.13.2'
+    self.release = '0.14.1'
     self.base_url = 'http://www.rubydoc.info/github/padrino/padrino-framework/'
     self.root_path = 'file/README.rdoc'
     self.initial_paths = %w(index2)
