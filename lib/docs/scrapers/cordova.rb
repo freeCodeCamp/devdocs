@@ -29,7 +29,7 @@ module Docs
     HTML
 
     version '7' do
-      self.release = '7.0.1'
+      self.release = '7.1.0'
       self.base_url = 'https://cordova.apache.org/docs/en/7.x/'
     end
 
