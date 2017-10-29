@@ -1,7 +1,7 @@
 module Docs
   class Q < Github
     self.name = 'Q'
-    self.release = '1.5.0'
+    self.release = '1.5.1'
     self.base_url = 'https://github.com/kriskowal/q/wiki/'
     self.root_path = 'API-Reference'
     self.links = {
