@@ -9,7 +9,7 @@ module Docs
           css('meta', '.colophon').remove
         end
 
-        css('a.deep-link[id]').each do |node|
+        css('a.deep-link[id]', 'a.anchor[id]').each do |node|
           node.parent['id'] = node['id']
           node.remove
         end
