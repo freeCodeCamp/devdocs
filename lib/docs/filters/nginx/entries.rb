@@ -20,7 +20,7 @@ module Docs
       def additional_entries
         css('h1 + ul a').each_with_object [] do |node, entries|
           name = node.content.strip
-          next if name =~ /\A[A-Z]/
+          next if name =~ /\A[A-Z]/ || name.start_with?('/')
 
           id = node['href'].remove('#')
           next if id.blank?
