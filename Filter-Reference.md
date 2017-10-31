@@ -221,6 +221,3 @@ module Docs
   end
 end
 ```
-
----
-_Feel free to edit this page or ask for improvements on the [mailing list](https://groups.google.com/d/forum/devdocs)._
