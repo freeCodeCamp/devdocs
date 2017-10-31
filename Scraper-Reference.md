@@ -186,6 +186,3 @@ More information about how filters work is available on the [Filter Reference](h
     Overrides the `:title` option for the root page only.
 
   _Note: this filter is disabled by default._
-
----
-_Feel free to edit wiki page or ask for improvements on the [mailing list](https://groups.google.com/d/forum/devdocs)._
