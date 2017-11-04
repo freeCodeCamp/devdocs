@@ -25,6 +25,7 @@
     @shortcuts = new app.Shortcuts
     @document = new app.views.Document
     @mobile = new app.views.Mobile if @isMobile()
+    @urls = new app.Urls
 
     if document.body.hasAttribute('data-doc')
       @DOC = JSON.parse(document.body.getAttribute('data-doc'))
@@ -112,6 +113,7 @@
   initDoc: (doc) ->
     doc.entries.add type.toEntry() for type in doc.types.all()
     @entries.add doc.entries.all()
+    @urls.addDoc doc
     return
 
   migrateDocs: ->

@@ -1,7 +1,7 @@
 #= require app/searcher
 
 class app.models.Entry extends app.Model
-  # Attributes: name, type, path
+  # Attributes: name, type, path, url
 
   constructor: ->
     super

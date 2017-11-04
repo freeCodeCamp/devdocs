@@ -4,22 +4,24 @@ module Docs
   class Entry
     class Invalid < StandardError; end
 
-    attr_accessor :name, :type, :path
+    attr_accessor :name, :type, :path, :url
 
-    def initialize(name = nil, path = nil, type = nil)
+    def initialize(name = nil, path = nil, type = nil, url = nil)
       self.name = name
       self.path = path
       self.type = type
+      self.url = url
 
       unless root?
         raise Invalid, 'missing name' if !name || name.empty?
         raise Invalid, 'missing path' if !path || path.empty?
         raise Invalid, 'missing type' if !type || type.empty?
+        raise Invalid, 'missing url'  if !url  || url.empty?
       end
     end
 
     def ==(other)
-      other.name == name && other.path == path && other.type == type
+      other.name == name && other.path == path && other.type == type && other.url == url
     end
 
     def name=(value)
@@ -30,12 +32,16 @@ module Docs
       @type = value.try :strip
     end
 
+    def url=(value)
+      @url = value.try :strip
+    end
+
     def root?
       path == 'index'
     end
 
     def as_json
-      { name: name, path: path, type: type }
+      { name: name, path: path, type: type, url: url }
     end
   end
 end

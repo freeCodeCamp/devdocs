@@ -5,35 +5,38 @@ class DocsEntryTest < MiniTest::Spec
   Entry = Docs::Entry
 
   let :entry do
-    Entry.new('name', 'path', 'type')
+    Entry.new('name', 'path', 'type', 'url')
   end
 
-  def build_entry(name = 'name', path = 'path', type = 'type')
-    Entry.new(name, path, type)
+  def build_entry(name = 'name', path = 'path', type = 'type', url = 'url')
+    Entry.new(name, path, type, url)
   end
 
   describe ".new" do
-    it "stores #name, #path and #type" do
-      entry = Entry.new('name', 'path', 'type')
+    it "stores #name, #path, #type, and #url" do
+      entry = Entry.new('name', 'path', 'type', 'url')
       assert_equal 'name', entry.name
       assert_equal 'path', entry.path
       assert_equal 'type', entry.type
+      assert_equal 'url', entry.url
     end
 
-    it "raises an error when #name, #path or #type is nil or empty" do
-      assert_raises(Docs::Entry::Invalid) { Entry.new(nil, 'path', 'type') }
-      assert_raises(Docs::Entry::Invalid) { Entry.new('', 'path', 'type') }
-      assert_raises(Docs::Entry::Invalid) { Entry.new('name', nil, 'type') }
-      assert_raises(Docs::Entry::Invalid) { Entry.new('name', '', 'type') }
-      assert_raises(Docs::Entry::Invalid) { Entry.new('name', 'path', nil) }
-      assert_raises(Docs::Entry::Invalid) { Entry.new('name', 'path', '') }
+    it "raises an error when #name, #path, #type, or #url is nil or empty" do
+      assert_raises(Docs::Entry::Invalid) { Entry.new(nil, 'path', 'type', 'url') }
+      assert_raises(Docs::Entry::Invalid) { Entry.new('', 'path', 'type', 'url') }
+      assert_raises(Docs::Entry::Invalid) { Entry.new('name', nil, 'type', 'url') }
+      assert_raises(Docs::Entry::Invalid) { Entry.new('name', '', 'type', 'url') }
+      assert_raises(Docs::Entry::Invalid) { Entry.new('name', 'path', nil, 'url') }
+      assert_raises(Docs::Entry::Invalid) { Entry.new('name', 'path', '', 'url') }
+      assert_raises(Docs::Entry::Invalid) { Entry.new('name', 'path', 'type', nil) }
+      assert_raises(Docs::Entry::Invalid) { Entry.new('name', 'path', 'type', '') }
     end
 
     it "don't raise an error when #path is 'index' and #name or #type is nil or empty" do
-      Entry.new(nil, 'index', 'type')
-      Entry.new('', 'index', 'type')
-      Entry.new('name', 'index', nil)
-      Entry.new('name', 'index', '')
+      Entry.new(nil, 'index', 'type', 'url')
+      Entry.new('', 'index', 'type', 'url')
+      Entry.new('name', 'index', nil, 'url')
+      Entry.new('name', 'index', '', 'url')
     end
   end
 
@@ -61,6 +64,19 @@ class DocsEntryTest < MiniTest::Spec
     end
   end
 
+
+  describe "#url=" do
+    it "removes surrounding whitespace" do
+      entry.url = " \n\rurl "
+      assert_equal 'url', entry.url
+    end
+
+    it "accepts nil" do
+      entry.url = nil
+      assert_nil entry.url
+    end
+  end
+
   describe "#==" do
     it "returns true when the other has the same name, path and type" do
       assert_equal build_entry, build_entry
@@ -80,6 +96,11 @@ class DocsEntryTest < MiniTest::Spec
       entry.type = 'other_type'
       refute_equal build_entry, entry
     end
+
+    it "returns false when the other has a different url" do
+      entry.url = 'other_url'
+      refute_equal build_entry, entry
+    end
   end
 
   describe "#root?" do
@@ -96,10 +117,10 @@ class DocsEntryTest < MiniTest::Spec
 
   describe "#as_json" do
     it "returns a hash with the name, path and type" do
-      as_json = Entry.new('name', 'path', 'type').as_json
+      as_json = Entry.new('name', 'path', 'type', 'url').as_json
       assert_instance_of Hash, as_json
-      assert_equal [:name, :path, :type], as_json.keys
-      assert_equal %w(name path type), as_json.values
+      assert_equal [:name, :path, :type, :url], as_json.keys
+      assert_equal %w(name path type url), as_json.values
     end
   end
 end

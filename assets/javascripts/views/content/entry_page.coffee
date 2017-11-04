@@ -34,7 +34,9 @@ class app.views.EntryPage extends app.View
 
     $.batchUpdate @el, =>
       @subview.render(content, fromCache)
-      @addCopyButtons() unless fromCache
+      unless fromCache
+        @addCopyButtons()
+        @internalizeLinks()
       return
 
     if app.disabledDocs.findBy 'slug', @entry.doc.slug
@@ -54,6 +56,14 @@ class app.views.EntryPage extends app.View
       @copyButton.setAttribute 'aria-label', 'Copy to clipboard'
     el.appendChild @copyButton.cloneNode(true) for el in @findAllByTag('pre')
     return
+
+  internalizeLinks: ->
+    for el in @findAllByTag('a')
+      continue if el.classList.contains '_attribution-link'
+
+      internalUrl = app.urls.get(el.href)
+      if internalUrl?
+        el.href = internalUrl
 
   polyfillMathML: ->
     return unless window.supportsMathML is false and !@polyfilledMathML and @findByTag('math')

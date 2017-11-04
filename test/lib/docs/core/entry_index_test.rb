@@ -3,7 +3,7 @@ require 'docs'
 
 class DocsEntryIndexTest < MiniTest::Spec
   let :entry do
-    Docs::Entry.new 'name', 'path', 'type'
+    Docs::Entry.new 'name', 'path', 'type', 'url'
   end
 
   let :index do
@@ -30,8 +30,8 @@ class DocsEntryIndexTest < MiniTest::Spec
 
     it "stores an array of entries" do
       entries = [
-        Docs::Entry.new('one', 'path', 'type'),
-        Docs::Entry.new('two', 'path', 'type')
+        Docs::Entry.new('one', 'path', 'type', 'url'),
+        Docs::Entry.new('two', 'path', 'type', 'url')
       ]
 
       index.add(entries)
@@ -56,9 +56,9 @@ class DocsEntryIndexTest < MiniTest::Spec
     end
 
     it "creates and indexes the type" do
-      index.add Docs::Entry.new('one', 'path', 'a')
-      index.add Docs::Entry.new('two', 'path', 'b')
-      index.add Docs::Entry.new('three', 'path', 'b')
+      index.add Docs::Entry.new('one', 'path', 'a', 'url')
+      index.add Docs::Entry.new('two', 'path', 'b', 'url')
+      index.add Docs::Entry.new('three', 'path', 'b', 'url')
       assert_equal ['a', 'b'], index.types.keys
       assert_instance_of Docs::Type, index.types['a']
     end
@@ -69,8 +69,8 @@ class DocsEntryIndexTest < MiniTest::Spec
     end
 
     it "increments the type's count" do
-      index.add Docs::Entry.new('one', 'path', 'type')
-      index.add Docs::Entry.new('two', 'path', 'type')
+      index.add Docs::Entry.new('one', 'path', 'type', 'url')
+      index.add Docs::Entry.new('two', 'path', 'type', 'url')
       assert_equal 2, index.types['type'].count
     end
   end
@@ -101,8 +101,8 @@ class DocsEntryIndexTest < MiniTest::Spec
       end
 
       it "includes the json representation of the #entries" do
-        index.add one = Docs::Entry.new('one', 'path', 'type')
-        index.add two = Docs::Entry.new('two', 'path', 'type')
+        index.add one = Docs::Entry.new('one', 'path', 'type', 'url')
+        index.add two = Docs::Entry.new('two', 'path', 'type', 'url')
         assert_equal [one.as_json, two.as_json], index.as_json[:entries]
       end
 

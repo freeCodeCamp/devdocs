@@ -56,8 +56,16 @@ module Docs
 
     def build_entry(name, frag = nil, type = nil)
       type ||= self.type
-      path = frag ? (frag.include?('#') ? frag : "#{self.path}##{frag}") : self.path
-      Entry.new(name, path, type)
+      if frag.present? && frag.include?('#')
+        path = frag
+        # TODO: What should `url` get changed to?
+        url = current_url
+      else
+        hash_frag = frag ? "##{frag}" : ''
+        path = "#{self.path}#{hash_frag}"
+        url = "#{current_url}#{hash_frag}"
+      end
+      Entry.new(name, path, type, url)
     end
   end
 end

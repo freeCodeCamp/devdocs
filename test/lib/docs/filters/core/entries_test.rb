@@ -14,6 +14,7 @@ class EntriesFilterTest < MiniTest::Spec
       stub(filter).name { 'name' }
       stub(filter).path { 'path' }
       stub(filter).type { 'type' }
+      stub(filter).current_url { 'url' }
     end
 
     let :entries do
@@ -41,10 +42,11 @@ class EntriesFilterTest < MiniTest::Spec
     end
 
     describe "the default entry" do
-      it "has the #name, #path and #type" do
+      it "has the #name, #path, #type, and #url" do
         assert_equal 'name', entries.first.name
         assert_equal 'path', entries.first.path
         assert_equal 'type', entries.first.type
+        assert_equal 'url',  entries.first.url
       end
     end
 
@@ -67,6 +69,7 @@ class EntriesFilterTest < MiniTest::Spec
       it "has a path with the given fragment" do
         stub(filter).additional_entries { [['test', 'frag']] }
         assert_equal 'path#frag', entries.last.path
+        assert_equal 'url#frag', entries.last.url
       end
 
       it "has a path with the given path" do
@@ -87,6 +90,16 @@ class EntriesFilterTest < MiniTest::Spec
       it "has a type equal to #type when the given type is nil" do
         stub(filter).additional_entries { [['test', nil, nil]] }
         assert_equal 'type', entries.last.type
+      end
+
+      it "has a url copied from the current_url property" do
+        stub(filter).additional_entries { [['test', nil, 'test']] }
+        assert_equal 'url', entries.last.url
+      end
+
+      it "appends the fragment to #url" do
+        stub(filter).additional_entries { [['test', 'hash', 'test']] }
+        assert_equal 'url#hash', entries.last.url
       end
     end
   end
