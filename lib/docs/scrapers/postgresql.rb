@@ -55,19 +55,30 @@ module Docs
       Licensed under the PostgreSQL License.
     HTML
 
+    version '10' do
+      self.release = '10.1'
+      self.base_url = 'https://www.postgresql.org/docs/10/static/'
+    end
+
     version '9.6' do
-      self.release = '9.6.5'
+      self.release = '9.6.6'
       self.base_url = 'https://www.postgresql.org/docs/9.6/static/'
+
+      html_filters.insert_before 'postgresql/extract_metadata', 'postgresql/normalize_class_names'
     end
 
     version '9.5' do
-      self.release = '9.5.9'
+      self.release = '9.5.10'
       self.base_url = 'https://www.postgresql.org/docs/9.5/static/'
+
+      html_filters.insert_before 'postgresql/extract_metadata', 'postgresql/normalize_class_names'
     end
 
     version '9.4' do
-      self.release = '9.4.14'
+      self.release = '9.4.15'
       self.base_url = 'https://www.postgresql.org/docs/9.4/static/'
+
+      html_filters.insert_before 'postgresql/extract_metadata', 'postgresql/normalize_class_names'
     end
   end
 end
