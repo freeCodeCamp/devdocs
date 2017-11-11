@@ -7,7 +7,7 @@ module Docs
       code: 'https://github.com/ansible/ansible'
     }
 
-    html_filters.push 'ansible/entries', 'ansible/clean_html', 'sphinx/clean_html'
+    html_filters.push 'ansible/entries', 'sphinx/clean_html', 'parse_cf_email'
 
     options[:skip] = %w(
       glossary.html

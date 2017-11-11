@@ -22,10 +22,6 @@ module Docs
           node.content = node.content
         end
 
-        css('.__cf_email__').each do |node|
-          node.replace(decode_cloudflare_email(node['data-cfemail']))
-        end
-
         doc
       end
     end
