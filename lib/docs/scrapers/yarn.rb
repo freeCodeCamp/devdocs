@@ -8,7 +8,7 @@ module Docs
       code: 'https://github.com/yarnpkg/yarn'
     }
 
-    html_filters.push 'yarn/entries', 'yarn/clean_html', 'title', 'parse_cf_email'
+    html_filters.push 'yarn/entries', 'yarn/clean_html', 'title', 'parse_cf_email', 'rouge'
 
     options[:root_title] = 'Yarn'
     options[:trailing_slash] = false

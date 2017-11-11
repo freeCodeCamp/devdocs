@@ -8,7 +8,7 @@ module Docs
       code: 'https://github.com/electron/electron'
     }
 
-    html_filters.push 'electron/clean_html', 'electron/entries'
+    html_filters.push 'electron/clean_html', 'electron/entries', 'rouge'
 
     options[:trailing_slash] = true
     options[:container] = '.page-section > .container, .page-section > .container-narrow'
