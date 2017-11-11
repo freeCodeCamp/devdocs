@@ -38,10 +38,6 @@ module Docs
           node['class'] = 'col'
         end
 
-        css('.__cf_email__').each do |node|
-          node.replace(decode_cloudflare_email(node['data-cfemail']))
-        end
-
         css('.highlight').each do |node|
           code = node.at_css('code')
           node['data-language'] = code['data-lang']

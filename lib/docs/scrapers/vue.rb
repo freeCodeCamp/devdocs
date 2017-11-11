@@ -8,7 +8,7 @@ module Docs
       code: 'https://github.com/vuejs/vue'
     }
 
-    html_filters.push 'vue/entries', 'vue/clean_html'
+    html_filters.push 'vue/entries', 'vue/clean_html', 'parse_cf_email'
 
     options[:only_patterns] = [/guide\//, /api\//]
     options[:skip] = %w(guide/team.html)
