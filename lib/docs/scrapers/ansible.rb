@@ -11,6 +11,8 @@ module Docs
 
     html_filters.push 'ansible/entries', 'ansible/clean_html', 'sphinx/clean_html'
 
+    options[:container] = '#page-content'
+
     options[:skip] = %w(
       glossary.html
       faq.html
