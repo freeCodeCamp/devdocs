@@ -4,7 +4,7 @@ Adding a documentation may look like a daunting task but once you get the hang o
 
 **Note:** please read the [contributing guidelines](https://github.com/Thibaut/devdocs/blob/master/CONTRIBUTING.md) before submitting a new documentation.
 
-1. Create a subclass of `Docs::UrlScraper` or `Docs::FileScraper` in the `lib/docs/scrapers/` directory. Its name should be the [CamelCase](http://api.rubyonrails.org/classes/String.html#method-i-camelize) equivalent of the filename (e.g. `my_doc` → `MyDoc`)
+1. Create a subclass of `Docs::UrlScraper` or `Docs::FileScraper` in the `lib/docs/scrapers/` directory. Its name should be the [PascalCase](http://api.rubyonrails.org/classes/String.html#method-i-camelize) equivalent of the filename (e.g. `my_doc` → `MyDoc`)
 2. Add the appropriate class attributes and filter options (see the [Scraper Reference](https://github.com/Thibaut/devdocs/wiki/Scraper-Reference) page).
 3. Check that the scraper is listed in `thor docs:list`.
 4. Create filters specific to the scraper in the `lib/docs/filters/[my_doc]/` directory and add them to the class's [filter stacks](https://github.com/Thibaut/devdocs/wiki/Scraper-Reference#filter-stacks). You may create any number of filters but will need at least the following two:
