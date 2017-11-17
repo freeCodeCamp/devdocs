@@ -2,19 +2,6 @@
 // Utilities
 //
 
-/* Usage:
- *
- * @include print {
- *   // print styles here
- * }
- *
- */
-@mixin print {
-  @media print {
-    @content;
-  }
-}
-
 %border-box {
   -moz-box-sizing: border-box;
        box-sizing: border-box;

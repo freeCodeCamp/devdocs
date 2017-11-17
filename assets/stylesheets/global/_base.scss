@@ -4,6 +4,9 @@ html {
   background: $documentBackground;
 
   @media #{$mediumScreen} { font-size: 93.75%; }
+
+  @include print { background: none; }
+  @import 'global/print';
 }
 
 body {

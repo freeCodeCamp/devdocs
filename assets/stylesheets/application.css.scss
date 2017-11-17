@@ -12,6 +12,7 @@
  */
 
 @import 'global/variables',
+        'global/mixins',
         'global/icons',
         'global/classes',
         'global/base';
@@ -98,7 +99,3 @@
         'pages/webpack',
         'pages/yard',
         'pages/yii';
-
-html { // specificity hack
-  @import 'global/print';
-}

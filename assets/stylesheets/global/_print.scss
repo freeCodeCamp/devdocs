@@ -1,79 +1,51 @@
-// Style overrides for printing
-
 @include print {
-
-  ._header, ._sidebar, ._path, ._notif, ._toc, ._pre-clip, ._notice {
+  ._header, ._sidebar, ._path, ._notif, ._toc, ._pre-clip, ._notice, ._links {
     display: none !important;
   }
 
-  // make the docs fill the page and scroll the <body> instead of ._container
-  body {
+  body, ._app, ._container, ._content {
+    margin: 0;
+    padding: 0;
     height: initial;
-    &::after {
+    background: none;
+
+    &:after {
       content: '';
       clear: both;
     }
   }
-  ._app {
-    height: initial;
-  }
-  ._container {
-    margin: 0;
-    padding: 0;
-    height: initial;
 
-    ._content {
-      margin: 0;
-    }
-  }
-
-  // Hide the scrollbars
   ::-webkit-scrollbar {
     display: none;
   }
 
-  // empty the boxes.
-  %box,
-  %heading-box {
-    background: transparent;
-  }
-  %heading-box {
-    border-radius: 0;
-    border: {
-      top: none;
-      left: none;
-      right: none;
-    }
+  %external-link:after {
+    display: none;
   }
 
-
-  // Underline links, put the destination after the link text
-  %external-link {
-    text-decoration: underline;
-    &::after {
-      content: ' (' attr(href) ')';
-      background-image: none;
-      display: inline;
-      margin: 0;
-    }
-  }
-
-  // Link back to DevDocs
   ._attribution-p {
-    background: transparent;
-    border: 2px solid $labelBackground;
-
-    &:after {
-      content: 'Exported from DevDocs (https://devdocs.io)';
-      font-style: italic;
-    }
+    background: none;
+    border: 2px solid $boxBorder;
   }
 
-  // Fix page breaks
+  ._attribution:last-child:after {
+    content: 'Exported from DevDocs — https://devdocs.io';
+    display: block;
+    margin-top: 1rem;
+    font-weight: $bolderFontWeight;
+  }
+
+  ._attribution {
+    page-break-inside: avoid;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+
   pre {
     page-break-before: avoid;
-  }
-  pre {
     orphans: 5;
     widows: 5;
   }
