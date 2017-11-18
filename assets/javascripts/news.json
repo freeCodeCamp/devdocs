@@ -1,5 +1,8 @@
 [
   [
+    "2017-11-18",
+    "Added print & PDF stylesheet.\nFeedback welcome on <a href=\"https://twitter.com/DevDocs\" target=\"_blank\" rel=\"noopener\">Twitter</a> and <a href=\"https://github.com/Thibaut/devdocs\" target=\"_blank\" rel=\"noopener\">GitHub</a>."
+  ], [
     "2017-09-10",
     "<a href=\"/settings\">Preferences</a> can now be exported and imported."
   ], [
