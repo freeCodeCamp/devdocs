@@ -4,7 +4,7 @@ module Docs
 
     self.name = 'PHP'
     self.type = 'php'
-    self.release = 'up to 7.1.5'
+    self.release = 'PHP4, PHP5 and PHP7'
     self.base_url = 'https://secure.php.net/manual/en/'
     self.root_path = 'index.html'
     self.initial_paths = %w(
@@ -20,7 +20,7 @@ module Docs
 
     self.links = {
       home: 'https://secure.php.net/',
-      code: 'https://github.com/php/php-src'
+      code: 'https://git.php.net/?p=php-src.git;a=summary'
     }
 
     # Downloaded from php.net/download-docs.php
