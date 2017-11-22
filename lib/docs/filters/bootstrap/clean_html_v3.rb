@@ -27,7 +27,7 @@ module Docs
             node.remove_attribute('data-example-id')
             prev = node.previous_element
             prev = prev.previous_element until prev['id']
-            node.inner_html = %(<a href="#{current_url}/##{prev['id']}">Open example on getbootstrap.com</a>)
+            node.inner_html = %(<a href="#{current_url}##{prev['id']}">Open example on getbootstrap.com</a>)
           end
         end
 
