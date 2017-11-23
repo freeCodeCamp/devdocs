@@ -44,45 +44,45 @@ class app.Shortcuts
     return
 
   handleKeydownEvent: (event, _force) ->
-    return @handleKeydownAltEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+    return @handleKeydownAltEvent(event, true) if not _force and event.key in ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'] and @swapArrowKeysBehavior()
 
-    if not event.target.form and (48 <= event.which <= 57 or 65 <= event.which <= 90)
+    if not event.target.form and (event.key.length is 1 and ('0' <= event.key <= '9' or 'A' <= event.key <= 'z'))
       @trigger 'typing'
       return
 
-    switch event.which
-      when 8
+    switch event.key
+      when 'Backspace'
         @trigger 'typing' unless event.target.form
-      when 13
+      when 'Enter'
         @trigger 'enter'
-      when 27
+      when 'Escape'
         @trigger 'escape'
         false
-      when 32
+      when ' '
         if event.target.type is 'search' and (not @lastKeypress or @lastKeypress < Date.now() - 500)
           @trigger 'pageDown'
           false
-      when 33
+      when 'PageUp'
         @trigger 'pageUp'
-      when 34
+      when 'PageDown'
         @trigger 'pageDown'
-      when 35
+      when 'End'
         @trigger 'pageBottom' unless event.target.form
-      when 36
+      when 'Home'
         @trigger 'pageTop' unless event.target.form
-      when 37
+      when 'ArrowLeft'
         @trigger 'left' unless event.target.value
-      when 38
+      when 'ArrowUp'
         @trigger 'up'
         @showTip?()
         false
-      when 39
+      when 'ArrowRight'
         @trigger 'right' unless event.target.value
-      when 40
+      when 'ArrowDown'
         @trigger 'down'
         @showTip?()
         false
-      when 191
+      when '/'
         unless event.target.form
           @trigger 'typing'
           false
@@ -110,62 +110,62 @@ class app.Shortcuts
         false
 
   handleKeydownShiftEvent: (event, _force) ->
-    return @handleKeydownEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+    return @handleKeydownEvent(event, true) if not _force and event.key in ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'] and @swapArrowKeysBehavior()
 
-    if not event.target.form and 65 <= event.which <= 90
+    if not event.target.form and (event.key.length is 1 and 'A' <= event.key <= 'z')
       @trigger 'typing'
       return
 
-    switch event.which
-      when 32
+    switch event.key
+      when ' '
         @trigger 'pageUp'
         false
-      when 38
+      when 'ArrowUp'
         unless getSelection()?.toString()
           @trigger 'altUp'
           false
-      when 40
+      when 'ArrowDown'
         unless getSelection()?.toString()
           @trigger 'altDown'
           false
 
   handleKeydownAltEvent: (event, _force) ->
-    return @handleKeydownEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+    return @handleKeydownEvent(event, true) if not _force and event.key in ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'] and @swapArrowKeysBehavior()
 
-    switch event.which
-      when 9
+    switch event.key
+      when 'Tab'
         @trigger 'altRight', event
-      when 37
+      when 'ArrowLeft'
         unless @isMac
           @trigger 'superLeft'
           false
-      when 38
+      when 'ArrowUp'
         @trigger 'altUp'
         false
-      when 39
+      when 'ArrowRight'
         unless @isMac
           @trigger 'superRight'
           false
-      when 40
+      when 'ArrowDown'
         @trigger 'altDown'
         false
-      when 70
+      when 'f'
         @trigger 'altF', event
-      when 71
+      when 'g'
         @trigger 'altG'
         false
-      when 79
+      when 'o'
         @trigger 'altO'
         false
-      when 82
+      when 'r'
         @trigger 'altR'
         false
-      when 83
+      when 's'
         @trigger 'altS'
         false
 
   handleKeypressEvent: (event) ->
-    if event.which is 63 and not event.target.value
+    if event.key is '?' and not event.target.value
       @trigger 'help'
       false
     else
