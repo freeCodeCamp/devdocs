@@ -88,24 +88,24 @@ class app.Shortcuts
           false
 
   handleKeydownSuperEvent: (event) ->
-    switch event.which
-      when 13
+    switch event.key
+      when 'Enter'
         @trigger 'superEnter'
-      when 37
+      when 'ArrowLeft'
         if @isMac
           @trigger 'superLeft'
           false
-      when 38
+      when 'ArrowUp'
         @trigger 'pageTop'
         false
-      when 39
+      when 'ArrowRight'
         if @isMac
           @trigger 'superRight'
           false
-      when 40
+      when 'ArrowDown'
         @trigger 'pageBottom'
         false
-      when 188
+      when ','
         @trigger 'preferences'
         false
 
