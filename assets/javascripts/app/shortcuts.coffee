@@ -175,7 +175,6 @@ class app.Shortcuts
     try
       event.target
       event.ctrlKey
-      event.which
       event.key
       return false
     catch
