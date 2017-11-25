@@ -37,10 +37,10 @@ app.templates.offlineError = (reason, exception) ->
       """ Your browser appears to be running in private mode.<br>
           This prevents DevDocs from caching documentations for offline access."""
     when 'exception'
-      """ An error occured when trying to open the IndexedDB database:<br>
+      """ An error occurred when trying to open the IndexedDB database:<br>
           <code class="_label">#{exception.name}: #{exception.message}</code> """
     when 'cant_open'
-      """ An error occured when trying to open the IndexedDB database:<br>
+      """ An error occurred when trying to open the IndexedDB database:<br>
           <code class="_label">#{exception.name}: #{exception.message}</code><br>
           This could be because you're browsing in private mode or have disallowed offline storage on the domain. """
     when 'version'
