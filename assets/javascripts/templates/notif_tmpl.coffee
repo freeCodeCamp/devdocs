@@ -13,7 +13,7 @@ app.templates.notifUpdateReady = ->
             """<span data-behavior="reboot"><a href="#" data-behavior="reboot">Reload the page</a> to use the new version.</span>"""
 
 app.templates.notifError = ->
-  textNotif """ Oops, an error occured. """,
+  textNotif """ Oops, an error occurred. """,
             """ Try <a href="#" data-behavior="hard-reload">reloading</a>, and if the problem persists,
                 <a href="#" data-behavior="reset">resetting the app</a>.<br>
                 You can also report this issue on <a href="https://github.com/Thibaut/devdocs/issues/new" target="_blank" rel="noopener">GitHub</a>. """
@@ -31,7 +31,7 @@ app.templates.notifInvalidLocation = ->
             """ Otherwise things are likely to break. """
 
 app.templates.notifImportInvalid = ->
-  textNotif """ Oops, an error occured. """,
+  textNotif """ Oops, an error occurred. """,
             """ The file you selected is invalid. """
 
 app.templates.notifNews = (news) ->
