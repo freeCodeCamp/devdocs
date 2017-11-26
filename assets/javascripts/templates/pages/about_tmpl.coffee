@@ -113,6 +113,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
   ], [
+    'Bluebird',
+    '2013-2017 Petka Antonov',
+    'MIT',
+    'https://raw.githubusercontent.com/petkaantonov/bluebird/master/LICENSE'
+  ], [
     'Bootstrap',
     '2011-2017 Twitter, Inc.<br>2011-2017 The Bootstrap Authors',
     'CC BY',

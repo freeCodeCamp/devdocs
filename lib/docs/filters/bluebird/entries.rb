@@ -26,41 +26,23 @@ module Docs
           done promise.config suppressunhandledrejections
           promise.onpossiblyunhandledrejection promise.bind
           promise.onunhandledrejectionhandled),
-        'Progression migration': %(),
-        'Deferred migration': %(),
-        'Environment variables': %(),
-        "Beginner's Guide": %w(),
-        'Error management configuration': %w(),
-        'Anti-patterns': %w(),
-        'Deprecated APIs': %w()
       }
 
       def get_name
-        name = at_css('h1.post-title')
-        if name.nil?
-          name = at_css('.post-content h2')
-        end
-        name.text
+        name = at_css('h1').content.strip
+        name << '()' if doc.to_html.include?("#{name}(")
+        name
       end
 
       def get_type
-        type = nil
-        TYPE_MAP.each do |k,v|
-          if k.to_s.casecmp(name.strip) == 0
-            type = k
-            break
-          else
-            slug_end = slug.sub(%r(^docs/api/), '')
-            if v.include?(slug_end.downcase)
-              type = k
-              break
-            end
+        if slug.start_with?('api')
+          TYPE_MAP.each do |key, value|
+            return key.to_s if value.include?(slug.remove('api/'))
           end
+        else
+          'Guides'
         end
-
-        type.to_s
       end
-
     end
   end
 end
