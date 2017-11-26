@@ -1,11 +1,10 @@
 module Docs
   class Eslint < UrlScraper
     self.name = 'ESLint'
-    self.type = 'eslint'
-    self.release = '4.9.0'
-    self.base_url = 'https://eslint.org/'
-    self.root_path = 'docs/user-guide/getting-started'
-
+    self.type = 'simple'
+    self.release = '4.12.0'
+    self.base_url = 'https://eslint.org/docs/'
+    self.root_path = 'user-guide/getting-started'
     self.links = {
       home: 'https://eslint.org/',
       code: 'https://github.com/eslint/eslint'
@@ -13,12 +12,11 @@ module Docs
 
     html_filters.push 'eslint/entries', 'eslint/clean_html'
 
-    options[:container] = 'body'    
-
-    options[:skip_patterns] = [/\Ablog/, /\Ademo/, /\Aparser/, /formatters\//]
+    options[:skip_patterns] = [/developer-guide/, /maintainer-guide/]
+    options[:skip] = %w(about about/ rules)
 
     options[:attribution] = <<-HTML
-      &copy; Copyright JS Foundation and other contributors, https://js.foundation/<br>
+      &copy; JS Foundation and other contributors<br>
       Licensed under the MIT License.
     HTML
   end

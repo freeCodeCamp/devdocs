@@ -2,24 +2,22 @@ module Docs
   class Eslint
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('h1').content
+        name = at_css('h1').content.strip
+
+        if subpath.start_with?('rules/') && subpath != 'rules/'
+          name = name[/\(([\w\-]+?)\)\z/, 1] || name[/\A([\w\-]+?):/, 1]
+        end
+
+        name
       end
 
       def get_type
-        if subpath.start_with?('docs/developer-guide/')
-          type = 'Developer Guide'
-        elsif subpath.start_with?('docs/user-guide/')
-          type = 'User Guide'
-        elsif subpath.start_with?('docs/rules')
+        if subpath.include?('guide')
+          type = 'Guide'
+        elsif subpath.start_with?('rules')
           type = 'Rules'
-        elsif subpath.start_with?('docs/about')
-          type = 'User Guide'
-        else
-          type = nil
         end
-        type
       end
-      
     end
   end
 end

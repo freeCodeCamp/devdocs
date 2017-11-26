@@ -248,6 +248,11 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
   ], [
+    'ESLint',
+    'JS Foundation and other contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/eslint/eslint/master/LICENSE'
+  ], [
     'Express',
     '2017 StrongLoop, IBM, and other expressjs.com contributors.',
     'CC BY-SA',
