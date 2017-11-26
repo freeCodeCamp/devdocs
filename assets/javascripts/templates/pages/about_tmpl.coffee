@@ -303,6 +303,11 @@ credits = [
     'MIT',
     'http://haxe.org/foundation/open-source.html'
   ], [
+    'Homebrew',
+    '2009-present Homebrew contributors',
+    'BSD',
+    'https://raw.githubusercontent.com/Homebrew/brew/master/LICENSE.txt'
+  ], [
     'Immutable.js',
     '2014-2016 Facebook, Inc.',
     'BSD',
