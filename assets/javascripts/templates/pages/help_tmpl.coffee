@@ -57,9 +57,7 @@ app.templates.helpPage = ->
       <ul>
         <li>On Chrome, the setup is done automatically. Simply press <code class="_label">tab</code> when devdocs.io is autocompleted
             in the omnibox (to set a custom keyword, click <em>Manage search engines\u2026</em> in Chrome's settings).
-        <li>On Firefox, open the search engine list (icon in the search bar) and click <em>Add "DevDocs Search"</em>.
-            DevDocs is now available in the search bar. You can also search from the location bar by following
-            <a href="https://support.mozilla.org/en-US/kb/how-search-from-address-bar">these instructions</a>.
+        <li>On Firefox, right-click the DevDocs search field and select <em>Add a Keyword for this Search…</em>. Then, type the added keyword followed by a query in the address bar to search DevDocs.
   </dl>
   <p>
     <i>Note: the above search features only work for documentations that are enabled.</i>
