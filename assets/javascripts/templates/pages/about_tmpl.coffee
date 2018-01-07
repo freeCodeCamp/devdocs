@@ -537,9 +537,9 @@ credits = [
     'https://raw.githubusercontent.com/ramda/ramda/master/LICENSE.txt'
   ], [
     'React, React Native, Flow, Relay',
-    '2013-2017 Facebook Inc.',
+    '2013-present Facebook Inc.',
     'CC BY',
-    'https://raw.githubusercontent.com/facebook/react/master/LICENSE-docs'
+    'https://raw.githubusercontent.com/reactjs/reactjs.org/master/LICENSE-DOCS.md'
   ], [
     'Redis',
     '2009-2017 Salvatore Sanfilippo',
