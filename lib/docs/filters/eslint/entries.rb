@@ -12,10 +12,12 @@ module Docs
       end
 
       def get_type
-        if subpath.include?('guide')
-          type = 'Guide'
+        if subpath.include?('developer-guide')
+          'Developer Guide'
+        elsif subpath.include?('guide')
+          'Guide'
         elsif subpath.start_with?('rules')
-          type = 'Rules'
+          'Rules'
         end
       end
     end
