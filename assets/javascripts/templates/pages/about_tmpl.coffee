@@ -23,8 +23,6 @@ app.templates.aboutPage = -> """
     <li>Watch the repository on <a href="https://github.com/Thibaut/devdocs/subscription">GitHub</a>
     <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
   </ul>
-  <p class="_note _note-green">If you like DevDocs, please spread the word and consider supporting my work on
-    <a href="https://gratipay.com/devdocs/">Gratipay</a>. Thanks!<br>
 
   <h2 class="_block-heading" id="copyright">Copyright and License</h2>
   <p class="_note">
