@@ -35,7 +35,11 @@ module Docs
 
     def process_response?(response)
       if response.error?
-        raise "Error status code (#{response.code}): #{response.return_message}\n#{response.url}"
+        raise <<~ERROR
+          Error status code (#{response.code}): #{response.return_message}
+          #{response.url}
+          #{JSON.pretty_generate(response.headers).slice(2..-3)}
+        ERROR
       elsif response.blank?
         raise "Empty response body: #{response.url}"
       end
