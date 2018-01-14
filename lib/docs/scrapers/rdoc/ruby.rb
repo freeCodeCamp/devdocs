@@ -76,18 +76,23 @@ module Docs
       Licensed under their own licenses.
     HTML
 
+    version '2.5' do
+      self.release = '2.5.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby25'
+    end
+
     version '2.4' do
-      self.release = '2.4.1'
+      self.release = '2.4.3'
       self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby24'
     end
 
     version '2.3' do
-      self.release = '2.3.4'
+      self.release = '2.3.6'
       self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby23'
     end
 
     version '2.2' do
-      self.release = '2.2.7'
+      self.release = '2.2.9'
       self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby22'
     end
   end
