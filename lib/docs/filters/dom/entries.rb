@@ -10,6 +10,7 @@ module Docs
         'Audio'               => 'Audio',
         'Battery Status'      => 'Battery Status',
         'Canvas '             => 'Canvas',
+        'Clipboard'           => 'Clipboard',
         'Cooperative Scheduling' => 'Scheduling',
         'CSS Font Loading'    => 'CSS',
         'CSS Object Model'    => 'CSS',
@@ -45,6 +46,7 @@ module Docs
         'Stream API'          => 'Media Streams',
         'Streams'             => 'Media Streams',
         'Touch Events'        => 'Touch Events',
+        'Visual Viewport'     => 'Visual Viewport',
         'Web Animations'      => 'Animation',
         'Web App Manifest'    => 'Web App Manifest',
         'Budget'              => 'Budget',
@@ -54,6 +56,8 @@ module Docs
         'WebVR'               => 'WebVR' }
 
       TYPE_BY_NAME_STARTS_WITH = {
+        'AbortController'     => 'Fetch',
+        'AbortSignal'         => 'Fetch',
         'Ambient'             => 'Ambient Light',
         'Attr'                => 'Nodes',
         'Audio'               => 'Audio',
@@ -61,6 +65,7 @@ module Docs
         'Broadcast'           => 'Broadcast Channel',
         'Budget'              => 'Budget',
         'Canvas'              => 'Canvas',
+        'Clipboard'           => 'Clipboard',
         'CSS'                 => 'CSS',
         'CharacterData'       => 'Nodes',
         'ChildNode'           => 'Nodes',
@@ -105,6 +110,7 @@ module Docs
         'screen'              => 'Screen',
         'Selection'           => 'Selection',
         'Shadow'              => 'Shadow DOM',
+        'Streams'             => 'Media Streams',
         'StyleSheet'          => 'CSS',
         'Stylesheet'          => 'CSS',
         'SVG'                 => 'SVG',
