@@ -17,6 +17,8 @@ module Docs
         end
 
         css('.bd-example', '.responsive-utilities-test').each do |node|
+          next unless node.previous_element
+
           if node.previous_element['class'].try(:include?, 'bd-example')
             node.remove
           else
