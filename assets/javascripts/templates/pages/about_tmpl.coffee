@@ -232,7 +232,7 @@ credits = [
     'https://raw.githubusercontent.com/electron/electron/master/LICENSE'
   ], [
     'Elixir',
-    '2012-2017 Plataformatec',
+    '2012 Plataformatec',
     'Apache',
     'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
   ], [

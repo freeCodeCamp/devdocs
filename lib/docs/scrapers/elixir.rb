@@ -19,7 +19,7 @@ module Docs
     options[:root_title] = 'Elixir'
 
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2017 Plataformatec<br>
+      &copy; 2012 Plataformatec<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 
@@ -33,8 +33,21 @@ module Docs
         "https://elixir-lang.org/getting-started/introduction.html" ]
     end
 
+    version '1.6' do
+      self.release = '1.6.0'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
     version '1.5' do
-      self.release = '1.5.2'
+      self.release = '1.5.3'
       self.base_urls = [
         "https://hexdocs.pm/elixir/#{release}/",
         "https://hexdocs.pm/eex/#{release}/",
