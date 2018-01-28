@@ -592,7 +592,7 @@ credits = [
     'https://raw.githubusercontent.com/scikit-learn/scikit-learn/master/COPYING'
   ], [
     'Sinon',
-    '2010-2017 Christian Johansen',
+    '2010-2018 Christian Johansen',
     'BSD',
     'https://raw.githubusercontent.com/sinonjs/sinon/master/LICENSE'
   ], [
