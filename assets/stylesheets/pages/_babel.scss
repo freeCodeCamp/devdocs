@@ -1,0 +1,10 @@
+._babel {
+  @extend %simple;
+  ._note {
+    h1, h2, h3, h4, h5, h6 {
+      &:first-child {
+        margin: 0.5em 0;
+      }
+    }
+  }
+}
