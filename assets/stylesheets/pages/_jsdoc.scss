@@ -1,0 +1,25 @@
+._jsdoc {
+  > h2 { @extend %block-heading; }
+
+  > h3 {
+    @extend %lined-heading;
+    font-size: 1.1em;
+  }
+
+  figure {
+    margin-left: 0;
+    font-size: inherit;
+
+    pre {
+      margin-bottom: 0.5em;
+    }
+
+    figcaption {
+      font-style: italic;
+    }
+  }
+
+  pre {
+    font-size: inherit;
+  }
+}
