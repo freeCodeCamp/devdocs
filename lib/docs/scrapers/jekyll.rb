@@ -1,7 +1,7 @@
 module Docs
   class Jekyll < UrlScraper
     self.type = 'jekyll'
-    self.release = '3.6.2'
+    self.release = '3.7.2'
     self.base_url = 'https://jekyllrb.com/docs/'
     self.root_path = 'home/'
     self.links = {
@@ -12,23 +12,21 @@ module Docs
     html_filters.push 'jekyll/clean_html', 'jekyll/entries'
 
     options[:trailing_slash] = true
-    options[:container] = 'article'
-    options[:skip] = [
-      '',
-      '/'
-    ]
+    options[:skip] = %w(sites/ upgrading/)
     options[:skip_patterns] = [
       /conduct/,
       /history/,
       /maintaining/,
-      /contributing/
+      /contributing/,
     ]
+    options[:replace_paths] = {
+      '' => 'home/',
+      '/' => 'home/'
+    }
+
     options[:attribution] = <<-HTML
-      &copy; 2008&ndash;2017 Tom Preston-Werner and Jekyll contributors<br />
-      Licensed under
-        <a href="https://github.com/jekyll/jekyll/blob/master/LICENSE">
-          the MIT license
-        </a>
+      &copy; 2008&ndash;2018 Tom Preston-Werner and Jekyll contributors<br>
+      Licensed under the MIT license.
     HTML
   end
 end

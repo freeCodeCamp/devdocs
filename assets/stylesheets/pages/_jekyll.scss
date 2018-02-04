@@ -1,35 +1,7 @@
 ._jekyll {
-  h2, h3 { @extend %block-heading; }
+  @extend %simple;
 
-  .note {
-    @extend %note;
-
-    h5 {
-      margin-top: 0.25em;
-    }
-
-    position: relative;
-    &::after {
-      content: attr(data-type);
-      opacity: 0.5;
-      text-transform: uppercase;
-      position: absolute;
-      top: 0.25em;
-      right: 0.5em;
-      font-size: 0.8em;
-      pointer-events: none;
-    }
-
-    // Other note types currently unstyled:
-    // plain
-    // tip
-    // feature
-    &.note-info { @extend %note-blue; }
-    &.note-warning { @extend %note-red; }
-    &.note-unreleased { @extend %note-orange; }
-  }
-
-  pre {
-    font-size: inherit;
-  }
+  .note.info { @extend %note-blue; }
+  .note.warning { @extend %note-red; }
+  .note.unreleased { @extend %note-orange; }
 }

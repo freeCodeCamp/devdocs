@@ -1,13 +1,12 @@
 module Docs
   class Jekyll
     class EntriesFilter < Docs::EntriesFilter
-
       def get_name
         at_css('h1').content
       end
 
       def get_type
-        if /continuous-integration/.match(slug)
+        if slug.include?('continuous-integration')
           'Deployment'
         else
           nav_link = doc.document # document
