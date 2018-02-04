@@ -2,8 +2,11 @@ module Docs
   class Jsdoc
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('h1').content
+        name = at_css('h1').content
+        name.prepend 'JSDoc: ' if !name.include?('@') && !name.include?('JSDoc')
+        name
       end
+
       def get_type
         case slug
           when /^about-/
@@ -17,7 +20,7 @@ module Docs
           when /^tags-/
             'Tags'
           else
-            'Other' # Only shown if a new category gets added in the upstream docs
+            'Miscellaneous' # Only shown if a new category gets added in the upstream docs
         end
       end
     end

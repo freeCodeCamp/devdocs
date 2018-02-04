@@ -346,6 +346,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/JuliaLang/julia/master/LICENSE.md'
   ], [
+    'JSDoc',
+    '2011-2017 the contributors to the JSDoc 3 documentation project',
+    'CC BY-SA',
+    'https://raw.githubusercontent.com/jsdoc3/jsdoc3.github.com/master/LICENSE'
+  ], [
     'Knockout.js',
     'Steven Sanderson, the Knockout.js team, and other contributors',
     'MIT',

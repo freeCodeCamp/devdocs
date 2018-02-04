@@ -1,9 +1,10 @@
 module Docs
   class Jsdoc < UrlScraper
     self.name = 'JSDoc'
-    self.type = 'jsdoc'
+    self.type = 'simple'
     self.release = '3.5.5'
     self.base_url = 'http://usejsdoc.org/'
+    self.root_path = 'index.html'
     self.links = {
       home: 'http://usejsdoc.org/',
       code: 'https://github.com/jsdoc3/jsdoc'
@@ -17,14 +18,8 @@ module Docs
       'about-license-jsdoc3.html'
     ]
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2017
-        <a href="https://github.com/jsdoc3/jsdoc3.github.com/contributors">
-          JSDoc 3 contributors
-        </a><br>
-      Licensed under
-        <a href="http://creativecommons.org/licenses/by-sa/3.0/">
-          CC BY-SA 3.0
-        </a>
+      &copy; 2011&ndash;2017 the contributors to the JSDoc 3 documentation project<br>
+      Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.
     HTML
   end
 end

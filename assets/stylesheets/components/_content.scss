@@ -382,6 +382,8 @@
 ._table { width: 100%; }
 ._mobile ._table { overflow-x: auto; }
 
+._pre-heading { @extend %pre-heading; }
+
 ._pre-clip {
   display: none;
   position: absolute;
