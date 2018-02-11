@@ -1,4 +1,4 @@
-FROM ruby:2.4.2-alpine
+FROM ruby:2.4.3-alpine
 
 WORKDIR /devdocs
 
