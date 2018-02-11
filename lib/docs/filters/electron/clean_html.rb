@@ -22,14 +22,6 @@ module Docs
           node.name = node.name.sub(/\d/) { |i| i.to_i - 1 } unless node.name == 'h3' && node.at_css('code')
         end if !at_css('h2') && at_css('h4')
 
-        css('div.highlighter-rouge').each do |node|
-          node['data-language'] = node['class'][/language-(\w+)/, 1] if node['class']
-          node.content = node.content.strip
-          node.name = 'pre'
-        end
-
-        css('.highlighter-rouge').remove_attr('class')
-
         css('pre').each do |node|
           node.content = node.content
         end

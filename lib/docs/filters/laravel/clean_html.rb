@@ -8,10 +8,6 @@ module Docs
           other
         end
 
-        css('a.__cf_email__').each do |node|
-          node.replace(decode_cloudflare_email(node['data-cfemail']))
-        end
-
         # Remove code highlighting
         css('pre').each do |node|
           node.content = node.content

@@ -42,18 +42,6 @@ module Docs
             node.name = node.name.sub(/\d/) { |i| i.to_i - 1 }
           end
         end
-
-        css('.__cf_email__').each do |node|
-          node.replace(decode_cloudflare_email(node['data-cfemail']))
-        end
-
-        css('div.highlighter-rouge').each do |node|
-          node['data-language'] = node['class'][/language-(\w+)/, 1] if node['class']
-          node.content = node.content.strip
-          node.name = 'pre'
-        end
-
-        css('.highlighter-rouge').remove_attr('class')
       end
     end
   end

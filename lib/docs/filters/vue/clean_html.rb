@@ -9,10 +9,6 @@ module Docs
 
         css('.demo', '.guide-links', '.footer', '#ad').remove
 
-        css('.__cf_email__').each do |node|
-          node.replace(decode_cloudflare_email(node['data-cfemail']))
-        end
-
         # Remove code highlighting
         css('figure').each do |node|
           node.name = 'pre'

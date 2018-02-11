@@ -8,7 +8,7 @@ module Docs
       code: 'https://github.com/nodejs/node'
     }
 
-    html_filters.push 'node/clean_html', 'node/entries', 'title'
+    html_filters.push 'node/clean_html', 'node/entries', 'title', 'parse_cf_email'
 
     options[:title] = false
     options[:root_title] = 'Node.js'
