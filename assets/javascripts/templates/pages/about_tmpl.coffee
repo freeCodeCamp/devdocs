@@ -202,7 +202,7 @@ credits = [
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
   ], [
     'D',
-    '1999-2017 The D Language Foundation',
+    '1999-2018 The D Language Foundation',
     'Boost',
     'https://raw.githubusercontent.com/dlang/phobos/master/LICENSE_1_0.txt'
   ], [
