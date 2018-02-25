@@ -304,7 +304,7 @@ credits = [
     'Haxe',
     '2005-2016 Haxe Foundation',
     'MIT',
-    'http://haxe.org/foundation/open-source.html'
+    'https://haxe.org/foundation/open-source.html'
   ], [
     'Homebrew',
     '2009-present Homebrew contributors',
