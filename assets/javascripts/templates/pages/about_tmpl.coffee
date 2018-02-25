@@ -182,9 +182,9 @@ credits = [
     'https://raw.githubusercontent.com/bcit-ci/CodeIgniter/develop/license.txt'
   ], [
     'CoffeeScript',
-    '2009-2017 Jeremy Ashkenas',
+    '2009-2018 Jeremy Ashkenas',
     'MIT',
-    'https://raw.githubusercontent.com/jashkenas/coffee-script/master/LICENSE'
+    'https://raw.githubusercontent.com/jashkenas/coffeescript/master/LICENSE'
   ], [
     'Cordova',
     '2012-2017 The Apache Software Foundation',
