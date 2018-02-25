@@ -4,7 +4,7 @@ module Docs
   class Tensorflow < UrlScraper
     self.name = 'TensorFlow'
     self.type = 'tensorflow'
-    self.release = '1.4'
+    self.release = '1.5'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://www.tensorflow.org/',
@@ -22,7 +22,7 @@ module Docs
     end
 
     options[:attribution] = <<-HTML
-      &copy; 2017 The TensorFlow Authors. All rights reserved.<br>
+      &copy; 2018 The TensorFlow Authors. All rights reserved.<br>
       Licensed under the Creative Commons Attribution License 3.0.<br>
       Code samples licensed under the Apache 2.0 License.
     HTML
