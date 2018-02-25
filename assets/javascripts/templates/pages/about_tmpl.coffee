@@ -277,7 +277,7 @@ credits = [
     'https://www.gnu.org/licenses/fdl-1.3.en.html'
   ], [
     'Git',
-    '2005-2017 Linus Torvalds and others',
+    '2005-2018 Linus Torvalds and others',
     'GPLv2',
     'https://raw.githubusercontent.com/git/git/master/COPYING'
   ], [
