@@ -657,7 +657,7 @@ credits = [
     'https://raw.githubusercontent.com/jashkenas/underscore/master/LICENSE'
   ], [
     'Vagrant',
-    '2010-2017 Mitchell Hashimoto',
+    '2010-2018 Mitchell Hashimoto',
     'MPL',
     'https://raw.githubusercontent.com/mitchellh/vagrant/master/website/LICENSE.md'
   ], [

@@ -29,6 +29,7 @@ module Docs
             if node.name == 'h2'
               h2 = node['id']
             elsif h2 == 'available-settings' && (code = node.at_css('code')) && (name = code.content) && name.start_with?('config.')
+              name.sub! %r{\s+=.*}, '='
               id = code.parent['id'] = name.parameterize
               entries << [name, id, 'Config']
             end
