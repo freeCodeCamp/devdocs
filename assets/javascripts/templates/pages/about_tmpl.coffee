@@ -522,7 +522,7 @@ credits = [
     'https://raw.githubusercontent.com/phoenixframework/phoenix/master/LICENSE.md'
   ], [
     'PHP',
-    '1997-2017 The PHP Documentation Group',
+    '1997-2018 The PHP Documentation Group',
     'CC BY',
     'https://secure.php.net/manual/en/copyright.php'
   ], [

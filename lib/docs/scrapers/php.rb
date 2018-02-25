@@ -4,7 +4,7 @@ module Docs
 
     self.name = 'PHP'
     self.type = 'php'
-    self.release = '7.1.12'
+    self.release = '7.2.2'
     self.base_url = 'https://secure.php.net/manual/en/'
     self.root_path = 'index.html'
     self.initial_paths = %w(
@@ -64,7 +64,7 @@ module Docs
     options[:skip_patterns] = [/mysqlnd/]
 
     options[:attribution] = <<-HTML
-      &copy; 1997&ndash;2017 The PHP Documentation Group<br>
+      &copy; 1997&ndash;2018 The PHP Documentation Group<br>
       Licensed under the Creative Commons Attribution License v3.0 or later.
     HTML
   end
