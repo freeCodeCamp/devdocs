@@ -427,7 +427,7 @@ credits = [
     'https://github.com/seattlerb/minitest/blob/master/README.rdoc#license'
   ], [
     'Mocha',
-    '2011-2017 JS Foundation and contributors',
+    '2011-2018 JS Foundation and contributors',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [

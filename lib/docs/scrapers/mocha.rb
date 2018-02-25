@@ -1,7 +1,7 @@
 module Docs
   class Mocha < UrlScraper
     self.type = 'mocha'
-    self.release = '4.1.0'
+    self.release = '5.0.1'
     self.base_url = 'https://mochajs.org/'
     self.links = {
       home: 'https://mochajs.org/',
@@ -15,7 +15,7 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2017 JS Foundation and contributors<br>
+      &copy; 2011&ndash;2018 JS Foundation and contributors<br>
       Licensed under the Creative Commons Attribution 4.0 International License.
     HTML
   end
