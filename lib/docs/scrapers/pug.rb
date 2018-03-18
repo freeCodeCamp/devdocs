@@ -3,7 +3,7 @@ module Docs
     self.type = 'pug'
     self.base_url = 'https://pugjs.org/'
     self.root_path = 'api/getting-started.html'
-    self.release = '2.0.0-rc.4'
+    self.release = '2.0.1'
     self.links = {
       home: 'https://pugjs.org/',
       code: 'https://github.com/pugjs/pug'
