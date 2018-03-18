@@ -677,7 +677,7 @@ credits = [
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Yarn',
-    '2016-2017 Yarn Contributors',
+    '2016-present Yarn Contributors',
     'BSD',
     'https://raw.githubusercontent.com/yarnpkg/yarn/master/LICENSE'
   ], [
