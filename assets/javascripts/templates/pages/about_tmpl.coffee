@@ -387,9 +387,9 @@ credits = [
     'https://raw.githubusercontent.com/Shopify/liquid/master/LICENSE'
   ], [
     'Lo-Dash',
-    '2012-2016 The Dojo Foundation',
+    'JS Foundation and other contributors',
     'MIT',
-    'https://raw.githubusercontent.com/lodash/lodash/master/LICENSE.txt'
+    'https://raw.githubusercontent.com/lodash/lodash/master/LICENSE'
   ], [
     'Lua',
     '1994–2017 Lua.org, PUC-Rio',
