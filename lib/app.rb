@@ -133,7 +133,7 @@ class App < Sinatra::Application
     end
 
     def canonical_origin
-      "http://#{request.host_with_port}"
+      "https://#{request.host_with_port}"
     end
 
     def browser
