@@ -51,6 +51,7 @@ module Docs
           type.remove! ' Module'
           type.remove! %r{ Level \d\z}
           type.remove! %r{\(.*\)}
+          type.remove! %r{  \d\z}
           type.sub! 'and', '&'
           type.strip!
           type = 'Grid Layout' if type.include?('Grid Layout')

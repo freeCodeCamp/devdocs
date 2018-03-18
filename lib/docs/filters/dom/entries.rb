@@ -11,6 +11,7 @@ module Docs
         'Battery Status'      => 'Battery Status',
         'Canvas '             => 'Canvas',
         'Clipboard'           => 'Clipboard',
+        'Content Security'    => 'Content Security Policy',
         'Cooperative Scheduling' => 'Scheduling',
         'CSS Font Loading'    => 'CSS',
         'CSS Object Model'    => 'CSS',
@@ -50,6 +51,7 @@ module Docs
         'Web Animations'      => 'Animation',
         'Web App Manifest'    => 'Web App Manifest',
         'Budget'              => 'Budget',
+        'Web Authentication'  => 'Authentication',
         'Web Workers'         => 'Web Workers',
         'WebGL'               => 'WebGL',
         'WebRTC'              => 'WebRTC',
@@ -74,6 +76,7 @@ module Docs
         'CustomElement'       => 'Custom Elements',
         'DataTransfer'        => 'Drag & Drop',
         'document'            => 'Document',
+        'Document Object'     => 'DOM',
         'DocumentFragment'    => 'DocumentFragment',
         'DocumentType'        => 'Nodes',
         'DOM'                 => 'DOM',
@@ -110,6 +113,7 @@ module Docs
         'screen'              => 'Screen',
         'Selection'           => 'Selection',
         'Shadow'              => 'Shadow DOM',
+        'StaticRange'         => 'Range',
         'Streams'             => 'Media Streams',
         'StyleSheet'          => 'CSS',
         'Stylesheet'          => 'CSS',
@@ -170,7 +174,6 @@ module Docs
 
       CLEANUP_NAMES = %w(
         CSS\ Object\ Model.
-        Document\ Object\ Model.
         Tutorial.
         XMLHttpRequest.
         ANGLE\ instanced\ arrays.)
@@ -178,6 +181,7 @@ module Docs
       def get_name
         name = super
         CLEANUP_NAMES.each { |str| name.remove!(str) }
+        name.sub! %r{Document\ Object\ Model\.}i, 'Document Object Model: '
         name.sub! 'Input.', 'HTMLInputElement.'
         name.sub! 'window.navigator', 'navigator'
         name.sub! 'API.', 'API: '

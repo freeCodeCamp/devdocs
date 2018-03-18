@@ -9,7 +9,7 @@ module Docs
     html_filters.push 'mdn/clean_html'
     text_filters.insert_before 'attribution', 'mdn/contribute_link'
 
-    options[:rate_limit] = 400
+    options[:rate_limit] = 200
     options[:trailing_slash] = false
 
     options[:skip_link] = ->(link) {
