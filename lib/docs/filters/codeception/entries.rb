@@ -2,7 +2,7 @@ module Docs
   class Codeception
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = (at_css('h1') || at_css('h2')).content
+        name = (at_css('.js-algolia__initial-content h1') || at_css('.js-algolia__initial-content h2')).content
 
         if number = subpath[/\A\d+/]
           name.prepend "#{number.to_i}. "
