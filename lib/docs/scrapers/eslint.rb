@@ -2,7 +2,7 @@ module Docs
   class Eslint < UrlScraper
     self.name = 'ESLint'
     self.type = 'simple'
-    self.release = '4.18.1'
+    self.release = '4.19.0'
     self.base_url = 'https://eslint.org/docs/'
     self.root_path = 'user-guide/getting-started'
     self.links = {
@@ -14,6 +14,7 @@ module Docs
 
     options[:skip_patterns] = [/maintainer-guide/]
     options[:skip] = %w(about about/ rules)
+    options[:replace_paths] = { 'user-guide' => 'user-guide/' }
 
     options[:attribution] = <<-HTML
       &copy; JS Foundation and other contributors<br>
