@@ -20,7 +20,7 @@ app.templates.helpPage = ->
     </ul>
   </nav>
 
-  <h1 class="_lined-heading">User Guide</h2>
+  <h1 class="_lined-heading">User Guide</h1>
 
   <h2 class="_block-heading" id="managing-documentations">Managing Documentations</h2>
   <p>
