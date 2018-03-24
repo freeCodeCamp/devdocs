@@ -103,7 +103,9 @@ module Docs
     end
 
     def clean_path(path)
-      path.gsub %r{[!;:]+}, '-'
+      path = path.gsub %r{[!;:]}, '-'
+      path = path.gsub %r{\+}, '_plus_'
+      path
     end
   end
 end
