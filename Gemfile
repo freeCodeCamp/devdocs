@@ -22,6 +22,7 @@ end
 
 group :production do
   gem 'uglifier'
+  gem 'newrelic_rpm'
 end
 
 group :development do

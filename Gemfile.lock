@@ -49,6 +49,7 @@ GEM
     minitest (5.11.3)
     multi_json (1.13.1)
     mustermann (1.0.2)
+    newrelic_rpm (4.8.0.341)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     options (2.3.2)
@@ -131,6 +132,7 @@ DEPENDENCIES
   image_optim
   image_optim_pack
   minitest
+  newrelic_rpm
   nokogiri
   progress_bar
   pry (~> 0.11.0)
