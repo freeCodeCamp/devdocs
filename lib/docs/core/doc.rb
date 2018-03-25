@@ -2,6 +2,7 @@ module Docs
   class Doc
     INDEX_FILENAME = 'index.json'
     DB_FILENAME = 'db.json'
+    META_FILENAME = 'meta.json'
 
     class << self
       include Instrumentable
@@ -73,6 +74,10 @@ module Docs
         File.join path, DB_FILENAME
       end
 
+      def meta_path
+        File.join path, META_FILENAME
+      end
+
       def as_json
         json = { name: name, slug: slug, type: type }
         json[:links] = links if links.present?
@@ -107,6 +112,7 @@ module Docs
           if index.present?
             store_index(store, INDEX_FILENAME, index)
             store_index(store, DB_FILENAME, pages)
+            store_meta(store)
             true
           else
             false
@@ -131,7 +137,15 @@ module Docs
         instrument "#{filename.remove('.json')}.doc", before: old_json, after: new_json
         store.write(filename, new_json)
       end
+
+      def store_meta(store)
+        json = as_json
+        json[:mtime] = Time.now.to_i
+        json[:db_size] = store.size(DB_FILENAME)
+        store.write(META_FILENAME, json.to_json)
+      end
     end
+
 
     def initialize
       raise NotImplementedError, "#{self.class} is an abstract class and cannot be instantiated." if self.class.abstract
