@@ -21,7 +21,7 @@ module Docs
     end
 
     def to_json
-      JSON.generate(as_json)
+      JSON.pretty_generate(as_json)
     end
   end
 end

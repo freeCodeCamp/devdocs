@@ -78,7 +78,7 @@ class ManifestTest < MiniTest::Spec
   describe "#to_json" do
     it "returns the JSON string for #as_json" do
       stub(manifest).as_json { { test: 'ok' } }
-      assert_equal '{"test":"ok"}', manifest.to_json
+      assert_equal "{\n  \"test\": \"ok\"\n}", manifest.to_json
     end
   end
 end
