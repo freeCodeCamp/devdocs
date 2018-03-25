@@ -8,7 +8,7 @@ module Docs
       code: 'https://github.com/facebook/flow'
     }
 
-    html_filters.push 'flow/entries', 'flow/clean_html', 'title', 'parse_cf_email'
+    html_filters.push 'flow/entries', 'flow/clean_html', 'title'
 
     options[:trailing_slash] = false
     options[:root_title] = 'Flow'

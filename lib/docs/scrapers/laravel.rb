@@ -7,7 +7,7 @@ module Docs
       code: 'https://github.com/laravel/laravel'
     }
 
-    html_filters.push 'laravel/entries', 'laravel/clean_html', 'parse_cf_email'
+    html_filters.push 'laravel/entries', 'laravel/clean_html'
 
     options[:container] = ->(filter) {
       filter.subpath.start_with?('/api') ? '#content' : '.docs-wrapper'

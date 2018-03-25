@@ -41,7 +41,7 @@ module Docs
     self.html_filters = FilterStack.new
     self.text_filters = FilterStack.new
 
-    html_filters.push 'apply_base_url', 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths'
+    html_filters.push 'apply_base_url', 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths', 'parse_cf_email'
     text_filters.push 'images' # ensure the images filter runs after all html filters
     text_filters.push 'inner_html', 'clean_text', 'attribution'
 
