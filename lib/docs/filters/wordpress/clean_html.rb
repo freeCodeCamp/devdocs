@@ -11,9 +11,14 @@ module Docs
             '.anchor', '.toc-jump', '.source-code-links', '.user-notes',
             '.show-more', '.hide-more').remove
 
-        # Add PHP code highlighting
         br = /<br\s?\/?>/i
-        css('.source-code-container', '.syntaxhighlighter').each do |node|
+
+        # Add PHP code highlighting
+        css('pre').each do |node|
+          node['data-language'] = 'php'
+        end
+
+        css('.source-code-container').each do |node|
           node.name = 'pre'
           node.inner_html = node.inner_html.gsub(br, "\n")
           node.content = node.content.strip
