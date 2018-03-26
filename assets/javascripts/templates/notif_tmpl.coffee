@@ -16,7 +16,7 @@ app.templates.notifError = ->
   textNotif """ Oops, an error occurred. """,
             """ Try <a href="#" data-behavior="hard-reload">reloading</a>, and if the problem persists,
                 <a href="#" data-behavior="reset">resetting the app</a>.<br>
-                You can also report this issue on <a href="https://github.com/Thibaut/devdocs/issues/new" target="_blank" rel="noopener">GitHub</a>. """
+                You can also report this issue on <a href="https://github.com/freeCodeCamp/devdocs/issues/new" target="_blank" rel="noopener">GitHub</a>. """
 
 app.templates.notifQuotaExceeded = ->
   textNotif """ The offline database has exceeded its size limitation. """,

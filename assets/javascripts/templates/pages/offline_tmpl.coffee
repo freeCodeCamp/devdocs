@@ -32,7 +32,7 @@ app.templates.offlinePage = (docs) -> """
     <dt>What if I don't update a documentation?
     <dd>You'll see outdated content and some pages will be missing or broken, because the rest of the app (including data for the search and sidebar) uses a different caching mechanism that's updated automatically.
     <dt>I found a bug, where do I report it?
-    <dd>In the <a href="https://github.com/Thibaut/devdocs/issues">issue tracker</a>. Thanks!
+    <dd>In the <a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>. Thanks!
     <dt>How do I uninstall/reset the app?
     <dd>Click <a href="#" data-behavior="reset">here</a>.
     <dt>Why aren't all documentations listed above?
