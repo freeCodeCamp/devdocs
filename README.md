@@ -6,6 +6,7 @@ DevDocs combines multiple API documentations in a fast, organized, and searchabl
 
 Keep track of development news:
 
+* Join the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs)
 * Watch the repository on [GitHub](https://github.com/Thibaut/devdocs/subscription)
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 * Join the [mailing list](https://groups.google.com/d/forum/devdocs)
