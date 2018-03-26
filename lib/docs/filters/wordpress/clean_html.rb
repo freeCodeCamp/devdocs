@@ -8,8 +8,7 @@ module Docs
         end
 
         css('hr', '.screen-reader-text', '.table-of-contents',
-            '.anchor', '.toc-jump', '.source-code-links', '.related',
-            '.user-notes').remove
+            '.anchor', '.toc-jump', '.source-code-links', '.user-notes').remove
 
         # Add PHP code highlighting
         br = /<br\s?\/?>/i
