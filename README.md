@@ -1,4 +1,4 @@
-# [DevDocs](https://devdocs.io) [![Build Status](https://travis-ci.org/Thibaut/devdocs.svg?branch=master)](https://travis-ci.org/Thibaut/devdocs)
+# [DevDocs](https://devdocs.io) [![Build Status](https://travis-ci.org/freeCodeCamp/devdocs.svg?branch=master)](https://travis-ci.org/freeCodeCamp/devdocs)
 
 DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
 
@@ -6,7 +6,8 @@ DevDocs combines multiple API documentations in a fast, organized, and searchabl
 
 Keep track of development news:
 
-* Watch the repository on [GitHub](https://github.com/Thibaut/devdocs/subscription)
+* Join the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs)
+* Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 * Join the [mailing list](https://groups.google.com/d/forum/devdocs)
 
@@ -21,7 +22,7 @@ DevDocs is made of two pieces: a Ruby scraper that generates the documentation a
 DevDocs requires Ruby 2.5.0, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
 
 ```
-git clone https://github.com/Thibaut/devdocs.git && cd devdocs
+git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
 gem install bundler
 bundle install
 bundle exec thor docs:download --default
@@ -32,13 +33,13 @@ Finally, point your browser at [localhost:9292](http://localhost:9292) (the firs
 
 The `thor docs:download` command is used to download pre-generated documentations from DevDocs's servers (e.g. `thor docs:download html css`). You can see the list of available documentations and versions by running `thor docs:list`. To update all downloaded documentations, run `thor docs:download --installed`.
 
-**Note:** there is currently no update mechanism other than `git pull origin master` to update the code and `thor docs:download --installed` to download the latest version of the docs. To stay informed about new releases, be sure to [watch](https://github.com/Thibaut/devdocs/subscription) this repository.
+**Note:** there is currently no update mechanism other than `git pull origin master` to update the code and `thor docs:download --installed` to download the latest version of the docs. To stay informed about new releases, be sure to [watch](https://github.com/freeCodeCamp/devdocs/subscription) this repository.
 
 Alternatively, DevDocs may be started as a Docker container:
 
 ```
 # First, build the image
-git clone https://github.com/Thibaut/devdocs.git && cd devdocs
+git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
 docker build -t thibaut/devdocs .
 
 # Finally, start a DevDocs container (access http://localhost:9292)
@@ -92,7 +93,7 @@ These modifications are applied via a set of filters using the [HTML::Pipeline](
 
 The end result is a set of normalized HTML partials and two JSON files (index + offline data). Because the index files are loaded separately by the [app](#app) following the user's preferences, the scraper also creates a JSON manifest file containing information about the documentations currently available on the system (such as their name, version, update date, etc.).
 
-More information about scrapers and filters is available on the [wiki](https://github.com/Thibaut/devdocs/wiki).
+More information about scrapers and filters is available on the [wiki](https://github.com/freeCodeCamp/devdocs/wiki).
 
 ## Available Commands
 
@@ -132,15 +133,15 @@ If multiple versions of Ruby are installed on your system, commands must be run 
 
 ## Contributing
 
-Contributions are welcome. Please read the [contributing guidelines](https://github.com/Thibaut/devdocs/blob/master/CONTRIBUTING.md).
+Contributions are welcome. Please read the [contributing guidelines](https://github.com/freeCodeCamp/devdocs/blob/master/CONTRIBUTING.md).
 
-DevDocs's own documentation is available on the [wiki](https://github.com/Thibaut/devdocs/wiki).
+DevDocs's own documentation is available on the [wiki](https://github.com/freeCodeCamp/devdocs/wiki).
 
 ## Copyright / License
 
-Copyright 2013-2018 Thibaut Courouble and [other contributors](https://github.com/Thibaut/devdocs/graphs/contributors)
+Copyright 2013-2018 Thibaut Courouble and [other contributors](https://github.com/freeCodeCamp/devdocs/graphs/contributors)
 
-This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](https://github.com/Thibaut/devdocs/blob/master/COPYRIGHT) and [LICENSE](https://github.com/Thibaut/devdocs/blob/master/LICENSE) files.
+This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](https://github.com/freeCodeCamp/devdocs/blob/master/COPYRIGHT) and [LICENSE](https://github.com/freeCodeCamp/devdocs/blob/master/LICENSE) files.
 
 Please do not use the name DevDocs to endorse or promote products derived from this software without my permission, except as may be necessary to comply with the notice/attribution requirements.
 
