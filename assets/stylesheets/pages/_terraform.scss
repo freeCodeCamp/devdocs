@@ -1,0 +1,4 @@
+._terraform {
+  @extend %simple;
+  .note, .alert { @extend %note; }
+}
