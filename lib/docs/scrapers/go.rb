@@ -1,7 +1,7 @@
 module Docs
   class Go < UrlScraper
     self.type = 'go'
-    self.release = '1.10.0'
+    self.release = '1.10.1'
     self.base_url = 'https://golang.org/pkg/'
     self.links = {
       home: 'https://golang.org/',
@@ -14,6 +14,10 @@ module Docs
     options[:container] = '#page .container'
     options[:skip] = %w(runtime/msan/)
     options[:skip_patterns] = [/\/\//]
+
+    options[:fix_urls] = ->(url) do
+      url.sub 'https://golang.org/pkg//', 'https://golang.org/pkg/'
+    end
 
     options[:attribution] = <<-HTML
       &copy; Google, Inc.<br>
