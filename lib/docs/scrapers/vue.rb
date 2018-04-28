@@ -15,12 +15,12 @@ module Docs
     options[:replace_paths] = { 'guide/' => 'guide/index.html' }
 
     options[:attribution] = <<-HTML
-      &copy; 2013&ndash;2017 Evan You, Vue.js contributors<br>
+      &copy; 2013&ndash;2018 Evan You, Vue.js contributors<br>
       Licensed under the MIT License.
     HTML
 
     version '2' do
-      self.release = '2.5.13'
+      self.release = '2.5.16'
       self.base_url = 'https://vuejs.org/v2/'
       self.root_path = 'guide/index.html'
       self.initial_paths = %w(api/)
