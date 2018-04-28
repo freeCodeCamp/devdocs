@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
-ruby '2.5.0'
+ruby '2.5.1'
 
 gem 'rake'
 gem 'thor'
 gem 'pry', '~> 0.11.0'
-gem 'activesupport', '~> 5.1', require: false
+gem 'activesupport', '~> 5.2', require: false
 gem 'yajl-ruby', require: false
 
 group :app do

@@ -97,7 +97,7 @@ credits = [
     'https://raw.githubusercontent.com/ansible/ansible/devel/COPYING'
   ], [
     'Apache HTTP Server<br>Apache Pig',
-    '2017 The Apache Software Foundation<br>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.',
+    '2018 The Apache Software Foundation<br>Apache and the Apache feather logo are trademarks of The Apache Software Foundation.',
     'Apache',
     'https://www.apache.org/licenses/LICENSE-2.0'
   ], [
@@ -132,7 +132,7 @@ credits = [
     'https://raw.githubusercontent.com/bottlepy/bottle/master/LICENSE'
   ], [
     'Bower',
-    '2017 Bower contributors',
+    '2018 Bower contributors',
     'MIT',
     'https://github.com/bower/bower.github.io/blob/1057905c18d899106f91372e6cca7ef54a91d60f/package.json#L20'
   ], [
@@ -142,9 +142,9 @@ credits = [
     'http://en.cppreference.com/w/Cppreference:Copyright/CC-BY-SA'
   ], [
     'CakePHP',
-    '2005-2017 The Cake Software Foundation, Inc.',
+    '2005-2018 The Cake Software Foundation, Inc.',
     'MIT',
-    'https://raw.githubusercontent.com/cakephp/cakephp/master/LICENSE.txt'
+    'https://raw.githubusercontent.com/cakephp/cakephp/master/LICENSE'
   ], [
     'Chai',
     '2016 Chai.js Assertion Library',
@@ -207,7 +207,7 @@ credits = [
     'https://raw.githubusercontent.com/dlang/phobos/master/LICENSE_1_0.txt'
   ], [
     'D3.js',
-    '2010-2017 Michael Bostock',
+    '2010-2018 Michael Bostock',
     'BSD',
     'https://raw.githubusercontent.com/d3/d3/master/LICENSE'
   ], [
@@ -557,7 +557,7 @@ credits = [
     'https://raw.githubusercontent.com/reactjs/reactjs.org/master/LICENSE-DOCS.md'
   ], [
     'Redis',
-    '2009-2017 Salvatore Sanfilippo',
+    '2009-2018 Salvatore Sanfilippo',
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
@@ -652,7 +652,7 @@ credits = [
     'https://raw.githubusercontent.com/Microsoft/TypeScript-Handbook/master/LICENSE'
   ], [
     'Underscore.js',
-    '2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
+    '2009-2017 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/underscore/master/LICENSE'
   ], [
@@ -662,7 +662,7 @@ credits = [
     'https://raw.githubusercontent.com/mitchellh/vagrant/master/website/LICENSE.md'
   ], [
     'Vue.js',
-    '2013-2017 Evan You, Vue.js contributors',
+    '2013-2018 Evan You, Vue.js contributors',
     'MIT',
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
   ], [
