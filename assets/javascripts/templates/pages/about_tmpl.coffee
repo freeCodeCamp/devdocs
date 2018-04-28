@@ -207,7 +207,7 @@ credits = [
     'https://raw.githubusercontent.com/dlang/phobos/master/LICENSE_1_0.txt'
   ], [
     'D3.js',
-    '2010-2017 Michael Bostock',
+    '2010-2018 Michael Bostock',
     'BSD',
     'https://raw.githubusercontent.com/d3/d3/master/LICENSE'
   ], [
