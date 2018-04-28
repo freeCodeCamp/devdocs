@@ -26,6 +26,11 @@ module Docs
       Licensed under the NumPy License.
     HTML
 
+    version '1.14' do
+      self.release = '1.14.2'
+      self.base_url = "https://docs.scipy.org/doc/numpy-#{self.release}/reference/"
+    end
+
     version '1.13' do
       self.release = '1.13.0'
       self.base_url = "https://docs.scipy.org/doc/numpy-#{self.release}/reference/"
