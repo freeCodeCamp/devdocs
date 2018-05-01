@@ -10,7 +10,7 @@ module Docs
     options[:container] = '.span9'
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2016 Haxe Foundation<br>
+      &copy; 2005&ndash;2018 Haxe Foundation<br>
       Licensed under a MIT license.
     HTML
 
@@ -20,7 +20,7 @@ module Docs
         code: 'https://github.com/HaxeFoundation/haxe'
       }
 
-      options[:skip_patterns] = [/\A(?:cpp|cs|flash|java|js|neko|php|python)/i]
+      options[:skip_patterns] = [/\A(?:cpp|cs|flash|java|js|neko|php|python|macro|lua|hashlink|sys)/i]
     end
 
     version 'C++' do
@@ -49,6 +49,22 @@ module Docs
 
     version 'PHP' do
       self.base_url = 'https://api.haxe.org/php/'
+    end
+
+    version 'Macro' do
+      self.base_url = 'https://api.haxe.org/macro/'
+    end
+
+    version 'Lua' do
+      self.base_url = 'https://api.haxe.org/lua/'
+    end
+
+    version 'HashLink' do
+      self.base_url = 'https://api.haxe.org/hashlink/'
+    end
+
+    version 'Sys' do
+      self.base_url = 'https://api.haxe.org/sys/'
     end
 
     version 'Python' do
