@@ -23,21 +23,26 @@ templates.sidebarEntry = (entry) ->
 
 templates.sidebarResult = (entry) ->
   addons = if entry.isIndex() and app.disabledDocs.contains(entry.doc)
-    """<span class="_list-enable" data-enable="#{entry.doc.slug}">Enable</span>"""
+    """<span class="_list-enable" data-enable="#{entry.doc.slug}">#{_ en: "Enable", ja: "有効"}</span>"""
   else
     """<span class="_list-reveal" data-reset-list title="Reveal in list"></span>"""
   addons += """<span class="_list-count">#{entry.doc.short_version}</span>""" if entry.doc.version and not entry.isIndex()
   """<a href="#{entry.fullPath()}" class="_list-item _list-hover _list-result _icon-#{entry.doc.icon}" tabindex="-1">#{addons}<span class="_list-text">#{$.escape entry.name}</span></a>"""
 
 templates.sidebarNoResults = ->
-  html = """ <div class="_list-note">No results.</div> """
-  html += """
-    <div class="_list-note">Note: documentations must be <a href="/settings" class="_list-note-link">enabled</a> to appear in the search.</div>
-  """ unless app.isSingleDoc() or app.disabledDocs.isEmpty()
+  html = """ <div class="_list-note">#{_ en: "No results.", ja: "ヒットしませんでした。"}</div> """
+  html += _(
+    en: """
+      <div class="_list-note">Note: documentations must be <a href="/settings" class="_list-note-link">enabled</a> to appear in the search.</div>
+    """
+    ja: """
+      <div class="_list-note">ノート: 検索で表示するには、ドキュメントを<a href="/settings" class="_list-note-link">有効</a> にすることが必要です。</div>
+    """
+  ) unless app.isSingleDoc() or app.disabledDocs.isEmpty()
   html
 
 templates.sidebarPageLink = (count) ->
-  """<span role="link" class="_list-item _list-pagelink">Show more\u2026 (#{count})</span>"""
+  """<span role="link" class="_list-item _list-pagelink">#{_ en: "Show more", ja: "もっと見る"}\u2026 (#{count})</span>"""
 
 templates.sidebarLabel = (doc, options = {}) ->
   label = """<label class="_list-item"""
@@ -52,7 +57,8 @@ templates.sidebarVersionedDoc = (doc, versions, options = {}) ->
   html + """" tabindex="0">#{arrow}#{doc.name}</div><div class="_list _list-sub">#{versions}</div>"""
 
 templates.sidebarDisabled = (options) ->
-  """<h6 class="_list-title">#{arrow}Disabled (#{options.count}) <a href="/settings" class="_list-title-link" tabindex="-1">Customize</a></h6>"""
+  disabled = _ en: "Disabled", ja: "カスタマイズ"
+  """<h6 class="_list-title">#{arrow}Disabled (#{options.count}) <a href="/settings" class="_list-title-link" tabindex="-1">#{disabled}</a></h6>"""
 
 templates.sidebarDisabledList = (html) ->
   """<div class="_disabled-list">#{html}</div>"""
@@ -60,9 +66,16 @@ templates.sidebarDisabledList = (html) ->
 templates.sidebarDisabledVersionedDoc = (doc, versions) ->
   """<a class="_list-item _list-dir _icon-#{doc.icon} _list-disabled" data-slug="#{doc.slug_without_version}" tabindex="-1">#{arrow}#{doc.name}</a><div class="_list _list-sub">#{versions}</div>"""
 
-templates.docPickerHeader = """<div class="_list-picker-head"><span>Documentation</span> <span>Enable</span></div>"""
+templates.docPickerHeader =
+  en: """<div class="_list-picker-head"><span>Documentation</span> <span>Enable</span></div>"""
+  ja: """<div class="_list-picker-head"><span>ドキュメント</span> <span>Enable</span></div>"""
 
-templates.docPickerNote = """
-  <div class="_list-note">Tip: for faster and better search results, select only the docs you need.</div>
-  <a href="https://trello.com/b/6BmTulfx/devdocs-documentation" class="_list-link" target="_blank" rel="noopener">Vote for new documentation</a>
+templates.docPickerNote =
+  en: """
+    <div class="_list-note">Tip: for faster and better search results, select only the docs you need.</div>
+    <a href="https://trello.com/b/6BmTulfx/devdocs-documentation" class="_list-link" target="_blank" rel="noopener">Vote for new documentation</a>
+  """
+  ja: """
+    <div class="_list-note">Tip: 検索結果を速くよくするには、必要なドキュメントだけ選択してください。</div>
+    <a href="https://trello.com/b/6BmTulfx/devdocs-documentation" class="_list-link" target="_blank" rel="noopener">新しいドキュメントを投票する</a>
   """

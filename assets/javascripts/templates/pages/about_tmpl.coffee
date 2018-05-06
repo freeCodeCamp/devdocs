@@ -1,89 +1,169 @@
-app.templates.aboutPage = -> """
-  <nav class="_toc" role="directory">
-    <h3 class="_toc-title">Table of Contents</h3>
-    <ul class="_toc-list">
-      <li><a href="#copyright">Copyright</a>
-      <li><a href="#plugins">Plugins</a>
-      <li><a href="#faq">FAQ</a>
-      <li><a href="#credits">Credits</a>
-      <li><a href="#privacy">Privacy Policy</a>
+app.templates.aboutPage =
+  en: """
+    <nav class="_toc" role="directory">
+      <h3 class="_toc-title">Table of Contents</h3>
+      <ul class="_toc-list">
+        <li><a href="#copyright">Copyright</a>
+        <li><a href="#plugins">Plugins</a>
+        <li><a href="#faq">FAQ</a>
+        <li><a href="#credits">Credits</a>
+        <li><a href="#privacy">Privacy Policy</a>
+      </ul>
+    </nav>
+
+    <h1 class="_lined-heading">DevDocs: API Documentation Browser</h1>
+    <p>DevDocs combines multiple API documentations in a clean and organized web UI with instant search, offline support, mobile version, dark theme, keyboard shortcuts, and more.
+    <ul>
+      <li>Created and maintained by <a href="https://thibaut.me">Thibaut Courouble</a>
+      <li>Free and <a href="https://github.com/freeCodeCamp/devdocs">open source</a>
+          <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=freeCodeCamp&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20" tabindex="-1"></iframe>
     </ul>
-  </nav>
+    <p>To keep up-to-date with the latest news:
+    <ul>
+      <li>Follow <a href="https://twitter.com/DevDocs">@DevDocs</a> on Twitter
+      <li>Watch the repository on <a href="https://github.com/freeCodeCamp/devdocs/subscription">GitHub</a>
+      <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
+    </ul>
 
-  <h1 class="_lined-heading">DevDocs: API Documentation Browser</h1>
-  <p>DevDocs combines multiple API documentations in a clean and organized web UI with instant search, offline support, mobile version, dark theme, keyboard shortcuts, and more.
-  <ul>
-    <li>Created and maintained by <a href="https://thibaut.me">Thibaut Courouble</a>
-    <li>Free and <a href="https://github.com/freeCodeCamp/devdocs">open source</a>
-        <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=freeCodeCamp&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20" tabindex="-1"></iframe>
-  </ul>
-  <p>To keep up-to-date with the latest news:
-  <ul>
-    <li>Follow <a href="https://twitter.com/DevDocs">@DevDocs</a> on Twitter
-    <li>Watch the repository on <a href="https://github.com/freeCodeCamp/devdocs/subscription">GitHub</a>
-    <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
-  </ul>
+    <h2 class="_block-heading" id="copyright">Copyright and License</h2>
+    <p class="_note">
+      <strong>Copyright 2013&ndash;2018 Thibaut Courouble and <a href="https://github.com/freeCodeCamp/devdocs/graphs/contributors">other contributors</a></strong><br>
+      This software is licensed under the terms of the Mozilla Public License v2.0.<br>
+      You may obtain a copy of the source code at <a href="https://github.com/freeCodeCamp/devdocs">github.com/freeCodeCamp/devdocs</a>.<br>
+      For more information, see the <a href="https://github.com/freeCodeCamp/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
+      and <a href="https://github.com/freeCodeCamp/devdocs/blob/master/LICENSE">LICENSE</a> files.
 
-  <h2 class="_block-heading" id="copyright">Copyright and License</h2>
-  <p class="_note">
-    <strong>Copyright 2013&ndash;2018 Thibaut Courouble and <a href="https://github.com/freeCodeCamp/devdocs/graphs/contributors">other contributors</a></strong><br>
-    This software is licensed under the terms of the Mozilla Public License v2.0.<br>
-    You may obtain a copy of the source code at <a href="https://github.com/freeCodeCamp/devdocs">github.com/freeCodeCamp/devdocs</a>.<br>
-    For more information, see the <a href="https://github.com/freeCodeCamp/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
-    and <a href="https://github.com/freeCodeCamp/devdocs/blob/master/LICENSE">LICENSE</a> files.
+    <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
+    <ul>
+      <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
+      <li><a href="https://github.com/egoist/devdocs-app">Desktop app</a>
+      <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text package</a>
+      <li><a href="https://atom.io/packages/devdocs">Atom package</a>
+      <li><a href="https://marketplace.visualstudio.com/items?itemName=deibit.devdocs">Visual Studio Code extension</a>
+      <li><a href="https://github.com/yannickglt/alfred-devdocs">Alfred workflow</a>
+      <li><a href="https://github.com/search?q=topic%3Adevdocs&type=Repositories">More…</a>
+    </ul>
 
-  <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
-  <ul>
-    <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
-    <li><a href="https://github.com/egoist/devdocs-app">Desktop app</a>
-    <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text package</a>
-    <li><a href="https://atom.io/packages/devdocs">Atom package</a>
-    <li><a href="https://marketplace.visualstudio.com/items?itemName=deibit.devdocs">Visual Studio Code extension</a>
-    <li><a href="https://github.com/yannickglt/alfred-devdocs">Alfred workflow</a>
-    <li><a href="https://github.com/search?q=topic%3Adevdocs&type=Repositories">More…</a>
-  </ul>
+    <h2 class="_block-heading" id="faq">Questions & Answers</h2>
+    <dl>
+      <dt>Where can I suggest new docs and features?
+      <dd>You can suggest and vote for new docs on the <a href="https://trello.com/b/6BmTulfx/devdocs-documentation">Trello board</a>.<br>
+          If you have a specific feature request, add it to the <a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>.<br>
+          Otherwise use the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>.
+      <dt>Where can I report bugs?
+      <dd>In the <a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>. Thanks!
+    </dl>
+    <p>For anything else, feel free to email me at <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
 
-  <h2 class="_block-heading" id="faq">Questions & Answers</h2>
-  <dl>
-    <dt>Where can I suggest new docs and features?
-    <dd>You can suggest and vote for new docs on the <a href="https://trello.com/b/6BmTulfx/devdocs-documentation">Trello board</a>.<br>
-        If you have a specific feature request, add it to the <a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>.<br>
-        Otherwise use the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>.
-    <dt>Where can I report bugs?
-    <dd>In the <a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>. Thanks!
-  </dl>
-  <p>For anything else, feel free to email me at <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
+    <h2 class="_block-heading" id="credits">Credits</h2>
 
-  <h2 class="_block-heading" id="credits">Credits</h2>
+    <p><strong>Special thanks to:</strong>
+    <ul>
+      <li><a href="https://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="https://sentry.io/">Sentry</a> and <a href="https://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
+      <li><a href="https://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="https://out.devdocs.io/s/shopify">Shopify</a>, <a href="https://out.devdocs.io/s/jetbrains">JetBrains</a> and <a href="https://out.devdocs.io/s/code-school">Code School</a> for sponsoring DevDocs in the past
+      <li><a href="https://www.heroku.com">Heroku</a> and <a href="https://newrelic.com/">New Relic</a> for providing awesome free service
+      <li><a href="https://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
+    </ul>
 
-  <p><strong>Special thanks to:</strong>
-  <ul>
-    <li><a href="https://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="https://sentry.io/">Sentry</a> and <a href="https://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
-    <li><a href="https://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="https://out.devdocs.io/s/shopify">Shopify</a>, <a href="https://out.devdocs.io/s/jetbrains">JetBrains</a> and <a href="https://out.devdocs.io/s/code-school">Code School</a> for sponsoring DevDocs in the past
-    <li><a href="https://www.heroku.com">Heroku</a> and <a href="https://newrelic.com/">New Relic</a> for providing awesome free service
-    <li><a href="https://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
-  </ul>
+    <div class="_table">
+      <table class="_credits">
+        <tr>
+          <th>Documentation
+          <th>Copyright
+          <th>License
+        #{credit_table}
+      </table>
+    </div>
 
-  <div class="_table">
-    <table class="_credits">
-      <tr>
-        <th>Documentation
-        <th>Copyright
-        <th>License
-      #{("<tr><td>#{c[0]}<td>&copy; #{c[1]}<td><a href=\"#{c[3]}\">#{c[2]}</a>" for c in credits).join('')}
-    </table>
-  </div>
-
-  <h2 class="_block-heading" id="privacy">Privacy Policy</h2>
-  <ul>
-    <li><a href="https://devdocs.io">devdocs.io</a> ("App") is operated by Thibaut Courouble ("We").
-    <li>We do not collect personal information.
-    <li>We use Google Analytics, Gauges and Sentry to collect anonymous traffic information and improve the app.
-    <li>The app uses cookies to store user preferences.
-    <li>By using the app, you signify your acceptance of this policy. If you do not agree to this policy, please do not use the app.
-    <li>If you have any questions regarding privacy, please email <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
-  </ul>
-"""
+    <h2 class="_block-heading" id="privacy">Privacy Policy</h2>
+    <ul>
+      <li><a href="https://devdocs.io">devdocs.io</a> ("App") is operated by Thibaut Courouble ("We").
+      <li>We do not collect personal information.
+      <li>We use Google Analytics, Gauges and Sentry to collect anonymous traffic information and improve the app.
+      <li>The app uses cookies to store user preferences.
+      <li>By using the app, you signify your acceptance of this policy. If you do not agree to this policy, please do not use the app.
+      <li>If you have any questions regarding privacy, please email <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
+    </ul>
+  """
+  ja: """
+    <nav class="_toc" role="directory">
+      <h3 class="_toc-title">内容</h3>
+      <ul class="_toc-list">
+        <li><a href="#copyright">著作権</a>
+        <li><a href="#plugins">プラグイン</a>
+        <li><a href="#faq">FAQ</a>
+        <li><a href="#credits">Credits</a>
+        <li><a href="#privacy">プライバシーポリシー</a>
+      </ul>
+    </nav>
+    <h1 class="_lined-heading">DevDocs: API ドキュメンテーション　ブラウザ</h1>
+    <p>DevDocsは便利なたくさんのAPIドキュメンテーションを綺麗にwebUIで管理しているサーチです。オフライン対応、モバイル版、ダークテーマ、キーボードショートカットなどがあります。</p>
+    <p>DevDocs combines multiple API documentations in a clean and organized web UI with instant search, offline support, mobile version, dark theme, keyboard shortcuts, and more.
+    <ul>
+      <li> <a href="https://thibaut.me">Thibaut Courouble</a>が制作・管理しています。
+      <li>無料で<a href="https://github.com/freeCodeCamp/devdocs">オープンソース</a>です。
+          <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=freeCodeCamp&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20" tabindex="-1"></iframe>
+    </ul>
+    <p>最新情報とアップデートについてを得るには:
+    <ul>
+      <li><a href="https://twitter.com/DevDocs">@DevDocs</a>をtwitterでフォロー
+      <li><a href="https://github.com/freeCodeCamp/devdocs/subscription">GitHub</a>のレポジトリをwatch
+      <li><a href="https://groups.google.com/d/forum/devdocs">メーリングリスト</a>に登録する
+    </ul>
+    <h2 class="_block-heading" id="copyright">著作権とライセンス</h2>
+    <p class="_note">
+      <strong>Copyright 2013&ndash;2018 Thibaut Courouble and <a href="https://github.com/freeCodeCamp/devdocs/graphs/contributors">other contributors</a></strong><br>
+      このソフトウェアはMozilla Public License v2.0に基づいてライセンスされています。<br>
+      You may obtain a copy of the source code at <a href="https://github.com/freeCodeCamp/devdocs">github.com/freeCodeCamp/devdocs</a>.<br>
+      詳しくは<a href="https://github.com/freeCodeCamp/devdocs/blob/master/COPYRIGHT">コピーライト</a>
+      や<a href="https://github.com/freeCodeCamp/devdocs/blob/master/LICENSE">ライセンス</a>をご覧ください。
+    <h2 class="_block-heading" id="plugins">プラグインと拡張</h2>
+    <ul>
+      <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web アプリ</a>
+      <li><a href="https://github.com/egoist/devdocs-app">デスクトップ　アプリ</a>
+      <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text パッケージ</a>
+      <li><a href="https://atom.io/packages/devdocs">Atom パッケージe</a>
+      <li><a href="https://marketplace.visualstudio.com/items?itemName=deibit.devdocs">Visual Studio Code 拡張</a>
+      <li><a href="https://github.com/yannickglt/alfred-devdocs">Alfred workflow</a>
+      <li><a href="https://github.com/search?q=topic%3Adevdocs&type=Repositories">更に見る</a>
+    </ul>
+    <h2 class="_block-heading" id="faq">Q&A</h2>
+    <dl>
+      <dt>どこで新しいドキュメントや機能を提案できますか？
+      <dd>新しいドキュメントは<a href="https://trello.com/b/6BmTulfx/devdocs-documentation">Trelloボード</a>で、提案・投票できます。<br>
+          If you have a specific feature request, add it to the <a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>.<br>
+          Otherwise use the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>.
+      <dt>どこでバグの報告をできますか？
+      <dd><a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>によろしくお願いします!
+    </dl>
+    <p>For anything else, feel free to email me at <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
+    <h2 class="_block-heading" id="credits">クレジット</h2>
+    <p><strong>特別感謝:</strong>
+    <ul>
+      <li><a href="https://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="https://sentry.io/">Sentry</a> and <a href="https://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
+      <li><a href="https://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="https://out.devdocs.io/s/shopify">Shopify</a>, <a href="https://out.devdocs.io/s/jetbrains">JetBrains</a> and <a href="https://out.devdocs.io/s/code-school">Code School</a> for sponsoring DevDocs in the past
+      <li><a href="https://www.heroku.com">Heroku</a> and <a href="https://newrelic.com/">New Relic</a> for providing awesome free service
+      <li><a href="https://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
+    </ul>
+    <div class="_table">
+      <table class="_credits">
+        <tr>
+          <th>Documentation
+          <th>Copyright
+          <th>License
+        #{credit_table}
+      </table>
+    </div>
+    <h2 class="_block-heading" id="privacy">Privacy Policy</h2>
+    <ul>
+      <li><a href="https://devdocs.io">devdocs.io</a> ("App") is operated by Thibaut Courouble ("We").
+      <li>We do not collect personal information.
+      <li>We use Google Analytics, Gauges and Sentry to collect anonymous traffic information and improve the app.
+      <li>The app uses cookies to store user preferences.
+      <li>By using the app, you signify your acceptance of this policy. If you do not agree to this policy, please do not use the app.
+      <li>If you have any questions regarding privacy, please email <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
+    </ul>
+  """
 
 credits = [
   [ 'Angular<br>Angular.js',
@@ -687,3 +767,5 @@ credits = [
     'https://raw.githubusercontent.com/yiisoft/yii/master/LICENSE'
   ]
 ]
+
+credit_table = ("<tr><td>#{c[0]}<td>&copy; #{c[1]}<td><a href=\"#{c[3]}\">#{c[2]}</a>" for c in credits).join('')
