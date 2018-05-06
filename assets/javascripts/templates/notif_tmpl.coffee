@@ -105,4 +105,4 @@ app.templates.notifUpdateDocs = ->
     ja: """ ドキュメントのアップデートが入手可能です。 """
   ,
     en: """ <a href="/offline">Install them</a> as soon as possible to avoid broken pages. """
-    ja: """ <a href="/offline">インストールする</a> aとすぐに可能になり、壊れたページを回避できます。 """
+    ja: """ <a href="/offline">インストールする</a> とすぐに可能になり、壊れたページを回避できます。 """
