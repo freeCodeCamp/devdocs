@@ -3,7 +3,7 @@ error = (title, text = '', links = '') ->
   links = """<p class="_error-links">#{_ links}</p>""" if links
   """<div class="_error"><h1 class="_error-title">#{_ title}</h1>#{text}#{links}</div>"""
 
-back = -> "<a href='#' data-behavior='back' class='_error-link'>#{_ en: 'Go back', ja: '戻る'}</a>"
+back = -> "<a href='#' data-behavior='back' class='_error-link'>#{_ en: "Go back", ja: "戻る"}</a>"
 
 app.templates.notFoundPage = ->
   error(
@@ -26,13 +26,15 @@ app.templates.pageLoadError = ->
       ja: """ サーバーを誤っています。（アプリを再度読み込んでください）または、オフラインです。<br>
             この表示が続くようであれば、プロキシの制限やファイヤーウォールでクロスドメインリクエストがブロックされています。 """
     ,
-      """ #{back()}
-          &middot;
-            <a href="/##{location.pathname}" target="_top" class="_error-link">
-              #{_ en: 'Reload', ja: '再読み込み'}
-            </a>
-          &middot;
-            <a href="#" class="_error-link" data-retry>Retry</a> """
+      """
+        #{back()}
+        &middot;
+          <a href="/##{location.pathname}" target="_top" class="_error-link">
+            #{_ en: "Reload", ja: "再読み込み"}
+          </a>
+        &middot;
+          <a href="#" class="_error-link" data-retry>Retry</a>
+      """
   )
 
 
@@ -91,7 +93,7 @@ app.templates.offlineError = (reason, exception) ->
       en: """ The IndexedDB database appears to be corrupted. Try <a href="#" data-behavior="reset">resetting the app</a>. """
       ja: """IndexedDBデータベースに誤りがあります。 <a href="#" data-behavior="reset">アプリをリセット</a>してみてください。 """
 
-  error 'Offline mode is unavailable.', reason
+  error "Offline mode is unavailable.", reason
 
 app.templates.unsupportedBrowser =
   en: """
