@@ -7,5 +7,7 @@ app.templates.render = (name, value, args...) ->
     result
   else if typeof template is 'function'
     template(value, args...)
+  else if typeof template is 'object'
+    _ template, value
   else
     template

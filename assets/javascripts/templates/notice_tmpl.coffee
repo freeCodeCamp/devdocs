@@ -1,4 +1,4 @@
-notice = (text) -> """<p class="_notice-text">#{text}</p>"""
+notice = (text) -> """<p class="_notice-text">#{_ text}</p>"""
 
 app.templates.singleDocNotice = (doc) ->
   notice """ You're browsing the #{doc.fullName} documentation. To browse all docs, go to
