@@ -68,7 +68,7 @@ app.templates.aboutPage =
     <div class="_table">
       <table class="_credits">
         <tr>
-          <th>Documentation
+          <th>#{__ 'documentation'}
           <th>Copyright
           <th>License
         #{credit_table}
@@ -148,7 +148,7 @@ app.templates.aboutPage =
     <div class="_table">
       <table class="_credits">
         <tr>
-          <th>Documentation
+          <th>#{__ 'documentation'}
           <th>Copyright
           <th>License
         #{credit_table}

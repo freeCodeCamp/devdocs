@@ -13,7 +13,7 @@ app.templates.offlinePage = (docs) -> """
   <div class="_table">
     <table class="_docs">
       <tr>
-        <th>Documentation</th>
+        <th>#{__ 'documentation'}</th>
         <th class="_docs-size">Size</th>
         <th>Status</th>
         <th>Action</th>

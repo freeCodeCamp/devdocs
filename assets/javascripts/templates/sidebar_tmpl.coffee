@@ -7,7 +7,7 @@ templates.sidebarDoc = (doc, options = {}) ->
   link += if options.disabled then '_list-disabled' else '_list-dir'
   link += """" data-slug="#{doc.slug}" title="#{doc.fullName}" tabindex="-1">"""
   if options.disabled
-    link += """<span class="_list-enable" data-enable="#{doc.slug}">Enable</span>"""
+    link += """<span class="_list-enable" data-enable="#{doc.slug}">#{__ 'enable'}</span>"""
   else
     link += arrow
   link += """<span class="_list-count">#{doc.release}</span>""" if doc.release
@@ -23,7 +23,7 @@ templates.sidebarEntry = (entry) ->
 
 templates.sidebarResult = (entry) ->
   addons = if entry.isIndex() and app.disabledDocs.contains(entry.doc)
-    """<span class="_list-enable" data-enable="#{entry.doc.slug}">#{_ en: "Enable", ja: "有効"}</span>"""
+    """<span class="_list-enable" data-enable="#{entry.doc.slug}">#{__ 'enable'}</span>"""
   else
     """<span class="_list-reveal" data-reset-list title="Reveal in list"></span>"""
   addons += """<span class="_list-count">#{entry.doc.short_version}</span>""" if entry.doc.version and not entry.isIndex()
@@ -66,9 +66,7 @@ templates.sidebarDisabledList = (html) ->
 templates.sidebarDisabledVersionedDoc = (doc, versions) ->
   """<a class="_list-item _list-dir _icon-#{doc.icon} _list-disabled" data-slug="#{doc.slug_without_version}" tabindex="-1">#{arrow}#{doc.name}</a><div class="_list _list-sub">#{versions}</div>"""
 
-templates.docPickerHeader =
-  en: """<div class="_list-picker-head"><span>Documentation</span> <span>Enable</span></div>"""
-  ja: """<div class="_list-picker-head"><span>ドキュメント</span> <span>Enable</span></div>"""
+templates.docPickerHeader = -> """<div class="_list-picker-head"><span>#{__ 'documentation'}</span> <span>#{__ 'enable'}</span></div>"""
 
 templates.docPickerNote =
   en: """

@@ -82,7 +82,7 @@ app.templates.notifUpdates = (docs, disabledDocs) ->
     for doc in disabledDocs
       html += "<li>#{doc.name}"
       html += " <code>&rarr;</code> #{doc.release}" if doc.release
-      html += """<span class="_notif-info"><a href="/settings">Enable</a></span>"""
+      html += """<span class="_notif-info"><a href="/settings">#{__ 'enable'}</a></span>"""
     html += '</ul></div>'
 
   notif 'Updates', "#{html}</div>"
