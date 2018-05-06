@@ -1,17 +1,30 @@
 class @I18n
-  constructor: (@data, lang = 'en') ->
-    @setLanguage lang
+  default: 'en'
+  constructor: (@langs = [@default]) ->
 
-  setLanguage: (lang) ->
-    return false unless @data[lang]
-    @lang = lang
-    true
+  _: (obj, substitution) =>
+    if typeof obj is 'object' or typeof obj is 'function'
+      @interpolate obj[@get_lang obj], substitution
+    else
+      obj
 
-  _: (key, substitution) ->
-    str = @data[@lang][key]
-    return unless str?
+  get_lang: (obj) ->
+    for lang in @langs
+      # eg. en-US
+      return lang if obj[lang]
 
+      lang = lang.replace /_\w+$/, ''
+      # eg. en
+      return lang if obj[lang]
+
+    @default
+
+  interpolate: (str, substitution) ->
+    return '' if not str?
     if substitution?
       for key in Object.keys(substitution)
         str = str.replace("{#{key}}", substitution[key])
     str
+
+@i18n = new I18n navigator.languages
+@_ = @i18n._
