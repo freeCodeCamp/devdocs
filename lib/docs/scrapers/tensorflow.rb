@@ -4,7 +4,7 @@ module Docs
   class Tensorflow < UrlScraper
     self.name = 'TensorFlow'
     self.type = 'tensorflow'
-    self.release = '1.6'
+    self.release = '1.8'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://www.tensorflow.org/',
