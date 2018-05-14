@@ -16,7 +16,7 @@ module Docs
     HTML
 
     version '2' do
-      self.release = '2.2.2'
+      self.release = '2.3.0'
       self.base_url = 'http://coffeescript.org/'
 
       html_filters.push 'coffeescript/entries', 'coffeescript/clean_html', 'title'
