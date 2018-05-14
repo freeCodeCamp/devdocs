@@ -4,7 +4,7 @@ module Docs
 
     self.name = 'PHP'
     self.type = 'php'
-    self.release = '7.2.2'
+    self.release = '7.2.5'
     self.base_url = 'https://secure.php.net/manual/en/'
     self.root_path = 'index.html'
     self.initial_paths = %w(
@@ -61,7 +61,7 @@ module Docs
       function.mssql-select-db.html
       pthreads.modifiers.html)
 
-    options[:skip_patterns] = [/mysqlnd/]
+    options[:skip_patterns] = [/mysqlnd/, /xdevapi/i]
 
     options[:attribution] = <<-HTML
       &copy; 1997&ndash;2018 The PHP Documentation Group<br>
