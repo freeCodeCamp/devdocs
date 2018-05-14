@@ -40,6 +40,15 @@
   },
   {
     "name": "Angular.js",
+    "slug": "angularjs~1.7",
+    "type": "angularjs",
+    "version": "1.7",
+    "release": "1.7.0",
+    "mtime": 1526260333,
+    "db_size": 2125909
+  },
+  {
+    "name": "Angular.js",
     "slug": "angularjs~1.6",
     "type": "angularjs",
     "version": "1.6",
@@ -224,9 +233,9 @@
       "code": "https://github.com/twbs/bootstrap"
     },
     "version": "4",
-    "release": "4.1.0",
-    "mtime": 1524923332,
-    "db_size": 676401
+    "release": "4.1.1",
+    "mtime": 1526257548,
+    "db_size": 699057
   },
   {
     "name": "Bootstrap",
@@ -612,9 +621,9 @@
       "code": "https://github.com/jashkenas/coffeescript"
     },
     "version": "2",
-    "release": "2.2.2",
-    "mtime": 1519570648,
-    "db_size": 109309
+    "release": "2.3.0",
+    "mtime": 1526258172,
+    "db_size": 108169
   },
   {
     "name": "CoffeeScript",
@@ -671,8 +680,8 @@
     "name": "CSS",
     "slug": "css",
     "type": "mdn",
-    "mtime": 1521409118,
-    "db_size": 10271796
+    "mtime": 1526249403,
+    "db_size": 10881858
   },
   {
     "name": "D",
@@ -682,9 +691,9 @@
       "home": "https://dlang.org/",
       "code": "https://github.com/dlang/phobos"
     },
-    "release": "2.079.0",
-    "mtime": 1521386521,
-    "db_size": 5564723
+    "release": "2.080.0",
+    "mtime": 1526258498,
+    "db_size": 5832783
   },
   {
     "name": "D3.js",
@@ -695,9 +704,9 @@
       "code": "https://github.com/d3/d3"
     },
     "version": "5",
-    "release": "5.1.0",
-    "mtime": 1524924021,
-    "db_size": 15110411
+    "release": "5.4.0",
+    "mtime": 1526257705,
+    "db_size": 15114972
   },
   {
     "name": "D3.js",
@@ -734,9 +743,9 @@
       "code": "https://github.com/django/django"
     },
     "version": "2.0",
-    "release": "2.0.2",
-    "mtime": 1519585673,
-    "db_size": 6068899
+    "release": "2.0.5",
+    "mtime": 1526258593,
+    "db_size": 6071797
   },
   {
     "name": "Django",
@@ -871,15 +880,15 @@
     "name": "DOM",
     "slug": "dom",
     "type": "mdn",
-    "mtime": 1521420853,
-    "db_size": 28424896
+    "mtime": 1526248721,
+    "db_size": 28885725
   },
   {
     "name": "DOM Events",
     "slug": "dom_events",
     "type": "mdn",
-    "mtime": 1521400686,
-    "db_size": 1615020
+    "mtime": 1526250965,
+    "db_size": 1619500
   },
   {
     "name": "Drupal",
@@ -915,9 +924,9 @@
       "home": "https://electronjs.org/",
       "code": "https://github.com/electron/electron"
     },
-    "release": "1.8.4",
-    "mtime": 1521387245,
-    "db_size": 1661542
+    "release": "2.0.0",
+    "mtime": 1526257393,
+    "db_size": 1732657
   },
   {
     "name": "Elixir",
@@ -928,9 +937,9 @@
       "code": "https://github.com/elixir-lang/elixir"
     },
     "version": "1.6",
-    "release": "1.6.4",
-    "mtime": 1521387206,
-    "db_size": 2891895
+    "release": "1.6.5",
+    "mtime": 1526258250,
+    "db_size": 2892867
   },
   {
     "name": "Elixir",
@@ -1502,15 +1511,15 @@
     "name": "HTML",
     "slug": "html",
     "type": "mdn",
-    "mtime": 1521397030,
-    "db_size": 3812899
+    "mtime": 1526249051,
+    "db_size": 3874271
   },
   {
     "name": "HTTP",
     "slug": "http",
     "type": "mdn",
-    "mtime": 1521397177,
-    "db_size": 4390235
+    "mtime": 1526250801,
+    "db_size": 4393744
   },
   {
     "name": "Immutable.js",
@@ -1552,8 +1561,8 @@
     "name": "JavaScript",
     "slug": "javascript",
     "type": "mdn",
-    "mtime": 1521399307,
-    "db_size": 6130002
+    "mtime": 1526250727,
+    "db_size": 6135004
   },
   {
     "name": "Jekyll",
@@ -2055,8 +2064,8 @@
     },
     "version": "",
     "release": "10.0.0",
-    "mtime": 1524925282,
-    "db_size": 2513175
+    "mtime": 1526257938,
+    "db_size": 2525537
   },
   {
     "name": "Node.js",
@@ -2404,9 +2413,9 @@
       "home": "https://secure.php.net/",
       "code": "https://git.php.net/?p=php-src.git;a=summary"
     },
-    "release": "7.2.2",
-    "mtime": 1519586580,
-    "db_size": 24079784
+    "release": "7.2.5",
+    "mtime": 1526259565,
+    "db_size": 24124470
   },
   {
     "name": "PHPUnit",
@@ -2834,9 +2843,9 @@
       "home": "https://www.rust-lang.org/",
       "code": "https://github.com/rust-lang/rust"
     },
-    "release": "1.25.0",
-    "mtime": 1524927620,
-    "db_size": 39063052
+    "release": "1.26.0",
+    "mtime": 1526257262,
+    "db_size": 54870091
   },
   {
     "name": "Sass",
@@ -2873,6 +2882,19 @@
     "release": "0.19.1",
     "mtime": 1509303678,
     "db_size": 47201336
+  },
+  {
+    "name": "Sinon.JS",
+    "slug": "sinon~5",
+    "type": "sinon",
+    "links": {
+      "home": "http://sinonjs.org/",
+      "code": "https://github.com/sinonjs/sinon"
+    },
+    "version": "5",
+    "release": "5.0.7",
+    "mtime": 1526258139,
+    "db_size": 112789
   },
   {
     "name": "Sinon.JS",
@@ -2966,15 +2988,15 @@
     "name": "Support Tables",
     "slug": "browser_support_tables",
     "type": "support_tables",
-    "mtime": 1524928375,
-    "db_size": 26980899
+    "mtime": 1526251574,
+    "db_size": 27487667
   },
   {
     "name": "SVG",
     "slug": "svg",
     "type": "mdn",
-    "mtime": 1515963636,
-    "db_size": 1758691
+    "mtime": 1526251455,
+    "db_size": 2107181
   },
   {
     "name": "Symfony",
@@ -3097,9 +3119,9 @@
       "code": "https://github.com/tensorflow/tensorflow"
     },
     "version": "Python",
-    "release": "1.6",
-    "mtime": 1521395225,
-    "db_size": 15293134
+    "release": "1.8",
+    "mtime": 1526243985,
+    "db_size": 16040756
   },
   {
     "name": "TensorFlow",
@@ -3110,9 +3132,9 @@
       "code": "https://github.com/tensorflow/tensorflow"
     },
     "version": "C++",
-    "release": "1.6",
-    "mtime": 1521396425,
-    "db_size": 4525901
+    "release": "1.8",
+    "mtime": 1526244330,
+    "db_size": 4558634
   },
   {
     "name": "TensorFlow",
@@ -3123,9 +3145,9 @@
       "code": "https://github.com/tensorflow/tensorflow"
     },
     "version": "Guide",
-    "release": "1.6",
-    "mtime": 1521396499,
-    "db_size": 9854630
+    "release": "1.8",
+    "mtime": 1526244405,
+    "db_size": 10841303
   },
   {
     "name": "Twig",
@@ -3185,9 +3207,9 @@
       "home": "https://www.vagrantup.com/",
       "code": "https://github.com/mitchellh/vagrant"
     },
-    "release": "2.0.4",
-    "mtime": 1524927863,
-    "db_size": 575454
+    "release": "2.1.1",
+    "mtime": 1526257745,
+    "db_size": 585392
   },
   {
     "name": "Vue.js",
@@ -3235,9 +3257,9 @@
       "code": "https://github.com/webpack/webpack"
     },
     "version": "",
-    "release": "4.6.0",
-    "mtime": 1524928133,
-    "db_size": 4095663
+    "release": "4.8.3",
+    "mtime": 1526258077,
+    "db_size": 3794626
   },
   {
     "name": "webpack",
