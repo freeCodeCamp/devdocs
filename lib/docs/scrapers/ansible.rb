@@ -24,8 +24,16 @@ module Docs
     HTML
 
     version '2.4' do
-      self.release = '2.4.3'
+      self.release = '2.4'
       self.base_url = 'https://docs.ansible.com/ansible/2.4/'
+    end
+    version '2.5' do
+      self.release = '2.5'
+      self.base_url = 'https://docs.ansible.com/ansible/2.5/'
+    end
+    version 'latest' do
+      self.release = 'latest'
+      self.base_url = 'https://docs.ansible.com/ansible/latest/'
     end
   end
 end
