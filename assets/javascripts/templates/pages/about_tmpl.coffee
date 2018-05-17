@@ -302,7 +302,7 @@ credits = [
     'https://www.haskell.org/ghc/license'
   ], [
     'Haxe',
-    '2005-2016 Haxe Foundation',
+    '2005-2018 Haxe Foundation',
     'MIT',
     'https://haxe.org/foundation/open-source.html'
   ], [
