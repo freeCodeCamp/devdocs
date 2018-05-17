@@ -40,15 +40,6 @@
   },
   {
     "name": "Angular.js",
-    "slug": "angularjs~1.7",
-    "type": "angularjs",
-    "version": "1.7",
-    "release": "1.7.0",
-    "mtime": 1526260333,
-    "db_size": 2125909
-  },
-  {
-    "name": "Angular.js",
     "slug": "angularjs~1.6",
     "type": "angularjs",
     "version": "1.6",
@@ -1420,8 +1411,8 @@
     },
     "version": "",
     "release": "3.4.7",
-    "mtime": 1519586096,
-    "db_size": 1342836
+    "mtime": 1526520808,
+    "db_size": 1117484
   },
   {
     "name": "Haxe",
@@ -1429,8 +1420,8 @@
     "type": "haxe",
     "version": "C++",
     "release": "3.4.7",
-    "mtime": 1519586098,
-    "db_size": 285939
+    "mtime": 1526520811,
+    "db_size": 445145
   },
   {
     "name": "Haxe",
@@ -1438,8 +1429,8 @@
     "type": "haxe",
     "version": "C#",
     "release": "3.4.7",
-    "mtime": 1519586118,
-    "db_size": 2287934
+    "mtime": 1526520830,
+    "db_size": 3456326
   },
   {
     "name": "Haxe",
@@ -1447,8 +1438,8 @@
     "type": "haxe",
     "version": "Flash",
     "release": "3.4.7",
-    "mtime": 1519586132,
-    "db_size": 1589211
+    "mtime": 1526520843,
+    "db_size": 1713506
   },
   {
     "name": "Haxe",
@@ -1456,8 +1447,8 @@
     "type": "haxe",
     "version": "Java",
     "release": "3.4.7",
-    "mtime": 1519586148,
-    "db_size": 1901861
+    "mtime": 1526520859,
+    "db_size": 2903032
   },
   {
     "name": "Haxe",
@@ -1465,8 +1456,8 @@
     "type": "haxe",
     "version": "JavaScript",
     "release": "3.4.7",
-    "mtime": 1519586202,
-    "db_size": 3898907
+    "mtime": 1526520906,
+    "db_size": 4491424
   },
   {
     "name": "Haxe",
@@ -1474,8 +1465,8 @@
     "type": "haxe",
     "version": "Neko",
     "release": "3.4.7",
-    "mtime": 1519586204,
-    "db_size": 103569
+    "mtime": 1526520909,
+    "db_size": 110930
   },
   {
     "name": "Haxe",
@@ -1483,8 +1474,35 @@
     "type": "haxe",
     "version": "PHP",
     "release": "3.4.7",
-    "mtime": 1519586205,
-    "db_size": 73043
+    "mtime": 1526520910,
+    "db_size": 93339
+  },
+  {
+    "name": "Haxe",
+    "slug": "haxe~lua",
+    "type": "haxe",
+    "version": "Lua",
+    "release": "3.4.7",
+    "mtime": 1526520913,
+    "db_size": 365204
+  },
+  {
+    "name": "Haxe",
+    "slug": "haxe~hashlink",
+    "type": "haxe",
+    "version": "HashLink",
+    "release": "3.4.7",
+    "mtime": 1526520915,
+    "db_size": 233826
+  },
+  {
+    "name": "Haxe",
+    "slug": "haxe~sys",
+    "type": "haxe",
+    "version": "Sys",
+    "release": "3.4.7",
+    "mtime": 1526520917,
+    "db_size": 166803
   },
   {
     "name": "Haxe",
@@ -1492,8 +1510,8 @@
     "type": "haxe",
     "version": "Python",
     "release": "3.4.7",
-    "mtime": 1519586210,
-    "db_size": 549685
+    "mtime": 1526520922,
+    "db_size": 612013
   },
   {
     "name": "Homebrew",
