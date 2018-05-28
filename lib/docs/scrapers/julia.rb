@@ -13,7 +13,7 @@ module Docs
     HTML
 
     version '0.6' do
-      self.release = '0.6.0'
+      self.release = '0.6.2'
       self.base_url = 'https://docs.julialang.org/en/release-0.6/'
       self.type = 'julia'
 

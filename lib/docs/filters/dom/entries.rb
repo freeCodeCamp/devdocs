@@ -10,6 +10,8 @@ module Docs
         'Audio'               => 'Audio',
         'Battery Status'      => 'Battery Status',
         'Canvas '             => 'Canvas',
+        'Clipboard'           => 'Clipboard',
+        'Content Security'    => 'Content Security Policy',
         'Cooperative Scheduling' => 'Scheduling',
         'CSS Font Loading'    => 'CSS',
         'CSS Object Model'    => 'CSS',
@@ -45,15 +47,19 @@ module Docs
         'Stream API'          => 'Media Streams',
         'Streams'             => 'Media Streams',
         'Touch Events'        => 'Touch Events',
+        'Visual Viewport'     => 'Visual Viewport',
         'Web Animations'      => 'Animation',
         'Web App Manifest'    => 'Web App Manifest',
         'Budget'              => 'Budget',
+        'Web Authentication'  => 'Authentication',
         'Web Workers'         => 'Web Workers',
         'WebGL'               => 'WebGL',
         'WebRTC'              => 'WebRTC',
         'WebVR'               => 'WebVR' }
 
       TYPE_BY_NAME_STARTS_WITH = {
+        'AbortController'     => 'Fetch',
+        'AbortSignal'         => 'Fetch',
         'Ambient'             => 'Ambient Light',
         'Attr'                => 'Nodes',
         'Audio'               => 'Audio',
@@ -61,6 +67,7 @@ module Docs
         'Broadcast'           => 'Broadcast Channel',
         'Budget'              => 'Budget',
         'Canvas'              => 'Canvas',
+        'Clipboard'           => 'Clipboard',
         'CSS'                 => 'CSS',
         'CharacterData'       => 'Nodes',
         'ChildNode'           => 'Nodes',
@@ -69,6 +76,7 @@ module Docs
         'CustomElement'       => 'Custom Elements',
         'DataTransfer'        => 'Drag & Drop',
         'document'            => 'Document',
+        'Document Object'     => 'DOM',
         'DocumentFragment'    => 'DocumentFragment',
         'DocumentType'        => 'Nodes',
         'DOM'                 => 'DOM',
@@ -105,6 +113,8 @@ module Docs
         'screen'              => 'Screen',
         'Selection'           => 'Selection',
         'Shadow'              => 'Shadow DOM',
+        'StaticRange'         => 'Range',
+        'Streams'             => 'Media Streams',
         'StyleSheet'          => 'CSS',
         'Stylesheet'          => 'CSS',
         'SVG'                 => 'SVG',
@@ -164,7 +174,6 @@ module Docs
 
       CLEANUP_NAMES = %w(
         CSS\ Object\ Model.
-        Document\ Object\ Model.
         Tutorial.
         XMLHttpRequest.
         ANGLE\ instanced\ arrays.)
@@ -172,6 +181,7 @@ module Docs
       def get_name
         name = super
         CLEANUP_NAMES.each { |str| name.remove!(str) }
+        name.sub! %r{Document\ Object\ Model\.}i, 'Document Object Model: '
         name.sub! 'Input.', 'HTMLInputElement.'
         name.sub! 'window.navigator', 'navigator'
         name.sub! 'API.', 'API: '

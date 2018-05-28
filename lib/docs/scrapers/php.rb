@@ -4,7 +4,7 @@ module Docs
 
     self.name = 'PHP'
     self.type = 'php'
-    self.release = 'up to 7.1.5'
+    self.release = '7.2.5'
     self.base_url = 'https://secure.php.net/manual/en/'
     self.root_path = 'index.html'
     self.initial_paths = %w(
@@ -20,7 +20,7 @@ module Docs
 
     self.links = {
       home: 'https://secure.php.net/',
-      code: 'https://github.com/php/php-src'
+      code: 'https://git.php.net/?p=php-src.git;a=summary'
     }
 
     # Downloaded from php.net/download-docs.php
@@ -45,7 +45,7 @@ module Docs
 
     BOOKS = %w(apache apc apcu array bc bzip2 calendar csprng classobj ctype curl
       datetime dba dir dom ds eio errorfunc ev event exec exif fileinfo filesystem filter
-      ftp funchand gearman geoip gettext gmagick gmp hash iconv iisfunc image
+      ftp funchand gearman geoip gettext gmagick gmp hash ibase iconv iisfunc image
       imagick imap info inotify intl json judy ldap libevent libxml lua mail mailparse
       math mbstring mcrypt memcached misc mysqli network oauth openssl
       outcontrol password pcntl pcre pdo pgsql phar posix proctitle pthreads quickhash regex runkit
@@ -61,10 +61,10 @@ module Docs
       function.mssql-select-db.html
       pthreads.modifiers.html)
 
-    options[:skip_patterns] = [/mysqlnd/]
+    options[:skip_patterns] = [/mysqlnd/, /xdevapi/i]
 
     options[:attribution] = <<-HTML
-      &copy; 1997&ndash;2017 The PHP Documentation Group<br>
+      &copy; 1997&ndash;2018 The PHP Documentation Group<br>
       Licensed under the Creative Commons Attribution License v3.0 or later.
     HTML
   end

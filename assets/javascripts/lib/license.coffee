@@ -1,5 +1,5 @@
 ###
- * Copyright 2013-2017 Thibaut Courouble and other contributors
+ * Copyright 2013-2018 Thibaut Courouble and other contributors
  *
  * This source code is licensed under the terms of the Mozilla
  * Public License, v. 2.0, a copy of which may be obtained at:

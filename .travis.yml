@@ -1,1 +1,4 @@
 language: ruby
+before_script:
+  - gem update --system
+  - gem install bundler

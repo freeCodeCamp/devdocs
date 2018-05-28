@@ -14,32 +14,14 @@ module Docs
     end
 
     def as_json
-      indexed_docs.map do |doc|
-        json = doc.as_json
-        json[:mtime] = doc_mtime(doc)
-        json[:db_size] = doc_db_size(doc)
-        json
+      @docs.each_with_object [] do |doc, result|
+        next unless @store.exist?(doc.meta_path)
+        result << JSON.parse(@store.read(doc.meta_path))
       end
     end
 
     def to_json
-      JSON.generate(as_json)
-    end
-
-    private
-
-    def indexed_docs
-      @docs.select do |doc|
-        @store.exist?(doc.index_path) && @store.exist?(doc.db_path)
-      end
-    end
-
-    def doc_mtime(doc)
-      [@store.mtime(doc.index_path).to_i, @store.mtime(doc.db_path).to_i].max
-    end
-
-    def doc_db_size(doc)
-      @store.size(doc.db_path)
+      JSON.pretty_generate(as_json)
     end
   end
 end

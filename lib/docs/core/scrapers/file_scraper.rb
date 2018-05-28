@@ -39,7 +39,10 @@ module Docs
     end
 
     def read_file(path)
-      File.read(path) rescue nil
+      File.read(path)
+    rescue
+      instrument 'warn.doc', msg: "Failed to open file: #{path}"
+      nil
     end
   end
 end

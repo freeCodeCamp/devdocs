@@ -47,13 +47,13 @@ module Docs
     }
 
     version '7' do
-      self.release = '7.2.0'
+      self.release = '7.3.0'
       self.dir = '/Users/Thibaut/DevDocs/Docs/gcc7'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '7 CPP' do
-      self.release = '7.2.0'
+      self.release = '7.3.0'
       self.dir = '/Users/Thibaut/DevDocs/Docs/gcpp7'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 

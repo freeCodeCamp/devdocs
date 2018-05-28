@@ -24,7 +24,7 @@ Want to contribute? Great. Please review the following guidelines carefully and 
 ## Requesting new features
 
 1. Search for similar feature requests; someone may have already requested it.
-2. Make sure your feature fits DevDocs's [vision](https://github.com/Thibaut/devdocs/blob/master/README.md#vision).
+2. Make sure your feature fits DevDocs's [vision](https://github.com/freeCodeCamp/devdocs/blob/master/README.md#vision).
 3. Provide a clear and detailed explanation of the feature and why it's important to add it.
 
 For general feedback and ideas, please use the [mailing list](https://groups.google.com/d/forum/devdocs).
@@ -46,7 +46,7 @@ Use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) wher
 
 ## Contributing new documentations
 
-See the [wiki](https://github.com/Thibaut/devdocs/wiki) to learn how to add new documentations.
+See the [wiki](https://github.com/freeCodeCamp/devdocs/wiki) to learn how to add new documentations.
 
 **Important:** the documentation's license must permit alteration, redistribution and commercial use, and the documented software must be released under an open source license. Feel free to get in touch if you're not sure if a documentation meets those requirements.
 

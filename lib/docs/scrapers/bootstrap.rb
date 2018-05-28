@@ -9,15 +9,15 @@ module Docs
     options[:trailing_slash] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2017 Twitter, Inc.<br>
-      &copy; 2011&ndash;2017 The Bootstrap Authors<br>
+      &copy; 2011&ndash;2018 Twitter, Inc.<br>
+      &copy; 2011&ndash;2018 The Bootstrap Authors<br>
       Code licensed under the MIT License.<br>
       Documentation licensed under the Creative Commons Attribution License v3.0.
     HTML
 
     version '4' do
-      self.release = '4.0.0-beta'
-      self.base_url = 'https://getbootstrap.com/docs/4.0/'
+      self.release = '4.1.1'
+      self.base_url = 'https://getbootstrap.com/docs/4.1/'
       self.root_path = 'getting-started/introduction/'
 
       html_filters.push 'bootstrap/entries_v4', 'bootstrap/clean_html_v4'

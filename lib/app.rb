@@ -133,7 +133,7 @@ class App < Sinatra::Application
     end
 
     def canonical_origin
-      "http://#{request.host_with_port}"
+      "https://#{request.host_with_port}"
     end
 
     def browser
@@ -253,7 +253,7 @@ class App < Sinatra::Application
   before do
     if request.host == OUT_HOST && !request.path.start_with?('/s/')
       query_string = "?#{request.query_string}" unless request.query_string.empty?
-      redirect "http://devdocs.io#{request.path}#{query_string}", 302
+      redirect "https://devdocs.io#{request.path}#{query_string}", 302
     end
   end
 
@@ -435,13 +435,13 @@ class App < Sinatra::Application
 
       maker.channel.links.new_link do |link|
         link.rel = 'self'
-        link.href = 'http://devdocs.io/feed.atom'
+        link.href = 'https://devdocs.io/feed.atom'
         link.type = 'application/atom+xml'
       end
 
       maker.channel.links.new_link do |link|
         link.rel = 'alternate'
-        link.href = 'http://devdocs.io/'
+        link.href = 'https://devdocs.io/'
         link.type = 'text/html'
       end
 
@@ -450,14 +450,14 @@ class App < Sinatra::Application
           item.id = "tag:devdocs.io,2014:News/#{settings.news.length - i}"
           item.title = news[1].split("\n").first.gsub(/<\/?[^>]*>/, '')
           item.description do |desc|
-            desc.content = news[1..-1].join.gsub("\n", '<br>').gsub('href="/', 'href="http://devdocs.io/')
+            desc.content = news[1..-1].join.gsub("\n", '<br>').gsub('href="/', 'href="https://devdocs.io/')
             desc.type = 'html'
           end
           item.updated = "#{news.first}T14:00:00Z"
           item.published = "#{news.first}T14:00:00Z"
           item.links.new_link do |link|
             link.rel = 'alternate'
-            link.href = 'http://devdocs.io/'
+            link.href = 'https://devdocs.io/'
             link.type = 'text/html'
           end
         end

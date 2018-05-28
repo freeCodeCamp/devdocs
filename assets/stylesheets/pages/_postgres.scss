@@ -1,19 +1,24 @@
 ._postgres {
   padding-left: 1rem;
 
-  h1, h1 ~ p, h1 ~ pre, h1 ~ blockquote, h2, .NAVFOOTER { margin-left: -1rem; }
+  h1, h1 ~ p, h1 ~ pre, h1 ~ ul, h1 ~ blockquote, h2, .navfooter { margin-left: -1rem; }
   h2 { @extend %block-heading; }
 
-  .VARIABLELIST dt { @extend %block-label, %label-blue; }
+  .variablelist dt { @extend %block-label, %label-blue; }
 
-  blockquote.NOTE, blockquote.IMPORTANT, blockquote.TIP, blockquote.CAUTION { @extend %note; }
-  blockquote.TIP { @extend %note-green; }
-  blockquote.CAUTION { @extend %note-orange; }
+  blockquote.note, blockquote.important, blockquote.tip, blockquote.caution { @extend %note; }
+  blockquote.tip { @extend %note-green; }
+  blockquote.caution { @extend %note-orange; }
+
+  blockquote > h3 {
+    font-size: .875rem;
+    margin: 0 0 .25rem;
+  }
 
   p > code { @extend %label; }
   p.c2 { font-weight: $boldFontWeight; }
 
-  .NAVFOOTER > table { width: 100%; }
+  .navfooter > table { width: 100%; }
   td[align=center] { text-align: center; }
   td[align=right] { text-align: right; }
 }

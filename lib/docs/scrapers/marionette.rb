@@ -19,7 +19,7 @@ module Docs
     HTML
 
     version '3' do
-      self.release = '3.4.3'
+      self.release = '3.5.1'
       self.base_url = "https://marionettejs.com/docs/v#{release}/"
 
       html_filters.push 'marionette/entries_v3'

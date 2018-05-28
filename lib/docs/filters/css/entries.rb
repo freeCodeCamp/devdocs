@@ -7,8 +7,8 @@ module Docs
         'CSS_Columns' => 'Multi-column Layout',
         'CSS_Flexible_Box_Layout' => 'Flexible Box Layout',
         'CSS_Grid_Layout' => 'Grid Layout',
-        'CSS_Images' => 'Image Values',
-        'CSS_Lists_and_Counters' => 'Lists & Counters',
+        'CSS_Images' => 'Images',
+        'CSS_Lists_and_Counters' => 'Lists',
         'CSS_Transforms' => 'Transforms',
         'Media_Queries' => 'Media Queries',
         'transform-function' => 'Transforms',
@@ -34,7 +34,7 @@ module Docs
           "#{super}()"
         elsif slug =~ /\A[a-z]+_/i
           slug.to_s.gsub('_', ' ').gsub('/', ': ')
-        elsif slug.start_with?('transform-function')
+        elsif slug.start_with?('transform-function') || slug.start_with?('filter-function')
           slug.split('/').last + '()'
         else
           super
@@ -51,6 +51,7 @@ module Docs
           type.remove! ' Module'
           type.remove! %r{ Level \d\z}
           type.remove! %r{\(.*\)}
+          type.remove! %r{  \d\z}
           type.sub! 'and', '&'
           type.strip!
           type = 'Grid Layout' if type.include?('Grid Layout')
@@ -74,9 +75,10 @@ module Docs
         'spec-Living' => 0,
         'spec-REC'    => 1,
         'spec-CR'     => 2,
-        'spec-LC'     => 3,
-        'spec-WD'     => 4,
-        'spec-ED'     => 5
+        'spec-PR'     => 3,
+        'spec-LC'     => 4,
+        'spec-WD'     => 5,
+        'spec-ED'     => 6
       }
 
       PRIORITY_STATUSES = %w(spec-REC spec-CR)
@@ -89,6 +91,8 @@ module Docs
         specs.map!     { |node| [node.at_css('> td:nth-child(1) > a'), node.at_css('> td:nth-child(2) > span')] }
         # ignore non-CSS specs
         specs.select!  { |pair| pair.first && pair.first['href'] =~ /css|fxtf|fullscreen|svg/i && !pair.first['href'].include?('compat.spec') }
+        # ignore specs with no status
+        specs.select!  { |pair| pair.second }
         # ["Spec", "spec-REC"]
         specs.map!     { |pair| [pair.first.child.content, pair.second['class']] }
         # sort by status

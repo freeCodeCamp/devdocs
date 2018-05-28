@@ -1,0 +1,9 @@
+//
+// Mixins
+//
+
+@mixin print {
+  @media print {
+    @content;
+  }
+}

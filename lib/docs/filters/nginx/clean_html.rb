@@ -30,6 +30,10 @@ module Docs
           node['data-language'] = 'nginx'
         end
 
+        css('code code').each do |node|
+          node.before(node.children).remove
+        end
+
         doc
       end
     end

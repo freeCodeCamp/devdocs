@@ -26,8 +26,18 @@ module Docs
       Licensed under the MIT License.
     HTML
 
+    version '4.0' do
+      self.release = '4.0.3'
+      self.base_url = "http://api.symfony.com/#{version}/"
+    end
+
+    version '3.4' do
+      self.release = '3.4.3'
+      self.base_url = "http://api.symfony.com/#{version}/"
+    end
+
     version '3.3' do
-      self.release = '3.3.6'
+      self.release = '3.3.15'
       self.base_url = "http://api.symfony.com/#{version}/"
     end
 
@@ -47,12 +57,12 @@ module Docs
     end
 
     version '2.8' do
-      self.release = '2.8.26'
+      self.release = '2.8.28'
       self.base_url = "http://api.symfony.com/#{version}/"
     end
 
     version '2.7' do
-      self.release = '2.7.33'
+      self.release = '2.7.35'
       self.base_url = "http://api.symfony.com/#{version}/"
     end
   end

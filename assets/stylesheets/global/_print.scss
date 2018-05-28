@@ -1,0 +1,57 @@
+@include print {
+  ._header, ._sidebar, ._path, ._notif, ._toc, ._pre-clip, ._notice, ._links {
+    display: none !important;
+  }
+
+  body, ._app, ._container, ._content {
+    margin: 0;
+    padding: 0;
+    height: initial;
+    background: none;
+
+    &:after {
+      content: '';
+      clear: both;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  %external-link:after {
+    display: none;
+  }
+
+  ._attribution-p {
+    background: none;
+    border: 2px solid $boxBorder;
+  }
+
+  ._attribution:last-child:after {
+    content: 'Exported from DevDocs \2014  https://devdocs.io';
+    display: block;
+    margin-top: 1rem;
+    font-weight: $bolderFontWeight;
+  }
+
+  ._attribution {
+    page-break-inside: avoid;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+
+  pre {
+    page-break-before: avoid;
+    orphans: 5;
+    widows: 5;
+  }
+
+  p {
+    orphans: 2;
+    widows: 2;
+  }
+}

@@ -19,12 +19,12 @@ module Docs
       library/sunau.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2001&ndash;2017 Python Software Foundation<br>
+      &copy; 2001&ndash;2018 Python Software Foundation<br>
       Licensed under the PSF License.
     HTML
 
     version '3.6' do
-      self.release = '3.6.1'
+      self.release = '3.6.4'
       self.dir = '/Users/Thibaut/DevDocs/Docs/Python36' # docs.python.org/3.6/download.html
       self.base_url = 'https://docs.python.org/3.6/'
 

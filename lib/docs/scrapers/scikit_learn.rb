@@ -3,9 +3,10 @@ module Docs
     self.name = 'scikit-learn'
     self.slug = 'scikit_learn'
     self.type = 'sphinx'
-    self.release = '0.19'
+    self.release = '0.19.1'
     self.base_url = 'http://scikit-learn.org/stable/'
     self.root_path = 'documentation.html'
+    self.force_gzip = true
     self.links = {
       home: 'http://scikit-learn.org/',
       code: 'https://github.com/scikit-learn/scikit-learn'

@@ -7,6 +7,7 @@ module Docs
 
       def get_type
         link = at_css("nav a[href='#{result[:path].split('/').last}']")
+        return 'Miscellaneous' unless link
         link.ancestors('ul').last.previous_element.content
       end
 

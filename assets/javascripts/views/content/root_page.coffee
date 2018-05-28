@@ -9,10 +9,21 @@ class app.views.RootPage extends app.View
 
   render: ->
     @empty()
-    if app.isAndroidWebview()
-      @append @tmpl('androidWarning')
+
+    tmpl = if app.isAndroidWebview()
+      'androidWarning'
+    else if @isHidden()
+      'splash'
+    else if app.isMobile()
+      'mobileIntro'
     else
-      @append @tmpl if @isHidden() then 'splash' else if app.isMobile() then 'mobileIntro' else 'intro'
+      'intro'
+
+    # temporary
+    if location.host is 'devdocs.io' and location.protocol is 'http:'
+      tmpl = 'httpWarning'
+
+    @append @tmpl(tmpl)
     return
 
   hideIntro: ->

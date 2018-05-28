@@ -90,33 +90,33 @@ module Docs
         return config_additional_entries if type && type.include?('Configuration')
         return data_types_additional_entries if type == 'Data Types'
         return command_additional_entries if type == 'Commands'
-        return get_heading_entries('h3[id]') if slug == 'functions-xml'
+        return get_heading_entries('h3[id], .sect3[id] > h3:first-child') if slug == 'functions-xml'
 
-        entries = get_heading_entries('h2[id]')
+        entries = get_heading_entries('h2[id], .sect2[id] > h2:first-child')
 
         case slug
         when 'queries-union'
-          entries.concat get_custom_entries('p > .LITERAL:first-child')
+          entries.concat get_custom_entries('p > .literal:first-child')
         when 'queries-table-expressions'
-          entries.concat get_heading_entries('h3[id]')
-          entries.concat get_custom_entries('dt > .LITERAL:first-child')
+          entries.concat get_heading_entries('h3[id], .sect3[id] > h3:first-child')
+          entries.concat get_custom_entries('dt > .literal:first-child')
         when 'functions-logical'
           entries.concat get_custom_entries('> table td:first-child > code')
         when 'functions-formatting'
           entries.concat get_custom_entries('#FUNCTIONS-FORMATTING-TABLE td:first-child > code')
         when 'functions-admin'
-          entries.concat get_custom_entries('.TABLE td:first-child > code')
+          entries.concat get_custom_entries('.table td:first-child > code')
         when 'functions-string'
           entries.concat get_custom_entries('> div[id^="FUNC"] td:first-child > code')
           entries.concat get_custom_entries('> div[id^="FORMAT"] td:first-child > code')
         else
           if type && type.start_with?('Functions')
-            entries.concat get_custom_entries('> .TABLE td:first-child > code.LITERAL:first-child')
-            entries.concat get_custom_entries('> .TABLE td:first-child > code.FUNCTION:first-child')
-            entries.concat get_custom_entries('> .TABLE td:first-child > code:not(.LITERAL):first-child + code.LITERAL')
-            entries.concat get_custom_entries('> .TABLE td:first-child > p > code.LITERAL:first-child')
-            entries.concat get_custom_entries('> .TABLE td:first-child > p > code.FUNCTION:first-child')
-            entries.concat get_custom_entries('> .TABLE td:first-child > p > code:not(.LITERAL):first-child + code.LITERAL')
+            entries.concat get_custom_entries('> .table td:first-child > code.literal:first-child')
+            entries.concat get_custom_entries('> .table td:first-child > code.function:first-child')
+            entries.concat get_custom_entries('> .table td:first-child > code:not(.literal):first-child + code.literal')
+            entries.concat get_custom_entries('> .table td:first-child > p > code.literal:first-child')
+            entries.concat get_custom_entries('> .table td:first-child > p > code.function:first-child')
+            entries.concat get_custom_entries('> .table td:first-child > p > code:not(.literal):first-child + code.literal')
             if slug == 'functions-comparison' && !at_css('#FUNCTIONS-COMPARISON-PRED-TABLE') # before 9.6
               entries.concat %w(IS NULL BETWEEN DISTINCT\ FROM).map { |name| ["#{self.name}: #{name}"] }
             end
@@ -127,8 +127,8 @@ module Docs
       end
 
       def config_additional_entries
-        css('.VARIABLELIST dt[id]').map do |node|
-          name = node.at_css('.VARNAME').content
+        css('.variablelist dt[id]').map do |node|
+          name = node.at_css('.varname').content
           ["Config: #{name}", node['id']]
         end
       end
@@ -136,27 +136,27 @@ module Docs
       def data_types_additional_entries
         selector = case slug
         when 'rangetypes'
-          'li > p > .TYPE:first-child'
+          'li > p > .type:first-child'
         when 'datatype-textsearch'
-          '.SECT2 > .TYPE'
+          '.title > .type, .sect2 > .type'
         else
-          '.CALSTABLE td:first-child > .TYPE'
+          '.table-contents td:first-child > .type, .calstable td:first-child > .type'
         end
         get_custom_entries(selector)
       end
 
       def command_additional_entries
-        css('.REFSECT2[id^="SQL"]').each_with_object([]) do |node, entries|
+        css('.refsect2[id^="SQL"]').each_with_object([]) do |node, entries|
           next unless heading = node.at_css('h3')
           next unless heading.content.strip =~ /[A-Z_\-]+ Clause/
-          name = heading.at_css('.LITERAL').content
+          name = heading.at_css('.literal').content
           name.prepend "#{self.name} ... "
           entries << [name, node['id']]
         end
       end
 
       def include_default_entry?
-        !initial_page? && !at_css('.TOC') && type
+        !initial_page? && (!at_css('.toc') || at_css('.sect2, .variablelist, .refsect1')) && type
       end
 
       SKIP_ENTRIES_SLUGS = [
@@ -199,7 +199,9 @@ module Docs
         css(selector).each_with_object([]) do |node, entries|
           name = node.content
           clean_heading_name(name)
-          entries << ["#{additional_entry_prefix}: #{name}", node['id']] unless skip_heading?(name)
+          id = node['id'] || node.parent['id']
+          raise "missing ids for selector #{selector}" unless id
+          entries << ["#{additional_entry_prefix}: #{name}", id] unless skip_heading?(name)
         end
       end
 

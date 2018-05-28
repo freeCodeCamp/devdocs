@@ -4,12 +4,17 @@ module Docs
       def call
         css('h1').remove if root_page?
 
+        css('.t-dcl-rev-aux td[rowspan]').each do |node|
+          rowspan = node['rowspan'].to_i
+          node['rowspan'] = node.ancestors('tbody').css('tr').length if rowspan > 3
+        end
+
         css('#siteSub', '#contentSub', '.printfooter', '.t-navbar', '.editsection', '#toc',
             '.t-dsc-sep', '.t-dcl-sep', '#catlinks', '.ambox-notice', '.mw-cite-backlink',
             '.t-sdsc-sep:first-child:last-child', '.t-example-live-link',
             '.t-dcl-rev-num > .t-dcl-rev-aux ~ tr:not(.t-dcl-rev-aux) > td:nth-child(2)').remove
 
-        css('#bodyContent', '.mw-content-ltr', 'span[style]', 'div[class^="t-ref"]',
+        css('#bodyContent', '.mw-content-ltr', 'span[style]', 'div[class^="t-ref"]', '.t-image',
             'th > div', 'td > div', '.t-dsc-see', '.mainpagediv', 'code > b', 'tbody').each do |node|
           node.before(node.children).remove
         end
@@ -78,7 +83,7 @@ module Docs
           end
           node.inner_html = node.inner_html.strip
           node << '.' if node.content =~ /[a-zA-Z0-9\)]\z/
-          node.remove if node.content.blank?
+          node.remove if node.content.blank? && !node.at_css('img')
         end
 
         css('pre').each do |node|
@@ -98,6 +103,10 @@ module Docs
         css('h1 ~ .fmbox').each do |node|
           node.name = 'div'
           node.content = node.content
+        end
+
+        css('img').each do |node|
+          node['src'] = node['src'].sub! %r{http://en.cppreference.com/common/([^"']+?)\.svg}, 'http://upload.cppreference.com/mwiki/\1.svg'
         end
 
         doc
