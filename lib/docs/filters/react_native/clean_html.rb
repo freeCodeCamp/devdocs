@@ -2,7 +2,7 @@ module Docs
   class ReactNative
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.inner-content, article.withtoc')
+        @doc = at_css('.post')
 
         if root_page?
           at_css('h1').content = 'React Native Documentation'
