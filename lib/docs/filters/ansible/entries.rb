@@ -11,6 +11,16 @@ module Docs
       end
 
       def get_type
+        if version == '2.4'
+          if slug.include?('module')
+            if name =~ /\A[a-z]/ && node = css('.toctree-l2.current').last
+              return "Modules: #{node.content.remove(' Modules')}"
+            else
+              return 'Modules'
+            end
+          end
+        end
+
         if slug =~ /\Acli\//
           'CLI Reference'
         elsif slug =~ /\Anetwork\//
@@ -23,9 +33,9 @@ module Docs
           end
         elsif slug =~ /\Amodules\//
           if slug =~ /\Amodules\/list_/ || slug=~ /_maintained\z/
-            'Modules'
+            'Modules: Categories'
           else
-            'Modules: Index'
+            'Modules'
           end
         elsif slug.include?('playbook')
           'Playbooks'
