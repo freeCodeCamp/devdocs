@@ -8,9 +8,22 @@
       "code": "https://github.com/angular/angular"
     },
     "version": "",
-    "release": "5.2.9",
-    "mtime": 1521396825,
-    "db_size": 9378792
+    "release": "6.0.4",
+    "mtime": 1528681713,
+    "db_size": 10106727
+  },
+  {
+    "name": "Angular",
+    "slug": "angular~5",
+    "type": "angular",
+    "links": {
+      "home": "https://angular.io/",
+      "code": "https://github.com/angular/angular"
+    },
+    "version": "5",
+    "release": "5.2.11",
+    "mtime": 1528681935,
+    "db_size": 9383106
   },
   {
     "name": "Angular",
@@ -85,6 +98,19 @@
   },
   {
     "name": "Ansible",
+    "slug": "ansible~2.5",
+    "type": "sphinx",
+    "links": {
+      "home": "https://www.ansible.com/",
+      "code": "https://github.com/ansible/ansible"
+    },
+    "version": "2.5",
+    "release": "2.5.3",
+    "mtime": 1528678186,
+    "db_size": 19502653
+  },
+  {
+    "name": "Ansible",
     "slug": "ansible~2.4",
     "type": "sphinx",
     "links": {
@@ -93,7 +119,7 @@
     },
     "version": "2.4",
     "release": "2.4.3",
-    "mtime": 1521914994,
+    "mtime": 1528674845,
     "db_size": 12975660
   },
   {
@@ -586,9 +612,9 @@
       "home": "https://codecept.io/",
       "code": "https://github.com/codeception/codeceptjs"
     },
-    "release": "1.1.7",
-    "mtime": 1521386248,
-    "db_size": 482861
+    "release": "1.2.1",
+    "mtime": 1528679846,
+    "db_size": 506846
   },
   {
     "name": "CodeIgniter",
@@ -992,9 +1018,9 @@
       "code": "https://github.com/erlang/otp"
     },
     "version": "20",
-    "release": "20.2",
-    "mtime": 1519585859,
-    "db_size": 8856196
+    "release": "20.3",
+    "mtime": 1528680392,
+    "db_size": 8870168
   },
   {
     "name": "Erlang",
@@ -1602,9 +1628,9 @@
       "home": "https://facebook.github.io/jest/",
       "code": "https://github.com/facebook/jest"
     },
-    "release": "22.4.2",
-    "mtime": 1524924339,
-    "db_size": 454562
+    "release": "23.1.0",
+    "mtime": 1528679758,
+    "db_size": 496159
   },
   {
     "name": "jQuery",
@@ -2048,9 +2074,9 @@
       "home": "https://nginx.org/",
       "code": "http://hg.nginx.org/nginx"
     },
-    "release": "1.14.0",
-    "mtime": 1524925038,
-    "db_size": 1445930
+    "release": "1.15.0",
+    "mtime": 1528679658,
+    "db_size": 1459960
   },
   {
     "name": "nginx / Lua Module",
@@ -2081,9 +2107,9 @@
       "code": "https://github.com/nodejs/node"
     },
     "version": "",
-    "release": "10.0.0",
-    "mtime": 1526257938,
-    "db_size": 2525537
+    "release": "10.4.0",
+    "mtime": 1528679608,
+    "db_size": 2538207
   },
   {
     "name": "Node.js",
@@ -2094,9 +2120,9 @@
       "code": "https://github.com/nodejs/node"
     },
     "version": "8 LTS",
-    "release": "8.11.1",
-    "mtime": 1524925222,
-    "db_size": 2145841
+    "release": "8.11.2",
+    "mtime": 1528679615,
+    "db_size": 2184150
   },
   {
     "name": "Node.js",
@@ -2107,9 +2133,9 @@
       "code": "https://github.com/nodejs/node"
     },
     "version": "6 LTS",
-    "release": "6.13.1",
-    "mtime": 1521387292,
-    "db_size": 1437522
+    "release": "6.14.2",
+    "mtime": 1528679620,
+    "db_size": 1612581
   },
   {
     "name": "Node.js",
@@ -2120,8 +2146,8 @@
       "code": "https://github.com/nodejs/node"
     },
     "version": "4 LTS",
-    "release": "4.8.7",
-    "mtime": 1521387294,
+    "release": "4.9.1",
+    "mtime": 1528679625,
     "db_size": 982448
   },
   {
@@ -2140,9 +2166,9 @@
       "home": "https://www.npmjs.com/",
       "code": "https://github.com/npm/npm"
     },
-    "release": "6.0.0",
-    "mtime": 1524925401,
-    "db_size": 1576112
+    "release": "6.1.0",
+    "mtime": 1528680011,
+    "db_size": 1732141
   },
   {
     "name": "NumPy",
@@ -2609,9 +2635,9 @@
       "home": "https://reactjs.org/",
       "code": "https://github.com/facebook/react"
     },
-    "release": "16.3.0",
-    "mtime": 1524926268,
-    "db_size": 795077
+    "release": "16.4.0",
+    "mtime": 1528679925,
+    "db_size": 828139
   },
   {
     "name": "ReactNative",
@@ -2621,9 +2647,9 @@
       "home": "https://facebook.github.io/react-native/",
       "code": "https://github.com/facebook/react-native"
     },
-    "release": "0.49",
-    "mtime": 1507560654,
-    "db_size": 1594775
+    "release": "0.55",
+    "mtime": 1528672748,
+    "db_size": 3068928
   },
   {
     "name": "Redis",
@@ -2910,9 +2936,9 @@
       "code": "https://github.com/sinonjs/sinon"
     },
     "version": "5",
-    "release": "5.0.7",
-    "mtime": 1526258139,
-    "db_size": 112789
+    "release": "5.1.0",
+    "mtime": 1528680045,
+    "db_size": 112874
   },
   {
     "name": "Sinon.JS",
@@ -3201,9 +3227,9 @@
       "home": "https://www.typescriptlang.org",
       "code": "https://github.com/Microsoft/TypeScript"
     },
-    "release": "2.8.3",
-    "mtime": 1524927749,
-    "db_size": 1282185
+    "release": "2.9.0",
+    "mtime": 1528680433,
+    "db_size": 1299587
   },
   {
     "name": "Underscore.js",
@@ -3275,9 +3301,9 @@
       "code": "https://github.com/webpack/webpack"
     },
     "version": "",
-    "release": "4.8.3",
-    "mtime": 1526258077,
-    "db_size": 3794626
+    "release": "4.12.0",
+    "mtime": 1528680127,
+    "db_size": 3725340
   },
   {
     "name": "webpack",
@@ -3307,9 +3333,9 @@
       "home": "https://yarnpkg.com/",
       "code": "https://github.com/yarnpkg/yarn"
     },
-    "release": "1.6.0",
-    "mtime": 1524928176,
-    "db_size": 195247
+    "release": "1.7.0",
+    "mtime": 1528679882,
+    "db_size": 199356
   },
   {
     "name": "Yii",
