@@ -10,6 +10,7 @@
 
   .important { @extend %note-orange; }
   .warning, .deprecated-removed, .deprecated { @extend %note-red; }
+  .hint { @extend %note-green; }
 
   .versionmodified, span.title, .topic-title {
     display: block;
