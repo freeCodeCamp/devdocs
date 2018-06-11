@@ -59,8 +59,28 @@ module Docs
     end
 
     version do
-      self.release = '5.2.9'
+      self.release = '6.0.4'
       self.base_url = 'https://angular.io/'
+      self.root_path = 'docs'
+
+      html_filters.push 'angular/clean_html', 'angular/entries'
+
+      options[:follow_links] = false
+      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
+      options[:fix_urls_before_parse] = ->(url) do
+        url.sub! %r{\Aguide/}, '/guide/'
+        url.sub! %r{\Atutorial/}, '/tutorial/'
+        url.sub! %r{\Aapi/}, '/api/'
+        url.sub! %r{\Agenerated/}, '/generated/'
+        url
+      end
+
+      include Docs::Angular::Common
+    end
+
+    version '5' do
+      self.release = '5.2.11'
+      self.base_url = 'https://v5.angular.io/'
       self.root_path = 'docs'
 
       html_filters.push 'angular/clean_html', 'angular/entries'
