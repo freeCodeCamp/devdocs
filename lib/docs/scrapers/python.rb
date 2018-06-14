@@ -1,6 +1,6 @@
 module Docs
   class Python < FileScraper
-    self.type = 'sphinx'
+    self.type = 'python'
     self.root_path = 'library/index.html'
     self.links = {
       home: 'https://www.python.org/',
