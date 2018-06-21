@@ -16,7 +16,7 @@ module Docs
       end
 
       def api
-        @doc = at_css('#main-content')
+        @doc = at_css('.main-content')
 
         at_css('h1 + p').remove if root_page?
 
