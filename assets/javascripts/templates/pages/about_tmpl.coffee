@@ -606,6 +606,11 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/scikit-learn/scikit-learn/master/COPYING'
   ], [
+    'Screeps',
+    '2018 Screeps',
+    'CC BY',
+    'https://creativecommons.org/licenses/by/4.0/'
+  ], [
     'Sinon',
     '2010-2018 Christian Johansen',
     'BSD',
