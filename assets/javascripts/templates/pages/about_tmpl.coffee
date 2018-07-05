@@ -553,8 +553,8 @@ credits = [
   ], [
     'React, React Native, Flow, Relay',
     '2013-present Facebook Inc.',
-    'CC BY',
-    'https://raw.githubusercontent.com/reactjs/reactjs.org/master/LICENSE-DOCS.md'
+    'MIT',
+    'https://raw.githubusercontent.com/facebook/react/master/LICENSE'
   ], [
     'Redis',
     '2009-2018 Salvatore Sanfilippo',
