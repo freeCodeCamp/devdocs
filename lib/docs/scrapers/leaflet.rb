@@ -1,10 +1,10 @@
 module Docs
   class Leaflet < UrlScraper
     self.name = 'Leaflet'
-    self.type = 'leaflet'
+    self.type = 'simple'
     self.slug = 'leaflet'
     self.links = {
-      home: 'http://leafletjs.com/',
+      home: 'https://leafletjs.com/',
       code: 'https://github.com/Leaflet/Leaflet'
     }
 
@@ -14,23 +14,29 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2017 <a href="http://agafonkin.com/en">Vladimir Agafonkin</a>.
-      Maps &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors.</p>
+      &copy; 2010&ndash;2018 Vladimir Agafonkin<br>
+      &copy; 2010&ndash;2011, CloudMade<br>
+      Maps &copy; OpenStreetMap contributors.
     HTML
+
+    version '1.3' do
+      self.release = '1.3.0'
+      self.base_url = "https://leafletjs.com/reference-#{release}.html"
+    end
 
     version '1.2' do
       self.release = '1.2.0'
-      self.base_url = "http://leafletjs.com/reference-#{release}.html"
+      self.base_url = "https://leafletjs.com/reference-#{release}.html"
     end
 
     version '1.1' do
       self.release = '1.1.0'
-      self.base_url = "http://leafletjs.com/reference-#{release}.html"
+      self.base_url = "https://leafletjs.com/reference-#{release}.html"
     end
 
     version '1.0' do
       self.release = '1.0.3'
-      self.base_url = "http://leafletjs.com/reference-#{release}.html"
+      self.base_url = "https://leafletjs.com/reference-#{release}.html"
     end
 
   end
