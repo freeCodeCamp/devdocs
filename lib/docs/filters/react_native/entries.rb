@@ -12,7 +12,7 @@ module Docs
       end
 
       def get_type
-        link = at_css('.navItemActive')
+        link = at_css('.navListItemActive')
         return 'Miscellaneous' unless link
         section = link.ancestors('.navGroup').first
         type = section.at_css('h3').content.strip
