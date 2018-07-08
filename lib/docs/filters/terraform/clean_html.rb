@@ -19,6 +19,11 @@ module Docs
             node['data-language'] = 'ruby'
           end
           node.content = node.content
+          node.remove_attribute('class')
+        end
+
+        css('.highlight').each do |node|
+          node.before(node.children).remove
         end
 
         doc

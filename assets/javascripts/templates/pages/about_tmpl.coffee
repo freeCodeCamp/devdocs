@@ -646,6 +646,11 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Terraform',
+    '2018 HashiCorp',
+    'MPL',
+    'https://raw.githubusercontent.com/hashicorp/terraform-website/master/LICENSE.md'
+  ], [
     'Twig',
     '2009-2017 The Twig Team',
     'BSD',
