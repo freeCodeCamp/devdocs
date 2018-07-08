@@ -15,7 +15,7 @@ module Docs
               (slug.include?('index') && !node.content.include?('.'))
           end
           .map do |node|
-            name = node.content.sub(/\(.*\)$/, '')
+            name = node.content.strip.sub(/\(.*\)\z/, '()')
             type = 'API' if type == @root_type && name.include?('.')
             [name, node['id'], type]
           end

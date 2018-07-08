@@ -3,7 +3,7 @@
 module Docs
   class Koa < Github
     self.base_url = 'https://github.com/koajs/koa/blob/master/docs/'
-    self.release = '2.4.1'
+    self.release = '2.5.1'
 
     self.root_path = 'api/index.md'
     self.initial_paths = %w[
@@ -31,7 +31,7 @@ module Docs
     options[:container] = '.markdown-body'
 
     options[:attribution] = <<-HTML
-      &copy; 2017 Koa contributors<br>
+      &copy; 2018 Koa contributors<br>
       Licensed under the MIT License.
     HTML
   end

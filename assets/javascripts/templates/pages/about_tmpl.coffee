@@ -366,6 +366,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/knockout/knockout/master/LICENSE'
   ], [
+    'Koa',
+    '2018 Koa contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/koajs/koa/master/LICENSE'
+  ], [
     'Kotlin',
     '2010-2018 JetBrains s.r.o.',
     'Apache',
