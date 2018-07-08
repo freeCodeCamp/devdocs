@@ -18,6 +18,7 @@ module Docs
         end
 
         css('pre').each do |node|
+          node['data-language'] = 'js'
           node['data-language'] = node['class'][/language-(\w+)/, 1] if node['class']
           node.content = node.content
         end
