@@ -98,6 +98,19 @@
   },
   {
     "name": "Ansible",
+    "slug": "ansible~2.6",
+    "type": "sphinx",
+    "links": {
+      "home": "https://www.ansible.com/",
+      "code": "https://github.com/ansible/ansible"
+    },
+    "version": "2.6",
+    "release": "2.6.1",
+    "mtime": 1531083932,
+    "db_size": 22024258
+  },
+  {
+    "name": "Ansible",
     "slug": "ansible~2.5",
     "type": "sphinx",
     "links": {
@@ -612,9 +625,9 @@
       "home": "https://codecept.io/",
       "code": "https://github.com/codeception/codeceptjs"
     },
-    "release": "1.2.1",
-    "mtime": 1528679846,
-    "db_size": 506846
+    "release": "1.3.1",
+    "mtime": 1531082805,
+    "db_size": 591278
   },
   {
     "name": "CodeIgniter",
@@ -689,16 +702,16 @@
       "home": "https://crystal-lang.org/",
       "code": "https://github.com/crystal-lang/crystal"
     },
-    "release": "0.24.1",
-    "mtime": 1515367561,
-    "db_size": 9170378
+    "release": "0.25.1",
+    "mtime": 1531081933,
+    "db_size": 9776392
   },
   {
     "name": "CSS",
     "slug": "css",
     "type": "mdn",
-    "mtime": 1526249403,
-    "db_size": 10881858
+    "mtime": 1531084156,
+    "db_size": 11172377
   },
   {
     "name": "D",
@@ -708,9 +721,9 @@
       "home": "https://dlang.org/",
       "code": "https://github.com/dlang/phobos"
     },
-    "release": "2.080.0",
-    "mtime": 1526258498,
-    "db_size": 5832783
+    "release": "2.081.0",
+    "mtime": 1531082506,
+    "db_size": 5861676
   },
   {
     "name": "D3.js",
@@ -760,9 +773,9 @@
       "code": "https://github.com/django/django"
     },
     "version": "2.0",
-    "release": "2.0.5",
-    "mtime": 1526258593,
-    "db_size": 6071797
+    "release": "2.0.7",
+    "mtime": 1531082713,
+    "db_size": 6069505
   },
   {
     "name": "Django",
@@ -897,15 +910,15 @@
     "name": "DOM",
     "slug": "dom",
     "type": "mdn",
-    "mtime": 1526248721,
-    "db_size": 28885725
+    "mtime": 1531093565,
+    "db_size": 30170757
   },
   {
     "name": "DOM Events",
     "slug": "dom_events",
     "type": "mdn",
-    "mtime": 1526250965,
-    "db_size": 1619500
+    "mtime": 1531084385,
+    "db_size": 1647081
   },
   {
     "name": "Drupal",
@@ -941,9 +954,9 @@
       "home": "https://electronjs.org/",
       "code": "https://github.com/electron/electron"
     },
-    "release": "2.0.0",
-    "mtime": 1526257393,
-    "db_size": 1732657
+    "release": "2.0.2",
+    "mtime": 1531082744,
+    "db_size": 1736011
   },
   {
     "name": "Elixir",
@@ -1008,6 +1021,19 @@
     "release": "2.15.0",
     "mtime": 1509308649,
     "db_size": 5540495
+  },
+  {
+    "name": "Erlang",
+    "slug": "erlang~21",
+    "type": "erlang",
+    "links": {
+      "home": "https://www.erlang.org/",
+      "code": "https://github.com/erlang/otp"
+    },
+    "version": "21",
+    "release": "21.0",
+    "mtime": 1531082610,
+    "db_size": 10706256
   },
   {
     "name": "Erlang",
@@ -1197,9 +1223,9 @@
       "home": "https://flow.org/",
       "code": "https://github.com/facebook/flow"
     },
-    "release": "0.68.0",
-    "mtime": 1521387140,
-    "db_size": 321159
+    "release": "0.75.0",
+    "mtime": 1531081679,
+    "db_size": 334904
   },
   {
     "name": "GCC",
@@ -1555,15 +1581,15 @@
     "name": "HTML",
     "slug": "html",
     "type": "mdn",
-    "mtime": 1526249051,
-    "db_size": 3874271
+    "mtime": 1531082980,
+    "db_size": 3933827
   },
   {
     "name": "HTTP",
     "slug": "http",
     "type": "mdn",
-    "mtime": 1526250801,
-    "db_size": 4393744
+    "mtime": 1531084508,
+    "db_size": 4397113
   },
   {
     "name": "Immutable.js",
@@ -1605,8 +1631,8 @@
     "name": "JavaScript",
     "slug": "javascript",
     "type": "mdn",
-    "mtime": 1526250727,
-    "db_size": 6135004
+    "mtime": 1531083728,
+    "db_size": 6232575
   },
   {
     "name": "Jekyll",
@@ -1628,9 +1654,9 @@
       "home": "https://facebook.github.io/jest/",
       "code": "https://github.com/facebook/jest"
     },
-    "release": "23.1.0",
-    "mtime": 1528679758,
-    "db_size": 496159
+    "release": "23.3.0",
+    "mtime": 1531081537,
+    "db_size": 520688
   },
   {
     "name": "jQuery",
@@ -1705,6 +1731,18 @@
     "release": "3.4.2",
     "mtime": 1489346587,
     "db_size": 417406
+  },
+  {
+    "name": "Koa",
+    "slug": "koa",
+    "type": "github",
+    "links": {
+      "home": "https://koajs.com/",
+      "code": "https://github.com/koajs/koa"
+    },
+    "release": "2.5.1",
+    "mtime": 1531085399,
+    "db_size": 160314
   },
   {
     "name": "Kotlin",
@@ -1808,6 +1846,58 @@
     "release": "4.2.11",
     "mtime": 1505055134,
     "db_size": 7711773
+  },
+  {
+    "name": "Leaflet",
+    "slug": "leaflet~1.3",
+    "type": "simple",
+    "links": {
+      "home": "https://leafletjs.com/",
+      "code": "https://github.com/Leaflet/Leaflet"
+    },
+    "version": "1.3",
+    "release": "1.3.0",
+    "mtime": 1531084142,
+    "db_size": 697420
+  },
+  {
+    "name": "Leaflet",
+    "slug": "leaflet~1.2",
+    "type": "simple",
+    "links": {
+      "home": "https://leafletjs.com/",
+      "code": "https://github.com/Leaflet/Leaflet"
+    },
+    "version": "1.2",
+    "release": "1.2.0",
+    "mtime": 1531084146,
+    "db_size": 678833
+  },
+  {
+    "name": "Leaflet",
+    "slug": "leaflet~1.1",
+    "type": "simple",
+    "links": {
+      "home": "https://leafletjs.com/",
+      "code": "https://github.com/Leaflet/Leaflet"
+    },
+    "version": "1.1",
+    "release": "1.1.0",
+    "mtime": 1531084149,
+    "db_size": 677510
+  },
+  {
+    "name": "Leaflet",
+    "slug": "leaflet~1.0",
+    "type": "simple",
+    "links": {
+      "home": "https://leafletjs.com/",
+      "code": "https://github.com/Leaflet/Leaflet"
+    },
+    "version": "1.0",
+    "release": "1.0.3",
+    "mtime": 1531084153,
+    "db_size": 672447
   },
   {
     "name": "Less",
@@ -2107,9 +2197,9 @@
       "code": "https://github.com/nodejs/node"
     },
     "version": "",
-    "release": "10.4.0",
-    "mtime": 1528679608,
-    "db_size": 2538207
+    "release": "10.6.0",
+    "mtime": 1531082202,
+    "db_size": 2629449
   },
   {
     "name": "Node.js",
@@ -2566,16 +2656,29 @@
   },
   {
     "name": "Python",
+    "slug": "python~3.7",
+    "type": "python",
+    "links": {
+      "home": "https://www.python.org/",
+      "code": "https://github.com/python/cpython"
+    },
+    "version": "3.7",
+    "release": "3.7.0",
+    "mtime": 1531081977,
+    "db_size": 8368646
+  },
+  {
+    "name": "Python",
     "slug": "python~3.6",
-    "type": "sphinx",
+    "type": "python",
     "links": {
       "home": "https://www.python.org/",
       "code": "https://github.com/python/cpython"
     },
     "version": "3.6",
     "release": "3.6.4",
-    "mtime": 1515368831,
-    "db_size": 8006465
+    "mtime": 1531081883,
+    "db_size": 8040080
   },
   {
     "name": "Python",
@@ -2647,9 +2750,9 @@
       "home": "https://facebook.github.io/react-native/",
       "code": "https://github.com/facebook/react-native"
     },
-    "release": "0.55",
-    "mtime": 1528672748,
-    "db_size": 3068928
+    "release": "0.56",
+    "mtime": 1531082387,
+    "db_size": 3711481
   },
   {
     "name": "Redis",
@@ -2929,6 +3032,19 @@
   },
   {
     "name": "Sinon.JS",
+    "slug": "sinon~6",
+    "type": "sinon",
+    "links": {
+      "home": "http://sinonjs.org/",
+      "code": "https://github.com/sinonjs/sinon"
+    },
+    "version": "6",
+    "release": "6.1.3",
+    "mtime": 1531082038,
+    "db_size": 114130
+  },
+  {
+    "name": "Sinon.JS",
     "slug": "sinon~5",
     "type": "sinon",
     "links": {
@@ -3032,15 +3148,15 @@
     "name": "Support Tables",
     "slug": "browser_support_tables",
     "type": "support_tables",
-    "mtime": 1526251574,
-    "db_size": 27487667
+    "mtime": 1531082971,
+    "db_size": 28577389
   },
   {
     "name": "SVG",
     "slug": "svg",
     "type": "mdn",
-    "mtime": 1526251455,
-    "db_size": 2107181
+    "mtime": 1531081456,
+    "db_size": 2477035
   },
   {
     "name": "Symfony",
@@ -3192,6 +3308,18 @@
     "release": "1.8",
     "mtime": 1526244405,
     "db_size": 10841303
+  },
+  {
+    "name": "Terraform",
+    "slug": "terraform",
+    "type": "terraform",
+    "links": {
+      "home": "https://www.terraform.io/",
+      "code": "https://github.com/hashicorp/terraform"
+    },
+    "release": "0.11.7",
+    "mtime": 1531085140,
+    "db_size": 8289722
   },
   {
     "name": "Twig",
