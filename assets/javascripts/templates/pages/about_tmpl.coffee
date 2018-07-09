@@ -366,6 +366,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/knockout/knockout/master/LICENSE'
   ], [
+    'Koa',
+    '2018 Koa contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/koajs/koa/master/LICENSE'
+  ], [
     'Kotlin',
     '2010-2018 JetBrains s.r.o.',
     'Apache',
@@ -375,6 +380,11 @@ credits = [
     'Taylor Otwell',
     'MIT',
     'https://raw.githubusercontent.com/laravel/framework/master/LICENSE.txt'
+  ], [
+    'Leaflet',
+    '2010-2018 Vladimir Agafonkin<br>&copy; 2010-2011, CloudMade<br>Maps &copy; OpenStreetMap contributors.',
+    'BSD',
+    'https://raw.githubusercontent.com/Leaflet/Leaflet/master/LICENSE'
   ], [
     'Less',
     '2009-2016 The Core Less Team',
@@ -553,8 +563,8 @@ credits = [
   ], [
     'React, React Native, Flow, Relay',
     '2013-present Facebook Inc.',
-    'CC BY',
-    'https://raw.githubusercontent.com/reactjs/reactjs.org/master/LICENSE-DOCS.md'
+    'MIT',
+    'https://raw.githubusercontent.com/facebook/react/master/LICENSE'
   ], [
     'Redis',
     '2009-2018 Salvatore Sanfilippo',
@@ -640,6 +650,11 @@ credits = [
     '2018 The TensorFlow Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
+  ], [
+    'Terraform',
+    '2018 HashiCorp',
+    'MPL',
+    'https://raw.githubusercontent.com/hashicorp/terraform-website/master/LICENSE.md'
   ], [
     'Twig',
     '2009-2017 The Twig Team',

@@ -55,6 +55,7 @@ module Docs
         'Web Workers'         => 'Web Workers',
         'WebGL'               => 'WebGL',
         'WebRTC'              => 'WebRTC',
+        'WebUSB'              => 'WebUSB',
         'WebVR'               => 'WebVR' }
 
       TYPE_BY_NAME_STARTS_WITH = {
@@ -126,6 +127,7 @@ module Docs
         'URL'                 => 'URL',
         'VR'                  => 'WebVR',
         'WebSocket'           => 'Web Sockets',
+        'USB'                 => 'WebUSB',
         'window'              => 'Window',
         'Window'              => 'Window',
         'XMLHttpRequest'      => 'XMLHTTPRequest' }

@@ -2,7 +2,7 @@ module Docs
   class ReactNative < UrlScraper
     self.slug = 'react_native'
     self.type = 'react_native'
-    self.release = '0.55'
+    self.release = '0.56'
     self.base_url = 'https://facebook.github.io/react-native/docs/'
     self.root_path = 'getting-started.html'
     self.links = {

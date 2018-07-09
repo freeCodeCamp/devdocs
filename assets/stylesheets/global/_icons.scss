@@ -93,6 +93,7 @@
 ._icon-svg:before           { background-position: -5rem -5rem; }
 ._icon-marionette:before    { background-position: -6rem -5rem; }
 ._icon-jsdoc:before,
+._icon-koa:before,
 ._icon-mongoose:before      { background-position: -7rem -5rem; }
 ._icon-phpunit:before       { background-position: -8rem -5rem; }
 ._icon-nokogiri:before      { background-position: -9rem -5rem; @extend %darkIconFix !optional; }
@@ -170,3 +171,5 @@
 ._icon-homebrew:before      { background-position: 0 -3rem; @extend %doc-icon-2; }
 ._icon-jekyll:before        { background-position: -1rem -3rem; @extend %doc-icon-2; }
 ._icon-babel:before         { background-position: -2rem -3rem; @extend %doc-icon-2; }
+._icon-leaflet:before       { background-position: -3rem -3rem; @extend %doc-icon-2; }
+._icon-terraform:before     { background-position: -4rem -3rem; @extend %doc-icon-2; }

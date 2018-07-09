@@ -18,6 +18,11 @@ module Docs
       Licensed under the BSD License.
     HTML
 
+    version '6' do
+      self.release = '6.1.3'
+      self.base_url = "http://sinonjs.org/releases/v#{release}/"
+    end
+
     version '5' do
       self.release = '5.1.0'
       self.base_url = "http://sinonjs.org/releases/v#{release}/"

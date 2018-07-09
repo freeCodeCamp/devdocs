@@ -6,7 +6,7 @@ module Docs
       end
 
       def get_type
-        type = at_css('.navItemActive').ancestors('.navGroup').first.at_css('h3').content
+        type = at_css('.navListItemActive').ancestors('.navGroup').first.at_css('h3').content
 
         if type == 'Introduction'
           'Guides: Introduction'
