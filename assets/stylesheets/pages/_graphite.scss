@@ -1,6 +1,14 @@
 ._graphite {
   @extend %simple;
 
+  h1 {
+    @extend %lined-heading;
+  }
+
+  .section:first-child h1 {
+    margin-top: 0;
+  }
+
   dl > dt {
     @extend %note, %note-blue;
     padding: 1px 0.5rem 2px 0.5rem;
@@ -11,7 +19,6 @@
     code {
       font-weight: bold;
     }
-
     em {
       font-style: normal;
     }

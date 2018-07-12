@@ -13,7 +13,7 @@ module Docs
         entries = []
 
         # Sections
-        css('.section').each do |node|
+        css('.section > .section').each do |node|
           title = node.at_css('h2, h3')
 
           next if title.nil?
@@ -23,14 +23,13 @@ module Docs
           title['id'] = node['id']
           node.remove_attribute('id')
 
-          entry = [title.children[0].to_s, title['id']]
+          parent_title_selector = "parent::div[@class='section']/preceding::#{title.name == 'h2' ? 'h1' : 'h2'}"
 
-          # Separate sub-sections in additional types
-          if title.name == 'h3'
-            entry.push title.xpath('parent::div[@class="section"]/preceding::h2').last.children[0].to_s
-          end
-
-          entries << entry
+          entries << [
+            title.children[0].to_s,
+            title['id'],
+            title.xpath(parent_title_selector).last.children[0].to_s
+          ]
         end
 
         # Functions

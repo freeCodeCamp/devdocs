@@ -9,8 +9,8 @@ module Docs
 
     html_filters.push 'graphite/clean_html', 'graphite/entries'
 
-    options[:container] = '.document > div > .section'
-    options[:skip] = %w(releases.html who-is-using.html composer.html)
+    options[:container] = '.document > div'
+    options[:skip] = %w(releases.html who-is-using.html composer.html search.html py-modindex.html genindex.html)
 
     options[:attribution] = <<-HTML
       &copy; 2008-2012 Chris Davis; 2011-2016 The Graphite Project<br>
