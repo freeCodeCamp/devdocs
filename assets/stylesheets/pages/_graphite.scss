@@ -1,0 +1,19 @@
+._graphite {
+  @extend %simple;
+
+  dl > dt {
+    @extend %note, %note-blue;
+    padding: 1px 0.5rem 2px 0.5rem;
+    font-weight: bold;
+  }
+
+  dl.function > dt {
+    code {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: normal;
+    }
+  }
+}
