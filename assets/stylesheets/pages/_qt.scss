@@ -1,0 +1,63 @@
+._qt {
+  @extend %simple;
+
+  h1 {
+    margin-top: 0;
+    @extend %lined-heading;
+  }
+
+  // Home page
+  .landingicons {
+    .icons1of3 {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 1em 0;
+
+      @if $style == 'dark' {
+        &:nth-child(3) img {
+          filter: invert(1) hue-rotate(180deg) brightness(1.5)
+        }
+      }
+    }
+
+    h2 {
+      flex: 1;
+      margin: 0;
+      margin-left: 10px;
+    }
+
+    h2 + p {
+      width: 100%;
+      padding-left: 70px;
+    }
+
+    .centerAlign,
+    .centerAlign img { // Icon
+      width: 60px;
+      height: 60px;
+      margin: 0;
+    }
+  }
+
+  // Syntax highlighting
+  .pre {
+    .operator { @extend .token, .operator; }
+    .number { @extend .token, .number; }
+    .keyword { @extend .token, .keyword; }
+    .type { @extend .token, .function; }
+    .type a { color: inherit; }
+    .pun, .comment { @extend .token, .punctuation; }
+    .kwd, .preprocessor { @extend .token, .keyword; }
+    .str, .string { @extend .token, .string; }
+  }
+
+  // Function headers
+  h3.fn code {
+    @extend %label;
+    float: right;
+    font-size: .8em;
+    padding: 0;
+    margin-right: -.5em;
+  }
+}
