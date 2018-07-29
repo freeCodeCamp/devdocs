@@ -11,6 +11,7 @@ module Docs
         # Remove chapter and section numbers from title
         title_node = at_css('h1, h2, h3, h4, h5, h6')
         title_node.content = title_node.content.gsub(/(\d+\.?)+/, '').strip
+        title_node.name = 'h1'
 
         # Remove the "D. " from names like "D. Concept Index" and "D. Function Index"
         title_node.content = title_node.content[3..-1] if title_node.content.start_with?("D. ")
@@ -54,6 +55,16 @@ module Docs
         css('td[valign=top]').each do |node|
           link = node.at_css('a')
           node.children = link unless link.nil?
+        end
+
+        css('tt', 'code', 'table').remove_attr('class')
+
+        css('tt').each do |node|
+          node.name = 'code'
+        end
+
+        css('pre').each do |node|
+          node.content = node.content
         end
 
         doc
