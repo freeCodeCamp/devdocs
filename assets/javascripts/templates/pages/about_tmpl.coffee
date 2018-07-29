@@ -296,6 +296,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/godotengine/godot/master/LICENSE.txt'
   ], [
+    'Graphite',
+    '2008-2012 Chris Davis; 2011-2016 The Graphite Project',
+    'Apache',
+    'https://raw.githubusercontent.com/graphite-project/graphite-web/master/LICENSE'
+  ], [
     'Grunt',
     'GruntJS Team',
     'MIT',
