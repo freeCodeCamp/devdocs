@@ -571,6 +571,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/kriskowal/q/master/LICENSE'
   ], [
+    'Qt',
+    '2012-2018 The Qt Company Ltd',
+    'GFDL',
+    'https://doc.qt.io/qt-5/licensing.html'
+  ], [
     'Ramda',
     '2013-2016 Scott Sauyet and Michael Hurley',
     'MIT',
