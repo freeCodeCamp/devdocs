@@ -216,6 +216,11 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/d3/d3/master/LICENSE'
   ], [
+    'Dart',
+    '2012 the Dart project authors',
+    'CC BY-SA',
+    'https://creativecommons.org/licenses/by-sa/4.0/'
+  ], [
     'Django',
     'Django Software Foundation and individual contributors',
     'BSD',
