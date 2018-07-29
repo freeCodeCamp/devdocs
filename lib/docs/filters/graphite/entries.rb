@@ -34,7 +34,9 @@ module Docs
 
         # Functions
         css('dl.function > dt').each do |node|
-          entries << [node['data-name'], node['id'], 'List of functions']
+          name = node.at_css('.descname').content
+          name << '()'
+          entries << [name, node['id'], 'Functions']
         end
 
         entries
