@@ -1,0 +1,22 @@
+._bash {
+  // The page title is always the first element on the page, but not always the same type of element
+  // The exception is the homepage, where the links element comes first
+  > *:first-child:not(._links) {
+    @extend h1;
+    @extend %lined-heading;
+  }
+
+  dl > dt > code,
+  dl > dt > kbd {
+    @extend %note, %note-blue;
+    display: block;
+    padding: 1px 7px 2px 7px;
+    margin: 28px 0 14px 0;
+    font-weight: bold;
+    font-family: $baseFont;
+  }
+
+  th[align=left] {
+    border-left: 1px solid #d8d8d8;
+  }
+}

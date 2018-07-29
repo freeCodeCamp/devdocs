@@ -116,6 +116,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
   ], [
+    'Bash',
+    '2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.',
+    'GFDL',
+    'https://www.gnu.org/licenses/fdl-1.3.en.html'
+  ], [
     'Bluebird',
     '2013-2017 Petka Antonov',
     'MIT',
