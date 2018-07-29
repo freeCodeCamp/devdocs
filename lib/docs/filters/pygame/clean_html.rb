@@ -2,23 +2,21 @@ module Docs
   class Pygame
     class CleanHtmlFilter < Filter
       def call
-
         @doc = at_css '.body'
 
         if root_page?
           # remove unneeded stuff
           at_css('.modindex-jumpbox').remove
-          css('[role="navigation"],.pcap, .cap, .footer').each do |node|
-            node.remove
-          end
+          css('[role="navigation"],.pcap, .cap, .footer').remove
           # table -> list
           list = at_css('table')
           list.replace(list.children)
           list.name = 'ul'
           css('tr').each do |row|
             row.name = 'li'
-            row['class'] = ''
+            row.remove_attribute('class')
           end
+          at_css('h1').content = 'Pygame'
           return doc
         end
 
@@ -26,11 +24,7 @@ module Docs
         # .headerlink => ¶ after links
         # .toc => table of content
         # .tooltip-content => tooltips after links to functions
-        if toremove = css('table.toc.docutils, .headerlink, .tooltip-content')
-          toremove.each do |node|
-            node.remove
-          end
-        end
+        css('table.toc.docutils, .headerlink, .tooltip-content').remove
 
         # Remove wrapper .section
         section = at_css('.section')
@@ -43,7 +37,7 @@ module Docs
           pre = node.at_css('pre')
           node.replace(pre)
           # gets rid of the already existing syntax highlighting
-          pre.inner_html = pre.inner_text
+          pre.content = pre.content
           pre['class'] = 'language-python'
           pre['data-language'] = "python"
         end
@@ -95,6 +89,10 @@ module Docs
               header.add_child "<br>"
             end
           end
+        end
+
+        css('> dl', '> dl > dd', 'h1 code').each do |node|
+          node.before(node.children).remove
         end
 
         doc

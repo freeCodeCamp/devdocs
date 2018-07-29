@@ -546,6 +546,11 @@ credits = [
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
   ], [
+    'Pygame',
+    'Pygame Developpers',
+    'LGPLv2.1',
+    'https://raw.githubusercontent.com/pygame/pygame/master/LICENSE'
+  ], [
     'Python',
     '2001-2018 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
     'PSFL',

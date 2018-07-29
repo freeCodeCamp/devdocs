@@ -1,15 +1,8 @@
 module Docs
   class Pygame < UrlScraper
-
     self.type = 'simple'
-
-    self.release = 'v1.9.4.dev0'
-
-    self.initial_paths = ['py-modindex.html']
-    self.base_url = 'https://www.pygame.org/docs/'
+    self.release = '1.9.4'
     self.root_path = 'py-modindex.html'
-    self.initial_paths = []
-
     self.links = {
       home: 'https://www.pygame.org/',
       code: 'https://github.com/pygame/pygame'
@@ -20,7 +13,8 @@ module Docs
     options[:only_patterns] = [/ref\//]
 
     options[:attribution] = <<-HTML
-         &copy; Pygame Developpers.
+      &copy; Pygame Developpers.<br>
+      Licensed under the GNU LGPL License version 2.1.
     HTML
   end
 end
