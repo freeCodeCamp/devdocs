@@ -1,0 +1,63 @@
+._screeps {
+  @extend %simple;
+
+  h1.article-title {
+    @extend %lined-heading;
+  }
+
+  h2[id] {
+    margin-left: -1rem;
+    @extend %block-heading;
+  }
+
+  h3[id] {
+    @extend %note, %note-blue;
+    padding: 1px 0.5rem 2px 0.5rem;
+    margin-left: -1rem;
+  }
+
+  img[align="right"] {
+    padding-left: 10px;
+  }
+
+  table.minerals img {
+    vertical-align: middle;
+    padding-right: 3px;
+  }
+
+  .api-property {
+    .api-property__inherited {
+      text-align: right;
+    }
+
+    .api-property__type {
+      float: right;
+    }
+
+    .api-property__cpu {
+      float: right;
+
+      img {
+        width: 16px;
+        height: 16px;
+        object-fit: cover;
+        vertical-align: middle;
+      }
+
+      @for $i from 0 through 3 {
+        &.api-property__cpu--#{$i} img {
+          object-position: -16px * $i;
+        }
+      }
+
+      &.api-property__cpu--A img {
+        object-position: -64px;
+      }
+    }
+  }
+
+  .article-author {
+    margin-bottom: 5px;
+    font-style: italic;
+  }
+}
