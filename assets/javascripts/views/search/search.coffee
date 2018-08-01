@@ -115,7 +115,7 @@ class app.views.Search extends app.View
     return
 
   duckduckgo: =>
-    @externalSearch "https://duckduckgo.com/?q="
+    @externalSearch "https://duckduckgo.com/?t=devdocs&q="
     return
 
   onResults: (results) =>
