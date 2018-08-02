@@ -561,6 +561,11 @@ credits = [
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
   ], [
+    'Puppeteer',
+    '2017 Google Inc',
+    'Apache',
+    'https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/LICENSE'
+  ], [
     'Pygame',
     'Pygame Developpers',
     'LGPLv2.1',
