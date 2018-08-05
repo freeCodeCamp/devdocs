@@ -15,14 +15,6 @@ module Docs
         css('h3').each {|node| node.name = 'h2'}
         css('h4').each {|node| node.name = 'h3'}
 
-        css('pre').each do |node|
-          # Remove nested tags
-          node.content = node.content
-
-          # Add syntax highlighting
-          node['data-language'] = 'js'
-        end
-
         doc
       end
     end

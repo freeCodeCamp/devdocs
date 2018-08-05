@@ -9,10 +9,6 @@ module Docs
         css('h3').each do |node|
           name = node.content.split(': ').last
 
-          # Set the id to the id of the link in the header
-          # Also remove the "user-content-" part of the id to fix internal links
-          node['id'] = node.at_css('a')['id'].sub('user-content-', '')
-
           # Find all sub-items (all h4's between the current h3 and the next)
           current = node.next
           while !current.nil? && current.name != 'h3'
@@ -28,8 +24,6 @@ module Docs
               if current_name.include?('(')
                 current_name = current_name.split('(')[0] + '()'
               end
-
-              current['id'] = current.at_css('a')['id'].sub('user-content-', '')
 
               entries << [current_name, current['id'], name]
             end

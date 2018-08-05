@@ -1,6 +1,5 @@
 module Docs
-  class Puppeteer < UrlScraper
-    self.type = 'puppeteer'
+  class Puppeteer < Github
     self.release = '1.6.2'
     self.base_url = 'https://github.com/GoogleChrome/puppeteer/blob/v1.6.2/docs/api.md'
     self.links = {
