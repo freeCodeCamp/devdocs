@@ -4,7 +4,7 @@ module Docs
       def call
         # Move the title into the main content node in the v1 docs
         title = at_css('h1.title')
-        unless title.nil?
+        if title
           name = title.children.last.content.strip
           kind = title.at_css('.kind').content
           at_css('.main-content').prepend_child("<h1>#{name} #{kind}</h1>")
@@ -39,10 +39,25 @@ module Docs
           header.add_child node unless header.nil?
         end
 
+        css('section').each do |node|
+          if node['id'] && node.first_element_child
+            node.first_element_child['id'] ||= node['id']
+          end
+
+          node.before(node.children).remove
+        end
+
+        css('span').each do |node|
+          node.before(node.children).remove
+        end
+
         # Make code blocks detectable by Prism
         css('pre').each do |node|
           node['data-language'] = 'dart'
+          node.content = node.content
         end
+
+        css('.properties', '.property', '.callables', '.callable').remove_attr('class')
 
         doc
       end
