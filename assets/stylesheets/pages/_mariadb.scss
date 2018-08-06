@@ -1,0 +1,7 @@
+._mariadb {
+  @extend %simple;
+
+  .graybox {
+    @extend %note;
+  }
+}

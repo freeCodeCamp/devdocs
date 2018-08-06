@@ -411,6 +411,11 @@ credits = [
     'GFDL',
     'http://www.gnu.org/copyleft/fdl.html'
   ], [
+    'MariaDB',
+    '2018 MariaDB',
+    'CC BY-SA & GFDL',
+    'https://mariadb.com/kb/en/library/documentation/+license/'
+  ], [
     'Marionette.js',
     '2017 Muted Solutions, LLC',
     'MIT',
