@@ -70,6 +70,7 @@ class app.models.Entry extends app.Model
     'nginx': 'ngx'
     'numpy': 'np'
     'pandas': 'pd'
+    'perl': 'pl'
     'postgresql': 'pg'
     'python': 'py'
     'ruby.on.rails': 'ror'
