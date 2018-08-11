@@ -1,4 +1,3 @@
-$style: 'dark';
 $mediumScreen: '(max-width: 800px)';
 // TODO: convert uses of these to CSS variables
 $selectionText: #fff;
@@ -11,6 +10,8 @@ html.dark {
   --monoFont: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   --boldFontWeight: 500;
   --bolderFontWeight: 600;
+
+  --absolute: white;
 
   --maxWidth: 80rem;
   --headerHeight: 3rem;

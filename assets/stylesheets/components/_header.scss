@@ -151,11 +151,7 @@
     opacity: .42;
     @extend %svg-icon;
 
-    @if $style == 'dark' {
-      fill: white;
-    } @else {
-      fill: black;
-    }
+    fill: var(--absolute);
   }
 }
 
@@ -202,13 +198,9 @@
     top: .5rem;
     left: .375rem;
     @extend %svg-icon;
+    fill: var(--absolute);
   }
 
-  @if $style == 'dark' {
-    > svg { fill: white; }
-  } @else {
-    > svg { fill: black; }
-  }
   ._search-active > & { display: block; }
 }
 

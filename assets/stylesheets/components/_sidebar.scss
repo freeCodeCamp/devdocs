@@ -200,10 +200,8 @@
   width: 1rem;
   height: 1rem;
   cursor: pointer;
-  fill: black;
+  fill: var(--absolute);
   opacity: .4;
-
-  @if $style == 'dark' { fill: white; }
 
   &:hover { opacity: .65; }
 
