@@ -76,7 +76,7 @@
   box-shadow: inset -1px 0 var(--sidebarBorder);
   @extend %border-box;
 
-  @media #{$mediumScreen} { width: var(--sidebarMediumWidth); }
+  @include mobile { width: var(--sidebarMediumWidth); }
 
   ._sidebar > & { min-height: 100%; }
 
@@ -311,7 +311,7 @@
           transform: translate3d(0, 0, 0);
   @extend %border-box;
 
-  @media #{$mediumScreen} { min-width: var(--sidebarMediumWidth); }
+  @include mobile { min-width: var(--sidebarMediumWidth); }
 
   > ._list-text { display: inline; }
 

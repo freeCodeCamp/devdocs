@@ -3,7 +3,7 @@ html {
   font-size: 100%;
   background: var(--documentBackground);
 
-  @media #{$mediumScreen} { font-size: 93.75%; }
+  @include mobile { font-size: 93.75%; }
 
   @include print { background: none; }
   @import 'global/print';

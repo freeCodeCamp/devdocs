@@ -11,7 +11,7 @@
   background: var(--pathBackground);
   box-shadow: inset 0 1px var(--pathBorder);
 
-  @media #{$mediumScreen} { left: var(--sidebarMediumWidth); }
+  @include mobile { left: var(--sidebarMediumWidth); }
 
   ._sidebar-hidden & { left: 0; }
 

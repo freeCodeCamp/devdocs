@@ -10,7 +10,7 @@
   pointer-events: none;
   @extend %border-box;
 
-  @media #{$mediumScreen} { margin-left: var(--sidebarMediumWidth); }
+  @include mobile { margin-left: var(--sidebarMediumWidth); }
 
   ._sidebar-hidden & { margin-left: 0; }
   body:not(._native-scrollbars) & { -webkit-margin-end: -1px; }

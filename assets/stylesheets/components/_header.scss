@@ -17,7 +17,7 @@
   @extend %border-box;
   @extend %user-select-none;
 
-  @media #{$mediumScreen} { width: var(--sidebarMediumWidth); }
+  @include mobile { width: var(--sidebarMediumWidth); }
 }
 
 ._header-left {
