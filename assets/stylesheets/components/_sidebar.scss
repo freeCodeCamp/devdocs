@@ -347,7 +347,7 @@
   font-weight: var(--bolderFontWeight);
   color: var(--textColorLight);
   text-transform: uppercase;
-  background: linear-gradient(to bottom, $sidebarBackground, $sidebarBackground 75%, rgba($sidebarBackground, 0));
+  background: linear-gradient(to bottom, var(--sidebarBackground), var(--sidebarBackground) 75%, var(--transparentSidebarBackground));
   cursor: default;
 }
 

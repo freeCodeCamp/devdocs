@@ -1,8 +1,3 @@
-// TODO: convert uses of these to CSS variables
-$sidebarBackground: #24282a;
-$headerBackground: #1c1c1c;
-$contentBackground: #33373a;
-
 html.dark {
   --baseFont: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
   --monoFont: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
@@ -17,7 +12,7 @@ html.dark {
   --sidebarMediumWidth: 16rem;
 
   --documentBackground: #222;
-  --contentBackground: $contentBackground;
+  --contentBackground: #33373a;
 
   --textColor: #cbd0d0;
   --textColorLight: #9da5ad;
@@ -43,10 +38,12 @@ html.dark {
   --linkColorHover: white;
   --linkTextDecoration: underline;
 
-  --headerBackground: $headerBackground;
+  --headerBackground: #1c1c1c;
   --headerBorder: #000;
+  --searchTagBackground: darken(#1c1c1c, 5%);
 
-  --sidebarBackground: $sidebarBackground;
+  --sidebarBackground: #24282a;
+  --transparentSidebarBackground: rgba(#24282a, 0);
   --sidebarBorder: #000;
 
   --scrollbarColor: #6c6c6f;

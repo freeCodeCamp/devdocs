@@ -213,7 +213,7 @@
   max-width: 50%;
   font-size: .8125rem;
   color: var(--textColorLight);
-  background: darken($headerBackground, 5%);
+  background: var(--searchTagBackground);
   border-radius: 2px;
   @extend %truncate-text;
 }
