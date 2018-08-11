@@ -1,5 +1,4 @@
 // TODO: convert uses of these to CSS variables
-$selectionText: #fff;
 $sidebarBackground: #f9f9f9;
 $headerBackground: #eee;
 $contentBackground: #fff;
@@ -36,7 +35,8 @@ html:not(.dark) {
 
   --selectionBackground: #398df0;
   --selectionBorder: #196fc2;
-  --selectionText: $selectionText;
+  --selectionText: #fff;
+  --transparentSelectionText: rgba(255, 255, 255, 0.9);
 
   --highlightBackground: #fffdcd;
 

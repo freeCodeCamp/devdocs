@@ -273,9 +273,9 @@
     left: .75rem;
     width: .75rem;
     height: 1px;
-    background: rgba($selectionText, .9);
-    box-shadow: 0 -3px rgba($selectionText, .9), // top line
-                0 3px rgba($selectionText, .9);  // bottom line
+    background: var(--transparentSelectionText);
+    box-shadow: 0 -3px var(--transparentSelectionText), // top line
+                0 3px var(--transparentSelectionText);  // bottom line
   }
 }
 
