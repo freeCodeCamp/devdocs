@@ -23,7 +23,7 @@
 ._fail-title {
   margin: 0 0 1rem;
   font-size: 1rem;
-  font-weight: $boldFontWeight;
+  font-weight: var(--boldFontWeight);
 }
 
 ._fail-text, ._fail-list {

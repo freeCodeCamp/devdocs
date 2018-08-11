@@ -3,7 +3,7 @@
 .token.doctype,
 .token.cdata,
 .token.punctuation {
-  color: $textColorLight;
+  color: var(--textColorLight);
 }
 
 .namespace {
@@ -79,7 +79,7 @@
 
 .token.important,
 .token.bold {
-  font-weight: $boldFontWeight;
+  font-weight: var(--boldFontWeight);
 }
 
 .token.italic {

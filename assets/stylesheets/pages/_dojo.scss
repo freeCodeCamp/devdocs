@@ -1,5 +1,5 @@
 ._dojo {
   @extend %simple;
 
-  .jsdoc-inheritance { color: $textColorLight; }
+  .jsdoc-inheritance { color: var(--textColorLight); }
 }
