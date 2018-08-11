@@ -1,94 +1,76 @@
-$baseFont: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
-$monoFont: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-$boldFontWeight: 500;
-$bolderFontWeight: 600;
+html._theme-dark {
+  --absolute: white;
 
-$style: 'dark';
+  --documentBackground: #222;
+  --contentBackground: #33373a;
 
-$maxWidth: 80rem;
-$headerHeight: 3rem;
-$sidebarWidth: 20rem;
-$sidebarMediumWidth: 16rem;
+  --textColor: #cbd0d0;
+  --textColorLight: #9da5ad;
+  --textColorLighter: #77787a;
 
-$documentBackground: #222;
-$contentBackground: #33373a;
+  --externalsBackground: #fff;
 
-$externalsBackground: #fff;
+  --inputFocusBorder: transparent;
 
-$textColor: #cbd0d0;
-$textColorLight: #9da5ad;
-$textColorLighter: #77787a;
-$textColorRed: #f44336;
+  --focusBackground: #3f4042;
+  --focusBorder: #000;
+  --focusText: #f7f2f2;
 
-$inputFocusBorder: false;
+  --loadingText: #5d6164;
 
-$focusBackground: #3f4042;
-$focusBorder: #000;
-$focusText: #f7f2f2;
+  --selectionBackground: #007acc;
+  --selectionBorder: #000;
 
-$loadingText: #5d6164;
-$splashText: $loadingText;
+  --highlightBackground: #64675f;
 
-$selectionBackground: #007acc;
-$selectionBorder: #000;
-$selectionText: #fff;
+  --linkColor: var(--textColor);
+  --linkColorHover: white;
+  --linkTextDecoration: underline;
 
-$highlightBackground: #64675f;
+  --headerBackground: #1c1c1c;
+  --headerBorder: #000;
+  --searchTagBackground: #{darken(#1c1c1c, 5%)};
+  --searchBorder: #{darken(#000, 2%)};
 
-$linkColor: $textColor;
-$linkColorHover: white;
-$linkTextDecoration: underline;
+  --sidebarBackground: #24282a;
+  --transparentSidebarBackground: #{rgba(#24282a, 0)};
+  --sidebarBorder: #000;
 
-$headerBackground: #1c1c1c;
-$headerBorder: #000;
+  --scrollbarColor: #6c6c6f;
+  --scrollbarColorHover: #949697;
 
-$sidebarBackground: #24282a;
-$sidebarBorder: #000;
+  --pathBackground: var(--headerBackground);
+  --pathBorder: var(--headerBorder);
 
-$scrollbarColor: #6c6c6f;
-$scrollbarColorHover: #949697;
+  --noticeBackground: var(--sidebarBackground);
+  --noticeBorder: var(--sidebarBorder);
 
-$pathBackground: $headerBackground;
-$pathBorder: $headerBorder;
+  --boxBackground: var(--sidebarBackground);
+  --boxBorder: var(--headerBorder);
+  --boxBorderLight: var(--headerBorder);
+  --boxHeaderColor: #dbe4e4;
+  --boxHeaderBackground: var(--sidebarBackground);
 
-$noticeBackground: $sidebarBackground;
-$noticeBorder: $sidebarBorder;
+  --noteBackground: #45474b;
+  --noteBorder: #000;
 
-$boxBackground: $sidebarBackground;
-$boxBorder: $headerBorder;
-$boxBorderLight: $headerBorder;
-$boxHeaderColor: #dbe4e4;
-$boxHeaderBackground: $sidebarBackground;
+  --noteGreenBackground: #284a2a;
+  --noteGreenBorder: #000;
 
-$noteBackground: #45474b;
-$noteBorder: #000;
+  --noteBlueBackground: #2a4151;
+  --noteBlueBorder: #000;
 
-$noteGreenBackground: #284a2a;
-$noteGreenBorder: #000;
+  --noteOrangeBackground: #563322;
+  --noteOrangeBorder: #000;
 
-$noteBlueBackground: #2a4151;
-$noteBlueBorder: #000;
+  --noteRedBackground: #603033;
+  --noteRedBorder: #000;
 
-$noteOrangeBackground: #563322;
-$noteOrangeBorder: #000;
+  --labelBackground: var(--boxBackground);
 
-$noteRedBackground: #603033;
-$noteRedBorder: #000;
+  --notifBackground: #{rgba(#555, .95)};
+  --notifBorder: 1px solid #000;
 
-$labelBackground: $boxBackground;
-
-$notifBackground: rgba(#555, .95);
-$notifBorder: 1px solid #000;
-$notifColor: #fff;
-$notifColorLight: #ccc;
-
-$tipBackground: $notifBackground;
-$tipBorder: $notifBorder;
-
-$mediumScreen: '(max-width: 800px)';
-
-$contentZ: 1;
-$sidebarZ: 2;
-$headerZ: 3;
-$noticeZ: 4;
-$hoverZ: 5;
+  --tipBackground: var(--notifBackground);
+  --tipBorder: var(--notifBorder);
+}

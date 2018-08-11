@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="_booting">
+<html lang="en" class="_booting _theme-<%= app_theme %>">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -11,7 +11,7 @@
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" type="image/x-icon" href="<%= App.cdn_origin %>/favicon.ico">
   <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Search DevDocs">
-  <link rel="stylesheet" href="<%= main_stylesheet_path %>" data-alt="<%= alternate_stylesheet_path %>">
+  <%= stylesheet_tag 'application' %>
 </head>
 <body<%= %( class="#{app_layout}") if app_layout %> data-doc="<%= CGI::escape_html @doc.to_json %>">
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>

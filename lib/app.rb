@@ -196,28 +196,12 @@ class App < Sinatra::Application
       @@manifest_asset_urls ||= [
         javascript_path('application', asset_host: false),
         stylesheet_path('application'),
-        stylesheet_path('application-dark'),
         image_path('docs-1.png'),
         image_path('docs-1@2x.png'),
         image_path('docs-2.png'),
         image_path('docs-2@2x.png'),
         asset_path('docs.js')
       ]
-    end
-
-    def main_stylesheet_path
-      stylesheet_paths[dark_theme? ? :dark : :default]
-    end
-
-    def alternate_stylesheet_path
-      stylesheet_paths[dark_theme? ? :default : :dark]
-    end
-
-    def stylesheet_paths
-      @@stylesheet_paths ||= {
-        default: stylesheet_path('application'),
-        dark: stylesheet_path('application-dark')
-      }
     end
 
     def app_size

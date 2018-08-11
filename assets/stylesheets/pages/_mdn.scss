@@ -7,7 +7,7 @@
     > span {
       display: block;
       font-size: 1rem;
-      font-weight: $boldFontWeight;
+      font-weight: var(--boldFontWeight);
     }
 
     ul, ol {
@@ -42,7 +42,7 @@
   > .note {
     em {
       font-style: normal;
-      font-weight: $boldFontWeight;
+      font-weight: var(--boldFontWeight);
     }
 
     > ul { margin: 1em 0; }
@@ -93,7 +93,7 @@
   dt > strong > code, // HTML element attribute
   dl > dt > code {    // CSS property value, Javascript function argument
     font-family: inherit;
-    font-weight: $boldFontWeight;
+    font-weight: var(--boldFontWeight);
     font-size: inherit;
   }
 
