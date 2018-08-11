@@ -4,9 +4,8 @@ $selectionText: #fff;
 $sidebarBackground: #f9f9f9;
 $headerBackground: #eee;
 $contentBackground: #fff;
-$inputFocusBorder: #35b5f4;
 
-html {
+html:not(.dark) {
   --baseFont: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
   --monoFont: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   --boldFontWeight: 500;
@@ -27,7 +26,7 @@ html {
   --textColorLighter: #888;
   --textColorRed: #f44336;
 
-  --inputFocusBorder: $inputFocusBorder;
+  --inputFocusBorder: #35b5f4;
 
   --focusBackground: #e5e5e5;
   --focusBorder: #d4d4d4;

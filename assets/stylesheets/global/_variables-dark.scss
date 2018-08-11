@@ -4,7 +4,7 @@ $selectionText: #fff;
 $sidebarBackground: #24282a;
 $headerBackground: #1c1c1c;
 $contentBackground: #33373a;
-$inputFocusBorder: false;
+
 html.dark {
   --baseFont: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
   --monoFont: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
@@ -26,7 +26,7 @@ html.dark {
   --textColorLighter: #77787a;
   --textColorRed: #f44336;
 
-  --inputFocusBorder: $inputFocusBorder;
+  --inputFocusBorder: transparent;
 
   --focusBackground: #3f4042;
   --focusBorder: #000;

@@ -169,10 +169,8 @@
 
   &:focus {
     outline: 0;
-    @if $inputFocusBorder {
-      border-color: var(--inputFocusBorder);
-      box-shadow: 0 0 1px var(--inputFocusBorder);
-    }
+    border-color: var(--inputFocusBorder);
+    box-shadow: 0 0 1px var(--inputFocusBorder);
   }
 
   &[disabled] {
