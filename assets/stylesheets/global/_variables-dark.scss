@@ -1,15 +1,5 @@
 html.dark {
-  --baseFont: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
-  --monoFont: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-  --boldFontWeight: 500;
-  --bolderFontWeight: 600;
-
   --absolute: white;
-
-  --maxWidth: 80rem;
-  --headerHeight: 3rem;
-  --sidebarWidth: 20rem;
-  --sidebarMediumWidth: 16rem;
 
   --documentBackground: #222;
   --contentBackground: #33373a;
@@ -17,7 +7,6 @@ html.dark {
   --textColor: #cbd0d0;
   --textColorLight: #9da5ad;
   --textColorLighter: #77787a;
-  --textColorRed: #f44336;
 
   --inputFocusBorder: transparent;
 
@@ -26,12 +15,9 @@ html.dark {
   --focusText: #f7f2f2;
 
   --loadingText: #5d6164;
-  --splashText: var(--loadingText);
 
   --selectionBackground: #007acc;
   --selectionBorder: #000;
-  --selectionText: #fff;
-  --transparentSelectionText: rgba(255, 255, 255, 0.9);
 
   --highlightBackground: #64675f;
 
@@ -81,15 +67,7 @@ html.dark {
 
   --notifBackground: rgba(#555, .95);
   --notifBorder: 1px solid #000;
-  --notifColor: #fff;
-  --notifColorLight: #ccc;
 
   --tipBackground: var(--notifBackground);
   --tipBorder: var(--notifBorder);
-
-  --contentZ: 1;
-  --sidebarZ: 2;
-  --headerZ: 3;
-  --noticeZ: 4;
-  --hoverZ: 5;
 }
