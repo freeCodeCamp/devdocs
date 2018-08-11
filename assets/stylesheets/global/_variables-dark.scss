@@ -26,11 +26,12 @@ html.dark {
   --focusText: #f7f2f2;
 
   --loadingText: #5d6164;
-  --splashText:   --loadingText;
+  --splashText: var(--loadingText);
 
   --selectionBackground: #007acc;
   --selectionBorder: #000;
-  --selectionText: rgba(255, 255, 255, 0.9);
+  --selectionText: #fff;
+  --transparentSelectionText: rgba(255, 255, 255, 0.9);
 
   --highlightBackground: #64675f;
 
