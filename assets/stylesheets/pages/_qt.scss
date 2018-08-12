@@ -1,0 +1,9 @@
+._qt {
+  @extend %simple;
+
+  // Function headers
+  h3.fn > code {
+    float: right;
+    color: var(--textColorLight);
+  }
+}
