@@ -27,11 +27,11 @@ html:not(.dark) {
 
   --headerBackground: #eee;
   --headerBorder: #d7d7d7;
-  --searchTagBackground: darken(#eee, 5%);
-  --searchBorder: darken(#d7d7d7, 2%)
+  --searchTagBackground: #{darken(#eee, 5%)};
+  --searchBorder: #{darken(#d7d7d7, 2%)};
 
   --sidebarBackground: #f9f9f9;
-  --transparentSidebarBackground: rgba(#f9f9f9, 0);
+  --transparentSidebarBackground: #{rgba(#f9f9f9, 0)};
   --sidebarBorder: #e1e1e1;
 
   --scrollbarColor: #ccc;
@@ -66,9 +66,9 @@ html:not(.dark) {
 
   --labelBackground: #f4f4f4;
 
-  --notifBackground: rgba(#333, .85);
+  --notifBackground: #{rgba(#333, .85)};
   --notifBorder: none;
 
-  --tipBackground: rgba(#fffdcd, .95);
+  --tipBackground: #{rgba(#fffdcd, .95)};
   --tipBorder: 1px solid #e7dca9;
 }

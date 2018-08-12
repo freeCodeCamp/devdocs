@@ -27,11 +27,11 @@ html.dark {
 
   --headerBackground: #1c1c1c;
   --headerBorder: #000;
-  --searchTagBackground: darken(#1c1c1c, 5%);
-  --searchBorder: darken(#000, 2%)
+  --searchTagBackground: #{darken(#1c1c1c, 5%)};
+  --searchBorder: #{darken(#000, 2%)};
 
   --sidebarBackground: #24282a;
-  --transparentSidebarBackground: rgba(#24282a, 0);
+  --transparentSidebarBackground: #{rgba(#24282a, 0)};
   --sidebarBorder: #000;
 
   --scrollbarColor: #6c6c6f;
@@ -66,7 +66,7 @@ html.dark {
 
   --labelBackground: var(--boxBackground);
 
-  --notifBackground: rgba(#555, .95);
+  --notifBackground: #{rgba(#555, .95)};
   --notifBorder: 1px solid #000;
 
   --tipBackground: var(--notifBackground);
