@@ -94,6 +94,7 @@ html._theme-dark {
 ._icon-marionette:before    { background-position: -6rem -5rem; }
 ._icon-jsdoc:before,
 ._icon-koa:before,
+._icon-graphite:before,
 ._icon-mongoose:before      { background-position: -7rem -5rem; }
 ._icon-phpunit:before       { background-position: -8rem -5rem; }
 ._icon-nokogiri:before      { background-position: -9rem -5rem; @extend %darkIconFix !optional; }
@@ -173,3 +174,5 @@ html._theme-dark {
 ._icon-babel:before         { background-position: -2rem -3rem; @extend %doc-icon-2; }
 ._icon-leaflet:before       { background-position: -3rem -3rem; @extend %doc-icon-2; }
 ._icon-terraform:before     { background-position: -4rem -3rem; @extend %doc-icon-2; }
+._icon-pygame:before        { background-position: -5rem -3rem; @extend %doc-icon-2; }
+._icon-bash:before          { background-position: -6rem -3rem; @extend %doc-icon-2; }

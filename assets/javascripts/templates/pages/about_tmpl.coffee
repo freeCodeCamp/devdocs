@@ -116,6 +116,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
   ], [
+    'Bash',
+    '2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.',
+    'GFDL',
+    'https://www.gnu.org/licenses/fdl-1.3.en.html'
+  ], [
     'Bluebird',
     '2013-2017 Petka Antonov',
     'MIT',
@@ -290,6 +295,11 @@ credits = [
     '2014-2018 Juan Linietsky, Ariel Manzur, Godot Engine contributors',
     'MIT',
     'https://raw.githubusercontent.com/godotengine/godot/master/LICENSE.txt'
+  ], [
+    'Graphite',
+    '2008-2012 Chris Davis<br>&copy; 2011-2016 The Graphite Project',
+    'Apache',
+    'https://raw.githubusercontent.com/graphite-project/graphite-web/master/LICENSE'
   ], [
     'Grunt',
     'GruntJS Team',
@@ -545,6 +555,11 @@ credits = [
     '1996-2018 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
+  ], [
+    'Pygame',
+    'Pygame Developpers',
+    'LGPLv2.1',
+    'https://raw.githubusercontent.com/pygame/pygame/master/LICENSE'
   ], [
     'Python',
     '2001-2018 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',

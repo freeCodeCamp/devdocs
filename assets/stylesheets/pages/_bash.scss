@@ -1,0 +1,12 @@
+._bash {
+  dl > dt > code,
+  dl > dt > kbd {
+    @extend %block-label, %label-blue;
+  }
+
+  th[align=left] {
+    border-left: 1px solid var(--boxBorder);
+  }
+
+  code { @extend %label; }
+}
