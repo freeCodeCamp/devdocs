@@ -12,7 +12,7 @@ module Docs
     html_filters.push 'qt/entries', 'qt/clean_html'
 
     options[:container] = '.main'
-
+    options[:max_image_size] = 156_000
     options[:skip_patterns] = [
       # License, copyright attributions
       /3rdparty/,
