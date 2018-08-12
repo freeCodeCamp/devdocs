@@ -164,7 +164,7 @@
   font-size: .875rem;
   background: var(--contentBackground);
   border: 1px solid;
-  border-color: darken(var(--headerBorder), 2%);
+  border-color: var(--searchBorder);
   border-radius: 3px;
 
   &:focus {
