@@ -30,7 +30,7 @@
   <link rel="apple-touch-icon" sizes="152x152" href="<%= App.cdn_origin %>/images/apple-icon-152.png">
   <link rel="apple-touch-icon" sizes="160x160" href="<%= App.cdn_origin %>/images/apple-icon-160.png">
   <link rel="mask-icon" href="<%= App.cdn_origin %>/images/webkit-mask-icon.svg" color="#398df0">
-  <link rel="stylesheet" href="<%= main_stylesheet_path %>" data-alt="<%= alternate_stylesheet_path %>">
+  <%= stylesheet_tag 'application' %>
 </head>
 <body<%= %( class="#{app_layout}") if app_layout %>>
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
