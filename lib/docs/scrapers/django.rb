@@ -34,6 +34,12 @@ module Docs
       Licensed under the BSD License.
     HTML
 
+    version '2.1' do
+      self.release = '2.1.0'
+      self.dir = '/Users/Thibaut/DevDocs/Docs/Django21'
+      self.base_url = 'https://docs.djangoproject.com/en/2.1/'
+    end
+
     version '2.0' do
       self.release = '2.0.7'
       self.dir = '/Users/Thibaut/DevDocs/Docs/Django20'
