@@ -1,8 +1,8 @@
 module Docs
   class Jasmine < UrlScraper
     self.type = 'jasmine'
-    self.release = '3.1.0'
-    self.base_url = 'https://jasmine.github.io/api/3.0/'
+    self.release = '3.2.1'
+    self.base_url = 'https://jasmine.github.io/api/3.2/'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://jasmine.github.io/',
