@@ -1,7 +1,7 @@
 module Docs
   class Yarn < UrlScraper
     self.type = 'yarn'
-    self.release = '1.7.0'
+    self.release = '1.9.4'
     self.base_url = 'https://yarnpkg.com/en/docs/'
     self.links = {
       home: 'https://yarnpkg.com/',
