@@ -167,7 +167,7 @@ credits = [
     'https://github.com/clojure/clojure/blob/master/epl-v10.html'
   ], [
     'CMake',
-    '2000-2017 Kitware, Inc. and Contributors',
+    '2000-2018 Kitware, Inc. and Contributors',
     'BSD',
     'https://cmake.org/licensing/'
   ], [
