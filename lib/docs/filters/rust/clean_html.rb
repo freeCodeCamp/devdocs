@@ -5,7 +5,7 @@ module Docs
         puts subpath if at_css('#versioninfo')
 
         if slug.start_with?('book') ||  slug.start_with?('reference')
-          @doc = at_css('#content')
+          @doc = at_css('#content main')
         elsif slug == 'error-index'
           css('.error-undescribed').remove
 
@@ -30,7 +30,7 @@ module Docs
         css('.rusttest', '.test-arrow', 'hr').remove
 
         css('a.header').each do |node|
-          node.first_element_child['id'] = node['name']
+          node.first_element_child['id'] = node['name'] || node['id']
           node.before(node.children).remove
         end
 
@@ -61,6 +61,9 @@ module Docs
           node.content = node.content
           node['data-language'] = 'rust' if node['class'] && node['class'].include?('rust')
         end
+
+        doc.first_element_child.name = 'h1' if doc.first_element_child.name = 'h2'
+        at_css('h1').content = 'Rust Documentation' if root_page?
 
         doc
       end
