@@ -12,9 +12,29 @@ module Docs
       Licensed under the MIT License.
     HTML
 
+    version '1.0' do
+      self.release = '1.0.0'
+      self.base_url = "https://docs.julialang.org/en/v#{release}/"
+      self.type = 'julia'
+
+      html_filters.push 'julia/entries', 'julia/clean_html'
+
+      options[:container] = '#docs'
+    end
+
+    version '0.7' do
+      self.release = '0.7.0'
+      self.base_url = "https://docs.julialang.org/en/v#{release}/"
+      self.type = 'julia'
+
+      html_filters.push 'julia/entries', 'julia/clean_html'
+
+      options[:container] = '#docs'
+    end
+
     version '0.6' do
       self.release = '0.6.2'
-      self.base_url = 'https://docs.julialang.org/en/release-0.6/'
+      self.base_url = "https://docs.julialang.org/en/v#{release}/"
       self.type = 'julia'
 
       html_filters.push 'julia/entries', 'julia/clean_html'
@@ -24,7 +44,7 @@ module Docs
 
     version '0.5' do
       self.release = '0.5.2'
-      self.base_url = 'https://docs.julialang.org/en/release-0.5/'
+      self.base_url = "https://docs.julialang.org/en/v#{release}/"
       self.type = 'sphinx_simple'
 
       html_filters.push 'julia/entries_sphinx', 'julia/clean_html_sphinx', 'sphinx/clean_html'
