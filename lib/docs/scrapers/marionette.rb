@@ -18,6 +18,13 @@ module Docs
       Licensed under the MIT License.
     HTML
 
+    version '4' do
+      self.release = '4.0.0'
+      self.base_url = "https://marionettejs.com/docs/v#{release}/"
+
+      html_filters.push 'marionette/entries_v3'
+    end
+
     version '3' do
       self.release = '3.5.1'
       self.base_url = "https://marionettejs.com/docs/v#{release}/"
