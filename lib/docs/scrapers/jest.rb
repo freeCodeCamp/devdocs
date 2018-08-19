@@ -1,7 +1,7 @@
 module Docs
   class Jest < UrlScraper
     self.type = 'jest'
-    self.release = '23.3.0'
+    self.release = '23.5.0'
     self.base_url = 'https://jestjs.io/docs/en/'
     self.root_path = 'getting-started'
     self.links = {
