@@ -5,7 +5,7 @@
 
   h3 > .access {
     float: right;
-    color: $textColorLight;
+    color: var(--textColorLight);
     font-weight: normal;
   }
 
@@ -15,6 +15,6 @@
   }
 
   p.github-link {
-    color: $textColorLight;
+    color: var(--textColorLight);
   }
 }

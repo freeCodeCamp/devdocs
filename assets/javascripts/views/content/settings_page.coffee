@@ -24,12 +24,10 @@ class app.views.SettingsPage extends app.View
     'Preferences'
 
   toggleDark: (enable) ->
-    css = $('link[rel="stylesheet"][data-alt]')
-    alt = css.getAttribute('data-alt')
-    css.setAttribute('data-alt', css.getAttribute('href'))
-    css.setAttribute('href', alt)
+    html = document.documentElement
+    html.classList.toggle('_theme-default')
+    html.classList.toggle('_theme-dark')
     app.settings.set('dark', !!enable)
-    app.appCache?.updateInBackground()
     return
 
   toggleLayout: (layout, enable) ->

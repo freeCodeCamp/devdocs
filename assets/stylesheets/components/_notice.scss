@@ -1,15 +1,15 @@
 ._notice {
   position: absolute;
-  z-index: $noticeZ;
+  z-index: var(--noticeZ);
   bottom: 0;
-  left: $sidebarWidth;
+  left: var(--sidebarWidth);
   right: 0;
   height: 2.5rem;
   padding: 0 1.25rem;
-  background: $noticeBackground;
-  box-shadow: inset 0 1px $noticeBorder;
+  background: var(--noticeBackground);
+  box-shadow: inset 0 1px var(--noticeBorder);
 
-  @media #{$mediumScreen} { left: $sidebarMediumWidth; }
+  @include mobile { left: var(--sidebarMediumWidth); }
 
   ._sidebar-hidden & { left: 0; }
 

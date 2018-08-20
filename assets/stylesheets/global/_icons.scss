@@ -23,8 +23,8 @@
   %doc-icon-2 { background-image: image-url('docs-2@2x.png') !important; }
 }
 
-%darkIconFix {
-  @if $style == 'dark' {
+html._theme-dark {
+  %darkIconFix {
     filter: invert(100%) grayscale(100%);
     -webkit-filter: invert(100%) grayscale(100%);
   }

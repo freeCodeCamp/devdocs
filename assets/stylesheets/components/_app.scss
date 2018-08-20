@@ -1,6 +1,6 @@
-html._booting { background: $contentBackground; }
+html._booting { background: var(--contentBackground); }
 body._max-width { background: none; }
-html._booting body._max-width { background: $documentBackground; }
+html._booting body._max-width { background: var(--documentBackground); }
 
 ._app {
   position: relative;
@@ -15,8 +15,8 @@ html._booting body._max-width { background: $documentBackground; }
 
   ._max-width & {
     margin: 0 auto;
-    max-width: $maxWidth;
-    background: $contentBackground;
-    box-shadow: 1px 0 $headerBorder, -1px 0 $headerBorder;
+    max-width: var(--maxWidth);
+    background: var(--contentBackground);
+    box-shadow: 1px 0 var(--headerBorder), -1px 0 var(--headerBorder);
   }
 }
