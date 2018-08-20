@@ -311,6 +311,11 @@ credits = [
     'MIT',
     'https://github.com/gruntjs/grunt-docs/blob/master/package.json#L10'
   ], [
+    'Handlebars',
+    '2011-2017 Yehuda Katz',
+    'MIT',
+    'https://raw.githubusercontent.com/wycats/handlebars.js/master/LICENSE'
+  ], [
     'Haskell',
     'The University of Glasgow',
     'BSD',
