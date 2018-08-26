@@ -33,17 +33,8 @@
     }
   }
 
-  .method-description { position: relative; }
-
   .method-source-code {
     display: none;
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: -1em;
-    right: 0;
-    background: var(--contentBackground);
-    box-shadow: 0 1em 1em 1em var(--contentBackground);
 
     > pre { margin: 0; }
   }
