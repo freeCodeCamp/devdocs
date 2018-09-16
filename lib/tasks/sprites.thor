@@ -13,32 +13,42 @@ class SpritesCLI < Thor
   desc 'generate [--verbose]', 'Generate the documentation icon spritesheets'
   option :verbose, type: :boolean
   def generate
-    icons = get_icons
-    icons_per_row = Math.sqrt(icons.length).ceil
+    items = get_items
+    items_with_icons = items.select {|item| item[:has_icons]}
+    items_without_icons = items.select {|item| !item[:has_icons]}
+    icons_per_row = Math.sqrt(items_with_icons.length).ceil
 
     bg_color = get_sidebar_background
 
-    icons.each_with_index do |icon, index|
-      icon[:row] = (index / icons_per_row).floor
-      icon[:col] = index - icon[:row] * icons_per_row
+    items_with_icons.each_with_index do |item, index|
+      if item[:has_icons]
+        item[:row] = (index / icons_per_row).floor
+        item[:col] = index - item[:row] * icons_per_row
 
-      icon[:icon_16] = get_icon(icon[:path_16], 16)
-      icon[:icon_32] = get_icon(icon[:path_32], 32)
+        item[:icon_16] = get_icon(item[:path_16], 16)
+        item[:icon_32] = get_icon(item[:path_32], 32)
 
-      icon[:dark_icon_fix] = needs_dark_icon_fix(icon[:icon_32], bg_color)
+        item[:dark_icon_fix] = needs_dark_icon_fix(item[:icon_32], bg_color)
+      end
     end
 
-    log_details(icons, icons_per_row)
+    generate_spritesheet(16, items_with_icons, 'assets/images/sprites/docs.png') {|item| item[:icon_16]}
+    generate_spritesheet(32, items_with_icons, 'assets/images/sprites/docs@2x.png') {|item| item[:icon_32]}
 
-    generate_spritesheet(16, icons, 'assets/images/sprites/docs.png') {|icon| icon[:icon_16]}
-    generate_spritesheet(32, icons, 'assets/images/sprites/docs@2x.png') {|icon| icon[:icon_32]}
+    # Add Mongoose's icon details to docs without custom icons
+    template_item = items_with_icons.find {|item| item[:type] == 'mongoose'}
+    items_without_icons.each do |item|
+      item[:row] = template_item[:row]
+      item[:col] = template_item[:col]
+      item[:dark_icon_fix] = template_item[:dark_icon_fix]
+    end
 
-    save_manifest(icons, icons_per_row, 'assets/images/sprites/docs.json')
+    save_manifest(items, icons_per_row, 'assets/images/sprites/docs.json')
   end
 
   private
 
-  def get_icons
+  def get_items
     items = Docs.all.map do |doc|
       base_path = "public/icons/docs/#{doc.slug}"
       {
@@ -50,7 +60,10 @@ class SpritesCLI < Thor
 
     # Checking paths against an array of possible paths is faster than 200+ File.exist? calls
     files = Dir.glob('public/icons/docs/**/*.png')
-    items.select {|item| files.include?(item[:path_16]) && files.include?(item[:path_32])}
+    items.map do |item|
+      item[:has_icons] = files.include?(item[:path_16]) && files.include?(item[:path_32])
+      item
+    end
   end
 
   def get_icon(path, max_size)
