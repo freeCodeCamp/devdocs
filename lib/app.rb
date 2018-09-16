@@ -48,6 +48,11 @@ class App < Sinatra::Application
   end
 
   configure :test, :development do
+    require 'thor'
+    load 'tasks/sprites.thor'
+
+    SpritesCLI.new.invoke(:generate)
+
     require 'active_support/per_thread_registry'
     require 'active_support/cache'
     sprockets.cache = ActiveSupport::Cache.lookup_store :file_store, root.join('tmp', 'cache', 'assets', environment.to_s)
