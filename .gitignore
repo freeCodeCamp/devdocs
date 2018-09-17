@@ -9,4 +9,3 @@ public/docs/**/*
 !public/docs/docs.json
 !public/docs/**/index.json
 log/
-assets/images/sprites
