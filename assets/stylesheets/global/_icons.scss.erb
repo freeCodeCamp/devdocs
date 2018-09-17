@@ -32,11 +32,11 @@
 <%=
   items = []
 
-  manifest['icons'].each do |icon|
+  manifest['items'].each do |item|
     rules = []
-    rules << "background-position: -#{icon['col']}rem -#{icon['row']}rem;"
-    rules << "@extend %darkIconFix !optional;" if icon['dark_icon_fix']
-    items << "._icon-#{icon['type']}:before { #{rules.join(' ')} }"
+    rules << "background-position: -#{item['col']}rem -#{item['row']}rem;"
+    rules << "@extend %darkIconFix !optional;" if item['dark_icon_fix']
+    items << "._icon-#{item['type']}:before { #{rules.join(' ')} }"
   end
 
   items.join('')
