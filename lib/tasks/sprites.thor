@@ -95,12 +95,13 @@ class SpritesCLI < Thor
 
   def needs_dark_icon_fix(icon, bg_color)
     # Determine whether the icon needs to be grayscaled if the user has enabled the dark theme
-    # The logic comes from https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast
-    contrast = icon.pixels.map do |pixel|
+    # The logic is roughly based on https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast
+    contrast = icon.pixels.select {|pixel| ChunkyPNG::Color.a(pixel) > 0}.map do |pixel|
       get_contrast(bg_color, pixel)
     end
 
-    contrast.max < 7
+    avg = contrast.reduce(:+) / contrast.size.to_f
+    avg < 3.5
   end
 
   def get_contrast(base, other)
@@ -173,7 +174,8 @@ class SpritesCLI < Thor
 
   def log_details(items_with_icons, icons_per_row)
     logger.debug("Amount of icons: #{items_with_icons.length}")
-    logger.debug("Icons per row: #{icons_per_row}")
+    logger.debug("Amount of icons needing the dark icon fix: #{items_with_icons.count {|item| item[:dark_icon_fix]}}")
+    logger.debug("Amount of icons per row: #{icons_per_row}")
 
     max_type_length = items_with_icons.map {|item| item[:type].length}.max
     border = "+#{'-' * (max_type_length + 2)}+#{'-' * 5}+#{'-' * 8}+#{'-' * 15}+"
