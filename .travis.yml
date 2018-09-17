@@ -1,6 +1,9 @@
 language: ruby
 
-cache: bundler
+cache:
+  bundler: true
+  directories:
+    - /home/travis/.rvm/
 
 before_script:
   - gem update --system
