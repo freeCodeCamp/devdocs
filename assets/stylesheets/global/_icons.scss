@@ -179,3 +179,4 @@
 ._icon-dart:before          { background-position: -7rem -3rem; @extend %doc-icon-2; }
 ._icon-qt:before            { background-position: -8rem -3rem; @extend %doc-icon-2; }
 ._icon-puppeteer:before     { background-position: -9rem -3rem; @extend %doc-icon-2; }
+._icon-handlebars:before    { background-position: 0 -4rem; @extend %doc-icon-2; @extend %darkIconFix !optional; }

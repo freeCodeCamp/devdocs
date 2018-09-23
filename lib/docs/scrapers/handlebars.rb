@@ -2,8 +2,8 @@ module Docs
   class Handlebars < UrlScraper
     self.name = 'Handlebars.js'
     self.slug = 'handlebars'
-    self.type = 'handlebars'
-    self.release = '4.0.11'
+    self.type = 'simple'
+    self.release = '4.0.12'
     self.base_url = 'https://handlebarsjs.com/'
     self.links = {
       home: 'https://handlebarsjs.com/',
@@ -16,7 +16,7 @@ module Docs
     options[:root_title] = 'Handlebars.js'
 
     options[:attribution] = <<-HTML
-      &copy; 2011-2017 by Yehuda Katz<br>
+      &copy; 2011&ndash;2017 by Yehuda Katz<br>
       Licensed under the MIT License.
     HTML
   end
