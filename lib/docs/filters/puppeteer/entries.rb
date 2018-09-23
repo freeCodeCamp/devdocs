@@ -17,7 +17,7 @@ module Docs
 
               # Prepend events with the class name
               if current_name.start_with?('event: ')
-                current_name = "#{name} event: '#{current_name[/'(.*)'/, 1]}'"
+                current_name = "#{name} event: #{current_name[/'(.*)'/, 1]}"
               end
 
               # Remove arguments from functions
