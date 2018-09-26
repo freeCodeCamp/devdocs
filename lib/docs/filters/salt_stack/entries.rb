@@ -19,10 +19,6 @@ module Docs
         type, _ = slug.split('/', 2)
         type
       end
-
-      def include_default_entry?
-        !subpath.end_with?('index.html')
-      end
     end
   end
 end
