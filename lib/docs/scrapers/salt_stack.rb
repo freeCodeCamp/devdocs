@@ -3,6 +3,10 @@ module Docs
     self.type = 'salt_stack'
     self.release = '2018.3.2'
     self.base_url = 'https://docs.saltstack.com/en/latest/ref/'
+    self.links = {
+      home: 'https://www.saltstack.com/',
+      code: 'https://github.com/saltstack/salt'
+    }
 
     html_filters.push 'salt_stack/clean_html', 'salt_stack/entries'
 
