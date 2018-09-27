@@ -17,7 +17,8 @@ module Docs
     options[:container] = '.body-content'
 
     options[:attribution] = <<-HTML
-      &copy; 2018 SaltStack. All Rights Reserved, SaltStack Inc.
+      &copy; 2018 SaltStack.<br>
+      Licensed under the Apache License, Version 2.0.
     HTML
   end
 end
