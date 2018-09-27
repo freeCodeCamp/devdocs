@@ -11,7 +11,7 @@ module Docs
     html_filters.push 'salt_stack/clean_html', 'salt_stack/entries'
 
     options[:only_patterns] = [
-      %r{[^/]+/all/}
+      %r{^[^/]+/all/}
     ]
 
     options[:container] = '.body-content'

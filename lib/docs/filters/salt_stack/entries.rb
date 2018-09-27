@@ -16,8 +16,11 @@ module Docs
       end
 
       def get_type
-        type, _ = slug.split('/', 2)
-        type
+        slug.split('/', 2).first
+      end
+
+      def include_default_entry?
+        slug.split('/').last.start_with? 'salt'
       end
     end
   end
