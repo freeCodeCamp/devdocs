@@ -5,6 +5,16 @@ module Docs
         # Remove unneeded elements
         css('#searchbar, .toc, .fork-and-edit, .anchor').remove
 
+        # Fix the home page titles
+        if subpath == ''
+          css('h1').each do |node|
+            node.name = 'h2'
+          end
+
+          # Add a main title before the first subtitle
+          at_css('h2').before('<h1>Composer</h1>')
+        end
+
         # Code blocks
         css('pre').each do |node|
           code = node.at_css('code[class]')
