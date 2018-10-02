@@ -1,7 +1,7 @@
 module Docs
   class Composer < UrlScraper
     self.name = 'Composer'
-    self.type = 'composer'
+    self.type = 'simple'
 
     self.links = {
       home: 'https://getcomposer.org',
