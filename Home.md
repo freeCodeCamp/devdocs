@@ -18,3 +18,4 @@
 * [Vim search plugin with Devdocs in its defaults](https://github.com/waiting-for-dev/vim-www) Just set `let g:www_shortcut_engines = { 'devdocs': ['Devdocs', '<leader>dd'] }` to have a `:Devdocs` command and a `<leader>dd` mapping.
 * [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=akfish.vscode-devdocs ) (1)
 * [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=deibit.devdocs) (2)
+* [Desktop application](https://github.com/egoist/devdocs-desktop)
