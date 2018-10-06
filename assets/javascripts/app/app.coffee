@@ -138,7 +138,10 @@
       @docs.sort()
       @initDoc(doc)
       @saveDocs()
-      _onSuccess()
+      if app.settings.get('autoInstall')
+        doc.install(_onSuccess, onError)
+      else
+        _onSuccess()
       return
 
     doc.load onSuccess, onError, writeCache: true

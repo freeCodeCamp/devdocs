@@ -10,6 +10,7 @@ class app.Settings
     'layout'
     'size'
     'tips'
+    'autoInstall'
   ]
 
   INTERNAL_KEYS = [
