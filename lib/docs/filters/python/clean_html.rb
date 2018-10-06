@@ -22,8 +22,10 @@ module Docs
           end
         end
 
-        css('h2', 'h3', 'h4').each do |node|
-          node.inner_html = node.inner_html.remove @levelRegexp
+        unless @levelRegexp.nil?
+          css('h2', 'h3', 'h4').each do |node|
+            node.inner_html = node.inner_html.remove @levelRegexp
+          end
         end
       end
     end
