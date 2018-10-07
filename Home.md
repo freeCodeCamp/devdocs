@@ -19,3 +19,4 @@
 * [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=akfish.vscode-devdocs ) (1)
 * [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=deibit.devdocs) (2)
 * [Desktop application](https://github.com/egoist/devdocs-desktop)
+* [Doc Browser](https://github.com/qwfy/doc-browser) is a native Linux app that supports DevDocs docsets
