@@ -1,6 +1,6 @@
 module Docs
   class Docker < UrlScraper
-    self.type = 'docker'
+    self.type = 'simple'
     self.links = {
       home: 'https://docker.com/',
       code: 'https://github.com/docker/docker'
