@@ -175,9 +175,13 @@ class DocsCLI < Thor
   private
 
   def find_docs(names)
-    names.map do |name|
+    names.flat_map do |name|
       name, version = name.split(/@|~/)
-      Docs.find(name, version)
+      if version == 'all'
+        Docs.find(name, false).versions
+      else
+        Docs.find(name, version)
+      end
     end
   end
 
