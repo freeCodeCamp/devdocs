@@ -1,6 +1,7 @@
 # Contributing to DevDocs
 
 Want to contribute? Great. Please review the following guidelines carefully and search for existing issues before opening a new one.
+This is fun.
 
 **Table of Contents:**
 
