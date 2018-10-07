@@ -3,9 +3,18 @@
 
   h4 { @extend %block-label; }
   .docblock { margin-left: 1em; }
+  div.information, div.important-traits {
+    @extend %note;
+
+    > pre { margin: .5rem 0; }
+  }
 
   div.stability { margin-bottom: 1em; }
   em.stab, span.stab { @extend %label; }
   em.stab.unstable, span.stab.unstable { @extend %label-orange; }
-  .since, .out-of-band { float: right; }
+  .out-of-band { float: right; }
+  .since, .srclink {
+    float: right;
+    margin-left: .5rem;
+  }
 }
