@@ -6,7 +6,7 @@
 
     .features {
       float: right;
-      color: $textColorLight;
+      color: var(--textColorLight);
     }
   }
 }

@@ -55,6 +55,18 @@ class AppTest < MiniTest::Spec
       get '/'
       assert_includes last_response.body, '<body class="foo">'
     end
+
+    it "sets the <html> theme from cookie" do
+      get '/'
+      assert_match %r{<html [^>]*class="[^\"]*_theme-default}, last_response.body
+      refute_includes last_response.body, '_theme-dark'
+
+      set_cookie('dark=1')
+
+      get '/'
+      assert_match %r{<html [^>]*class="[^\"]*_theme-dark}, last_response.body
+      refute_includes last_response.body, '_theme-default'
+    end
   end
 
   describe "/[static-page]" do
@@ -108,19 +120,6 @@ class AppTest < MiniTest::Spec
       get '/manifest.appcache'
       assert last_response.ok?
       refute_includes last_response.body, 'foo'
-    end
-
-    it "has the word 'default' when no 'dark' cookie is set" do
-      get '/manifest.appcache'
-      assert_includes last_response.body, '# default'
-      refute_includes last_response.body, '# dark'
-    end
-
-    it "has the word 'dark' when the cookie is set" do
-      set_cookie('dark=1')
-      get '/manifest.appcache'
-      assert_includes last_response.body, '# dark'
-      refute_includes last_response.body, '# default'
     end
 
     it "sets default size" do
