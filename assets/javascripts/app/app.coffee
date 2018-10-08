@@ -245,7 +245,7 @@
         matchMedia:         !!window.matchMedia
         insertAdjacentHTML: !!document.body.insertAdjacentHTML
         defaultPrevented:     document.createEvent('CustomEvent').defaultPrevented is false
-        cssGradients:         supportsCssGradients()
+        cssVariables:         CSS.supports and CSS.supports('--t:0')
 
       for key, value of features when not value
         Raven.captureMessage "unsupported/#{key}", level: 'info'
@@ -267,10 +267,5 @@
 
   isInvalidLocation: ->
     @config.env is 'production' and location.host.indexOf(app.config.production_host) isnt 0
-
-supportsCssGradients = ->
-  el = document.createElement('div')
-  el.style.cssText = "background-image: -webkit-linear-gradient(top, #000, #fff); background-image: linear-gradient(to top, #000, #fff);"
-  el.style.backgroundImage.indexOf('gradient') >= 0
 
 $.extend app, Events
