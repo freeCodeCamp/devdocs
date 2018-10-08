@@ -1,5 +1,9 @@
+// Variables needed to style the error message for browsers that don't support CSS variables.
+$baseFont: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
+$textColor: #333;
+
 html {
-  --baseFont: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
+  --baseFont: #{$baseFont};
   --monoFont: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   --boldFontWeight: 500;
   --bolderFontWeight: 600;

@@ -1,6 +1,7 @@
 html {
   height: 100%;
   font-size: 100%;
+  background: #fff; // fallback to show the error message to browsers that don't support CSS variables.
   background: var(--documentBackground);
 
   @include mobile { font-size: 93.75%; }
@@ -15,8 +16,9 @@ body {
   overflow: auto;
   font-size: 1em;
   font-weight: normal;
-  font-family: var(--baseFont);
+  font-family: $baseFont;
   line-height: 1.7;
+  color: $textColor; // fallback to show the error message to browsers that don't support CSS variables.
   color: var(--textColor);
   word-wrap: break-word;
   overflow-wrap: break-word;
