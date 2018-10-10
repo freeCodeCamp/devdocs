@@ -11,7 +11,9 @@
   > h1 { @extend ._lined-heading; }
   > h1:first-child { margin-top: 0; }
 
-  a[href^="http:"], a[href^="https:"] { @extend %external-link; }
+  a[href^="http:"], a[href^="https:"] {
+    &:after { @extend %external-link; }
+  }
 
   a:not([href]) {
     color: inherit;
