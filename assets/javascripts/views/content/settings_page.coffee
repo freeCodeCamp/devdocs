@@ -28,6 +28,7 @@ class app.views.SettingsPage extends app.View
     html.classList.toggle('_theme-default')
     html.classList.toggle('_theme-dark')
     app.settings.set('dark', !!enable)
+    app.appCache?.updateInBackground()
     return
 
   toggleLayout: (layout, enable) ->

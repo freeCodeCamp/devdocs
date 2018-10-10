@@ -122,6 +122,19 @@ class AppTest < MiniTest::Spec
       refute_includes last_response.body, 'foo'
     end
 
+    it "has the word 'default' when no 'dark' cookie is set" do
+      get '/manifest.appcache'
+      assert_includes last_response.body, '# default'
+      refute_includes last_response.body, '# dark'
+    end
+
+    it "has the word 'dark' when the cookie is set" do
+      set_cookie('dark=1')
+      get '/manifest.appcache'
+      assert_includes last_response.body, '# dark'
+      refute_includes last_response.body, '# default'
+    end
+
     it "sets default size" do
       get '/manifest.appcache'
       assert_includes last_response.body, '20rem'
