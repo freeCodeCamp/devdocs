@@ -16,7 +16,7 @@ module Docs
 
     options[:skip_patterns] = [
       # Other languages
-      /^(zh|ja|ru|kr)\//,
+      /^(zh|ja|ru|kr|fr)\//,
     ]
 
     options[:attribution] = <<-HTML
