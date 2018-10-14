@@ -1,5 +1,6 @@
 #!/usr/bin/env rake
 
+require 'root'
 require 'bundler/setup'
 require 'thor'
 
