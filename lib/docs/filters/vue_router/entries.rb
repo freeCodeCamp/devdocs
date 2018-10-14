@@ -41,16 +41,14 @@ module Docs
 
           entryName.remove! '# '
 
-          unless entryName.start_with?('router.')
-            if title == "Router Construction Options"
-              entryName = "RouterOptions.#{entryName}"
-            elsif title == "<router-view> Props"
-              entryName = "<router-view> `#{entryName}` prop"
-            elsif title == "<router-link> Props"
-              entryName = "<router-link> `#{entryName}` prop"
-            else
-              entryName = "> #{entryName} (in: #{title})"
-            end
+          if title == "Router Construction Options"
+            entryName = "RouterOptions.#{entryName}"
+          elsif title == "<router-view> Props"
+            entryName = "<router-view> `#{entryName}` prop"
+          elsif title == "<router-link> Props"
+            entryName = "<router-link> `#{entryName}` prop"
+          elsif title == "Router Instance Methods"
+            entryName = "#{entryName}()"
           end
 
           unless title == "Component Injections" || node['id'] == 'applying-active-class-to-outer-element' || node['id'] == 'route-object-properties'
