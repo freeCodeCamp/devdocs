@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <% if doc_index_page? %><meta name="description" content="<%= @doc['name'] %> <%= @doc['release'] %> API documentation with instant search, offline support, keyboard shortcuts, mobile version, and more."><% else %><meta name="robots" content="noindex"><% end %>
+  <% if doc_index_page? %>
+    <meta name="description" content="<%= @doc['name'] %> <%= @doc['release'] %> API documentation with instant search, offline support, keyboard shortcuts, mobile version, and more."><% else %><meta name="robots" content="noindex">
+  <% end %>
   <meta name="format-detection" content="telephone=no">
   <meta property="og:image" content="<%= App.cdn_origin %>/images/icon-320.png">
   <title>DevDocs<%= " &mdash; #{@doc['full_name']} documentation" if doc_index_page? %></title>
