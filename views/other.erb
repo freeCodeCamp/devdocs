@@ -16,7 +16,9 @@
 <body<%= %( class="#{app_layout}") if app_layout %> data-doc="<%= CGI::escape_html @doc.to_json %>">
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
 <%= erb :app -%>
-<%= javascript_tag 'application', asset_host: false %><% unless App.production? %>
-<%= javascript_tag 'debug' %><% end %>
+<%= javascript_tag 'application', asset_host: false %>
+<% unless App.production? %>
+  <%= javascript_tag 'debug' %>
+<% end %>
 </body>
 </html>
