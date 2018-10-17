@@ -9,7 +9,7 @@ module Docs
 
     self.name = 'Cypress'
     self.type = 'cypress'
-    self.root_path = '/api/introduction/api.html'
+    self.root_path = '/api/api/table-of-contents.html'
 
     html_filters.push 'cypress/clean_html', 'cypress/entries'
 
