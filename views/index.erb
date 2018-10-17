@@ -36,7 +36,9 @@
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
 <%= erb :app -%>
 <%= javascript_tag 'application', asset_host: false %>
-<%= javascript_tag 'docs' %><% unless App.production? %>
-<%= javascript_tag 'debug' %><% end %>
+<%= javascript_tag 'docs' %>
+<% unless App.production? %>
+  <%= javascript_tag 'debug' %>
+<% end %>
 </body>
 </html>
