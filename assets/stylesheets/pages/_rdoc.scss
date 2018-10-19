@@ -6,7 +6,7 @@
   .method-description > h2, h3, h4, h5, h6 { font-size: 1em; }
 
   .method-heading {
-    font-weight: $boldFontWeight;
+    font-weight: var(--boldFontWeight);
     @extend %block-label, %label-blue;
 
     + .method-heading { margin-top: -.5em; }
@@ -22,7 +22,7 @@
   a.method-click-advice {
     float: right;
     font-size: .75rem;
-    color: $linkColor;
+    color: var(--linkColor);
     cursor: pointer;
     @extend %user-select-none;
 

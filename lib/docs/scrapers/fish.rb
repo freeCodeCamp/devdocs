@@ -1,7 +1,7 @@
 module Docs
   class Fish < UrlScraper
     self.name = 'Fish'
-    self.type = 'fish'
+    self.type = 'simple'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://fishshell.com/',

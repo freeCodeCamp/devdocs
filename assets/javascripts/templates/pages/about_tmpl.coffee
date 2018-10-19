@@ -311,6 +311,11 @@ credits = [
     'MIT',
     'https://github.com/gruntjs/grunt-docs/blob/master/package.json#L10'
   ], [
+    'Handlebars',
+    '2011-2017 Yehuda Katz',
+    'MIT',
+    'https://raw.githubusercontent.com/wycats/handlebars.js/master/LICENSE'
+  ], [
     'Haskell',
     'The University of Glasgow',
     'BSD',
@@ -560,6 +565,11 @@ credits = [
     '1996-2018 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
+  ], [
+    'Puppeteer',
+    '2017 Google Inc',
+    'Apache',
+    'https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/LICENSE'
   ], [
     'Pygame',
     'Pygame Developpers',

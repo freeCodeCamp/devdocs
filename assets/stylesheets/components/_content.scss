@@ -4,13 +4,13 @@
 
 ._container {
   position: relative;
-  z-index: $contentZ;
+  z-index: var(--contentZ);
   height: 100%;
-  margin-left: $sidebarWidth;
+  margin-left: var(--sidebarWidth);
   pointer-events: none;
   @extend %border-box;
 
-  @media #{$mediumScreen} { margin-left: $sidebarMediumWidth; }
+  @include mobile { margin-left: var(--sidebarMediumWidth); }
 
   ._sidebar-hidden & { margin-left: 0; }
   body:not(._native-scrollbars) & { -webkit-margin-end: -1px; }
@@ -30,7 +30,7 @@
   ._sidebar-hidden &:before {
     content: '';
     display: block;
-    margin-top: $headerHeight;
+    margin-top: var(--headerHeight);
   }
 
   ._overlay-scrollbars & { padding-left: .625rem; }
@@ -54,7 +54,7 @@
   font-size: 4rem;
   font-weight: 300;
   letter-spacing: -.125rem;
-  color: $loadingText;
+  color: var(--loadingText);
   text-align: center;
   cursor: default;
 }
@@ -68,7 +68,7 @@
 //
 
 ._splash-title {
-  color: $splashText;
+  color: var(--splashText);
   @extend %loading, %user-select-none;
 }
 
@@ -88,7 +88,7 @@
   min-height: calc(100vh - 2.375rem);
 
   ._sidebar-hidden & {
-    min-height: calc(100vh - 2.375rem - #{$headerHeight});
+    min-height: calc(100vh - 2.375rem - var(--headerHeight));
   }
 }
 
@@ -140,12 +140,12 @@
 
 ._error-text {
   margin: 0 0 1rem;
-  color: $textColorLight;
+  color: var(--textColorLight);
 }
 
 ._error-links {
   font-size: 1rem;
-  font-weight: $boldFontWeight;
+  font-weight: var(--boldFontWeight);
 }
 
 ._error-link { padding: 0 .5rem; }
@@ -167,7 +167,7 @@
     height: 1px;
     margin-top: .25rem;
     margin-left: 1rem;
-    background: $boxBorderLight;
+    background: var(--boxBorderLight);
   }
 }
 
@@ -197,7 +197,7 @@
 ._toc-title {
   margin: 0 0 .5rem;
   font-size: inherit;
-  font-weight: $boldFontWeight;
+  font-weight: var(--boldFontWeight);
 }
 
 ._toc-list {
@@ -252,7 +252,7 @@
 ._docs-size {
   text-align: right;
 
-  > small { color: $textColorLight; }
+  > small { color: var(--textColorLight); }
 }
 
 ._docs-tools {
@@ -285,7 +285,7 @@
     padding: 0 .75rem;
   }
   ._btn-link:not(._show) { display: none; }
-  ._btn-link._show ~ ._btn-link._show { border-left: 1px solid $boxBorder; }
+  ._btn-link._show ~ ._btn-link._show { border-left: 1px solid var(--boxBorder); }
 }
 
 //
@@ -297,7 +297,7 @@
     position: relative;
     padding-left: 10em;
     font-size: .8125rem;
-    color: $textColorLight;
+    color: var(--textColorLight);
 
     + ._news-row { margin-top: 1em; }
   }
@@ -305,7 +305,7 @@
   ._news-title {
     display: block;
     font-size: .875rem;
-    color: $textColor;
+    color: var(--textColor);
   }
 
   ._news-date {
@@ -372,12 +372,12 @@
 // Utilities
 //
 
-._bold { font-weight: $boldFontWeight; }
+._bold { font-weight: var(--boldFontWeight); }
 ._note { @extend %note; }
 ._note-green { @extend %note-green; }
 ._label { @extend %label; }
 ._code { @extend %code; }
-._highlight { background: $highlightBackground !important; }
+._highlight { background: var(--highlightBackground) !important; }
 
 ._table { width: 100%; }
 ._mobile ._table { overflow-x: auto; }
@@ -396,12 +396,9 @@
   pre:hover > & { display: block; }
   &:hover { opacity: 1; }
 
-  > svg { @extend %svg-icon; }
-
-  @if $style == 'dark' {
-    > svg { fill: white; }
-  } @else {
-    > svg { fill: black; }
+  > svg {
+    @extend %svg-icon;
+    fill: var(--absolute);
   }
 
   &._pre-clip-success > svg,
@@ -419,15 +416,13 @@
   line-height: normal;
   white-space: nowrap;
   padding: .375rem .675rem;
-  background-image: linear-gradient(lighten($boxBackground, 4%), darken($boxBackground, 2%));
-  border: 1px solid $boxBorder;
+  background-color: var(--boxBackground);
+  border: 1px solid var(--boxBorder);
   border-radius: 3px;
-  box-shadow: 0 1px rgba($boxBorder, .08);
   cursor: pointer;
 
   &:active {
-    background-color: $boxBackground;
-    box-shadow: inset 0 1px 1px rgba(black, .05), inset 0 1px 4px $boxBorder;
+    box-shadow: inset 0 1px 1px rgba(black, .05), inset 0 1px 4px var(--boxBorder);
   }
 }
 
@@ -447,18 +442,18 @@
 
 ._btn-link {
   line-height: inherit;
-  color: $linkColor;
-  text-decoration: $linkTextDecoration;
+  color: var(--linkColor);
+  text-decoration: var(--linkTextDecoration);
 
   &:hover {
-    color: $linkColorHover;
+    color: var(--linkColorHover);
     text-decoration: underline;
   }
 }
 
 ._reset-btn,
 ._reset-btn:hover {
-  color: $textColorRed;
+  color: var(--textColorRed);
 }
 
 ._github-btn {
