@@ -1,7 +1,7 @@
 module Docs
   class Vulkan < UrlScraper
     self.name = 'Vulkan'
-    self.type = 'vulkan'
+    self.type = 'simple'
     self.release = '1.0.59'
     self.base_url = 'https://www.khronos.org/registry/vulkan/specs/1.0/'
     self.root_path = 'apispec.html'

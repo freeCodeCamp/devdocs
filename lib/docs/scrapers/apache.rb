@@ -3,7 +3,7 @@ module Docs
     self.name = 'Apache HTTP Server'
     self.slug = 'apache_http_server'
     self.type = 'apache'
-    self.release = '2.4.33'
+    self.release = '2.4.34'
     self.base_url = 'https://httpd.apache.org/docs/2.4/en/'
     self.links = {
       home: 'https://httpd.apache.org/'

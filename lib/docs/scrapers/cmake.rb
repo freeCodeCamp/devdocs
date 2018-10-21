@@ -16,12 +16,22 @@ module Docs
     options[:skip_patterns] = [/\Agenerator/, /\Ainclude/, /\Arelease/]
 
     options[:attribution] = <<-HTML
-      &copy; 2000&ndash;2017 Kitware, Inc. and Contributors<br>
+      &copy; 2000&ndash;2018 Kitware, Inc. and Contributors<br>
       Licensed under the BSD 3-clause License.
     HTML
 
+    version '3.12' do
+      self.release = '3.12.1'
+      self.base_url = 'https://cmake.org/cmake/help/v3.12/'
+    end
+
+    version '3.11' do
+      self.release = '3.11.4'
+      self.base_url = 'https://cmake.org/cmake/help/v3.11/'
+    end
+
     version '3.10' do
-      self.release = '3.10.1'
+      self.release = '3.10.3'
       self.base_url = 'https://cmake.org/cmake/help/v3.10/'
     end
 

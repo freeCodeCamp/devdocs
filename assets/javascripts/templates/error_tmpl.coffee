@@ -56,13 +56,10 @@ app.templates.unsupportedBrowser = """
     <h1 class="_fail-title">Your browser is unsupported, sorry.</h1>
     <p class="_fail-text">DevDocs is an API documentation browser which supports the following browsers:
     <ul class="_fail-list">
-      <li>Recent versions of Chrome and Firefox
-      <li>Safari 5.1+
-      <li>Opera 12.1+
-      <li>Internet Explorer 10+
-      <li>iOS 6+
-      <li>Android 4.1+
-      <li>Windows Phone 8+
+      <li>Recent versions of Firefox, Chrome, or Opera
+      <li>Safari 9.1+
+      <li>Edge 16+
+      <li>iOS 10+
     </ul>
     <p class="_fail-text">
       If you're unable to upgrade, I apologize.

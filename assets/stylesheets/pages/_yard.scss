@@ -1,5 +1,5 @@
 ._yard {
   @extend %simple;
 
-  .tag_title { font-weight: $boldFontWeight; }
+  .tag_title { font-weight: var(--boldFontWeight); }
 }

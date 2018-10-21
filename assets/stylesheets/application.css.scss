@@ -11,7 +11,9 @@
  * http://mozilla.org/MPL/2.0/
  */
 
-@import 'global/variables',
+@import 'global/variables-light',
+        'global/variables-dark',
+        'global/variables',
         'global/mixins',
         'global/icons',
         'global/classes',
@@ -35,6 +37,7 @@
         'pages/angularjs',
         'pages/apache',
         'pages/async',
+        'pages/bash',
         'pages/bootstrap',
         'pages/c',
         'pages/cakephp',
@@ -45,6 +48,7 @@
         'pages/crystal',
         'pages/d',
         'pages/d3',
+        'pages/dart',
         'pages/dojo',
         'pages/drupal',
         'pages/elixir',
@@ -54,6 +58,7 @@
         'pages/git',
         'pages/github',
         'pages/go',
+        'pages/graphite',
         'pages/haskell',
         'pages/jekyll',
         'pages/jquery',
@@ -81,6 +86,7 @@
         'pages/postgres',
         'pages/pug',
         'pages/python',
+        'pages/qt',
         'pages/ramda',
         'pages/rdoc',
         'pages/react_native',

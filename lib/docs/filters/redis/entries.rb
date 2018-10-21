@@ -12,7 +12,7 @@ module Docs
         when 'HDEL'             then 'Hashes'
         when 'BLPOP'            then 'Lists'
         when 'SADD'             then 'Sets'
-        when 'ZADD'             then 'Sorted Sets'
+        when 'BZPOPMAX'         then 'Sorted Sets'
         when 'PSUBSCRIBE'       then 'Pub/Sub'
         when 'DISCARD'          then 'Transactions'
         when 'EVAL'             then 'Scripting'
@@ -21,6 +21,7 @@ module Docs
         when 'PFADD'            then 'HyperLogLog'
         when 'CLUSTER ADDSLOTS' then 'Cluster'
         when 'GEOADD'           then 'Geo'
+        when 'XADD'             then 'Stream'
         else 'Miscellaneous'
         end
       end

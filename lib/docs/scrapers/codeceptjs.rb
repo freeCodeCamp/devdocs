@@ -1,7 +1,7 @@
 module Docs
   class Codeceptjs < UrlScraper
     self.name = 'CodeceptJS'
-    self.type = 'codeceptjs'
+    self.type = 'simple'
     self.root_path = 'index.html'
     self.release = '1.3.1'
     self.base_url = 'https://codecept.io/'

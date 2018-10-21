@@ -116,6 +116,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
   ], [
+    'Bash',
+    '2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.',
+    'GFDL',
+    'https://www.gnu.org/licenses/fdl-1.3.en.html'
+  ], [
     'Bluebird',
     '2013-2017 Petka Antonov',
     'MIT',
@@ -162,7 +167,7 @@ credits = [
     'https://github.com/clojure/clojure/blob/master/epl-v10.html'
   ], [
     'CMake',
-    '2000-2017 Kitware, Inc. and Contributors',
+    '2000-2018 Kitware, Inc. and Contributors',
     'BSD',
     'https://cmake.org/licensing/'
   ], [
@@ -210,6 +215,11 @@ credits = [
     '2010-2018 Michael Bostock',
     'BSD',
     'https://raw.githubusercontent.com/d3/d3/master/LICENSE'
+  ], [
+    'Dart',
+    '2012 the Dart project authors',
+    'CC BY-SA',
+    'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
     'Django',
     'Django Software Foundation and individual contributors',
@@ -291,10 +301,20 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/godotengine/godot/master/LICENSE.txt'
   ], [
+    'Graphite',
+    '2008-2012 Chris Davis<br>&copy; 2011-2016 The Graphite Project',
+    'Apache',
+    'https://raw.githubusercontent.com/graphite-project/graphite-web/master/LICENSE'
+  ], [
     'Grunt',
     'GruntJS Team',
     'MIT',
     'https://github.com/gruntjs/grunt-docs/blob/master/package.json#L10'
+  ], [
+    'Handlebars',
+    '2011-2017 Yehuda Katz',
+    'MIT',
+    'https://raw.githubusercontent.com/wycats/handlebars.js/master/LICENSE'
   ], [
     'Haskell',
     'The University of Glasgow',
@@ -551,6 +571,16 @@ credits = [
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
   ], [
+    'Puppeteer',
+    '2017 Google Inc',
+    'Apache',
+    'https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/LICENSE'
+  ], [
+    'Pygame',
+    'Pygame Developpers',
+    'LGPLv2.1',
+    'https://raw.githubusercontent.com/pygame/pygame/master/LICENSE'
+  ], [
     'Python',
     '2001-2018 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
     'PSFL',
@@ -560,6 +590,11 @@ credits = [
     '2009-2017 Kristopher Michael Kowal',
     'MIT',
     'https://raw.githubusercontent.com/kriskowal/q/master/LICENSE'
+  ], [
+    'Qt',
+    '2012-2018 The Qt Company Ltd',
+    'GFDL',
+    'https://doc.qt.io/qt-5/licensing.html'
   ], [
     'Ramda',
     '2013-2016 Scott Sauyet and Michael Hurley',

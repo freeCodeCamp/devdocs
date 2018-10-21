@@ -1,5 +1,7 @@
 FROM ruby:2.5.1-alpine
 
+ENV LANG=C.UTF-8
+
 WORKDIR /devdocs
 
 COPY . /devdocs

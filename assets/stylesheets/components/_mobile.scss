@@ -4,7 +4,7 @@
 
 ._mobile {
   font-size: 100%;
-  background: $contentBackground;
+  background: var(--contentBackground);
 
   ._hide-on-mobile { display: none; }
 
@@ -18,7 +18,7 @@
 
   ._container {
     margin: 0;
-    padding-top: $headerHeight;
+    padding-top: var(--headerHeight);
   }
 
   ._content {
