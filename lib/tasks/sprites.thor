@@ -105,6 +105,8 @@ class SpritesCLI < Thor
   end
 
   def get_contrast(base, other)
+    # Calculating the contrast ratio as described in the WCAG 2.0:
+    # https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
     l1 = get_luminance(base) + 0.05
     l2 = get_luminance(other) + 0.05
     ratio = l1 / l2
@@ -117,6 +119,9 @@ class SpritesCLI < Thor
       ChunkyPNG::Color.g(color).to_f,
       ChunkyPNG::Color.b(color).to_f
     ]
+
+    # Calculating the relative luminance as described in the WCAG 2.0:
+    # https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
 
     rgb.map! do |value|
       value /= 255
