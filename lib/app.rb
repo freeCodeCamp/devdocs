@@ -69,7 +69,7 @@ class App < Sinatra::Application
     set :static, false
     set :cdn_origin, 'https://cdn.devdocs.io'
     set :docs_origin, '//docs.devdocs.io'
-    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
     use Rack::ETag
