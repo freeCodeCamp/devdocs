@@ -42,6 +42,11 @@ module Docs
           node.parent.content = node.parent.content
         end
 
+        # Fix links to the method reference
+        css('a').each do |node|
+          node['href'] = node['href'].sub('4x/api', 'index')
+        end
+
         doc
       end
     end

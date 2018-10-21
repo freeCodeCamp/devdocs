@@ -42,11 +42,14 @@ module Docs
             entries << [node.content, node['id']] unless node.content.include?('Note:')
           end
         else
-          css('#methods + * + div > .method', '#required-methods + div > .method', '#provided-methods + div > .method').map do |node|
-            name = node.at_css('.fnname').content
-            name.prepend "#{self.name}::"
-            [name, node['id']]
-          end
+          css('.method')
+            .select {|node| !node.at_css('.fnname').nil?}
+            .map {|node|
+              name = node.at_css('.fnname').content
+              name.prepend "#{self.name}::"
+              [name, node['id']]
+            }
+            .uniq {|item| item[0]}
         end
       end
     end

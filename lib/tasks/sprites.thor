@@ -89,7 +89,7 @@ class SpritesCLI < Thor
     # Unfortunately, it's not possible to get the value of a SCSS variable from a Thor task
     # Because hard-coding the value is even worse, we extract it using some regex
     path = 'assets/stylesheets/global/_variables-dark.scss'
-    regex = /\$sidebarBackground:\s+([^;]+);/
+    regex = /--sidebarBackground:\s+([^;]+);/
     ChunkyPNG::Color.parse(File.read(path)[regex, 1])
   end
 

@@ -2,7 +2,7 @@ module Docs
   class ApachePig < UrlScraper
     self.name = 'Apache Pig'
     self.slug = 'apache_pig'
-    self.type = 'apache_pig'
+    self.type = 'simple'
     self.links = {
       home: 'https://pig.apache.org/'
     }

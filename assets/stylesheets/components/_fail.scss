@@ -1,4 +1,4 @@
-._fail {
+._fail { // Don't use CSS variables, in case the browser doesn't support them.
   display: block;
   position: relative;
   top: 1.5rem;
@@ -23,7 +23,7 @@
 ._fail-title {
   margin: 0 0 1rem;
   font-size: 1rem;
-  font-weight: $boldFontWeight;
+  font-weight: bold;
 }
 
 ._fail-text, ._fail-list {

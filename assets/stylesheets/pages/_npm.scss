@@ -8,7 +8,7 @@
 
   .faint.heading {
     font-size: .9em;
-    color: $textColorLight;
+    color: var(--textColorLight);
   }
 
   .youtube-video iframe { width: 420px; height: 315px; }

@@ -23,7 +23,7 @@
     max-width: 100%;
     margin-bottom: 1em;
     padding: 1px;
-    border: 1px dotted $boxBorder;
+    border: 1px dotted var(--boxBorder);
     border-radius: 3px;
     @extend %border-box;
   }
@@ -50,7 +50,7 @@
   display: inline-block;
   vertical-align: top;
   padding: 0 .5rem;
-  background: $contentBackground;
+  background: var(--contentBackground);
   @extend %internal-link;
 
   & + & { margin-left: .75rem; }
@@ -66,7 +66,7 @@
   clear: both;
   margin: 2rem 0 1.5rem;
   font-size: .75rem;
-  color: $textColorLight;
+  color: var(--textColorLight);
   text-align: center;
   -webkit-font-smoothing: subpixel-antialiased;
 
@@ -78,7 +78,7 @@
   display: inline-block;
   margin: 0;
   padding: .25rem .75rem;
-  background: $labelBackground;
+  background: var(--labelBackground);
   border-radius: 3px;
 }
 

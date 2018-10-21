@@ -22,8 +22,8 @@
   %doc-icon { background-image: image-url('sprites/docs@2x.png'); }
 }
 
-%darkIconFix {
-  @if $style == 'dark' {
+html._theme-dark {
+  %darkIconFix {
     filter: invert(100%) grayscale(100%);
     -webkit-filter: invert(100%) grayscale(100%);
   }

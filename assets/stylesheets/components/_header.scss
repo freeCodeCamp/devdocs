@@ -4,20 +4,20 @@
 
 ._header {
   position: absolute;
-  z-index: $headerZ;
+  z-index: var(--headerZ);
   top: 0;
   left: 0;
   display: -ms-flexbox;
   display: flex;
-  width: $sidebarWidth;
-  height: $headerHeight;
-  background: $headerBackground;
-  border-bottom: 1px solid $headerBorder;
-  border-right: 1px solid $headerBorder;
+  width: var(--sidebarWidth);
+  height: var(--headerHeight);
+  background: var(--headerBackground);
+  border-bottom: 1px solid var(--headerBorder);
+  border-right: 1px solid var(--headerBorder);
   @extend %border-box;
   @extend %user-select-none;
 
-  @media #{$mediumScreen} { width: $sidebarMediumWidth; }
+  @include mobile { width: var(--sidebarMediumWidth); }
 }
 
 ._header-left {
@@ -35,7 +35,7 @@
   flex: 0 0 auto;
   width: 2.25rem;
   height: 100%;
-  color: $textColorLight;
+  color: var(--textColorLight);
   text-align: center;
 
   &[hidden] { display: none; }
@@ -67,8 +67,8 @@
   word-wrap: normal;
   overflow-wrap: normal;
   font-size: .875rem;
-  background: $contentBackground;
-  border: 1px solid $headerBorder;
+  background: var(--contentBackground);
+  border: 1px solid var(--headerBorder);
   border-radius: 3px;
   box-shadow: -1px 1px 1px rgba(black, .05);
   transition: all 0ms cubic-bezier(0.23, 1, 0.32, 1) 1ms;
@@ -98,10 +98,10 @@
   margin: 0;
   line-height: 1.5rem;
   font-size: 1rem;
-  font-weight: $boldFontWeight;
+  font-weight: var(--boldFontWeight);
   letter-spacing: -.5px;
-  background: $sidebarBackground;
-  border-bottom: 1px solid $sidebarBorder;
+  background: var(--sidebarBackground);
+  border-bottom: 1px solid var(--sidebarBorder);
   border-radius: 2px 2px 0 0;
 }
 
@@ -109,7 +109,7 @@
 ._menu-title-link:hover {
   display: block;
   padding: .5rem 1rem;
-  color: $focusText;
+  color: var(--focusText);
   text-decoration: none;
 }
 
@@ -121,9 +121,9 @@
   text-decoration: none;
 
   &:hover {
-    color: $focusText;
+    color: var(--focusText);
     text-decoration: none;
-    background: $sidebarBackground;
+    background: var(--sidebarBackground);
   }
 
   &:last-child { border-radius: 0 0 2px 2px; }
@@ -151,11 +151,7 @@
     opacity: .42;
     @extend %svg-icon;
 
-    @if $style == 'dark' {
-      fill: white;
-    } @else {
-      fill: black;
-    }
+    fill: var(--absolute);
   }
 }
 
@@ -166,21 +162,19 @@
   height: 100%;
   padding: 0 .75rem 1px 1.75rem;
   font-size: .875rem;
-  background: $contentBackground;
+  background: var(--contentBackground);
   border: 1px solid;
-  border-color: darken($headerBorder, 2%);
+  border-color: var(--searchBorder);
   border-radius: 3px;
 
   &:focus {
     outline: 0;
-    @if $inputFocusBorder {
-      border-color: $inputFocusBorder;
-      box-shadow: 0 0 1px $inputFocusBorder;
-    }
+    border-color: var(--inputFocusBorder);
+    box-shadow: 0 0 1px var(--inputFocusBorder);
   }
 
   &[disabled] {
-    background: $sidebarBackground;
+    background: var(--sidebarBackground);
     cursor: not-allowed;
   }
 }
@@ -202,13 +196,9 @@
     top: .5rem;
     left: .375rem;
     @extend %svg-icon;
+    fill: var(--absolute);
   }
 
-  @if $style == 'dark' {
-    > svg { fill: white; }
-  } @else {
-    > svg { fill: black; }
-  }
   ._search-active > & { display: block; }
 }
 
@@ -222,8 +212,8 @@
   line-height: 1.25rem;
   max-width: 50%;
   font-size: .8125rem;
-  color: $textColorLight;
-  background: darken($headerBackground, 5%);
+  color: var(--textColorLight);
+  background: var(--searchTagBackground);
   border-radius: 2px;
   @extend %truncate-text;
 }
