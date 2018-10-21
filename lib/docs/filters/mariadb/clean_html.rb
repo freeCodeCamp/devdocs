@@ -34,6 +34,11 @@ module Docs
           end
         end
 
+        # Fix images
+        css('img').each do |node|
+          node['src'] = node['src'].sub('http:', 'https:')
+        end
+
         # Remove navigation items containing only numbers
         css('.node_comments').each do |node|
           if node.content.scan(/\D/).empty?
