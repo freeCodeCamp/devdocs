@@ -6,6 +6,9 @@ gem 'thor'
 gem 'pry', '~> 0.11.0'
 gem 'activesupport', '~> 5.2', require: false
 gem 'yajl-ruby', require: false
+gem 'html-pipeline'
+gem 'typhoeus'
+gem 'nokogiri'
 
 group :app do
   gem 'rack'
@@ -31,9 +34,6 @@ group :development do
 end
 
 group :docs do
-  gem 'typhoeus'
-  gem 'nokogiri'
-  gem 'html-pipeline'
   gem 'image_optim'
   gem 'image_optim_pack', platforms: :ruby
   gem 'progress_bar', require: false

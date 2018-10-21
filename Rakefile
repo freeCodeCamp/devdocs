@@ -13,6 +13,11 @@ end
 namespace :assets do
   desc 'Compile all assets'
   task :precompile do
+    Bundler.require
+
+    load 'tasks/docs.thor'
+    DocsCLI.new.prepare_deploy
+
     load 'tasks/assets.thor'
     AssetsCLI.new.compile
   end

@@ -172,6 +172,43 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   end
 
+  desc 'prepare_deploy', 'Internal task executed before deployment'
+  def prepare_deploy
+    puts 'Docs -- BEGIN'
+
+    require 'open-uri'
+    require 'thread'
+
+    docs = Docs.all_versions
+    time = Time.now.to_i
+    mutex = Mutex.new
+
+    (1..6).map do
+      Thread.new do
+        while doc = docs.shift
+          dir = File.join(Docs.store_path, doc.path)
+          FileUtils.mkpath(dir)
+
+          ['index.json', 'meta.json'].each do |filename|
+            open("https://docs.devdocs.io/#{doc.path}/#{filename}?#{time}") do |file|
+              mutex.synchronize do
+                path = File.join(dir, filename)
+                File.write(path, file.read)
+              end
+            end
+          end
+
+          puts "Docs -- Downloaded #{doc.slug}"
+        end
+      end
+    end.map(&:join)
+
+    puts 'Docs -- Generating manifest...'
+    generate_manifest
+
+    puts 'Docs -- DONE'
+  end
+
   private
 
   def find_docs(names)
