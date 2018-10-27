@@ -146,3 +146,16 @@ I also wish that any documentation file generated using this software be attribu
 ## Questions?
 
 If you have any questions, please feel free to ask them on the [mailing list](https://groups.google.com/d/forum/devdocs).
+
+
+
+
+español//
+
+No utilice el nombre DevDocs para respaldar o promocionar productos derivados de este software sin mi permiso, excepto cuando sea necesario para cumplir con los requisitos de notificación / atribución.
+
+También deseo que cualquier archivo de documentación generado con este software sea atribuido a DevDocs. Seamos justos con todos los contribuyentes al otorgar crédito cuando sea necesario. ¡Gracias!
+
+## ¿Preguntas?
+
+Si tiene alguna pregunta, no dude en preguntar en la [lista de correo] (https://groups.google.com/d/forum/devdocs).
