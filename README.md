@@ -1,16 +1,7 @@
 # [DevDocs](https://devdocs.io) [![Build Status](https://travis-ci.org/freeCodeCamp/devdocs.svg?branch=master)](https://travis-ci.org/freeCodeCamp/devdocs)
 
 DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
-
-* Created by [Thibaut Courouble](https://thibaut.me)
-
-Keep track of development news:
-
-* Join the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs)
-* Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
-* Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
-* Join the [mailing list](https://groups.google.com/d/forum/devdocs)
-
+\
 **Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [License](#copyright--license) · [Questions?](#questions)
 
 ## Quick Start
