@@ -2,7 +2,7 @@ module Docs
   class Sqlite < FileScraper
     self.name = 'SQLite'
     self.type = 'sqlite'
-    self.release = '3.23.1'
+    self.release = '3.25.2'
     self.dir = '/Users/Thibaut/DevDocs/Docs/sqlite/'
     self.base_url = 'https://sqlite.org/'
     self.root_path = 'docs.html'
