@@ -1,5 +1,5 @@
 require 'bundler/setup'
-Bundler.require :docs
+Bundler.require :default, :docs
 
 require 'active_support'
 require 'active_support/core_ext'
