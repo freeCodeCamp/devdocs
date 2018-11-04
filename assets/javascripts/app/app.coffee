@@ -157,10 +157,17 @@
     new app.views.Updates()
     @updateChecker = new app.UpdateChecker()
 
+  reboot: ->
+    if location.pathname isnt '/'
+      window.location = "/##{location.pathname}"
+    else
+      window.location = '/'
+    return
+
   reload: ->
     @docs.clearCache()
     @disabledDocs.clearCache()
-    if @appCache then @appCache.reload() else window.location = '/'
+    if @appCache then @appCache.reload() else @reboot()
     return
 
   reset: ->

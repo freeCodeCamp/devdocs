@@ -27,7 +27,11 @@ class app.AppCache
     return
 
   reload: ->
-    $.on @cache, 'updateready noupdate error', -> window.location = '/'
+    $.on @cache, 'updateready noupdate error', ->
+      if location.pathname isnt '/'
+        window.location = "/##{location.pathname}"
+      else
+        window.location = '/'
     @notifyUpdate = false
     @notifyProgress = true
     try @cache.update() catch
