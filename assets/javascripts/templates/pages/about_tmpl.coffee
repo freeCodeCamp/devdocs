@@ -702,7 +702,7 @@ credits = [
     'https://raw.githubusercontent.com/Microsoft/TypeScript-Handbook/master/LICENSE'
   ], [
     'Underscore.js',
-    '2009-2017 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
+    '2009-2018 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/underscore/master/LICENSE'
   ], [
