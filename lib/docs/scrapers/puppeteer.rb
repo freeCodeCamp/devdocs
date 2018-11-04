@@ -1,6 +1,6 @@
 module Docs
   class Puppeteer < Github
-    self.release = '1.8.0'
+    self.release = '1.10.0'
     self.base_url = 'https://github.com/GoogleChrome/puppeteer/blob/v1.8.0/docs/api.md'
     self.links = {
       code: 'https://github.com/GoogleChrome/puppeteer'
