@@ -692,9 +692,9 @@ credits = [
     'https://raw.githubusercontent.com/hashicorp/terraform-website/master/LICENSE.md'
   ], [
     'Twig',
-    '2009-2017 The Twig Team',
+    '2009-2018 The Twig Team',
     'BSD',
-    'https://twig.sensiolabs.org/license'
+    'https://twig.symfony.com/license'
   ], [
     'TypeScript',
     'Microsoft and other contributors',
