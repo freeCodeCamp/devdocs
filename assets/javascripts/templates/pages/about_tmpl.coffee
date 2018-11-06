@@ -291,6 +291,11 @@ credits = [
     'GPLv2',
     'https://raw.githubusercontent.com/git/git/master/COPYING'
   ], [
+    'GnuCOBOL',
+    'Free Software Foundation',
+    'GFDL',
+    'https://www.gnu.org/licenses/fdl-1.3.en.html'
+  ], [
     'Go',
     'Google, Inc.',
     'CC BY',
