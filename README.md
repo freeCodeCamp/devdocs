@@ -129,7 +129,7 @@ If multiple versions of Ruby are installed on your system, commands must be run 
 
 ## Contributing
 
-Contributions are welcome. Please read the [contributing guidelines](https://github.com/freeCodeCamp/devdocs/blob/master/CONTRIBUTING.md).
+Contributions are welcome.
 
 DevDocs's own documentation is available on the [wiki](https://github.com/freeCodeCamp/devdocs/wiki).
 
