@@ -1,6 +1,6 @@
 module Docs
   class Babel
-    class EntriesFilter < Docs::EntriesFilter
+    class EntriesV6Filter < Docs::EntriesFilter
       def get_name
         at_css('h1').content
       end

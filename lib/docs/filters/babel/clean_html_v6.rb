@@ -1,6 +1,6 @@
 module Docs
   class Babel
-    class CleanHtmlFilter < Filter
+    class CleanHtmlV6Filter < Filter
       def call
         if root_page?
           doc.inner_html = '<h1>Babel</h1>'

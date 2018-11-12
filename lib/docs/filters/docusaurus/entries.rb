@@ -7,7 +7,8 @@ module Docs
       end
 
       def get_type
-        doc.document.at_css('.navListItemActive').ancestors('.navGroup').first.at_css('h3').content
+        link = doc.document.at_css('.navListItemActive')
+        link && link.ancestors('.navGroup').first.at_css('h3').content
       end
     end
   end
