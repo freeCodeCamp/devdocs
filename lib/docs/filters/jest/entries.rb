@@ -1,12 +1,8 @@
 module Docs
   class Jest
-    class EntriesFilter < Docs::EntriesFilter
-      def get_name
-        at_css('.mainContainer h1').content
-      end
-
+    class EntriesFilter < Docusaurus::EntriesFilter
       def get_type
-        type = at_css('.navListItemActive').ancestors('.navGroup').first.at_css('h3').content
+        type = super
 
         if type == 'Introduction'
           'Guides: Introduction'
@@ -20,7 +16,7 @@ module Docs
       def additional_entries
         return [] unless !root_page? && self.type == self.name # api page
 
-        at_css('.mainContainer ul').css('li > a').map do |node|
+        at_css('ul').css('li > a').map do |node|
           name = node.at_css('code').content.strip
           name.sub! %r{\(.*\)}, '()'
           name.remove! %r{[\s=<].*}
