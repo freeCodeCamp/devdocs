@@ -8,6 +8,8 @@ module Docs
       code: 'https://github.com/prettier/prettier'
     }
 
+    html_filters.push 'docusaurus/entries'
+
     options[:trailing_slash] = false
 
     options[:attribution] = <<-HTML

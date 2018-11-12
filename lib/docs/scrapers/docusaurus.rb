@@ -3,6 +3,6 @@ module Docs
     self.abstract = true
     self.type = 'simple'
 
-    html_filters.push 'docusaurus/clean_html', 'docusaurus/entries'
+    html_filters.push 'docusaurus/clean_html'
   end
 end

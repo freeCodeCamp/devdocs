@@ -7,12 +7,7 @@ module Docs
       end
 
       def get_type
-        doc.document
-          .at_css('.toc .navListItemActive') # toc is for doc pages, toc-headings is for headings
-          .parent # ul
-          .parent # .navGroup
-          .at_css('h3') # title
-          .text
+        doc.document.at_css('.navListItemActive').ancestors('.navGroup').first.at_css('h3').content
       end
     end
   end
