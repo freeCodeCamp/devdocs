@@ -1,5 +1,6 @@
 module Docs
   class ReactNative < Docusaurus
+    self.name = 'React Native'
     self.slug = 'react_native'
     self.type = 'react_native'
     self.release = '0.57'
@@ -15,8 +16,6 @@ module Docs
     options[:container] = '.docMainWrapper'
     options[:skip_patterns] = [/\Asample\-/]
     options[:skip] = %w(
-      transforms
-      troubleshooting
       more-resources
     )
 
