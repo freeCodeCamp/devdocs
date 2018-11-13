@@ -1,10 +1,10 @@
 module Docs
-  class ReactNative < UrlScraper
+  class ReactNative < Docusaurus
     self.slug = 'react_native'
     self.type = 'react_native'
-    self.release = '0.56'
+    self.release = '0.57'
     self.base_url = 'https://facebook.github.io/react-native/docs/'
-    self.root_path = 'getting-started.html'
+    self.root_path = 'getting-started'
     self.links = {
       home: 'https://facebook.github.io/react-native/',
       code: 'https://github.com/facebook/react-native'
@@ -15,10 +15,9 @@ module Docs
     options[:container] = '.docMainWrapper'
     options[:skip_patterns] = [/\Asample\-/]
     options[:skip] = %w(
-      videos.html
-      transforms.html
-      troubleshooting.html
-      more-resources.html
+      transforms
+      troubleshooting
+      more-resources
     )
 
     options[:fix_urls] = ->(url) {
