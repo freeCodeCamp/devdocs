@@ -62,7 +62,7 @@ class DocsCLI < Thor
     Docs.rescue_errors = true
     Docs.install_report :store if options[:verbose]
     Docs.install_report :scraper if options[:debug]
-    Docs.install_report :progress_bar, :doc, :image if $stdout.tty?
+    Docs.install_report :progress_bar, :doc, :image, :requester if $stdout.tty?
 
     require 'unix_utils' if options[:package]
 
