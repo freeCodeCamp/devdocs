@@ -7,6 +7,7 @@ class app.views.SearchScope extends app.View
 
   @events:
     keydown: 'onKeydown'
+    textInput: 'onTextInput'
 
   @routes:
     after: 'afterRoute'
@@ -98,6 +99,12 @@ class app.views.SearchScope extends app.View
          (event.which is 32 and app.isMobile()) # space
         @search @input.value[0...@input.selectionStart]
         $.stopEvent(event) if @doc
+    return
+
+  onTextInput: (event) =>
+    if event.data == ' ' and app.isMobile()
+      @search @input.value[0...@input.selectionStart]
+      $.stopEvent(event) if @doc
     return
 
   extractHashValue: ->
