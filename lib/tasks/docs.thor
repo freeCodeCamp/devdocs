@@ -53,7 +53,7 @@ class DocsCLI < Thor
     Docs.install_report :store if options[:verbose]
     if options[:debug]
       GC.disable
-      Docs.install_report :filter, :request
+      Docs.install_report :filter, :request, :doc
     end
 
     if Docs.generate_page(name, options[:version], path)
