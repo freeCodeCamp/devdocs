@@ -4,7 +4,6 @@ module Docs
 
     self.name = 'Ruby on Rails'
     self.slug = 'rails'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Rails'
     self.initial_paths = %w(guides/index.html)
     self.links = {
       home: 'http://rubyonrails.org/',

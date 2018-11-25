@@ -3,7 +3,6 @@ module Docs
     self.name = 'Nokogiri'
     self.slug = 'nokogiri'
     self.release = '1.8.1'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Nokogiri'
 
     html_filters.replace 'rdoc/entries', 'nokogiri2/entries'
 

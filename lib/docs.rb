@@ -29,6 +29,7 @@ module Docs
   self.rescue_errors = false
 
   class DocNotFound < NameError; end
+  class SetupError < StandardError; end
 
   def self.all
     Dir["#{root_path}/docs/scrapers/**/*.rb"].

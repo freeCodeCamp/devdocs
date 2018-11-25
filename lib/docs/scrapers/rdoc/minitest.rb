@@ -1,9 +1,9 @@
 module Docs
   class Minitest < Rdoc
+     # Run "rake docs" in the gem directory
     self.name = 'Ruby / Minitest'
     self.slug = 'minitest'
     self.release = '5.10.3'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Minitest' # rake docs
     self.links = {
       code: 'https://github.com/seattlerb/minitest'
     }

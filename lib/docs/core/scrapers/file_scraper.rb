@@ -1,14 +1,13 @@
 module Docs
   class FileScraper < Scraper
+    SOURCE_DIRECTORY = File.expand_path '../../../../../docs', __FILE__
+
     Response = Struct.new :body, :url
 
     class << self
-      attr_accessor :dir
-
       def inherited(subclass)
         super
         subclass.base_url = base_url
-        subclass.dir = dir
       end
     end
 
@@ -16,13 +15,25 @@ module Docs
 
     html_filters.push 'clean_local_urls'
 
+    def source_directory
+      @source_directory ||= File.join(SOURCE_DIRECTORY, self.class.path)
+    end
+
     private
 
+    def assert_source_directory_exists
+      unless Dir.exists?(source_directory)
+        raise SetupError, "The #{self.class.name} scraper requires the original documentation files to be stored in the \"#{source_directory}\" directory."
+      end
+    end
+
     def request_one(url)
-      Response.new read_file(file_path_for(url)), URL.parse(url)
+      assert_source_directory_exists
+      Response.new read_file(url_to_path(url)), URL.parse(url)
     end
 
     def request_all(urls)
+      assert_source_directory_exists
       queue = [urls].flatten
       until queue.empty?
         result = yield request_one(queue.shift)
@@ -34,12 +45,12 @@ module Docs
       response.body.present?
     end
 
-    def file_path_for(url)
-      File.join self.class.dir, url.remove(base_url.to_s)
+    def url_to_path(url)
+      url.remove(base_url.to_s)
     end
 
     def read_file(path)
-      File.read(path)
+      File.read(File.join(source_directory, path))
     rescue
       instrument 'warn.doc', msg: "Failed to open file: #{path}"
       nil

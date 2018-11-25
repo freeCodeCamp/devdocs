@@ -3,7 +3,6 @@ module Docs
     self.name = 'C++'
     self.slug = 'cpp'
     self.type = 'c'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/cpp'
     self.base_url = 'http://en.cppreference.com/w/cpp/'
     self.root_path = 'header.html'
 
