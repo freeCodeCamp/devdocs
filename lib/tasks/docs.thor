@@ -15,8 +15,14 @@ class DocsCLI < Thor
   option :packaged, type: :boolean
   def list
     if options[:packaged]
-      names = Dir[File.join(Docs.store_path, '*.tar.gz')].map { |f| File.basename(f, '.tar.gz') }
-      puts names
+      slugs = Dir[File.join(Docs.store_path, '*.tar.gz')].map { |f| File.basename(f, '.tar.gz') }
+      names = find_docs_by_slugs(slugs).map do |doc|
+        name = if doc.version?
+          "#{doc.superclass.to_s.demodulize.underscore}@#{doc.version}"
+        else
+          doc.to_s.demodulize.underscore
+        end
+      end
     else
       names = Docs.all.flat_map do |doc|
         name = doc.to_s.demodulize.underscore
@@ -26,12 +32,12 @@ class DocsCLI < Thor
           name
         end
       end
-
-      output = names.join("\n")
-
-      require 'tty-pager'
-      TTY::Pager.new.page(output)
     end
+
+    output = names.join("\n")
+
+    require 'tty-pager'
+    TTY::Pager.new.page(output)
   end
 
   desc 'page <doc> [path] [--version] [--verbose] [--debug]', 'Generate a page (no indexing)'
