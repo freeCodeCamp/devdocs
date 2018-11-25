@@ -39,6 +39,7 @@ group :docs do
   gem 'progress_bar', require: false
   gem 'unix_utils', require: false
   gem 'tty-pager', require: false
+  gem 'net-sftp', '>= 2.1.3.rc2', require: false
 end
 
 group :test do

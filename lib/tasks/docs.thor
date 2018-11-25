@@ -157,15 +157,36 @@ class DocsCLI < Thor
   option :dryrun, type: :boolean
   option :packaged, type: :boolean
   def upload(*names)
+    require 'net/sftp'
     names = Dir[File.join(Docs.store_path, '*.tar.gz')].map { |f| File.basename(f, '.tar.gz') } if options[:packaged]
     docs = find_docs(names)
     assert_docs(docs)
+
+    # Sync files with S3 (used by the web app)
+    puts '[S3] Begin syncing.'
     docs.each do |doc|
-      puts "Syncing #{doc.path}..."
+      puts "[S3] Syncing #{doc.path}..."
       cmd = "aws s3 sync #{File.join(Docs.store_path, doc.path)} s3://docs.devdocs.io/#{doc.path} --delete"
       cmd << ' --dryrun' if options[:dryrun]
       system(cmd)
     end
+    puts '[S3] Done syncing.'
+
+    # Upload packages to dl.devdocs.io (used by the "thor docs:download" command)
+    puts '[MaxCDN] Begin uploading.'
+    Net::SFTP.start('ftp.devdocs-dl.devdocs.netdna-cdn.com', ENV['DEVDOCS_DL_USERNAME'], password: ENV['DEVDOCS_DL_PASSWORD']) do |sftp|
+      docs.each do |doc|
+        filename = "#{doc.path}.tar.gz"
+        print "[MaxCDN] Uploading #{filename}..."
+        if options[:dryrun]
+          print "\n"
+        else
+          sftp.upload! File.join(Docs.store_path, filename), File.join('', 'public_html', filename)
+          print " OK\n"
+        end
+      end
+    end
+    puts '[MaxCDN] Done uploading.'
   end
 
   desc 'commit', '[private]'
