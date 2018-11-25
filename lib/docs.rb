@@ -74,6 +74,22 @@ module Docs
     end
   end
 
+  def self.find_by_slug(slug, version = nil)
+    doc = all.find { |klass| klass.slug == slug }
+
+    unless doc
+      raise DocNotFound.new(%(could not find doc with "#{slug}"), slug)
+    end
+
+    if version.present?
+      version = doc.versions.find { |klass| klass.version == version || klass.version_slug == version }
+      raise DocNotFound.new(%(could not find version "#{version}" for doc "#{doc.name}"), doc.name) unless version
+      doc = version
+    end
+
+    doc
+  end
+
   def self.generate_page(name, version, page_id)
     find(name, version).store_page(store, page_id)
   end

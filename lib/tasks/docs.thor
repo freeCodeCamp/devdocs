@@ -158,8 +158,14 @@ class DocsCLI < Thor
   option :packaged, type: :boolean
   def upload(*names)
     require 'net/sftp'
-    names = Dir[File.join(Docs.store_path, '*.tar.gz')].map { |f| File.basename(f, '.tar.gz') } if options[:packaged]
-    docs = find_docs(names)
+
+    if options[:packaged]
+      slugs = Dir[File.join(Docs.store_path, '*.tar.gz')].map { |f| File.basename(f, '.tar.gz') }
+      docs = find_docs_by_slugs(slugs)
+    else
+      docs = find_docs(names)
+    end
+
     assert_docs(docs)
 
     # Sync files with S3 (used by the web app)
@@ -248,6 +254,13 @@ class DocsCLI < Thor
       else
         Docs.find(name, version)
       end
+    end
+  end
+
+  def find_docs_by_slugs(slugs)
+    slugs.flat_map do |slug|
+      slug, version = slug.split(/~/)
+      Docs.find_by_slug(slug, version)
     end
   end
 
