@@ -6,6 +6,7 @@ class app.views.SearchScope extends app.View
     tag:   '._search-tag'
 
   @events:
+    click: 'onClick'
     keydown: 'onKeydown'
 
   @routes:
@@ -87,11 +88,19 @@ class app.views.SearchScope extends app.View
     @trigger 'change', null, previousDoc
     return
 
+  onClick: (event) =>
+    if event.target is @tag
+      @reset()
+      $.trigger @input, 'input'
+      $.stopEvent(event)
+    return
+
   onKeydown: (event) =>
     if event.which is 8 # backspace
-      if @doc and not @input.value
-        $.stopEvent(event)
+      if @doc and @input.selectionEnd is 0
         @reset()
+        $.trigger @input, 'input'
+        $.stopEvent(event)
     else if not @doc and @input.value
       return if event.ctrlKey or event.metaKey or event.altKey or event.shiftKey
       if event.which is 9 or # tab
