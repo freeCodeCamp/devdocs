@@ -12,18 +12,26 @@ class DocsCLI < Thor
   end
 
   desc 'list', 'List available documentations'
+  option :packaged, type: :boolean
   def list
-    output = Docs.all.flat_map do |doc|
-      name = doc.to_s.demodulize.underscore
-      if doc.versioned?
-        doc.versions.map { |_doc| "#{name}@#{_doc.version}" }
-      else
-        name
+    if options[:packaged]
+      names = Dir[File.join(Docs.store_path, '*.tar.gz')].map { |f| File.basename(f, '.tar.gz') }
+      puts names
+    else
+      names = Docs.all.flat_map do |doc|
+        name = doc.to_s.demodulize.underscore
+        if doc.versioned?
+          doc.versions.map { |_doc| "#{name}@#{_doc.version}" }
+        else
+          name
+        end
       end
-    end.join("\n")
 
-    require 'tty-pager'
-    TTY::Pager.new.page(output)
+      output = names.join("\n")
+
+      require 'tty-pager'
+      TTY::Pager.new.page(output)
+    end
   end
 
   desc 'page <doc> [path] [--version] [--verbose] [--debug]', 'Generate a page (no indexing)'
