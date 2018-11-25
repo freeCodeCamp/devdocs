@@ -12,7 +12,7 @@ class App < Sinatra::Application
   Rack::Mime::MIME_TYPES['.webapp'] = 'application/x-web-app-manifest+json'
 
   configure do
-    use Rack::SslEnforcer, only_environments: ['production', 'test'], hsts: false, force_secure_cookies: false
+    use Rack::SslEnforcer, only_environments: ['production', 'test'], hsts: true, force_secure_cookies: false
 
     set :sentry_dsn, ENV['SENTRY_DSN']
     set :protection, except: [:frame_options, :xss_header]
