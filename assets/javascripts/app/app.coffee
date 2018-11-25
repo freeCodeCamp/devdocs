@@ -158,7 +158,7 @@
     @updateChecker = new app.UpdateChecker()
 
   reboot: ->
-    if location.pathname isnt '/'
+    if location.pathname isnt '/' and location.pathname isnt '/settings'
       window.location = "/##{location.pathname}"
     else
       window.location = '/'
