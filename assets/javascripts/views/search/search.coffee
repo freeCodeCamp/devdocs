@@ -143,6 +143,7 @@ class app.views.Search extends app.View
 
   onScopeChange: =>
     @value = ''
+    @onInput()
     return
 
   afterRoute: (name, context) =>

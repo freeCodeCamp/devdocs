@@ -91,7 +91,6 @@ class app.views.SearchScope extends app.View
   onClick: (event) =>
     if event.target is @tag
       @reset()
-      $.trigger @input, 'input'
       $.stopEvent(event)
     return
 
@@ -99,7 +98,6 @@ class app.views.SearchScope extends app.View
     if event.which is 8 # backspace
       if @doc and @input.selectionEnd is 0
         @reset()
-        $.trigger @input, 'input'
         $.stopEvent(event)
     else if not @doc and @input.value
       return if event.ctrlKey or event.metaKey or event.altKey or event.shiftKey
