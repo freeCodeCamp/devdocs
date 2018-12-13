@@ -2,8 +2,7 @@ module Docs
   class Pony < UrlScraper
     self.type = 'pony'
     self.release = '0.25.0'
-    self.base_url = 'http://localhost:2015'
-    #self.base_url = 'https://stdlib.ponylang.io/'
+    self.base_url = 'https://stdlib.ponylang.io/'
 
     html_filters.push 'pony/container', 'pony/entries', 'pony/clean_html'
     options[:attribution] = "Me"
