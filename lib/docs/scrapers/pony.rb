@@ -6,6 +6,7 @@ module Docs
 
     html_filters.push 'pony/container', 'pony/clean_html', 'pony/entries'
     options[:attribution] = "Me"
-    options[:follow_links] = ->(filter) { filter.subpath !~ /src/ }
+    options[:trailing_slash] = false
+    options[:skip_patterns] = [/src/]
   end
 end
