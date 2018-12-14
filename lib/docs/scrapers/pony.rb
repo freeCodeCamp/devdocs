@@ -4,8 +4,9 @@ module Docs
     self.release = '0.25.0'
     self.base_url = 'https://stdlib.ponylang.io/'
 
-    html_filters.push 'pony/container', 'pony/clean_html', 'pony/entries'
+    html_filters.push 'pony/container', 'pony/entries'
     options[:attribution] = "Me"
+
     options[:trailing_slash] = false
     options[:skip_patterns] = [/src/]
   end
