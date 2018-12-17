@@ -27,8 +27,6 @@ Want to contribute? Great. Please review the following guidelines carefully and 
 2. Make sure your feature fits DevDocs's [vision](https://github.com/freeCodeCamp/devdocs/blob/master/README.md#vision).
 3. Provide a clear and detailed explanation of the feature and why it's important to add it.
 
-For general feedback and ideas, please use the [mailing list](https://groups.google.com/d/forum/devdocs).
-
 ## Requesting new documentations
 
 Please don't open issues to request new documentations.  
@@ -70,7 +68,7 @@ To ask that an existing documentation be updated, please use the [Trello board](
 Besides new docs and features, here are other ways you can contribute:
 
 * **Improve our copy.** English isn't my first language so if you notice grammatical or usage errors, feel free to submit a pull request — it'll be much appreciated.
-* **Participate in the issue tracker.** Your opinion matters — feel free to add comments to existing issues. You're also welcome to participate to the [mailing list](https://groups.google.com/d/forum/devdocs).
+* **Participate in the issue tracker.** Your opinion matters — feel free to add comments to existing issues.
 
 ## Coding conventions
 
@@ -80,4 +78,4 @@ Besides new docs and features, here are other ways you can contribute:
 
 ## Questions?
 
-If you have any questions, please feel free to ask on the [mailing list](https://groups.google.com/d/forum/devdocs).
+If you have any questions, please feel free to ask them on the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs).

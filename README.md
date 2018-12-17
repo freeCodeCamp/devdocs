@@ -9,7 +9,6 @@ Keep track of development news:
 * Join the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs)
 * Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
-* Join the [mailing list](https://groups.google.com/d/forum/devdocs)
 
 **Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [License](#copyright--license) · [Questions?](#questions)
 
@@ -145,4 +144,4 @@ I also wish that any documentation file generated using this software be attribu
 
 ## Questions?
 
-If you have any questions, please feel free to ask them on the [mailing list](https://groups.google.com/d/forum/devdocs).
+If you have any questions, please feel free to ask them on the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs).

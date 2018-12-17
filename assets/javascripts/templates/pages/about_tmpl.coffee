@@ -21,7 +21,7 @@ app.templates.aboutPage = -> """
   <ul>
     <li>Follow <a href="https://twitter.com/DevDocs">@DevDocs</a> on Twitter
     <li>Watch the repository on <a href="https://github.com/freeCodeCamp/devdocs/subscription">GitHub</a>
-    <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
+    <li>Join the <a href="https://gitter.im/FreeCodeCamp/DevDocs">Gitter</a> chat room
   </ul>
 
   <h2 class="_block-heading" id="copyright">Copyright and License</h2>
@@ -48,7 +48,7 @@ app.templates.aboutPage = -> """
     <dt>Where can I suggest new docs and features?
     <dd>You can suggest and vote for new docs on the <a href="https://trello.com/b/6BmTulfx/devdocs-documentation">Trello board</a>.<br>
         If you have a specific feature request, add it to the <a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>.<br>
-        Otherwise use the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>.
+        Otherwise, come talk to us in the <a href="https://gitter.im/FreeCodeCamp/DevDocs">Gitter</a> chat room.
     <dt>Where can I report bugs?
     <dd>In the <a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>. Thanks!
   </dl>
