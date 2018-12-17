@@ -63,13 +63,6 @@ Please don't submit a pull request updating the version number of a documentatio
 
 To ask that an existing documentation be updated, please use the [Trello board](https://trello.com/c/2B0hmW7M/52-request-updates-here).
 
-## Other contributions
-
-Besides new docs and features, here are other ways you can contribute:
-
-* **Improve our copy.** English isn't my first language so if you notice grammatical or usage errors, feel free to submit a pull request — it'll be much appreciated.
-* **Participate in the issue tracker.** Your opinion matters — feel free to add comments to existing issues.
-
 ## Coding conventions
 
 * two spaces; no tabs
