@@ -7,7 +7,9 @@ module Docs
     html_filters.push 'pony/container', 'pony/entries'
 
     options[:attribution] = <<-HTML
-      &copy; 2018 Pony Developers
+      &copy; 2016-2018, The Pony Developers<br>
+      &copy; 2014-2015, Causality Ltd.<br>
+      Licensed under the <a href="https://github.com/ponylang/ponyc/blob/master/LICENSE">BSD 2-Clause License</a>
     HTML
 
     options[:trailing_slash] = false
