@@ -174,6 +174,19 @@ class DocsCLI < Thor
 
     assert_docs(docs)
 
+    # Verify files are present
+    docs.each do |doc|
+      unless Dir.exists?(File.join(Docs.store_path, doc.path))
+        puts "ERROR: directory #{File.join(Docs.store_path, doc.path)} not found."
+        return
+      end
+
+      unless File.exists?(File.join(Docs.store_path, "#{doc.path}.tar.gz"))
+        puts "ERROR: package for '#{doc.slug}' documentation not found. Run 'thor docs:package #{doc.slug}' to create it."
+        return
+      end
+    end
+
     # Sync files with S3 (used by the web app)
     puts '[S3] Begin syncing.'
     docs.each do |doc|
