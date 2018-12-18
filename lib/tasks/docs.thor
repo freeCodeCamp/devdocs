@@ -178,7 +178,7 @@ class DocsCLI < Thor
     puts '[S3] Begin syncing.'
     docs.each do |doc|
       puts "[S3] Syncing #{doc.path}..."
-      cmd = "aws s3 sync #{File.join(Docs.store_path, doc.path)} s3://docs.devdocs.io/#{doc.path} --delete"
+      cmd = "aws s3 sync #{File.join(Docs.store_path, doc.path)} s3://devdocs-assets/#{doc.path} --delete --profile devdocs"
       cmd << ' --dryrun' if options[:dryrun]
       system(cmd)
     end
