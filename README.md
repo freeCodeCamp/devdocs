@@ -1,8 +1,8 @@
-# [DevDocs](https://devdocs.io) [![Build Status](https://travis-ci.org/freeCodeCamp/devdocs.svg?branch=master)](https://travis-ci.org/freeCodeCamp/devdocs)
+# [DevDocs](https://devdocs.io) — API Documentation Browser [![Build Status](https://travis-ci.org/freeCodeCamp/devdocs.svg?branch=master)](https://travis-ci.org/freeCodeCamp/devdocs)
 
-DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
+DevDocs combines multiple developer documentations in a clean and organized web UI with instant search, offline support, mobile version, dark theme, keyboard shortcuts, and more.
 
-* Created by [Thibaut Courouble](https://thibaut.me)
+DevDocs was created by [Thibaut Courouble](https://thibaut.me) and is operated by [freeCodeCamp](https://www.freecodecamp.org).
 
 Keep track of development news:
 
@@ -14,7 +14,7 @@ Keep track of development news:
 
 ## Quick Start
 
-Unless you wish to contribute to the project, I recommend using the hosted version at [devdocs.io](https://devdocs.io). It's up-to-date and works offline out-of-the-box.
+Unless you wish to contribute to the project, we recommend using the hosted version at [devdocs.io](https://devdocs.io). It's up-to-date and works offline out-of-the-box.
 
 DevDocs is made of two pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
@@ -138,9 +138,9 @@ Copyright 2013-2018 Thibaut Courouble and [other contributors](https://github.co
 
 This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](https://github.com/freeCodeCamp/devdocs/blob/master/COPYRIGHT) and [LICENSE](https://github.com/freeCodeCamp/devdocs/blob/master/LICENSE) files.
 
-Please do not use the name DevDocs to endorse or promote products derived from this software without my permission, except as may be necessary to comply with the notice/attribution requirements.
+Please do not use the name DevDocs to endorse or promote products derived from this software without the maintainers' permission, except as may be necessary to comply with the notice/attribution requirements.
 
-I also wish that any documentation file generated using this software be attributed to DevDocs. Let's be fair to all contributors by giving credit where credit's due. Thanks!
+We also wish that any documentation file generated using this software be attributed to DevDocs. Let's be fair to all contributors by giving credit where credit's due. Thanks!
 
 ## Questions?
 

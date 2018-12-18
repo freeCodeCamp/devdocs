@@ -35,7 +35,7 @@ Use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) wher
 ## Contributing code and features
 
 1. Search for existing issues; someone may already be working on a similar feature.
-2. Before embarking on any significant pull request, please open an issue describing the changes you intend to make. Otherwise you risk spending a lot of time working on something I may not want to merge. This also tells other contributors that you're working on the feature.
+2. Before embarking on any significant pull request, please open an issue describing the changes you intend to make. Otherwise you risk spending a lot of time working on something we may not want to merge. This also tells other contributors that you're working on the feature.
 3. Follow the [coding conventions](#coding-conventions).
 4. If you're modifying the Ruby code, include tests and ensure they pass.
 5. Try to keep your pull request small and simple.
