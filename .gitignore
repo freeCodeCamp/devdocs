@@ -4,4 +4,5 @@ tmp
 public/assets
 public/fonts
 public/docs/**/*
-/docs/
+docs/**/*
+!docs/*.md
