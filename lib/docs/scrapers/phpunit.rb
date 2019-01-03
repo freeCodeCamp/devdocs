@@ -19,9 +19,14 @@ module Docs
       appendixes.copyright.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2017 Sebastian Bergmann<br>
+      &copy; 2005&ndash;2018 Sebastian Bergmann<br>
       Licensed under the Creative Commons Attribution 3.0 Unported License.
     HTML
+
+    version '7' do
+      self.release = '7.4'
+      self.base_url = "https://phpunit.readthedocs.io/en/#{release}/"
+    end
 
     version '6' do
       self.release = '6.5'
