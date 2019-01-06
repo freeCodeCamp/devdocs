@@ -1,0 +1,14 @@
+version: "3.4"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-alpine
+    ports:
+      - "9292:9292"
+    volumes:
+      - .:/devdocs
+      - docs:/devdocs/public/docs # dont mount the "docs" folder so we use the content from the container.
+
+volumes:
+  docs:
