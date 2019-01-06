@@ -6,9 +6,9 @@ DevDocs was created by [Thibaut Courouble](https://thibaut.me) and is operated b
 
 Keep track of development news:
 
-* Join the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs)
-* Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
-* Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
+- Join the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs)
+- Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
+- Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 
 **Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [License](#copyright--license) · [Questions?](#questions)
 
@@ -45,6 +45,12 @@ docker build -t thibaut/devdocs .
 docker run --name devdocs -d -p 9292:9292 thibaut/devdocs
 ```
 
+Or using docker-compose:
+
+```
+docker-compose up
+```
+
 ## Vision
 
 DevDocs aims to make reading and searching reference documentation fast, easy and enjoyable.
@@ -63,10 +69,10 @@ Another driving factor is performance and the fact that everything happens in th
 
 DevDocs being a developer tool, the browser requirements are high:
 
-* Recent versions of Firefox, Chrome, or Opera
-* Safari 9.1+
-* Edge 16+
-* iOS 10+
+- Recent versions of Firefox, Chrome, or Opera
+- Safari 9.1+
+- Edge 16+
+- iOS 10+
 
 This allows the code to take advantage of the latest DOM and HTML5 APIs and make developing DevDocs a lot more fun!
 
@@ -78,11 +84,11 @@ There are currently two kinds of scrapers: `UrlScraper` which downloads files vi
 
 Modifications made to each document include:
 
-* removing content such as the document structure (`<html>`, `<head>`, etc.), comments, empty nodes, etc.
-* fixing links (e.g. to remove duplicates)
-* replacing all external (not scraped) URLs with their fully qualified counterpart
-* replacing all internal (scraped) URLs with their unqualified and relative counterpart
-* adding content, such as a title and link to the original document
+- removing content such as the document structure (`<html>`, `<head>`, etc.), comments, empty nodes, etc.
+- fixing links (e.g. to remove duplicates)
+- replacing all external (not scraped) URLs with their fully qualified counterpart
+- replacing all internal (scraped) URLs with their unqualified and relative counterpart
+- adding content, such as a title and link to the original document
 
 These modifications are applied via a set of filters using the [HTML::Pipeline](https://github.com/jch/html-pipeline) library. Each scraper includes filters specific to itself, one of which is tasked with figuring out the pages' metadata.
 
