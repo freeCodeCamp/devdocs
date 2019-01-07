@@ -1,14 +1,14 @@
-Adding a documentation may look like a daunting task but once you get the hang of it, it's actually quite simple. Don't hesitate to ask for help on the [mailing list](https://groups.google.com/d/forum/devdocs) if you ever get stuck.
+Adding a documentation may look like a daunting task but once you get the hang of it, it's actually quite simple. Don't hesitate to ask for help [in Gitter](https://gitter.im/FreeCodeCamp/DevDocs) if you ever get stuck.
 
 **Note:** please read the [contributing guidelines](https://github.com/Thibaut/devdocs/blob/master/.github/CONTRIBUTING.md) before submitting a new documentation.
 
 1. Create a subclass of `Docs::UrlScraper` or `Docs::FileScraper` in the `lib/docs/scrapers/` directory. Its name should be the [PascalCase](http://api.rubyonrails.org/classes/String.html#method-i-camelize) equivalent of the filename (e.g. `my_doc` → `MyDoc`)
-2. Add the appropriate class attributes and filter options (see the [Scraper Reference](https://github.com/Thibaut/devdocs/wiki/Scraper-Reference) page).
+2. Add the appropriate class attributes and filter options (see the [Scraper Reference](./scraper-reference.md) page).
 3. Check that the scraper is listed in `thor docs:list`.
-4. Create filters specific to the scraper in the `lib/docs/filters/[my_doc]/` directory and add them to the class's [filter stacks](https://github.com/Thibaut/devdocs/wiki/Scraper-Reference#filter-stacks). You may create any number of filters but will need at least the following two:
-   * A [`CleanHtml`](https://github.com/Thibaut/devdocs/wiki/Filter-Reference#cleanhtmlfilter) filter whose task is to clean the HTML markup (e.g. adding `id` attributes to headings) and remove everything superfluous and/or nonessential.
-   * An [`Entries`](https://github.com/Thibaut/devdocs/wiki/Filter-Reference#entriesfilter) filter whose task is to determine the pages' metadata (the list of entries, each with a name, type and path).
-   The [Filter Reference](https://github.com/Thibaut/devdocs/wiki/Filter-Reference) page has all the details about filters.
+4. Create filters specific to the scraper in the `lib/docs/filters/[my_doc]/` directory and add them to the class's [filter stacks](./scraper-reference.md#filter-stacks). You may create any number of filters but will need at least the following two:
+   * A [`CleanHtml`](./filter-reference.md#cleanhtmlfilter) filter whose task is to clean the HTML markup (e.g. adding `id` attributes to headings) and remove everything superfluous and/or nonessential.
+   * An [`Entries`](./filter-reference.md#entriesfilter) filter whose task is to determine the pages' metadata (the list of entries, each with a name, type and path).
+   The [Filter Reference](./filter-reference.md) page has all the details about filters.
 5. Using the `thor docs:page [my_doc] [path]` command, check that the scraper works properly. Files will appear in the `public/docs/[my_doc]/` directory (but not inside the app as the command doesn't touch the index). `path` in this case refers to either the remote path (if using `UrlScraper`) or the local path (if using `FileScraper`).
 6. Generate the full documentation using the `thor docs:generate [my_doc] --force` command. Additionally, you can use the `--verbose` option to see which files are being created/updated/deleted (useful to see what changed since the last run), and the `--debug` option to see which URLs are being requested and added to the queue (useful to pin down which page adds unwanted URLs to the queue).
 7. Start the server, open the app, enable the documentation, and see how everything plays out.

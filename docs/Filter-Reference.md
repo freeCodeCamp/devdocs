@@ -1,13 +1,11 @@
----
-
 **Table of contents:**
 
-* [Overview](https://github.com/Thibaut/devdocs/wiki/Filter-Reference#overview)
-* [Instance methods](https://github.com/Thibaut/devdocs/wiki/Filter-Reference#instance-methods)
-* [Core filters](https://github.com/Thibaut/devdocs/wiki/Filter-Reference#core-filters)
-* [Custom filters](https://github.com/Thibaut/devdocs/wiki/Filter-Reference#custom-filters)
-  - [CleanHtmlFilter](https://github.com/Thibaut/devdocs/wiki/Filter-Reference#cleanhtmlfilter)
-  - [EntriesFilter](https://github.com/Thibaut/devdocs/wiki/Filter-Reference#entriesfilter)
+* [Overview](#overview)
+* [Instance methods](#instance-methods)
+* [Core filters](#core-filters)
+* [Custom filters](#custom-filters)
+  - [CleanHtmlFilter](#cleanhtmlfilter)
+  - [EntriesFilter](#entriesfilter)
 
 ## Overview
 
@@ -25,52 +23,52 @@ module Docs
 end
 ```
 
-Filters which manipulate the Nokogiri node object (`doc` and related methods) are _HTML filters_ and must not manipulate the HTML string (`html`). Vice-versa, filters which manipulate the string representation of the document are _text filters_ and must not manipulate the Nokogiri node object. The two types are divided into two stacks within the scrapers. These stacks are then combined into a pipeline that calls the HTML filters before the text filters (more details [here](https://github.com/Thibaut/devdocs/wiki/Scraper-Reference#filter-stacks)). This is to avoid parsing the document multiple times.
+Filters which manipulate the Nokogiri node object (`doc` and related methods) are _HTML filters_ and must not manipulate the HTML string (`html`). Vice-versa, filters which manipulate the string representation of the document are _text filters_ and must not manipulate the Nokogiri node object. The two types are divided into two stacks within the scrapers. These stacks are then combined into a pipeline that calls the HTML filters before the text filters (more details [here](./scraper-reference.md#filter-stacks)). This is to avoid parsing the document multiple times.
 
 The `call` method must return either `doc` or `html`, depending on the type of filter.
 
 ## Instance methods
 
-* `doc` [Nokogiri::XML::Node]  
-  The Nokogiri representation of the container element.  
+* `doc` [Nokogiri::XML::Node]
+  The Nokogiri representation of the container element.
   See [Nokogiri's API docs](http://www.rubydoc.info/github/sparklemotion/nokogiri/Nokogiri/XML/Node) for the list of available methods.
 
-* `html` [String]  
+* `html` [String]
   The string representation of the container element.
-  
-* `context` [Hash] **(frozen)**  
+
+* `context` [Hash] **(frozen)**
   The scraper's `options` along with a few additional keys: `:base_url`, `:root_url`, `:root_page` and `:url`.
 
-* `result` [Hash]  
-  Used to store the page's metadata and pass back information to the scraper.  
+* `result` [Hash]
+  Used to store the page's metadata and pass back information to the scraper.
   Possible keys:
-  
+
   - `:path` — the page's normalized path
   - `:store_path` — the path where the page will be stored (equal to `:path` with `.html` at the end)
   - `:internal_urls` — the list of distinct internal URLs found within the page
   - `:entries` — the [`Entry`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/core/models/entry.rb) objects to add to the index
 
-* `css`, `at_css`, `xpath`, `at_xpath`  
+* `css`, `at_css`, `xpath`, `at_xpath`
   Shortcuts for `doc.css`, `doc.xpath`, etc.
 
-* `base_url`, `current_url`, `root_url` [Docs::URL]  
+* `base_url`, `current_url`, `root_url` [Docs::URL]
   Shortcuts for `context[:base_url]`, `context[:url]`, and `context[:root_url]` respectively.
-  
-* `root_path` [String]  
+
+* `root_path` [String]
   Shortcut for `context[:root_path]`.
 
-* `subpath` [String]  
-  The sub-path from the base URL of the current URL.  
+* `subpath` [String]
+  The sub-path from the base URL of the current URL.
   _Example: if `base_url` equals `example.com/docs` and `current_url` equals `example.com/docs/file?raw`, the returned value is `/file`._
 
-* `slug` [String]  
-  The `subpath` removed of any leading slash or `.html` extension.  
+* `slug` [String]
+  The `subpath` removed of any leading slash or `.html` extension.
   _Example: if `subpath` equals `/dir/file.html`, the returned value is `dir/file`._
 
-* `root_page?` [Boolean]  
+* `root_page?` [Boolean]
   Returns `true` if the current page is the root page.
 
-* `initial_page?` [Boolean]  
+* `initial_page?` [Boolean]
   Returns `true` if the current page is the root page or its subpath is one of the scraper's `initial_paths`.
 
 ## Core filters
@@ -148,34 +146,34 @@ The following two models are used under the hood to represent the metadata:
 
 Each scraper must implement its own `EntriesFilter` by subclassing the [`Docs::EntriesFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/entries.rb) class. The base class already implements the `call` method and includes four methods which the subclasses can override:
 
-* `get_name` [String]  
-  The name of the default entry (aka. the page's name).  
-  It is usually guessed from the `slug` (documented above) or by searching the HTML markup.  
+* `get_name` [String]
+  The name of the default entry (aka. the page's name).
+  It is usually guessed from the `slug` (documented above) or by searching the HTML markup.
   **Default:** modified version of `slug` (underscores are replaced with spaces and forward slashes with dots)
 
-* `get_type` [String]  
-  The type of the default entry (aka. the page's type).  
-  Entries without a type can be searched for but won't be listed in the app's sidebar (unless no other entries have a type).  
+* `get_type` [String]
+  The type of the default entry (aka. the page's type).
+  Entries without a type can be searched for but won't be listed in the app's sidebar (unless no other entries have a type).
   **Default:** `nil`
 
-* `include_default_entry?` [Boolean]  
-  Whether to include the default entry.  
-  Used when a page consists of multiple entries (returned by `additional_entries`) but doesn't have a name/type of its own, or to remove a page from the index (if it has no additional entries), in which case it won't be copied on the local filesystem and any link to it in the other pages will be broken (as explained on the [Scraper Reference](https://github.com/Thibaut/devdocs/wiki/Scraper-Reference) page, this is used to keep the `:skip` / `:skip_patterns` options to a maintainable size, or if the page includes links that can't reached from anywhere else).  
+* `include_default_entry?` [Boolean]
+  Whether to include the default entry.
+  Used when a page consists of multiple entries (returned by `additional_entries`) but doesn't have a name/type of its own, or to remove a page from the index (if it has no additional entries), in which case it won't be copied on the local filesystem and any link to it in the other pages will be broken (as explained on the [Scraper Reference](./scraper-reference.md) page, this is used to keep the `:skip` / `:skip_patterns` options to a maintainable size, or if the page includes links that can't reached from anywhere else).
   **Default:** `true`
 
-* `additional_entries` [Array]  
-  The list of additional entries.  
-  Each entry is represented by an Array of three attributes: its name, fragment identifier, and type. The fragment identifier refers to the `id` attribute of the HTML element (usually a heading) that the entry relates to. It is combined with the page's path to become the entry's path. If absent or `nil`, the page's path is used. If the type is absent or `nil`, the default `type` is used.  
-  Example: `[ ['One'], ['Two', 'id'], ['Three', nil, 'type'] ]` adds three additional entries, the first one named "One" with the default path and type, the second one named "Two" with the URL fragment "#id" and the default type, and the third one named "Three" with the default path and the type "type".  
-  The list is usually constructed by running through the markup. Exceptions can also be hard-coded for specific pages.  
+* `additional_entries` [Array]
+  The list of additional entries.
+  Each entry is represented by an Array of three attributes: its name, fragment identifier, and type. The fragment identifier refers to the `id` attribute of the HTML element (usually a heading) that the entry relates to. It is combined with the page's path to become the entry's path. If absent or `nil`, the page's path is used. If the type is absent or `nil`, the default `type` is used.
+  Example: `[ ['One'], ['Two', 'id'], ['Three', nil, 'type'] ]` adds three additional entries, the first one named "One" with the default path and type, the second one named "Two" with the URL fragment "#id" and the default type, and the third one named "Three" with the default path and the type "type".
+  The list is usually constructed by running through the markup. Exceptions can also be hard-coded for specific pages.
   **Default:** `[]`
 
 The following accessors are also available, but must not be overridden:
 
-* `name` [String]  
+* `name` [String]
   Memoized version of `get_name` (`nil` for the root page).
 
-* `type` [String]  
+* `type` [String]
   Memoized version of `get_type` (`nil` for the root page).
 
 **Notes:**
