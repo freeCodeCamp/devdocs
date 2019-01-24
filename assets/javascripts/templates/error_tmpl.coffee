@@ -62,12 +62,12 @@ app.templates.unsupportedBrowser = """
       <li>iOS 10+
     </ul>
     <p class="_fail-text">
-      If you're unable to upgrade, I apologize.
-      I decided to prioritize speed and new features over support for older browsers.
+      If you're unable to upgrade, we apologize.
+      We decided to prioritize speed and new features over support for older browsers.
     <p class="_fail-text">
       Note: if you're already using one of the browsers above, check your settings and add-ons.
       The app uses feature detection, not user agent sniffing.
     <p class="_fail-text">
-      &mdash; Thibaut <a href="https://twitter.com/DevDocs" class="_fail-link">@DevDocs</a>
+      &mdash; <a href="https://twitter.com/DevDocs">@DevDocs</a>
   </div>
 """

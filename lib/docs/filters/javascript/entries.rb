@@ -88,7 +88,7 @@ module Docs
       end
 
       def include_default_entry?
-        node = doc.at_css '.overheadIndicator, .warning'
+        node = doc.at_css '.blockIndicator, .warning'
 
         # Can't use :first-child because #doc is a DocumentFragment
         return true unless node && node.parent == doc && !node.previous_element

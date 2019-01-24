@@ -27,8 +27,6 @@ Want to contribute? Great. Please review the following guidelines carefully and 
 2. Make sure your feature fits DevDocs's [vision](https://github.com/freeCodeCamp/devdocs/blob/master/README.md#vision).
 3. Provide a clear and detailed explanation of the feature and why it's important to add it.
 
-For general feedback and ideas, please use the [mailing list](https://groups.google.com/d/forum/devdocs).
-
 ## Requesting new documentations
 
 Please don't open issues to request new documentations.  
@@ -37,7 +35,7 @@ Use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) wher
 ## Contributing code and features
 
 1. Search for existing issues; someone may already be working on a similar feature.
-2. Before embarking on any significant pull request, please open an issue describing the changes you intend to make. Otherwise you risk spending a lot of time working on something I may not want to merge. This also tells other contributors that you're working on the feature.
+2. Before embarking on any significant pull request, please open an issue describing the changes you intend to make. Otherwise you risk spending a lot of time working on something we may not want to merge. This also tells other contributors that you're working on the feature.
 3. Follow the [coding conventions](#coding-conventions).
 4. If you're modifying the Ruby code, include tests and ensure they pass.
 5. Try to keep your pull request small and simple.
@@ -65,13 +63,6 @@ Please don't submit a pull request updating the version number of a documentatio
 
 To ask that an existing documentation be updated, please use the [Trello board](https://trello.com/c/2B0hmW7M/52-request-updates-here).
 
-## Other contributions
-
-Besides new docs and features, here are other ways you can contribute:
-
-* **Improve our copy.** English isn't my first language so if you notice grammatical or usage errors, feel free to submit a pull request — it'll be much appreciated.
-* **Participate in the issue tracker.** Your opinion matters — feel free to add comments to existing issues. You're also welcome to participate to the [mailing list](https://groups.google.com/d/forum/devdocs).
-
 ## Coding conventions
 
 * two spaces; no tabs
@@ -80,4 +71,4 @@ Besides new docs and features, here are other ways you can contribute:
 
 ## Questions?
 
-If you have any questions, please feel free to ask on the [mailing list](https://groups.google.com/d/forum/devdocs).
+If you have any questions, please feel free to ask them on the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs).

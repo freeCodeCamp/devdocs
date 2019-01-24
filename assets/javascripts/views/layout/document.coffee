@@ -77,7 +77,7 @@ class app.views.Document extends app.View
     switch target.getAttribute('data-behavior')
       when 'back'         then history.back()
       when 'reload'       then window.location.reload()
-      when 'reboot'       then window.location = '/'
+      when 'reboot'       then app.reboot()
       when 'hard-reload'  then app.reload()
       when 'reset'        then app.reset() if confirm('Are you sure you want to reset DevDocs?')
     return

@@ -95,6 +95,9 @@ module Docs
             false
           end
         end
+      rescue Docs::SetupError => error
+        puts "ERROR: #{error.message}"
+        false
       end
 
       def store_pages(store)
@@ -118,6 +121,9 @@ module Docs
             false
           end
         end
+      rescue Docs::SetupError => error
+        puts "ERROR: #{error.message}"
+        false
       end
 
       private

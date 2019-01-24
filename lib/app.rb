@@ -12,7 +12,7 @@ class App < Sinatra::Application
   Rack::Mime::MIME_TYPES['.webapp'] = 'application/x-web-app-manifest+json'
 
   configure do
-    use Rack::SslEnforcer, only_environments: ['production', 'test'], hsts: false, force_secure_cookies: false
+    use Rack::SslEnforcer, only_environments: ['production', 'test'], hsts: true, force_secure_cookies: false
 
     set :sentry_dsn, ENV['SENTRY_DSN']
     set :protection, except: [:frame_options, :xss_header]
@@ -69,7 +69,7 @@ class App < Sinatra::Application
     set :static, false
     set :cdn_origin, 'https://cdn.devdocs.io'
     set :docs_origin, '//docs.devdocs.io'
-    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
     use Rack::ETag

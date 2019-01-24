@@ -2,7 +2,6 @@ module Docs
   class Numpy < FileScraper
     self.name = 'NumPy'
     self.type = 'sphinx'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/numpy/reference/'
     self.root_path = 'index.html'
     self.links = {
       home: 'http://www.numpy.org/',

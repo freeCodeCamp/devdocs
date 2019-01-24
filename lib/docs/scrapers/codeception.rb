@@ -2,7 +2,7 @@ module Docs
   class Codeception < UrlScraper
     self.name = 'Codeception'
     self.type = 'codeception'
-    self.release = '2.4.0'
+    self.release = '2.5.1'
     self.base_url = 'https://codeception.com/docs/'
     self.root_path = 'index.html'
     self.links = {
