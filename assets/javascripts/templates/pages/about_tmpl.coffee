@@ -596,6 +596,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/facebook/react/master/LICENSE'
   ], [
+    'ReactiveX',
+    'ReactiveX contributors',
+    'Apache',
+    'https://raw.githubusercontent.com/ReactiveX/reactivex.github.io/develop/LICENSE'
+  ], [
     'Redis',
     '2009-2018 Salvatore Sanfilippo',
     'CC BY-SA',
