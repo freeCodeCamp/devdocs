@@ -94,6 +94,8 @@ class app.views.DocList extends app.View
     $.stopEvent(event)
     doc = app.docs.findBy 'slug', event.target.getAttribute('data-slug')
 
+    @setFaviconForDoc(doc)
+
     if doc and not @lists[doc.slug]
       @lists[doc.slug] = if doc.types.isEmpty()
         new app.views.EntryList doc.entries.all()
@@ -109,6 +111,29 @@ class app.views.DocList extends app.View
     if doc and @lists[doc.slug]
       @lists[doc.slug].detach()
       delete @lists[doc.slug]
+    return
+
+  setFaviconForDoc: (doc) ->
+    link = $("a._list-item[data-slug='#{doc.slug}']")
+    styles = window.getComputedStyle(link, ':before')
+
+    bgUrl = styles['background-image'].slice(5, -2)
+    bgSize = if bgUrl.includes('@2x') then 32 else 16
+    bgPositions = styles['background-position'].split(' ')
+    bgX = parseInt(bgPositions[0].slice(0, -2))
+    bgY = parseInt(bgPositions[1].slice(0, -2))
+
+    img = new Image()
+    img.src = bgUrl
+    img.onload = () =>
+      canvas = document.createElement('canvas')
+
+      canvas.width = bgSize
+      canvas.height = bgSize
+      canvas.getContext('2d').drawImage(img, bgX, bgY)
+
+      $('link[rel="icon"]').href = canvas.toDataURL()
+      return
     return
 
   select: (model) ->
