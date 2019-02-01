@@ -40,6 +40,7 @@ class app.views.EntryPage extends app.View
     if app.disabledDocs.findBy 'slug', @entry.doc.slug
       @hiddenView = new app.views.HiddenPage @el, @entry
 
+    setFaviconForDoc(@entry.doc)
     @delay @polyfillMathML
     @trigger 'loaded'
     return

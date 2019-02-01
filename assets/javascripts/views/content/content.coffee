@@ -153,6 +153,9 @@ class app.views.Content extends app.View
     return
 
   afterRoute: (route, context) =>
+    if route != 'entry' and route != 'type'
+      resetFavicon()
+
     switch route
       when 'root'
         @show @rootPage
