@@ -5,6 +5,7 @@ class app.Settings
     'manualUpdate'
     'fastScroll'
     'arrowScroll'
+    'analyticsConsent'
     'docs'
     'dark'
     'layout'
@@ -26,6 +27,7 @@ class app.Settings
     news: 0
     manualUpdate: false
     schema: 1
+    analyticsConsent: false
 
   constructor: ->
     @store = new CookieStore

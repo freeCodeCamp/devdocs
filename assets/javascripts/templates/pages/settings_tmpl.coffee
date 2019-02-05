@@ -15,6 +15,10 @@ app.templates.settingsPage = (settings) -> """
         <input type="checkbox" form="settings" name="layout" value="_sidebar-hidden"#{if settings['_sidebar-hidden'] then ' checked' else ''}>Automatically hide and show the sidebar
         <small>Tip: drag the edge of the sidebar to resize it.</small>
       </label>
+      <label class="_settings-label">
+        <input type="checkbox" form="settings" name="analyticsConsent"#{if settings.analyticsConsent then ' checked' else ''}>Enable tracking cookies
+        <small>With this checked, we enable Google Analytics and Gauges to collect anonymous traffic information.</small>
+      </label>
     </div>
   </div>
 
