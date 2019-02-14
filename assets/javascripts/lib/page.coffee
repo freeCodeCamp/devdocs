@@ -190,7 +190,7 @@ isSameOrigin = (url) ->
 
 updateCanonicalLink = ->
   @canonicalLink ||= document.head.querySelector('link[rel="canonical"]')
-  @canonicalLink.setAttribute('href', "http://#{location.host}#{location.pathname}")
+  @canonicalLink.setAttribute('href', "https://#{location.host}#{location.pathname}")
 
 trackers = []
 

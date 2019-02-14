@@ -32,7 +32,7 @@ module Docs
           if hierarchy && hierarchy.content.include?('Exception')
             'Exceptions'
           else
-            type = at_css('#types-list > ul > .current > a').content
+            type = at_css('.types-list > ul > .current > a').content
             type = 'Float' if type.start_with?('Float')
             type = 'Int' if type.start_with?('Int')
             type = 'UInt' if type.start_with?('UInt')

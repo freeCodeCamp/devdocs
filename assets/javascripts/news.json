@@ -1,7 +1,19 @@
 [
   [
+    "2018-09-23",
+    "New documentations: <a href=\"/puppeteer/\">Puppeteer</a> and <a href=\"/handlebars/\">Handlebars.js</a>"
+  ], [
+    "2018-08-12",
+    "New documentations: <a href=\"/dart/\">Dart</a> and <a href=\"/qt/\">Qt</a>"
+  ], [
+    "2018-07-29",
+    "New documentations: <a href=\"/bash/\">Bash</a>, <a href=\"/graphite/\">Graphite</a> and <a href=\"/pygame/\">Pygame</a>"
+  ], [
+    "2018-07-08",
+    "New documentations: <a href=\"/leaflet/\">Leaflet</a>, <a href=\"/terraform/\">Terraform</a> and <a href=\"/koa/\">Koa</a>"
+  ], [
     "2018-03-26",
-    "DevDocs is joining the freeCodeCamp community. Read the announcement <a href=\"https://medium.com/@quincylarson/devdocs-is-joining-the-freecodecamp-community-ae185a1c14a6\" target=\"_blank\">here</a>."
+    "DevDocs is joining the freeCodeCamp community. Read the announcement <a href=\"https://medium.freecodecamp.org/devdocs-is-joining-the-freecodecamp-community-ae185a1c14a6\" target=\"_blank\">here</a>."
   ], [
     "2018-02-04",
     "New documentations: <a href=\"/babel/\">Babel</a>, <a href=\"/jekyll/\">Jekyll</a> and <a href=\"/jsdoc/\">JSDoc</a>"

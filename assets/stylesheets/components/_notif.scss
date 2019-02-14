@@ -7,9 +7,9 @@
   max-width: 90%;
   padding: .625rem 1rem;
   font-size: .75rem;
-  color: $notifColor;
-  background: $notifBackground;
-  border: $notifBorder;
+  color: var(--notifColor);
+  background: var(--notifBackground);
+  border: var(--notifBorder);
   border-radius: .25rem;
   transition: opacity .2s;
   opacity: 0;
@@ -30,7 +30,7 @@
 
 ._notif-info {
   float: right;
-  color: $notifColorLight;
+  color: var(--notifColorLight);
 }
 
 ._notif-link,
@@ -69,13 +69,13 @@
   &::-webkit-scrollbar { width: 10px !important; }
 
   &::-webkit-scrollbar-track {
-    background: $notifBackground !important;
+    background: var(--notifBackground) !important;
     border: 0 !important;
     border-radius: 5px !important;
   }
 
   &::-webkit-scrollbar-thumb {
-    border: 3px solid $notifBackground !important;
+    border: 3px solid var(--notifBackground) !important;
 
     &:hover, &:active { border-width: 2px !important; }
   }
@@ -90,7 +90,7 @@
   > ._news-row {
     line-height: 1.125rem;
     font-size: .6875rem;
-    color: $notifColorLight;
+    color: var(--notifColorLight);
     margin-bottom: .25rem;
 
     + ._news-row { margin-top: .625rem; }
@@ -107,7 +107,7 @@
   ._news-date {
     float: right;
     margin-left: 1rem;
-    font-weight: $boldFontWeight;
+    font-weight: var(--boldFontWeight);
   }
 
   code {
@@ -128,9 +128,9 @@
 }
 
 ._notif-tip {
-  color: $textColor;
-  background: $tipBackground;
-  border: $tipBorder;
+  color: var(--textColor);
+  background: var(--tipBackground);
+  border: var(--tipBorder);
 
-  ._notif-info { color: $textColorLight; }
+  ._notif-info { color: var(--textColorLight); }
 }

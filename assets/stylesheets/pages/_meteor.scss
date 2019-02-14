@@ -9,10 +9,10 @@
   dt > code { @extend %label; }
 
   .api-heading { overflow: hidden; }
-  .api-heading > code { font-weight: $boldFontWeight; }
+  .api-heading > code { font-weight: var(--boldFontWeight); }
   .locus, .src-code { float: right; }
   .locus, .type, .src-code { margin-left: .5em; }
   h2 .subtext-api { margin-top: .25rem; }
   .locus, .subtext-api, .subtext-api > code { font-size: .75rem; }
-  .locus, .type { color: $textColorLight; }
+  .locus, .type { color: var(--textColorLight); }
 }

@@ -1,7 +1,7 @@
 module Docs
   class Redis < UrlScraper
     self.type = 'redis'
-    self.release = '4.0.9'
+    self.release = '5.0.0'
     self.base_url = 'https://redis.io/commands'
     self.links = {
       home: 'https://redis.io/',

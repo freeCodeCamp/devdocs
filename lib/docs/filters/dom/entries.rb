@@ -6,6 +6,7 @@ module Docs
         'EXT_'                => 'WebGL',
         'OES_'                => 'WebGL',
         'WEBGL_'              => 'WebGL',
+        'Sensor API'          => 'Sensors',
         'Ambient Light'       => 'Ambient Light',
         'Audio'               => 'Audio',
         'Battery Status'      => 'Battery Status',
@@ -22,10 +23,13 @@ module Docs
         'Encrypted Media Extensions' => 'Encrypted Media',
         'Fetch'               => 'Fetch',
         'File API'            => 'File',
+        'Fullscreen'          => 'Fullscreen',
         'Geolocation'         => 'Geolocation',
         'Geometry'            => 'Geometry',
         'High Resolution Time' => 'Performance',
         'Intersection'        => 'Intersection Observer',
+        'Keyboard'            => 'Keyboard',
+        'Media Capabilities'  => 'Media',
         'Media Capture'       => 'Media',
         'Media Session'       => 'Media',
         'Media Source'        => 'Media',
@@ -34,6 +38,7 @@ module Docs
         'MIDI'                => 'Audio',
         'Navigation Timing'   => 'Performance',
         'Network Information' => 'Network Information',
+        'Orientation Sensor'  => 'Sensors',
         'Payment'             => 'Payments',
         'Performance Timeline' => 'Performance',
         'Pointer Events'      => 'Pointer Events',
@@ -52,10 +57,13 @@ module Docs
         'Web App Manifest'    => 'Web App Manifest',
         'Budget'              => 'Budget',
         'Web Authentication'  => 'Authentication',
+        'Web Locks'           => 'Locks',
         'Web Workers'         => 'Web Workers',
         'WebGL'               => 'WebGL',
         'WebRTC'              => 'WebRTC',
-        'WebVR'               => 'WebVR' }
+        'WebUSB'              => 'WebUSB',
+        'WebVR'               => 'WebVR',
+        'WebVTT'              => 'WebVTT' }
 
       TYPE_BY_NAME_STARTS_WITH = {
         'AbortController'     => 'Fetch',
@@ -87,10 +95,12 @@ module Docs
         'Fetch'               => 'Fetch',
         'File'                => 'File',
         'GlobalEventHandlers' => 'GlobalEventHandlers',
+        'HMDVR'               => 'WebVR',
         'history'             => 'History',
         'HTML Drag'           => 'Drag & Drop',
         'HTML'                => 'Elements',
         'IDB'                 => 'IndexedDB',
+        'Keyboard'            => 'Keyboard',
         'location'            => 'Location',
         'navigator'           => 'Navigator',
         'MediaKeySession'     => 'Encrypted Media',
@@ -98,6 +108,7 @@ module Docs
         'MediaSession'        => 'Media Session',
         'MediaTrack'          => 'Media Streams',
         'Message'             => 'Channel Messaging',
+        'Mutation'            => 'DOM',
         'NamedNode'           => 'Nodes',
         'Node'                => 'Nodes',
         'Notification'        => 'Notification',
@@ -115,9 +126,11 @@ module Docs
         'Shadow'              => 'Shadow DOM',
         'StaticRange'         => 'Range',
         'Streams'             => 'Media Streams',
+        'StyleProperty'       => 'CSS',
         'StyleSheet'          => 'CSS',
         'Stylesheet'          => 'CSS',
         'SVG'                 => 'SVG',
+        'TextTrack'           => 'WebVTT',
         'TimeRanges'          => 'Media',
         'timing'              => 'Performance',
         'Timing'              => 'Performance',
@@ -126,6 +139,7 @@ module Docs
         'URL'                 => 'URL',
         'VR'                  => 'WebVR',
         'WebSocket'           => 'Web Sockets',
+        'USB'                 => 'WebUSB',
         'window'              => 'Window',
         'Window'              => 'Window',
         'XMLHttpRequest'      => 'XMLHTTPRequest' }
@@ -155,6 +169,7 @@ module Docs
         'timing'        => 'Performance',
         'Timing'        => 'Performance',
         'udio'          => 'Audio',
+        'VRDevice'      => 'WebVR',
         'WebGL'         => 'WebGL',
         'WEBGL'         => 'WebGL',
         'WebRTC'        => 'WebRTC',
@@ -234,7 +249,7 @@ module Docs
 
       def include_default_entry?
         return true if type == 'Console'
-        return true unless node = doc.at_css('.overheadIndicator')
+        return true unless node = doc.at_css('.overheadIndicator, .blockIndicator')
         node = node.parent while node.parent != doc
         return true if node.previous_element.try(:name).in?(%w(h2 h3))
         content = node.content

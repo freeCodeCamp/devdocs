@@ -2,7 +2,7 @@ module Docs
   class D < UrlScraper
     include MultipleBaseUrls
 
-    self.release = '2.080.0'
+    self.release = '2.083.0'
     self.type = 'd'
     self.base_urls = ['https://dlang.org/phobos/', 'https://dlang.org/spec/']
     self.root_path = 'index.html'

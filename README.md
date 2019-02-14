@@ -1,25 +1,24 @@
-# [DevDocs](https://devdocs.io) [![Build Status](https://travis-ci.org/freeCodeCamp/devdocs.svg?branch=master)](https://travis-ci.org/freeCodeCamp/devdocs)
+# [DevDocs](https://devdocs.io) — API Documentation Browser [![Build Status](https://travis-ci.org/freeCodeCamp/devdocs.svg?branch=master)](https://travis-ci.org/freeCodeCamp/devdocs)
 
-DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
+DevDocs combines multiple developer documentations in a clean and organized web UI with instant search, offline support, mobile version, dark theme, keyboard shortcuts, and more.
 
-* Created by [Thibaut Courouble](https://thibaut.me)
+DevDocs was created by [Thibaut Courouble](https://thibaut.me) and is operated by [freeCodeCamp](https://www.freecodecamp.org).
 
 Keep track of development news:
 
 * Join the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs)
 * Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
-* Join the [mailing list](https://groups.google.com/d/forum/devdocs)
 
-**Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [License](#copyright--license) · [Questions?](#questions)
+**Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [Documentation](#documentation) · [Plugins and Extensions](#plugins-and-extensions) · [License](#copyright--license) · [Questions?](#questions)
 
 ## Quick Start
 
-Unless you wish to contribute to the project, I recommend using the hosted version at [devdocs.io](https://devdocs.io). It's up-to-date and works offline out-of-the-box.
+Unless you wish to contribute to the project, we recommend using the hosted version at [devdocs.io](https://devdocs.io). It's up-to-date and works offline out-of-the-box.
 
 DevDocs is made of two pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
-DevDocs requires Ruby 2.5.1, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
+DevDocs requires Ruby 2.6.0, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
 
 ```
 git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
@@ -64,14 +63,10 @@ Another driving factor is performance and the fact that everything happens in th
 
 DevDocs being a developer tool, the browser requirements are high:
 
-1. On the desktop:
-  * Recent version of Chrome, Firefox, or Opera
-  * Safari 8+
-  * IE / Edge 10+
-2. On mobile:
-  * iOS 8+
-  * Android 4.1+
-  * Windows Phone 8+
+* Recent versions of Firefox, Chrome, or Opera
+* Safari 9.1+
+* Edge 16+
+* iOS 10+
 
 This allows the code to take advantage of the latest DOM and HTML5 APIs and make developing DevDocs a lot more fun!
 
@@ -133,20 +128,45 @@ If multiple versions of Ruby are installed on your system, commands must be run 
 
 ## Contributing
 
-Contributions are welcome. Please read the [contributing guidelines](https://github.com/freeCodeCamp/devdocs/blob/master/CONTRIBUTING.md).
+Contributions are welcome. Please read the [contributing guidelines](https://github.com/freeCodeCamp/devdocs/blob/master/.github/CONTRIBUTING.md).
 
 DevDocs's own documentation is available on the [wiki](https://github.com/freeCodeCamp/devdocs/wiki).
 
+## Documentation
+
+* [Adding documentations to DevDocs](./docs/adding-docs.md)
+* [Scraper Reference](./docs/scraper-reference.md)
+* [Filter Reference](./docs/filter-reference.md)
+* [Maintainers’ Guide](./docs/maintainers.md)
+
+## Plugins and Extensions
+
+* [Chrome web app](https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe)
+* [Ubuntu Touch app](https://uappexplorer.com/app/devdocsunofficial.berkes)
+* [Sublime Text plugin](https://sublime.wbond.net/packages/DevDocs)
+* [Atom plugin](https://atom.io/packages/devdocs)
+* [Brackets extension](https://github.com/gruehle/dev-docs-viewer) 
+* [Fluid](http://fluidapp.com) for turning DevDocs into a real OS X app
+* [GTK shell / Vim integration](https://github.com/naquad/devdocs-shell)
+* [Emacs lookup](https://github.com/skeeto/devdocs-lookup)
+* [Alfred Workflow](https://github.com/yannickglt/alfred-devdocs)
+* [Vim search plugin with Devdocs in its defaults](https://github.com/waiting-for-dev/vim-www) Just set `let g:www_shortcut_engines = { 'devdocs': ['Devdocs', '<leader>dd'] }` to have a `:Devdocs` command and a `<leader>dd` mapping.
+* [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=akfish.vscode-devdocs ) (1)
+* [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=deibit.devdocs) (2)
+* [Desktop application](https://github.com/egoist/devdocs-desktop)
+* [Doc Browser](https://github.com/qwfy/doc-browser) is a native Linux app that supports DevDocs docsets
+* [GNOME Application](https://github.com/hardpixel/devdocs-desktop) GTK3 application with search integrated in headerbar
+
 ## Copyright / License
 
-Copyright 2013-2018 Thibaut Courouble and [other contributors](https://github.com/freeCodeCamp/devdocs/graphs/contributors)
+Copyright 2013-2019 Thibaut Courouble and [other contributors](https://github.com/freeCodeCamp/devdocs/graphs/contributors)
 
 This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](https://github.com/freeCodeCamp/devdocs/blob/master/COPYRIGHT) and [LICENSE](https://github.com/freeCodeCamp/devdocs/blob/master/LICENSE) files.
 
-Please do not use the name DevDocs to endorse or promote products derived from this software without my permission, except as may be necessary to comply with the notice/attribution requirements.
+Please do not use the name DevDocs to endorse or promote products derived from this software without the maintainers' permission, except as may be necessary to comply with the notice/attribution requirements.
 
-I also wish that any documentation file generated using this software be attributed to DevDocs. Let's be fair to all contributors by giving credit where credit's due. Thanks!
+We also wish that any documentation file generated using this software be attributed to DevDocs. Let's be fair to all contributors by giving credit where credit's due. Thanks!
 
 ## Questions?
 
-If you have any questions, please feel free to ask them on the [mailing list](https://groups.google.com/d/forum/devdocs).
+If you have any questions, please feel free to ask them on the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs).

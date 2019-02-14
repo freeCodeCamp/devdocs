@@ -42,11 +42,13 @@ module Docs
             entries << [node.content, node['id']] unless node.content.include?('Note:')
           end
         else
-          css('#methods + * + div > .method', '#required-methods + div > .method', '#provided-methods + div > .method').map do |node|
-            name = node.at_css('.fnname').content
-            name.prepend "#{self.name}::"
-            [name, node['id']]
-          end
+          css('.method')
+            .each_with_object({}) { |node, entries|
+              name = node.at_css('.fnname').try(:content)
+              next unless name
+              name.prepend "#{self.name}::"
+              entries[name] ||= [name, node['id']]
+            }.values
         end
       end
     end

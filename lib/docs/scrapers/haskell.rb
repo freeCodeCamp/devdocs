@@ -57,7 +57,7 @@ module Docs
     end
 
     version '8' do
-      self.release = '8.2.1'
+      self.release = '8.6.1'
       self.base_url = "https://downloads.haskell.org/~ghc/#{release}/docs/html/"
     end
 

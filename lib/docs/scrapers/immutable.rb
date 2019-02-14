@@ -2,7 +2,7 @@ module Docs
   class Immutable < UrlScraper
     self.name = 'Immutable.js'
     self.slug = 'immutable'
-    self.type = 'immutable'
+    self.type = 'simple'
     self.release = '3.8.1'
     self.base_url = 'https://facebook.github.io/immutable-js/docs/'
     self.links = {

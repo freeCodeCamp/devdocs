@@ -157,10 +157,17 @@
     new app.views.Updates()
     @updateChecker = new app.UpdateChecker()
 
+  reboot: ->
+    if location.pathname isnt '/' and location.pathname isnt '/settings'
+      window.location = "/##{location.pathname}"
+    else
+      window.location = '/'
+    return
+
   reload: ->
     @docs.clearCache()
     @disabledDocs.clearCache()
-    if @appCache then @appCache.reload() else window.location = '/'
+    if @appCache then @appCache.reload() else @reboot()
     return
 
   reset: ->
@@ -245,7 +252,7 @@
         matchMedia:         !!window.matchMedia
         insertAdjacentHTML: !!document.body.insertAdjacentHTML
         defaultPrevented:     document.createEvent('CustomEvent').defaultPrevented is false
-        cssGradients:         supportsCssGradients()
+        cssVariables:         CSS.supports and CSS.supports('(--t: 0)')
 
       for key, value of features when not value
         Raven.captureMessage "unsupported/#{key}", level: 'info'
@@ -267,10 +274,5 @@
 
   isInvalidLocation: ->
     @config.env is 'production' and location.host.indexOf(app.config.production_host) isnt 0
-
-supportsCssGradients = ->
-  el = document.createElement('div')
-  el.style.cssText = "background-image: -webkit-linear-gradient(top, #000, #fff); background-image: linear-gradient(to top, #000, #fff);"
-  el.style.backgroundImage.indexOf('gradient') >= 0
 
 $.extend app, Events

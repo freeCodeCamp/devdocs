@@ -3,7 +3,7 @@ module Docs
     self.name = 'scikit-learn'
     self.slug = 'scikit_learn'
     self.type = 'sphinx'
-    self.release = '0.19.1'
+    self.release = '0.20.0'
     self.base_url = 'http://scikit-learn.org/stable/'
     self.root_path = 'documentation.html'
     self.force_gzip = true
@@ -21,7 +21,7 @@ module Docs
     options[:max_image_size] = 256_000
 
     options[:attribution] = <<-HTML
-      &copy; 2007&ndash;2017 The scikit-learn developers<br>
+      &copy; 2007&ndash;2018 The scikit-learn developers<br>
       Licensed under the 3-clause BSD License.
     HTML
 

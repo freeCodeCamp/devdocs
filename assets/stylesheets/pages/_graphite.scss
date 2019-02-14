@@ -1,0 +1,7 @@
+._graphite {
+  @extend %simple;
+
+  dl > dt {
+    @extend %block-label, %label-blue;
+  }
+}

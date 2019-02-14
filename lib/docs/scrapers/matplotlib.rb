@@ -6,7 +6,7 @@ module Docs
     self.type = 'sphinx'
     self.root_path = 'index.html'
     self.links = {
-      home: 'http://matplotlib.org/',
+      home: 'https://matplotlib.org/',
       code: 'https://github.com/matplotlib/matplotlib'
     }
 
@@ -16,34 +16,52 @@ module Docs
     options[:skip] = %w(api_changes.html tutorial.html faq.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2017 Matplotlib Development Team. All rights reserved.<br>
+      &copy; 2012&ndash;2018 Matplotlib Development Team. All rights reserved.<br>
       Licensed under the Matplotlib License Agreement.
     HTML
+
+    version '3.0' do
+      self.release = '3.0.0'
+      self.base_urls = [
+        "https://matplotlib.org/#{release}/api/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
+      ]
+    end
+
+    version '2.2' do
+      self.release = '2.2.3'
+      self.base_urls = [
+        "https://matplotlib.org/#{release}/api/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
+      ]
+    end
 
     version '2.1' do
       self.release = '2.1.0'
       self.base_urls = [
-        "http://matplotlib.org/#{release}/api/",
-        "http://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",
-        "http://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
+        "https://matplotlib.org/#{release}/api/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
       ]
     end
 
     version '2.0' do
       self.release = '2.0.2'
       self.base_urls = [
-        "http://matplotlib.org/#{release}/api/",
-        "http://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",
-        "http://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
+        "https://matplotlib.org/#{release}/api/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
       ]
     end
 
     version '1.5' do
       self.release = '1.5.3'
       self.base_urls = [
-        "http://matplotlib.org/#{release}/api/",
-        "http://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",
-        "http://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
+        "https://matplotlib.org/#{release}/api/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
       ]
     end
   end
