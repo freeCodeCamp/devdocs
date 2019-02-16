@@ -19,6 +19,9 @@ withImage = (url, action) ->
 
   favicon = $('link[rel="icon"]')
 
+  if defaultUrl == null
+    defaultUrl = favicon.href
+
   if urlCache[doc.slug]
     favicon.href = urlCache[doc.slug]
     currentSlug = doc.slug
@@ -27,24 +30,31 @@ withImage = (url, action) ->
   styles = window.getComputedStyle($("._icon-#{doc.slug}"), ':before')
 
   bgUrl = styles['background-image'].slice(5, -2)
-  bgSize = if bgUrl.includes('@2x') then 32 else 16
-  bgX = parseInt(styles['background-position-x'].slice(0, -2))
-  bgY = parseInt(styles['background-position-y'].slice(0, -2))
+  sourceSize = if bgUrl.includes('@2x') then 32 else 16
+  sourceX = Math.abs(parseInt(styles['background-position-x'].slice(0, -2)))
+  sourceY = Math.abs(parseInt(styles['background-position-y'].slice(0, -2)))
 
-  withImage(bgUrl, (img) ->
-    canvas = document.createElement('canvas')
+  withImage(bgUrl, (docImg) ->
+    withImage(defaultUrl, (defaultImg) ->
+      size = defaultImg.width
 
-    canvas.width = bgSize
-    canvas.height = bgSize
-    canvas.getContext('2d').drawImage(img, bgX, bgY)
+      canvas = document.createElement('canvas')
+      ctx = canvas.getContext('2d')
 
-    if defaultUrl == null
-      defaultUrl = favicon.href
+      canvas.width = size
+      canvas.height = size
+      ctx.drawImage(defaultImg, 0, 0)
 
-    urlCache[doc.slug] = canvas.toDataURL()
-    favicon.href = urlCache[doc.slug]
+      docIconPercentage = 65
+      destinationCoords = size / 100 * (100 - docIconPercentage)
+      destinationSize = size / 100 * docIconPercentage
+      ctx.drawImage(docImg, sourceX, sourceY, sourceSize, sourceSize, destinationCoords, destinationCoords, destinationSize, destinationSize)
 
-    currentSlug = doc.slug
+      urlCache[doc.slug] = canvas.toDataURL()
+      favicon.href = urlCache[doc.slug]
+
+      currentSlug = doc.slug
+    )
   )
 
 @resetFavicon = () ->
