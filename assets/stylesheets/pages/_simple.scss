@@ -17,34 +17,4 @@
   blockquote > h4, blockquote > h5 { margin-top: .25rem; }
 }
 
-._apache_pig,
-._bower,
-._chai,
-._codeceptjs,
-._docker,
-._electron,
-._fish,
-._flow,
-._gnu,
-._grunt,
-._haxe,
-._immutable,
-._influxdata,
-._jasmine,
-._jest,
-._less,
-._lodash,
-._marionette,
-._markdown,
-._mocha,
-._mongoose,
-._nim,
-._redux,
-._requirejs,
-._simple,
-._typescript,
-._vagrant,
-._vulkan,
-._yarn {
-  @extend %simple;
-}
+._simple { @extend %simple; }

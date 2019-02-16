@@ -6,7 +6,7 @@
   .admonition.tip { @extend %note-green; }
   .admonition-title {
     margin: 0 0 .25rem;
-    font-weight: $boldFontWeight;
+    font-weight: var(--boldFontWeight);
   }
 
   code { @extend %label; }

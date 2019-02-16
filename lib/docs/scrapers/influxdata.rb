@@ -1,7 +1,7 @@
 module Docs
   class Influxdata < UrlScraper
     self.name = 'InfluxData'
-    self.type = 'influxdata'
+    self.type = 'simple'
     self.release = '1.3'
     self.base_url = 'https://docs.influxdata.com/'
     self.links = {

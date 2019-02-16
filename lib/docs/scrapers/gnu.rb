@@ -1,6 +1,6 @@
 module Docs
   class Gnu < FileScraper
-    self.type = 'gnu'
+    self.type = 'simple'
     self.root_path = 'index.html'
     self.abstract = 'true'
 

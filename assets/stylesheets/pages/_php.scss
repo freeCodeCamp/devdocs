@@ -13,7 +13,7 @@
 
   .verinfo {
     float: right;
-    font-weight: $boldFontWeight;
+    font-weight: var(--boldFontWeight);
   }
 
   .classsynopsis,
@@ -21,7 +21,7 @@
   .description > .methodsynopsis,
   .description > .fieldsynopsis { @extend %note, %note-blue; }
 
-  .classsynopsisinfo_comment { color: $textColorLight; }
+  .classsynopsisinfo_comment { color: var(--textColorLight); }
 
   .classsynopsisinfo_comment,
   .classsynopsis > .constructorsynopsis,

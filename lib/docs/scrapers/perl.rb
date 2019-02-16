@@ -2,7 +2,6 @@ module Docs
   class Perl < FileScraper
     self.name = 'Perl'
     self.type = 'perl'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/Perl'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://www.perl.org/'

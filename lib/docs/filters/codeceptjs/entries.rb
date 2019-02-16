@@ -20,8 +20,8 @@ module Docs
       def additional_entries
         return [] unless subpath.start_with?('helpers') && subpath != 'helpers/'
 
-        css('h2').each_with_object [] do |node, entries|
-          next if node['id'] == 'access-from-helpers'
+        css('h2, h3').each_with_object [] do |node, entries|
+          next if node['id'] == 'access-from-helpers' || node.content !~ /\s*[a-z_]/
           entries << ["#{node.content} (#{name})", node['id']]
         end
       end

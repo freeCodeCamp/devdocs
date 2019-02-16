@@ -25,14 +25,14 @@
 
   ._attribution-p {
     background: none;
-    border: 2px solid $boxBorder;
+    border: 2px solid var(--boxBorder);
   }
 
   ._attribution:last-child:after {
     content: 'Exported from DevDocs \2014  https://devdocs.io';
     display: block;
     margin-top: 1rem;
-    font-weight: $bolderFontWeight;
+    font-weight: var(--bolderFontWeight);
   }
 
   ._attribution {

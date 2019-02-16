@@ -27,7 +27,7 @@ class app.AppCache
     return
 
   reload: ->
-    $.on @cache, 'updateready noupdate error', -> window.location = '/'
+    $.on @cache, 'updateready noupdate error', -> app.reboot()
     @notifyUpdate = false
     @notifyProgress = true
     try @cache.update() catch

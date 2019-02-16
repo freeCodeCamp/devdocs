@@ -12,6 +12,6 @@
   .smwtable { width: 100%; }
   .smwtable td:nth-last-child(2), .smwtable td:last-child { width: 2.5em; }
 
-  .cell-green { background: $noteGreenBackground; }
-  .cell-red { background: $noteRedBackground; }
+  .cell-green { background: var(--noteGreenBackground); }
+  .cell-red { background: var(--noteRedBackground); }
 }
