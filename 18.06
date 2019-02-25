@@ -1,0 +1,45 @@
+  Docker, Inc. and other parties may also have trademark rights in other terms used herein.
+    HTML
+
+    version '18' do
+      self.release = '18.06'
+      self.base_url = 'https://docs.docker.com/'
+
+      html_filters.push 'docker/entries', 'docker/clean_html'
+
+      options[:container] = '.wrapper .container-fluid .row'
+
+      options[:only_patterns] = [/\Aget-started\//, /\Aengine\//, /\Acompose\//, /\Amachine\//, /\Anotary\//]
+      options[:skip_patterns] = [/\Aengine\/api\/v/, /glossary/, /docker-ee/]
+
+      options[:replace_paths] = {
+        'get-started/part1' => 'get-started/',
+        'engine/installation/linux/docker-ee/linux-postinstall/' => 'engine/installation/linux/linux-postinstall/',
+        'engine/installation/linux/docker-ee/' => 'engine/installation/',
+        'engine/installation/linux/docker-ce/' => 'engine/installation/',
+        'engine/installation/linux/' => 'engine/installation/',
+        'engine/installation/windows/' => 'engine/installation/',
+        'engine/userguide/intro/' => 'engine/userguide/',
+        'engine/tutorials/dockervolumes/' => 'engine/admin/volumes/volumes/',
+        'engine/getstarted/' => 'get-started/',
+        'engine/tutorials/dockerimages/' => 'get-started/',
+        'engine/tutorials/dockerrepos/' => 'get-started/',
+        'engine/admin/host_integration/' => 'engine/admin/start-containers-automatically/',
+        'engine/installation/linux/rhel/' => 'engine/installation/linux/docker-ee/rhel/',
+        'engine/installation/linux/ubuntulinux/' => 'engine/installation/linux/docker-ee/ubuntu/',
+        'engine/installation/linux/suse/' => 'engine/installation/linux/docker-ee/suse/',
+        'engine/admin/logging/' => 'engine/admin/logging/view_container_logs/',
+        'engine/swarm/how-swarm-mode-works/' => 'engine/swarm/how-swarm-mode-works/nodes/',
+        'engine/installation/binaries/' => 'engine/installation/linux/docker-ce/binaries/',
+        'engine/reference/commandline/' => 'engine/reference/commandline/docker/',
+        'engine/reference/api/' => 'engine/api/',
+        'engine/userguide/dockervolumes/' => 'engine/admin/volumes/volumes/',
+        'engine/understanding-docker/' => 'engine/docker-overview/',
+        'engine/reference/commandline/swarm_join_token/' => 'engine/reference/commandline/swarm_join-token/',
+        'engine/api/getting-started/' => 'engine/api/get-started/',
+      }
+    end
+
+    version '17' do
+      self.release = '17.06'
+      self.base_url = 'https://docs.docker.com/'
