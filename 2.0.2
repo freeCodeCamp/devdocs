@@ -1,0 +1,2 @@
+brew update
+brew upgrade
