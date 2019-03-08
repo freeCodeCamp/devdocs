@@ -132,6 +132,35 @@ module Docs
       end
     end
 
+    def get_latest_version
+      raise NotImplementedError
+    end
+
+    # Returns whether or not this scraper is outdated.
+    #
+    # The default implementation assumes the documentation uses a semver(-like) approach when it comes to versions.
+    # Patch updates are ignored because there are usually little to no documentation changes in bug-fix-only releases.
+    #
+    # Scrapers of documentations that do not use this versioning approach should override this method.
+    #
+    # Examples of the default implementation:
+    # 1 -> 2 = outdated
+    # 1.1 -> 1.2 = outdated
+    # 1.1.1 -> 1.1.2 = not outdated
+    def is_outdated(current_version, latest_version)
+      current_parts = current_version.split(/\./).map(&:to_i)
+      latest_parts = latest_version.split(/\./).map(&:to_i)
+
+      # Only check the first two parts, the third part is for patch updates
+      [0, 1].each do |i|
+        break if i >= current_parts.length or i >= latest_parts.length
+        return true if latest_parts[i] > current_parts[i]
+        return false if latest_parts[i] < current_parts[i]
+      end
+
+      false
+    end
+
     private
 
     def request_one(url)
