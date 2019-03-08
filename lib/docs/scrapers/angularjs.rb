@@ -69,5 +69,9 @@ module Docs
       self.release = '1.2.32'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
+
+    def get_latest_version(&block)
+      get_npm_version('angular', &block)
+    end
   end
 end

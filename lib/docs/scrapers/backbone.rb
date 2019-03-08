@@ -20,5 +20,12 @@ module Docs
       &copy; 2010&ndash;2016 Jeremy Ashkenas, DocumentCloud<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(&block)
+      fetch_doc('https://backbonejs.org/') do |doc|
+        version = doc.at_css('.version').content
+        block.call version[1...-1]
+      end
+    end
   end
 end

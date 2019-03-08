@@ -43,5 +43,11 @@ module Docs
       self.base_url = "https://pig.apache.org/docs/r#{release}/"
     end
 
+    def get_latest_version(&block)
+      fetch_doc('https://pig.apache.org/') do |doc|
+        item = doc.at_css('div[id="menu_1.2"] > .menuitem:last-child')
+        block.call item.content.strip.sub(/Release /, '')
+      end
+    end
   end
 end

@@ -17,5 +17,12 @@ module Docs
       Copyright &copy; 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.<br>
       Licensed under the GNU Free Documentation License.
     HTML
+
+    def get_latest_version(&block)
+      fetch('https://www.gnu.org/software/bash/manual/html_node/index.html') do |body|
+        version = body.scan(/, Version ([0-9.]+)/)[0][0]
+        block.call version[0...-1]
+      end
+    end
   end
 end

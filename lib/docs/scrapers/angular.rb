@@ -155,6 +155,10 @@ module Docs
       end
     end
 
+    def get_latest_version(&block)
+      get_npm_version('@angular/core', &block)
+    end
+
     private
 
     def parse(response)

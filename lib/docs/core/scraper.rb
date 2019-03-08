@@ -132,7 +132,7 @@ module Docs
       end
     end
 
-    def get_latest_version
+    def get_latest_version(&block)
       raise NotImplementedError
     end
 
@@ -229,6 +229,38 @@ module Docs
 
     def additional_options
       {}
+    end
+
+    # Utility methods for get_latest_version
+
+    def fetch(url, &block)
+      Request.run(url) do |response|
+        if response.success?
+          block.call response.body
+        else
+          block.call nil
+        end
+      end
+    end
+
+    def fetch_doc(url, &block)
+      fetch(url) do |body|
+        parser = Parser.new(body)
+        block.call parser.html
+      end
+    end
+
+    def fetch_json(url, &block)
+      fetch(url) do |body|
+        json = JSON.parse(body)
+        block.call json
+      end
+    end
+
+    def get_npm_version(package, &block)
+      fetch_json("https://registry.npmjs.com/#{package}") do |json|
+        block.call json['dist-tags']['latest']
+      end
     end
 
     module FixInternalUrlsBehavior
