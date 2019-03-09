@@ -16,6 +16,7 @@ Adding a documentation may look like a daunting task but once you get the hang o
 9. To customize the pages' styling, create an SCSS file in the `assets/stylesheets/pages/` directory and import it in both `application.css.scss` AND `application-dark.css.scss`. Both the file and CSS class should be named `_[type]` where [type] is equal to the scraper's `type` attribute (documentations with the same type share the same custom CSS and JS). _(Note: feel free to submit a pull request without custom CSS/JS)_
 10. To add syntax highlighting or execute custom JavaScript on the pages, create a file in the `assets/javascripts/views/pages/` directory (take a look at the other files to see how it works).
 11. Add the documentation's icon in the `public/icons/docs/[my_doc]/` directory, in both 16x16 and 32x32-pixels formats. It'll be added to the icon sprite after your pull request is merged.
+12. Ensure `thor updates:check [my_doc]` shows the correct latest version.
 
 If the documentation includes more than a few hundreds pages and is available for download, try to scrape it locally (e.g. using `FileScraper`). It'll make the development process much faster and avoids putting too much load on the source site. (It's not a problem if your scraper is coupled to your local setup, just explain how it works in your pull request.)
 

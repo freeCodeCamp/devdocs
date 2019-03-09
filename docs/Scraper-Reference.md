@@ -184,3 +184,42 @@ More information about how filters work is available on the [Filter Reference](.
     Overrides the `:title` option for the root page only.
 
   _Note: this filter is disabled by default._
+
+## Keeping scrapers up-to-date
+
+In order to keep scrapers up-to-date the `get_latest_version(options, &block)` method should be overridden by all scrapers that define the `self.release` attribute. This method should return the latest version of the documentation that is being scraped. The result of this method is periodically reported in a "Documentation versions report" issue which helps maintainers keep track of outdated documentations.
+
+To make life easier, there are a few utility methods that you can use in `get_latest_version`:
+* `fetch(url, options, &block)`
+
+  Makes a GET request to the url and calls `&block` with the body.
+
+  Example: [lib/docs/scrapers/bash.rb](../lib/docs/scrapers/bash.rb)
+* `fetch_doc(url, options, &block)`
+
+  Makes a GET request to the url and calls `&block` with the HTML body converted to a Nokogiri document.
+
+  Example: [lib/docs/scrapers/git.rb](../lib/docs/scrapers/git.rb)
+* `fetch_json(url, options, &block)`
+
+  Makes a GET request to the url and calls `&block` with the JSON body converted to a dictionary.
+* `get_npm_version(package, options, &block)`
+
+  Calls `&block` with the latest version of the given npm package.
+
+  Example: [lib/docs/scrapers/bower.rb](../lib/docs/scrapers/bower.rb)
+* `get_latest_github_release(owner, repo, options, &block)`
+
+  Calls `&block` with the latest GitHub release of the given repository ([format](https://developer.github.com/v3/repos/releases/#get-the-latest-release)).
+
+  Example: [lib/docs/scrapers/jsdoc.rb](../lib/docs/scrapers/jsdoc.rb)
+* `get_github_tags(owner, repo, options, &block)`
+
+  Calls `&block` with the list of tags on the given repository ([format](https://developer.github.com/v3/repos/#list-tags)).
+
+  Example: [lib/docs/scrapers/liquid.rb](../lib/docs/scrapers/liquid.rb)
+* `get_github_file_contents(owner, repo, path, options, &block)`
+
+  Calls `&block` with the contents of the requested file in the default branch of the given repository.
+
+  Example: [lib/docs/scrapers/minitest.rb](../lib/docs/scrapers/minitest.rb)
