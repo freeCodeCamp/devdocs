@@ -97,5 +97,11 @@ module Docs
         'https://elixir-lang.org/getting-started/'
       ]
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://hexdocs.pm/elixir/api-reference.html', options) do |doc|
+        block.call doc.at_css('h2.sidebar-projectVersion').content.strip[1..-1]
+      end
+    end
   end
 end

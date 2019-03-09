@@ -70,8 +70,8 @@ module Docs
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
-    def get_latest_version(&block)
-      get_npm_version('angular', &block)
+    def get_latest_version(options, &block)
+      get_npm_version('angular', options, &block)
     end
   end
 end

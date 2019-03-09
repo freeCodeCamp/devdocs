@@ -19,5 +19,9 @@ module Docs
       &copy; 2018 Bower contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(options, &block)
+      get_npm_version('bower', options, &block)
+    end
   end
 end

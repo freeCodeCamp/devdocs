@@ -17,5 +17,11 @@ module Docs
       &copy; 2011&ndash;2016 The Graphite Project<br>
       Licensed under the Apache License, Version 2.0.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://graphite.readthedocs.io/en/latest/releases.html', options) do |doc|
+        block.call doc.at_css('#release-notes li > a').content
+      end
+    end
   end
 end

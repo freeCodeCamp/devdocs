@@ -28,5 +28,11 @@ module Docs
       &copy; 2008&ndash;2018 Tom Preston-Werner and Jekyll contributors<br>
       Licensed under the MIT license.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://jekyllrb.com/docs/', options) do |doc|
+        block.call doc.at_css('.meta a').content[1..-1]
+      end
+    end
   end
 end

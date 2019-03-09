@@ -46,5 +46,12 @@ module Docs
       &copy; 2015 InfluxData, Inc.<br>
       Licensed under the MIT license.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://docs.influxdata.com/influxdb/', options) do |doc|
+        label = doc.at_css('.navbar--current-product').content.strip
+        block.call label.scan(/([0-9.]+)/)[0][0]
+      end
+    end
   end
 end

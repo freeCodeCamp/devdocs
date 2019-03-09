@@ -26,5 +26,11 @@ module Docs
     def initial_urls
       %w(https://dlang.org/phobos/index.html https://dlang.org/spec/intro.html)
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://dlang.org/changelog/', options) do |doc|
+        block.call doc.at_css('#content > ul > li:nth-child(2) > a')['id']
+      end
+    end
   end
 end

@@ -133,5 +133,11 @@ module Docs
         url
       end
     end
+
+    def get_latest_version(options, &block)
+      get_latest_github_release('laravel', 'laravel', options) do |release|
+        block.call release['tag_name'][1..-1]
+      end
+    end
   end
 end

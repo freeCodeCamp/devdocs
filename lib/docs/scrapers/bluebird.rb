@@ -19,8 +19,8 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    def get_latest_version(&block)
-      get_npm_version('bluebird', &block)
+    def get_latest_version(options, &block)
+      get_npm_version('bluebird', options, &block)
     end
   end
 end

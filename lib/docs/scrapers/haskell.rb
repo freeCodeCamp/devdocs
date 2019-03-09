@@ -68,5 +68,12 @@ module Docs
 
       options[:only_patterns] = [/\Alibraries\//]
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/', options) do |doc|
+        label = doc.at_css('.related > ul > li:last-child').content
+        block.call label.scan(/([0-9.]+)/)[0][0]
+      end
+    end
   end
 end

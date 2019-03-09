@@ -59,5 +59,12 @@ module Docs
       self.release = '3.5.2'
       self.base_url = 'https://cmake.org/cmake/help/v3.5/'
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://cmake.org/documentation/', options) do |doc|
+        link = doc.at_css('.entry-content ul > li > strong > a > big')
+        block.call link.content.scan(/([0-9.]+)/)[0][0]
+      end
+    end
   end
 end

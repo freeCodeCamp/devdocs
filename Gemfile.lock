@@ -101,6 +101,8 @@ GEM
       unicode-display_width (~> 1.4.0)
       unicode_utils (~> 1.4.0)
     strings-ansi (0.1.0)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -153,6 +155,7 @@ DEPENDENCIES
   sinatra-contrib
   sprockets
   sprockets-helpers
+  terminal-table
   thin
   thor
   tty-pager

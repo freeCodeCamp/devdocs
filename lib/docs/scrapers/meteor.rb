@@ -45,5 +45,11 @@ module Docs
       self.base_urls = ['https://guide.meteor.com/v1.3/', "https://docs.meteor.com/v#{self.release}/"]
       options[:fix_urls] = nil
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://docs.meteor.com/#/full/', options) do |doc|
+        block.call doc.at_css('select.version-select > option').content
+      end
+    end
   end
 end

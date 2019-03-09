@@ -18,8 +18,8 @@ module Docs
       Licensed under the GNU Free Documentation License.
     HTML
 
-    def get_latest_version(&block)
-      fetch('https://www.gnu.org/software/bash/manual/html_node/index.html') do |body|
+    def get_latest_version(options, &block)
+      fetch('https://www.gnu.org/software/bash/manual/html_node/index.html', options) do |body|
         version = body.scan(/, Version ([0-9.]+)/)[0][0]
         block.call version[0...-1]
       end

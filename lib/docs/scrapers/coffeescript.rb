@@ -30,5 +30,9 @@ module Docs
 
       options[:container] = '.container'
     end
+
+    def get_latest_version(options, &block)
+      get_npm_version('coffeescript', options, &block)
+    end
   end
 end

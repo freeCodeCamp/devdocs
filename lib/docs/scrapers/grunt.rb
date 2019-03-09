@@ -26,5 +26,9 @@ module Docs
       &copy; GruntJS Team<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(options, &block)
+      get_npm_version('grunt-cli', options, &block)
+    end
   end
 end

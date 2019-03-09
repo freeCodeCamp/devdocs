@@ -47,5 +47,12 @@ module Docs
 
       options[:only_patterns] = [/\A#{client_path}\//, /\A#{server_path}\//]
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://docs-archive.chef.io/', options) do |doc|
+        cell = doc.at_css('.main-archives > tr:nth-child(2) > td:nth-child(2)')
+        block.call cell.content.sub(/Chef Client /, '')
+      end
+    end
   end
 end

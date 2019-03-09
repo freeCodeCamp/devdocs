@@ -18,8 +18,8 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    def get_latest_version(&block)
-      fetch_doc('https://caolan.github.io/async/') do |doc|
+    def get_latest_version(options, &block)
+      fetch_doc('https://caolan.github.io/async/', options) do |doc|
         version = doc.at_css('#version-dropdown > a').content.strip[1..-1]
         block.call version
       end

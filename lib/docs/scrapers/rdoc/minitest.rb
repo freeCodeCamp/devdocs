@@ -21,5 +21,11 @@ module Docs
       &copy; Ryan Davis, seattle.rb<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(options, &block)
+      get_github_file_contents('seattlerb', 'minitest', 'History.rdoc', options) do |contents|
+        block.call contents.scan(/([0-9.]+)/)[0][0]
+      end
+    end
   end
 end

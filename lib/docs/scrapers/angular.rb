@@ -155,8 +155,8 @@ module Docs
       end
     end
 
-    def get_latest_version(&block)
-      get_npm_version('@angular/core', &block)
+    def get_latest_version(options, &block)
+      get_npm_version('@angular/core', options, &block)
     end
 
     private

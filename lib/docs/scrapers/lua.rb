@@ -26,5 +26,11 @@ module Docs
       self.release = '5.1.5'
       self.base_url = 'https://www.lua.org/manual/5.1/'
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://www.lua.org/manual/', options) do |doc|
+        block.call doc.at_css('p.menubar > a').content
+      end
+    end
   end
 end

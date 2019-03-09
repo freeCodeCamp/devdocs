@@ -40,6 +40,7 @@ group :docs do
   gem 'unix_utils', require: false
   gem 'tty-pager', require: false
   gem 'net-sftp', '>= 2.1.3.rc2', require: false
+  gem 'terminal-table', require: false
 end
 
 group :test do

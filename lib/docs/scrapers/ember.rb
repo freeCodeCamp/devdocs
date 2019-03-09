@@ -56,5 +56,11 @@ module Docs
         https://emberjs.com/api/ember-data/2.14/classes/DS
       )
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://emberjs.com/api/ember/release', options) do |doc|
+        block.call doc.at_css('.sidebar > .select-container .ember-power-select-selected-item').content.strip
+      end
+    end
   end
 end

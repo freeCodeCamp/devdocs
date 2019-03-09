@@ -19,5 +19,11 @@ module Docs
       &copy; 2009&ndash;present Homebrew contributors<br>
       Licensed under the BSD 2-Clause License.
     HTML
+
+    def get_latest_version(options, &block)
+      get_latest_github_release('Homebrew', 'brew', options) do |release|
+        block.call release['name']
+      end
+    end
   end
 end

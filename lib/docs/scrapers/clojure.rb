@@ -27,5 +27,11 @@ module Docs
       self.release = '1.7'
       self.base_url = 'https://clojure.github.io/clojure/branch-clojure-1.7.0/'
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('http://clojure.github.io/clojure/index.html', options) do |doc|
+        block.call doc.at_css('#header-version').content[1..-1]
+      end
+    end
   end
 end

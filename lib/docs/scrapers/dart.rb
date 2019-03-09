@@ -31,5 +31,12 @@ module Docs
       self.release = '1.24.3'
       self.base_url = "https://api.dartlang.org/stable/#{release}/"
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://api.dartlang.org/', options) do |doc|
+        label = doc.at_css('footer > span').content.strip
+        block.call label.sub(/Dart /, '')
+      end
+    end
   end
 end

@@ -36,6 +36,12 @@ module Docs
       urls.map { |url| "<a href='#{url}'>#{url}</a>" }.join
     end
 
+    def get_latest_version(options, &block)
+      fetch_doc('https://dojotoolkit.org/api/', options) do |doc|
+        block.call doc.at_css('#versionSelector > option[selected]').content
+      end
+    end
+
     private
 
     def get_url_list(json, set = Set.new)

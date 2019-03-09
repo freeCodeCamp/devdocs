@@ -22,5 +22,9 @@ module Docs
       /Selectors\/odd/i,
       /index/i
     ]
+
+    def get_latest_version(options, &block)
+      get_npm_version('jquery', options, &block)
+    end
   end
 end

@@ -34,5 +34,11 @@ module Docs
         HTML
       end
     }
+
+    def get_latest_version(options, &block)
+      fetch('https://crystal-lang.org/api', options) do |body|
+        block.call body.scan(/Crystal Docs ([0-9.]+)/)[0][0]
+      end
+    end
   end
 end

@@ -39,5 +39,11 @@ module Docs
       &copy; 2006&ndash;2016 L&Ouml;VE Development Team<br>
       Licensed under the GNU Free Documentation License, Version 1.3.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://love2d.org/wiki/Version_History', options) do |doc|
+        block.call doc.at_css('#mw-content-text table a').content
+      end
+    end
   end
 end

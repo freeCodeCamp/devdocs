@@ -20,5 +20,9 @@ module Docs
       &copy; JS Foundation and other contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(options, &block)
+      get_npm_version('eslint', options, &block)
+    end
   end
 end

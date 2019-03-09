@@ -84,5 +84,17 @@ module Docs
     version '2.2' do
       self.release = '2.2.10'
     end
+
+    def get_latest_version(options, &block)
+      get_github_tags('ruby', 'ruby', options) do |tags|
+        tags.each do |tag|
+          version = tag['name'].gsub(/_/, '.')[1..-1]
+          if !/^([0-9.]+)$/.match(version).nil? && version.count('.') == 2
+            block.call version
+            break
+          end
+        end
+      end
+    end
   end
 end

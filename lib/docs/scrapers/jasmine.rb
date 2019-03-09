@@ -17,5 +17,11 @@ module Docs
       &copy; 2008&ndash;2017 Pivotal Labs<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(options, &block)
+      get_latest_github_release('jasmine', 'jasmine', options) do |release|
+        block.call release['name']
+      end
+    end
   end
 end

@@ -22,5 +22,11 @@ module Docs
       &copy; 2013&ndash;2018 GitHub Inc.<br>
       Licensed under the MIT license.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://electronjs.org/docs', options) do |doc|
+        block.call doc.at_css('.docs-version').content
+      end
+    end
   end
 end

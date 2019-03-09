@@ -26,5 +26,12 @@ module Docs
       &copy; 2010 LearnBoost<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://mongoosejs.com/docs/', options) do |doc|
+        label = doc.at_css('.pure-menu-link').content.strip
+        block.call label.sub(/Version /, '')
+      end
+    end
   end
 end

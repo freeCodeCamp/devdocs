@@ -25,5 +25,12 @@ module Docs
       self.release = '4.9.3'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gfortran/"
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://gcc.gnu.org/onlinedocs/', options) do |doc|
+        label = doc.at_css('ul > li > ul > li > a').content.strip
+        block.call label.scan(/([0-9.]+)/)[0][0]
+      end
+    end
   end
 end

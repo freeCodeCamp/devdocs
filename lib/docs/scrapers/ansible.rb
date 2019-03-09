@@ -88,8 +88,8 @@ module Docs
         list_of_all_modules.html)
     end
 
-    def get_latest_version(&block)
-      fetch_doc('https://docs.ansible.com/ansible/latest/index.html') do |doc|
+    def get_latest_version(options, &block)
+      fetch_doc('https://docs.ansible.com/ansible/latest/index.html', options) do |doc|
         block.call doc.at_css('.DocSiteProduct-CurrentVersion').content.strip
       end
     end
