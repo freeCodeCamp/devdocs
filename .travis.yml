@@ -5,3 +5,7 @@ cache: bundler
 before_script:
   - gem update --system
   - gem install bundler
+
+script:
+  - if [ "$TRAVIS_EVENT_TYPE" != "cron" ]; then bundle exec rake; fi
+  - if [ "$TRAVIS_EVENT_TYPE" = "cron" ]; then bundle exec thor updates:check --github-token $GH_TOKEN --upload; fi
