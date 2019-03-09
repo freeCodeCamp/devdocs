@@ -52,5 +52,11 @@ module Docs
       self.release = '1.17.7'
       self.base_url = "https://sinonjs.org/releases/v#{release}/"
     end
+
+    def get_latest_version(options, &block)
+      fetch('https://sinonjs.org/', options) do |body|
+        block.call body.scan(/\/releases\/v([0-9.]+)/)[0][0]
+      end
+    end
   end
 end

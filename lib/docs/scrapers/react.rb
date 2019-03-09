@@ -30,5 +30,11 @@ module Docs
       &copy; 2013&ndash;present Facebook Inc.<br>
       Licensed under the Creative Commons Attribution 4.0 International Public License.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://reactjs.org/docs/getting-started.html', options) do |doc|
+        block.call doc.at_css('a[href="/versions"]').content.strip[1..-1]
+      end
+    end
   end
 end

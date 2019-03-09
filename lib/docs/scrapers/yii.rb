@@ -34,5 +34,11 @@ module Docs
 
       options[:container] = '.grid_9'
     end
+
+    def get_latest_version(options, &block)
+      get_latest_github_release('yiisoft', 'yii2', options) do |release|
+        block.call release['tag_name']
+      end
+    end
   end
 end

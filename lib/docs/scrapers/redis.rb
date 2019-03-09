@@ -19,5 +19,12 @@ module Docs
       &copy; 2009&ndash;2018 Salvatore Sanfilippo<br>
       Licensed under the Creative Commons Attribution-ShareAlike License 4.0.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch('http://download.redis.io/redis-stable/00-RELEASENOTES', options) do |body|
+        body = body.lines[1..-1].join
+        block.call body.scan(/Redis ([0-9.]+)/)[0][0]
+      end
+    end
   end
 end

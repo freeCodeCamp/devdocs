@@ -20,5 +20,11 @@ module Docs
       &copy; 2016&ndash;present Yarn Contributors<br>
       Licensed under the BSD License.
     HTML
+
+    def get_latest_version(options, &block)
+      get_latest_github_release('yarnpkg', 'yarn', options) do |release|
+        block.call release['tag_name'][1..-1]
+      end
+    end
   end
 end

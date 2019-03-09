@@ -15,6 +15,12 @@ module Docs
       &copy; 2013&ndash;2016 Scott Sauyet and Michael Hurley<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://ramdajs.com/docs/', options) do |doc|
+        block.call doc.at_css('.navbar-brand > .version').content[1..-1]
+      end
+    end
   end
 end
 

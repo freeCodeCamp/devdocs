@@ -23,5 +23,11 @@ module Docs
       &copy; 2006&ndash;2016 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(options, &block)
+      get_github_file_contents('sass', 'sass', 'VERSION', options) do |contents|
+        block.call contents.strip
+      end
+    end
   end
 end

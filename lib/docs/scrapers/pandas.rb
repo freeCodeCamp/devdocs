@@ -49,5 +49,12 @@ module Docs
       self.release = '0.18.1'
       self.base_url = "http://pandas.pydata.org/pandas-docs/version/#{self.release}/"
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('http://pandas.pydata.org/pandas-docs/stable/', options) do |doc|
+        label = doc.at_css('.body > .section > p').content
+        block.call label.scan(/Version: ([0-9.]+)/)[0][0]
+      end
+    end
   end
 end

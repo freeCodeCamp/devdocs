@@ -70,5 +70,11 @@ module Docs
       self.release = '2.7.35'
       self.base_url = "https://api.symfony.com/#{version}/"
     end
+
+    def get_latest_version(options, &block)
+      get_latest_github_release('symfony', 'symfony', options) do |release|
+        block.call release['tag_name'][1..-1]
+      end
+    end
   end
 end

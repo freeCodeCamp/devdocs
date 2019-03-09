@@ -58,7 +58,7 @@ class UpdatesCLI < Thor
 
   private
 
-  def check_doc(doc, options)
+  def check_doc(doc, opts)
     # Newer scraper versions always come before older scraper versions
     # Therefore, the first item's release value is the latest scraper version
     #
@@ -71,7 +71,7 @@ class UpdatesCLI < Thor
 
     logger.debug("Checking #{doc.name}")
 
-    instance.get_latest_version(options) do |latest_version|
+    instance.get_latest_version(opts) do |latest_version|
       return {
         name: doc.name,
         scraper_version: scraper_version,

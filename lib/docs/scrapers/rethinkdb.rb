@@ -58,6 +58,12 @@ module Docs
       CODE
     end
 
+    def get_latest_version(options, &block)
+      get_latest_github_release('rethinkdb', 'rethinkdb', options) do |release|
+        block.call release['tag_name'][1..-1]
+      end
+    end
+
     private
 
     def process_response?(response)

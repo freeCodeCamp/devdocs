@@ -17,5 +17,11 @@ module Docs
       &copy; 2006&ndash;2018 Andreas Rumpf<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://nim-lang.org/docs/overview.html', options) do |doc|
+        block.call doc.at_css('.container > .docinfo > tbody > tr:last-child > td').content.strip
+      end
+    end
   end
 end

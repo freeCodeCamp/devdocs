@@ -117,5 +117,12 @@ module Docs
       self.release = '5.6'
       self.base_url = 'https://doc.qt.io/qt-5.6/'
     end
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://doc.qt.io/qt-5/index.html', options) do |doc|
+        label = doc.at_css('.mainContent h1.title').content
+        block.call label.sub(/Qt /, '')
+      end
+    end
   end
 end

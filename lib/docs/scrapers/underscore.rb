@@ -20,5 +20,11 @@ module Docs
       &copy; 2009&ndash;2018 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://underscorejs.org/', options) do |doc|
+        block.call doc.at_css('.version').content[1...-1]
+      end
+    end
   end
 end

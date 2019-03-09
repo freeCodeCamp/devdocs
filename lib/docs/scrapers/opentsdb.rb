@@ -18,5 +18,11 @@ module Docs
       &copy; 2010&ndash;2016 The OpenTSDB Authors<br>
       Licensed under the GNU LGPLv2.1+ and GPLv3+ licenses.
     HTML
+
+    def get_latest_version(options, &block)
+      get_latest_github_release('OpenTSDB', 'opentsdb', options) do |release|
+        block.call release['tag_name'][1..-1]
+      end
+    end
   end
 end

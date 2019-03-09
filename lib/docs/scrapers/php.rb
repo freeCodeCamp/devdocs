@@ -66,5 +66,12 @@ module Docs
       &copy; 1997&ndash;2018 The PHP Documentation Group<br>
       Licensed under the Creative Commons Attribution License v3.0 or later.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://secure.php.net/manual/en/doc.changelog.php', options) do |doc|
+        label = doc.at_css('tbody.gen-changelog > tr > td').content
+        block.call label.split(',').last.strip
+      end
+    end
   end
 end

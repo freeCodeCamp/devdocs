@@ -20,5 +20,9 @@ module Docs
     stub '' do
       request_one('http://redux.js.org/index.html').body
     end
+
+    def get_latest_version(options, &block)
+      get_npm_version('redux', options, &block)
+    end
   end
 end

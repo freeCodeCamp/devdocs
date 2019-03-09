@@ -68,5 +68,9 @@ module Docs
         Licensed under the MIT License.
       HTML
     end
+
+    def get_latest_version(options, &block)
+      get_npm_version('webpack', options, &block)
+    end
   end
 end

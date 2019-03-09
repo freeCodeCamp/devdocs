@@ -25,5 +25,12 @@ module Docs
       &copy; 2011-2018 Nginx, Inc.<br>
       Licensed under the BSD License.
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://nginx.org/en/download.html', options) do |doc|
+        table = doc.at_css('#content > table').inner_html
+        block.call table.scan(/nginx-([0-9.]+)</)[0][0]
+      end
+    end
   end
 end

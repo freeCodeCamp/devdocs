@@ -24,6 +24,12 @@ module Docs
       &copy; Microsoft and other contributors<br>
       Licensed under the Apache License, Version 2.0.
     HTML
+
+    def get_latest_version(options, &block)
+      get_latest_github_release('Microsoft', 'TypeScript', options) do |release|
+        block.call release['tag_name'][1..-1]
+      end
+    end
   end
 end
 

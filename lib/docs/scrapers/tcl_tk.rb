@@ -25,5 +25,12 @@ module Docs
     options[:attribution] = <<-HTML
       Licensed under <a href="http://tcl.tk/software/tcltk/license.html">Tcl/Tk terms</a>
     HTML
+
+    def get_latest_version(options, &block)
+      fetch_doc('https://www.tcl.tk/man/tcl/contents.htm', options) do |doc|
+        label = doc.at_css('h2').content
+        block.call label.scan(/Tk([0-9.]+)/)[0][0]
+      end
+    end
   end
 end
