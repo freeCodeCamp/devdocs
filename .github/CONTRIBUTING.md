@@ -61,7 +61,7 @@ In addition to the [guidelines for contributing code](#contributing-code-and-fea
 
 Please don't submit a pull request updating the version number of a documentation, unless a change is required in the scraper and you've verified that it works.
 
-To ask that an existing documentation be updated, please use the [Trello board](https://trello.com/c/2B0hmW7M/52-request-updates-here).
+To ask that an existing documentation be updated, first check the last two [Documentation versions reports](https://github.com/freeCodeCamp/devdocs/issues?utf8=%E2%9C%93&q=Documentation+versions+report+is%3Aissue+author%3Adevdocs-bot+sort%3Aupdated-desc). Only create an issue if the documentation has been wrongly marked as up-to-date for at least 2 reports (a new report is automatically created every month).
 
 ## Coding conventions
 
