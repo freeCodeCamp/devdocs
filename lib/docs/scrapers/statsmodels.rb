@@ -21,10 +21,9 @@ module Docs
       Licensed under the 3-clause BSD License.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('http://www.statsmodels.org/stable/', options) do |doc|
-        block.call doc.at_css('.sphinxsidebarwrapper h3 + p > b').content
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('http://www.statsmodels.org/stable/', opts)
+      doc.at_css('.sphinxsidebarwrapper h3 + p > b').content
     end
   end
 end

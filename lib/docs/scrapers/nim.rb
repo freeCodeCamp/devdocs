@@ -18,10 +18,9 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://nim-lang.org/docs/overview.html', options) do |doc|
-        block.call doc.at_css('.container > .docinfo > tbody > tr:last-child > td').content.strip
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://nim-lang.org/docs/overview.html', opts)
+      doc.at_css('.container > .docinfo > tbody > tr:last-child > td').content.strip
     end
   end
 end

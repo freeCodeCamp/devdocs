@@ -47,11 +47,10 @@ module Docs
       Licensed under the MIT license.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://docs.influxdata.com/influxdb/', options) do |doc|
-        label = doc.at_css('.navbar--current-product').content.strip
-        block.call label.scan(/([0-9.]+)/)[0][0]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://docs.influxdata.com/influxdb/', opts)
+      label = doc.at_css('.navbar--current-product').content.strip
+      label.scan(/([0-9.]+)/)[0][0]
     end
   end
 end

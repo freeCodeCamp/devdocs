@@ -30,10 +30,9 @@ module Docs
       self.base_url = 'https://docs.phalconphp.com/en/2.0.0/'
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://docs.phalconphp.com/', options) do |doc|
-        block.call doc.at_css('.custom-select__version').content.strip.sub(/Version /, '')
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://docs.phalconphp.com/', opts)
+      doc.at_css('.custom-select__version').content.strip.sub(/Version /, '')
     end
   end
 end

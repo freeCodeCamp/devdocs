@@ -16,8 +16,8 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    def get_latest_version(options, &block)
-      get_npm_version('modernizr', options, &block)
+    def get_latest_version(opts)
+      get_npm_version('modernizr', opts)
     end
   end
 end

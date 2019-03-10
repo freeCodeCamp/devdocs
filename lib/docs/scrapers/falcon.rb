@@ -34,10 +34,9 @@ module Docs
       self.base_url = "https://falcon.readthedocs.io/en/#{self.release}/"
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://falcon.readthedocs.io/en/stable/changes/index.html', options) do |doc|
-        block.call doc.at_css('#changelogs ul > li > a').content
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://falcon.readthedocs.io/en/stable/changes/index.html', opts)
+      doc.at_css('#changelogs ul > li > a').content
     end
   end
 end

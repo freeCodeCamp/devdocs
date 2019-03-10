@@ -22,10 +22,8 @@ module Docs
       Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.
     HTML
 
-    def get_latest_version(options, &block)
-      get_latest_github_release('jsdoc3', 'jsdoc', options) do |release|
-        block.call release['tag_name']
-      end
+    def get_latest_version(opts)
+      get_latest_github_release('jsdoc3', 'jsdoc', opts)['tag_name']
     end
   end
 end

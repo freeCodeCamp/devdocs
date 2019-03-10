@@ -20,11 +20,10 @@ module Docs
       Licensed under the Creative Commons Attribution-ShareAlike License 4.0.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch('http://download.redis.io/redis-stable/00-RELEASENOTES', options) do |body|
-        body = body.lines[1..-1].join
-        block.call body.scan(/Redis ([0-9.]+)/)[0][0]
-      end
+    def get_latest_version(opts)
+      body = fetch('http://download.redis.io/redis-stable/00-RELEASENOTES', opts)
+      body = body.lines[1..-1].join
+      body.scan(/Redis ([0-9.]+)/)[0][0]
     end
   end
 end

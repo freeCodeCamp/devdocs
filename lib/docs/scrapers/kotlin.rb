@@ -29,10 +29,8 @@ module Docs
       Licensed under the Apache License, Version 2.0.
     HTML
 
-    def get_latest_version(options, &block)
-      get_latest_github_release('JetBrains', 'kotlin', options) do |release|
-        block.call release['tag_name'][1..-1]
-      end
+    def get_latest_version(opts)
+      get_latest_github_release('JetBrains', 'kotlin', opts)['tag_name'][1..-1]
     end
   end
 end

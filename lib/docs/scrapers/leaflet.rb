@@ -39,11 +39,10 @@ module Docs
       self.base_url = "https://leafletjs.com/reference-#{release}.html"
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://leafletjs.com/index.html', options) do |doc|
-        link = doc.css('ul > li > a').to_a.select {|node| node.content == 'Docs'}.first
-        block.call link['href'].scan(/reference-([0-9.]+)\.html/)[0][0]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://leafletjs.com/index.html', opts)
+      link = doc.css('ul > li > a').to_a.select {|node| node.content == 'Docs'}.first
+      link['href'].scan(/reference-([0-9.]+)\.html/)[0][0]
     end
   end
 end

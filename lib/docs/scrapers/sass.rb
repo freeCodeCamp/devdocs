@@ -24,10 +24,8 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    def get_latest_version(options, &block)
-      get_github_file_contents('sass', 'sass', 'VERSION', options) do |contents|
-        block.call contents.strip
-      end
+    def get_latest_version(opts)
+      get_github_file_contents('sass', 'sass', 'VERSION', opts).strip
     end
   end
 end

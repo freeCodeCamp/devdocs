@@ -29,10 +29,9 @@ module Docs
       Licensed under the MIT license.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://jekyllrb.com/docs/', options) do |doc|
-        block.call doc.at_css('.meta a').content[1..-1]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://jekyllrb.com/docs/', opts)
+      doc.at_css('.meta a').content[1..-1]
     end
   end
 end

@@ -16,8 +16,8 @@ module Docs
       url.sub! 'http://api.jqueryui.com/', 'https://api.jqueryui.com/'
     end
 
-    def get_latest_version(options, &block)
-      get_npm_version('jquery-ui', options, &block)
+    def get_latest_version(opts)
+      get_npm_version('jquery-ui', opts)
     end
   end
 end

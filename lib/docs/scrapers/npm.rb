@@ -30,10 +30,8 @@ module Docs
       npm is a trademark of npm, Inc.
     HTML
 
-    def get_latest_version(options, &block)
-      get_latest_github_release('npm', 'cli', options) do |release|
-        block.call release['tag_name'][1..-1]
-      end
+    def get_latest_version(opts)
+      get_latest_github_release('npm', 'cli', opts)['tag_name'][1..-1]
     end
   end
 end

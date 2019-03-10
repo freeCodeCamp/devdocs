@@ -44,10 +44,9 @@ module Docs
       self.base_url = "https://perldoc.perl.org/#{self.release}/"
     end
 
-    def get_latest_version(options, &block)
-      fetch('https://perldoc.perl.org/static/perlversion.js', options) do |body|
-        block.call body.scan(/>Perl ([0-9.]+)/)[0][0]
-      end
+    def get_latest_version(opts)
+      body = fetch('https://perldoc.perl.org/static/perlversion.js', opts)
+      body.scan(/>Perl ([0-9.]+)/)[0][0]
     end
   end
 end

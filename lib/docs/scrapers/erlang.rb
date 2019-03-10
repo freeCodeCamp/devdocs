@@ -56,10 +56,9 @@ module Docs
       self.release = '18.3'
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://www.erlang.org/downloads', options) do |doc|
-        block.call doc.at_css('.col-lg-3 > ul > li').content.strip.sub(/OTP /, '')
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://www.erlang.org/downloads', opts)
+      doc.at_css('.col-lg-3 > ul > li').content.strip.sub(/OTP /, '')
     end
   end
 end

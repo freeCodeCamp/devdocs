@@ -19,10 +19,9 @@ module Docs
       Licensed under the BSD License.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('http://facebook.github.io/relay/en/', options) do |doc|
-        block.call doc.at_css('header > a > h3').content[1..-1]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('http://facebook.github.io/relay/en/', opts)
+      doc.at_css('header > a > h3').content[1..-1]
     end
   end
 end

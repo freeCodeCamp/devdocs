@@ -20,10 +20,9 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    def get_latest_version(options, &block)
-      get_github_tags('Shopify', 'liquid', options) do |tags|
-        block.call tags[0]['name'][1..-1]
-      end
+    def get_latest_version(opts)
+      tags = get_github_tags('Shopify', 'liquid', opts)
+      tags[0]['name'][1..-1]
     end
   end
 end

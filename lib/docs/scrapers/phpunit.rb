@@ -38,11 +38,10 @@ module Docs
       self.base_url = "https://phpunit.de/manual/#{release}/en/"
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://phpunit.readthedocs.io/', options) do |doc|
-        label = doc.at_css('.rst-current-version').content.strip
-        block.call label.scan(/v: ([0-9.]+)/)[0][0]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://phpunit.readthedocs.io/', opts)
+      label = doc.at_css('.rst-current-version').content.strip
+      label.scan(/v: ([0-9.]+)/)[0][0]
     end
   end
 end

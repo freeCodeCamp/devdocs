@@ -19,10 +19,9 @@ module Docs
       Licensed under the MPL 2.0 License.
     HTML
 
-    def get_latest_version(options, &block)
-      get_github_file_contents('hashicorp', 'terraform-website', 'content/config.rb', options) do |contents|
-        block.call contents.scan(/version\s+=\s+"([0-9.]+)"/)[0][0]
-      end
+    def get_latest_version(opts)
+      contents = get_github_file_contents('hashicorp', 'terraform-website', 'content/config.rb', opts)
+      contents.scan(/version\s+=\s+"([0-9.]+)"/)[0][0]
     end
   end
 end

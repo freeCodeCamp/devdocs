@@ -16,10 +16,9 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://ramdajs.com/docs/', options) do |doc|
-        block.call doc.at_css('.navbar-brand > .version').content[1..-1]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://ramdajs.com/docs/', opts)
+      doc.at_css('.navbar-brand > .version').content[1..-1]
     end
   end
 end

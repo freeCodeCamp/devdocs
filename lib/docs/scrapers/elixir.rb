@@ -98,10 +98,9 @@ module Docs
       ]
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://hexdocs.pm/elixir/api-reference.html', options) do |doc|
-        block.call doc.at_css('h2.sidebar-projectVersion').content.strip[1..-1]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://hexdocs.pm/elixir/api-reference.html', opts)
+      doc.at_css('h2.sidebar-projectVersion').content.strip[1..-1]
     end
   end
 end

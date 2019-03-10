@@ -56,10 +56,8 @@ module Docs
         /\Aextend/]
     end
 
-    def get_latest_version(options, &block)
-      get_latest_github_release('tensorflow', 'tensorflow', options) do |release|
-        block.call release['tag_name'][1..-1]
-      end
+    def get_latest_version(opts)
+      get_latest_github_release('tensorflow', 'tensorflow', opts)['tag_name'][1..-1]
     end
 
     private

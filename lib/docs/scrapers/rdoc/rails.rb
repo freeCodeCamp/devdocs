@@ -94,10 +94,8 @@ module Docs
       self.release = '4.1.16'
     end
 
-    def get_latest_version(options, &block)
-      get_latest_github_release('rails', 'rails', options) do |release|
-        block.call release['name']
-      end
+    def get_latest_version(opts)
+      get_latest_github_release('rails', 'rails', opts)['name']
     end
   end
 end

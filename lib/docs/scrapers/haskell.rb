@@ -69,12 +69,11 @@ module Docs
       options[:only_patterns] = [/\Alibraries\//]
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://downloads.haskell.org/~ghc/latest/docs/html/', options) do |doc|
-        links = doc.css('a').to_a
-        versions = links.map {|link| link['href'].scan(/ghc-([0-9.]+)/)}
-        block.call versions.find {|version| !version.empty?}[0][0]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://downloads.haskell.org/~ghc/latest/docs/html/', opts)
+      links = doc.css('a').to_a
+      versions = links.map {|link| link['href'].scan(/ghc-([0-9.]+)/)}
+      versions.find {|version| !version.empty?}[0][0]
     end
   end
 end

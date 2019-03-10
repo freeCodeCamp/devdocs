@@ -87,7 +87,7 @@ module Docs
       File.read(path).force_encoding('iso-8859-1').encode('utf-8') rescue nil
     end
 
-    def get_latest_version(options, &block)
+    def get_latest_version(opts)
       latest_version = 8
       current_attempt = latest_version
       attempts = 0
@@ -95,17 +95,16 @@ module Docs
       while attempts < 3
         current_attempt += 1
 
-        fetch_doc("https://packages.debian.org/sid/openjdk-#{current_attempt}-doc", options) do |doc|
-          if doc.at_css('.perror').nil?
-            latest_version = current_attempt
-            attempts = 0
-          else
-            attempts += 1
-          end
+        doc = fetch_doc("https://packages.debian.org/sid/openjdk-#{current_attempt}-doc", opts)
+        if doc.at_css('.perror').nil?
+          latest_version = current_attempt
+          attempts = 0
+        else
+          attempts += 1
         end
       end
 
-      block.call latest_version
+      latest_version
     end
   end
 end

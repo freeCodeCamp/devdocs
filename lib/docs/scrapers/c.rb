@@ -26,12 +26,11 @@ module Docs
       Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://en.cppreference.com/w/Cppreference:Archives', options) do |doc|
-        link = doc.at_css('a[title^="File:"]')
-        date = link.content.scan(/(\d+)\./)[0][0]
-        block.call DateTime.strptime(date, '%Y%m%d').to_time.to_i
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://en.cppreference.com/w/Cppreference:Archives', opts)
+      link = doc.at_css('a[title^="File:"]')
+      date = link.content.scan(/(\d+)\./)[0][0]
+      DateTime.strptime(date, '%Y%m%d').to_time.to_i
     end
 
     private

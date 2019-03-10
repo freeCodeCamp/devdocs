@@ -21,8 +21,8 @@ module Docs
       request_one('http://redux.js.org/index.html').body
     end
 
-    def get_latest_version(options, &block)
-      get_npm_version('redux', options, &block)
+    def get_latest_version(opts)
+      get_npm_version('redux', opts)
     end
   end
 end

@@ -24,13 +24,14 @@ module Docs
       Licensed under the Creative Commons Attribution License 3.0.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://golang.org/pkg/', options) do |doc|
-        footer = doc.at_css('#footer').content
-        version = footer.scan(/go([0-9.]+)/)[0][0]
-        version = version[0...-1] if version.end_with?('.')
-        block.call version
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://golang.org/pkg/', opts)
+
+      footer = doc.at_css('#footer').content
+      version = footer.scan(/go([0-9.]+)/)[0][0]
+      version = version[0...-1] if version.end_with?('.')
+
+      version
     end
 
     private

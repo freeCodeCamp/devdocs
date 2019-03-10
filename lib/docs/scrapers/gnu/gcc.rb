@@ -100,11 +100,10 @@ module Docs
       options[:replace_paths] = CPP_PATHS
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://gcc.gnu.org/onlinedocs/', options) do |doc|
-        label = doc.at_css('ul > li > ul > li > a').content.strip
-        block.call label.scan(/([0-9.]+)/)[0][0]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://gcc.gnu.org/onlinedocs/', opts)
+      label = doc.at_css('ul > li > ul > li > a').content.strip
+      label.scan(/([0-9.]+)/)[0][0]
     end
   end
 end

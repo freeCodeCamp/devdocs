@@ -26,11 +26,10 @@ module Docs
       Licensed under the BSD License.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://nginx.org/en/download.html', options) do |doc|
-        table = doc.at_css('#content > table').inner_html
-        block.call table.scan(/nginx-([0-9.]+)</)[0][0]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://nginx.org/en/download.html', opts)
+      table = doc.at_css('#content > table').inner_html
+      table.scan(/nginx-([0-9.]+)</)[0][0]
     end
   end
 end

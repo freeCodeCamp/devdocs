@@ -51,10 +51,9 @@ module Docs
       html_filters.push 'python/entries_v2', 'sphinx/clean_html', 'python/clean_html'
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://docs.python.org/', options) do |doc|
-        block.call doc.at_css('.version_switcher_placeholder').content
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://docs.python.org/', opts)
+      doc.at_css('.version_switcher_placeholder').content
     end
   end
 end

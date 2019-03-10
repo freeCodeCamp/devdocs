@@ -62,17 +62,15 @@ class UpdatesCLI < Thor
     logger.debug("Checking #{doc.name}")
 
     instance = doc.versions.first.new
+    scraper_version = instance.get_scraper_version(opts)
+    latest_version = instance.get_latest_version(opts)
 
-    instance.get_scraper_version(opts) do |scraper_version|
-      instance.get_latest_version(opts) do |latest_version|
-        return {
-          name: doc.name,
-          scraper_version: format_version(scraper_version),
-          latest_version: format_version(latest_version),
-          is_outdated: instance.is_outdated(scraper_version, latest_version)
-        }
-      end
-    end
+    {
+      name: doc.name,
+      scraper_version: format_version(scraper_version),
+      latest_version: format_version(latest_version),
+      is_outdated: instance.is_outdated(scraper_version, latest_version)
+    }
   rescue NotImplementedError
     logger.warn("Couldn't check #{doc.name}, get_latest_version is not implemented")
     error_result(doc, '`get_latest_version` is not implemented')
@@ -87,7 +85,7 @@ class UpdatesCLI < Thor
     # If the version is numeric and greater than or equal to 1e9 it's probably a timestamp
     return str if str.match(/^(\d)+$/).nil? or str.to_i < 1e9
 
-    DateTime.strptime(str, '%s').strftime('%B %-d, %Y')
+    DateTime.strptime(str, '%s').strftime('%F')
   end
 
   def error_result(doc, reason)
@@ -150,46 +148,45 @@ class UpdatesCLI < Thor
     logger.info('Uploading the results to a new GitHub issue')
 
     logger.info('Checking if the GitHub token belongs to the correct user')
-    github_get('/user') do |user|
-      # Only allow the DevDocs bot to upload reports
-      if user['login'] == UPLOAD_USER
-        issue = results_to_issue(outdated_results, up_to_date_results, failed_results)
+    user = github_get('/user')
 
-        logger.info('Creating a new GitHub issue')
-        github_post("/repos/#{UPLOAD_REPO}/issues", issue) do |created_issue|
-          search_params = {
-            q: "Documentation versions report in:title author:#{UPLOAD_USER} is:issue repo:#{UPLOAD_REPO}",
-            sort: 'created',
-            order: 'desc'
-          }
+    # Only allow the DevDocs bot to upload reports
+    unless user['login'] == UPLOAD_USER
+      logger.error("Only #{UPLOAD_USER} is supposed to upload the results to a new issue. The specified github token is not for #{UPLOAD_USER}.")
+      return
+    end
 
-          logger.info('Checking if the previous issue is still open')
-          github_get('/search/issues', search_params) do |matching_issues|
-            previous_issue = matching_issues['items'].find {|item| item['number'] != created_issue['number']}
+    logger.info('Creating a new GitHub issue')
 
-            if previous_issue.nil?
-              logger.info('No previous issue found')
-              log_upload_success(created_issue)
-            else
-              comment = "This report was superseded by ##{created_issue['number']}."
+    issue = results_to_issue(outdated_results, up_to_date_results, failed_results)
+    created_issue = github_post("/repos/#{UPLOAD_REPO}/issues", issue)
 
-              logger.info('Commenting on the previous issue')
-              github_post("/repos/#{UPLOAD_REPO}/issues/#{previous_issue['number']}/comments", {body: comment}) do |_|
-                if previous_issue['closed_at'].nil?
-                  logger.info('Closing the previous issue')
-                  github_patch("/repos/#{UPLOAD_REPO}/issues/#{previous_issue['number']}", {state: 'closed'}) do |_|
-                    log_upload_success(created_issue)
-                  end
-                else
-                  logger.info('The previous issue has already been closed')
-                  log_upload_success(created_issue)
-                end
-              end
-            end
-          end
-        end
+    logger.info('Checking if the previous issue is still open')
+
+    search_params = {
+      q: "Documentation versions report in:title author:#{UPLOAD_USER} is:issue repo:#{UPLOAD_REPO}",
+      sort: 'created',
+      order: 'desc'
+    }
+
+    matching_issues = github_get('/search/issues', search_params)
+    previous_issue = matching_issues['items'].find {|item| item['number'] != created_issue['number']}
+
+    if previous_issue.nil?
+      logger.info('No previous issue found')
+      log_upload_success(created_issue)
+    else
+      logger.info('Commenting on the previous issue')
+
+      comment = "This report was superseded by ##{created_issue['number']}."
+      github_post("/repos/#{UPLOAD_REPO}/issues/#{previous_issue['number']}/comments", {body: comment})
+      if previous_issue['closed_at'].nil?
+        logger.info('Closing the previous issue')
+        github_patch("/repos/#{UPLOAD_REPO}/issues/#{previous_issue['number']}", {state: 'closed'})
+        log_upload_success(created_issue)
       else
-        logger.error("Only #{UPLOAD_USER} is supposed to upload the results to a new issue. The specified github token is not for #{UPLOAD_USER}.")
+        logger.info('The previous issue has already been closed')
+        log_upload_success(created_issue)
       end
     end
   end
@@ -266,19 +263,19 @@ The #{outdated_results.length + up_to_date_results.length + failed_results.lengt
   # HTTP utilities
   #
 
-  def github_get(endpoint, params = {}, &block)
-    github_request(endpoint, {method: :get, params: params}, &block)
+  def github_get(endpoint, params = {})
+    github_request(endpoint, {method: :get, params: params})
   end
 
-  def github_post(endpoint, params, &block)
-    github_request(endpoint, {method: :post, body: params.to_json}, &block)
+  def github_post(endpoint, params)
+    github_request(endpoint, {method: :post, body: params.to_json})
   end
 
-  def github_patch(endpoint, params, &block)
-    github_request(endpoint, {method: :patch, body: params.to_json}, &block)
+  def github_patch(endpoint, params)
+    github_request(endpoint, {method: :patch, body: params.to_json})
   end
 
-  def github_request(endpoint, opts, &block)
+  def github_request(endpoint, opts)
     url = "https://api.github.com#{endpoint}"
 
     # GitHub token authentication
@@ -292,16 +289,15 @@ The #{outdated_results.length + up_to_date_results.length + failed_results.lengt
     end
 
     logger.debug("Making a #{opts[:method]} request to #{url}")
+    response = Docs::Request.run(url, opts)
 
-    Docs::Request.run(url, opts) do |response|
-      # response.success? is false if the response code is 201
-      # GitHub returns 201 Created after an issue is created
-      if response.success? || response.code == 201
-        block.call JSON.parse(response.body)
-      else
-        logger.error("Couldn't make a #{opts[:method]} request to #{url} (response code #{response.code})")
-        block.call nil
-      end
+    # response.success? is false if the response code is 201
+    # GitHub returns 201 Created after an issue is created
+    if response.success? || response.code == 201
+      JSON.parse(response.body)
+    else
+      logger.error("Couldn't make a #{opts[:method]} request to #{url} (response code #{response.code})")
+      nil
     end
   end
 

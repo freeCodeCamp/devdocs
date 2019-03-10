@@ -27,11 +27,10 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://mongoosejs.com/docs/', options) do |doc|
-        label = doc.at_css('.pure-menu-link').content.strip
-        block.call label.sub(/Version /, '')
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://mongoosejs.com/docs/', opts)
+      label = doc.at_css('.pure-menu-link').content.strip
+      label.sub(/Version /, '')
     end
   end
 end

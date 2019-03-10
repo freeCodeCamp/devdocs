@@ -34,10 +34,9 @@ module Docs
       Licensed under the Apache License, Version 2.0.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('http://httpd.apache.org/docs/', options) do |doc|
-        block.call doc.at_css('#apcontents > ul a')['href'][0...-1]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('http://httpd.apache.org/docs/', opts)
+      doc.at_css('#apcontents > ul a')['href'][0...-1]
     end
   end
 end

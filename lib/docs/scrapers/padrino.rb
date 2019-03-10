@@ -24,10 +24,8 @@ module Docs
       request_one(url_for('index')).body
     end
 
-    def get_latest_version(options, &block)
-      get_github_tags('padrino', 'padrino-framework', options) do |tags|
-        block.call tags[0]['name']
-      end
+    def get_latest_version(opts)
+      get_github_tags('padrino', 'padrino-framework', opts)[0]['name']
     end
   end
 end

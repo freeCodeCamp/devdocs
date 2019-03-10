@@ -23,10 +23,9 @@ module Docs
       Licensed under the MIT license.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://electronjs.org/docs', options) do |doc|
-        block.call doc.at_css('.docs-version').content
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://electronjs.org/docs', opts)
+      doc.at_css('.docs-version').content
     end
   end
 end

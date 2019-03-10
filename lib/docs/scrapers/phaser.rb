@@ -26,10 +26,8 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    def get_latest_version(options, &block)
-      get_latest_github_release('photonstorm', 'phaser', options) do |release|
-        block.call release['tag_name'][1..-1]
-      end
+    def get_latest_version(opts)
+      get_latest_github_release('photonstorm', 'phaser', opts)['tag_name'][1..-1]
     end
   end
 end

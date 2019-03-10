@@ -20,10 +20,9 @@ module Docs
       Licensed under the GNU General Public License version 2.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://git-scm.com/', options) do |doc|
-        block.call doc.at_css('.version').content.strip
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://git-scm.com/', opts)
+      doc.at_css('.version').content.strip
     end
   end
 end

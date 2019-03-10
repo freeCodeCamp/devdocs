@@ -23,8 +23,8 @@ module Docs
       /index/i
     ]
 
-    def get_latest_version(options, &block)
-      get_npm_version('jquery', options, &block)
+    def get_latest_version(opts)
+      get_npm_version('jquery', opts)
     end
   end
 end

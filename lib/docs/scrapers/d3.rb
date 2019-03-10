@@ -59,8 +59,8 @@ module Docs
       options[:only_patterns] = [/\.md\z/]
     end
 
-    def get_latest_version(options, &block)
-      get_npm_version('d3', options, &block)
+    def get_latest_version(opts)
+      get_npm_version('d3', opts)
     end
   end
 end

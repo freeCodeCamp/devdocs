@@ -21,10 +21,9 @@ module Docs
       Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.
     HTML
 
-    def get_latest_version(opts, &block)
-      fetch_json("https://developer.mozilla.org/en-US/docs/feeds/json/tag/#{options[:mdn_tag]}", opts) do |json|
-        block.call DateTime.parse(json[0]['pubdate']).to_time.to_i
-      end
+    def get_latest_version(opts)
+      json = fetch_json("https://developer.mozilla.org/en-US/docs/feeds/json/tag/#{options[:mdn_tag]}", opts)
+      DateTime.parse(json[0]['pubdate']).to_time.to_i
     end
 
     private

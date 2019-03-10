@@ -19,11 +19,10 @@ module Docs
       Licensed under the BSD License.
     HTML
 
-    def get_latest_version(options, &block)
-      get_github_tags('openresty', 'lua-nginx-module', options) do |tags|
-        tag = tags.find { |tag| !tag['name'].include?('rc') }
-        block.call tag['name'][1..-1]
-      end
+    def get_latest_version(opts)
+      tags = get_github_tags('openresty', 'lua-nginx-module', opts)
+      tag = tags.find {|tag| !tag['name'].include?('rc')}
+      tag['name'][1..-1]
     end
   end
 end

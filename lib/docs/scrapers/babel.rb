@@ -23,10 +23,9 @@ module Docs
       '<div></div>'
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://babeljs.io/docs/en/', options) do |doc|
-        block.call doc.at_css('a[href="/versions"] > h3').content
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://babeljs.io/docs/en/', opts)
+      doc.at_css('a[href="/versions"] > h3').content
     end
   end
 end

@@ -47,10 +47,9 @@ module Docs
       self.base_url = "https://fishshell.com/docs/#{version}/"
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('http://fishshell.com/docs/current/index.html', options) do |doc|
-        block.call doc.at_css('#toc-index').content.scan(/([0-9.]+)/)[0][0]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('http://fishshell.com/docs/current/index.html', opts)
+      doc.at_css('#toc-index').content.scan(/([0-9.]+)/)[0][0]
     end
   end
 end

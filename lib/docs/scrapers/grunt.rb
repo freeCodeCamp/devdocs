@@ -27,8 +27,8 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    def get_latest_version(options, &block)
-      get_npm_version('grunt-cli', options, &block)
+    def get_latest_version(opts)
+      get_npm_version('grunt-cli', opts)
     end
   end
 end

@@ -18,10 +18,8 @@ module Docs
       Licensed under the GNU LGPL License version 2.1.
     HTML
 
-    def get_latest_version(options, &block)
-      get_latest_github_release('pygame', 'pygame', options) do |release|
-        block.call release['tag_name']
-      end
+    def get_latest_version(opts)
+      get_latest_github_release('pygame', 'pygame', opts)['tag_name']
     end
   end
 end

@@ -21,11 +21,9 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://backbonejs.org/', options) do |doc|
-        version = doc.at_css('.version').content
-        block.call version[1...-1]
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://backbonejs.org/', opts)
+      doc.at_css('.version').content[1...-1]
     end
   end
 end

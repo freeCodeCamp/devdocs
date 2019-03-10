@@ -29,8 +29,8 @@ module Docs
       Licensed under the Creative Commons Attribution-ShareAlike License v3.0.
     HTML
 
-    def get_latest_version(options, &block)
-      get_npm_version('express', options, &block)
+    def get_latest_version(opts)
+      get_npm_version('express', opts)
     end
   end
 end

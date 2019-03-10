@@ -187,39 +187,41 @@ More information about how filters work is available on the [Filter Reference](.
 
 ## Keeping scrapers up-to-date
 
-In order to keep scrapers up-to-date the `get_latest_version(options, &block)` method should be overridden. If `self.release` is defined, this should return the latest version of the documentation. If `self.release` is not defined, it should return the Epoch time when the documentation was last modified. If the documentation will never change, simply return `1.0.0`. The result of this method is periodically reported in a "Documentation versions report" issue which helps maintainers keep track of outdated documentations.
+In order to keep scrapers up-to-date the `get_latest_version(opts)` method should be overridden. If `self.release` is defined, this should return the latest version of the documentation. If `self.release` is not defined, it should return the Epoch time when the documentation was last modified. If the documentation will never change, simply return `1.0.0`. The result of this method is periodically reported in a "Documentation versions report" issue which helps maintainers keep track of outdated documentations.
 
 To make life easier, there are a few utility methods that you can use in `get_latest_version`:
-* `fetch(url, options, &block)`
+* `fetch(url, opts)`
 
-  Makes a GET request to the url and calls `&block` with the body.
+  Makes a GET request to the url and returns the response body.
 
   Example: [lib/docs/scrapers/bash.rb](../lib/docs/scrapers/bash.rb)
-* `fetch_doc(url, options, &block)`
+* `fetch_doc(url, opts)`
 
-  Makes a GET request to the url and calls `&block` with the HTML body converted to a Nokogiri document.
+  Makes a GET request to the url and returns the HTML body converted to a Nokogiri document.
 
   Example: [lib/docs/scrapers/git.rb](../lib/docs/scrapers/git.rb)
-* `fetch_json(url, options, &block)`
+* `fetch_json(url, opts)`
 
-  Makes a GET request to the url and calls `&block` with the JSON body converted to a dictionary.
-* `get_npm_version(package, options, &block)`
+  Makes a GET request to the url and returns the JSON body converted to a dictionary.
 
-  Calls `&block` with the latest version of the given npm package.
+  Example: [lib/docs/scrapers/mdn/mdn.rb](../lib/docs/scrapers/mdn/mdn.rb)
+* `get_npm_version(package, opts)`
+
+  Returns the latest version of the given npm package.
 
   Example: [lib/docs/scrapers/bower.rb](../lib/docs/scrapers/bower.rb)
-* `get_latest_github_release(owner, repo, options, &block)`
+* `get_latest_github_release(owner, repo, opts)`
 
-  Calls `&block` with the latest GitHub release of the given repository ([format](https://developer.github.com/v3/repos/releases/#get-the-latest-release)).
+  Returns the latest GitHub release of the given repository ([format](https://developer.github.com/v3/repos/releases/#get-the-latest-release)).
 
   Example: [lib/docs/scrapers/jsdoc.rb](../lib/docs/scrapers/jsdoc.rb)
-* `get_github_tags(owner, repo, options, &block)`
+* `get_github_tags(owner, repo, opts)`
 
-  Calls `&block` with the list of tags on the given repository ([format](https://developer.github.com/v3/repos/#list-tags)).
+  Returns the list of tags on the given repository ([format](https://developer.github.com/v3/repos/#list-tags)).
 
   Example: [lib/docs/scrapers/liquid.rb](../lib/docs/scrapers/liquid.rb)
-* `get_github_file_contents(owner, repo, path, options, &block)`
+* `get_github_file_contents(owner, repo, path, opts)`
 
-  Calls `&block` with the contents of the requested file in the default branch of the given repository.
+  Returns the contents of the requested file in the default branch of the given repository.
 
   Example: [lib/docs/scrapers/minitest.rb](../lib/docs/scrapers/minitest.rb)

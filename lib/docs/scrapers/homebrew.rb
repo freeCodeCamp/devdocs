@@ -20,10 +20,8 @@ module Docs
       Licensed under the BSD 2-Clause License.
     HTML
 
-    def get_latest_version(options, &block)
-      get_latest_github_release('Homebrew', 'brew', options) do |release|
-        block.call release['name']
-      end
+    def get_latest_version(opts)
+      get_latest_github_release('Homebrew', 'brew', opts)['name']
     end
   end
 end

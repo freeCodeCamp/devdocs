@@ -33,10 +33,8 @@ module Docs
       self.initial_paths = %w(/api/index.html)
     end
 
-    def get_latest_version(options, &block)
-      get_latest_github_release('vuejs', 'vue', options) do |release|
-        block.call release['tag_name'][1..-1]
-      end
+    def get_latest_version(opts)
+      get_latest_github_release('vuejs', 'vue', opts)['tag_name'][1..-1]
     end
   end
 end

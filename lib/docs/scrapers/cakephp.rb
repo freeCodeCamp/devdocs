@@ -71,10 +71,9 @@ module Docs
       self.base_url = 'https://api.cakephp.org/2.7/'
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://api.cakephp.org/3.7/', options) do |doc|
-        block.call doc.at_css('.version-picker .dropdown-toggle').content.strip
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://api.cakephp.org/3.7/', opts)
+      doc.at_css('.version-picker .dropdown-toggle').content.strip
     end
 
     private

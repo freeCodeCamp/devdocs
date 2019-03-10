@@ -164,16 +164,15 @@ module Docs
       raise NotImplementedError
     end
 
-    def get_scraper_version(opts, &block)
+    def get_scraper_version(opts)
       if self.class.method_defined?(:options) and !options[:release].nil?
-        block.call options[:release]
+        options[:release]
       else
         # If options[:release] does not exist, we return the Epoch timestamp of when the doc was last modified in DevDocs production
-        fetch_json('https://devdocs.io/docs.json', opts) do |json|
-          items = json.select {|item| item['name'] == self.class.name}
-          items = items.map {|item| item['mtime']}
-          block.call items.max
-        end
+        json = fetch_json('https://devdocs.io/docs.json', opts)
+        items = json.select {|item| item['name'] == self.class.name}
+        items = items.map {|item| item['mtime']}
+        items.max
       end
     end
 
@@ -181,7 +180,7 @@ module Docs
     # If options[:release] is defined, it should be in the same format
     # If options[:release] is not defined, it should return the Epoch timestamp of when the documentation was last updated
     # If the docs will never change, simply return '1.0.0'
-    def get_latest_version(options, &block)
+    def get_latest_version(opts)
       raise NotImplementedError
     end
 
@@ -216,55 +215,49 @@ module Docs
     # Utility methods for get_latest_version
     #
 
-    def fetch(url, options, &block)
+    def fetch(url, opts)
       headers = {}
 
-      if options.key?(:github_token) and url.start_with?('https://api.github.com/')
-        headers['Authorization'] = "token #{options[:github_token]}"
+      if opts.key?(:github_token) and url.start_with?('https://api.github.com/')
+        headers['Authorization'] = "token #{opts[:github_token]}"
       end
 
-      options[:logger].debug("Fetching #{url}")
+      opts[:logger].debug("Fetching #{url}")
+      response = Request.run(url, { headers: headers })
 
-      Request.run(url, { headers: headers }) do |response|
-        if response.success?
-          block.call response.body
-        else
-          options[:logger].error("Couldn't fetch #{url} (response code #{response.code})")
-          block.call nil
-        end
-      end
-    end
-
-    def fetch_doc(url, options, &block)
-      fetch(url, options) do |body|
-        block.call Nokogiri::HTML.parse(body, nil, 'UTF-8')
+      if response.success?
+        response.body
+      else
+        opts[:logger].error("Couldn't fetch #{url} (response code #{response.code})")
+        nil
       end
     end
 
-    def fetch_json(url, options, &block)
-      fetch(url, options) do |body|
-        block.call JSON.parse(body)
-      end
+    def fetch_doc(url, opts)
+      body = fetch(url, opts)
+      Nokogiri::HTML.parse(body, nil, 'UTF-8')
     end
 
-    def get_npm_version(package, options, &block)
-      fetch_json("https://registry.npmjs.com/#{package}", options) do |json|
-        block.call json['dist-tags']['latest']
-      end
+    def fetch_json(url, opts)
+      JSON.parse fetch(url, opts)
     end
 
-    def get_latest_github_release(owner, repo, options, &block)
-      fetch_json("https://api.github.com/repos/#{owner}/#{repo}/releases/latest", options, &block)
+    def get_npm_version(package, opts)
+      json = fetch_json("https://registry.npmjs.com/#{package}", opts)
+      json['dist-tags']['latest']
     end
 
-    def get_github_tags(owner, repo, options, &block)
-      fetch_json("https://api.github.com/repos/#{owner}/#{repo}/tags", options, &block)
+    def get_latest_github_release(owner, repo, opts)
+      fetch_json("https://api.github.com/repos/#{owner}/#{repo}/releases/latest", opts)
     end
 
-    def get_github_file_contents(owner, repo, path, options, &block)
-      fetch_json("https://api.github.com/repos/#{owner}/#{repo}/contents/#{path}", options) do |json|
-        block.call(Base64.decode64(json['content']))
-      end
+    def get_github_tags(owner, repo, opts)
+      fetch_json("https://api.github.com/repos/#{owner}/#{repo}/tags", opts)
+    end
+
+    def get_github_file_contents(owner, repo, path, opts)
+      json = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/contents/#{path}", opts)
+      Base64.decode64(json['content'])
     end
   end
 end

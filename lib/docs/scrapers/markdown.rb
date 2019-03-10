@@ -14,8 +14,8 @@ module Docs
       Licensed under the BSD License.
     HTML
 
-    def get_latest_version(options, &block)
-      block.call '1.0.0'
+    def get_latest_version(opts)
+      '1.0.0'
     end
   end
 end

@@ -43,13 +43,14 @@ module Docs
       self.base_url = 'https://cordova.apache.org/docs/en/6.x/'
     end
 
-    def get_latest_version(options, &block)
-      fetch_doc('https://cordova.apache.org/docs/en/latest/', options) do |doc|
-        label = doc.at_css('#versionDropdown').content.strip
-        version = label.scan(/([0-9.]+)/)[0][0]
-        version = version[0...-1] if version.end_with?('.')
-        block.call version
-      end
+    def get_latest_version(opts)
+      doc = fetch_doc('https://cordova.apache.org/docs/en/latest/', opts)
+
+      label = doc.at_css('#versionDropdown').content.strip
+      version = label.scan(/([0-9.]+)/)[0][0]
+      version = version[0...-1] if version.end_with?('.')
+
+      version
     end
   end
 end

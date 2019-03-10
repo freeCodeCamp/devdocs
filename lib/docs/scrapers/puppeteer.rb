@@ -15,10 +15,9 @@ module Docs
       Licensed under the Apache License 2.0.
     HTML
 
-    def get_latest_version(options, &block)
-      get_github_file_contents('GoogleChrome', 'puppeteer', 'README.md', options) do |contents|
-        block.call contents.scan(/\/v([0-9.]+)\/docs\/api\.md/)[0][0]
-      end
+    def get_latest_version(opts)
+      contents = get_github_file_contents('GoogleChrome', 'puppeteer', 'README.md', opts)
+      contents.scan(/\/v([0-9.]+)\/docs\/api\.md/)[0][0]
     end
   end
 end

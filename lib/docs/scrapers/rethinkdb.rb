@@ -58,10 +58,8 @@ module Docs
       CODE
     end
 
-    def get_latest_version(options, &block)
-      get_latest_github_release('rethinkdb', 'rethinkdb', options) do |release|
-        block.call release['tag_name'][1..-1]
-      end
+    def get_latest_version(opts)
+      get_latest_github_release('rethinkdb', 'rethinkdb', opts)['tag_name'][1..-1]
     end
 
     private
