@@ -1,11 +1,9 @@
 class UpdatesCLI < Thor
   # The GitHub user that is allowed to upload reports
-  # TODO: Update this before creating a PR
   UPLOAD_USER = 'devdocs-bot'
 
   # The repository to create an issue in when uploading the results
-  # TODO: Update this before creating a PR
-  UPLOAD_REPO = 'jmerle/devdocs'
+  UPLOAD_REPO = 'freeCodeCamp/devdocs'
 
   def self.to_s
     'Updates'
@@ -207,7 +205,7 @@ class UpdatesCLI < Thor
 
 This is an automatically created issue which contains information about the version status of the documentations available on DevDocs. The results of this report can be used by maintainers when updating outdated documentations.
 
-Maintainers can close this issue when all documentations are up-to-date. This issue is automatically closed when the next report is created.#{travis_str}
+Maintainers can close this issue when all documentations are up-to-date. The issue is also automatically closed when the next report is created.#{travis_str}
 
 ## Results
 
