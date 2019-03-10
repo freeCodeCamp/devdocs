@@ -10,7 +10,7 @@ module Docs
 
     html_filters.push 'haskell/entries', 'haskell/clean_html'
 
-    options[:container] = ->(filter) { filter.subpath.start_with?('users_guide') ? '.body' : '#content' }
+    options[:container] = ->(filter) {filter.subpath.start_with?('users_guide') ? '.body' : '#content'}
 
     options[:only_patterns] = [/\Alibraries\//, /\Ausers_guide\//]
     options[:skip_patterns] = [
@@ -70,9 +70,10 @@ module Docs
     end
 
     def get_latest_version(options, &block)
-      fetch_doc('https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/', options) do |doc|
-        label = doc.at_css('.related > ul > li:last-child').content
-        block.call label.scan(/([0-9.]+)/)[0][0]
+      fetch_doc('https://downloads.haskell.org/~ghc/latest/docs/html/', options) do |doc|
+        links = doc.css('a').to_a
+        versions = links.map {|link| link['href'].scan(/ghc-([0-9.]+)/)}
+        block.call versions.find {|version| !version.empty?}[0][0]
       end
     end
   end

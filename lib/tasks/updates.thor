@@ -1,7 +1,7 @@
 class UpdatesCLI < Thor
   # The GitHub user that is allowed to upload reports
   # TODO: Update this before creating a PR
-  UPLOAD_USER = 'jmerle'
+  UPLOAD_USER = 'devdocs-bot'
 
   # The repository to create an issue in when uploading the results
   # TODO: Update this before creating a PR
@@ -59,25 +59,19 @@ class UpdatesCLI < Thor
   private
 
   def check_doc(doc, opts)
-    # Newer scraper versions always come before older scraper versions
-    # Therefore, the first item's release value is the latest scraper version
-    #
-    # For example, a scraper could scrape 3 versions: 10, 11 and 12
-    # doc.versions.first would be the scraper for version 12
-    instance = doc.versions.first.new
-
-    scraper_version = instance.class.method_defined?(:options) ? instance.options[:release] : nil
-    return error_result(doc, '`options[:release]` does not exist') if scraper_version.nil?
-
     logger.debug("Checking #{doc.name}")
 
-    instance.get_latest_version(opts) do |latest_version|
-      return {
-        name: doc.name,
-        scraper_version: scraper_version,
-        latest_version: latest_version,
-        is_outdated: instance.is_outdated(scraper_version, latest_version)
-      }
+    instance = doc.versions.first.new
+
+    instance.get_scraper_version(opts) do |scraper_version|
+      instance.get_latest_version(opts) do |latest_version|
+        return {
+          name: doc.name,
+          scraper_version: format_version(scraper_version),
+          latest_version: format_version(latest_version),
+          is_outdated: instance.is_outdated(scraper_version, latest_version)
+        }
+      end
     end
   rescue NotImplementedError
     logger.warn("Couldn't check #{doc.name}, get_latest_version is not implemented")
@@ -85,6 +79,15 @@ class UpdatesCLI < Thor
   rescue
     logger.error("Error while checking #{doc.name}")
     raise
+  end
+
+  def format_version(version)
+    str = version.to_s
+
+    # If the version is numeric and greater than or equal to 1e9 it's probably a timestamp
+    return str if str.match(/^(\d)+$/).nil? or str.to_i < 1e9
+
+    DateTime.strptime(str, '%s').strftime('%B %-d, %Y')
   end
 
   def error_result(doc, reason)
@@ -199,14 +202,15 @@ class UpdatesCLI < Thor
     ]
 
     results_str = results.select {|result| !result.nil?}.join("\n\n")
+    travis_str = ENV['TRAVIS'].nil? ? '' : "\n\nThis issue was created by Travis CI build [##{ENV['TRAVIS_BUILD_NUMBER']}](#{ENV['TRAVIS_BUILD_WEB_URL']})."
 
-    title = "Documentation versions report for #{Date.today.strftime('%B')} 2019"
+    title = "Documentation versions report for #{Date.today.strftime('%B %Y')}"
     body = <<-MARKDOWN
 ## What is this?
 
 This is an automatically created issue which contains information about the version status of the documentations available on DevDocs. The results of this report can be used by maintainers when updating outdated documentations.
 
-Maintainers can close this issue when all documentations are up-to-date. This issue is automatically closed when the next report is created.
+Maintainers can close this issue when all documentations are up-to-date. This issue is automatically closed when the next report is created.#{travis_str}
 
 ## Results
 

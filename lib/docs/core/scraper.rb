@@ -132,35 +132,6 @@ module Docs
       end
     end
 
-    def get_latest_version(options, &block)
-      raise NotImplementedError
-    end
-
-    # Returns whether or not this scraper is outdated.
-    #
-    # The default implementation assumes the documentation uses a semver(-like) approach when it comes to versions.
-    # Patch updates are ignored because there are usually little to no documentation changes in bug-fix-only releases.
-    #
-    # Scrapers of documentations that do not use this versioning approach should override this method.
-    #
-    # Examples of the default implementation:
-    # 1 -> 2 = outdated
-    # 1.1 -> 1.2 = outdated
-    # 1.1.1 -> 1.1.2 = not outdated
-    def is_outdated(scraper_version, latest_version)
-      scraper_parts = scraper_version.split(/\./).map(&:to_i)
-      latest_parts = latest_version.split(/\./).map(&:to_i)
-
-      # Only check the first two parts, the third part is for patch updates
-      [0, 1].each do |i|
-        break if i >= scraper_parts.length or i >= latest_parts.length
-        return true if latest_parts[i] > scraper_parts[i]
-        return false if latest_parts[i] < scraper_parts[i]
-      end
-
-      false
-    end
-
     private
 
     def request_one(url)
@@ -229,62 +200,6 @@ module Docs
 
     def additional_options
       {}
-    end
-
-    #
-    # Utility methods for get_latest_version
-    #
-
-    def fetch(url, options, &block)
-      headers = {}
-
-      if options.key?(:github_token) and url.start_with?('https://api.github.com/')
-        headers['Authorization'] = "token #{options[:github_token]}"
-      end
-
-      options[:logger].debug("Fetching #{url}")
-
-      Request.run(url, { headers: headers }) do |response|
-        if response.success?
-          block.call response.body
-        else
-          options[:logger].error("Couldn't fetch #{url} (response code #{response.code})")
-          block.call nil
-        end
-      end
-    end
-
-    def fetch_doc(url, options, &block)
-      fetch(url, options) do |body|
-        block.call Nokogiri::HTML.parse body, nil, 'UTF-8'
-      end
-    end
-
-    def fetch_json(url, options, &block)
-      fetch(url, options) do |body|
-        json = JSON.parse(body)
-        block.call json
-      end
-    end
-
-    def get_npm_version(package, options, &block)
-      fetch_json("https://registry.npmjs.com/#{package}", options) do |json|
-        block.call json['dist-tags']['latest']
-      end
-    end
-
-    def get_latest_github_release(owner, repo, options, &block)
-      fetch_json("https://api.github.com/repos/#{owner}/#{repo}/releases/latest", options, &block)
-    end
-
-    def get_github_tags(owner, repo, options, &block)
-      fetch_json("https://api.github.com/repos/#{owner}/#{repo}/tags", options, &block)
-    end
-
-    def get_github_file_contents(owner, repo, path, options, &block)
-      fetch_json("https://api.github.com/repos/#{owner}/#{repo}/contents/#{path}", options) do |json|
-        block.call(Base64.decode64(json['content']))
-      end
     end
 
     module FixInternalUrlsBehavior

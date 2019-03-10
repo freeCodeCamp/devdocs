@@ -178,5 +178,12 @@ module Docs
         </p>
       </div>
     HTML
+
+    def get_latest_version(options, &block)
+      fetch('https://feeds.feedburner.com/WhenCanIUse?format=xml', options) do |body|
+        timestamp = body.scan(/<updated>([^<]+)<\/updated>/)[0][0]
+        block.call DateTime.parse(timestamp).to_time.to_i
+      end
+    end
   end
 end

@@ -49,9 +49,8 @@ module Docs
     end
 
     def get_latest_version(options, &block)
-      fetch_doc('https://docs-archive.chef.io/', options) do |doc|
-        cell = doc.at_css('.main-archives > tr:nth-child(2) > td:nth-child(2)')
-        block.call cell.content.sub(/Chef Client /, '')
+      fetch_doc('https://downloads.chef.io/chef', options) do |doc|
+        block.call doc.at_css('h1.product-heading > span').content.strip
       end
     end
   end

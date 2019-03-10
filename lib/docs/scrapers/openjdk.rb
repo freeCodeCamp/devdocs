@@ -105,7 +105,7 @@ module Docs
         end
       end
 
-      block.call latest_version.to_s
+      block.call latest_version
     end
   end
 end

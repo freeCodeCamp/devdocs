@@ -187,7 +187,7 @@ More information about how filters work is available on the [Filter Reference](.
 
 ## Keeping scrapers up-to-date
 
-In order to keep scrapers up-to-date the `get_latest_version(options, &block)` method should be overridden by all scrapers that define the `self.release` attribute. This method should return the latest version of the documentation that is being scraped. The result of this method is periodically reported in a "Documentation versions report" issue which helps maintainers keep track of outdated documentations.
+In order to keep scrapers up-to-date the `get_latest_version(options, &block)` method should be overridden. If `self.release` is defined, this should return the latest version of the documentation. If `self.release` is not defined, it should return the Epoch time when the documentation was last modified. If the documentation will never change, simply return `1.0.0`. The result of this method is periodically reported in a "Documentation versions report" issue which helps maintainers keep track of outdated documentations.
 
 To make life easier, there are a few utility methods that you can use in `get_latest_version`:
 * `fetch(url, options, &block)`
