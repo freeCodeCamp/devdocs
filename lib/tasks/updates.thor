@@ -72,9 +72,9 @@ class UpdatesCLI < Thor
   rescue NotImplementedError
     logger.warn("Couldn't check #{doc.name}, get_latest_version is not implemented")
     error_result(doc, '`get_latest_version` is not implemented')
-  rescue
-    logger.error("Error while checking #{doc.name}")
-    raise
+  rescue => error
+    logger.error("Error while checking #{doc.name}\n#{error.full_message.strip}")
+    error_result(doc, error.message.gsub(/'/, '`'))
   end
 
   def format_version(version)

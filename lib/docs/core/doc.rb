@@ -223,13 +223,14 @@ module Docs
       end
 
       opts[:logger].debug("Fetching #{url}")
-      response = Request.run(url, { headers: headers })
+      response = Request.run(url, { connecttimeout: 15, headers: headers })
 
       if response.success?
         response.body
       else
-        opts[:logger].error("Couldn't fetch #{url} (response code #{response.code})")
-        nil
+        reason = response.timed_out? ? "Timed out while fetching #{url}" : "Couldn't fetch #{url} (response code #{response.code})"
+        opts[:logger].error(reason)
+        raise reason
       end
     end
 
