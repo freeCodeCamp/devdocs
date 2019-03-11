@@ -228,7 +228,7 @@ module Docs
       if response.success?
         response.body
       else
-        reason = response.timed_out? ? "Timed out while fetching #{url}" : "Couldn't fetch #{url} (response code #{response.code})"
+        reason = response.timed_out? ? "Timed out while connecting to #{url}" : "Couldn't fetch #{url} (response code #{response.code})"
         opts[:logger].error(reason)
         raise reason
       end
