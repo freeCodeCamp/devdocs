@@ -157,6 +157,7 @@ DevDocs's own documentation is available on the [wiki](https://github.com/freeCo
 * [Desktop application](https://github.com/egoist/devdocs-desktop)
 * [Doc Browser](https://github.com/qwfy/doc-browser) is a native Linux app that supports DevDocs docsets
 * [GNOME Application](https://github.com/hardpixel/devdocs-desktop) GTK3 application with search integrated in headerbar
+* [macOS Application](https://github.com/dteoh/devdocs-macos)
 
 ## Copyright / License
 
