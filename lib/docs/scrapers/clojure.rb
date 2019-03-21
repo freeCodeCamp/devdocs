@@ -13,6 +13,11 @@ module Docs
       Licensed under the Eclipse Public License 1.0.
     HTML
 
+    version '(current master)' do
+      self.release = '1.11 (in development)'
+      self.base_url = 'https://clojure.github.io/clojure/branch-master/'
+    end
+
     version '1.10' do
       self.release = '1.10 (stable)'
       self.base_url = 'https://clojure.github.io/clojure/'
