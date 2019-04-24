@@ -89,7 +89,7 @@ These modifications are applied via a set of filters using the [HTML::Pipeline](
 
 The end result is a set of normalized HTML partials and two JSON files (index + offline data). Because the index files are loaded separately by the [app](#app) following the user's preferences, the scraper also creates a JSON manifest file containing information about the documentations currently available on the system (such as their name, version, update date, etc.).
 
-More information about scrapers and filters is available on the [wiki](https://github.com/freeCodeCamp/devdocs/wiki).
+More information about [scrapers](https://github.com/freeCodeCamp/devdocs/blob/master/docs/Scraper-Reference.md) and [filters](https://github.com/freeCodeCamp/devdocs/blob/master/docs/Filter-Reference.md) is available in the `docs` folder.
 
 ## Available Commands
 
@@ -130,8 +130,6 @@ If multiple versions of Ruby are installed on your system, commands must be run 
 ## Contributing
 
 Contributions are welcome. Please read the [contributing guidelines](https://github.com/freeCodeCamp/devdocs/blob/master/.github/CONTRIBUTING.md).
-
-DevDocs's own documentation is available on the [wiki](https://github.com/freeCodeCamp/devdocs/wiki).
 
 ## Documentation
 
