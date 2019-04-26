@@ -20,9 +20,14 @@ module Docs
 
           dl = node.parent.parent
 
-          if dl.classes.include?('attribute') or dl.classes.include?('method')
+          if dl.classes.include?('attribute') \
+              or dl.classes.include?('method') \
+              or dl.classes.include?('data')
             parent = dl.parent.previous_element
             cls = ''
+            if n = parent.at_css('.descclassname')
+              cls += n.text
+            end
             if n = parent.at_css('.descname')
               if n.text == "The nursery interface"
                 cls += "Nursery."
