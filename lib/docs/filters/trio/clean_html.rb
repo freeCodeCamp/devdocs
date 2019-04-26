@@ -10,9 +10,23 @@ module Docs
         css('.headerlink').remove
 
         css('dt').each do |node|
-          new_node = doc.document.create_element "h3"
-          new_node.content = node.inner_text[0...-1]
+          if node.parent.classes.include? 'class'
+            new_node = doc.document.create_element 'h2'
+          else
+            new_node = doc.document.create_element "h3"
+          end
+          new_node['id'] = node['id']
+          new_node.content = node.inner_text
           node.replace new_node
+        end
+
+        css('pre').each do |node|
+          classes = node.parent.parent.classes
+          if classes.include? 'highlight-python3'
+            node['class'] = 'language-python'
+            node['data-language'] = 'python'
+          end
+          node.parent.parent.replace(node)
         end
         doc
       end
