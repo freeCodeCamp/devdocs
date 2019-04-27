@@ -38,8 +38,7 @@ module Docs
             name = cls + name
           end
 
-          id = node.parent['id']
-          entries << [name, id]
+          entries << [name, node.parent['id']]
         end
       end
     end
