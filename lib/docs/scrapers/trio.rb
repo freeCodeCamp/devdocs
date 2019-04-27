@@ -11,14 +11,17 @@ module Docs
 
     html_filters.push 'trio/entries', 'trio/clean_html'
 
-    options[:attribution] = <<-HTML
-    HTML
     options[:only_patterns] = [
       /reference-core/,
       /reference-io/,
       /reference-testing/,
       /reference-hazmat/,
     ]
+
+    options[:attribution] = <<-HTML
+      &copy; 2017-2019 Nathaniel Smith<br>
+      Licensed under MIT and Apache2.
+    HTML
 
   end
 end
