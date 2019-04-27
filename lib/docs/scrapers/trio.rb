@@ -19,7 +19,7 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2017-2019 Nathaniel Smith<br>
+      &copy; 2017-2019 Nathaniel J. Smith<br>
       Licensed under MIT and Apache2.
     HTML
 
