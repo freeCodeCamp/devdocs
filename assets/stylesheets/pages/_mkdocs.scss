@@ -1,4 +1,4 @@
-%mkdocs {
+._mkdocs {
   h2 { @extend %block-heading; }
   h3 { @extend %block-label, %label-blue; }
   h4 { @extend %block-label; }
@@ -8,8 +8,4 @@
   strong { font-weight: var(--bolderFontWeight); }
 
   p > code, li > code { @extend %label; }
-}
-
-._mkdocs {
-  @extend %mkdocs;
 }

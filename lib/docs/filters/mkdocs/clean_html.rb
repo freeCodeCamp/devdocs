@@ -4,7 +4,6 @@ module Docs
       def call
         css('.toclink').each do |node|
           node.parent.content = node.content
-          node.remove
         end
 
         css('pre').each do |node|
