@@ -24,12 +24,12 @@ Want to contribute? Great. Please review the following guidelines carefully and 
 ## Requesting new features
 
 1. Search for similar feature requests; someone may have already requested it.
-2. Make sure your feature fits DevDocs's [vision](https://github.com/freeCodeCamp/devdocs/blob/master/README.md#vision).
+2. Make sure your feature fits DevDocs's [vision](../README.md#vision).
 3. Provide a clear and detailed explanation of the feature and why it's important to add it.
 
 ## Requesting new documentations
 
-Please don't open issues to request new documentations.  
+Please don't open issues to request new documentations.
 Use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) where everyone can vote.
 
 ## Contributing code and features

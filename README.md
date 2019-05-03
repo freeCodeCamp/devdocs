@@ -89,7 +89,7 @@ These modifications are applied via a set of filters using the [HTML::Pipeline](
 
 The end result is a set of normalized HTML partials and two JSON files (index + offline data). Because the index files are loaded separately by the [app](#app) following the user's preferences, the scraper also creates a JSON manifest file containing information about the documentations currently available on the system (such as their name, version, update date, etc.).
 
-More information about [scrapers](https://github.com/freeCodeCamp/devdocs/blob/master/docs/Scraper-Reference.md) and [filters](https://github.com/freeCodeCamp/devdocs/blob/master/docs/Filter-Reference.md) is available in the `docs` folder.
+More information about [scrapers](./docs/scraper-reference.md) and [filters](./docs/filter-reference.md) is available in the `docs` folder.
 
 ## Available Commands
 
@@ -129,7 +129,7 @@ If multiple versions of Ruby are installed on your system, commands must be run 
 
 ## Contributing
 
-Contributions are welcome. Please read the [contributing guidelines](https://github.com/freeCodeCamp/devdocs/blob/master/.github/CONTRIBUTING.md).
+Contributions are welcome. Please read the [contributing guidelines](./.github/CONTRIBUTING.md).
 
 ## Documentation
 
@@ -144,7 +144,7 @@ Contributions are welcome. Please read the [contributing guidelines](https://git
 * [Ubuntu Touch app](https://uappexplorer.com/app/devdocsunofficial.berkes)
 * [Sublime Text plugin](https://sublime.wbond.net/packages/DevDocs)
 * [Atom plugin](https://atom.io/packages/devdocs)
-* [Brackets extension](https://github.com/gruehle/dev-docs-viewer) 
+* [Brackets extension](https://github.com/gruehle/dev-docs-viewer)
 * [Fluid](http://fluidapp.com) for turning DevDocs into a real OS X app
 * [GTK shell / Vim integration](https://github.com/naquad/devdocs-shell)
 * [Emacs lookup](https://github.com/skeeto/devdocs-lookup)
@@ -162,7 +162,7 @@ Contributions are welcome. Please read the [contributing guidelines](https://git
 
 Copyright 2013-2019 Thibaut Courouble and [other contributors](https://github.com/freeCodeCamp/devdocs/graphs/contributors)
 
-This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](https://github.com/freeCodeCamp/devdocs/blob/master/COPYRIGHT) and [LICENSE](https://github.com/freeCodeCamp/devdocs/blob/master/LICENSE) files.
+This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](./COPYRIGHT) and [LICENSE](./LICENSE) files.
 
 Please do not use the name DevDocs to endorse or promote products derived from this software without the maintainers' permission, except as may be necessary to comply with the notice/attribution requirements.
 
