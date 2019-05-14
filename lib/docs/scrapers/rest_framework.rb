@@ -3,7 +3,6 @@ module Docs
     self.name = 'Django REST Framework'
     self.release = '3.9.2'
     self.slug = 'rest_framework'
-    self.type = 'mkdocs'
     self.base_url = 'https://www.django-rest-framework.org/'
     self.root_path = 'index.html'
     self.links = {
