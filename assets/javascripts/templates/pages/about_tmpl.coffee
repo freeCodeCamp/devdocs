@@ -312,6 +312,11 @@ credits = [
     'GFDL',
     'https://www.gnu.org/licenses/fdl-1.3.en.html'
   ], [
+    'Gnuplot',
+    'Copyright 1986 - 1993, 1998, 2004 Thomas Williams, Colin Kelley',
+    'gnuplot license',
+    'https://sourceforge.net/p/gnuplot/gnuplot-main/ci/master/tree/Copyright'
+  ], [
     'Go',
     'Google, Inc.',
     'CC BY',
