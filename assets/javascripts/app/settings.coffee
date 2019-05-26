@@ -124,5 +124,6 @@ class app.Settings
     classList[if enable then 'add' else 'remove']('_theme-dark')
 
   toggleLayout: (layout, enable) ->
-    document.body.classList[if enable then 'add' else 'remove'](layout) unless layout is SIDEBAR_HIDDEN_LAYOUT
-    document.body.classList[if $.overlayScrollbarsEnabled() then 'add' else 'remove']('_overlay-scrollbars')
+    classList = document.body.classList
+    classList[if enable then 'add' else 'remove'](layout) unless layout is SIDEBAR_HIDDEN_LAYOUT
+    classList[if $.overlayScrollbarsEnabled() then 'add' else 'remove']('_overlay-scrollbars')
