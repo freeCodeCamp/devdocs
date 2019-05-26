@@ -19,6 +19,9 @@ class app.Settings
     'news'
   ]
 
+  LAYOUTS = ['_max-width', '_sidebar-hidden', '_native-scrollbars']
+  SIDEBAR_HIDDEN_LAYOUT = '_sidebar-hidden'
+
   @defaults:
     count: 0
     hideDisabled: false
@@ -38,6 +41,7 @@ class app.Settings
   set: (key, value) ->
     @store.set(key, value)
     delete @cache[key]
+    @toggleDark(value) if key == 'dark'
     return
 
   del: (key) ->
@@ -63,6 +67,8 @@ class app.Settings
     return
 
   setLayout: (name, enable) ->
+    @toggleLayout(name, enable)
+
     layout = (@store.get('layout') || '').split(' ')
     $.arrayDelete(layout, '')
 
@@ -80,6 +86,9 @@ class app.Settings
   hasLayout: (name) ->
     layout = (@store.get('layout') || '').split(' ')
     layout.indexOf(name) isnt -1
+
+  getAllLayouts: ->
+    return LAYOUTS
 
   setSize: (value) ->
     @set 'size', value
@@ -104,3 +113,16 @@ class app.Settings
     @store.reset()
     @cache = {}
     return
+
+  initLayout: ->
+    @toggleDark(@get('dark'))
+    @toggleLayout(layout, @hasLayout(layout)) for layout in LAYOUTS
+
+  toggleDark: (enable) ->
+    classList = document.documentElement.classList
+    classList[if enable then 'remove' else 'add']('_theme-default')
+    classList[if enable then 'add' else 'remove']('_theme-dark')
+
+  toggleLayout: (layout, enable) ->
+    document.body.classList[if enable then 'add' else 'remove'](layout) unless layout is SIDEBAR_HIDDEN_LAYOUT
+    document.body.classList[if $.overlayScrollbarsEnabled() then 'add' else 'remove']('_overlay-scrollbars')
