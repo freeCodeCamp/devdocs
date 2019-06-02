@@ -3,8 +3,8 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = super
-        name.gsub!('Element.', '').try(:downcase!)
-        name.gsub!('Attribute.', '').try(:downcase!)
+        name.gsub!('Element.', '')
+        name.gsub!('Attribute.', '')
         name.gsub!('Tutorial.', '')
         name.gsub!('_', '')
 

@@ -1,11 +1,10 @@
 module Docs
   class Openjdk < FileScraper
+    # Downloaded from packages.debian.org/sid/openjdk-8-doc
+    # Extracting subdirectory /usr/share/doc/openjdk-8-jre-headless/api
     self.name = 'OpenJDK'
     self.type = 'openjdk'
     self.root_path = 'overview-summary.html'
-    # Downloaded from packages.debian.org/sid/openjdk-8-doc
-    # Extracting subdirectory /usr/share/doc/openjdk-8-jre-headless/api
-    self.dir = '/Users/Thibaut/DevDocs/Docs/OpenJDK'
 
     html_filters.insert_after 'internal_urls', 'openjdk/clean_urls'
     html_filters.push 'openjdk/entries', 'openjdk/clean_html'

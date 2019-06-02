@@ -1,16 +1,9 @@
 module Docs
   class Ruby < Rdoc
-    # Generated with:
-    #   ./configure && make html
-    # or:
-    #   rdoc \
-    #     --root . \
-    #     --page-dir doc \
-    #     --encoding=UTF-8 \
-    #     --visibility=public \
-    #     --format=darkfish \
-    #     --no-line-numbers \
-    #     --op html .
+    # Instructions:
+    #   1. Download Ruby's source code
+    #   2. Run "./configure && make html" (in the Ruby directory)
+    #   3. Copy the ".ext/html" directory to "docs/ruby~[version]"
 
     include FixInternalUrlsBehavior
 
@@ -76,19 +69,20 @@ module Docs
       Licensed under their own licenses.
     HTML
 
+    version '2.5' do
+      self.release = '2.5.3'
+    end
+
     version '2.4' do
-      self.release = '2.4.1'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby24'
+      self.release = '2.4.5'
     end
 
     version '2.3' do
-      self.release = '2.3.4'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby23'
+      self.release = '2.3.8'
     end
 
     version '2.2' do
-      self.release = '2.2.7'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby22'
+      self.release = '2.2.10'
     end
   end
 end

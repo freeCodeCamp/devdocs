@@ -17,6 +17,7 @@ class app.views.Search extends app.View
     typing: 'focus'
     altG: 'google'
     altS: 'stackoverflow'
+    altD: 'duckduckgo'
 
   @routes:
     after: 'afterRoute'
@@ -113,6 +114,10 @@ class app.views.Search extends app.View
     @externalSearch "https://stackoverflow.com/search?q="
     return
 
+  duckduckgo: =>
+    @externalSearch "https://duckduckgo.com/?t=devdocs&q="
+    return
+
   onResults: (results) =>
     @hasResults = true if results.length
     @trigger 'results', results, @flags
@@ -127,7 +132,6 @@ class app.views.Search extends app.View
     if event.target is @resetLink
       $.stopEvent(event)
       @reset()
-      app.document.onEscape()
     return
 
   onSubmit: (event) ->

@@ -2,7 +2,7 @@ module Docs
   class ReactNative
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.inner-content, article.withtoc')
+        @doc = at_css('.post')
 
         if root_page?
           at_css('h1').content = 'React Native Documentation'
@@ -38,6 +38,11 @@ module Docs
           node.content = node.content
         end
 
+        css('pre > code.hljs').each do |node|
+          node.parent['data-language'] = 'jsx'
+          node.before(node.children).remove
+        end
+
         css('blockquote > p:first-child').each do |node|
           node.remove if node.content.strip == 'Note:'
         end
@@ -45,7 +50,7 @@ module Docs
         css('h3#props', 'h3#methods').each { |node| node.name = 'h2' }
         css('h4.propTitle').each { |node| node.name = 'h3' }
 
-        css('> div > div', '> div', 'div > span', '.props', '.prop').each do |node|
+        css('> div > div', '> div', 'div > span', '.props', '.prop', '> article', '.postHeader', '.web-player').each do |node|
           node.before(node.children).remove
         end
 

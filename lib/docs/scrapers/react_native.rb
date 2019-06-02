@@ -2,7 +2,7 @@ module Docs
   class ReactNative < UrlScraper
     self.slug = 'react_native'
     self.type = 'react_native'
-    self.release = '0.49'
+    self.release = '0.56'
     self.base_url = 'https://facebook.github.io/react-native/docs/'
     self.root_path = 'getting-started.html'
     self.links = {
@@ -12,7 +12,7 @@ module Docs
 
     html_filters.push 'react_native/entries', 'react_native/clean_html'
 
-    options[:container] = '.documentationContent'
+    options[:container] = '.docMainWrapper'
     options[:skip_patterns] = [/\Asample\-/]
     options[:skip] = %w(
       videos.html
@@ -27,7 +27,7 @@ module Docs
     }
 
     options[:attribution] = <<-HTML
-      &copy; 2015&ndash;2017 Facebook Inc.<br>
+      &copy; 2015&ndash;2018 Facebook Inc.<br>
       Licensed under the Creative Commons Attribution 4.0 International Public License.
     HTML
   end

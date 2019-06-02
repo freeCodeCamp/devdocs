@@ -1,5 +1,7 @@
 module Docs
   class DomEvents < Mdn
+    prepend FixInternalUrlsBehavior
+
     self.name = 'DOM Events'
     self.slug = 'dom_events'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/Events'

@@ -2,7 +2,6 @@ module Docs
   class Numpy < FileScraper
     self.name = 'NumPy'
     self.type = 'sphinx'
-    self.dir = '/Users/Thibaut/DevDocs/Docs/numpy/reference/'
     self.root_path = 'index.html'
     self.links = {
       home: 'http://www.numpy.org/',
@@ -25,6 +24,11 @@ module Docs
       &copy; 2008&ndash;2017 NumPy Developers<br>
       Licensed under the NumPy License.
     HTML
+
+    version '1.14' do
+      self.release = '1.14.2'
+      self.base_url = "https://docs.scipy.org/doc/numpy-#{self.release}/reference/"
+    end
 
     version '1.13' do
       self.release = '1.13.0'

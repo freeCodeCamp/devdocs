@@ -7,15 +7,15 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  z-index: $headerZ;
+  z-index: var(--headerZ);
 
   &._in { display: block; }
 
   > ._header { justify-content: space-between; }
 
   &._dirty > ._header {
-    background: $noteGreenBackground;
-    border-color: $noteGreenBorder;
+    background: var(--noteGreenBackground);
+    border-color: var(--noteGreenBorder);
   }
 }
 
@@ -37,7 +37,7 @@
   padding-right: .5rem;
   line-height: inherit;
   font-size: inherit;
-  font-weight: $boldFontWeight;
+  font-weight: var(--boldFontWeight);
   text-align: right;
   @extend %border-box;
 }
@@ -52,7 +52,7 @@
 
   > small {
     display: block;
-    color: $textColorLight;
+    color: var(--textColorLight);
     margin-left: 1.75rem;
   }
 
@@ -62,7 +62,7 @@
   }
 }
 
-@media (max-width: $maxWidth) {
+@media (max-width: 80rem) {
   ._setting-max-width { display: none; }
 }
 
@@ -80,7 +80,7 @@
   line-height: 1.5rem;
   padding: 0 .75rem;
   font-size: .875rem;
-  font-weight: $boldFontWeight;
+  font-weight: var(--boldFontWeight);
   color: inherit;
   text-align: left;
   cursor: pointer;
@@ -119,12 +119,12 @@
   position: relative;
   vertical-align: top;
   padding: 0 .75rem;
-  line-height: $headerHeight;
-  color: $textColorLight;
+  line-height: var(--headerHeight);
+  color: var(--textColorLight);
 
   &.active {
-    color: $textColor;
-    font-weight: $boldFontWeight;
-    box-shadow: inset 0 -2px $linkColor;
+    color: var(--textColor);
+    font-weight: var(--boldFontWeight);
+    box-shadow: inset 0 -2px var(--linkColor);
   }
 }

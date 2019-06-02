@@ -26,6 +26,10 @@ module Docs
       log event.payload[:msg]
     end
 
+    def warn(event)
+      log "ERROR: #{event.payload[:msg]}"
+    end
+
     def error(event)
       exception = event.payload[:exception]
       log "ERROR:"

@@ -3,7 +3,7 @@ module Docs
     self.name = 'Moment.js'
     self.slug = 'moment'
     self.type = 'moment'
-    self.release = '2.18.1'
+    self.release = '2.22.1'
     self.base_url = 'http://momentjs.com'
     self.root_path = '/docs/'
     self.initial_paths = %w(/guides/)

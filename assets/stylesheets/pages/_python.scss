@@ -1,0 +1,6 @@
+._python {
+    @extend %sphinx;
+  
+    h2 > a, h3 > a, dt[id] > a.external, dt[id] > a.internal { float: none !important; }
+  }
+  

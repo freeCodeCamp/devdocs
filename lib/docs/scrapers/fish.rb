@@ -1,7 +1,7 @@
 module Docs
   class Fish < UrlScraper
     self.name = 'Fish'
-    self.type = 'fish'
+    self.type = 'simple'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://fishshell.com/',
@@ -16,6 +16,11 @@ module Docs
       &copy; 2005&ndash;2009 Axel Liljencrantz<br>
       Licensed under the GNU General Public License, version 2.
     HTML
+
+    version '2.7' do
+      self.release = '2.7.1'
+      self.base_url = "https://fishshell.com/docs/#{version}/"
+    end
 
     version '2.6' do
       self.release = '2.6.0'

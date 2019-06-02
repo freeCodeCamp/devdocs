@@ -57,6 +57,7 @@ class app.views.OfflinePage extends app.View
       doc[action](@onInstallSuccess.bind(@, doc), @onInstallError.bind(@, doc), @onInstallProgress.bind(@, doc))
       el.parentNode.innerHTML = "#{el.textContent.replace(/e$/, '')}ing…"
     else if action = el.getAttribute('data-action-all')
+      return unless action isnt 'uninstall' or window.confirm('Uninstall all docs?')
       app.db.migrate()
       $.click(el) for el in @findAll("[data-action='#{action}']")
     return

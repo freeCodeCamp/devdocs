@@ -19,6 +19,8 @@ module Docs
           name.split('.')[0..2].join('.')
         elsif name.start_with?('ddmd')
           'ddmd'
+        elsif name.start_with?('rt')
+          'rt'
         else
           name.split('.')[0..1].join('.')
         end

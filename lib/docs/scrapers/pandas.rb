@@ -20,8 +20,23 @@ module Docs
       Licensed under the 3-clause BSD License.
     HTML
 
+    version '0.23' do
+      self.release = '0.23.4'
+      self.base_url = "http://pandas.pydata.org/pandas-docs/version/#{self.release}/"
+    end
+
+    version '0.22' do
+      self.release = '0.22.0'
+      self.base_url = "http://pandas.pydata.org/pandas-docs/version/#{self.release}/"
+    end
+
+    version '0.21' do
+      self.release = '0.21.0'
+      self.base_url = "http://pandas.pydata.org/pandas-docs/version/#{self.release}/"
+    end
+
     version '0.20' do
-      self.release = '0.20.2'
+      self.release = '0.20.3'
       self.base_url = "http://pandas.pydata.org/pandas-docs/version/#{self.release}/"
     end
 

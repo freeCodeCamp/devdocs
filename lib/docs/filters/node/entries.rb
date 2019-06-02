@@ -26,6 +26,7 @@ module Docs
 
       def get_type
         type = at_css('h1').content.strip
+        type.remove! %r{\[.*\]}
         REPLACE_TYPES[type] || "#{type.first.upcase}#{type[1..-1]}"
       end
 
@@ -40,6 +41,7 @@ module Docs
 
           klass = nil if node.name == 'h2'
           name = node.content.strip
+          name.remove! %r{\s*\[src\]}
 
           # Skip constructors
           if name.start_with? 'new '

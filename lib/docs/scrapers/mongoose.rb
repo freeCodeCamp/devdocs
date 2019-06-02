@@ -1,11 +1,12 @@
 module Docs
   class Mongoose < UrlScraper
     self.name = 'Mongoose'
-    self.type = 'mongoose'
-    self.release = '4.12.0'
+    self.type = 'simple'
+    self.release = '4.13.1'
     self.base_url = 'http://mongoosejs.com/docs/'
     self.root_path = 'index.html'
     self.initial_paths = %w(guide.html api.html)
+    self.force_gzip = true
     self.links = {
       home: 'http://mongoosejs.com/',
       code: 'https://github.com/Automattic/mongoose'

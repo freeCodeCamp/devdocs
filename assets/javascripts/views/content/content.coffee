@@ -19,7 +19,10 @@ class app.views.Content extends app.View
     after:  'afterRoute'
 
   init: ->
-    @scrollEl = if app.isMobile() then document.body else @el
+    @scrollEl = if app.isMobile()
+      (document.scrollingElement || document.body)
+    else
+      @el
     @scrollMap = {}
     @scrollStack = []
 
