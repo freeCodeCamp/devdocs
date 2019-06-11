@@ -2,7 +2,7 @@ module Docs
   class Vagrant < UrlScraper
     self.name = 'Vagrant'
     self.type = 'simple'
-    self.release = '2.1.1'
+    self.release = '2.2.0'
     self.base_url = 'https://www.vagrantup.com/docs/'
     self.root_path = 'index.html'
     self.links = {

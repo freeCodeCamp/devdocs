@@ -1,5 +1,7 @@
 module Docs
   class Requester < Typhoeus::Hydra
+    include Instrumentable
+
     attr_reader :request_options
 
     def self.run(urls, options = {}, &block)
@@ -20,7 +22,7 @@ module Docs
     def initialize(options = {})
       @request_options = options.extract!(:request_options)[:request_options].try(:dup) || {}
       options[:max_concurrency] ||= 20
-      options[:pipelining] = false
+      options[:pipelining] = 0
       super
     end
 
@@ -52,9 +54,11 @@ module Docs
     end
 
     def handle_response(response)
-      on_response.each do |callback|
-        result = callback.call(response)
-        result.each { |url| request(url) } if result.is_a? Array
+      instrument 'handle_response.requester', url: response.url do
+        on_response.each do |callback|
+          result = callback.call(response)
+          result.each { |url| request(url) } if result.is_a?(Array)
+        end
       end
     end
   end

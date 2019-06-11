@@ -21,6 +21,11 @@ class AppTest < MiniTest::Spec
     assert_equal 'https://example.com/test?q=1', last_response['Location']
   end
 
+  it 'returns HSTS header' do
+    get 'https://example.com/test'
+    assert_equal 'max-age=31536000; includeSubDomains', last_response['Strict-Transport-Security']
+  end
+
   describe "/" do
     it "works" do
       get '/'

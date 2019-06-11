@@ -1,7 +1,7 @@
 module Docs
   class Statsmodels < UrlScraper
     self.type = 'sphinx'
-    self.release = '0.8.0'
+    self.release = '0.9.0'
     self.base_url = 'http://www.statsmodels.org/stable/'
     self.root_path = 'index.html'
     self.links = {

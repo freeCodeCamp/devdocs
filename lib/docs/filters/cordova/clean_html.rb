@@ -2,7 +2,7 @@ module Docs
   class Cordova
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.page-content > div')
+        @doc = at_css('#page-toc-source') || at_css('.page-content > div')
 
         at_css('h1').content = 'Apache Cordova' if root_page?
 
