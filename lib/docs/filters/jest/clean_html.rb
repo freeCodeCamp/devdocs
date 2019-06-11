@@ -12,13 +12,14 @@ module Docs
           node.before(node.children).remove
         end
 
-        css('.anchor[name]').each do |node|
-          node.parent['id'] = node['name']
+        css('.anchor').each do |node|
+          node.parent['id'] = node['id']
           node.remove
         end
 
         css('pre').each do |node|
-          node['data-language'] = node['class'][/language-(\w+)/, 1]
+          node['data-language'] = 'js'
+          node['data-language'] = node['class'][/language-(\w+)/, 1] if node['class']
           node.content = node.content
         end
 

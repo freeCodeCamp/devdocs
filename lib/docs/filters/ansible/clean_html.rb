@@ -4,8 +4,8 @@ module Docs
       def call
         @doc = at_css('#page-content')
 
-        css('.__cf_email__').each do |node|
-          node.replace(decode_cloudflare_email(node['data-cfemail']))
+        css('font').each do |node|
+          node.before(node.children).remove
         end
 
         doc

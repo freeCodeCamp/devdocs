@@ -2,7 +2,7 @@ module Docs
   class Marionette < UrlScraper
     self.name = 'Marionette.js'
     self.slug = 'marionette'
-    self.type = 'marionette'
+    self.type = 'simple'
     self.root_path = 'index'
     self.links = {
       home: 'https://marionettejs.com/',
@@ -17,6 +17,13 @@ module Docs
       &copy; 2017 Muted Solutions, LLC<br>
       Licensed under the MIT License.
     HTML
+
+    version '4' do
+      self.release = '4.0.0'
+      self.base_url = "https://marionettejs.com/docs/v#{release}/"
+
+      html_filters.push 'marionette/entries_v3'
+    end
 
     version '3' do
       self.release = '3.5.1'

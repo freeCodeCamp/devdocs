@@ -41,17 +41,12 @@ class ManifestTest < MiniTest::Spec
   end
 
   describe "#as_json" do
-    let :index_path do
-      'index_path'
-    end
-
-    let :db_path do
-      'db_path'
+    let :meta_path do
+      'meta_path'
     end
 
     before do
-      stub(doc).index_path { index_path }
-      stub(doc).db_path { db_path }
+      stub(doc).meta_path { meta_path }
     end
 
     it "returns an array" do
@@ -59,46 +54,22 @@ class ManifestTest < MiniTest::Spec
       assert_instance_of Array, manifest.as_json
     end
 
-    context "when the doc has an index and a db" do
+    context "when the doc has a meta file" do
       before do
-        stub(store).exist?(index_path) { true }
-        stub(store).exist?(db_path) { true }
+        stub(store).exist?(meta_path) { true }
+        stub(store).read(meta_path) { '{"name":"Test"}' }
       end
 
-      it "includes the doc's JSON representation" do
+      it "includes the doc's meta representation" do
         json = manifest.as_json
         assert_equal 1, json.length
-        assert_empty doc.as_json.keys - json.first.keys
-      end
-
-      it "adds an :mtime attribute with the greatest of the index and db files' mtime" do
-        mtime_index = Time.now - 1
-        mtime_db = Time.now - 2
-        stub(store).mtime(index_path) { mtime_index }
-        stub(store).mtime(db_path) { mtime_db }
-        assert_equal mtime_index.to_i, manifest.as_json.first[:mtime]
-        mtime_index, mtime_db = mtime_db, mtime_index
-        assert_equal mtime_db.to_i, manifest.as_json.first[:mtime]
-      end
-
-      it "adds a :db_size attribute" do
-        stub(store).size(db_path) { 42 }
-        assert_equal 42, manifest.as_json.first[:db_size]
+        assert_equal 'Test', json[0]['name']
       end
     end
 
-    context "when the doc doesn't have an index" do
+    context "when the doc doesn't have a meta file" do
       it "doesn't include the doc" do
-        stub(store).exist?(db_path) { true }
-        stub(store).exist?(index_path) { false }
-        assert_empty manifest.as_json
-      end
-    end
-
-    context "when the doc doesn't have a db" do
-      it "doesn't include the doc" do
-        stub(store).exist?(index_path) { true }
-        stub(store).exist?(db_path) { false }
+        stub(store).exist?(meta_path) { false }
         assert_empty manifest.as_json
       end
     end
@@ -107,7 +78,7 @@ class ManifestTest < MiniTest::Spec
   describe "#to_json" do
     it "returns the JSON string for #as_json" do
       stub(manifest).as_json { { test: 'ok' } }
-      assert_equal '{"test":"ok"}', manifest.to_json
+      assert_equal "{\n  \"test\": \"ok\"\n}", manifest.to_json
     end
   end
 end

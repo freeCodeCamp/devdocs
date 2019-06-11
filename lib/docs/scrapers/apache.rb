@@ -3,7 +3,7 @@ module Docs
     self.name = 'Apache HTTP Server'
     self.slug = 'apache_http_server'
     self.type = 'apache'
-    self.release = '2.4.29'
+    self.release = '2.4.37'
     self.base_url = 'https://httpd.apache.org/docs/2.4/en/'
     self.links = {
       home: 'https://httpd.apache.org/'
@@ -30,7 +30,7 @@ module Docs
       /\Adeveloper\// ]
 
     options[:attribution] = <<-HTML
-      &copy; 2017 The Apache Software Foundation<br>
+      &copy; 2018 The Apache Software Foundation<br>
       Licensed under the Apache License, Version 2.0.
     HTML
   end

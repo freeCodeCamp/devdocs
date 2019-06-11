@@ -11,14 +11,38 @@ module Docs
       end
 
       def get_type
-        if slug.include?('module')
-          if name =~ /\A[a-z]/ && node = css('.toctree-l2.current').last
-            "Modules: #{node.content.remove(' Modules')}"
+        if version == '2.4'
+          if slug.include?('module')
+            if name =~ /\A[a-z]/ && node = css('.toctree-l2.current').last
+              return "Modules: #{node.content.remove(' Modules')}"
+            else
+              return 'Modules'
+            end
+          end
+        end
+
+        if slug =~ /\Acli\//
+          'CLI Reference'
+        elsif slug =~ /\Anetwork\//
+          'Network'
+        elsif slug =~ /\Aplugins\//
+          if name =~ /\A[a-z]/ && node = css('.toctree-l3.current').last
+            "Plugins: #{node.content.sub(/ Plugins.*/, '')}"
+          else
+            'Plugins'
+          end
+        elsif slug =~ /\Amodules\//
+          if slug =~ /\Amodules\/list_/ || slug=~ /_maintained\z/
+            'Modules: Categories'
           else
             'Modules'
           end
         elsif slug.include?('playbook')
           'Playbooks'
+        elsif slug =~ /\Auser_guide\//
+          'Guides: User'
+        elsif slug =~ /\Ascenario_guides\//
+          'Guides: Scenarios'
         elsif slug.include?('guide')
           'Guides'
         else

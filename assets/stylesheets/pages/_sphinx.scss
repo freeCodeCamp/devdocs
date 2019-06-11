@@ -10,10 +10,11 @@
 
   .important { @extend %note-orange; }
   .warning, .deprecated-removed, .deprecated { @extend %note-red; }
+  .hint { @extend %note-green; }
 
   .versionmodified, span.title, .topic-title {
     display: block;
-    font-weight: $boldFontWeight;
+    font-weight: var(--boldFontWeight);
   }
 
   p > code, li > code, dd > code, .docutils > dt > code { @extend %label; }
@@ -25,7 +26,7 @@
   .admonition-title {
     float: left;
     margin: 0 .5em 0 0;
-    font-weight: $boldFontWeight;
+    font-weight: var(--boldFontWeight);
 
     &:after { content: ':'; }
   }

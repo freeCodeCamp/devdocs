@@ -6,10 +6,13 @@ module Docs
         'EXT_'                => 'WebGL',
         'OES_'                => 'WebGL',
         'WEBGL_'              => 'WebGL',
+        'Sensor API'          => 'Sensors',
         'Ambient Light'       => 'Ambient Light',
         'Audio'               => 'Audio',
         'Battery Status'      => 'Battery Status',
         'Canvas '             => 'Canvas',
+        'Clipboard'           => 'Clipboard',
+        'Content Security'    => 'Content Security Policy',
         'Cooperative Scheduling' => 'Scheduling',
         'CSS Font Loading'    => 'CSS',
         'CSS Object Model'    => 'CSS',
@@ -20,10 +23,13 @@ module Docs
         'Encrypted Media Extensions' => 'Encrypted Media',
         'Fetch'               => 'Fetch',
         'File API'            => 'File',
+        'Fullscreen'          => 'Fullscreen',
         'Geolocation'         => 'Geolocation',
         'Geometry'            => 'Geometry',
         'High Resolution Time' => 'Performance',
         'Intersection'        => 'Intersection Observer',
+        'Keyboard'            => 'Keyboard',
+        'Media Capabilities'  => 'Media',
         'Media Capture'       => 'Media',
         'Media Session'       => 'Media',
         'Media Source'        => 'Media',
@@ -32,6 +38,7 @@ module Docs
         'MIDI'                => 'Audio',
         'Navigation Timing'   => 'Performance',
         'Network Information' => 'Network Information',
+        'Orientation Sensor'  => 'Sensors',
         'Payment'             => 'Payments',
         'Performance Timeline' => 'Performance',
         'Pointer Events'      => 'Pointer Events',
@@ -45,15 +52,22 @@ module Docs
         'Stream API'          => 'Media Streams',
         'Streams'             => 'Media Streams',
         'Touch Events'        => 'Touch Events',
+        'Visual Viewport'     => 'Visual Viewport',
         'Web Animations'      => 'Animation',
         'Web App Manifest'    => 'Web App Manifest',
         'Budget'              => 'Budget',
+        'Web Authentication'  => 'Authentication',
+        'Web Locks'           => 'Locks',
         'Web Workers'         => 'Web Workers',
         'WebGL'               => 'WebGL',
         'WebRTC'              => 'WebRTC',
-        'WebVR'               => 'WebVR' }
+        'WebUSB'              => 'WebUSB',
+        'WebVR'               => 'WebVR',
+        'WebVTT'              => 'WebVTT' }
 
       TYPE_BY_NAME_STARTS_WITH = {
+        'AbortController'     => 'Fetch',
+        'AbortSignal'         => 'Fetch',
         'Ambient'             => 'Ambient Light',
         'Attr'                => 'Nodes',
         'Audio'               => 'Audio',
@@ -61,6 +75,7 @@ module Docs
         'Broadcast'           => 'Broadcast Channel',
         'Budget'              => 'Budget',
         'Canvas'              => 'Canvas',
+        'Clipboard'           => 'Clipboard',
         'CSS'                 => 'CSS',
         'CharacterData'       => 'Nodes',
         'ChildNode'           => 'Nodes',
@@ -69,6 +84,7 @@ module Docs
         'CustomElement'       => 'Custom Elements',
         'DataTransfer'        => 'Drag & Drop',
         'document'            => 'Document',
+        'Document Object'     => 'DOM',
         'DocumentFragment'    => 'DocumentFragment',
         'DocumentType'        => 'Nodes',
         'DOM'                 => 'DOM',
@@ -79,10 +95,12 @@ module Docs
         'Fetch'               => 'Fetch',
         'File'                => 'File',
         'GlobalEventHandlers' => 'GlobalEventHandlers',
+        'HMDVR'               => 'WebVR',
         'history'             => 'History',
         'HTML Drag'           => 'Drag & Drop',
         'HTML'                => 'Elements',
         'IDB'                 => 'IndexedDB',
+        'Keyboard'            => 'Keyboard',
         'location'            => 'Location',
         'navigator'           => 'Navigator',
         'MediaKeySession'     => 'Encrypted Media',
@@ -90,6 +108,7 @@ module Docs
         'MediaSession'        => 'Media Session',
         'MediaTrack'          => 'Media Streams',
         'Message'             => 'Channel Messaging',
+        'Mutation'            => 'DOM',
         'NamedNode'           => 'Nodes',
         'Node'                => 'Nodes',
         'Notification'        => 'Notification',
@@ -105,9 +124,13 @@ module Docs
         'screen'              => 'Screen',
         'Selection'           => 'Selection',
         'Shadow'              => 'Shadow DOM',
+        'StaticRange'         => 'Range',
+        'Streams'             => 'Media Streams',
+        'StyleProperty'       => 'CSS',
         'StyleSheet'          => 'CSS',
         'Stylesheet'          => 'CSS',
         'SVG'                 => 'SVG',
+        'TextTrack'           => 'WebVTT',
         'TimeRanges'          => 'Media',
         'timing'              => 'Performance',
         'Timing'              => 'Performance',
@@ -116,6 +139,7 @@ module Docs
         'URL'                 => 'URL',
         'VR'                  => 'WebVR',
         'WebSocket'           => 'Web Sockets',
+        'USB'                 => 'WebUSB',
         'window'              => 'Window',
         'Window'              => 'Window',
         'XMLHttpRequest'      => 'XMLHTTPRequest' }
@@ -145,6 +169,7 @@ module Docs
         'timing'        => 'Performance',
         'Timing'        => 'Performance',
         'udio'          => 'Audio',
+        'VRDevice'      => 'WebVR',
         'WebGL'         => 'WebGL',
         'WEBGL'         => 'WebGL',
         'WebRTC'        => 'WebRTC',
@@ -164,7 +189,6 @@ module Docs
 
       CLEANUP_NAMES = %w(
         CSS\ Object\ Model.
-        Document\ Object\ Model.
         Tutorial.
         XMLHttpRequest.
         ANGLE\ instanced\ arrays.)
@@ -172,6 +196,7 @@ module Docs
       def get_name
         name = super
         CLEANUP_NAMES.each { |str| name.remove!(str) }
+        name.sub! %r{Document\ Object\ Model\.}i, 'Document Object Model: '
         name.sub! 'Input.', 'HTMLInputElement.'
         name.sub! 'window.navigator', 'navigator'
         name.sub! 'API.', 'API: '
@@ -224,7 +249,7 @@ module Docs
 
       def include_default_entry?
         return true if type == 'Console'
-        return true unless node = doc.at_css('.overheadIndicator')
+        return true unless node = doc.at_css('.overheadIndicator, .blockIndicator')
         node = node.parent while node.parent != doc
         return true if node.previous_element.try(:name).in?(%w(h2 h3))
         content = node.content

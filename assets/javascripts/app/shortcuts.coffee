@@ -149,6 +149,9 @@ class app.Shortcuts
       when 'ArrowDown'
         @trigger 'altDown'
         false
+      when 'd'
+        @trigger 'altD'
+        false
       when 'f'
         @trigger 'altF', event
       when 'g'

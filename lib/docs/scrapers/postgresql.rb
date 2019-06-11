@@ -51,12 +51,12 @@ module Docs
       /\Aunsupported-features/ ]
 
     options[:attribution] = <<-HTML
-      &copy; 1996&ndash;2017 The PostgreSQL Global Development Group<br>
+      &copy; 1996&ndash;2018 The PostgreSQL Global Development Group<br>
       Licensed under the PostgreSQL License.
     HTML
 
     version '10' do
-      self.release = '10.1'
+      self.release = '10.3'
       self.base_url = 'https://www.postgresql.org/docs/10/static/'
     end
 

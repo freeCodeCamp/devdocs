@@ -12,6 +12,8 @@ class App < Sinatra::Application
   Rack::Mime::MIME_TYPES['.webapp'] = 'application/x-web-app-manifest+json'
 
   configure do
+    use Rack::SslEnforcer, only_environments: ['production', 'test'], hsts: true, force_secure_cookies: false
+
     set :sentry_dsn, ENV['SENTRY_DSN']
     set :protection, except: [:frame_options, :xss_header]
 
@@ -67,7 +69,7 @@ class App < Sinatra::Application
     set :static, false
     set :cdn_origin, 'https://cdn.devdocs.io'
     set :docs_origin, '//docs.devdocs.io'
-    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
     use Rack::ETag
@@ -133,7 +135,7 @@ class App < Sinatra::Application
     end
 
     def canonical_origin
-      "http://#{request.host_with_port}"
+      "https://#{request.host_with_port}"
     end
 
     def browser
@@ -194,28 +196,12 @@ class App < Sinatra::Application
       @@manifest_asset_urls ||= [
         javascript_path('application', asset_host: false),
         stylesheet_path('application'),
-        stylesheet_path('application-dark'),
         image_path('docs-1.png'),
         image_path('docs-1@2x.png'),
         image_path('docs-2.png'),
         image_path('docs-2@2x.png'),
         asset_path('docs.js')
       ]
-    end
-
-    def main_stylesheet_path
-      stylesheet_paths[dark_theme? ? :dark : :default]
-    end
-
-    def alternate_stylesheet_path
-      stylesheet_paths[dark_theme? ? :default : :dark]
-    end
-
-    def stylesheet_paths
-      @@stylesheet_paths ||= {
-        default: stylesheet_path('application'),
-        dark: stylesheet_path('application-dark')
-      }
     end
 
     def app_size
@@ -253,7 +239,7 @@ class App < Sinatra::Application
   before do
     if request.host == OUT_HOST && !request.path.start_with?('/s/')
       query_string = "?#{request.query_string}" unless request.query_string.empty?
-      redirect "http://devdocs.io#{request.path}#{query_string}", 302
+      redirect "https://devdocs.io#{request.path}#{query_string}", 302
     end
   end
 
@@ -435,13 +421,13 @@ class App < Sinatra::Application
 
       maker.channel.links.new_link do |link|
         link.rel = 'self'
-        link.href = 'http://devdocs.io/feed.atom'
+        link.href = 'https://devdocs.io/feed.atom'
         link.type = 'application/atom+xml'
       end
 
       maker.channel.links.new_link do |link|
         link.rel = 'alternate'
-        link.href = 'http://devdocs.io/'
+        link.href = 'https://devdocs.io/'
         link.type = 'text/html'
       end
 
@@ -450,14 +436,14 @@ class App < Sinatra::Application
           item.id = "tag:devdocs.io,2014:News/#{settings.news.length - i}"
           item.title = news[1].split("\n").first.gsub(/<\/?[^>]*>/, '')
           item.description do |desc|
-            desc.content = news[1..-1].join.gsub("\n", '<br>').gsub('href="/', 'href="http://devdocs.io/')
+            desc.content = news[1..-1].join.gsub("\n", '<br>').gsub('href="/', 'href="https://devdocs.io/')
             desc.type = 'html'
           end
           item.updated = "#{news.first}T14:00:00Z"
           item.published = "#{news.first}T14:00:00Z"
           item.links.new_link do |link|
             link.rel = 'alternate'
-            link.href = 'http://devdocs.io/'
+            link.href = 'https://devdocs.io/'
             link.type = 'text/html'
           end
         end

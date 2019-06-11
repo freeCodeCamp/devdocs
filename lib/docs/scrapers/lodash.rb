@@ -2,7 +2,7 @@ module Docs
   class Lodash < UrlScraper
     self.name = 'lodash'
     self.slug = 'lodash'
-    self.type = 'lodash'
+    self.type = 'simple'
     self.links = {
       home: 'https://lodash.com/',
       code: 'https://github.com/lodash/lodash/'
@@ -14,12 +14,12 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2016 The Dojo Foundation<br>
+      &copy; JS Foundation and other contributors<br>
       Licensed under the MIT License.
     HTML
 
     version '4' do
-      self.release = '4.17.4'
+      self.release = '4.17.10'
       self.base_url = "https://lodash.com/docs/#{release}"
     end
 

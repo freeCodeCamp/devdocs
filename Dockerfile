@@ -1,4 +1,6 @@
-FROM ruby:2.4.2
+FROM ruby:2.6.0
+
+ENV LANG=C.UTF-8
 
 WORKDIR /devdocs
 

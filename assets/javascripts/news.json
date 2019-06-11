@@ -1,7 +1,28 @@
 [
   [
+    "2018-09-23",
+    "New documentations: <a href=\"/puppeteer/\">Puppeteer</a> and <a href=\"/handlebars/\">Handlebars.js</a>"
+  ], [
+    "2018-08-12",
+    "New documentations: <a href=\"/dart/\">Dart</a> and <a href=\"/qt/\">Qt</a>"
+  ], [
+    "2018-07-29",
+    "New documentations: <a href=\"/bash/\">Bash</a>, <a href=\"/graphite/\">Graphite</a> and <a href=\"/pygame/\">Pygame</a>"
+  ], [
+    "2018-07-08",
+    "New documentations: <a href=\"/leaflet/\">Leaflet</a>, <a href=\"/terraform/\">Terraform</a> and <a href=\"/koa/\">Koa</a>"
+  ], [
+    "2018-03-26",
+    "DevDocs is joining the freeCodeCamp community. Read the announcement <a href=\"https://medium.freecodecamp.org/devdocs-is-joining-the-freecodecamp-community-ae185a1c14a6\" target=\"_blank\">here</a>."
+  ], [
+    "2018-02-04",
+    "New documentations: <a href=\"/babel/\">Babel</a>, <a href=\"/jekyll/\">Jekyll</a> and <a href=\"/jsdoc/\">JSDoc</a>"
+  ], [
+    "2017-11-26",
+    "New documentations: <a href=\"/bluebird/\">Bluebird</a>, <a href=\"/eslint/\">ESLint</a> and <a href=\"/homebrew/\">Homebrew</a>"
+  ], [
     "2017-11-18",
-    "Added print & PDF stylesheet.\nFeedback welcome on <a href=\"https://twitter.com/DevDocs\" target=\"_blank\" rel=\"noopener\">Twitter</a> and <a href=\"https://github.com/Thibaut/devdocs\" target=\"_blank\" rel=\"noopener\">GitHub</a>."
+    "Added print & PDF stylesheet.\nFeedback welcome on <a href=\"https://twitter.com/DevDocs\" target=\"_blank\" rel=\"noopener\">Twitter</a> and <a href=\"https://github.com/freeCodeCamp/devdocs\" target=\"_blank\" rel=\"noopener\">GitHub</a>."
   ], [
     "2017-09-10",
     "<a href=\"/settings\">Preferences</a> can now be exported and imported."
@@ -113,7 +134,7 @@
     "New documentations: <a href=\"/q/\">Q</a> and <a href=\"/opentsdb/\">OpenTSDB</a>"
   ], [
     "2015-07-26",
-    "Added search aliases (e.g. <code class=\"_label\">$</code> is an alias for <code class=\"_label\">jQuery</code>).\n<a href=\"/help#aliases\">Click here</a> to see the full list. Feel free to suggest more on <a href=\"https://github.com/Thibaut/devdocs/issues/new\" target=\"_blank\" rel=\"noopener\">GitHub</a>.",
+    "Added search aliases (e.g. <code class=\"_label\">$</code> is an alias for <code class=\"_label\">jQuery</code>).\n<a href=\"/help#aliases\">Click here</a> to see the full list. Feel free to suggest more on <a href=\"https://github.com/freeCodeCamp/devdocs/issues/new\" target=\"_blank\" rel=\"noopener\">GitHub</a>.",
     "Added <code class=\"_label\">shift + &darr;/&uarr;</code> shortcut for scrolling (same as <code class=\"_label\">alt + &darr;/&uarr;</code>)."
   ], [
     "2015-07-05",
@@ -154,7 +175,7 @@
     "New <a href=\"/python2/\">Python 2</a> documentation"
   ], [
     "2014-11-09",
-    "New design\nFeedback welcome on <a href=\"https://twitter.com/DevDocs\" target=\"_blank\" rel=\"noopener\">Twitter</a> and <a href=\"https://github.com/Thibaut/devdocs\" target=\"_blank\" rel=\"noopener\">GitHub</a>."
+    "New design\nFeedback welcome on <a href=\"https://twitter.com/DevDocs\" target=\"_blank\" rel=\"noopener\">Twitter</a> and <a href=\"https://github.com/freeCodeCamp/devdocs\" target=\"_blank\" rel=\"noopener\">GitHub</a>."
   ], [
     "2014-10-19",
     "New <a href=\"/svg/\">SVG</a>, <a href=\"/marionette/\">Marionette.js</a>, and <a href=\"/mongoose/\">Mongoose</a> documentations"
@@ -239,7 +260,7 @@
     "New <a href=\"/ruby/\">Ruby</a> documentation"
   ], [
     "2013-10-24",
-    "DevDocs is now <a href=\"https://github.com/Thibaut/devdocs\">open source</a>."
+    "DevDocs is now <a href=\"https://github.com/freeCodeCamp/devdocs\">open source</a>."
   ], [
     "2013-10-09",
     "DevDocs is now available as a <a href=\"https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe\">Chrome web app</a>."

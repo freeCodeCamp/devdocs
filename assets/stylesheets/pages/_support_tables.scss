@@ -24,7 +24,7 @@
     }
 
     tr.current {
-      font-weight: $boldFontWeight;
+      font-weight: var(--boldFontWeight);
       font-size: 1rem;
     }
 

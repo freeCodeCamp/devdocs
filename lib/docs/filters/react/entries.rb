@@ -6,8 +6,11 @@ module Docs
       end
 
       def get_type
-        link = at_css("nav a[href='#{result[:path].split('/').last}']")
-        link.ancestors('ul').last.previous_element.content
+        link = css("nav a[href='#{result[:path].split('/').last}']").last
+        return 'Miscellaneous' unless link
+        type = link.ancestors('ul').last.previous_element.content
+        type.remove! %r{\s*\(.*\)}
+        type
       end
 
       def additional_entries
@@ -24,6 +27,8 @@ module Docs
             'Reference: Component'
           elsif slug == 'react-api'
             'Reference: React'
+          elsif slug == 'hooks-reference'
+            'Hooks'
           else
             'Reference'
           end

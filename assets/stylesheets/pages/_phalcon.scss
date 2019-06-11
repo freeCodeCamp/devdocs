@@ -3,6 +3,6 @@
 
   h3 > small {
     float: right;
-    color: $textColorLight;
+    color: var(--textColorLight);
   }
 }
