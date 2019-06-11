@@ -100,13 +100,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('http://cgit.drupalcode.org/drupal', opts)
-
-      version = doc.at_css('td.form > form > select > option[selected]').content
-      version = version.scan(/([0-9.]+)/)[0][0]
-      version = version[0...-1] if version.end_with?('.')
-
-      version
+      json = fetch_json('https://packagist.org/packages/drupal/drupal.json', opts)
+      json['package']['versions'].keys.find {|version| !version.end_with?('-dev')}
     end
   end
 end

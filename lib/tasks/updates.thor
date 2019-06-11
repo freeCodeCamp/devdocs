@@ -139,7 +139,7 @@ class UpdatesCLI < Thor
   def upload_results(outdated_results, up_to_date_results, failed_results)
     # We can't create issues without a GitHub token
     unless options.key?(:github_token)
-      logger.error('Please specify a GitHub token with the public_repo permission for devdocs-bot with the --github-token parameter')
+      logger.error("Please specify a GitHub token with the public_repo permission for #{UPLOAD_USER} with the --github-token parameter")
       return
     end
 

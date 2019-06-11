@@ -32,7 +32,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://docs.phalconphp.com/', opts)
-      doc.at_css('.custom-select__version').content.strip.sub(/Version /, '')
+      doc.at_css('.header__lang.expand > div > ul > li > a').content
     end
   end
 end

@@ -19,7 +19,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://caolan.github.io/async/', opts)
+      doc = fetch_doc('https://caolan.github.io/async/v3/', opts)
       doc.at_css('#version-dropdown > a').content.strip[1..-1]
     end
   end

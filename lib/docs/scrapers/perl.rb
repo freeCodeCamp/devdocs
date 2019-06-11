@@ -45,8 +45,9 @@ module Docs
     end
 
     def get_latest_version(opts)
-      body = fetch('https://perldoc.perl.org/static/perlversion.js', opts)
-      body.scan(/>Perl ([0-9.]+)/)[0][0]
+      doc = fetch_doc('https://perldoc.perl.org/', opts)
+      header = doc.at_css('h2.h1').content
+      header.scan(/Perl ([0-9.]+)/)[0][0]
     end
   end
 end
