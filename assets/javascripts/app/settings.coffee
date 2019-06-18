@@ -19,7 +19,7 @@ class app.Settings
     'news'
   ]
 
-  LAYOUTS = ['_max-width', '_sidebar-hidden', '_native-scrollbars']
+  LAYOUTS: ['_max-width', '_sidebar-hidden', '_native-scrollbars']
   SIDEBAR_HIDDEN_LAYOUT = '_sidebar-hidden'
 
   @defaults:
@@ -87,9 +87,6 @@ class app.Settings
     layout = (@store.get('layout') || '').split(' ')
     layout.indexOf(name) isnt -1
 
-  getAllLayouts: ->
-    return LAYOUTS
-
   setSize: (value) ->
     @set 'size', value
     return
@@ -116,7 +113,7 @@ class app.Settings
 
   initLayout: ->
     @toggleDark(@get('dark'))
-    @toggleLayout(layout, @hasLayout(layout)) for layout in LAYOUTS
+    @toggleLayout(layout, @hasLayout(layout)) for layout in @LAYOUTS
 
   toggleDark: (enable) ->
     classList = document.documentElement.classList
