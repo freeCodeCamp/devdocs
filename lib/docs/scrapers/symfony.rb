@@ -72,7 +72,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      get_latest_github_release('symfony', 'symfony', opts)['tag_name'][1..-1]
+      get_latest_github_release('symfony', 'symfony', opts)
     end
   end
 end

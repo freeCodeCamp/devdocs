@@ -19,7 +19,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_latest_github_release('pygame', 'pygame', opts)['tag_name']
+      get_latest_github_release('pygame', 'pygame', opts)
     end
   end
 end

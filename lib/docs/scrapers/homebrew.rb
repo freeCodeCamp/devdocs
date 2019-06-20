@@ -21,7 +21,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_latest_github_release('Homebrew', 'brew', opts)['name']
+      get_latest_github_release('Homebrew', 'brew', opts)
     end
   end
 end

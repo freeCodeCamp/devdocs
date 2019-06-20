@@ -31,7 +31,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_latest_github_release('npm', 'cli', opts)['tag_name'][1..-1]
+      get_latest_github_release('npm', 'cli', opts)
     end
   end
 end

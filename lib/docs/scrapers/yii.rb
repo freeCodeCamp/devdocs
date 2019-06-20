@@ -36,7 +36,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      get_latest_github_release('yiisoft', 'yii2', opts)['tag_name']
+      get_latest_github_release('yiisoft', 'yii2', opts)
     end
   end
 end

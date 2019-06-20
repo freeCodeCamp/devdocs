@@ -249,7 +249,9 @@ module Docs
     end
 
     def get_latest_github_release(owner, repo, opts)
-      fetch_json("https://api.github.com/repos/#{owner}/#{repo}/releases/latest", opts)
+      release = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/releases/latest", opts)
+      tag_name = release['tag_name']
+      tag_name.start_with?('v') ? tag_name[1..-1] : tag_name
     end
 
     def get_github_tags(owner, repo, opts)

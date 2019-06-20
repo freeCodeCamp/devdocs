@@ -212,7 +212,7 @@ To make life easier, there are a few utility methods that you can use in `get_la
   Example: [lib/docs/scrapers/bower.rb](../lib/docs/scrapers/bower.rb)
 * `get_latest_github_release(owner, repo, opts)`
 
-  Returns the latest GitHub release of the given repository ([format](https://developer.github.com/v3/repos/releases/#get-the-latest-release)).
+  Returns the tag name of the latest GitHub release of the given repository. If the tag name is preceeded by a "v", the "v" will be removed.
 
   Example: [lib/docs/scrapers/jsdoc.rb](../lib/docs/scrapers/jsdoc.rb)
 * `get_github_tags(owner, repo, opts)`

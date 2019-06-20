@@ -23,7 +23,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_latest_github_release('jsdoc3', 'jsdoc', opts)['tag_name']
+      get_latest_github_release('jsdoc3', 'jsdoc', opts)
     end
   end
 end

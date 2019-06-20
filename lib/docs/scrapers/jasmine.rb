@@ -19,7 +19,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_latest_github_release('jasmine', 'jasmine', opts)['name']
+      get_latest_github_release('jasmine', 'jasmine', opts)
     end
   end
 end

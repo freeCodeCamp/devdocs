@@ -25,7 +25,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_latest_github_release('sass', 'libsass', opts)['tag_name']
+      get_latest_github_release('sass', 'libsass', opts)
     end
   end
 end
