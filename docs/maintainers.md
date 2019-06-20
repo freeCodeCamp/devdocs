@@ -4,7 +4,7 @@ This document is intended for [DevDocs maintainers](#list-of-maintainers).
 
 ## Merging pull requests
 
-- Unless the change is trivial or in an area that you are familiar with, PRs should be approved by at least two maintainers before being merged.
+- PRs should be approved by at least one maintainer before being merged.
 
 - PRs that add or update documentations should always be merged locally, and the app deployed, before the merge is pushed to GitHub.
 
@@ -94,9 +94,10 @@ If this is your first deploy, make sure another maintainer is around to assist.
 
 ## List of maintainers
 
-- [Beau Carnes](https://github.com/beaucarnes)
 - [Jed Fox](https://github.com/j-f1)
 - [Jasper van Merle](https://github.com/jmerle)
+- [Ahmad Abdolsaheb](https://github.com/ahmadabdolsaheb)
+- [Mrugesh Mohapatra](https://github.com/raisedadead)
 - [Thibaut Courouble](https://github.com/thibaut)
 
 Interested in helping maintain DevDocs? Come talk to us on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs) :)
