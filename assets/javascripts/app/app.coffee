@@ -26,6 +26,8 @@
     @document = new app.views.Document
     @mobile = new app.views.Mobile if @isMobile()
 
+    @settings.initLayout()
+
     if document.body.hasAttribute('data-doc')
       @DOC = JSON.parse(document.body.getAttribute('data-doc'))
       @bootOne()
