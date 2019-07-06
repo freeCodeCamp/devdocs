@@ -201,8 +201,8 @@ class App < Sinatra::Application
       @@manifest_asset_urls ||= [
         javascript_path('application', asset_host: false),
         stylesheet_path('application'),
-        image_path('docs.png'),
-        image_path('docs@2x.png'),
+        image_path('sprites/docs.png'),
+        image_path('sprites/docs@2x.png'),
         asset_path('docs.js')
       ]
     end
