@@ -1,0 +1,64 @@
+<%# Use the hash of the application.js file as cache name, or 'app' if not running in production %>
+<%# This ensures that the cache is always updated if the hash of the application.js file changes %>
+const cacheName = '<%= javascript_path('application', asset_host: false).scan(/application-([^\.]+)\.js/).last&.first || 'app' %>';
+
+<%# Paths to cache when the service worker is installed %>
+const cachePaths = [
+  '/',
+  '/favicon.ico',
+  '/manifest.json',
+  '/images/webapp-icon-32.png',
+  '/images/webapp-icon-60.png',
+  '/images/webapp-icon-80.png',
+  '/images/webapp-icon-128.png',
+  '/images/webapp-icon-256.png',
+  '/images/webapp-icon-512.png',
+  '<%= manifest_asset_urls.join "',\n  '" %>',
+  '<%= doc_index_urls.join "',\n  '" %>',
+];
+
+<%# Set-up the cache %>
+self.addEventListener('install', event => {
+  self.skipWaiting();
+
+  event.waitUntil(
+    caches.open(cacheName).then(cache => cache.addAll(cachePaths)),
+  );
+});
+
+<%# Remove old caches %>
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => Promise.all(
+      keys.map(key => {
+        if (key !== cacheName) {
+          return caches.delete(key);
+        }
+      })
+    ))
+  );
+});
+
+<%# Handle HTTP requests %>
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      if (response) {
+        return response;
+      }
+
+      return fetch(event.request)
+        .catch(err => {
+          const url = new URL(event.request.url);
+
+          <%# Return the index page from the cache if the user is visiting a url like devdocs.io/javascript/global_objects/array/find %>
+          <%# The index page will make sure the correct documentation or a proper offline page is shown %>
+          if (url.origin === location.origin && !url.pathname.includes('.')) {
+            return caches.match('/').then(response => response || err);
+          }
+
+          return err;
+        });
+    })
+  );
+});

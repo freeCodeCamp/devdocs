@@ -156,7 +156,7 @@ Contributions are welcome. Please read the [contributing guidelines](./.github/C
 * [Doc Browser](https://github.com/qwfy/doc-browser) is a native Linux app that supports DevDocs docsets
 * [GNOME Application](https://github.com/hardpixel/devdocs-desktop) GTK3 application with search integrated in headerbar
 * [macOS Application](https://github.com/dteoh/devdocs-macos)
-* [Android Application](https://github.com/Merith-TK/devdocs_webapp_kotlin) is a fully working, advanced WebView with AppCache enabled
+* [Android Application](https://github.com/Merith-TK/devdocs_webapp_kotlin) is a fully working, advanced WebView
 
 ## Copyright / License
 

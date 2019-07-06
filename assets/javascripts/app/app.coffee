@@ -13,7 +13,7 @@
 
     @el = $('._app')
     @localStorage = new LocalStorageStore
-    @appCache = new app.AppCache if app.AppCache.isEnabled()
+    @serviceWorker = new app.ServiceWorker if app.ServiceWorker.isEnabled()
     @settings = new app.Settings
     @db = new app.DB()
 
@@ -149,7 +149,7 @@
   saveDocs: ->
     @settings.setDocs(doc.slug for doc in @docs.all())
     @db.migrate()
-    @appCache?.updateInBackground()
+    @serviceWorker?.updateInBackground()
 
   welcomeBack: ->
     visitCount = @settings.get('count')
@@ -169,14 +169,14 @@
   reload: ->
     @docs.clearCache()
     @disabledDocs.clearCache()
-    if @appCache then @appCache.reload() else @reboot()
+    if @serviceWorker then @serviceWorker.reload() else @reboot()
     return
 
   reset: ->
     @localStorage.reset()
     @settings.reset()
     @db?.reset()
-    @appCache?.update()
+    @serviceWorker?.update()
     window.location = '/'
     return
 
@@ -195,9 +195,9 @@
     return
 
   indexHost: ->
-    # Can't load the index files from the host/CDN when applicationCache is
+    # Can't load the index files from the host/CDN when service worker is
     # enabled because it doesn't support caching URLs that use CORS.
-    @config[if @appCache and @settings.hasDocs() then 'index_path' else 'docs_origin']
+    @config[if @serviceWorker and @settings.hasDocs() then 'index_path' else 'docs_origin']
 
   onBootError: (args...) ->
     @trigger 'bootError'

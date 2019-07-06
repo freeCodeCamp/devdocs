@@ -26,9 +26,7 @@ class app.views.Resizer extends app.View
     newSize = "#{value}px"
     @style.innerHTML = @style.innerHTML.replace(new RegExp(@size, 'g'), newSize)
     @size = newSize
-    if save
-      app.settings.setSize(value)
-      app.appCache?.updateInBackground()
+    app.settings.setSize(value) if save
     return
 
   onDragStart: (event) =>

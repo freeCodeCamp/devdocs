@@ -220,7 +220,7 @@ class App < Sinatra::Application
       app_theme == 'dark'
     end
 
-    def redirect_via_js(path) # courtesy of HTML5 App Cache
+    def redirect_via_js(path)
       response.set_cookie :initial_path, value: path, expires: Time.now + 15, path: '/'
       redirect '/', 302
     end
@@ -243,15 +243,15 @@ class App < Sinatra::Application
     end
   end
 
-  get '/manifest.appcache' do
-    content_type 'text/cache-manifest'
+  get '/service-worker.js' do
+    content_type 'application/javascript'
     expires 0, :'no-cache'
-    erb :manifest
+    erb :'service-worker.js'
   end
 
   get '/' do
     return redirect "/#q=#{params[:q]}" if params[:q]
-    return redirect '/' unless request.query_string.empty? # courtesy of HTML5 App Cache
+    return redirect '/' unless request.query_string.empty?
     response.headers['Content-Security-Policy'] = settings.csp if settings.csp
     erb :index
   end

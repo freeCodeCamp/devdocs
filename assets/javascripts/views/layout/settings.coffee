@@ -25,7 +25,6 @@ class app.views.Settings extends app.View
     if super
       @render()
       document.body.classList.remove(SIDEBAR_HIDDEN_LAYOUT)
-      app.appCache?.on 'progress', @onAppCacheProgress
     return
 
   deactivate: ->
@@ -33,7 +32,6 @@ class app.views.Settings extends app.View
       @resetClass()
       @docPicker.detach()
       document.body.classList.add(SIDEBAR_HIDDEN_LAYOUT) if app.settings.hasLayout(SIDEBAR_HIDDEN_LAYOUT)
-      app.appCache?.off 'progress', @onAppCacheProgress
     return
 
   render: ->
@@ -52,7 +50,7 @@ class app.views.Settings extends app.View
         docs = @docPicker.getSelectedDocs()
         app.settings.setDocs(docs)
 
-      @saveBtn.textContent = if app.appCache then 'Downloading\u2026' else 'Saving\u2026'
+      @saveBtn.textContent = 'Saving\u2026'
       disabledDocs = new app.collections.Docs(doc for doc in app.docs.all() when docs.indexOf(doc.slug) is -1)
       disabledDocs.uninstall ->
         app.db.migrate()
@@ -82,10 +80,4 @@ class app.views.Settings extends app.View
     if event.target is @backBtn
       $.stopEvent(event)
       app.router.show '/'
-    return
-
-  onAppCacheProgress: (event) =>
-    if event.lengthComputable
-      percentage = Math.round event.loaded * 100 / event.total
-      @saveBtn.textContent = "Downloading\u2026 (#{percentage}%)"
     return

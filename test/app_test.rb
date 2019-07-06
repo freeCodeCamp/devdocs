@@ -106,58 +106,6 @@ class AppTest < MiniTest::Spec
     end
   end
 
-  describe "/manifest.appcache" do
-    it "works" do
-      get '/manifest.appcache'
-      assert last_response.ok?
-    end
-
-    it "works with cookie" do
-      set_cookie('docs=css/html~5')
-      get '/manifest.appcache'
-      assert last_response.ok?
-      assert_includes last_response.body, '/css/index.json?1420139788'
-      assert_includes last_response.body, '/html~5/index.json?1420139791'
-    end
-
-    it "ignores invalid docs in the cookie" do
-      set_cookie('docs=foo')
-      get '/manifest.appcache'
-      assert last_response.ok?
-      refute_includes last_response.body, 'foo'
-    end
-
-    it "has the word 'default' when no 'dark' cookie is set" do
-      get '/manifest.appcache'
-      assert_includes last_response.body, '# default'
-      refute_includes last_response.body, '# dark'
-    end
-
-    it "has the word 'dark' when the cookie is set" do
-      set_cookie('dark=1')
-      get '/manifest.appcache'
-      assert_includes last_response.body, '# dark'
-      refute_includes last_response.body, '# default'
-    end
-
-    it "sets default size" do
-      get '/manifest.appcache'
-      assert_includes last_response.body, '20rem'
-    end
-
-    it "sets size from cookie" do
-      set_cookie('size=42')
-      get '/manifest.appcache'
-      assert_includes last_response.body, '42px'
-    end
-
-    it "sets layout from cookie" do
-      set_cookie('layout=foo_layout')
-      get '/manifest.appcache'
-      assert_includes last_response.body, 'foo_layout'
-    end
-  end
-
   describe "/[doc]" do
     it "renders when the doc exists and isn't enabled" do
       set_cookie('docs=html~5')

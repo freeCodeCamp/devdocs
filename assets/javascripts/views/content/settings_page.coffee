@@ -22,12 +22,10 @@ class app.views.SettingsPage extends app.View
 
   toggleDark: (enable) ->
     app.settings.set('dark', !!enable)
-    app.appCache?.updateInBackground()
     return
 
   toggleLayout: (layout, enable) ->
     app.settings.setLayout(layout, enable)
-    app.appCache?.updateInBackground()
     return
 
   toggleSmoothScroll: (enable) ->

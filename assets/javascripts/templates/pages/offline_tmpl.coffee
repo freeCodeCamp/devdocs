@@ -26,7 +26,7 @@ app.templates.offlinePage = (docs) -> """
   <dl>
     <dt>How does this work?
     <dd>Each page is cached as a key-value pair in <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">IndexedDB</a> (downloaded from a single file).<br>
-        The app also uses <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Using_the_application_cache">AppCache</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API">localStorage</a> to cache the assets and index files.
+        The app also uses <a href="https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers">Service Workers</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API">localStorage</a> to cache the assets and index files.
     <dt>Can I close the tab/browser?
     <dd>#{canICloseTheTab()}
     <dt>What if I don't update a documentation?
@@ -41,10 +41,10 @@ app.templates.offlinePage = (docs) -> """
 """
 
 canICloseTheTab = ->
-  if app.AppCache.isEnabled()
+  if app.ServiceWorker.isEnabled()
     """ Yes! Even offline, you can open a new tab, go to <a href="//devdocs.io">devdocs.io</a>, and everything will work as if you were online (provided you installed all the documentations you want to use beforehand). """
   else
-    """ No. AppCache isn't available in your browser (or is disabled), so loading <a href="//devdocs.io">devdocs.io</a> offline won't work.<br>
+    """ No. Service Workers aren't available in your browser (or are disabled), so loading <a href="//devdocs.io">devdocs.io</a> offline won't work.<br>
         The current tab will continue to function even when you go offline (provided you installed all the documentations beforehand). """
 
 app.templates.offlineDoc = (doc, status) ->
