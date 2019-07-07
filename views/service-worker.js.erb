@@ -1,4 +1,4 @@
-<%# Use the hash of the application.js file as cache name, or 'app' if not running in production %>
+<%# Use the hash of the application.js file as cache name or 'app' if not running in production %>
 <%# This ensures that the cache is always updated if the hash of the application.js file changes %>
 const cacheName = '<%= javascript_path('application', asset_host: false).scan(/application-([^\.]+)\.js/).last&.first || 'app' %>';
 
@@ -28,37 +28,33 @@ self.addEventListener('install', event => {
 
 <%# Remove old caches %>
 self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys => Promise.all(
-      keys.map(key => {
-        if (key !== cacheName) {
-          return caches.delete(key);
-        }
-      })
-    ))
-  );
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    const jobs = keys.map(key => key !== cacheName ? caches.delete(key) : Promise.resolve());
+    return await Promise.all(jobs);
+  })());
 });
 
 <%# Handle HTTP requests %>
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      if (response) {
-        return response;
+  event.respondWith((async () => {
+    const cachedResponse = await caches.match(event.request);
+    if (cachedResponse) return cachedResponse;
+
+    try {
+      const response = await fetch(event.request);
+      return response;
+    } catch (err) {
+      const url = new URL(event.request.url);
+
+      <%# Attempt to return the index page from the cache if the user is visiting a url like devdocs.io/javascript/global_objects/array/find %>
+      <%# The index page will make sure the correct documentation or a proper offline page is shown %>
+      if (url.origin === location.origin && !url.pathname.includes('.')) {
+        const cachedIndex = await caches.match('/');
+        if (cachedIndex) return cachedIndex;
       }
 
-      return fetch(event.request)
-        .catch(err => {
-          const url = new URL(event.request.url);
-
-          <%# Return the index page from the cache if the user is visiting a url like devdocs.io/javascript/global_objects/array/find %>
-          <%# The index page will make sure the correct documentation or a proper offline page is shown %>
-          if (url.origin === location.origin && !url.pathname.includes('.')) {
-            return caches.match('/').then(response => response || err);
-          }
-
-          return err;
-        });
-    })
-  );
+      throw err;
+    }
+  })());
 });

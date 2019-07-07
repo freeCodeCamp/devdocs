@@ -6,7 +6,6 @@ class app.ServiceWorker
 
   constructor: ->
     @registration = null
-    @installingRegistration = null
     @notifyUpdate = true
 
     navigator.serviceWorker.register(app.config.service_worker_path, {scope: '/'})
@@ -16,37 +15,30 @@ class app.ServiceWorker
   update: ->
     return unless @registration
     @notifyUpdate = true
-    return @doUpdate()
+    return @registration.update().catch(->)
 
   updateInBackground: ->
     return unless @registration
     @notifyUpdate = false
-    return @doUpdate()
+    return @registration.update().catch(->)
 
   reload: ->
     return @updateInBackground().then(() -> app.reboot())
 
-  doUpdate: ->
-    return @registration.update().catch(->)
-
   updateRegistration: (registration) ->
-    $.off @registration, 'updatefound', @onUpdateFound if @registration
-    $.off @installingRegistration, 'statechange', @onStateChange if @installingRegistration
-
     @registration = registration
-    @installingRegistration = null
-
     $.on @registration, 'updatefound', @onUpdateFound
     return
 
   onUpdateFound: () =>
+    $.off @installingRegistration, 'statechange', @onStateChange() if @installingRegistration
     @installingRegistration = @registration.installing
     $.on @installingRegistration, 'statechange', @onStateChange
     return
 
   onStateChange: () =>
-    if @installingRegistration.state == 'installed' and navigator.serviceWorker.controller
-      @updateRegistration(@installingRegistration)
+    if @installingRegistration and @installingRegistration.state == 'installed' and navigator.serviceWorker.controller
+      @installingRegistration = null
       @onUpdateReady()
     return
 
