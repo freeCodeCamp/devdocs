@@ -2,6 +2,8 @@ Adding a documentation may look like a daunting task but once you get the hang o
 
 **Note:** please read the [contributing guidelines](../.github/CONTRIBUTING.md) before submitting a new documentation.
 
+**Note:** when editing any of the files in the `assets` directory or the `public` directory, you'll have to bypass the service worker cache. To do this, go to the Preferences page on your local instance of DevDocs, check "Bypass Service Worker cache" and refresh the page.
+
 1. Create a subclass of `Docs::UrlScraper` or `Docs::FileScraper` in the `lib/docs/scrapers/` directory. Its name should be the [PascalCase](http://api.rubyonrails.org/classes/String.html#method-i-camelize) equivalent of the filename (e.g. `my_doc` → `MyDoc`)
 2. Add the appropriate class attributes and filter options (see the [Scraper Reference](./scraper-reference.md) page).
 3. Check that the scraper is listed in `thor docs:list`.

@@ -220,6 +220,10 @@ class App < Sinatra::Application
       app_theme == 'dark'
     end
 
+    def bypass_cache?
+      !memoized_cookies['bypassCache'].nil?
+    end
+
     def redirect_via_js(path)
       response.set_cookie :initial_path, value: path, expires: Time.now + 15, path: '/'
       redirect '/', 302

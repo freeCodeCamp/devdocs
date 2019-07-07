@@ -14,6 +14,7 @@ class app.views.SettingsPage extends app.View
     settings.dark = app.settings.get('dark')
     settings.smoothScroll = !app.settings.get('fastScroll')
     settings.arrowScroll = app.settings.get('arrowScroll')
+    settings.bypassCache = app.settings.get('bypassCache')
     settings[layout] = app.settings.hasLayout(layout) for layout in app.settings.LAYOUTS
     settings
 
@@ -30,6 +31,10 @@ class app.views.SettingsPage extends app.View
 
   toggleSmoothScroll: (enable) ->
     app.settings.set('fastScroll', !enable)
+    return
+
+  toggleBypassCache: (enable) ->
+    app.settings.setBypassCache(!!enable)
     return
 
   toggle: (name, enable) ->
@@ -75,6 +80,8 @@ class app.views.SettingsPage extends app.View
         @toggleSmoothScroll input.checked
       when 'import'
         @import input.files[0], input
+      when 'bypassCache'
+        @toggleBypassCache input.checked
       else
         @toggle input.name, input.checked
     return

@@ -15,6 +15,10 @@ app.templates.settingsPage = (settings) -> """
         <input type="checkbox" form="settings" name="layout" value="_sidebar-hidden"#{if settings['_sidebar-hidden'] then ' checked' else ''}>Automatically hide and show the sidebar
         <small>Tip: drag the edge of the sidebar to resize it.</small>
       </label>
+      <label class="_settings-label">
+        <input type="checkbox" form="settings" name="bypassCache" value="1"#{if settings.bypassCache then ' checked' else ''}>Bypass Service Worker cache
+        <small>When this is checked, the Service Worker will always fetch the latest version of requested files. Useful when making changes to the DevDocs source code.</small>
+      </label>
     </div>
   </div>
 

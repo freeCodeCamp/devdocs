@@ -5,6 +5,7 @@ class app.Settings
     'manualUpdate'
     'fastScroll'
     'arrowScroll'
+    'bypassCache'
     'docs'
     'dark'
     'layout'
@@ -89,6 +90,11 @@ class app.Settings
 
   setSize: (value) ->
     @set 'size', value
+    return
+
+  setBypassCache: (value) ->
+    @set 'bypassCache', value
+    app.serviceWorker?.updateInBackground()
     return
 
   dump: ->

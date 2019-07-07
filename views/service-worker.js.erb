@@ -31,13 +31,16 @@ self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
     const jobs = keys.map(key => key !== cacheName ? caches.delete(key) : Promise.resolve());
-    return await Promise.all(jobs);
+    return Promise.all(jobs);
   })());
 });
 
 <%# Handle HTTP requests %>
 self.addEventListener('fetch', event => {
   event.respondWith((async () => {
+    <% if bypass_cache? %>
+    return fetch(event.request);
+    <% else %>
     const cachedResponse = await caches.match(event.request);
     if (cachedResponse) return cachedResponse;
 
@@ -56,5 +59,6 @@ self.addEventListener('fetch', event => {
 
       throw err;
     }
+    <% end %>
   })());
 });
