@@ -209,18 +209,6 @@ class App < Sinatra::Application
       @app_size ||= memoized_cookies['size'].nil? ? '20rem' : "#{memoized_cookies['size']}px"
     end
 
-    def app_layout
-      memoized_cookies['layout']
-    end
-
-    def app_theme
-      @app_theme ||= memoized_cookies['dark'].nil? ? 'default' : 'dark'
-    end
-
-    def dark_theme?
-      app_theme == 'dark'
-    end
-
     def bypass_cache?
       !memoized_cookies['bypassCache'].nil?
     end

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns#" lang="en" class="_booting _theme-<%= app_theme %>">
+<html prefix="og: http://ogp.me/ns#" lang="en" class="_booting">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no">
@@ -32,7 +32,7 @@
   <link rel="mask-icon" href="<%= App.cdn_origin %>/images/webkit-mask-icon.svg" color="#398df0">
   <%= stylesheet_tag 'application' %>
 </head>
-<body<%= %( class="#{app_layout}") if app_layout %>>
+<body>
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
 <%= erb :app -%>
 <%= javascript_tag 'application', asset_host: false %>
