@@ -192,16 +192,17 @@ class App < Sinatra::Application
       request.query_string.empty? ? nil : "?#{request.query_string}"
     end
 
-    def manifest_asset_urls
-      @@manifest_asset_urls ||= [
+    def service_worker_asset_urls
+      @@service_worker_asset_urls ||= [
         javascript_path('application', asset_host: false),
         stylesheet_path('application'),
         image_path('docs-1.png'),
         image_path('docs-1@2x.png'),
         image_path('docs-2.png'),
         image_path('docs-2@2x.png'),
-        asset_path('docs.js')
-      ]
+        asset_path('docs.js'),
+        App.production? ? nil : javascript_path('debug'),
+      ].compact
     end
 
     def app_size

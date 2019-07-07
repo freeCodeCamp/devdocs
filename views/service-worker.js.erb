@@ -13,9 +13,8 @@ const cachePaths = [
   '/images/webapp-icon-128.png',
   '/images/webapp-icon-256.png',
   '/images/webapp-icon-512.png',
-  '<%= manifest_asset_urls.join "',\n  '" %>',
-  '<%= doc_index_urls.join "',\n  '" %>',<% unless App.production? %>
-  '<%= javascript_path('debug') %>',<% end %>
+  '<%= service_worker_asset_urls.join "',\n  '" %>',
+  '<%= doc_index_urls.join "',\n  '" %>',
 ];
 
 <%# Set-up the cache %>
