@@ -30,13 +30,13 @@ class app.ServiceWorker
     $.on @registration, 'updatefound', @onUpdateFound
     return
 
-  onUpdateFound: () =>
+  onUpdateFound: =>
     $.off @installingRegistration, 'statechange', @onStateChange() if @installingRegistration
     @installingRegistration = @registration.installing
     $.on @installingRegistration, 'statechange', @onStateChange
     return
 
-  onStateChange: () =>
+  onStateChange: =>
     if @installingRegistration and @installingRegistration.state == 'installed' and navigator.serviceWorker.controller
       @installingRegistration = null
       @onUpdateReady()

@@ -2,17 +2,11 @@
 <%# This ensures that the cache is always updated if the hash of the application.js file changes %>
 const cacheName = '<%= javascript_path('application', asset_host: false).scan(/application-([^\.]+)\.js/).last&.first || 'app' %>';
 
-<%# Paths to cache when the service worker is installed %>
-const cachePaths = [
+<%# Url's to cache when the service worker is installed %>
+const urlsToCache = [
   '/',
   '/favicon.ico',
   '/manifest.json',
-  '/images/webapp-icon-32.png',
-  '/images/webapp-icon-60.png',
-  '/images/webapp-icon-80.png',
-  '/images/webapp-icon-128.png',
-  '/images/webapp-icon-256.png',
-  '/images/webapp-icon-512.png',
   '<%= service_worker_asset_urls.join "',\n  '" %>',
   '<%= doc_index_urls.join "',\n  '" %>',
 ];
@@ -22,7 +16,7 @@ self.addEventListener('install', event => {
   self.skipWaiting();
 
   event.waitUntil(
-    caches.open(cacheName).then(cache => cache.addAll(cachePaths)),
+    caches.open(cacheName).then(cache => cache.addAll(urlsToCache)),
   );
 });
 

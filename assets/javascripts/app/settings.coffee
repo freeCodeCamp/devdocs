@@ -120,6 +120,7 @@ class app.Settings
   initLayout: ->
     @toggleDark(@get('dark'))
     @toggleLayout(layout, @hasLayout(layout)) for layout in @LAYOUTS
+    @addResizerCSS()
 
   toggleDark: (enable) ->
     classList = document.documentElement.classList
@@ -130,3 +131,23 @@ class app.Settings
     classList = document.body.classList
     classList[if enable then 'add' else 'remove'](layout) unless layout is SIDEBAR_HIDDEN_LAYOUT
     classList[if $.overlayScrollbarsEnabled() then 'add' else 'remove']('_overlay-scrollbars')
+
+  addResizerCSS: ->
+    size = @get('size')
+    size = if size then size + 'px' else '20rem'
+
+    css = """
+      ._container { margin-left: #{size}; }
+      ._header, ._list { width: #{size}; }
+      ._list-hover.clone { min-width: #{size}; }
+      ._notice, ._path, ._resizer { left: #{size}; }
+    """
+
+    style = document.createElement('style')
+    style.type = 'text/css'
+    style.appendChild(document.createTextNode(css))
+    style.setAttribute('data-size', size)
+    style.setAttribute('data-resizer', '')
+
+    document.head.appendChild(style)
+    return

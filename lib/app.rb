@@ -205,10 +205,6 @@ class App < Sinatra::Application
       ].compact
     end
 
-    def app_size
-      @app_size ||= memoized_cookies['size'].nil? ? '20rem' : "#{memoized_cookies['size']}px"
-    end
-
     def bypass_cache?
       !memoized_cookies['bypassCache'].nil?
     end

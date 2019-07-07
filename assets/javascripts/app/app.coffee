@@ -17,6 +17,8 @@
     @settings = new app.Settings
     @db = new app.DB()
 
+    @settings.initLayout()
+
     @docs = new app.collections.Docs
     @disabledDocs = new app.collections.Docs
     @entries = new app.collections.Entries
@@ -25,8 +27,6 @@
     @shortcuts = new app.Shortcuts
     @document = new app.views.Document
     @mobile = new app.views.Mobile if @isMobile()
-
-    @settings.initLayout()
 
     if document.body.hasAttribute('data-doc')
       @DOC = JSON.parse(document.body.getAttribute('data-doc'))
