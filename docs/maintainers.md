@@ -84,7 +84,7 @@ In addition to the [publicly-documented commands](https://github.com/freeCodeCam
 
 Once docs have been uploaded via `thor docs:upload` (if applicable), deploying DevDocs is as simple as running `git push heroku master`. See [Heroku's documentation](https://devcenter.heroku.com/articles/git) for more information.
 
-- If you're deploying documentation updates, verify that the documentations work properly once the deploy is done (you will need to reload [devdocs.io](https://devdocs.io/) a couple times for the application cache to update and the new version to load).
+- If you're deploying documentation updates, verify that the documentations work properly once the deploy is done (you will need to reload [devdocs.io](https://devdocs.io/) a couple times for the service worker to update and the new version to load).
 - If you're deploying frontend changes, monitor [Sentry](https://sentry.io/devdocs/devdocs-js/) for new JS errors once the deploy is done.
 - If you're deploying server changes, monitor New Relic (accessible through [the Heroku dashboard](https://dashboard.heroku.com/apps/devdocs)) for Ruby exceptions and throughput or response time changes once the deploy is done.
 
