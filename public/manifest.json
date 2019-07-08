@@ -4,6 +4,7 @@
   "description": "API Documentation Browser",
   "start_url": "/",
   "display": "standalone",
+  "background_color": "#EEEEEE",
   "icons": [
     {
       "src": "/images/webapp-icon-32.png",
