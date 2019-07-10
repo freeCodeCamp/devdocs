@@ -215,18 +215,18 @@ class App < Sinatra::Application
         end
 
         digest = Sprockets::Manifest
-          .new(nil, App.assets_manifest_path)
-          .files
-          .values
-          .map {|file| file["digest"]}
-          .join
+                   .new(nil, App.assets_manifest_path)
+                   .files
+                   .values
+                   .map {|file| file["digest"]}
+                   .join
 
         return @@service_worker_cache_name ||= Digest::MD5.hexdigest(digest)
       else
         paths = App.sprockets
-          .each_file
-          .to_a
-          .reject {|file| file.start_with?(App.docs_path)}
+                  .each_file
+                  .to_a
+                  .reject {|file| file.start_with?(App.docs_path)}
 
         return App.sprockets.pack_hexdigest(App.sprockets.files_digest(paths))
       end
