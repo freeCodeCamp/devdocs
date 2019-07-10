@@ -64,9 +64,9 @@ Another driving factor is performance and the fact that everything happens in th
 DevDocs being a developer tool, the browser requirements are high:
 
 * Recent versions of Firefox, Chrome, or Opera
-* Safari 9.1+
-* Edge 16+
-* iOS 10+
+* Safari 11.1+
+* Edge 17+
+* iOS 11.3+
 
 This allows the code to take advantage of the latest DOM and HTML5 APIs and make developing DevDocs a lot more fun!
 
