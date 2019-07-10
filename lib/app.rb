@@ -205,8 +205,28 @@ class App < Sinatra::Application
       ].compact
     end
 
-    def bypass_cache?
-      !memoized_cookies['bypassCache'].nil?
+    def service_worker_cache_name
+      # Returns the digest of the last modified asset
+      # When a manifest exist, this digest is only calculated once based on the asset manifest because it never changes without a server restart
+      # If a manifest does not exist, it is calculated every time this method is called because the assets can change while the server is running
+      if File.exist?(App.assets_manifest_path)
+        return @@service_worker_cache_name ||=
+          Sprockets::Manifest
+            .new(nil, App.assets_manifest_path)
+            .files
+            .values
+            .sort_by {|file| file["mtime"]}
+            .reverse
+            .first["digest"]
+      else
+        last_modified_file = App.sprockets
+          .each_file
+          .to_a
+          .reject {|file| file.start_with?(App.docs_path)}
+          .max_by {|file| File.mtime(file)}
+
+        return App.sprockets.pack_base64digest(App.sprockets.file_digest(last_modified_file))
+      end
     end
 
     def redirect_via_js(path)

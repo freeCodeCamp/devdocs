@@ -2,7 +2,7 @@ class app.ServiceWorker
   $.extend @prototype, Events
 
   @isEnabled: ->
-    !!navigator.serviceWorker
+    !!navigator.serviceWorker and app.config.service_worker_enabled
 
   constructor: ->
     @registration = null

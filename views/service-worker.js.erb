@@ -1,6 +1,6 @@
-<%# Use the hash of the application.js file as cache name or 'app' if not running in production %>
-<%# This ensures that the cache is always updated if the hash of the application.js file changes %>
-const cacheName = '<%= javascript_path('application', asset_host: false).scan(/application-([^\.]+)\.js/).last&.first || 'app' %>';
+<%# The name of the cache to store responses in %>
+<%# If the cache name changes DevDocs is assumed to be updated %>
+const cacheName = '<%= service_worker_cache_name %>';
 
 <%# Url's to cache when the service worker is installed %>
 const urlsToCache = [
@@ -32,9 +32,6 @@ self.addEventListener('activate', event => {
 <%# Handle HTTP requests %>
 self.addEventListener('fetch', event => {
   event.respondWith((async () => {
-    <% if bypass_cache? %>
-    return fetch(event.request);
-    <% else %>
     const cachedResponse = await caches.match(event.request);
     if (cachedResponse) return cachedResponse;
 
@@ -53,6 +50,5 @@ self.addEventListener('fetch', event => {
 
       throw err;
     }
-    <% end %>
   })());
 });
