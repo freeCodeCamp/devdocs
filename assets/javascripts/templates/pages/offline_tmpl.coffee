@@ -47,7 +47,7 @@ canICloseTheTab = ->
     reason = "aren't available in your browser (or are disabled)"
 
     if app.config.env != 'production'
-      reason = "are disabled in your development instance of DevDocs (enable them by setting the ENABLE_SERVICE_WORKERS environment variable)"
+      reason = "are disabled in your development instance of DevDocs (enable them by setting the <code>ENABLE_SERVICE_WORKERS</code> environment variable to <code>true</code>)"
 
     """ No. Service Workers #{reason}, so loading <a href="//devdocs.io">devdocs.io</a> offline won't work.<br>
         The current tab will continue to function even when you go offline (provided you installed all the documentations beforehand). """
