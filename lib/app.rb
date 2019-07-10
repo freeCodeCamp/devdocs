@@ -205,27 +205,30 @@ class App < Sinatra::Application
       ].compact
     end
 
+    # Returns a cache name for the service worker to use which changes if any of the assets changes
+    # When a manifest exist, this name is only created once based on the asset manifest because it never changes without a server restart
+    # If a manifest does not exist, it is created every time this method is called because the assets can change while the server is running
     def service_worker_cache_name
-      # Returns the digest of the last modified asset
-      # When a manifest exist, this digest is only calculated once based on the asset manifest because it never changes without a server restart
-      # If a manifest does not exist, it is calculated every time this method is called because the assets can change while the server is running
       if File.exist?(App.assets_manifest_path)
-        return @@service_worker_cache_name ||=
-          Sprockets::Manifest
-            .new(nil, App.assets_manifest_path)
-            .files
-            .values
-            .sort_by {|file| file["mtime"]}
-            .reverse
-            .first["digest"]
+        if defined?(@@service_worker_cache_name)
+          return @@service_worker_cache_name
+        end
+
+        digest = Sprockets::Manifest
+          .new(nil, App.assets_manifest_path)
+          .files
+          .values
+          .map {|file| file["digest"]}
+          .join
+
+        return @@service_worker_cache_name ||= Digest::MD5.hexdigest(digest)
       else
-        last_modified_file = App.sprockets
+        paths = App.sprockets
           .each_file
           .to_a
           .reject {|file| file.start_with?(App.docs_path)}
-          .max_by {|file| File.mtime(file)}
 
-        return App.sprockets.pack_base64digest(App.sprockets.file_digest(last_modified_file))
+        return App.sprockets.pack_hexdigest(App.sprockets.files_digest(paths))
       end
     end
 
