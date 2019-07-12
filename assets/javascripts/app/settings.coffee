@@ -114,16 +114,20 @@ class app.Settings
     @toggleDark(@get('dark') is 1)
     @toggleLayout(layout, @hasLayout(layout)) for layout in @LAYOUTS
     @initSidebarWidth()
+    return
 
   toggleDark: (enable) ->
     classList = document.documentElement.classList
     classList.toggle('_theme-default', !enable)
     classList.toggle('_theme-dark', enable)
+    $('meta[name=theme-color]').setAttribute('content', if enable then '#1c1c1c' else '#eee')
+    return
 
   toggleLayout: (layout, enable) ->
     classList = document.body.classList
     classList.toggle(layout, enable) unless layout is '_sidebar-hidden'
     classList.toggle('_overlay-scrollbars', $.overlayScrollbarsEnabled())
+    return
 
   initSidebarWidth: ->
     size = @get('size')
