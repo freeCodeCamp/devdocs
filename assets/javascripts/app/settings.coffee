@@ -120,7 +120,8 @@ class app.Settings
     classList = document.documentElement.classList
     classList.toggle('_theme-default', !enable)
     classList.toggle('_theme-dark', enable)
-    $('meta[name=theme-color]').setAttribute('content', if enable then '#1c1c1c' else '#eee')
+    color = getComputedStyle(document.documentElement).getPropertyValue('--headerBackground').trim()
+    $('meta[name=theme-color]').setAttribute('content', color)
     return
 
   toggleLayout: (layout, enable) ->
