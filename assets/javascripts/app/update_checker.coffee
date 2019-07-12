@@ -3,7 +3,7 @@ class app.UpdateChecker
     @lastCheck = Date.now()
 
     $.on window, 'focus', @onFocus
-    app.serviceWorker.on 'updateready', @onUpdateReady if app.serviceWorker
+    app.serviceWorker?.on 'updateready', @onUpdateReady
 
     setTimeout @checkDocs, 0
 

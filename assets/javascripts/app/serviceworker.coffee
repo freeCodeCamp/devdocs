@@ -9,8 +9,10 @@ class app.ServiceWorker
     @notifyUpdate = true
 
     navigator.serviceWorker.register(app.config.service_worker_path, {scope: '/'})
-      .then((registration) => @updateRegistration(registration))
-      .catch((error) -> console.error 'Could not register service worker:', error)
+      .then(
+        (registration) => @updateRegistration(registration),
+        (error) -> console.error('Could not register service worker:', error)
+      )
 
   update: ->
     return unless @registration

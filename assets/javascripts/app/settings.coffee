@@ -20,7 +20,6 @@ class app.Settings
   ]
 
   LAYOUTS: ['_max-width', '_sidebar-hidden', '_native-scrollbars']
-  SIDEBAR_HIDDEN_LAYOUT = '_sidebar-hidden'
 
   @defaults:
     count: 0
@@ -112,36 +111,21 @@ class app.Settings
     return
 
   initLayout: ->
-    @toggleDark(@get('dark'))
+    @toggleDark(@get('dark') is 1)
     @toggleLayout(layout, @hasLayout(layout)) for layout in @LAYOUTS
-    @addResizerCSS()
+    @initSidebarWidth()
 
   toggleDark: (enable) ->
     classList = document.documentElement.classList
-    classList[if enable then 'remove' else 'add']('_theme-default')
-    classList[if enable then 'add' else 'remove']('_theme-dark')
+    classList.toggle('_theme-default', !enable)
+    classList.toggle('_theme-dark', enable)
 
   toggleLayout: (layout, enable) ->
     classList = document.body.classList
-    classList[if enable then 'add' else 'remove'](layout) unless layout is SIDEBAR_HIDDEN_LAYOUT
-    classList[if $.overlayScrollbarsEnabled() then 'add' else 'remove']('_overlay-scrollbars')
+    classList.toggle(layout, enable) unless layout is '_sidebar-hidden'
+    classList.toggle('_overlay-scrollbars', $.overlayScrollbarsEnabled())
 
-  addResizerCSS: ->
+  initSidebarWidth: ->
     size = @get('size')
-    size = if size then size + 'px' else '20rem'
-
-    css = """
-      ._container { margin-left: #{size}; }
-      ._header, ._list { width: #{size}; }
-      ._list-hover.clone { min-width: #{size}; }
-      ._notice, ._path, ._resizer { left: #{size}; }
-    """
-
-    style = document.createElement('style')
-    style.type = 'text/css'
-    style.appendChild(document.createTextNode(css))
-    style.setAttribute('data-size', size)
-    style.setAttribute('data-resizer', '')
-
-    document.head.appendChild(style)
+    document.documentElement.style.setProperty('--sidebarWidth', size + 'px') if size
     return

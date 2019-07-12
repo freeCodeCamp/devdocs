@@ -35,20 +35,15 @@ self.addEventListener('fetch', event => {
     const cachedResponse = await caches.match(event.request);
     if (cachedResponse) return cachedResponse;
 
-    try {
-      const response = await fetch(event.request);
-      return response;
-    } catch (err) {
-      const url = new URL(event.request.url);
+    const url = new URL(event.request.url);
 
-      <%# Attempt to return the index page from the cache if the user is visiting a url like devdocs.io/javascript/global_objects/array/find %>
-      <%# The index page will make sure the correct documentation or a proper offline page is shown %>
-      if (url.origin === location.origin && !url.pathname.includes('.')) {
-        const cachedIndex = await caches.match('/');
-        if (cachedIndex) return cachedIndex;
-      }
-
-      throw err;
+    <%# Attempt to return the index page from the cache if the user is visiting a url like devdocs.io/offline or devdocs.io/javascript/global_objects/array/find %>
+    <%# The index page will handle the routing %>
+    if (url.origin === location.origin && !url.pathname.includes('.')) {
+      const cachedIndex = await caches.match('/');
+      if (cachedIndex) return cachedIndex;
     }
+
+    return fetch(event.request);
   })());
 });
