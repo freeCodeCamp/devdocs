@@ -25,13 +25,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://golang.org/pkg/', opts)
-
-      footer = doc.at_css('#footer').content
-      version = footer.scan(/go([0-9.]+)/)[0][0]
-      version = version[0...-1] if version.end_with?('.')
-
-      version
+      doc = fetch_doc('https://golang.org/project/', opts)
+      doc.at_css('#page ul > li > a').text[3..-1]
     end
 
     private
