@@ -37,6 +37,9 @@ class App < Sinatra::Application
 
     set :csp, false
 
+    require 'docs'
+    Docs.generate_manifest
+
     Dir[docs_path, root.join(assets_prefix, '*/')].each do |path|
       sprockets.append_path(path)
     end
