@@ -192,35 +192,47 @@ class App < Sinatra::Application
       request.query_string.empty? ? nil : "?#{request.query_string}"
     end
 
-    def manifest_asset_urls
-      @@manifest_asset_urls ||= [
+    def service_worker_asset_urls
+      @@service_worker_asset_urls ||= [
         javascript_path('application', asset_host: false),
         stylesheet_path('application'),
         image_path('docs-1.png'),
         image_path('docs-1@2x.png'),
         image_path('docs-2.png'),
         image_path('docs-2@2x.png'),
-        asset_path('docs.js')
-      ]
+        asset_path('docs.js'),
+        App.production? ? nil : javascript_path('debug'),
+      ].compact
     end
 
-    def app_size
-      @app_size ||= memoized_cookies['size'].nil? ? '20rem' : "#{memoized_cookies['size']}px"
+    # Returns a cache name for the service worker to use which changes if any of the assets changes
+    # When a manifest exist, this name is only created once based on the asset manifest because it never changes without a server restart
+    # If a manifest does not exist, it is created every time this method is called because the assets can change while the server is running
+    def service_worker_cache_name
+      if File.exist?(App.assets_manifest_path)
+        if defined?(@@service_worker_cache_name)
+          return @@service_worker_cache_name
+        end
+
+        digest = Sprockets::Manifest
+                   .new(nil, App.assets_manifest_path)
+                   .files
+                   .values
+                   .map {|file| file["digest"]}
+                   .join
+
+        return @@service_worker_cache_name ||= Digest::MD5.hexdigest(digest)
+      else
+        paths = App.sprockets
+                  .each_file
+                  .to_a
+                  .reject {|file| file.start_with?(App.docs_path)}
+
+        return App.sprockets.pack_hexdigest(App.sprockets.files_digest(paths))
+      end
     end
 
-    def app_layout
-      memoized_cookies['layout']
-    end
-
-    def app_theme
-      @app_theme ||= memoized_cookies['dark'].nil? ? 'default' : 'dark'
-    end
-
-    def dark_theme?
-      app_theme == 'dark'
-    end
-
-    def redirect_via_js(path) # courtesy of HTML5 App Cache
+    def redirect_via_js(path)
       response.set_cookie :initial_path, value: path, expires: Time.now + 15, path: '/'
       redirect '/', 302
     end
@@ -243,15 +255,15 @@ class App < Sinatra::Application
     end
   end
 
-  get '/manifest.appcache' do
-    content_type 'text/cache-manifest'
+  get '/service-worker.js' do
+    content_type 'application/javascript'
     expires 0, :'no-cache'
-    erb :manifest
+    erb :'service-worker.js'
   end
 
   get '/' do
     return redirect "/#q=#{params[:q]}" if params[:q]
-    return redirect '/' unless request.query_string.empty? # courtesy of HTML5 App Cache
+    return redirect '/' unless request.query_string.empty?
     response.headers['Content-Security-Policy'] = settings.csp if settings.csp
     erb :index
   end
