@@ -13,3 +13,5 @@ app.config =
   version: <%= Time.now.to_i %>
   release: <%= Time.now.utc.httpdate.to_json %>
   mathml_stylesheet: '<%= App.cdn_origin %>/mathml.css'
+  service_worker_path: '/service-worker.js'
+  service_worker_enabled: <%= App.environment == :production || ENV['ENABLE_SERVICE_WORKER'] == 'true' %>
