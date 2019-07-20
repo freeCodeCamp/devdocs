@@ -72,7 +72,7 @@ module Docs
 
       if base == dest
         ''
-      elsif dest.start_with? File.join(base, '')
+      elsif dest.start_with?(::File.join(base, ''))
         url.path[(path.length)..-1]
       end
     end

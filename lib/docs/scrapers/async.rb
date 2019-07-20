@@ -1,7 +1,7 @@
 module Docs
   class Async < UrlScraper
     self.type = 'async'
-    self.release = '2.6.0'
+    self.release = '2.6.1'
     self.base_url = 'https://caolan.github.io/async/'
     self.root_path = 'docs.html'
     self.links = {
@@ -14,7 +14,7 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2017 Caolan McMahon<br>
+      &copy; 2010&ndash;2018 Caolan McMahon<br>
       Licensed under the MIT License.
     HTML
   end

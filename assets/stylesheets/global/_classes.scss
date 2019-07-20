@@ -36,15 +36,15 @@
 //
 
 %box {
-  background: $boxBackground;
-  border: 1px solid $boxBorder;
+  background: var(--boxBackground);
+  border: 1px solid var(--boxBorder);
   border-radius: 3px;
 }
 
 %heading-box {
-  color: $boxHeaderColor;
-  background: $boxHeaderBackground;
-  border: 1px solid $boxBorder;
+  color: var(--boxHeaderColor);
+  background: var(--boxHeaderBackground);
+  border: 1px solid var(--boxBorder);
   border-radius: 3px;
 }
 
@@ -82,15 +82,15 @@
 %note {
   margin: 1.5rem 0;
   padding: .5rem .875rem;
-  background: $noteBackground;
-  border: 1px solid $noteBorder;
+  background: var(--noteBackground);
+  border: 1px solid var(--noteBorder);
   border-radius: 3px;
 }
 
 %label {
   margin: 0 1px;
   padding: 1px 4px 2px;
-  background: $labelBackground;
+  background: var(--labelBackground);
   border-radius: 3px;
 }
 
@@ -102,35 +102,35 @@
   padding-right: .5em;
   overflow: hidden;
   font-size: inherit;
-  color: $boxHeaderColor;
-  border: 1px solid $boxBorder;
+  color: var(--boxHeaderColor);
+  border: 1px solid var(--boxBorder);
   border-radius: 2px;
   @extend %label;
 }
 
 %label-yellow {
-  background: $noteBackground;
-  border-color: $noteBorder;
+  background: var(--noteBackground);
+  border-color: var(--noteBorder);
 }
 
 %note-green, %label-green {
-  background: $noteGreenBackground;
-  border-color: $noteGreenBorder;
+  background: var(--noteGreenBackground);
+  border-color: var(--noteGreenBorder);
 }
 
 %note-blue, %label-blue {
-  background: $noteBlueBackground;
-  border-color: $noteBlueBorder;
+  background: var(--noteBlueBackground);
+  border-color: var(--noteBlueBorder);
 }
 
 %note-orange, %label-orange {
-  background: $noteOrangeBackground;
-  border-color: $noteOrangeBorder;
+  background: var(--noteOrangeBackground);
+  border-color: var(--noteOrangeBorder);
 }
 
 %note-red, %label-red {
-  background: $noteRedBackground;
-  border-color: $noteRedBorder;
+  background: var(--noteRedBackground);
+  border-color: var(--noteRedBorder);
 }
 
 //
@@ -149,12 +149,11 @@
     pointer-events: none;
 
     // <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M15,15H2V6h2.595c0,0,0.689-0.896,2.17-2H1C0.447,4,0,4.449,0,5v11c0,0.553,0.447,1,1,1h15c0.553,0,1-0.447,1-1v-3.746 l-2,1.645V15z M13.361,8.05v3.551L20,6.4l-6.639-4.999v3.131C5.3,4.532,5.3,12.5,5.3,12.5C7.582,8.752,8.986,8.05,13.361,8.05z"/></svg>
-    @if $style == 'dark' {
-      background-image: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAgMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI2NiZDBkMCIgZD0iTTE1LDE1SDJWNmgyLjU5NWMwLDAsMC42ODktMC44OTYsMi4xNy0ySDFDMC40NDcsNCwwLDQuNDQ5LDAsNXYxMWMwLDAuNTUzLDAuNDQ3LDEsMSwxaDE1YzAuNTUzLDAsMS0wLjQ0NywxLTF2LTMuNzQ2IGwtMiwxLjY0NVYxNXogTTEzLjM2MSw4LjA1djMuNTUxTDIwLDYuNGwtNi42MzktNC45OTl2My4xMzFDNS4zLDQuNTMyLDUuMywxMi41LDUuMywxMi41QzcuNTgyLDguNzUyLDguOTg2LDguMDUsMTMuMzYxLDguMDV6Ii8+PC9zdmc+);
-    } @else {
-      background-image: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAgMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iIzMzNzdjMCIgZD0iTTE1LDE1SDJWNmgyLjU5NWMwLDAsMC42ODktMC44OTYsMi4xNy0ySDFDMC40NDcsNCwwLDQuNDQ5LDAsNXYxMWMwLDAuNTUzLDAuNDQ3LDEsMSwxaDE1YzAuNTUzLDAsMS0wLjQ0NywxLTF2LTMuNzQ2IGwtMiwxLjY0NVYxNXogTTEzLjM2MSw4LjA1djMuNTUxTDIwLDYuNGwtNi42MzktNC45OTl2My4xMzFDNS4zLDQuNTMyLDUuMywxMi41LDUuMywxMi41QzcuNTgyLDguNzUyLDguOTg2LDguMDUsMTMuMzYxLDguMDV6Ii8+PC9zdmc+);
-    }
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAgMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iIzMzNzdjMCIgZD0iTTE1LDE1SDJWNmgyLjU5NWMwLDAsMC42ODktMC44OTYsMi4xNy0ySDFDMC40NDcsNCwwLDQuNDQ5LDAsNXYxMWMwLDAuNTUzLDAuNDQ3LDEsMSwxaDE1YzAuNTUzLDAsMS0wLjQ0NywxLTF2LTMuNzQ2IGwtMiwxLjY0NVYxNXogTTEzLjM2MSw4LjA1djMuNTUxTDIwLDYuNGwtNi42MzktNC45OTl2My4xMzFDNS4zLDQuNTMyLDUuMywxMi41LDUuMywxMi41QzcuNTgyLDguNzUyLDguOTg2LDguMDUsMTMuMzYxLDguMDV6Ii8+PC9zdmc+);
   }
+}
+html._theme-dark %external-link:after {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAgMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iI2NiZDBkMCIgZD0iTTE1LDE1SDJWNmgyLjU5NWMwLDAsMC42ODktMC44OTYsMi4xNy0ySDFDMC40NDcsNCwwLDQuNDQ5LDAsNXYxMWMwLDAuNTUzLDAuNDQ3LDEsMSwxaDE1YzAuNTUzLDAsMS0wLjQ0NywxLTF2LTMuNzQ2IGwtMiwxLjY0NVYxNXogTTEzLjM2MSw4LjA1djMuNTUxTDIwLDYuNGwtNi42MzktNC45OTl2My4xMzFDNS4zLDQuNTMyLDUuMywxMi41LDUuMywxMi41QzcuNTgyLDguNzUyLDguOTg2LDguMDUsMTMuMzYxLDguMDV6Ii8+PC9zdmc+);
 }
 
 %internal-link:after { content: none !important; }

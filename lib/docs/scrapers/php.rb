@@ -1,5 +1,7 @@
 module Docs
   class Php < FileScraper
+    # Downloaded from php.net/download-docs.php
+
     include FixInternalUrlsBehavior
 
     self.name = 'PHP'
@@ -22,9 +24,6 @@ module Docs
       home: 'https://secure.php.net/',
       code: 'https://git.php.net/?p=php-src.git;a=summary'
     }
-
-    # Downloaded from php.net/download-docs.php
-    self.dir = '/Users/Thibaut/DevDocs/Docs/PHP'
 
     html_filters.push 'php/internal_urls', 'php/entries', 'php/clean_html', 'title'
     text_filters.push 'php/fix_urls'

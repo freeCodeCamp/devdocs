@@ -21,7 +21,7 @@ module Docs
         when 'PFADD'            then 'HyperLogLog'
         when 'CLUSTER ADDSLOTS' then 'Cluster'
         when 'GEOADD'           then 'Geo'
-        when 'XADD'             then 'Stream'
+        when 'XACK'             then 'Stream'
         else 'Miscellaneous'
         end
       end

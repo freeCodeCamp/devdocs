@@ -15,15 +15,17 @@ module Docs
 
       def other
         css('h1').each do |node|
-          node.content = node.content.sub!(/\A[\d\.]+/) do |str|
+          node.content = node.content.sub(/\A[\d\.]+/) do |str|
             rgx = /\A#{str}/
             @levelRegexp = @levelRegexp ? Regexp.union(@levelRegexp, rgx) : rgx
             ''
           end
         end
 
-        css('h2', 'h3', 'h4').each do |node|
-          node.inner_html = node.inner_html.remove @levelRegexp
+        unless @levelRegexp.nil?
+          css('h2', 'h3', 'h4').each do |node|
+            node.inner_html = node.inner_html.remove @levelRegexp
+          end
         end
       end
     end

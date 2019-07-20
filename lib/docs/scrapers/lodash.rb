@@ -2,7 +2,7 @@ module Docs
   class Lodash < UrlScraper
     self.name = 'lodash'
     self.slug = 'lodash'
-    self.type = 'lodash'
+    self.type = 'simple'
     self.links = {
       home: 'https://lodash.com/',
       code: 'https://github.com/lodash/lodash/'

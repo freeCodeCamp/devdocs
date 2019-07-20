@@ -13,9 +13,11 @@
 
     @el = $('._app')
     @localStorage = new LocalStorageStore
-    @appCache = new app.AppCache if app.AppCache.isEnabled()
+    @serviceWorker = new app.ServiceWorker if app.ServiceWorker.isEnabled()
     @settings = new app.Settings
     @db = new app.DB()
+
+    @settings.initLayout()
 
     @docs = new app.collections.Docs
     @disabledDocs = new app.collections.Docs
@@ -150,7 +152,7 @@
   saveDocs: ->
     @settings.setDocs(doc.slug for doc in @docs.all())
     @db.migrate()
-    @appCache?.updateInBackground()
+    @serviceWorker?.updateInBackground()
 
   welcomeBack: ->
     visitCount = @settings.get('count')
@@ -160,17 +162,24 @@
     new app.views.Updates()
     @updateChecker = new app.UpdateChecker()
 
+  reboot: ->
+    if location.pathname isnt '/' and location.pathname isnt '/settings'
+      window.location = "/##{location.pathname}"
+    else
+      window.location = '/'
+    return
+
   reload: ->
     @docs.clearCache()
     @disabledDocs.clearCache()
-    if @appCache then @appCache.reload() else window.location = '/'
+    if @serviceWorker then @serviceWorker.reload() else @reboot()
     return
 
   reset: ->
     @localStorage.reset()
     @settings.reset()
     @db?.reset()
-    @appCache?.update()
+    @serviceWorker?.update()
     window.location = '/'
     return
 
@@ -189,9 +198,9 @@
     return
 
   indexHost: ->
-    # Can't load the index files from the host/CDN when applicationCache is
+    # Can't load the index files from the host/CDN when service worker is
     # enabled because it doesn't support caching URLs that use CORS.
-    @config[if @appCache and @settings.hasDocs() then 'index_path' else 'docs_origin']
+    @config[if @serviceWorker and @settings.hasDocs() then 'index_path' else 'docs_origin']
 
   onBootError: (args...) ->
     @trigger 'bootError'
@@ -248,7 +257,7 @@
         matchMedia:         !!window.matchMedia
         insertAdjacentHTML: !!document.body.insertAdjacentHTML
         defaultPrevented:     document.createEvent('CustomEvent').defaultPrevented is false
-        cssGradients:         supportsCssGradients()
+        cssVariables:       !!CSS?.supports?('(--t: 0)')
 
       for key, value of features when not value
         Raven.captureMessage "unsupported/#{key}", level: 'info'
@@ -270,10 +279,5 @@
 
   isInvalidLocation: ->
     @config.env is 'production' and location.host.indexOf(app.config.production_host) isnt 0
-
-supportsCssGradients = ->
-  el = document.createElement('div')
-  el.style.cssText = "background-image: -webkit-linear-gradient(top, #000, #fff); background-image: linear-gradient(to top, #000, #fff);"
-  el.style.backgroundImage.indexOf('gradient') >= 0
 
 $.extend app, Events

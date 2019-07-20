@@ -1,7 +1,7 @@
 module Docs
   class Nim < UrlScraper
-    self.type = 'nim'
-    self.release = '0.18.0'
+    self.type = 'simple'
+    self.release = '0.19.0'
     self.base_url = 'https://nim-lang.org/docs/'
     self.root_path = 'overview.html'
     self.links = {
@@ -14,7 +14,7 @@ module Docs
     options[:skip] = %w(theindex.html docgen.txt)
 
     options[:attribution] = <<-HTML
-      &copy; 2006&ndash;2017 Andreas Rumpf<br>
+      &copy; 2006&ndash;2018 Andreas Rumpf<br>
       Licensed under the MIT License.
     HTML
   end

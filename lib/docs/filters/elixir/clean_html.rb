@@ -59,6 +59,7 @@ module Docs
 
         css('pre').each do |node|
           node['data-language'] = 'elixir'
+          node.content = node.content
         end
       end
     end

@@ -1,4 +1,15 @@
 language: ruby
+
+cache: bundler
+
 before_script:
   - gem update --system
   - gem install bundler
+
+deploy:
+  provider: heroku
+  app: devdocs
+  on:
+    branch: master
+  api_key:
+    secure: "4p1klvWJZSOImzFcKOduILjP93hlOlAhceWlYMKS4tU+TCFE8qTBzdKdFPSCsCgjB+YR9pBss+L0lJpVVMjSwFHXqpKe6EeUSltO2k7DFHfW7kXLUM/L0AfqXz+YXk76XUyZMhvOEbldPfaMaj10e8vgDOQCSHABDyK/4CU+hnI="

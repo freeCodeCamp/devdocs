@@ -2,7 +2,7 @@ module Docs
   class Marionette < UrlScraper
     self.name = 'Marionette.js'
     self.slug = 'marionette'
-    self.type = 'marionette'
+    self.type = 'simple'
     self.root_path = 'index'
     self.links = {
       home: 'https://marionettejs.com/',

@@ -1,7 +1,4 @@
 class app.views.SettingsPage extends app.View
-  LAYOUTS = ['_max-width', '_sidebar-hidden', '_native-scrollbars']
-  SIDEBAR_HIDDEN_LAYOUT = '_sidebar-hidden'
-
   @className: '_static'
 
   @events:
@@ -18,30 +15,28 @@ class app.views.SettingsPage extends app.View
     settings.smoothScroll = !app.settings.get('fastScroll')
     settings.arrowScroll = app.settings.get('arrowScroll')
     settings.autoInstall = app.settings.get('autoInstall')
-    settings[layout] = app.settings.hasLayout(layout) for layout in LAYOUTS
+    settings.analyticsConsent = app.settings.get('analyticsConsent')
+    settings[layout] = app.settings.hasLayout(layout) for layout in app.settings.LAYOUTS
     settings
 
   getTitle: ->
     'Preferences'
 
   toggleDark: (enable) ->
-    css = $('link[rel="stylesheet"][data-alt]')
-    alt = css.getAttribute('data-alt')
-    css.setAttribute('data-alt', css.getAttribute('href'))
-    css.setAttribute('href', alt)
     app.settings.set('dark', !!enable)
-    app.appCache?.updateInBackground()
     return
 
   toggleLayout: (layout, enable) ->
-    document.body.classList[if enable then 'add' else 'remove'](layout) unless layout is SIDEBAR_HIDDEN_LAYOUT
-    document.body.classList[if $.overlayScrollbarsEnabled() then 'add' else 'remove']('_overlay-scrollbars')
     app.settings.setLayout(layout, enable)
-    app.appCache?.updateInBackground()
     return
 
   toggleSmoothScroll: (enable) ->
     app.settings.set('fastScroll', !enable)
+    return
+
+  toggleAnalyticsConsent: (enable) ->
+    app.settings.set('analyticsConsent', if enable then '1' else '0')
+    resetAnalytics() unless enable
     return
 
   toggle: (name, enable) ->
@@ -87,6 +82,8 @@ class app.views.SettingsPage extends app.View
         @toggleSmoothScroll input.checked
       when 'import'
         @import input.files[0], input
+      when 'analyticsConsent'
+        @toggleAnalyticsConsent input.checked
       else
         @toggle input.name, input.checked
     return
