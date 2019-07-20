@@ -15,7 +15,7 @@ class AssetsCLI < Thor
   option :verbose, type: :boolean
   def compile
     load 'tasks/sprites.thor'
-    invoke 'sprites:generate', [], :verbose => options[:verbose]
+    invoke 'sprites:generate', [], :remove_public_icons => true, :verbose => options[:verbose]
 
     manifest.compile App.assets_compile
     manifest.clean(options[:keep]) if options[:clean]

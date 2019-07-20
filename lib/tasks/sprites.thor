@@ -10,7 +10,8 @@ class SpritesCLI < Thor
     super
   end
 
-  desc 'generate [--verbose]', 'Generate the documentation icon spritesheets'
+  desc 'generate [--remove-public-icons] [--verbose]', 'Generate the documentation icon spritesheets'
+  option :remove_public_icons, type: :boolean, desc: 'Remove public/icons after generating the spritesheets'
   option :verbose, type: :boolean
   def generate
     items = get_items
@@ -44,6 +45,11 @@ class SpritesCLI < Thor
     end
 
     save_manifest(items, icons_per_row, 'assets/images/sprites/docs.json')
+
+    if options[:remove_public_icons]
+      logger.info('Removing public/icons')
+      FileUtils.rm_rf('public/icons')
+    end
   end
 
   private
