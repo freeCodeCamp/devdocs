@@ -123,7 +123,7 @@ class app.views.EntryPage extends app.View
     @render @tmpl('pageLoadError')
     @resetClass()
     @addClass @constructor.errorClass
-    app.appCache?.update()
+    app.serviceWorker?.update()
     return
 
   cache: ->

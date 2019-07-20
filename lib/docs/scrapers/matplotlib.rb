@@ -64,5 +64,9 @@ module Docs
         "https://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
       ]
     end
+
+    def get_latest_version(opts)
+      get_latest_github_release('matplotlib', 'matplotlib', opts)
+    end
   end
 end

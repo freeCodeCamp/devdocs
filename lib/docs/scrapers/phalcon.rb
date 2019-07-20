@@ -29,5 +29,10 @@ module Docs
       self.release = '2.0.13'
       self.base_url = 'https://docs.phalconphp.com/en/2.0.0/'
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://docs.phalconphp.com/', opts)
+      doc.at_css('.header__lang.expand > div > ul > li > a').content
+    end
   end
 end

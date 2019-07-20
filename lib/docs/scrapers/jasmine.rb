@@ -17,5 +17,9 @@ module Docs
       &copy; 2008&ndash;2017 Pivotal Labs<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('jasmine', 'jasmine', opts)
+    end
   end
 end

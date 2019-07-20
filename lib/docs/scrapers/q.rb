@@ -19,5 +19,9 @@ module Docs
       &copy; 2009&ndash;2017 Kristopher Michael Kowal<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('q', opts)
+    end
   end
 end
