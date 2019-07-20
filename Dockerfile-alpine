@@ -1,4 +1,4 @@
-FROM ruby:2.6.0-alpine
+FROM ruby:2.6.3-alpine
 
 ENV LANG=C.UTF-8
 ENV ENABLE_SERVICE_WORKER=true
