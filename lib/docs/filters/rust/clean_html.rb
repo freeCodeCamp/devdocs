@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Docs
   class Rust
     class CleanHtmlFilter < Filter
@@ -74,10 +76,10 @@ module Docs
           node.remove
         end
 
-        css('h2 .important-traits', 'h3 .important-traits', 'h4 .important-traits').each do |node|
+        css('.important-traits').to_a.each_with_index do |node, index|
           content = node.at_css('.content.hidden .content')
           node.at_css('.content.hidden').replace(content) if content
-          node.parent.after(node)
+          node.parent.after(node) if node.parent.name.in?(%(h2 h3 h4))
         end
 
         css('code.content').each do |node|

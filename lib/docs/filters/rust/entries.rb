@@ -43,13 +43,12 @@ module Docs
           end
         else
           css('.method')
-            .select {|node| !node.at_css('.fnname').nil?}
-            .map {|node|
-              name = node.at_css('.fnname').content
+            .each_with_object({}) { |node, entries|
+              name = node.at_css('.fnname').try(:content)
+              next unless name
               name.prepend "#{self.name}::"
-              [name, node['id']]
-            }
-            .uniq {|item| item[0]}
+              entries[name] ||= [name, node['id']]
+            }.values
         end
       end
     end

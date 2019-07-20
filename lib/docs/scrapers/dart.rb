@@ -24,13 +24,11 @@ module Docs
 
     version '2' do
       self.release = '2.0.0'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/Dart2'
       self.base_url = "https://api.dartlang.org/stable/#{release}/"
     end
 
     version '1' do
       self.release = '1.24.3'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/Dart1'
       self.base_url = "https://api.dartlang.org/stable/#{release}/"
     end
   end
