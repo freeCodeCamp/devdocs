@@ -14,6 +14,7 @@ class app.views.SettingsPage extends app.View
     settings.dark = app.settings.get('dark')
     settings.smoothScroll = !app.settings.get('fastScroll')
     settings.arrowScroll = app.settings.get('arrowScroll')
+    settings.analyticsConsent = app.settings.get('analyticsConsent')
     settings[layout] = app.settings.hasLayout(layout) for layout in app.settings.LAYOUTS
     settings
 
@@ -30,6 +31,11 @@ class app.views.SettingsPage extends app.View
 
   toggleSmoothScroll: (enable) ->
     app.settings.set('fastScroll', !enable)
+    return
+
+  toggleAnalyticsConsent: (enable) ->
+    app.settings.set('analyticsConsent', if enable then '1' else '0')
+    resetAnalytics() unless enable
     return
 
   toggle: (name, enable) ->
@@ -75,6 +81,8 @@ class app.views.SettingsPage extends app.View
         @toggleSmoothScroll input.checked
       when 'import'
         @import input.files[0], input
+      when 'analyticsConsent'
+        @toggleAnalyticsConsent input.checked
       else
         @toggle input.name, input.checked
     return
