@@ -1,7 +1,7 @@
 module Docs
   class Bash < UrlScraper
     self.type = 'bash'
-    self.release = '4.4'
+    self.release = '5.0'
     self.base_url = 'https://www.gnu.org/software/bash/manual'
     self.root_path = '/html_node/index.html'
     self.links = {
