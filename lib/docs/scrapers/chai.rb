@@ -23,5 +23,9 @@ module Docs
       &copy; 2016 Chai.js Assertion Library<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('chai', opts)
+    end
   end
 end

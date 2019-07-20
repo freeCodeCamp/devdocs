@@ -117,5 +117,10 @@ module Docs
       self.release = '5.6'
       self.base_url = 'https://doc.qt.io/qt-5.6/'
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://doc.qt.io/qt-5/index.html', opts)
+      doc.at_css('.mainContent h1.title').content.sub(/Qt /, '')
+    end
   end
 end

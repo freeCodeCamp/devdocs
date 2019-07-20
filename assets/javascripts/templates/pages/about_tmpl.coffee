@@ -73,7 +73,8 @@ app.templates.aboutPage = -> """
   <ul>
     <li><a href="https://devdocs.io">devdocs.io</a> ("App") is operated by <a href="https://www.freecodecamp.org/">freeCodeCamp</a> ("We").
     <li>We do not collect personal information through the app.
-    <li>We use Google Analytics, Gauges and Sentry to collect anonymous traffic information and improve the app.
+    <li>We use Google Analytics and Gauges to collect anonymous traffic information if you have given consent to this. You can change your decision in the <a href="/settings">settings</a>.
+    <li>We use Sentry to collect crash data and improve the app.
     <li>The app uses cookies to store user preferences.
     <li>By using the app, you signify your acceptance of this policy. If you do not agree to this policy, please do not use the app.
     <li>If you have any questions regarding privacy, please email <a href="mailto:privacy@freecodecamp.org">privacy@freecodecamp.org</a>.

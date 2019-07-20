@@ -46,5 +46,10 @@ module Docs
       self.release = '4.9.1'
       self.base_url = 'https://nodejs.org/dist/latest-v4.x/docs/api/'
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://nodejs.org/en/', opts)
+      doc.at_css('#home-intro > .home-downloadblock:last-of-type > a')['data-version'][1..-1]
+    end
   end
 end

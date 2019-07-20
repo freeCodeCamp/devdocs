@@ -34,5 +34,10 @@ module Docs
 
       options[:only] = %w(getting-started/ css/ components/ javascript/)
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://getbootstrap.com/', opts)
+      doc.at_css('#bd-versions').content.strip[1..-1]
+    end
   end
 end
