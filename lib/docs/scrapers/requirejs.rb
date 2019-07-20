@@ -30,5 +30,9 @@ module Docs
       &copy; jQuery Foundation and other contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('requirejs', opts)
+    end
   end
 end

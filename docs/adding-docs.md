@@ -17,6 +17,7 @@ Adding a documentation may look like a daunting task but once you get the hang o
 10. To add syntax highlighting or execute custom JavaScript on the pages, create a file in the `assets/javascripts/views/pages/` directory (take a look at the other files to see how it works).
 11. Add the documentation's icon in the `public/icons/docs/[my_doc]/` directory, in both 16x16 and 32x32-pixels formats. It'll be added to the icon spritesheet after your pull request is merged.
 12. Add the documentation's copyright details to the list in `assets/javascripts/templates/pages/about_tmpl.coffee`. This is the data shown in the table on the [about](https://devdocs.io/about) page, and is ordered alphabetically. Simply copying an existing item, placing it in the right slot and updating the values to match the new scraper will do the job.
+13. Ensure `thor updates:check [my_doc]` shows the correct latest version.
 
 If the documentation includes more than a few hundreds pages and is available for download, try to scrape it locally (e.g. using `FileScraper`). It'll make the development process much faster and avoids putting too much load on the source site. (It's not a problem if your scraper is coupled to your local setup, just explain how it works in your pull request.)
 

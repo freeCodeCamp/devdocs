@@ -19,5 +19,10 @@ module Docs
       &copy; 2005&ndash;2018 Linus Torvalds and others<br>
       Licensed under the GNU General Public License version 2.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://git-scm.com/', opts)
+      doc.at_css('.version').content.strip
+    end
   end
 end

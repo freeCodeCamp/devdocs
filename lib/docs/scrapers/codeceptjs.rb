@@ -21,5 +21,9 @@ module Docs
       &copy; 2015 DavertMik &lt;davert@codegyre.com&gt; (http://codegyre.com)<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('codeceptjs', opts)
+    end
   end
 end

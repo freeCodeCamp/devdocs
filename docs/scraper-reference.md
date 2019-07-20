@@ -184,3 +184,44 @@ More information about how filters work is available on the [Filter Reference](.
     Overrides the `:title` option for the root page only.
 
   _Note: this filter is disabled by default._
+
+## Keeping scrapers up-to-date
+
+In order to keep scrapers up-to-date the `get_latest_version(opts)` method should be overridden. If `self.release` is defined, this should return the latest version of the documentation. If `self.release` is not defined, it should return the Epoch time when the documentation was last modified. If the documentation will never change, simply return `1.0.0`. The result of this method is periodically reported in a "Documentation versions report" issue which helps maintainers keep track of outdated documentations.
+
+To make life easier, there are a few utility methods that you can use in `get_latest_version`:
+* `fetch(url, opts)`
+
+  Makes a GET request to the url and returns the response body.
+
+  Example: [lib/docs/scrapers/bash.rb](../lib/docs/scrapers/bash.rb)
+* `fetch_doc(url, opts)`
+
+  Makes a GET request to the url and returns the HTML body converted to a Nokogiri document.
+
+  Example: [lib/docs/scrapers/git.rb](../lib/docs/scrapers/git.rb)
+* `fetch_json(url, opts)`
+
+  Makes a GET request to the url and returns the JSON body converted to a dictionary.
+
+  Example: [lib/docs/scrapers/mdn/mdn.rb](../lib/docs/scrapers/mdn/mdn.rb)
+* `get_npm_version(package, opts)`
+
+  Returns the latest version of the given npm package.
+
+  Example: [lib/docs/scrapers/bower.rb](../lib/docs/scrapers/bower.rb)
+* `get_latest_github_release(owner, repo, opts)`
+
+  Returns the tag name of the latest GitHub release of the given repository. If the tag name is preceded by a "v", the "v" will be removed.
+
+  Example: [lib/docs/scrapers/jsdoc.rb](../lib/docs/scrapers/jsdoc.rb)
+* `get_github_tags(owner, repo, opts)`
+
+  Returns the list of tags on the given repository ([format](https://developer.github.com/v3/repos/#list-tags)).
+
+  Example: [lib/docs/scrapers/liquid.rb](../lib/docs/scrapers/liquid.rb)
+* `get_github_file_contents(owner, repo, path, opts)`
+
+  Returns the contents of the requested file in the default branch of the given repository.
+
+  Example: [lib/docs/scrapers/minitest.rb](../lib/docs/scrapers/minitest.rb)
