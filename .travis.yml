@@ -20,5 +20,6 @@ deploy:
   app: devdocs
   on:
     branch: master
+    condition: $TRAVIS_EVENT_TYPE != cron
   api_key:
     secure: "4p1klvWJZSOImzFcKOduILjP93hlOlAhceWlYMKS4tU+TCFE8qTBzdKdFPSCsCgjB+YR9pBss+L0lJpVVMjSwFHXqpKe6EeUSltO2k7DFHfW7kXLUM/L0AfqXz+YXk76XUyZMhvOEbldPfaMaj10e8vgDOQCSHABDyK/4CU+hnI="
