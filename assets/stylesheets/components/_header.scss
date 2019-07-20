@@ -215,5 +215,6 @@
   color: var(--textColorLight);
   background: var(--searchTagBackground);
   border-radius: 2px;
+  cursor: pointer;
   @extend %truncate-text;
 }
