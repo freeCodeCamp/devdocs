@@ -28,13 +28,7 @@
     </nav>
   </header>
   <section class="_sidebar" tabindex="-1">
-    <div class="_list" role="navigation">
-      <% unless @doc %>
-      <% App.docs.each do |slug, doc| %>
-      <a href="/<%= slug %>/" class="_list-item"><%= doc['full_name'] %></a>
-      <% end %>
-      <% end %>
-    </div>
+    <div class="_list" role="navigation"></div>
   </section>
   <div class="_container" role="document">
     <main class="_content _content-loading" role="main"></main>
@@ -63,9 +57,3 @@
     <symbol id="icon-external-link" viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></symbol>
   </defs>
 </svg>
-<style data-size="<%= app_size %>" data-resizer>
-  ._container { margin-left: <%= app_size %>; }
-  ._header, ._list { width: <%= app_size %>; }
-  ._list-hover.clone { min-width: <%= app_size %>; }
-  ._notice, ._path, ._resizer { left: <%= app_size %>; }
-</style>
