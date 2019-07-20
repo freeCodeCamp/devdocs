@@ -14,6 +14,7 @@ class app.views.SettingsPage extends app.View
     settings.dark = app.settings.get('dark')
     settings.smoothScroll = !app.settings.get('fastScroll')
     settings.arrowScroll = app.settings.get('arrowScroll')
+    settings.autoInstall = app.settings.get('autoInstall')
     settings.analyticsConsent = app.settings.get('analyticsConsent')
     settings[layout] = app.settings.hasLayout(layout) for layout in app.settings.LAYOUTS
     settings
