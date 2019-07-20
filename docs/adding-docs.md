@@ -15,7 +15,7 @@ Adding a documentation may look like a daunting task but once you get the hang o
 8. Tweak the scraper/filters and repeat 5) and 6) until the pages and metadata are ok.
 9. To customize the pages' styling, create an SCSS file in the `assets/stylesheets/pages/` directory and import it in both `application.css.scss` AND `application-dark.css.scss`. Both the file and CSS class should be named `_[type]` where [type] is equal to the scraper's `type` attribute (documentations with the same type share the same custom CSS and JS). Setting the type to `simple` will apply the general styling rules in `assets/stylesheets/pages/_simple.scss`, which can be used for documentations where little to no CSS changes are needed.
 10. To add syntax highlighting or execute custom JavaScript on the pages, create a file in the `assets/javascripts/views/pages/` directory (take a look at the other files to see how it works).
-11. Add the documentation's icon in the `public/icons/docs/[my_doc]/` directory, in both 16x16 and 32x32-pixels formats. It'll be added to the icon spritesheet after your pull request is merged.
+11. Add the documentation's icon in the `public/icons/docs/[my_doc]/` directory, in both 16x16 and 32x32-pixels formats. The icon spritesheet is automatically generated when you (re)start your local DevDocs instance.
 12. Add the documentation's copyright details to the list in `assets/javascripts/templates/pages/about_tmpl.coffee`. This is the data shown in the table on the [about](https://devdocs.io/about) page, and is ordered alphabetically. Simply copying an existing item, placing it in the right slot and updating the values to match the new scraper will do the job.
 13. Ensure `thor updates:check [my_doc]` shows the correct latest version.
 

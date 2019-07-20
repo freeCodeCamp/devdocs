@@ -55,7 +55,6 @@ In addition to the [guidelines for contributing code](#contributing-code-and-fea
 * Remove as much content and HTML markup as possible, particularly content not associated with any entry (e.g. introduction, changelog, etc.).
 * Names must be as short as possible and unique across the documentation.
 * The number of types (categories) should ideally be less than 100.
-* Don't modify the icon sprite. I'll do it after your pull request is merged.
 
 ## Updating existing documentations
 
