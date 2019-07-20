@@ -53,6 +53,11 @@ class App < Sinatra::Application
   end
 
   configure :test, :development do
+    require 'thor'
+    load 'tasks/sprites.thor'
+
+    SpritesCLI.new.invoke(:generate)
+
     require 'active_support/per_thread_registry'
     require 'active_support/cache'
     sprockets.cache = ActiveSupport::Cache.lookup_store :file_store, root.join('tmp', 'cache', 'assets', environment.to_s)
@@ -199,10 +204,8 @@ class App < Sinatra::Application
       @@service_worker_asset_urls ||= [
         javascript_path('application', asset_host: false),
         stylesheet_path('application'),
-        image_path('docs-1.png'),
-        image_path('docs-1@2x.png'),
-        image_path('docs-2.png'),
-        image_path('docs-2@2x.png'),
+        image_path('sprites/docs.png'),
+        image_path('sprites/docs@2x.png'),
         asset_path('docs.js'),
         App.production? ? nil : javascript_path('debug'),
       ].compact
