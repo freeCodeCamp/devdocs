@@ -1,5 +1,10 @@
 language: ruby
 
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+
 cache: bundler
 
 before_script:
