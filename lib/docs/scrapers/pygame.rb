@@ -14,7 +14,7 @@ module Docs
     options[:only_patterns] = [/ref\//]
 
     options[:attribution] = <<-HTML
-      &copy; Pygame Developpers.<br>
+      &copy; Pygame Developers.<br>
       Licensed under the GNU LGPL License version 2.1.
     HTML
 
