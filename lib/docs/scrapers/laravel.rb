@@ -133,5 +133,9 @@ module Docs
         url
       end
     end
+
+    def get_latest_version(opts)
+      get_latest_github_release('laravel', 'laravel', opts)
+    end
   end
 end

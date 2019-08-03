@@ -43,5 +43,11 @@ module Docs
       self.release = '5.20.2'
       self.base_url = "https://perldoc.perl.org/#{self.release}/"
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://perldoc.perl.org/', opts)
+      header = doc.at_css('h2.h1').content
+      header.scan(/Perl ([0-9.]+)/)[0][0]
+    end
   end
 end

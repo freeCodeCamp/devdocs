@@ -1,5 +1,13 @@
 [
   [
+    "2019-07-21",
+    "Fixed several bugs, added an option to automatically download documentation and <a href=\"https://github.com/freeCodeCamp/devdocs/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aclosed+sort%3Aupdated-desc+closed%3A%3E2019-07-18+977+988+986+870+886+1024+979+975+941+831+1005+848+942\" target=\"_blank\">more</a>."
+  ],
+  [
+    "2019-07-19",
+    "Replaced the AppCache with a Service Worker (which makes DevDocs an installable PWA) and fixed layout preferences on Firefox."
+  ],
+  [
     "2018-09-23",
     "New documentations: <a href=\"/puppeteer/\">Puppeteer</a> and <a href=\"/handlebars/\">Handlebars.js</a>"
   ], [

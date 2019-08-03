@@ -47,5 +47,10 @@ module Docs
 
       options[:only_patterns] = [/\A#{client_path}\//, /\A#{server_path}\//]
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://downloads.chef.io/chef', opts)
+      doc.at_css('h1.product-heading > span').content.strip
+    end
   end
 end

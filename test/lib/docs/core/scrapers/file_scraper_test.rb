@@ -63,7 +63,7 @@ class FileScraperTest < MiniTest::Spec
       end
 
       it "reads a file" do
-        mock(scraper).read_file(path)
+        mock(scraper).read_file(File.join(ROOT_PATH, 'docs/scraper', path))
         result
       end
 
@@ -165,7 +165,7 @@ class FileScraperTest < MiniTest::Spec
 
   describe "#read_file" do
     let :result do
-      scraper.send :read_file, 'file'
+      scraper.send :read_file, File.join(ROOT_PATH, 'docs', 'scraper', 'file')
     end
 
     it "returns the file's content when the file exists in the source directory" do

@@ -8,6 +8,8 @@ module Docs
 
     html_filters.push 'dom/clean_html', 'dom/entries', 'title'
 
+    options[:mdn_tag] = 'XSLT_Reference'
+
     options[:root_title] = 'DOM'
 
     options[:skip] = %w(

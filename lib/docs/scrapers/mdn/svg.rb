@@ -8,6 +8,8 @@ module Docs
 
     html_filters.push 'svg/clean_html', 'svg/entries', 'title'
 
+    options[:mdn_tag] = 'XSLT_Reference'
+
     options[:root_title] = 'SVG'
 
     options[:title] = ->(filter) do

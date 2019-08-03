@@ -5,11 +5,13 @@ class app.Settings
     'manualUpdate'
     'fastScroll'
     'arrowScroll'
+    'analyticsConsent'
     'docs'
     'dark'
     'layout'
     'size'
     'tips'
+    'autoInstall'
   ]
 
   INTERNAL_KEYS = [
@@ -19,6 +21,8 @@ class app.Settings
     'news'
   ]
 
+  LAYOUTS: ['_max-width', '_sidebar-hidden', '_native-scrollbars']
+
   @defaults:
     count: 0
     hideDisabled: false
@@ -26,6 +30,7 @@ class app.Settings
     news: 0
     manualUpdate: false
     schema: 1
+    analyticsConsent: false
 
   constructor: ->
     @store = new CookieStore
@@ -38,6 +43,7 @@ class app.Settings
   set: (key, value) ->
     @store.set(key, value)
     delete @cache[key]
+    @toggleDark(value) if key == 'dark'
     return
 
   del: (key) ->
@@ -63,6 +69,8 @@ class app.Settings
     return
 
   setLayout: (name, enable) ->
+    @toggleLayout(name, enable)
+
     layout = (@store.get('layout') || '').split(' ')
     $.arrayDelete(layout, '')
 
@@ -103,4 +111,29 @@ class app.Settings
   reset: ->
     @store.reset()
     @cache = {}
+    return
+
+  initLayout: ->
+    @toggleDark(@get('dark') is 1)
+    @toggleLayout(layout, @hasLayout(layout)) for layout in @LAYOUTS
+    @initSidebarWidth()
+    return
+
+  toggleDark: (enable) ->
+    classList = document.documentElement.classList
+    classList.toggle('_theme-default', !enable)
+    classList.toggle('_theme-dark', enable)
+    color = getComputedStyle(document.documentElement).getPropertyValue('--headerBackground').trim()
+    $('meta[name=theme-color]').setAttribute('content', color)
+    return
+
+  toggleLayout: (layout, enable) ->
+    classList = document.body.classList
+    classList.toggle(layout, enable) unless layout is '_sidebar-hidden'
+    classList.toggle('_overlay-scrollbars', $.overlayScrollbarsEnabled())
+    return
+
+  initSidebarWidth: ->
+    size = @get('size')
+    document.documentElement.style.setProperty('--sidebarWidth', size + 'px') if size
     return
