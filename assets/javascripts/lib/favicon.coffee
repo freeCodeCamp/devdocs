@@ -28,7 +28,7 @@ withImage = (url, action) ->
     currentSlug = doc.slug
     return
 
-  styles = window.getComputedStyle($("._icon-#{doc.slug}"), ':before')
+  styles = window.getComputedStyle($("._icon-#{doc.slug.split('~')[0]}"), ':before')
 
   bgUrl = styles['background-image'].slice(5, -2)
   sourceSize = if bgUrl.includes('@2x') then 32 else 16
