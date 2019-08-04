@@ -30,8 +30,8 @@ withImage = (url, action) ->
 
   styles = window.getComputedStyle($("._icon-#{doc.slug.split('~')[0]}"), ':before')
 
-  bgUrl = styles['background-image'].slice(5, -2)
-  sourceSize = if bgUrl.includes('@2x') then 32 else 16
+  bgUrl = app.config.favicon_spritesheet
+  sourceSize = 16
   sourceX = Math.abs(parseInt(styles['background-position-x'].slice(0, -2)))
   sourceY = Math.abs(parseInt(styles['background-position-y'].slice(0, -2)))
 
