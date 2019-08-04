@@ -33,7 +33,8 @@ class app.Settings
     analyticsConsent: false
 
   constructor: ->
-    @store = new CookieStore
+    @store = new CookiesStore
+    console.log @store
     @cache = {}
 
   get: (key) ->
