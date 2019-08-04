@@ -9,6 +9,7 @@ withImage = (url, action) ->
     action(imageCache[url])
   else
     img = new Image()
+    img.crossOrigin = 'anonymous'
     img.src = url
     img.onload = () =>
       imageCache[url] = img
