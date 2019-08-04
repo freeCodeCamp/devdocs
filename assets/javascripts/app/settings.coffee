@@ -34,7 +34,6 @@ class app.Settings
 
   constructor: ->
     @store = new CookiesStore
-    console.log @store
     @cache = {}
 
   get: (key) ->
