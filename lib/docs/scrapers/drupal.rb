@@ -98,5 +98,10 @@ module Docs
         /\A[\w\-\.]+\.php\/7\.x\z/
       ]
     end
+
+    def get_latest_version(opts)
+      json = fetch_json('https://packagist.org/packages/drupal/drupal.json', opts)
+      json['package']['versions'].keys.find {|version| !version.end_with?('-dev')}
+    end
   end
 end

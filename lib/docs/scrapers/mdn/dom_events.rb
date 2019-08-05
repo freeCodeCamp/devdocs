@@ -9,6 +9,8 @@ module Docs
     html_filters.insert_after 'clean_html', 'dom_events/clean_html'
     html_filters.push 'dom_events/entries', 'title'
 
+    options[:mdn_tag] = 'events'
+
     options[:root_title] = 'DOM Events'
 
     options[:skip] = %w(/MozOrientation)

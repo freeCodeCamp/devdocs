@@ -23,5 +23,9 @@ module Docs
       &copy; 2006&ndash;2016 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('sass', 'libsass', opts)
+    end
   end
 end

@@ -16,5 +16,10 @@ module Docs
     options[:fix_urls] = ->(url) do
       url.sub! 'http://api.jquerymobile.com/', 'https://api.jquerymobile.com/'
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://jquerymobile.com/', opts)
+      doc.at_css('.download-box > .download-option:last-child > span').content.sub(/Version /, '')
+    end
   end
 end
