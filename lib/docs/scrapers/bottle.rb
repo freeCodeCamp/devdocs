@@ -27,5 +27,11 @@ module Docs
       self.release = '0.11.7'
       self.base_url = "https://bottlepy.org/docs/#{self.version}/"
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://bottlepy.org/docs/stable/', opts)
+      label = doc.at_css('.sphinxsidebarwrapper > ul > li > b')
+      label.content.sub(/Bottle /, '')
+    end
   end
 end

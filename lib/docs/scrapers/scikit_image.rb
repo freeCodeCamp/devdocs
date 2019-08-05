@@ -20,5 +20,10 @@ module Docs
       &copy; 2011 the scikit-image team<br>
       Licensed under the BSD 3-clause License.
     HTML
+
+    def get_latest_version(opts)
+      tags = get_github_tags('scikit-image', 'scikit-image', opts)
+      tags[0]['name'][1..-1]
+    end
   end
 end

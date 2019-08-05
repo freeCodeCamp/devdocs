@@ -174,11 +174,24 @@ class DocsCLI < Thor
 
     assert_docs(docs)
 
+    # Verify files are present
+    docs.each do |doc|
+      unless Dir.exists?(File.join(Docs.store_path, doc.path))
+        puts "ERROR: directory #{File.join(Docs.store_path, doc.path)} not found."
+        return
+      end
+
+      unless File.exists?(File.join(Docs.store_path, "#{doc.path}.tar.gz"))
+        puts "ERROR: package for '#{doc.slug}' documentation not found. Run 'thor docs:package #{doc.slug}' to create it."
+        return
+      end
+    end
+
     # Sync files with S3 (used by the web app)
     puts '[S3] Begin syncing.'
     docs.each do |doc|
       puts "[S3] Syncing #{doc.path}..."
-      cmd = "aws s3 sync #{File.join(Docs.store_path, doc.path)} s3://docs.devdocs.io/#{doc.path} --delete"
+      cmd = "aws s3 sync #{File.join(Docs.store_path, doc.path)} s3://devdocs-assets/#{doc.path} --delete --profile devdocs"
       cmd << ' --dryrun' if options[:dryrun]
       system(cmd)
     end

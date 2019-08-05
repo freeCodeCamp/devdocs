@@ -137,5 +137,11 @@ module Docs
       options[:container] = '#docs'
       options[:only_patterns] << /\Aswarm\//
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://docs.docker.com/', opts)
+      label = doc.at_css('.nav-container button.dropdown-toggle').content.strip
+      label.scan(/([0-9.]+)/)[0][0]
+    end
   end
 end

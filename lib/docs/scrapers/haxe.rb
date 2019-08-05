@@ -66,5 +66,11 @@ module Docs
     version 'Python' do
       self.base_url = 'https://api.haxe.org/python/'
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://api.haxe.org/', opts)
+      label = doc.at_css('.container.main-content h1 > small').content
+      label.sub(/version /, '')
+    end
   end
 end
