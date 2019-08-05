@@ -1,4 +1,8 @@
-class @CookieStore
+class @CookiesStore
+  # Intentionally called CookiesStore instead of CookieStore
+  # Calling it CookieStore causes issues when the Experimental Web Platform features flag is enabled in Chrome
+  # Related issue: https://github.com/freeCodeCamp/devdocs/issues/932
+
   INT = /^\d+$/
 
   @onBlocked: ->

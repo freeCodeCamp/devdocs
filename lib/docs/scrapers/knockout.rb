@@ -33,5 +33,9 @@ module Docs
       &copy; Steven Sanderson, the Knockout.js team, and other contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('knockout', 'knockout', opts)
+    end
   end
 end

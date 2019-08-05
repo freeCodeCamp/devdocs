@@ -19,5 +19,9 @@ module Docs
       Patrick Mahoney, Yoko Harada, Akinori Musha, John Shahid, Lars Kanis<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('sparklemotion', 'nokogiri', opts)
+    end
   end
 end
