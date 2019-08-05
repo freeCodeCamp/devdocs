@@ -1,7 +1,7 @@
 module Docs
   class Pygame < UrlScraper
     self.type = 'simple'
-    self.release = '1.9.4'
+    self.release = '1.9.6'
     self.base_url = 'https://www.pygame.org/docs/'
     self.root_path = 'py-modindex.html'
     self.links = {
