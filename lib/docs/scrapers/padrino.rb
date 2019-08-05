@@ -3,7 +3,7 @@ module Docs
     self.slug = 'padrino'
     self.type = 'rubydoc'
     self.release = '0.14.4'
-    self.base_url = 'http://www.rubydoc.info/github/padrino/padrino-framework/'
+    self.base_url = 'https://www.rubydoc.info/github/padrino/padrino-framework/'
     self.root_path = 'file/README.rdoc'
     self.initial_paths = %w(index2)
     self.links = {
