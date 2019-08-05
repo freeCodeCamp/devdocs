@@ -7,7 +7,7 @@ WORKDIR /devdocs
 
 COPY . /devdocs
 
-RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev && \
+RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev libcurl && \
     gem install bundler && \
     bundle install --system --without test && \
     thor docs:download --all && \

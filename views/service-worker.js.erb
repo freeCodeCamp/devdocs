@@ -35,15 +35,25 @@ self.addEventListener('fetch', event => {
     const cachedResponse = await caches.match(event.request);
     if (cachedResponse) return cachedResponse;
 
-    const url = new URL(event.request.url);
+    try {
+      const response = await fetch(event.request);
 
-    <%# Attempt to return the index page from the cache if the user is visiting a url like devdocs.io/offline or devdocs.io/javascript/global_objects/array/find %>
-    <%# The index page will handle the routing %>
-    if (url.origin === location.origin && !url.pathname.includes('.')) {
-      const cachedIndex = await caches.match('/');
-      if (cachedIndex) return cachedIndex;
+      if (!response.ok) {
+        throw new Error(`The HTTP request failed with status code ${response.status}`);
+      }
+
+      return response;
+    } catch (err) {
+      const url = new URL(event.request.url);
+
+      <%# Attempt to return the index page from the cache if the user is visiting a url like devdocs.io/offline or devdocs.io/javascript/global_objects/array/find %>
+      <%# The index page will make sure the correct documentation or a proper offline page is shown  %>
+      if (url.origin === location.origin && !url.pathname.replace(/~([0-9.])+/, '').includes('.')) {
+        const cachedIndex = await caches.match('/');
+        if (cachedIndex) return cachedIndex;
+      }
+
+      throw err;
     }
-
-    return fetch(event.request);
   })());
 });

@@ -78,7 +78,7 @@
         .install()
       @previousErrorHandler = onerror
       window.onerror = @onWindowError.bind(@)
-      CookieStore.onBlocked = @onCookieBlocked
+      CookiesStore.onBlocked = @onCookieBlocked
     return
 
   bootOne: ->

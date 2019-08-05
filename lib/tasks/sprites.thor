@@ -31,6 +31,8 @@ class SpritesCLI < Thor
       item[:dark_icon_fix] = needs_dark_icon_fix(item[:icon_32], bg_color)
     end
 
+    return unless items_with_icons.length > 0
+
     log_details(items_with_icons, icons_per_row)
 
     generate_spritesheet(16, items_with_icons, 'assets/images/sprites/docs.png') {|item| item[:icon_16]}

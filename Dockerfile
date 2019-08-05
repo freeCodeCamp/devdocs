@@ -6,7 +6,7 @@ ENV ENABLE_SERVICE_WORKER=true
 WORKDIR /devdocs
 
 RUN apt-get update && \
-    apt-get -y install git nodejs && \
+    apt-get -y install git nodejs libcurl4 && \
     gem install bundler && \
     rm -rf /var/lib/apt/lists/*
 
