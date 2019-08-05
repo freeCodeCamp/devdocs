@@ -103,9 +103,19 @@ module Docs
       Licensed under the GNU Free Documentation License, Version 1.3.
     HTML
 
+    version '5.13' do
+      self.release = '5.13'
+      self.base_url = 'https://doc.qt.io/qt-5.13/'
+    end
+
+    version '5.12' do
+      self.release = '5.12'
+      self.base_url = 'https://doc.qt.io/qt-5.12/'
+    end
+
     version '5.11' do
       self.release = '5.11'
-      self.base_url = 'https://doc.qt.io/qt-5/'
+      self.base_url = 'https://doc.qt.io/archives/qt-5.11/'
     end
 
     version '5.9' do
@@ -115,7 +125,7 @@ module Docs
 
     version '5.6' do
       self.release = '5.6'
-      self.base_url = 'https://doc.qt.io/qt-5.6/'
+      self.base_url = 'https://doc.qt.io/archives/qt-5.6/'
     end
 
     def get_latest_version(opts)

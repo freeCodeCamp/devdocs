@@ -8,6 +8,7 @@ module Docs
         # QML property/method header
         css('.qmlproto').each do |node|
           id = node.at_css('tr')['id']
+          id = node.at_css('a')['name'] if id.blank?
           node.inner_html = node.at_css('td').inner_html
           node.name = 'h3'
           node['id'] = id
