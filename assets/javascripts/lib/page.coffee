@@ -199,5 +199,21 @@ page.track = (fn) ->
   return
 
 track = ->
-  tracker.call() for tracker in trackers
+  consentGiven = Cookies.get('analyticsConsent')
+  consentAsked = Cookies.get('analyticsConsentAsked')
+
+  if consentGiven == '1'
+    tracker.call() for tracker in trackers
+  else if consentGiven == undefined and consentAsked == undefined
+    # Only ask for consent once per browser session
+    Cookies.set('analyticsConsentAsked', '1')
+
+    new app.views.Notif 'AnalyticsConsent', autoHide: null
+  return
+
+@resetAnalytics = ->
+  for cookie in document.cookie.split(/;\s?/)
+    name = cookie.split('=')[0]
+    if name[0] == '_'
+      Cookies.expire(name)
   return

@@ -20,5 +20,9 @@ module Docs
       &copy; 2016&ndash;present Yarn Contributors<br>
       Licensed under the BSD License.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('yarnpkg', 'yarn', opts)
+    end
   end
 end
