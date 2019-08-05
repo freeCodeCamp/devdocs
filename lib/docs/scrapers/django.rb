@@ -35,22 +35,22 @@ module Docs
     HTML
 
     version '2.2' do
-      self.release = '2.2.1'
+      self.release = '2.2.4'
       self.base_url = 'https://docs.djangoproject.com/en/2.2/'
     end
 
     version '2.1' do
-      self.release = '2.1.8'
+      self.release = '2.1.11'
       self.base_url = 'https://docs.djangoproject.com/en/2.1/'
     end
 
     version '2.0' do
-      self.release = '2.0.7'
+      self.release = '2.0.13'
       self.base_url = 'https://docs.djangoproject.com/en/2.0/'
     end
 
     version '1.11' do
-      self.release = '1.11.20'
+      self.release = '1.11.23'
       self.base_url = 'https://docs.djangoproject.com/en/1.11/'
     end
 
