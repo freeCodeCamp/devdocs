@@ -58,5 +58,9 @@ module Docs
       options[:root_title] = 'D3.js'
       options[:only_patterns] = [/\.md\z/]
     end
+
+    def get_latest_version(opts)
+      get_npm_version('d3', opts)
+    end
   end
 end

@@ -30,5 +30,10 @@ module Docs
       &copy; 2015&ndash;2018 Facebook Inc.<br>
       Licensed under the Creative Commons Attribution 4.0 International Public License.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://facebook.github.io/react-native/docs/getting-started.html', opts)
+      doc.at_css('header > a > h3').content
+    end
   end
 end

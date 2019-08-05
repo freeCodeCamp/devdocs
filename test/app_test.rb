@@ -43,35 +43,6 @@ class AppTest < MiniTest::Spec
       assert last_response.redirect?
       assert_equal 'https://example.org/', last_response['Location']
     end
-
-    it "sets default size" do
-      get '/'
-      assert_includes last_response.body, 'data-size="20rem"'
-    end
-
-    it "sets size from cookie" do
-      set_cookie('size=42')
-      get '/'
-      assert_includes last_response.body, 'data-size="42px"'
-    end
-
-    it "sets layout from cookie" do
-      set_cookie('layout=foo')
-      get '/'
-      assert_includes last_response.body, '<body class="foo">'
-    end
-
-    it "sets the <html> theme from cookie" do
-      get '/'
-      assert_match %r{<html [^>]*class="[^\"]*_theme-default}, last_response.body
-      refute_includes last_response.body, '_theme-dark'
-
-      set_cookie('dark=1')
-
-      get '/'
-      assert_match %r{<html [^>]*class="[^\"]*_theme-dark}, last_response.body
-      refute_includes last_response.body, '_theme-default'
-    end
   end
 
   describe "/[static-page]" do
@@ -103,58 +74,6 @@ class AppTest < MiniTest::Spec
       get '/search', q: 'foo'
       assert last_response.redirect?
       assert_equal 'https://example.org/#q=foo', last_response['Location']
-    end
-  end
-
-  describe "/manifest.appcache" do
-    it "works" do
-      get '/manifest.appcache'
-      assert last_response.ok?
-    end
-
-    it "works with cookie" do
-      set_cookie('docs=css/html~5')
-      get '/manifest.appcache'
-      assert last_response.ok?
-      assert_includes last_response.body, '/css/index.json?1420139788'
-      assert_includes last_response.body, '/html~5/index.json?1420139791'
-    end
-
-    it "ignores invalid docs in the cookie" do
-      set_cookie('docs=foo')
-      get '/manifest.appcache'
-      assert last_response.ok?
-      refute_includes last_response.body, 'foo'
-    end
-
-    it "has the word 'default' when no 'dark' cookie is set" do
-      get '/manifest.appcache'
-      assert_includes last_response.body, '# default'
-      refute_includes last_response.body, '# dark'
-    end
-
-    it "has the word 'dark' when the cookie is set" do
-      set_cookie('dark=1')
-      get '/manifest.appcache'
-      assert_includes last_response.body, '# dark'
-      refute_includes last_response.body, '# default'
-    end
-
-    it "sets default size" do
-      get '/manifest.appcache'
-      assert_includes last_response.body, '20rem'
-    end
-
-    it "sets size from cookie" do
-      set_cookie('size=42')
-      get '/manifest.appcache'
-      assert_includes last_response.body, '42px'
-    end
-
-    it "sets layout from cookie" do
-      set_cookie('layout=foo_layout')
-      get '/manifest.appcache'
-      assert_includes last_response.body, 'foo_layout'
     end
   end
 

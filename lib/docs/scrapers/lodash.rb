@@ -32,5 +32,10 @@ module Docs
       self.release = '2.4.2'
       self.base_url = "https://lodash.com/docs/#{release}"
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://lodash.com/docs/', opts)
+      doc.at_css('#version > option[selected]').content
+    end
   end
 end

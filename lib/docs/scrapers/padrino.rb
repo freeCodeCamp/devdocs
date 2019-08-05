@@ -23,5 +23,9 @@ module Docs
     stub 'index2' do
       request_one(url_for('index')).body
     end
+
+    def get_latest_version(opts)
+      get_github_tags('padrino', 'padrino-framework', opts)[0]['name']
+    end
   end
 end

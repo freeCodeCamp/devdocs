@@ -18,6 +18,10 @@ module Docs
       Licensed under the MIT license.
     HTML
 
+    def get_latest_version(opts)
+      get_npm_version('pug', opts)
+    end
+
     private
 
     def parse(response) # Hook here because Nokogori removes whitespace from textareas
