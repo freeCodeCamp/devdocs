@@ -86,5 +86,25 @@ module Docs
     def read_file(path)
       File.read(path).force_encoding('iso-8859-1').encode('utf-8') rescue nil
     end
+
+    def get_latest_version(opts)
+      latest_version = 8
+      current_attempt = latest_version
+      attempts = 0
+
+      while attempts < 3
+        current_attempt += 1
+
+        doc = fetch_doc("https://packages.debian.org/sid/openjdk-#{current_attempt}-doc", opts)
+        if doc.at_css('.perror').nil?
+          latest_version = current_attempt
+          attempts = 0
+        else
+          attempts += 1
+        end
+      end
+
+      latest_version
+    end
   end
 end

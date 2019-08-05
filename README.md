@@ -59,14 +59,14 @@ The web app is all client-side JavaScript, written in [CoffeeScript](http://coff
 
 Many of the code's design decisions were driven by the fact that the app uses XHR to load content directly into the main frame. This includes stripping the original documents of most of their HTML markup (e.g. scripts and stylesheets) to avoid polluting the main frame, and prefixing all CSS class names with an underscore to prevent conflicts.
 
-Another driving factor is performance and the fact that everything happens in the browser. `applicationCache` (which comes with its own set of constraints) and `localStorage` are used to speed up the boot time, while memory consumption is kept in check by allowing the user to pick his/her own set of documentations. The search algorithm is kept simple because it needs to be fast even searching through 100,000 strings.
+Another driving factor is performance and the fact that everything happens in the browser. A service worker (which comes with its own set of constraints) and `localStorage` are used to speed up the boot time, while memory consumption is kept in check by allowing the user to pick his/her own set of documentations. The search algorithm is kept simple because it needs to be fast even searching through 100,000 strings.
 
 DevDocs being a developer tool, the browser requirements are high:
 
 * Recent versions of Firefox, Chrome, or Opera
-* Safari 9.1+
-* Edge 16+
-* iOS 10+
+* Safari 11.1+
+* Edge 17+
+* iOS 11.3+
 
 This allows the code to take advantage of the latest DOM and HTML5 APIs and make developing DevDocs a lot more fun!
 
@@ -156,7 +156,7 @@ Contributions are welcome. Please read the [contributing guidelines](./.github/C
 * [Doc Browser](https://github.com/qwfy/doc-browser) is a native Linux app that supports DevDocs docsets
 * [GNOME Application](https://github.com/hardpixel/devdocs-desktop) GTK3 application with search integrated in headerbar
 * [macOS Application](https://github.com/dteoh/devdocs-macos)
-* [Android Application](https://github.com/Merith-TK/devdocs_webapp_kotlin) is a fully working, advanced WebView with AppCache enabled
+* [Android Application](https://github.com/Merith-TK/devdocs_webapp_kotlin) is a fully working, advanced WebView
 
 ## Copyright / License
 

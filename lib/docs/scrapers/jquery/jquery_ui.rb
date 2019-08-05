@@ -15,5 +15,9 @@ module Docs
     options[:fix_urls] = ->(url) do
       url.sub! 'http://api.jqueryui.com/', 'https://api.jqueryui.com/'
     end
+
+    def get_latest_version(opts)
+      get_npm_version('jquery-ui', opts)
+    end
   end
 end

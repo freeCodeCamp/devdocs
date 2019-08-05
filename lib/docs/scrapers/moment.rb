@@ -22,5 +22,10 @@ module Docs
       &copy; JS Foundation and other contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('http://momentjs.com/', opts)
+      doc.at_css('.hero-title > h1 > span').content
+    end
   end
 end
