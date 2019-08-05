@@ -1,8 +1,8 @@
 module Docs
   class Ramda < UrlScraper
     self.type = 'ramda'
-    self.release = '0.25.0'
-    self.base_url = "http://ramdajs.com/#{release}/docs/"
+    self.release = '0.26.1'
+    self.base_url = "https://ramdajs.com/#{release}/docs/"
     self.links = {
       home: 'http://ramdajs.com/',
       code: 'https://github.com/ramda/ramda/'
@@ -22,4 +22,3 @@ module Docs
     end
   end
 end
-
