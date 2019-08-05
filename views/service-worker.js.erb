@@ -48,7 +48,7 @@ self.addEventListener('fetch', event => {
 
       <%# Attempt to return the index page from the cache if the user is visiting a url like devdocs.io/offline or devdocs.io/javascript/global_objects/array/find %>
       <%# The index page will make sure the correct documentation or a proper offline page is shown  %>
-      if (url.origin === location.origin && !url.pathname.includes('.')) {
+      if (url.origin === location.origin && !url.pathname.replace(/~([0-9.])+/, '').includes('.')) {
         const cachedIndex = await caches.match('/');
         if (cachedIndex) return cachedIndex;
       }
