@@ -38,5 +38,9 @@ module Docs
 
       html_filters.push 'marionette/entries_v2'
     end
+
+    def get_latest_version(opts)
+      get_npm_version('backbone.marionette', opts)
+    end
   end
 end

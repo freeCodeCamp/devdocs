@@ -20,5 +20,9 @@ module Docs
       &copy; 2014&ndash;2015 Automattic<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('socket.io', opts)
+    end
   end
 end

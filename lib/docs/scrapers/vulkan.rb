@@ -20,5 +20,10 @@ module Docs
       Licensed under the Creative Commons Attribution 4.0 International License.<br>
       Vulkan and the Vulkan logo are registered trademarks of the Khronos Group Inc.
     HTML
+
+    def get_latest_version(opts)
+      tags = get_github_tags('KhronosGroup', 'Vulkan-Docs', opts)
+      tags[0]['name'][1..-1]
+    end
   end
 end

@@ -49,5 +49,9 @@ module Docs
       self.release = '1.10.4'
       self.base_url = "https://docs.scipy.org/doc/numpy-#{self.release}/reference/"
     end
+
+    def get_latest_version(opts)
+      get_latest_github_release('numpy', 'numpy', opts)
+    end
   end
 end

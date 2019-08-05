@@ -18,5 +18,9 @@ module Docs
       &copy; 2013&ndash;present Facebook Inc.<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('flow-bin', opts)
+    end
   end
 end
