@@ -2,7 +2,8 @@ module Docs
   class Homebrew
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('h1').content.strip
+        header = at_css('h1')
+        name = header.nil? ? current_url.normalized_path[1..-1].gsub(/-/, ' ') : header.content.strip
         name.remove! %r{\(.*}
         name
       end
@@ -16,6 +17,7 @@ module Docs
         Python-for-Formula-Authors
         Migrating-A-Formula-To-A-Tap
         Rename-A-Formula
+        Building-Against-Non-Homebrew-Dependencies
         How-to-Create-and-Maintain-a-Tap
         Brew-Test-Bot
         Prose-Style-Guidelines)

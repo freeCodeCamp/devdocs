@@ -29,5 +29,9 @@ module Docs
       Licensed under the npm License.<br>
       npm is a trademark of npm, Inc.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('npm', 'cli', opts)
+    end
   end
 end

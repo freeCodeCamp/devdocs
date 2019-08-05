@@ -25,5 +25,9 @@ module Docs
       Licensed under the 3-clause BSD License.
     HTML
 
+    def get_latest_version(opts)
+      doc = fetch_doc('https://scikit-learn.org/stable/documentation.html', opts)
+      doc.at_css('.body h1').content.scan(/([0-9.]+)/)[0][0]
+    end
   end
 end

@@ -21,5 +21,9 @@ module Docs
       &copy; 2011&ndash;2017 the contributors to the JSDoc 3 documentation project<br>
       Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('jsdoc3', 'jsdoc', opts)
+    end
   end
 end

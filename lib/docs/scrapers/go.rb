@@ -24,6 +24,11 @@ module Docs
       Licensed under the Creative Commons Attribution License 3.0.
     HTML
 
+    def get_latest_version(opts)
+      doc = fetch_doc('https://golang.org/project/', opts)
+      doc.at_css('#page ul > li > a').text[3..-1]
+    end
+
     private
 
     def parse(response) # Hook here because Nokogori removes whitespace from textareas
