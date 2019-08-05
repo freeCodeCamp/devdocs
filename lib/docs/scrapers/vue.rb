@@ -32,5 +32,9 @@ module Docs
       self.root_path = '/guide/index.html'
       self.initial_paths = %w(/api/index.html)
     end
+
+    def get_latest_version(opts)
+      get_latest_github_release('vuejs', 'vue', opts)
+    end
   end
 end

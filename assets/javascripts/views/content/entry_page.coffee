@@ -40,6 +40,7 @@ class app.views.EntryPage extends app.View
     if app.disabledDocs.findBy 'slug', @entry.doc.slug
       @hiddenView = new app.views.HiddenPage @el, @entry
 
+    setFaviconForDoc(@entry.doc)
     @delay @polyfillMathML
     @trigger 'loaded'
     return
@@ -123,7 +124,7 @@ class app.views.EntryPage extends app.View
     @render @tmpl('pageLoadError')
     @resetClass()
     @addClass @constructor.errorClass
-    app.appCache?.update()
+    app.serviceWorker?.update()
     return
 
   cache: ->

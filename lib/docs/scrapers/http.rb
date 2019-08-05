@@ -7,6 +7,8 @@ module Docs
 
     html_filters.push 'http/clean_html', 'http/entries', 'title'
 
+    options[:mdn_tag] = 'HTTP'
+
     options[:root_title] = 'HTTP'
     options[:title] = ->(filter) { filter.current_url.host == 'tools.ietf.org' ? false : filter.default_title }
     options[:container] = ->(filter) { filter.current_url.host == 'tools.ietf.org' ? '.content' : nil }

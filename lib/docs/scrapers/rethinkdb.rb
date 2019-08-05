@@ -58,6 +58,10 @@ module Docs
       CODE
     end
 
+    def get_latest_version(opts)
+      get_latest_github_release('rethinkdb', 'rethinkdb', opts)
+    end
+
     private
 
     def process_response?(response)

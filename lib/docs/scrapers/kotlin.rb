@@ -28,5 +28,9 @@ module Docs
       &copy; 2010&ndash;2018 JetBrains s.r.o.<br>
       Licensed under the Apache License, Version 2.0.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('JetBrains', 'kotlin', opts)
+    end
   end
 end

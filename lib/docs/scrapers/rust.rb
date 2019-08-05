@@ -39,6 +39,12 @@ module Docs
       Licensed under the Apache License, Version 2.0 or the MIT license, at your option.
     HTML
 
+    def get_latest_version(opts)
+      doc = fetch_doc('https://www.rust-lang.org/', opts)
+      label = doc.at_css('.button-download + p > a').content
+      label.sub(/Version /, '')
+    end
+
     private
 
     REDIRECT_RGX = /http-equiv="refresh"/i
