@@ -17,5 +17,10 @@ module Docs
       &copy; 2014&ndash;present Facebook Inc.<br>
       Licensed under the BSD License.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://jestjs.io/docs/en/getting-started', opts)
+      doc.at_css('header > a > h3').content
+    end
   end
 end

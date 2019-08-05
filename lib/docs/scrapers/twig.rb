@@ -28,5 +28,10 @@ module Docs
       self.release = '1.34.3'
       self.base_url = 'https://twig.symfony.com/doc/1.x/'
     end
+
+    def get_latest_version(opts)
+      tags = get_github_tags('twigphp', 'Twig', opts)
+      tags[0]['name'][1..-1]
+    end
   end
 end

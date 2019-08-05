@@ -29,7 +29,7 @@ module Docs
 
     def request_one(url)
       assert_source_directory_exists
-      Response.new read_file(url_to_path(url)), URL.parse(url)
+      Response.new read_file(File.join(source_directory, url_to_path(url))), URL.parse(url)
     end
 
     def request_all(urls)
@@ -50,7 +50,7 @@ module Docs
     end
 
     def read_file(path)
-      File.read(File.join(source_directory, path))
+      File.read(path)
     rescue
       instrument 'warn.doc', msg: "Failed to open file: #{path}"
       nil

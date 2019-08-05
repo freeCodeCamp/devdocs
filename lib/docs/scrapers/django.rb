@@ -68,5 +68,10 @@ module Docs
       self.release = '1.8.18'
       self.base_url = 'https://docs.djangoproject.com/en/1.8/'
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://docs.djangoproject.com/', opts)
+      doc.at_css('#doc-versions > li.current > span > strong').content
+    end
   end
 end
