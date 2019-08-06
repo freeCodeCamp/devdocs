@@ -223,7 +223,7 @@ credits = [
     'https://raw.githubusercontent.com/django/django/master/LICENSE'
   ], [
     'Docker',
-    '2017 Docker, Inc.<br>Docker and the Docker logo are trademarks of Docker, Inc.',
+    '2019 Docker, Inc.<br>Docker and the Docker logo are trademarks of Docker, Inc.',
     'Apache',
     'https://raw.githubusercontent.com/docker/docker.github.io/master/LICENSE'
   ], [
@@ -388,7 +388,7 @@ credits = [
     'https://raw.githubusercontent.com/koajs/koa/master/LICENSE'
   ], [
     'Kotlin',
-    '2010-2018 JetBrains s.r.o.',
+    '2010-2019 JetBrains s.r.o.',
     'Apache',
     'https://raw.githubusercontent.com/JetBrains/kotlin/master/license/LICENSE.txt'
   ], [
@@ -518,7 +518,7 @@ credits = [
     'https://raw.githubusercontent.com/OpenTSDB/opentsdb.net/gh-pages/COPYING.LESSER'
   ], [
     'Padrino',
-    '2010-2016 Padrino',
+    '2010-2019 Padrino',
     'MIT',
     'https://raw.githubusercontent.com/padrino/padrino-framework/master/padrino/LICENSE.txt'
   ], [
@@ -568,7 +568,7 @@ credits = [
     'https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/LICENSE'
   ], [
     'Pygame',
-    'Pygame Developpers',
+    'Pygame Developers',
     'LGPLv2.1',
     'https://raw.githubusercontent.com/pygame/pygame/master/LICENSE'
   ], [
