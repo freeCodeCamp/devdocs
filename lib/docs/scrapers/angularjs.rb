@@ -31,10 +31,14 @@ module Docs
     end
 
     options[:only_patterns] = [%r{\Aapi}, %r{\Aguide}]
-    options[:skip] = %w(api/ng.html)
+    options[:skip] = %w(api/ng.html guide/tutorial/step_14.html guide/api.html guide/tutorial/.html)
+    options[:skip_patterns] = [
+      /error\/\$compile/,
+      /misc/,
+    ]
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2017 Google, Inc.<br>
+      &copy; 2010&ndash;2018 Google, Inc.<br>
       Licensed under the Creative Commons Attribution License 4.0.
     HTML
 
@@ -45,8 +49,13 @@ module Docs
       capybara.execute_script("return document.querySelector('.side-navigation').innerHTML")
     end
 
+    version '1.7' do
+      self.release = '1.7.8'
+      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
+    end
+
     version '1.6' do
-      self.release = '1.6.6'
+      self.release = '1.6.9'
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
