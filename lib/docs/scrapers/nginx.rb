@@ -6,7 +6,7 @@ module Docs
     self.base_url = 'https://nginx.org/en/docs/'
     self.links = {
       home: 'https://nginx.org/',
-      code: 'http://hg.nginx.org/nginx'
+      code: 'https://hg.nginx.org/nginx'
     }
 
     html_filters.push 'nginx/clean_html', 'nginx/entries'
