@@ -473,7 +473,7 @@ credits = [
     'https://github.com/LearnBoost/mongoose/blob/master/README.md#license'
   ], [
     'nginx',
-    '2002-2018 Igor Sysoev<br>&copy; 2011-2018 Nginx, Inc.',
+    '2002-2019 Igor Sysoev<br>&copy; 2011-2019 Nginx, Inc.',
     'BSD',
     'http://nginx.org/LICENSE'
   ], [
