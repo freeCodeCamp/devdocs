@@ -123,7 +123,7 @@ credits = [
     'https://raw.githubusercontent.com/petkaantonov/bluebird/master/LICENSE'
   ], [
     'Bootstrap',
-    '2011-2018 Twitter, Inc.<br>2011-2018 The Bootstrap Authors',
+    '2011-2019 Twitter, Inc.<br>2011-2019 The Bootstrap Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
