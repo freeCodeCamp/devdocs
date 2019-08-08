@@ -36,7 +36,7 @@ module Docs
     end
 
     version '3.12' do
-      self.release = '3.12.1'
+      self.release = '3.12.4'
       self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
     end
 
