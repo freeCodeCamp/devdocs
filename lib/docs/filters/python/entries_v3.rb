@@ -27,6 +27,7 @@ module Docs
 
       def get_type
         return 'Logging' if slug.start_with? 'library/logging'
+        return 'Asynchronous I/O' if slug.start_with? 'library/asyncio'
 
         type = at_css('.related a[accesskey="U"]').content
 
@@ -47,6 +48,7 @@ module Docs
       end
 
       def include_default_entry?
+        return true if slug == 'library/asyncio'
         !at_css('.body > .section:only-child > .toctree-wrapper:last-child') && !type.in?(%w(Superseded))
       end
 
