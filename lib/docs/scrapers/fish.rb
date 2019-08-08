@@ -12,10 +12,16 @@ module Docs
 
     options[:skip] = %w(design.html license.html)
 
+    # https://fishshell.com/docs/current/license.html
     options[:attribution] = <<-HTML
       &copy; 2005&ndash;2009 Axel Liljencrantz<br>
       Licensed under the GNU General Public License, version 2.
     HTML
+
+    version '3.0' do
+      self.release = '3.0.1'
+      self.base_url = "https://fishshell.com/docs/#{version}/"
+    end
 
     version '2.7' do
       self.release = '2.7.1'
