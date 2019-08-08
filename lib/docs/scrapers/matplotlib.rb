@@ -20,6 +20,15 @@ module Docs
       Licensed under the Matplotlib License Agreement.
     HTML
 
+    version '3.1' do
+      self.release = '3.1.1'
+      self.base_urls = [
+        "https://matplotlib.org/#{release}/api/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
+      ]
+    end
+
     version '3.0' do
       self.release = '3.0.0'
       self.base_urls = [
