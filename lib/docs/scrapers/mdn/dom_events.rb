@@ -1,11 +1,15 @@
 module Docs
   class DomEvents < Mdn
+    prepend FixInternalUrlsBehavior
+
     self.name = 'DOM Events'
     self.slug = 'dom_events'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/Events'
 
     html_filters.insert_after 'clean_html', 'dom_events/clean_html'
     html_filters.push 'dom_events/entries', 'title'
+
+    options[:mdn_tag] = 'events'
 
     options[:root_title] = 'DOM Events'
 

@@ -28,7 +28,7 @@ class app.views.Document extends app.View
     return
 
   setTitle: (title) ->
-    @el.title = if title then "DevDocs — #{title}" else 'DevDocs API Documentation'
+    @el.title = if title then "#{title} — DevDocs" else 'DevDocs API Documentation'
 
   afterRoute: (route) =>
     if route is 'settings'
@@ -75,9 +75,11 @@ class app.views.Document extends app.View
     return unless target.hasAttribute('data-behavior')
     $.stopEvent(event)
     switch target.getAttribute('data-behavior')
-      when 'back'         then history.back()
-      when 'reload'       then window.location.reload()
-      when 'reboot'       then window.location = '/'
-      when 'hard-reload'  then app.reload()
-      when 'reset'        then app.reset() if confirm('Are you sure you want to reset DevDocs?')
+      when 'back'               then history.back()
+      when 'reload'             then window.location.reload()
+      when 'reboot'             then app.reboot()
+      when 'hard-reload'        then app.reload()
+      when 'reset'              then app.reset() if confirm('Are you sure you want to reset DevDocs?')
+      when 'accept-analytics'   then Cookies.set('analyticsConsent', '1') && app.reboot()
+      when 'decline-analytics'  then Cookies.set('analyticsConsent', '0') && app.reboot()
     return

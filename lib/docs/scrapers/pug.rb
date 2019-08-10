@@ -3,7 +3,7 @@ module Docs
     self.type = 'pug'
     self.base_url = 'https://pugjs.org/'
     self.root_path = 'api/getting-started.html'
-    self.release = '2.0.0-rc.2'
+    self.release = '2.0.3'
     self.links = {
       home: 'https://pugjs.org/',
       code: 'https://github.com/pugjs/pug'
@@ -17,6 +17,10 @@ module Docs
       &copy; Pug authors<br>
       Licensed under the MIT license.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('pug', opts)
+    end
 
     private
 

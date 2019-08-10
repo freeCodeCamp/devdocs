@@ -1,7 +1,7 @@
 module Docs
   class Sass < UrlScraper
     self.type = 'yard'
-    self.release = '3.5.1'
+    self.release = '3.5.3'
     self.base_url = 'http://sass-lang.com/documentation/'
     self.root_path = 'file.SASS_REFERENCE.html'
     self.links = {
@@ -23,5 +23,9 @@ module Docs
       &copy; 2006&ndash;2016 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('sass', 'libsass', opts)
+    end
   end
 end

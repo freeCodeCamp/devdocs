@@ -1,6 +1,6 @@
 module Docs
   class Redux < UrlScraper
-    self.type = 'redux'
+    self.type = 'simple'
     self.release = '3.7.2'
     self.base_url = 'http://redux.js.org/docs/'
     self.links = {
@@ -19,6 +19,10 @@ module Docs
 
     stub '' do
       request_one('http://redux.js.org/index.html').body
+    end
+
+    def get_latest_version(opts)
+      get_npm_version('redux', opts)
     end
   end
 end

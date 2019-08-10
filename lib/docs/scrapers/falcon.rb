@@ -15,9 +15,14 @@ module Docs
     options[:skip_patterns] = [/\Achanges/, /\A_modules/, /\Acommunity/]
 
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2016 by Rackspace Hosting, Inc. and other contributors<br>
+      &copy; 2012&ndash;2017 by Rackspace Hosting, Inc. and other contributors<br>
       Licensed under the Apache License, Version 2.0.
     HTML
+
+    version '1.4' do
+      self.release = '1.4.1'
+      self.base_url = "https://falcon.readthedocs.io/en/#{self.release}/"
+    end
 
     version '1.3' do
       self.release = '1.3.0'
@@ -27,6 +32,11 @@ module Docs
     version '1.2' do
       self.release = '1.2.0'
       self.base_url = "https://falcon.readthedocs.io/en/#{self.release}/"
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://falcon.readthedocs.io/en/stable/changes/index.html', opts)
+      doc.at_css('#changelogs ul > li > a').content
     end
   end
 end

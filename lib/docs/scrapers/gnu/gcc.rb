@@ -47,14 +47,12 @@ module Docs
     }
 
     version '7' do
-      self.release = '7.2.0'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/gcc7'
+      self.release = '7.3.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '7 CPP' do
-      self.release = '7.2.0'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/gcpp7'
+      self.release = '7.3.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
@@ -62,7 +60,6 @@ module Docs
 
     version '6' do
       self.release = '6.4.0'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/gcc6'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
 
       options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
@@ -70,7 +67,6 @@ module Docs
 
     version '6 CPP' do
       self.release = '6.4.0'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/gcpp6'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
@@ -78,7 +74,6 @@ module Docs
 
     version '5' do
       self.release = '5.4.0'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/gcc5'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
 
       options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
@@ -86,7 +81,6 @@ module Docs
 
     version '5 CPP' do
       self.release = '5.4.0'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/gcpp5'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
@@ -94,7 +88,6 @@ module Docs
 
     version '4' do
       self.release = '4.9.3'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/gcc4'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
 
       options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
@@ -102,10 +95,15 @@ module Docs
 
     version '4 CPP' do
       self.release = '4.9.3'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/gcpp4'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://gcc.gnu.org/onlinedocs/', opts)
+      label = doc.at_css('ul > li > ul > li > a').content.strip
+      label.scan(/([0-9.]+)/)[0][0]
     end
   end
 end

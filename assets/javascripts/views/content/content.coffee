@@ -19,7 +19,10 @@ class app.views.Content extends app.View
     after:  'afterRoute'
 
   init: ->
-    @scrollEl = if app.isMobile() then document.body else @el
+    @scrollEl = if app.isMobile()
+      (document.scrollingElement || document.body)
+    else
+      @el
     @scrollMap = {}
     @scrollStack = []
 
@@ -150,6 +153,9 @@ class app.views.Content extends app.View
     return
 
   afterRoute: (route, context) =>
+    if route != 'entry' and route != 'type'
+      resetFavicon()
+
     switch route
       when 'root'
         @show @rootPage

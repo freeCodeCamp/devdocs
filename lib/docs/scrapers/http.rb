@@ -7,10 +7,13 @@ module Docs
 
     html_filters.push 'http/clean_html', 'http/entries', 'title'
 
+    options[:mdn_tag] = 'HTTP'
+
     options[:root_title] = 'HTTP'
     options[:title] = ->(filter) { filter.current_url.host == 'tools.ietf.org' ? false : filter.default_title }
     options[:container] = ->(filter) { filter.current_url.host == 'tools.ietf.org' ? '.content' : nil }
     options[:skip_links] = ->(filter) { filter.current_url.host == 'tools.ietf.org' ? true : false }
+    options[:replace_paths] = { '/Access_control_CORS' => '/CORS' }
     options[:fix_urls] = ->(url) do
       url.sub! %r{(Status/\d\d\d)_[A-Z].+}, '\1'
       url

@@ -2,16 +2,18 @@ module Docs
   class Python
     class EntriesV3Filter < Docs::EntriesFilter
       REPLACE_TYPES = {
-        'Cryptographic'                           => 'Cryptography',
-        'Custom Interpreters'                     => 'Interpreters',
-        'Data Compression & Archiving'            => 'Data Compression',
-        'Generic Operating System'                => 'Operating System',
-        'Graphical User Interfaces with Tk'       => 'Tk',
-        'Internet Data Handling'                  => 'Internet Data',
-        'Internet Protocols & Support'            => 'Internet',
-        'Interprocess Communication & Networking' => 'Networking',
-        'Program Frameworks'                      => 'Frameworks',
-        'Structured Markup Processing Tools'      => 'Structured Markup' }
+        'contextvars — Context Variables'          => 'Context Variables',
+        'Cryptographic'                            => 'Cryptography',
+        'Custom Interpreters'                      => 'Interpreters',
+        'Data Compression & Archiving'             => 'Data Compression',
+        'email — An email & MIME handling package' => 'Email',
+        'Generic Operating System'                 => 'Operating System',
+        'Graphical User Interfaces with Tk'        => 'Tk',
+        'Internet Data Handling'                   => 'Internet Data',
+        'Internet Protocols & Support'             => 'Internet',
+        'Interprocess Communication & Networking'  => 'Networking',
+        'Program Frameworks'                       => 'Frameworks',
+        'Structured Markup Processing Tools'       => 'Structured Markup' }
 
       def get_name
         name = at_css('h1').content
@@ -25,6 +27,7 @@ module Docs
 
       def get_type
         return 'Logging' if slug.start_with? 'library/logging'
+        return 'Asynchronous I/O' if slug.start_with? 'library/asyncio'
 
         type = at_css('.related a[accesskey="U"]').content
 
@@ -45,6 +48,7 @@ module Docs
       end
 
       def include_default_entry?
+        return true if slug == 'library/asyncio'
         !at_css('.body > .section:only-child > .toctree-wrapper:last-child') && !type.in?(%w(Superseded))
       end
 
@@ -53,14 +57,8 @@ module Docs
         clean_id_attributes
         entries = []
 
-        css('.class > dt[id]', '.exception > dt[id]', '.attribute > dt[id]').each do |node|
+        css('.class > dt[id]', '.exception > dt[id]', '.attribute > dt[id]', '.data > dt[id]').each do |node|
           entries << [node['id'], node['id']]
-        end
-
-        css('.data > dt[id]').each do |node|
-          if node['id'].split('.').last.upcase! # skip constants
-            entries << [node['id'], node['id']]
-          end
         end
 
         css('.function > dt[id]', '.method > dt[id]', '.staticmethod > dt[id]', '.classmethod > dt[id]').each do |node|

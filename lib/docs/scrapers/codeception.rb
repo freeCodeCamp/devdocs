@@ -2,11 +2,11 @@ module Docs
   class Codeception < UrlScraper
     self.name = 'Codeception'
     self.type = 'codeception'
-    self.release = '2.3.5'
-    self.base_url = 'http://codeception.com/docs/'
+    self.release = '2.5.1'
+    self.base_url = 'https://codeception.com/docs/'
     self.root_path = 'index.html'
     self.links = {
-      home: 'http://codeception.com/',
+      home: 'https://codeception.com/',
       code: 'https://github.com/codeception/codeception'
     }
 
@@ -15,8 +15,13 @@ module Docs
     options[:skip_patterns] = [/install/]
 
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2017 Michael Bodnarchuk and contributors<br>
+      &copy; 2011 Michael Bodnarchuk and contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://codeception.com/changelog', opts)
+      doc.at_css('#page > h4').content
+    end
   end
 end

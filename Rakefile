@@ -3,6 +3,7 @@
 require 'bundler/setup'
 require 'thor'
 
+Bundler.require :default
 $LOAD_PATH.unshift 'lib'
 
 task :default do
@@ -13,6 +14,9 @@ end
 namespace :assets do
   desc 'Compile all assets'
   task :precompile do
+    load 'tasks/docs.thor'
+    DocsCLI.new.prepare_deploy
+
     load 'tasks/assets.thor'
     AssetsCLI.new.compile
   end

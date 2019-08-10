@@ -9,6 +9,7 @@ module Docs
     html_filters.push 'mdn/clean_html'
     text_filters.insert_before 'attribution', 'mdn/contribute_link'
 
+    options[:rate_limit] = 200
     options[:trailing_slash] = false
 
     options[:skip_link] = ->(link) {
@@ -16,9 +17,14 @@ module Docs
     }
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2017 Mozilla Developer Network and individual contributors.<br>
+      &copy; 2005&ndash;2018 Mozilla Developer Network and individual contributors.<br>
       Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.
     HTML
+
+    def get_latest_version(opts)
+      json = fetch_json("https://developer.mozilla.org/en-US/docs/feeds/json/tag/#{options[:mdn_tag]}", opts)
+      DateTime.parse(json[0]['pubdate']).to_time.to_i
+    end
 
     private
 

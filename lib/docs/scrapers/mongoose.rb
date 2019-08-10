@@ -1,11 +1,12 @@
 module Docs
   class Mongoose < UrlScraper
     self.name = 'Mongoose'
-    self.type = 'mongoose'
-    self.release = '4.12.0'
+    self.type = 'simple'
+    self.release = '4.13.1'
     self.base_url = 'http://mongoosejs.com/docs/'
     self.root_path = 'index.html'
     self.initial_paths = %w(guide.html api.html)
+    self.force_gzip = true
     self.links = {
       home: 'http://mongoosejs.com/',
       code: 'https://github.com/Automattic/mongoose'
@@ -25,5 +26,11 @@ module Docs
       &copy; 2010 LearnBoost<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://mongoosejs.com/docs/', opts)
+      label = doc.at_css('.pure-menu-link').content.strip
+      label.sub(/Version /, '')
+    end
   end
 end

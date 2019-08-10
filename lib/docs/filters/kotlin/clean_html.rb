@@ -46,6 +46,13 @@ module Docs
           parent.content = parent.content
           parent['data-language'] = 'kotlin'
         end
+
+        css('.tags').each do |wrapper|
+          platforms = wrapper.css('.platform:not(.tag-value-Common)').to_a
+          platforms = platforms.map { |node| "#{node.content} (#{node['data-tag-version']})" }
+          platforms = "<b>Platform and version requirements:</b> #{platforms.join ", "}"
+          wrapper.replace(platforms)
+        end
       end
     end
   end

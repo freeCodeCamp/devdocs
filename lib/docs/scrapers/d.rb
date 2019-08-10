@@ -2,7 +2,7 @@ module Docs
   class D < UrlScraper
     include MultipleBaseUrls
 
-    self.release = '2.076.0'
+    self.release = '2.083.0'
     self.type = 'd'
     self.base_urls = ['https://dlang.org/phobos/', 'https://dlang.org/spec/']
     self.root_path = 'index.html'
@@ -19,12 +19,17 @@ module Docs
     options[:title] = false
 
     options[:attribution] = <<-HTML
-      &copy; 1999&ndash;2017 The D Language Foundation<br>
+      &copy; 1999&ndash;2018 The D Language Foundation<br>
       Licensed under the Boost License 1.0.
     HTML
 
     def initial_urls
       %w(https://dlang.org/phobos/index.html https://dlang.org/spec/intro.html)
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://dlang.org/changelog/', opts)
+      doc.at_css('#content > ul > li:nth-child(2) > a')['id']
     end
   end
 end

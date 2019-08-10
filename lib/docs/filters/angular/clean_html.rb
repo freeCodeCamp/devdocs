@@ -7,7 +7,7 @@ module Docs
           at_css('h1').content = 'Angular Documentation'
         end
 
-        css('br', 'hr', '.material-icons', '.header-link').remove
+        css('br', 'hr', '.material-icons', '.header-link', '.breadcrumb').remove
 
         css('.content', 'article', '.api-header', 'section', '.instance-member').each do |node|
           node.before(node.children).remove
@@ -84,6 +84,14 @@ module Docs
 
         if at_css('.api-type-label.module')
           at_css('h1').content = subpath.remove('api/')
+        end
+
+        css('th h3').each do |node|
+          node.name = 'span'
+        end
+
+        css('code code').each do |node|
+          node.before(node.children).remove
         end
 
         doc

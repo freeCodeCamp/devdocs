@@ -25,5 +25,9 @@ module Docs
       &copy; 2016 Richard Davey, Photon Storm Ltd.<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('photonstorm', 'phaser', opts)
+    end
   end
 end

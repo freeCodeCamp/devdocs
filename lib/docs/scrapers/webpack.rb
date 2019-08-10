@@ -4,7 +4,7 @@ module Docs
     self.type = 'webpack'
 
     version do
-      self.release = '3.6.0'
+      self.release = '4.16.5'
       self.base_url = 'https://webpack.js.org/'
       self.root_path = 'guides/'
       self.initial_paths = %w(
@@ -67,6 +67,10 @@ module Docs
         &copy; 2012&ndash;2015 Tobias Koppers<br>
         Licensed under the MIT License.
       HTML
+    end
+
+    def get_latest_version(opts)
+      get_npm_version('webpack', opts)
     end
   end
 end

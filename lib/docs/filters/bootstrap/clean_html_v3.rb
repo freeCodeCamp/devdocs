@@ -27,7 +27,7 @@ module Docs
             node.remove_attribute('data-example-id')
             prev = node.previous_element
             prev = prev.previous_element until prev['id']
-            node.inner_html = %(<a href="#{current_url}/##{prev['id']}">Open example on getbootstrap.com</a>)
+            node.inner_html = %(<a href="#{current_url}##{prev['id']}">Open example on getbootstrap.com</a>)
           end
         end
 
@@ -37,10 +37,6 @@ module Docs
 
         css('div[class*="col-"]').each do |node|
           node['class'] = 'col'
-        end
-
-        css('.__cf_email__').each do |node|
-          node.replace(decode_cloudflare_email(node['data-cfemail']))
         end
 
         css('figure.highlight').each do |node|

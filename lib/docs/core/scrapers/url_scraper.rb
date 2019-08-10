@@ -13,6 +13,8 @@ module Docs
       end
     end
 
+    @@rate_limiter = nil
+
     self.params = {}
     self.headers = { 'User-Agent' => 'DevDocs' }
     self.force_gzip = false
@@ -24,6 +26,15 @@ module Docs
     end
 
     def request_all(urls, &block)
+      if options[:rate_limit]
+        if @@rate_limiter
+          @@rate_limiter.limit = options[:rate_limit]
+        else
+          @@rate_limiter = RateLimiter.new(options[:rate_limit])
+          Typhoeus.before(&@@rate_limiter.to_proc)
+        end
+      end
+
       Requester.run urls, request_options: request_options, &block
     end
 
@@ -35,7 +46,11 @@ module Docs
 
     def process_response?(response)
       if response.error?
-        raise "Error status code (#{response.code}): #{response.return_message}\n#{response.url}"
+        raise <<~ERROR
+          Error status code (#{response.code}): #{response.return_message}
+          #{response.url}
+          #{JSON.pretty_generate(response.headers).slice(2..-3)}
+        ERROR
       elsif response.blank?
         raise "Empty response body: #{response.url}"
       end
@@ -159,6 +174,36 @@ module Docs
 
       def additional_options
         super.merge! redirections: self.class.redirections
+      end
+    end
+
+    class RateLimiter
+      attr_accessor :limit
+
+      def initialize(limit)
+        @limit = limit
+        @minute = nil
+        @counter = 0
+      end
+
+      def call(*)
+        if @minute != Time.now.min
+          @minute = Time.now.min
+          @counter = 0
+        end
+
+        @counter += 1
+
+        if @counter >= @limit
+          wait = Time.now.end_of_minute.to_i - Time.now.to_i + 1
+          sleep wait
+        end
+
+        true
+      end
+
+      def to_proc
+        method(:call).to_proc
       end
     end
   end

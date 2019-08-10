@@ -5,5 +5,5 @@
   code.code { @extend %label; }
   .note { @extend %note; }
   .warning { @extend %note, %note-red; }
-  .note .label, .warning .label { font-weight: $boldFontWeight; }
+  .note .label, .warning .label { font-weight: var(--boldFontWeight); }
 }

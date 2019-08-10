@@ -31,7 +31,7 @@ module Docs
     HTML
 
     version '1.5' do
-      self.release = '1.5.1'
+      self.release = '1.5.2'
       self.base_urls = ['https://docs.meteor.com/', 'https://guide.meteor.com/', 'http://blazejs.org/']
     end
 
@@ -44,6 +44,11 @@ module Docs
       self.release = '1.3.5'
       self.base_urls = ['https://guide.meteor.com/v1.3/', "https://docs.meteor.com/v#{self.release}/"]
       options[:fix_urls] = nil
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://docs.meteor.com/#/full/', opts)
+      doc.at_css('select.version-select > option').content
     end
   end
 end

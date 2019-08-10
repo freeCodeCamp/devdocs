@@ -31,12 +31,18 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2014&ndash;2017 British Columbia Institute of Technology<br>
+      &copy; 2014&ndash;2018 British Columbia Institute of Technology<br>
       Licensed under the MIT License.
     HTML
 
     version '3' do
-      self.release = '3.1.5'
+      self.release = '3.1.8'
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://codeigniter.com/user_guide/changelog.html', opts)
+      header = doc.at_css('#change-log h2')
+      header.content.scan(/([0-9.]+)/)[0][0]
     end
   end
 end

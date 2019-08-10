@@ -28,11 +28,11 @@ module Docs
         when 'files/package.json'
           css('#page > h2').each_with_object [] do |node, entries|
             next if node.content =~ /\A[A-Z]/
-            entries << ["package.json: #{node.content}", node.at_css('.deep-link')['id']]
+            entries << ["package.json: #{node.content}", node.at_css('.anchor')['id']]
           end
         when 'misc/config'
           css('h2:contains("Config Settings") ~ h3').map do |node|
-            ["config: #{node.content}", node.at_css('.deep-link')['id']]
+            ["config: #{node.content}", node.at_css('.anchor')['id']]
           end
         else
           []

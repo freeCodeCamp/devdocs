@@ -1,7 +1,7 @@
 module Docs
   class Crystal < UrlScraper
     self.type = 'crystal'
-    self.release = '0.23.0'
+    self.release = '0.27.0'
     self.base_url = 'https://crystal-lang.org/'
     self.root_path = "api/#{release}/index.html"
     self.initial_paths = %w(docs/index.html)
@@ -29,10 +29,15 @@ module Docs
         HTML
       else
         <<-HTML
-          &copy; 2012&ndash;2017 Manas Technology Solutions.<br>
+          &copy; 2012&ndash;2018 Manas Technology Solutions.<br>
           Licensed under the Apache License, Version 2.0.
         HTML
       end
     }
+
+    def get_latest_version(opts)
+      body = fetch('https://crystal-lang.org/api', opts)
+      body.scan(/Crystal Docs ([0-9.]+)/)[0][0]
+    end
   end
 end

@@ -1,1 +1,26 @@
 language: ruby
+
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+
+cache: bundler
+
+before_install:
+  - "echo 'gem: --no-document' > ~/.gemrc"
+  - gem update --system
+  - gem install bundler
+
+script:
+  - if [ "$TRAVIS_EVENT_TYPE" != "cron" ]; then bundle exec rake; fi
+  - if [ "$TRAVIS_EVENT_TYPE" = "cron" ]; then bundle exec thor updates:check --github-token $GH_TOKEN --upload; fi
+
+deploy:
+  provider: heroku
+  app: devdocs
+  on:
+    branch: master
+    condition: $TRAVIS_EVENT_TYPE != cron
+  api_key:
+    secure: "4p1klvWJZSOImzFcKOduILjP93hlOlAhceWlYMKS4tU+TCFE8qTBzdKdFPSCsCgjB+YR9pBss+L0lJpVVMjSwFHXqpKe6EeUSltO2k7DFHfW7kXLUM/L0AfqXz+YXk76XUyZMhvOEbldPfaMaj10e8vgDOQCSHABDyK/4CU+hnI="

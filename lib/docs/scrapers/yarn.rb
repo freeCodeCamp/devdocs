@@ -1,7 +1,7 @@
 module Docs
   class Yarn < UrlScraper
-    self.type = 'yarn'
-    self.release = '1.1.0'
+    self.type = 'simple'
+    self.release = '1.12.1'
     self.base_url = 'https://yarnpkg.com/en/docs/'
     self.links = {
       home: 'https://yarnpkg.com/',
@@ -17,8 +17,12 @@ module Docs
     options[:skip_patterns] = [/\Aorg\//]
 
     options[:attribution] = <<-HTML
-      &copy; 2016&ndash;2017 Yarn Contributors<br>
+      &copy; 2016&ndash;present Yarn Contributors<br>
       Licensed under the BSD License.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('yarnpkg', 'yarn', opts)
+    end
   end
 end

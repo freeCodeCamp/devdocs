@@ -27,6 +27,7 @@ module Docs
           type = at_css('dt > .descclassname').content.strip
           type.remove! 'sklearn.'
           type.remove! %r{\.\z}
+          type = 'sklearn' if type.blank?
           type
         elsif subpath.start_with?('tutorial')
           'Tutorials'

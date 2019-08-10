@@ -1,9 +1,13 @@
 module Docs
   class JqueryCore < Jquery
     self.name = 'jQuery'
-    self.release = 'up to 3.2.1'
+    self.release = '3.3.1'
     self.base_url = 'https://api.jquery.com/'
     self.initial_paths = %w(/index/index)
+    self.links = {
+      home: 'https://jquery.com/',
+      code: 'https://github.com/jquery/jquery'
+    }
 
     html_filters.insert_before 'jquery/clean_html', 'jquery_core/entries'
 
@@ -18,5 +22,9 @@ module Docs
       /Selectors\/odd/i,
       /index/i
     ]
+
+    def get_latest_version(opts)
+      get_npm_version('jquery', opts)
+    end
   end
 end

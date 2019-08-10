@@ -6,13 +6,16 @@ module Docs
         'CSS_Background_and_Borders' => 'Backgrounds & Borders',
         'CSS_Columns' => 'Multi-column Layout',
         'CSS_Flexible_Box_Layout' => 'Flexible Box Layout',
+        'CSS_Fonts' => 'Fonts',
         'CSS_Grid_Layout' => 'Grid Layout',
-        'CSS_Images' => 'Image Values',
-        'CSS_Lists_and_Counters' => 'Lists & Counters',
+        'CSS_Images' => 'Images',
+        'CSS_Lists_and_Counters' => 'Lists',
         'CSS_Transforms' => 'Transforms',
         'Media_Queries' => 'Media Queries',
+        'filter-function' => 'Filter Effects',
         'transform-function' => 'Transforms',
         '@media' => 'Media Queries',
+        'overscroll' => 'Overscroll',
         'text-size-adjust' => 'Miscellaneous',
         'resolved_value' => 'Miscellaneous',
         'touch-action' => 'Miscellaneous',
@@ -34,7 +37,7 @@ module Docs
           "#{super}()"
         elsif slug =~ /\A[a-z]+_/i
           slug.to_s.gsub('_', ' ').gsub('/', ': ')
-        elsif slug.start_with?('transform-function')
+        elsif slug.start_with?('transform-function') || slug.start_with?('filter-function')
           slug.split('/').last + '()'
         else
           super
@@ -42,7 +45,7 @@ module Docs
       end
 
       def get_type
-        if slug.include?('-webkit') || slug.include?('-moz')
+        if slug.include?('-webkit') || slug.include?('-moz') || slug.include?('-ms')
           'Extensions'
         elsif type = TYPE_BY_PATH[slug.split('/').first]
           type
@@ -51,6 +54,7 @@ module Docs
           type.remove! ' Module'
           type.remove! %r{ Level \d\z}
           type.remove! %r{\(.*\)}
+          type.remove! %r{  \d\z}
           type.sub! 'and', '&'
           type.strip!
           type = 'Grid Layout' if type.include?('Grid Layout')
@@ -65,18 +69,22 @@ module Docs
           'Pseudo-Elements'
         elsif name.start_with?(':')
           'Selectors'
+        elsif name.start_with?('display-')
+          'Display'
         else
           'Miscellaneous'
         end
       end
 
       STATUSES = {
-        'spec-Living' => 0,
-        'spec-REC'    => 1,
-        'spec-CR'     => 2,
-        'spec-LC'     => 3,
-        'spec-WD'     => 4,
-        'spec-ED'     => 5
+        'spec-Living'   => 0,
+        'spec-REC'      => 1,
+        'spec-CR'       => 2,
+        'spec-PR'       => 3,
+        'spec-LC'       => 4,
+        'spec-WD'       => 5,
+        'spec-ED'       => 6,
+        'spec-Obsolete' => 7
       }
 
       PRIORITY_STATUSES = %w(spec-REC spec-CR)
@@ -84,11 +92,14 @@ module Docs
 
       def get_spec
         return unless table = at_css('#Specifications + table') || css('.standard-table').last
+
         specs = table.css('tbody tr').to_a
         # [link, span]
         specs.map!     { |node| [node.at_css('> td:nth-child(1) > a'), node.at_css('> td:nth-child(2) > span')] }
         # ignore non-CSS specs
         specs.select!  { |pair| pair.first && pair.first['href'] =~ /css|fxtf|fullscreen|svg/i && !pair.first['href'].include?('compat.spec') }
+        # ignore specs with no status
+        specs.select!  { |pair| pair.second }
         # ["Spec", "spec-REC"]
         specs.map!     { |pair| [pair.first.child.content, pair.second['class']] }
         # sort by status
@@ -106,8 +117,8 @@ module Docs
         'shape' => [
           %w(rect() Syntax) ],
         'timing-function' => [
-          %w(cubic-bezier() The_cubic-bezier()_class_of_timing-functions),
-          %w(steps() The_steps()_class_of_timing-functions),
+          %w(cubic-bezier()),
+          %w(steps()),
           %w(linear linear),
           %w(ease ease),
           %w(ease-in ease-in),

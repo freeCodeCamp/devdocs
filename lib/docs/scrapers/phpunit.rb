@@ -24,7 +24,7 @@ module Docs
     HTML
 
     version '6' do
-      self.release = '6.3'
+      self.release = '6.5'
       self.base_url = "https://phpunit.de/manual/#{release}/en/"
     end
 
@@ -36,6 +36,12 @@ module Docs
     version '4' do
       self.release = '4.8'
       self.base_url = "https://phpunit.de/manual/#{release}/en/"
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://phpunit.readthedocs.io/', opts)
+      label = doc.at_css('.rst-current-version').content.strip
+      label.scan(/v: ([0-9.]+)/)[0][0]
     end
   end
 end

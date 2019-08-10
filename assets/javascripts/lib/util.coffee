@@ -124,7 +124,7 @@ $.empty = (el) ->
   return
 
 # Calls the function while the element is off the DOM to avoid triggering
-# unecessary reflows and repaints.
+# unnecessary reflows and repaints.
 $.batchUpdate = (el, fn) ->
   parent = el.parentNode
   sibling = el.nextSibling
@@ -351,6 +351,10 @@ $.isMac = ->
 isIE = null
 $.isIE = ->
   isIE ?= navigator.userAgent?.indexOf('MSIE') >= 0 || navigator.userAgent?.indexOf('rv:11.0') >= 0
+
+isChromeForAndroid = null
+$.isChromeForAndroid = ->
+  isChromeForAndroid ?= navigator.userAgent?.indexOf('Android') >= 0 && /Chrome\/([.0-9])+ Mobile/.test(navigator.userAgent)
 
 isAndroid = null
 $.isAndroid = ->

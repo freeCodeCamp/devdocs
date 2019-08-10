@@ -45,10 +45,6 @@ module Docs
           end
         end
 
-        css('.__cf_email__').each do |node|
-          node.replace(decode_cloudflare_email(node['data-cfemail']))
-        end
-
         css('.editor').each do |node|
           pre = node.at_css('.editor-code > pre')
           pre['data-language'] = 'javascript'

@@ -1,7 +1,7 @@
 module Docs
   class Git < UrlScraper
     self.type = 'git'
-    self.release = '2.14.1'
+    self.release = '2.19.1'
     self.base_url = 'https://git-scm.com/docs'
     self.initial_paths = %w(/git.html)
     self.links = {
@@ -16,8 +16,13 @@ module Docs
     options[:skip] = %w(/howto-index.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2017 Linus Torvalds and others<br>
+      &copy; 2005&ndash;2018 Linus Torvalds and others<br>
       Licensed under the GNU General Public License version 2.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://git-scm.com/', opts)
+      doc.at_css('.version').content.strip
+    end
   end
 end

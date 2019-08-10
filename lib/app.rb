@@ -12,6 +12,8 @@ class App < Sinatra::Application
   Rack::Mime::MIME_TYPES['.webapp'] = 'application/x-web-app-manifest+json'
 
   configure do
+    use Rack::SslEnforcer, only_environments: ['production', 'test'], hsts: true, force_secure_cookies: false
+
     set :sentry_dsn, ENV['SENTRY_DSN']
     set :protection, except: [:frame_options, :xss_header]
 
@@ -35,6 +37,9 @@ class App < Sinatra::Application
 
     set :csp, false
 
+    require 'docs'
+    Docs.generate_manifest
+
     Dir[docs_path, root.join(assets_prefix, '*/')].each do |path|
       sprockets.append_path(path)
     end
@@ -48,6 +53,11 @@ class App < Sinatra::Application
   end
 
   configure :test, :development do
+    require 'thor'
+    load 'tasks/sprites.thor'
+
+    SpritesCLI.new.invoke(:generate)
+
     require 'active_support/per_thread_registry'
     require 'active_support/cache'
     sprockets.cache = ActiveSupport::Cache.lookup_store :file_store, root.join('tmp', 'cache', 'assets', environment.to_s)
@@ -67,7 +77,7 @@ class App < Sinatra::Application
     set :static, false
     set :cdn_origin, 'https://cdn.devdocs.io'
     set :docs_origin, '//docs.devdocs.io'
-    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' http://cdn.devdocs.io https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es http://*.jquery.com https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
     use Rack::ETag
@@ -133,7 +143,7 @@ class App < Sinatra::Application
     end
 
     def canonical_origin
-      "http://#{request.host_with_port}"
+      "https://#{request.host_with_port}"
     end
 
     def browser
@@ -190,51 +200,45 @@ class App < Sinatra::Application
       request.query_string.empty? ? nil : "?#{request.query_string}"
     end
 
-    def manifest_asset_urls
-      @@manifest_asset_urls ||= [
+    def service_worker_asset_urls
+      @@service_worker_asset_urls ||= [
         javascript_path('application', asset_host: false),
         stylesheet_path('application'),
-        stylesheet_path('application-dark'),
-        image_path('docs-1.png'),
-        image_path('docs-1@2x.png'),
-        image_path('docs-2.png'),
-        image_path('docs-2@2x.png'),
-        asset_path('docs.js')
-      ]
+        image_path('sprites/docs.png'),
+        image_path('sprites/docs@2x.png'),
+        asset_path('docs.js'),
+        App.production? ? nil : javascript_path('debug'),
+      ].compact
     end
 
-    def main_stylesheet_path
-      stylesheet_paths[dark_theme? ? :dark : :default]
+    # Returns a cache name for the service worker to use which changes if any of the assets changes
+    # When a manifest exist, this name is only created once based on the asset manifest because it never changes without a server restart
+    # If a manifest does not exist, it is created every time this method is called because the assets can change while the server is running
+    def service_worker_cache_name
+      if File.exist?(App.assets_manifest_path)
+        if defined?(@@service_worker_cache_name)
+          return @@service_worker_cache_name
+        end
+
+        digest = Sprockets::Manifest
+                   .new(nil, App.assets_manifest_path)
+                   .files
+                   .values
+                   .map {|file| file["digest"]}
+                   .join
+
+        return @@service_worker_cache_name ||= Digest::MD5.hexdigest(digest)
+      else
+        paths = App.sprockets
+                  .each_file
+                  .to_a
+                  .reject {|file| file.start_with?(App.docs_path)}
+
+        return App.sprockets.pack_hexdigest(App.sprockets.files_digest(paths))
+      end
     end
 
-    def alternate_stylesheet_path
-      stylesheet_paths[dark_theme? ? :default : :dark]
-    end
-
-    def stylesheet_paths
-      @@stylesheet_paths ||= {
-        default: stylesheet_path('application'),
-        dark: stylesheet_path('application-dark')
-      }
-    end
-
-    def app_size
-      @app_size ||= memoized_cookies['size'].nil? ? '20rem' : "#{memoized_cookies['size']}px"
-    end
-
-    def app_layout
-      memoized_cookies['layout']
-    end
-
-    def app_theme
-      @app_theme ||= memoized_cookies['dark'].nil? ? 'default' : 'dark'
-    end
-
-    def dark_theme?
-      app_theme == 'dark'
-    end
-
-    def redirect_via_js(path) # courtesy of HTML5 App Cache
+    def redirect_via_js(path)
       response.set_cookie :initial_path, value: path, expires: Time.now + 15, path: '/'
       redirect '/', 302
     end
@@ -253,19 +257,19 @@ class App < Sinatra::Application
   before do
     if request.host == OUT_HOST && !request.path.start_with?('/s/')
       query_string = "?#{request.query_string}" unless request.query_string.empty?
-      redirect "http://devdocs.io#{request.path}#{query_string}", 302
+      redirect "https://devdocs.io#{request.path}#{query_string}", 302
     end
   end
 
-  get '/manifest.appcache' do
-    content_type 'text/cache-manifest'
+  get '/service-worker.js' do
+    content_type 'application/javascript'
     expires 0, :'no-cache'
-    erb :manifest
+    erb :'service-worker.js'
   end
 
   get '/' do
     return redirect "/#q=#{params[:q]}" if params[:q]
-    return redirect '/' unless request.query_string.empty? # courtesy of HTML5 App Cache
+    return redirect '/' unless request.query_string.empty?
     response.headers['Content-Security-Policy'] = settings.csp if settings.csp
     erb :index
   end
@@ -435,13 +439,13 @@ class App < Sinatra::Application
 
       maker.channel.links.new_link do |link|
         link.rel = 'self'
-        link.href = 'http://devdocs.io/feed.atom'
+        link.href = 'https://devdocs.io/feed.atom'
         link.type = 'application/atom+xml'
       end
 
       maker.channel.links.new_link do |link|
         link.rel = 'alternate'
-        link.href = 'http://devdocs.io/'
+        link.href = 'https://devdocs.io/'
         link.type = 'text/html'
       end
 
@@ -450,14 +454,14 @@ class App < Sinatra::Application
           item.id = "tag:devdocs.io,2014:News/#{settings.news.length - i}"
           item.title = news[1].split("\n").first.gsub(/<\/?[^>]*>/, '')
           item.description do |desc|
-            desc.content = news[1..-1].join.gsub("\n", '<br>').gsub('href="/', 'href="http://devdocs.io/')
+            desc.content = news[1..-1].join.gsub("\n", '<br>').gsub('href="/', 'href="https://devdocs.io/')
             desc.type = 'html'
           end
           item.updated = "#{news.first}T14:00:00Z"
           item.published = "#{news.first}T14:00:00Z"
           item.links.new_link do |link|
             link.rel = 'alternate'
-            link.href = 'http://devdocs.io/'
+            link.href = 'https://devdocs.io/'
             link.type = 'text/html'
           end
         end

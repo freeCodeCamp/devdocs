@@ -2,7 +2,7 @@ module Docs
   class Javascript
     class EntriesFilter < Docs::EntriesFilter
       TYPES = %w(Array ArrayBuffer Atomics Boolean DataView Date Function
-        Generator Intl JSON Map Math Number Object Promise Reflect RegExp
+        Generator Intl JSON Map Math Number Object PluralRules Promise Reflect RegExp
         Set SharedArrayBuffer SIMD String Symbol TypedArray WeakMap WeakSet)
       INTL_OBJECTS = %w(Collator DateTimeFormat NumberFormat)
 
@@ -88,7 +88,7 @@ module Docs
       end
 
       def include_default_entry?
-        node = doc.at_css '.overheadIndicator, .warning'
+        node = doc.at_css '.blockIndicator, .warning'
 
         # Can't use :first-child because #doc is a DocumentFragment
         return true unless node && node.parent == doc && !node.previous_element

@@ -8,16 +8,17 @@ module Docs
 
     options[:trailing_slash] = true
 
+    # https://github.com/twbs/bootstrap/blob/master/LICENSE
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2017 Twitter, Inc.<br>
-      &copy; 2011&ndash;2017 The Bootstrap Authors<br>
+      &copy; 2011&ndash;2019 Twitter, Inc.<br>
+      &copy; 2011&ndash;2019 The Bootstrap Authors<br>
       Code licensed under the MIT License.<br>
       Documentation licensed under the Creative Commons Attribution License v3.0.
     HTML
 
     version '4' do
-      self.release = '4.0.0-beta'
-      self.base_url = 'https://getbootstrap.com/docs/4.0/'
+      self.release = '4.3.1'
+      self.base_url = 'https://getbootstrap.com/docs/4.3/'
       self.root_path = 'getting-started/introduction/'
 
       html_filters.push 'bootstrap/entries_v4', 'bootstrap/clean_html_v4'
@@ -33,6 +34,11 @@ module Docs
       html_filters.push 'bootstrap/entries_v3', 'bootstrap/clean_html_v3'
 
       options[:only] = %w(getting-started/ css/ components/ javascript/)
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://getbootstrap.com/', opts)
+      doc.at_css('#bd-versions').content.strip[1..-1]
     end
   end
 end
