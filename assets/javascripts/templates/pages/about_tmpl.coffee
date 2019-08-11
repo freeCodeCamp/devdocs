@@ -728,6 +728,12 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
+    'Wordpress',
+    '2003-2019 WordPress Foundation',
+    'GPLv2+',
+    'https://wordpress.org/about/license/'
+  ],
+  [
     'Yarn',
     '2016-present Yarn Contributors',
     'BSD',

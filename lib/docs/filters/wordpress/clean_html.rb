@@ -7,11 +7,18 @@ module Docs
           return doc
         end
 
+        article = at_css('article[id^="post-"]')
+        @doc = at_css('article[id^="post-"]') unless article.nil?
+
         css('hr', '.screen-reader-text', '.table-of-contents',
             '.anchor', '.toc-jump', '.source-code-links', '.user-notes',
             '.show-more', '.hide-more').remove
 
         br = /<br\s?\/?>/i
+
+        header = at_css('h1')
+        header.content = header.content.strip
+        doc.prepend_child header
 
         # Add PHP code highlighting
         css('pre').each do |node|

@@ -2,7 +2,7 @@ module Docs
   class Wordpress < UrlScraper
     self.name = 'WordPress'
     self.type = 'wordpress'
-    self.release = '4.9.4'
+    self.release = '5.2.2'
     self.base_url = 'https://developer.wordpress.org/reference/'
     self.initial_paths = %w(
       functions/
@@ -15,10 +15,10 @@ module Docs
       code: 'https://github.com/WordPress/WordPress'
     }
 
-    html_filters.push 'wordpress/clean_html', 'wordpress/entries'
+    html_filters.push 'wordpress/entries', 'wordpress/clean_html'
 
     options[:container] = '#content-area'
-    options[:trailing_slash] = true
+    options[:trailing_slash] = false
     options[:only_patterns] = [
       /\Afunctions\//,
       /\Ahooks\//,
@@ -32,7 +32,7 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2003&ndash;2018 WordPress Foundation<br>
+      &copy; 2003&ndash;2019 WordPress Foundation<br>
       Licensed under the GNU GPLv2+ License.
     HTML
   end
