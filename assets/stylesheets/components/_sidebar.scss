@@ -4,14 +4,14 @@
 
 ._sidebar {
   position: absolute;
-  z-index: $sidebarZ;
+  z-index: var(--sidebarZ);
   top: 0;
   bottom: 0;
   left: 0;
   overflow-x: hidden;
   overflow-y: scroll;
-  padding-top: $headerHeight;
-  background: $sidebarBackground;
+  padding-top: var(--headerHeight);
+  background: var(--sidebarBackground);
   background-clip: content-box;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none; // IE 10 doesn't support pointer-events
@@ -22,13 +22,13 @@
 
   ._overlay-scrollbars & {
     padding-top: 0;
-    top: $headerHeight;
+    top: var(--headerHeight);
   }
 
   body:not(._native-scrollbars) & {
     &::-webkit-scrollbar { width: 10px; }
     &::-webkit-scrollbar-track {
-      background: $contentBackground;
+      background: var(--contentBackground);
       border: 0;
     }
     &::-webkit-scrollbar-thumb {
@@ -52,10 +52,10 @@
 
 ._resizer {
   position: absolute;
-  z-index: $sidebarZ + 1;
-  top: $headerHeight;
-  bottom: $headerHeight;
-  left: $sidebarWidth;
+  z-index: var(--headerZ);
+  top: var(--headerHeight);
+  bottom: var(--headerHeight);
+  left: var(--sidebarWidth);
   margin-left: -2px;
   width: 3px;
   cursor: col-resize;
@@ -72,11 +72,11 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  width: $sidebarWidth;
-  box-shadow: inset -1px 0 $sidebarBorder;
+  width: var(--sidebarWidth);
+  box-shadow: inset -1px 0 var(--sidebarBorder);
   @extend %border-box;
 
-  @media #{$mediumScreen} { width: $sidebarMediumWidth; }
+  @include mobile { width: var(--sidebarMediumWidth); }
 
   ._sidebar > & { min-height: 100%; }
 
@@ -89,7 +89,7 @@
   padding: 0 .75rem 0 2.125rem;
   line-height: 2rem;
   font-size: .75rem;
-  color: $textColorLight;
+  color: var(--textColorLight);
   text-transform: uppercase;
   cursor: default;
 }
@@ -110,8 +110,8 @@
   line-height: 1.5rem;
   font-size: .875rem;
   cursor: default;
-  background: $sidebarBackground;
-  box-shadow: inset -1px 0 $sidebarBorder;
+  background: var(--sidebarBackground);
+  box-shadow: inset -1px 0 var(--sidebarBorder);
   @extend %truncate-text;
 
   &, &:hover {
@@ -123,16 +123,16 @@
   &.focus:hover,
   &.active,
   &.active:hover {
-    color: $focusText;
-    background: $focusBackground;
-    box-shadow: inset -1px 0 $focusBorder;
+    color: var(--focusText);
+    background: var(--focusBackground);
+    box-shadow: inset -1px 0 var(--focusBorder);
   }
 
   &.active,
   &.active:hover {
-    color: $selectionText;
-    background: $selectionBackground;
-    box-shadow: inset -1px 0 $selectionBorder;
+    color: var(--selectionText);
+    background: var(--selectionBackground);
+    box-shadow: inset -1px 0 var(--selectionBorder);
   }
 
   &:before {
@@ -160,7 +160,7 @@
 }
 
 ._list-count {
-  color: $textColorLighter;
+  color: var(--textColorLighter);
   pointer-events: none;
 
   ._list-disabled:hover > & { display: none; }
@@ -168,7 +168,7 @@
 
 ._list-enable {
   display: none;
-  color: $linkColor;
+  color: var(--linkColor);
   cursor: pointer;
 
   &:hover { text-decoration: underline; }
@@ -188,7 +188,7 @@
 ._list-disabled {
   @extend %_list-dir;
 
-  &, &:hover { color: $textColorLight; }
+  &, &:hover { color: var(--textColorLight); }
   &:before { opacity: .7; }
 }
 
@@ -200,10 +200,8 @@
   width: 1rem;
   height: 1rem;
   cursor: pointer;
-  fill: black;
+  fill: var(--absolute);
   opacity: .4;
-
-  @if $style == 'dark' { fill: white; }
 
   &:hover { opacity: .65; }
 
@@ -239,11 +237,11 @@
 //
 
 ._list-pagelink {
-  color: $linkColor;
+  color: var(--linkColor);
   cursor: pointer;
 
   &:hover {
-    color: $linkColorHover;
+    color: var(--linkColorHover);
     text-decoration: underline;
   }
 }
@@ -275,9 +273,9 @@
     left: .75rem;
     width: .75rem;
     height: 1px;
-    background: rgba($selectionText, .9);
-    box-shadow: 0 -3px rgba($selectionText, .9), // top line
-                0 3px rgba($selectionText, .9);  // bottom line
+    background: var(--transparentSelectionText);
+    box-shadow: 0 -3px var(--transparentSelectionText), // top line
+                0 3px var(--transparentSelectionText);  // bottom line
   }
 }
 
@@ -289,7 +287,7 @@
   padding: .5rem .75rem;
   line-height: 1.25rem;
   font-size: .8125rem;
-  color: $textColorLight;
+  color: var(--textColorLight);
 
   & + & { padding-top: 0; }
 }
@@ -303,9 +301,9 @@
 ._list-hover.clone {
   position: fixed;
   overflow: visible;
-  z-index: $hoverZ;
+  z-index: var(--hoverZ);
   left: 0;
-  min-width: $sidebarWidth;
+  min-width: var(--sidebarWidth);
   padding: .25rem .75rem;
   pointer-events: none;
   -webkit-font-smoothing: subpixel-antialiased;
@@ -313,7 +311,7 @@
           transform: translate3d(0, 0, 0);
   @extend %border-box;
 
-  @media #{$mediumScreen} { min-width: $sidebarMediumWidth; }
+  @include mobile { min-width: var(--sidebarMediumWidth); }
 
   > ._list-text { display: inline; }
 
@@ -346,10 +344,10 @@
   padding: .5rem .75rem .25rem .75rem;
   line-height: 1.5rem;
   font-size: .75rem;
-  font-weight: $bolderFontWeight;
-  color: $textColorLight;
+  font-weight: var(--bolderFontWeight);
+  color: var(--textColorLight);
   text-transform: uppercase;
-  background: linear-gradient(to bottom, $sidebarBackground, $sidebarBackground 75%, rgba($sidebarBackground, 0));
+  background: linear-gradient(to bottom, var(--sidebarBackground), var(--sidebarBackground) 75%, var(--transparentSidebarBackground));
   cursor: default;
 }
 

@@ -3,7 +3,7 @@ module Docs
     self.name = 'Moment.js'
     self.slug = 'moment'
     self.type = 'moment'
-    self.release = '2.21.0'
+    self.release = '2.22.1'
     self.base_url = 'http://momentjs.com'
     self.root_path = '/docs/'
     self.initial_paths = %w(/guides/)
@@ -22,5 +22,10 @@ module Docs
       &copy; JS Foundation and other contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('http://momentjs.com/', opts)
+      doc.at_css('.hero-title > h1 > span').content
+    end
   end
 end

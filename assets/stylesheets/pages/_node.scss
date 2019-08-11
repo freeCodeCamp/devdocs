@@ -20,5 +20,8 @@
     margin: 0 0 1em 1em;
     @extend %label;
   }
+
+  .srclink { float: right; }
+  details > table { margin: 0; }
 }
 

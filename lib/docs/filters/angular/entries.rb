@@ -16,6 +16,8 @@ module Docs
           node.next_element.content.remove('@angular/')
         elsif at_css('.api-type-label.module')
           name.split('/').first
+        elsif slug.start_with?('api/')
+          slug.split('/').second
         else
           'Miscellaneous'
         end

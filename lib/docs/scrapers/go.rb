@@ -1,7 +1,7 @@
 module Docs
   class Go < UrlScraper
     self.type = 'go'
-    self.release = '1.10.0'
+    self.release = '1.12'
     self.base_url = 'https://golang.org/pkg/'
     self.links = {
       home: 'https://golang.org/',
@@ -15,10 +15,19 @@ module Docs
     options[:skip] = %w(runtime/msan/)
     options[:skip_patterns] = [/\/\//]
 
+    options[:fix_urls] = ->(url) do
+      url.sub 'https://golang.org/pkg//', 'https://golang.org/pkg/'
+    end
+
     options[:attribution] = <<-HTML
       &copy; Google, Inc.<br>
       Licensed under the Creative Commons Attribution License 3.0.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://golang.org/project/', opts)
+      doc.at_css('#page ul > li > a').text[3..-1]
+    end
 
     private
 

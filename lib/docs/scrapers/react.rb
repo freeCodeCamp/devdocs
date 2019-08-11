@@ -2,7 +2,7 @@ module Docs
   class React < UrlScraper
     self.name = 'React'
     self.type = 'simple'
-    self.release = '16.2.0'
+    self.release = '16.6.0'
     self.base_url = 'https://reactjs.org/docs/'
     self.root_path = 'hello-world.html'
     self.links = {
@@ -30,5 +30,10 @@ module Docs
       &copy; 2013&ndash;present Facebook Inc.<br>
       Licensed under the Creative Commons Attribution 4.0 International Public License.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://reactjs.org/docs/getting-started.html', opts)
+      doc.at_css('a[href="/versions"]').content.strip[1..-1]
+    end
   end
 end

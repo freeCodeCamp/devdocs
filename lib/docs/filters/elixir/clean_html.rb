@@ -57,8 +57,14 @@ module Docs
           node.parent.after(node)
         end
 
+        css('.signature').each do |node|
+          non_text_children = node.xpath('node()[not(self::text())]')
+          non_text_children.to_a.reverse.each { |child| node.parent.add_next_sibling(child) }
+        end
+
         css('pre').each do |node|
           node['data-language'] = 'elixir'
+          node.content = node.content
         end
       end
     end

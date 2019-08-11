@@ -4,7 +4,7 @@ module Docs
   class Tensorflow < UrlScraper
     self.name = 'TensorFlow'
     self.type = 'tensorflow'
-    self.release = '1.6'
+    self.release = '1.8'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://www.tensorflow.org/',
@@ -54,6 +54,10 @@ module Docs
         /\Aperformance/,
         /\Adeploy/,
         /\Aextend/]
+    end
+
+    def get_latest_version(opts)
+      get_latest_github_release('tensorflow', 'tensorflow', opts)
     end
 
     private

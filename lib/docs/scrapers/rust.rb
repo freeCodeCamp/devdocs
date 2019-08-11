@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Docs
   class Rust < UrlScraper
     self.type = 'rust'
-    self.release = '1.24.0'
+    self.release = '1.30.1'
     self.base_url = 'https://doc.rust-lang.org/'
-    self.root_path = 'book/first-edition/index.html'
+    self.root_path = 'book/second-edition/index.html'
     self.initial_paths = %w(
       reference/introduction.html
       collections/index.html
@@ -17,17 +19,18 @@ module Docs
     html_filters.push 'rust/entries', 'rust/clean_html'
 
     options[:only_patterns] = [
-      /\Abook\/first-edition\//,
+      /\Abook\/second-edition\//,
       /\Areference\//,
       /\Acollections\//,
       /\Astd\// ]
 
-    options[:skip] = %w(book/first-edition/README.html)
-    options[:skip_patterns] = [/(?<!\.html)\z/]
+    options[:skip] = %w(book/second-edition/README.html)
+    options[:skip_patterns] = [/(?<!\.html)\z/, /\/print\.html/]
 
     options[:fix_urls] = ->(url) do
       url.sub! %r{(#{Rust.base_url}.+/)\z}, '\1index.html'
       url.sub! '/unicode/u_str', '/unicode/str/'
+      url.sub! '/std/std/', '/std/'
       url
     end
 
@@ -35,6 +38,12 @@ module Docs
       &copy; 2010 The Rust Project Developers<br>
       Licensed under the Apache License, Version 2.0 or the MIT license, at your option.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://www.rust-lang.org/', opts)
+      label = doc.at_css('.button-download + p > a').content
+      label.sub(/Version /, '')
+    end
 
     private
 

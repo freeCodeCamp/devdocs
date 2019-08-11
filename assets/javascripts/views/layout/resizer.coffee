@@ -11,9 +11,6 @@ class app.views.Resizer extends app.View
   init: ->
     @el.setAttribute('draggable', 'true')
     @appendTo $('._app')
-
-    @style = $('style[data-resizer]')
-    @size = @style.getAttribute('data-size')
     return
 
   MIN = 260
@@ -24,15 +21,11 @@ class app.views.Resizer extends app.View
     return unless value > 0
     value = Math.min(Math.max(Math.round(value), MIN), MAX)
     newSize = "#{value}px"
-    @style.innerHTML = @style.innerHTML.replace(new RegExp(@size, 'g'), newSize)
-    @size = newSize
-    if save
-      app.settings.setSize(value)
-      app.appCache?.updateInBackground()
+    document.documentElement.style.setProperty('--sidebarWidth', newSize)
+    app.settings.setSize(value) if save
     return
 
   onDragStart: (event) =>
-    @style.removeAttribute('disabled')
     event.dataTransfer.effectAllowed = 'link'
     event.dataTransfer.setData('Text', '')
     $.on(window, 'dragover', @onDrag)
@@ -50,7 +43,7 @@ class app.views.Resizer extends app.View
   onDragEnd: (event) =>
     $.off(window, 'dragover', @onDrag)
     value = event.pageX or (event.screenX - window.screenX)
-    if @lastDragValue and not (@lastDragValue - 5 < value < @lastDragValue + 5) # https://github.com/Thibaut/devdocs/issues/265
+    if @lastDragValue and not (@lastDragValue - 5 < value < @lastDragValue + 5) # https://github.com/freeCodeCamp/devdocs/issues/265
       value = @lastDragValue
     @resize(value, true)
     return

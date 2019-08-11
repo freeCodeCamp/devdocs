@@ -1,7 +1,7 @@
 module Docs
   class Haxe < UrlScraper
     self.name = 'Haxe'
-    self.type = 'haxe'
+    self.type = 'simple'
     self.release = '3.4.7'
     self.base_url = 'https://api.haxe.org/'
 
@@ -10,7 +10,7 @@ module Docs
     options[:container] = '.span9'
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2016 Haxe Foundation<br>
+      &copy; 2005&ndash;2018 Haxe Foundation<br>
       Licensed under a MIT license.
     HTML
 
@@ -20,7 +20,7 @@ module Docs
         code: 'https://github.com/HaxeFoundation/haxe'
       }
 
-      options[:skip_patterns] = [/\A(?:cpp|cs|flash|java|js|neko|php|python)/i]
+      options[:skip_patterns] = [/\A(?:cpp|cs|flash|java|js|neko|php|python|lua|hl|sys)/i]
     end
 
     version 'C++' do
@@ -51,8 +51,26 @@ module Docs
       self.base_url = 'https://api.haxe.org/php/'
     end
 
+    version 'Lua' do
+      self.base_url = 'https://api.haxe.org/lua/'
+    end
+
+    version 'HashLink' do
+      self.base_url = 'https://api.haxe.org/hl/'
+    end
+
+    version 'Sys' do
+      self.base_url = 'https://api.haxe.org/sys/'
+    end
+
     version 'Python' do
       self.base_url = 'https://api.haxe.org/python/'
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://api.haxe.org/', opts)
+      label = doc.at_css('.container.main-content h1 > small').content
+      label.sub(/version /, '')
     end
   end
 end

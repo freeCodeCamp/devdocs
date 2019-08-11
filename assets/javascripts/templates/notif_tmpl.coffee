@@ -16,7 +16,7 @@ app.templates.notifError = ->
   textNotif """ Oops, an error occurred. """,
             """ Try <a href="#" data-behavior="hard-reload">reloading</a>, and if the problem persists,
                 <a href="#" data-behavior="reset">resetting the app</a>.<br>
-                You can also report this issue on <a href="https://github.com/Thibaut/devdocs/issues/new" target="_blank" rel="noopener">GitHub</a>. """
+                You can also report this issue on <a href="https://github.com/freeCodeCamp/devdocs/issues/new" target="_blank" rel="noopener">GitHub</a>. """
 
 app.templates.notifQuotaExceeded = ->
   textNotif """ The offline database has exceeded its size limitation. """,
@@ -68,3 +68,9 @@ app.templates.notifShare = ->
 app.templates.notifUpdateDocs = ->
   textNotif """ Documentation updates available. """,
             """ <a href="/offline">Install them</a> as soon as possible to avoid broken pages. """
+
+app.templates.notifAnalyticsConsent = ->
+  textNotif """ Tracking cookies """,
+            """ We would like to gather usage data about how DevDocs is used through Google Analytics and Gauges. We only collect anonymous traffic information.
+                 Please confirm if you accept our tracking cookies. You can always change your decision in the settings.
+                 <br><span class="_notif-right"><a href="#" data-behavior="accept-analytics">Accept</a> or <a href="#" data-behavior="decline-analytics">Decline</a></span> """

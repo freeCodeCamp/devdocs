@@ -12,9 +12,9 @@ module Docs
       end
 
       def get_type
-        link = at_css('.nav-docs-section .active, .toc .active')
+        link = at_css('.navListItemActive')
         return 'Miscellaneous' unless link
-        section = link.ancestors('.nav-docs-section, section').first
+        section = link.ancestors('.navGroup').first
         type = section.at_css('h3').content.strip
         type = REPLACE_TYPES[type] || type
         type += ": #{name}" if type == 'Components'
@@ -22,15 +22,13 @@ module Docs
       end
 
       def additional_entries
-        css('.props > .prop > .propTitle', '.props > .prop > .methodTitle').each_with_object [] do |node, entries|
-          name = node.children.find(&:text?).try(:content)
-          next if name.blank?
-          sep = node.content.include?('static') ? '.' : '#'
-          name.prepend(self.name + sep)
-          name << '()' if node['class'].include?('methodTitle')
-          name.remove! %r{\??\:\s*\z}
-          id = node.at_css('.anchor')['name']
-          entries << [name, id]
+        css('.mainContainer h3').each_with_object [] do |node, entries|
+          subname = node.text
+          next if subname.blank? || node.css('code').empty?
+          sep = subname.include?('()') ? '.' : '#'
+          subname.prepend(name + sep)
+          id = node.at_css('.anchor')['id']
+          entries << [subname, id]
         end
       end
     end
