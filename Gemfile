@@ -1,11 +1,14 @@
 source 'https://rubygems.org'
-ruby '2.5.1'
+ruby '2.6.3'
 
 gem 'rake'
 gem 'thor'
-gem 'pry', '~> 0.11.0'
+gem 'pry', '~> 0.12.0'
 gem 'activesupport', '~> 5.2', require: false
 gem 'yajl-ruby', require: false
+gem 'html-pipeline'
+gem 'typhoeus'
+gem 'nokogiri'
 
 group :app do
   gem 'rack'
@@ -19,6 +22,8 @@ group :app do
   gem 'browser'
   gem 'sass'
   gem 'coffee-script'
+  gem 'chunky_png'
+  gem 'sprockets-sass'
 end
 
 group :production do
@@ -31,14 +36,13 @@ group :development do
 end
 
 group :docs do
-  gem 'typhoeus'
-  gem 'nokogiri'
-  gem 'html-pipeline'
   gem 'image_optim'
   gem 'image_optim_pack', platforms: :ruby
   gem 'progress_bar', require: false
   gem 'unix_utils', require: false
   gem 'tty-pager', require: false
+  gem 'net-sftp', '>= 2.1.3.rc2', require: false
+  gem 'terminal-table', require: false
 end
 
 group :test do

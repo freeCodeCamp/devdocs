@@ -18,5 +18,9 @@ module Docs
       &copy; 2013&ndash;2017 Petka Antonov<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('bluebird', opts)
+    end
   end
 end

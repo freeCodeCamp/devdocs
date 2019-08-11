@@ -1,7 +1,7 @@
 module Docs
   class Flow < UrlScraper
     self.type = 'simple'
-    self.release = '0.79.1'
+    self.release = '0.85.0'
     self.base_url = 'https://flow.org/en/docs/'
     self.links = {
       home: 'https://flow.org/',
@@ -18,5 +18,9 @@ module Docs
       &copy; 2013&ndash;present Facebook Inc.<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('flow-bin', opts)
+    end
   end
 end
