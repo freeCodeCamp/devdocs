@@ -1,14 +1,30 @@
 module Docs
   class Scala
     class EntriesFilter < Docs::EntriesFilter
+      REPLACEMENTS = {
+        '$eq' => '=',
+        '$colon' => ':',
+        '$less' => '<',
+      }
+
       def get_name
-        # this first condition is mainly for scala 212 docs, which
-        # have their package listing as index.html
         if is_package?
           symbol = at_css('#definition h1')
           symbol ? symbol.text.gsub(/\W+/, '') : "package"
         else
-          slug.split('/').last
+          name = slug.split('/').last
+
+          # Some objects have inner objects, show ParentObject$.ChildObject$ instead of ParentObject$$ChildObject$
+          name = name.gsub('$$', '$.')
+
+          # If a dollar sign is used as separator between two characters, replace it with a dot
+          name = name.gsub(/([^$.])\$([^$.])/, '\1.\2')
+
+          REPLACEMENTS.each do |key, value|
+            name = name.gsub(key, value)
+          end
+
+          name
         end
       end
 
@@ -26,6 +42,31 @@ module Docs
         true
       end
 
+      def additional_entries
+        entries = []
+
+        full_name = "#{type}.#{name}".remove('$')
+        css(".members li[name^=\"#{full_name}\"]").each do |node|
+          # Ignore packages
+          kind = node.at_css('.modifier_kind > .kind')
+          next if !kind.nil? && kind.content == 'package'
+
+          # Ignore deprecated members
+          next unless node.at_css('.symbol > .name.deprecated').nil?
+
+          id = node['name'].rpartition('#').last
+          member_name = node.at_css('.name')
+
+          # Ignore members only existing of hashtags, we can't link to that
+          next if member_name.nil? || member_name.content.strip.remove('#').blank?
+
+          member = "#{name}.#{member_name.content}()"
+          entries << [member, id]
+        end
+
+        entries
+      end
+
       private
 
       # For the package name, we use the slug rather than parsing the package
@@ -40,7 +81,6 @@ module Docs
       end
 
       def parent_package
-        name = package_name
         parent = package_drop_last(package_name.split('.'))
         parent.empty? ? '_root_' : parent
       end
