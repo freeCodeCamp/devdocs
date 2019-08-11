@@ -17,14 +17,12 @@ module Docs
           # Some objects have inner objects, show ParentObject$.ChildObject$ instead of ParentObject$$ChildObject$
           name = name.gsub('$$', '$.')
 
-          # If a dollar sign is used as separator between two characters, replace it with a dot
-          name = name.gsub(/([^$.])\$([^$.])/, '\1.\2')
-
           REPLACEMENTS.each do |key, value|
             name = name.gsub(key, value)
           end
 
-          name
+          # If a dollar sign is used as separator between two characters, replace it with a dot
+          name.gsub(/([^$.])\$([^$.])/, '\1.\2')
         end
       end
 

@@ -9,7 +9,8 @@ module Docs
 
     options[:container] = '#content-container'
     options[:attribution] = <<-HTML
-        &copy; 2002-2019 EPFL, with contributions from Lightbend.
+        &copy; 2002-2019 EPFL, with contributions from Lightbend.<br>
+        Licensed under the Apache License, Version 2.0.
     HTML
 
     # https://downloads.lightbend.com/scala/2.13.0/scala-docs-2.13.0.zip
@@ -32,21 +33,21 @@ module Docs
       html_filters.push 'scala/entries', 'scala/clean_html'
     end
 
-    # https://downloads.lightbend.com/scala/2.12.6/scala-docs-2.12.6.zip
+    # https://downloads.lightbend.com/scala/2.12.9/scala-docs-2.12.9.zip
     # Extract api/scala-library into docs/scala~2.12_library
     version '2.12 Library' do
-      self.release = '2.12.6'
-      self.base_url = 'https://www.scala-lang.org/api/2.12.6/'
+      self.release = '2.12.9'
+      self.base_url = 'https://www.scala-lang.org/api/2.12.9/'
       self.root_path = 'index.html'
 
       html_filters.push 'scala/entries', 'scala/clean_html'
     end
 
-    # https://downloads.lightbend.com/scala/2.12.6/scala-docs-2.12.6.zip
+    # https://downloads.lightbend.com/scala/2.12.9/scala-docs-2.12.9.zip
     # Extract api/scala-reflect into docs/scala~2.12_reflection
     version '2.12 Reflection' do
-      self.release = '2.12.6'
-      self.base_url = 'https://www.scala-lang.org/api/2.12.6/scala-reflect/'
+      self.release = '2.12.9'
+      self.base_url = 'https://www.scala-lang.org/api/2.12.9/scala-reflect/'
       self.root_path = 'index.html'
 
       html_filters.push 'scala/entries', 'scala/clean_html'
