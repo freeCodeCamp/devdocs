@@ -208,12 +208,12 @@ track = ->
     # Only ask for consent once per browser session
     Cookies.set('analyticsConsentAsked', '1')
 
-    new app.views.Notif 'AnalyticsConsent', autoHide: null
+    new app.views.Notif 'AnalyticsConsent', autoHide: false
   return
 
 @resetAnalytics = ->
   for cookie in document.cookie.split(/;\s?/)
     name = cookie.split('=')[0]
-    if name[0] == '_'
+    if name[0] == '_' && name[1] != '_'
       Cookies.expire(name)
   return

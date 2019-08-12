@@ -80,6 +80,6 @@ class app.views.Document extends app.View
       when 'reboot'             then app.reboot()
       when 'hard-reload'        then app.reload()
       when 'reset'              then app.reset() if confirm('Are you sure you want to reset DevDocs?')
-      when 'accept-analytics'   then Cookies.set('analyticsConsent', '1') && app.reboot()
-      when 'decline-analytics'  then Cookies.set('analyticsConsent', '0') && app.reboot()
+      when 'accept-analytics'   then Cookies.set('analyticsConsent', '1', expires: 1e8) && app.reboot()
+      when 'decline-analytics'  then Cookies.set('analyticsConsent', '0', expires: 1e8) && app.reboot()
     return
