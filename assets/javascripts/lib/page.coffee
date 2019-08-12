@@ -208,7 +208,7 @@ track = ->
     # Only ask for consent once per browser session
     Cookies.set('analyticsConsentAsked', '1')
 
-    new app.views.Notif 'AnalyticsConsent', autoHide: false
+    new app.views.Notif 'AnalyticsConsent', autoHide: null
   return
 
 @resetAnalytics = ->
