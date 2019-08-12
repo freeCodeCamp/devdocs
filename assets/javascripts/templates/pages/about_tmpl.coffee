@@ -202,6 +202,12 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
   ], [
+    'Cypress',
+    '2017 Cypress.io',
+    'MIT',
+    'https://raw.githubusercontent.com/cypress-io/cypress-documentation/develop/LICENSE.md'
+  ],
+  [
     'D',
     '1999-2018 The D Language Foundation',
     'Boost',
