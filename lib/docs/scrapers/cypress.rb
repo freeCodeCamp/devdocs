@@ -2,32 +2,35 @@
 
 module Docs
   class Cypress < UrlScraper
-    # Follow the instructions on https://github.com/cypress-io/cypress-documentation/blob/develop/CONTRIBUTING.md
-    # to run the cypress documentation server locally in the following URL:
-    # self.base_url = 'http://localhost:2222'
-    self.base_url = 'https://docs.cypress.io'
-
     self.name = 'Cypress'
     self.type = 'cypress'
+    self.release = '3.4.1'
+    self.base_url = 'https://docs.cypress.io'
     self.root_path = '/api/api/table-of-contents.html'
+    self.links = {
+      home: 'https://www.cypress.io/',
+      code: 'https://github.com/cypress-io/cypress',
+    }
 
-    html_filters.push 'cypress/clean_html', 'cypress/entries'
+    html_filters.push 'cypress/entries', 'cypress/clean_html'
 
-    options[:root_title] = 'Cypress'
     options[:container] = '#content'
-
+    options[:max_image_size] = 300_000
     options[:include_default_entry] = true
 
-    options[:skip_link] = lambda do |link|
+    options[:skip_patterns] = [/examples\//]
+    options[:skip_link] = ->(link) {
       href = link.attr(:href)
-
-      EntriesFilter::SECTIONS.none? { |section| href.match?("/#{section}/") }
-    end
+      href.nil? ? true : EntriesFilter::SECTIONS.none? { |section| href.match?("/#{section}/") }
+    }
 
     options[:attribution] = <<-HTML
-      © 2018 <a href="https://cypress.io">Cypress.io</a>
-      - Licensed under the
-      <a href="https://github.com/cypress-io/cypress-documentation/blob/develop/LICENSE.md">MIT License</a>.
+      &copy; 2017 Cypress.io<br>
+      Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('cypress-io', 'cypress', opts)
+    end
   end
 end

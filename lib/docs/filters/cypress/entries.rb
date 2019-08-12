@@ -8,7 +8,6 @@ module Docs
         core-concepts
         cypress-api
         events
-        examples
         getting-started
         guides
         overview
@@ -28,12 +27,6 @@ module Docs
           if path.match?("/#{section}/")
             return section.split('-').map(&:capitalize).join(' ')
           end
-        end
-      end
-
-      def additional_entries
-        css('.sidebar-li > a').map do |node|
-          [node['href']]
         end
       end
     end
