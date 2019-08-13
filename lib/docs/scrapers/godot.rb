@@ -37,5 +37,10 @@ module Docs
       self.release = '2.1'
       self.base_url = "http://docs.godotengine.org/en/#{self.version}/"
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://docs.godotengine.org/', opts)
+      doc.at_css('.version').content.strip
+    end
   end
 end

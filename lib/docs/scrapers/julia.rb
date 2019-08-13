@@ -49,5 +49,9 @@ module Docs
 
       html_filters.push 'julia/entries_sphinx', 'julia/clean_html_sphinx', 'sphinx/clean_html'
     end
+
+    def get_latest_version(opts)
+      get_latest_github_release('JuliaLang', 'julia', opts)
+    end
   end
 end

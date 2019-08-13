@@ -34,5 +34,9 @@ module Docs
       &copy; 2018 Koa contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('koa', opts)
+    end
   end
 end

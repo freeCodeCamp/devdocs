@@ -142,4 +142,6 @@ class app.models.Doc extends app.Model
     return
 
   isOutdated: (status) ->
-    status and status.installed and @mtime isnt status.mtime
+    return false if not status
+    isInstalled = status.installed or app.settings.get('autoInstall')
+    isInstalled and @mtime isnt status.mtime

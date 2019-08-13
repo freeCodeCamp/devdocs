@@ -413,7 +413,7 @@
 				// when the user next taps anywhere else on the page, new touchstart and touchend events are dispatched
 				// with the same identifier as the touch event that previously triggered the click that triggered the alert.
 				// Sadly, there is an issue on iOS 4 that causes some normal touch events to have the same identifier as an
-				// immediately preceeding touch event (issue #52), so this fix is unavailable on that platform.
+				// immediately preceding touch event (issue #52), so this fix is unavailable on that platform.
 				// Issue 120: touch.identifier is 0 when Chrome dev tools 'Emulate touch events' is set with an iOS device UA string,
 				// which causes all touch events to be ignored. As this block only applies to iOS, and iOS identifiers are always long,
 				// random integers, it's safe to to continue if the identifier is 0 here.
@@ -805,7 +805,7 @@
 			}
 		}
 
-		// IE11: prefixed -ms-touch-action is no longer supported and it's recomended to use non-prefixed version
+		// IE11: prefixed -ms-touch-action is no longer supported and it's recommended to use non-prefixed version
 		// http://msdn.microsoft.com/en-us/library/windows/apps/Hh767313.aspx
 		if (layer.style.touchAction === 'none' || layer.style.touchAction === 'manipulation') {
 			return true;

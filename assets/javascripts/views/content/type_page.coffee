@@ -9,6 +9,7 @@ class app.views.TypePage extends app.View
 
   render: (@type) ->
     @html @tmpl('typePage', @type)
+    setFaviconForDoc(@type.doc)
     return
 
   getTitle: ->

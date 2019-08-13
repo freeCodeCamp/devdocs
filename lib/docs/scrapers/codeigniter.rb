@@ -38,5 +38,11 @@ module Docs
     version '3' do
       self.release = '3.1.8'
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://codeigniter.com/user_guide/changelog.html', opts)
+      header = doc.at_css('#change-log h2')
+      header.content.scan(/([0-9.]+)/)[0][0]
+    end
   end
 end
