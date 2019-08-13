@@ -262,5 +262,11 @@ module Docs
       json = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/contents/#{path}", opts)
       Base64.decode64(json['content'])
     end
+
+    def get_latest_github_commit_date(owner, repo, opts)
+      commits = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/commits", opts)
+      timestamp = commits[0]['commit']['author']['date']
+      Date.iso8601(timestamp).to_time.to_i
+    end
   end
 end
