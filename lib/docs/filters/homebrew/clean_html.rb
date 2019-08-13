@@ -4,6 +4,11 @@ module Docs
       def call
         css('hr')
 
+        if at_css('h1').nil?
+          title = current_url.normalized_path[1..-1].gsub(/-/, ' ')
+          doc.children.before("<h1>#{title}</h1>")
+        end
+
         css('div.highlighter-rouge').each do |node|
           lang = node['class'][/language-(\w+)/, 1]
           node['data-language'] = lang if lang

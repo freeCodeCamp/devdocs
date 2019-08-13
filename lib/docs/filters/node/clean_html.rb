@@ -16,7 +16,7 @@ module Docs
 
         css('pre').each do |node|
           if lang = node.at_css('code')['class']
-            node['data-language'] = lang.remove('lang-')
+            node['data-language'] = lang.remove(%r{lang(uage)?-})
           end
 
           node.content = node.content

@@ -7,7 +7,7 @@
     > span {
       display: block;
       font-size: 1rem;
-      font-weight: $boldFontWeight;
+      font-weight: var(--boldFontWeight);
     }
 
     ul, ol {
@@ -30,6 +30,7 @@
   .notice,
   .warning,
   .overheadIndicator,
+  .blockIndicator,
   .syntaxbox,           // CSS, JavaScript
   .twopartsyntaxbox,    // CSS
   .inheritsbox,         // JavaScript
@@ -42,7 +43,7 @@
   > .note {
     em {
       font-style: normal;
-      font-weight: $boldFontWeight;
+      font-weight: var(--boldFontWeight);
     }
 
     > ul { margin: 1em 0; }
@@ -93,7 +94,7 @@
   dt > strong > code, // HTML element attribute
   dl > dt > code {    // CSS property value, Javascript function argument
     font-family: inherit;
-    font-weight: $boldFontWeight;
+    font-weight: var(--boldFontWeight);
     font-size: inherit;
   }
 
@@ -104,4 +105,28 @@
   .cleared { clear: both; } // CSS/box-shadow
 
   code > strong { font-weight: normal; }
+
+  // Compatibility tablees
+
+  .bc-github-link {
+    float: right;
+    font-size: .75rem;
+  }
+
+  .bc-supports-yes, .bc-supports-yes + dd, .bc-supports-yes + dd + dd { background: var(--noteGreenBackground); }
+  .bc-supports-partial, .bc-supports-partial + dd, .bc-supports-partial + dd + dd { background: var(--noteOrangeBackground); }
+  .bc-supports-no, .bc-supports-no + dd, .bc-supports-no + dd + dd { background: var(--noteRedBackground); }
+
+  .bc-table {
+    min-width: 100%;
+
+    dl {
+      margin: .25rem 0 0;
+      padding: .25rem 0 0;
+      font-size: .75rem;
+      border-top: 1px solid var(--boxBorder);
+    }
+
+    dd { margin: 0; }
+  }
 }

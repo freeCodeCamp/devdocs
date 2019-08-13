@@ -1,6 +1,6 @@
 module Docs
   class Jest < UrlScraper
-    self.type = 'jest'
+    self.type = 'simple'
     self.release = '23.5.0'
     self.base_url = 'https://jestjs.io/docs/en/'
     self.root_path = 'getting-started'
@@ -17,5 +17,10 @@ module Docs
       &copy; 2014&ndash;present Facebook Inc.<br>
       Licensed under the BSD License.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://jestjs.io/docs/en/getting-started', opts)
+      doc.at_css('header > a > h3').content
+    end
   end
 end

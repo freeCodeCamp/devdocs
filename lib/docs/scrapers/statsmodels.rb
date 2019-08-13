@@ -1,7 +1,7 @@
 module Docs
   class Statsmodels < UrlScraper
     self.type = 'sphinx'
-    self.release = '0.8.0'
+    self.release = '0.9.0'
     self.base_url = 'http://www.statsmodels.org/stable/'
     self.root_path = 'index.html'
     self.links = {
@@ -21,5 +21,9 @@ module Docs
       Licensed under the 3-clause BSD License.
     HTML
 
+    def get_latest_version(opts)
+      doc = fetch_doc('http://www.statsmodels.org/stable/', opts)
+      doc.at_css('.sphinxsidebarwrapper h3 + p > b').content[1..-1]
+    end
   end
 end

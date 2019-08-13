@@ -3,7 +3,7 @@
 module Docs
   class Koa < Github
     self.base_url = 'https://github.com/koajs/koa/blob/master/docs/'
-    self.release = '2.5.1'
+    self.release = '2.6.1'
 
     self.root_path = 'api/index.md'
     self.initial_paths = %w[
@@ -34,5 +34,9 @@ module Docs
       &copy; 2018 Koa contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('koa', opts)
+    end
   end
 end

@@ -52,7 +52,7 @@ module Docs
         return [] if subpath.start_with?('users_guide')
         return [] if IGNORE_ENTRIES_PATHS.include?(subpath.split('/').last)
 
-        css('#synopsis > ul > li').each_with_object [] do |node, entries|
+        css('#synopsis > details > ul > li').each_with_object [] do |node, entries|
           link = node.at_css('a')
           name = node.content.strip
           name.remove! %r{\A(?:module|data|newtype|class|type family m|type)\s+}
@@ -75,7 +75,7 @@ module Docs
       end
 
       def include_default_entry?
-        subpath.start_with?('users_guide') || at_css('#synopsis > ul > li')
+        subpath.start_with?('users_guide') || at_css('#synopsis > details > ul > li')
       end
     end
   end

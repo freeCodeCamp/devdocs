@@ -1,6 +1,6 @@
 module Docs
   class Electron < UrlScraper
-    self.type = 'electron'
+    self.type = 'simple'
     self.base_url = 'https://electronjs.org/docs'
     self.release = '2.0.2'
     self.links = {
@@ -22,5 +22,10 @@ module Docs
       &copy; 2013&ndash;2018 GitHub Inc.<br>
       Licensed under the MIT license.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://electronjs.org/docs', opts)
+      doc.at_css('.docs-version').content
+    end
   end
 end

@@ -3,13 +3,13 @@
 
   h3 > .type-signature {
     float: right;
-    color: $textColorLight;
+    color: var(--textColorLight);
   }
 
   h3 > .signature-attributes {
     font-size: .75rem;
     font-weight: normal;
     font-style: italic;
-    color: $textColorLighter;
+    color: var(--textColorLighter);
   }
 }

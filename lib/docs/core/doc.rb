@@ -95,6 +95,9 @@ module Docs
             false
           end
         end
+      rescue Docs::SetupError => error
+        puts "ERROR: #{error.message}"
+        false
       end
 
       def store_pages(store)
@@ -118,6 +121,9 @@ module Docs
             false
           end
         end
+      rescue Docs::SetupError => error
+        puts "ERROR: #{error.message}"
+        false
       end
 
       private
@@ -146,7 +152,6 @@ module Docs
       end
     end
 
-
     def initialize
       raise NotImplementedError, "#{self.class} is an abstract class and cannot be instantiated." if self.class.abstract
     end
@@ -157,6 +162,105 @@ module Docs
 
     def build_pages(&block)
       raise NotImplementedError
+    end
+
+    def get_scraper_version(opts)
+      if self.class.method_defined?(:options) and !options[:release].nil?
+        options[:release]
+      else
+        # If options[:release] does not exist, we return the Epoch timestamp of when the doc was last modified in DevDocs production
+        json = fetch_json('https://devdocs.io/docs.json', opts)
+        items = json.select {|item| item['name'] == self.class.name}
+        items = items.map {|item| item['mtime']}
+        items.max
+      end
+    end
+
+    # Should return the latest version of this documentation
+    # If options[:release] is defined, it should be in the same format
+    # If options[:release] is not defined, it should return the Epoch timestamp of when the documentation was last updated
+    # If the docs will never change, simply return '1.0.0'
+    def get_latest_version(opts)
+      raise NotImplementedError
+    end
+
+    # Returns whether or not this scraper is outdated.
+    #
+    # The default implementation assumes the documentation uses a semver(-like) approach when it comes to versions.
+    # Patch updates are ignored because there are usually little to no documentation changes in bug-fix-only releases.
+    #
+    # Scrapers of documentations that do not use this versioning approach should override this method.
+    #
+    # Examples of the default implementation:
+    # 1 -> 2 = outdated
+    # 1.1 -> 1.2 = outdated
+    # 1.1.1 -> 1.1.2 = not outdated
+    def is_outdated(scraper_version, latest_version)
+      scraper_parts = scraper_version.to_s.split(/\./).map(&:to_i)
+      latest_parts = latest_version.to_s.split(/\./).map(&:to_i)
+
+      # Only check the first two parts, the third part is for patch updates
+      [0, 1].each do |i|
+        break if i >= scraper_parts.length or i >= latest_parts.length
+        return true if latest_parts[i] > scraper_parts[i]
+        return false if latest_parts[i] < scraper_parts[i]
+      end
+
+      false
+    end
+
+    private
+
+    #
+    # Utility methods for get_latest_version
+    #
+
+    def fetch(url, opts)
+      headers = {}
+
+      if opts.key?(:github_token) and url.start_with?('https://api.github.com/')
+        headers['Authorization'] = "token #{opts[:github_token]}"
+      end
+
+      opts[:logger].debug("Fetching #{url}")
+      response = Request.run(url, { connecttimeout: 15, headers: headers })
+
+      if response.success?
+        response.body
+      else
+        reason = response.timed_out? ? "Timed out while connecting to #{url}" : "Couldn't fetch #{url} (response code #{response.code})"
+        opts[:logger].error(reason)
+        raise reason
+      end
+    end
+
+    def fetch_doc(url, opts)
+      body = fetch(url, opts)
+      Nokogiri::HTML.parse(body, nil, 'UTF-8')
+    end
+
+    def fetch_json(url, opts)
+      JSON.parse fetch(url, opts)
+    end
+
+    def get_npm_version(package, opts)
+      json = fetch_json("https://registry.npmjs.com/#{package}", opts)
+      json['dist-tags']['latest']
+    end
+
+    def get_latest_github_release(owner, repo, opts)
+      release = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/releases/latest", opts)
+      tag_name = release['tag_name']
+      tag_name.start_with?('v') ? tag_name[1..-1] : tag_name
+    end
+
+    def get_github_tags(owner, repo, opts)
+      fetch_json("https://api.github.com/repos/#{owner}/#{repo}/tags", opts)
+    end
+
+    def get_github_file_contents(owner, repo, path, opts)
+      json = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/contents/#{path}", opts)
+      Base64.decode64(json['content'])
     end
   end
 end

@@ -1,7 +1,7 @@
 module Docs
   class Chai < UrlScraper
     self.name = 'Chai'
-    self.type = 'chai'
+    self.type = 'simple'
     self.release = '4.1.0'
     self.base_url = 'http://chaijs.com'
     self.root_path = '/api/'
@@ -23,5 +23,9 @@ module Docs
       &copy; 2016 Chai.js Assertion Library<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('chai', opts)
+    end
   end
 end

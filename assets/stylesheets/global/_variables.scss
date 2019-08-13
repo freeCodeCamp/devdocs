@@ -1,94 +1,35 @@
+// Variables needed to style the error message for browsers that don't support CSS variables.
 $baseFont: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
-$monoFont: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-$boldFontWeight: 500;
-$bolderFontWeight: 600;
-
-$style: 'light';
-
-$maxWidth: 80rem;
-$headerHeight: 3rem;
-$sidebarWidth: 20rem;
-$sidebarMediumWidth: 16rem;
-
-$documentBackground: #f3f3f3;
-$contentBackground: #fff;
-
-$externalsBackground: $contentBackground;
-
 $textColor: #333;
-$textColorLight: #666;
-$textColorLighter: #888;
-$textColorRed: #f44336;
 
-$inputFocusBorder: #35b5f4;
+html {
+  --baseFont: #{$baseFont};
+  --monoFont: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  --boldFontWeight: 500;
+  --bolderFontWeight: 600;
 
-$focusBackground: #e5e5e5;
-$focusBorder: #d4d4d4;
-$focusText: #000;
+  --textColorRed: #f44336;
 
-$loadingText: #ccc;
-$splashText: #ccc;
+  --splashText: var(--loadingText);
 
-$selectionBackground: #398df0;
-$selectionBorder: #196fc2;
-$selectionText: #fff;
+  --selectionText: #fff;
+  --transparentSelectionText: rgba(255, 255, 255, 0.9);
 
-$highlightBackground: #fffdcd;
+  --notifColor: #fff;
+  --notifColorLight: #ccc;
 
-$linkColor: #3377c0;
-$linkColorHover: #2f6cb6;
-$linkTextDecoration: none;
+  --maxWidth: 80rem;
+  --headerHeight: 3rem;
+  --sidebarWidth: 20rem;
+  --sidebarMediumWidth: 16rem;
 
-$headerBackground: #eee;
-$headerBorder: #d7d7d7;
+  --focusBackground: #e5e5e5;
+  --focusBorder: #d4d4d4;
+  --focusText: #000;
 
-$sidebarBackground: #f9f9f9;
-$sidebarBorder: #e1e1e1;
-
-$scrollbarColor: #ccc;
-$scrollbarColorHover: #999;
-
-$pathBackground: $sidebarBackground;
-$pathBorder: $sidebarBorder;
-
-$noticeBackground: #faf9e2;
-$noticeBorder: #e2e2c1;
-
-$boxBackground: #fafafa;
-$boxBorder: #d8d8d8;
-$boxBorderLight: #e5e5e5;
-$boxHeaderColor: $textColor;
-$boxHeaderBackground: #f5f5f5;
-
-$noteBackground: #f8f8dd;
-$noteBorder: #d3d952;
-
-$noteGreenBackground: #e7f8e1;
-$noteGreenBorder: #89da70;
-
-$noteBlueBackground: #d4f3fd;
-$noteBlueBorder: #94bbeb;
-
-$noteOrangeBackground: #fbe6d1;
-$noteOrangeBorder: #ec8b01;
-
-$noteRedBackground: #fed5d3;
-$noteRedBorder: #dc7874;
-
-$labelBackground: #f4f4f4;
-
-$notifBackground: rgba(#333, .85);
-$notifBorder: none;
-$notifColor: #fff;
-$notifColorLight: #ccc;
-
-$tipBackground: rgba(#fffdcd, .95);
-$tipBorder: 1px solid #e7dca9;
-
-$mediumScreen: '(max-width: 800px)';
-
-$contentZ: 1;
-$sidebarZ: 2;
-$headerZ: 3;
-$noticeZ: 4;
-$hoverZ: 5;
+  --contentZ: 1;
+  --sidebarZ: 2;
+  --headerZ: 3;
+  --noticeZ: 4;
+  --hoverZ: 5;
+}

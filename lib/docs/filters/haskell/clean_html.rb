@@ -65,6 +65,10 @@ module Docs
           end
         end
 
+        css('pre code').each do |node|
+          node.before(node.children).remove
+        end
+
         doc
       end
     end

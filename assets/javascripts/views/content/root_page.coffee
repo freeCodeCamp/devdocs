@@ -19,10 +19,6 @@ class app.views.RootPage extends app.View
     else
       'intro'
 
-    # temporary
-    if location.host is 'devdocs.io' and location.protocol is 'http:'
-      tmpl = 'httpWarning'
-
     @append @tmpl(tmpl)
     return
 

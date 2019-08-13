@@ -2,8 +2,10 @@ module Docs
   class Pandas
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        if subpath.start_with?('generated')
-          name = at_css('dt').content.strip
+        if subpath.start_with?('generated') || (subpath.include?('reference') && !subpath.include?('reference/index'))
+          name_node = at_css('dt')
+          name_node = at_css('h1') if name_node.nil?
+          name = name_node.content.strip
           name.sub! %r{\(.*}, '()'
           name.remove! %r{\s=.*}
           name.remove! %r{\A(class(method)?) (pandas\.)?}
@@ -16,7 +18,7 @@ module Docs
       end
 
       def get_type
-        if subpath.start_with?('generated')
+        if subpath.start_with?('generated') || (subpath.include?('reference') && !subpath.include?('reference/index'))
           css('.toctree-l2.current > a').last.content.remove(/\s\(.+?\)/)
         else
           'Manual'
