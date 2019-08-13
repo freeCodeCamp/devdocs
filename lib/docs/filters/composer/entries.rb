@@ -3,15 +3,12 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         title = at_css('h1').content
-
         title = "#{Integer(subpath[1]) + 1}. #{title}" if type == 'Book'
-
         title
       end
 
       def get_type
         return 'Articles' if subpath.start_with?('articles/')
-
         'Book'
       end
 

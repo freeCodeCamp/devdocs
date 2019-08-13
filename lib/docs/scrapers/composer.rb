@@ -1,17 +1,14 @@
 module Docs
   class Composer < UrlScraper
-    self.name = 'Composer'
     self.type = 'simple'
-
+    self.release = '1.9.0'
+    self.base_url = 'https://getcomposer.org/doc/'
     self.links = {
       home: 'https://getcomposer.org',
       code: 'https://github.com/composer/composer'
     }
 
     html_filters.push 'composer/clean_html', 'composer/entries'
-
-    self.release = '1.7.2'
-    self.base_url = 'https://getcomposer.org/doc/'
 
     options[:container] = '#main'
 
@@ -23,5 +20,9 @@ module Docs
       &copy; Nils Adermann, Jordi Boggiano<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('composer', 'composer', opts)
+    end
   end
 end
