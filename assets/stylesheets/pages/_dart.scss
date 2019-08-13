@@ -1,0 +1,12 @@
+._dart {
+  @extend %simple;
+
+  dl:not(.dl-horizontal) dt, .multi-line-signature {
+    @extend %block-label;
+
+    .features {
+      float: right;
+      color: var(--textColorLight);
+    }
+  }
+}

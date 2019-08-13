@@ -1,7 +1,7 @@
 module Docs
   class Requirejs < UrlScraper
     self.name = 'RequireJS'
-    self.type = 'requirejs'
+    self.type = 'simple'
     self.release = '2.3.5'
     self.base_url = 'http://requirejs.org/docs/'
     self.links = {
@@ -30,5 +30,9 @@ module Docs
       &copy; jQuery Foundation and other contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('requirejs', opts)
+    end
   end
 end

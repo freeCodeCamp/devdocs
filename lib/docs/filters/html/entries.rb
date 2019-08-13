@@ -28,7 +28,7 @@ module Docs
 
       def include_default_entry?
         return false if %w(Element/Heading_Elements).include?(slug)
-        (node = doc.at_css '.overheadIndicator').nil? || node.content.exclude?('not on a standards track')
+        (node = doc.at_css '.overheadIndicator, .blockIndicator').nil? || node.content.exclude?('not on a standards track')
       end
 
       def additional_entries

@@ -14,13 +14,23 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2018 Vladimir Agafonkin<br>
+      &copy; 2010&ndash;2019 Vladimir Agafonkin<br>
       &copy; 2010&ndash;2011, CloudMade<br>
       Maps &copy; OpenStreetMap contributors.
     HTML
 
+    version '1.5' do
+      self.release = '1.5.0'
+      self.base_url = "https://leafletjs.com/reference-#{release}.html"
+    end
+
+    version '1.4' do
+      self.release = '1.4.0'
+      self.base_url = "https://leafletjs.com/reference-#{release}.html"
+    end
+
     version '1.3' do
-      self.release = '1.3.0'
+      self.release = '1.3.4'
       self.base_url = "https://leafletjs.com/reference-#{release}.html"
     end
 
@@ -39,5 +49,10 @@ module Docs
       self.base_url = "https://leafletjs.com/reference-#{release}.html"
     end
 
+    def get_latest_version(opts)
+      doc = fetch_doc('https://leafletjs.com/index.html', opts)
+      link = doc.css('ul > li > a').to_a.select {|node| node.content == 'Docs'}.first
+      link['href'].scan(/reference-([0-9.]+)\.html/)[0][0]
+    end
   end
 end

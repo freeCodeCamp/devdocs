@@ -1,7 +1,7 @@
 module Docs
   class Mocha < UrlScraper
-    self.type = 'mocha'
-    self.release = '5.0.1'
+    self.type = 'simple'
+    self.release = '5.2.0'
     self.base_url = 'https://mochajs.org/'
     self.links = {
       home: 'https://mochajs.org/',
@@ -18,5 +18,9 @@ module Docs
       &copy; 2011&ndash;2018 JS Foundation and contributors<br>
       Licensed under the Creative Commons Attribution 4.0 International License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('mocha', opts)
+    end
   end
 end

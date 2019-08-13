@@ -56,6 +56,10 @@ module Docs
         /\Aextend/]
     end
 
+    def get_latest_version(opts)
+      get_latest_github_release('tensorflow', 'tensorflow', opts)
+    end
+
     private
 
     def parse(response)

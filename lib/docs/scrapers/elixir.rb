@@ -33,8 +33,47 @@ module Docs
         "https://elixir-lang.org/getting-started/introduction.html" ]
     end
 
+    version '1.9' do
+      self.release = '1.9.1'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.8' do
+      self.release = '1.8.2'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.7' do
+      self.release = '1.7.4'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
     version '1.6' do
-      self.release = '1.6.5'
+      self.release = '1.6.6'
       self.base_urls = [
         "https://hexdocs.pm/elixir/#{release}/",
         "https://hexdocs.pm/eex/#{release}/",
@@ -83,6 +122,11 @@ module Docs
         "https://hexdocs.pm/mix/#{release}/",
         'https://elixir-lang.org/getting-started/'
       ]
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://hexdocs.pm/elixir/api-reference.html', opts)
+      doc.at_css('h2.sidebar-projectVersion').content.strip[1..-1]
     end
   end
 end

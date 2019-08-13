@@ -1,7 +1,7 @@
 module Docs
   class Influxdata < UrlScraper
     self.name = 'InfluxData'
-    self.type = 'influxdata'
+    self.type = 'simple'
     self.release = '1.3'
     self.base_url = 'https://docs.influxdata.com/'
     self.links = {
@@ -46,5 +46,11 @@ module Docs
       &copy; 2015 InfluxData, Inc.<br>
       Licensed under the MIT license.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://docs.influxdata.com/influxdb/', opts)
+      label = doc.at_css('.navbar--current-product').content.strip
+      label.scan(/([0-9.]+)/)[0][0]
+    end
   end
 end
