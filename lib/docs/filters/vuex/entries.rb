@@ -8,10 +8,10 @@ module Docs
 
         # Add index on guides
         unless subpath.start_with?('api')
-          sidebarLink = at_css('.sidebar-link.active')
-          allLinks = css('.sidebar-link:not([href="/"]):not([href="../index"])')
+          sidebar_link = at_css('.sidebar-link.active')
+          all_links = css('.sidebar-link:not([href="/"]):not([href="../index"])')
 
-          index = allLinks.index(sidebarLink)
+          index = all_links.index(sidebar_link)
 
           name.prepend "#{index + 1}. " if index
         end
@@ -28,7 +28,7 @@ module Docs
       end
 
       def additional_entries
-        return [] unless subpath.start_with?('api') 
+        return [] unless subpath.start_with?('api')
 
         entries = [
           ['Component Binding Helpers', 'component-binding-helpers', 'API Reference'],
@@ -36,7 +36,7 @@ module Docs
         ]
 
         css('h3').each do |node|
-          entryName = node.content.strip
+          entry_name = node.content.strip
 
           # Get the previous h2 title
           title = node
@@ -44,21 +44,22 @@ module Docs
           title = title.content.strip
           title.remove! '# '
 
-          entryName.remove! '# '
+          entry_name.remove! '# '
 
-          unless entryName.start_with?('router.')
-            if title == "Vuex.Store Constructor Options"
-              entryName = "StoreOptions.#{entryName}"
-            elsif title == "Vuex.Store Instance Properties"
-              entryName = "Vuex.Store.#{entryName}"
-            elsif title == "Vuex.Store Instance Methods"
-              entryName = "Vuex.Store.#{entryName}()"
-            elsif title == "Component Binding Helpers"
-              entryName = "#{entryName}()"
+          unless entry_name.start_with?('router.')
+            case title
+            when "Vuex.Store Constructor Options"
+              entry_name = "StoreOptions.#{entry_name}"
+            when "Vuex.Store Instance Properties"
+              entry_name = "Vuex.Store.#{entry_name}"
+            when "Vuex.Store Instance Methods"
+              entry_name = "Vuex.Store.#{entry_name}()"
+            when "Component Binding Helpers"
+              entry_name = "#{entry_name}()"
             end
           end
 
-          entries << [entryName, node['id'], 'API Reference']
+          entries << [entry_name, node['id'], 'API Reference']
         end
 
         entries
