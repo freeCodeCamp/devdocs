@@ -24,9 +24,14 @@ module Docs
     end
 
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2017 The Apache Software Foundation<br>
+      &copy; 2012&ndash;2018 The Apache Software Foundation<br>
       Licensed under the Apache License 2.0.
     HTML
+
+    version '8' do
+      self.release = '8.1.2'
+      self.base_url = 'https://cordova.apache.org/docs/en/8.x/'
+    end
 
     version '7' do
       self.release = '7.1.0'
@@ -36,6 +41,16 @@ module Docs
     version '6' do
       self.release = '6.5.0'
       self.base_url = 'https://cordova.apache.org/docs/en/6.x/'
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://cordova.apache.org/docs/en/latest/', opts)
+
+      label = doc.at_css('#versionDropdown').content.strip
+      version = label.scan(/([0-9.]+)/)[0][0]
+      version = version[0...-1] if version.end_with?('.')
+
+      version
     end
   end
 end

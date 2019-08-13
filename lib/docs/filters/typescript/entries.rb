@@ -9,6 +9,7 @@ module Docs
 
       def get_type
         return 'Declaration Files' if subpath.include?('declaration-files')
+        return 'Project Configuration' if slug == 'handbook/configuring-watch'
         type = at_css('#main-nav a.active').ancestors('.panel').first.at_css('> a').content
         type = name if type == 'Handbook'
         type

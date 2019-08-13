@@ -352,6 +352,10 @@ isIE = null
 $.isIE = ->
   isIE ?= navigator.userAgent?.indexOf('MSIE') >= 0 || navigator.userAgent?.indexOf('rv:11.0') >= 0
 
+isChromeForAndroid = null
+$.isChromeForAndroid = ->
+  isChromeForAndroid ?= navigator.userAgent?.indexOf('Android') >= 0 && /Chrome\/([.0-9])+ Mobile/.test(navigator.userAgent)
+
 isAndroid = null
 $.isAndroid = ->
   isAndroid ?= navigator.userAgent?.indexOf('Android') >= 0

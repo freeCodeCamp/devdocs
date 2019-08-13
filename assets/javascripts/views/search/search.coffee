@@ -17,6 +17,7 @@ class app.views.Search extends app.View
     typing: 'focus'
     altG: 'google'
     altS: 'stackoverflow'
+    altD: 'duckduckgo'
 
   @routes:
     after: 'afterRoute'
@@ -28,6 +29,9 @@ class app.views.Search extends app.View
     @searcher
       .on 'results', @onResults
       .on 'end', @onEnd
+
+    @scope
+      .on 'change', @onScopeChange
 
     app.on 'ready', @onReady
     $.on window, 'hashchange', @searchUrl
@@ -113,6 +117,10 @@ class app.views.Search extends app.View
     @externalSearch "https://stackoverflow.com/search?q="
     return
 
+  duckduckgo: =>
+    @externalSearch "https://duckduckgo.com/?t=devdocs&q="
+    return
+
   onResults: (results) =>
     @hasResults = true if results.length
     @trigger 'results', results, @flags
@@ -131,6 +139,11 @@ class app.views.Search extends app.View
 
   onSubmit: (event) ->
     $.stopEvent(event)
+    return
+
+  onScopeChange: =>
+    @value = ''
+    @onInput()
     return
 
   afterRoute: (name, context) =>

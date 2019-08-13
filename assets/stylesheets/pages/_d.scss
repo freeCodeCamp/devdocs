@@ -2,10 +2,10 @@
   h2 { @extend %block-heading; }
   h3, .d_decl { @extend %block-label, %label-blue; }
   .d_decl { @extend %code; }
-  .d_decl > small { color: $textColorLight; }
-  .d_decl > strong { font-weight: $bolderFontWeight; }
+  .d_decl > small { color: var(--textColorLight); }
+  .d_decl > strong { font-weight: var(--bolderFontWeight); }
 
   p > code, li > code, td > code, dd > code { @extend %label; }
 
-  span.red { color: $textColorRed; }
+  span.red { color: var(--textColorRed); }
 }

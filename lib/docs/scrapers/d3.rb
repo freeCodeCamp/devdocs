@@ -17,7 +17,7 @@ module Docs
     HTML
 
     version '5' do
-      self.release = '5.4.0'
+      self.release = '5.7.0'
       self.base_url = 'https://github.com/d3/'
       self.root_path = 'd3/blob/master/API.md'
 
@@ -57,6 +57,10 @@ module Docs
 
       options[:root_title] = 'D3.js'
       options[:only_patterns] = [/\.md\z/]
+    end
+
+    def get_latest_version(opts)
+      get_npm_version('d3', opts)
     end
   end
 end

@@ -57,14 +57,8 @@ module Docs
         clean_id_attributes
         entries = []
 
-        css('.class > dt[id]', '.exception > dt[id]', '.attribute > dt[id]').each do |node|
+        css('.class > dt[id]', '.exception > dt[id]', '.attribute > dt[id]', '.data > dt[id]').each do |node|
           entries << [node['id'], node['id']]
-        end
-
-        css('.data > dt[id]').each do |node|
-          if node['id'].split('.').last.upcase! # skip constants
-            entries << [node['id'], node['id']]
-          end
         end
 
         css('.function > dt[id]', '.method > dt[id]', '.staticmethod > dt[id]', '.classmethod > dt[id]').each do |node|

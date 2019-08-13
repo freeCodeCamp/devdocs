@@ -2,7 +2,7 @@ module Docs
   class Npm < UrlScraper
     self.name = 'npm'
     self.type = 'npm'
-    self.release = '6.1.0'
+    self.release = '6.4.0'
     self.base_url = 'https://docs.npmjs.com/'
     self.force_gzip = true
     self.links = {
@@ -29,5 +29,9 @@ module Docs
       Licensed under the npm License.<br>
       npm is a trademark of npm, Inc.
     HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('npm', 'cli', opts)
+    end
   end
 end

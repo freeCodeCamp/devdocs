@@ -131,6 +131,9 @@ app.templates.helpPage = ->
     <dt class="_shortcuts-dt">
       <code class="_shortcut-code">alt + s</code>
     <dd class="_shortcuts-dd">Search on Stack Overflow
+    <dt class="_shortcuts-dt">
+      <code class="_shortcut-code">alt + d</code>
+    <dd class="_shortcuts-dd">Search on DuckDuckGo
   </dl>
   <p class="_note _note-green">
     <strong>Tip:</strong> If the cursor is no longer in the search field, press <code class="_label">/</code> or
