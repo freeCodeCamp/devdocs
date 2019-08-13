@@ -730,15 +730,20 @@ credits = [
     'MPL',
     'https://raw.githubusercontent.com/mitchellh/vagrant/master/website/LICENSE.md'
   ], [
+    'Vue Router',
+    '2013-present Evan You',
+    'MIT',
+    'https://raw.githubusercontent.com/vuejs/vue-router/dev/LICENSE'
+  ], [
     'Vue.js',
     '2013-2018 Evan You, Vue.js contributors',
     'MIT',
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
   ], [
-    'Vue Router',
-    '2013-present Evan You',
+    'Vuex',
+    '2015-present Evan You',
     'MIT',
-    'https://raw.githubusercontent.com/vuejs/vue-router/dev/LICENSE'
+    'https://raw.githubusercontent.com/vuejs/vuex/dev/LICENSE'
   ], [
     'Vulkan',
     '2014-2017 Khronos Group Inc.<br>Vulkan and the Vulkan logo are registered trademarks of the Khronos Group Inc.',
