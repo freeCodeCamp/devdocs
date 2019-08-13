@@ -1,7 +1,7 @@
 module Docs
   class Enzyme < UrlScraper
     self.type = 'simple'
-    self.release = '3.6.0'
+    self.release = '3.10.0'
     self.base_url = 'https://airbnb.io/enzyme/'
     self.root_path = 'index.html'
     self.links = {
@@ -16,5 +16,9 @@ module Docs
       &copy; 2015 Airbnb, Inc.<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('enzyme', opts)
+    end
   end
 end
