@@ -16,5 +16,11 @@ module Docs
       Copyright &copy; 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.<br>
       Licensed under the GNU Free Documentation License.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://open-cobol.sourceforge.io/HTML/gnucobpg.html', opts)
+      title = doc.at_css('h1').content
+      title.scan(/([0-9.]+)/)[0][0]
+    end
   end
 end
