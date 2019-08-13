@@ -187,6 +187,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/coffeescript/master/LICENSE'
   ], [
+    'Composer',
+    'Nils Adermann, Jordi Boggiano',
+    'MIT',
+    'https://raw.githubusercontent.com/composer/composer/master/LICENSE'
+  ], [
     'Cordova',
     '2012-2018 The Apache Software Foundation',
     'Apache',
