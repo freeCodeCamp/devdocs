@@ -23,8 +23,8 @@ module Docs
     HTML
 
     version do
-      self.release = '11.1.0'
-      self.base_url = 'https://nodejs.org/dist/latest-v11.x/docs/api/'
+      self.release = '12.8.0'
+      self.base_url = 'https://nodejs.org/dist/latest-v12.x/docs/api/'
     end
 
     version '10 LTS' do
@@ -45,6 +45,11 @@ module Docs
     version '4 LTS' do
       self.release = '4.9.1'
       self.base_url = 'https://nodejs.org/dist/latest-v4.x/docs/api/'
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://nodejs.org/en/', opts)
+      doc.at_css('#home-intro > .home-downloadblock:last-of-type > a')['data-version'][1..-1]
     end
   end
 end

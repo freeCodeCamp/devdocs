@@ -93,5 +93,9 @@ module Docs
     version '4.1' do
       self.release = '4.1.16'
     end
+
+    def get_latest_version(opts)
+      get_latest_github_release('rails', 'rails', opts)
+    end
   end
 end

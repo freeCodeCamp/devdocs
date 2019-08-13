@@ -3,13 +3,13 @@ class app.UpdateChecker
     @lastCheck = Date.now()
 
     $.on window, 'focus', @onFocus
-    app.appCache.on 'updateready', @onUpdateReady if app.appCache
+    app.serviceWorker?.on 'updateready', @onUpdateReady
 
     setTimeout @checkDocs, 0
 
   check: ->
-    if app.appCache
-      app.appCache.update()
+    if app.serviceWorker
+      app.serviceWorker.update()
     else
       ajax
         url: $('script[src*="application"]').getAttribute('src')

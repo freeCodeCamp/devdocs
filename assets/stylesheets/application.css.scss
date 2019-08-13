@@ -1,7 +1,6 @@
-//= depend_on docs-1.png
-//= depend_on docs-1@2x.png
-//= depend_on docs-2.png
-//= depend_on docs-2@2x.png
+//= depend_on sprites/docs.png
+//= depend_on sprites/docs@2x.png
+//= depend_on sprites/docs.json
 
 /*!
  * Copyright 2013-2019 Thibaut Courouble and other contributors
@@ -46,6 +45,7 @@
         'pages/coffeescript',
         'pages/cordova',
         'pages/crystal',
+        'pages/cypress',
         'pages/d',
         'pages/d3',
         'pages/dart',
@@ -95,6 +95,7 @@
         'pages/rfc',
         'pages/rubydoc',
         'pages/rust',
+        'pages/scala',
         'pages/sinon',
         'pages/socketio',
         'pages/sphinx',
@@ -107,5 +108,6 @@
         'pages/underscore',
         'pages/vue',
         'pages/webpack',
+        'pages/wordpress',
         'pages/yard',
         'pages/yii';
