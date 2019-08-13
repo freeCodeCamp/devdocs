@@ -16,11 +16,22 @@ module Docs
       end
 
       def get_type
-        slug.split('/', 2).first
+        slug.split('/', 3)[1]
       end
 
       def include_default_entry?
         slug.split('/').last.start_with? 'salt'
+      end
+
+      def additional_entries
+        entries = []
+
+        css('.function > h3').each do |node|
+          name = node.content.remove('salt.').split('(')[0] + '()'
+          entries << [name, node['id']]
+        end
+
+        entries
       end
     end
   end
