@@ -1,11 +1,10 @@
-require 'net/http'
-
 module Docs
   class Mariadb
     class CleanHtmlFilter < Filter
-      @@known_urls = Hash.new
-
       def call
+        # Return the empty doc if the EraseInvalidPagesFilter detected this page shouldn't be scraped
+        return doc if doc.inner_html == ''
+
         # Extract main content
         @doc = at_css('#content')
 
@@ -21,19 +20,6 @@ module Docs
           node['data-language'] = 'sql'
         end
 
-        # Fix links like http://kb-mirror.mariadb.com/kb/en/bitwise-or/ to not redirect to an external page
-        css('a').each do |node|
-          url = node['href']
-
-          if /^http:\/\/kb-mirror\.mariadb\.com\/kb\/en\/[^\/]+\/(#[^\/]+)?$/.match?(url)
-            final_url = get_final_url(url)
-
-            if !final_url.nil? && final_url.start_with?('/kb/en/library/documentation/')
-              node['href'] = "#{'../' * subpath.count('/')}#{final_url[29..-1]}index"
-            end
-          end
-        end
-
         # Fix images
         css('img').each do |node|
           node['src'] = node['src'].sub('http:', 'https:')
@@ -46,11 +32,11 @@ module Docs
           end
         end
 
-        # Convert listings (pages like http://kb-mirror.mariadb.com/kb/en/library/documentation/sql-statements-structure/) into tables
+        # Convert listings (pages like https://mariadb.com/kb/en/library/documentation/sql-statements-structure/) into tables
         css('ul.listing').each do |node|
           rows = []
 
-          node.css('li').each do |li|
+          node.css('li:not(.no_data)').each do |li|
             name = li.at_css('.media-heading').content
             description = li.at_css('.blurb').content
             url = li.at_css('a')['href']
@@ -61,15 +47,20 @@ module Docs
           node.replace(table)
         end
 
-        doc
-      end
-
-      def get_final_url(url)
-        unless @@known_urls.has_key?(url)
-          @@known_urls[url] = Net::HTTP.get_response(URI(url))['location']
+        # Turn note titles into <strong> tags
+        css('.product_title').each do |node|
+          node.name = 'strong'
         end
 
-        @@known_urls[url]
+        # Remove comments and questions
+        css('.related_questions, #comments').remove
+        css('h2').each do |node|
+          if node.content == 'Comments'
+            node.remove
+          end
+        end
+
+        doc
       end
     end
   end

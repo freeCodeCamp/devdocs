@@ -439,7 +439,7 @@ credits = [
     'http://www.gnu.org/copyleft/fdl.html'
   ], [
     'MariaDB',
-    '2018 MariaDB',
+    '2019 MariaDB',
     'CC BY-SA & GFDL',
     'https://mariadb.com/kb/en/library/documentation/+license/'
   ], [
