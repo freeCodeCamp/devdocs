@@ -42,22 +42,23 @@ module Docs
 
     version '21' do
       self.release = '21.0'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/Erlang21'
     end
 
     version '20' do
       self.release = '20.3'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/Erlang20'
     end
 
     version '19' do
       self.release = '19.3'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/Erlang19'
     end
 
     version '18' do
       self.release = '18.3'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/Erlang18'
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://www.erlang.org/downloads', opts)
+      doc.at_css('.col-lg-3 > ul > li').content.strip.sub(/OTP /, '')
     end
   end
 end

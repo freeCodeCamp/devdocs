@@ -6,13 +6,16 @@ module Docs
         'CSS_Background_and_Borders' => 'Backgrounds & Borders',
         'CSS_Columns' => 'Multi-column Layout',
         'CSS_Flexible_Box_Layout' => 'Flexible Box Layout',
+        'CSS_Fonts' => 'Fonts',
         'CSS_Grid_Layout' => 'Grid Layout',
         'CSS_Images' => 'Images',
         'CSS_Lists_and_Counters' => 'Lists',
         'CSS_Transforms' => 'Transforms',
         'Media_Queries' => 'Media Queries',
+        'filter-function' => 'Filter Effects',
         'transform-function' => 'Transforms',
         '@media' => 'Media Queries',
+        'overscroll' => 'Overscroll',
         'text-size-adjust' => 'Miscellaneous',
         'resolved_value' => 'Miscellaneous',
         'touch-action' => 'Miscellaneous',
@@ -42,7 +45,7 @@ module Docs
       end
 
       def get_type
-        if slug.include?('-webkit') || slug.include?('-moz')
+        if slug.include?('-webkit') || slug.include?('-moz') || slug.include?('-ms')
           'Extensions'
         elsif type = TYPE_BY_PATH[slug.split('/').first]
           type
@@ -66,19 +69,22 @@ module Docs
           'Pseudo-Elements'
         elsif name.start_with?(':')
           'Selectors'
+        elsif name.start_with?('display-')
+          'Display'
         else
           'Miscellaneous'
         end
       end
 
       STATUSES = {
-        'spec-Living' => 0,
-        'spec-REC'    => 1,
-        'spec-CR'     => 2,
-        'spec-PR'     => 3,
-        'spec-LC'     => 4,
-        'spec-WD'     => 5,
-        'spec-ED'     => 6
+        'spec-Living'   => 0,
+        'spec-REC'      => 1,
+        'spec-CR'       => 2,
+        'spec-PR'       => 3,
+        'spec-LC'       => 4,
+        'spec-WD'       => 5,
+        'spec-ED'       => 6,
+        'spec-Obsolete' => 7
       }
 
       PRIORITY_STATUSES = %w(spec-REC spec-CR)
@@ -86,6 +92,7 @@ module Docs
 
       def get_spec
         return unless table = at_css('#Specifications + table') || css('.standard-table').last
+
         specs = table.css('tbody tr').to_a
         # [link, span]
         specs.map!     { |node| [node.at_css('> td:nth-child(1) > a'), node.at_css('> td:nth-child(2) > span')] }
@@ -110,8 +117,8 @@ module Docs
         'shape' => [
           %w(rect() Syntax) ],
         'timing-function' => [
-          %w(cubic-bezier() The_cubic-bezier()_class_of_timing-functions),
-          %w(steps() The_steps()_class_of_timing-functions),
+          %w(cubic-bezier()),
+          %w(steps()),
           %w(linear linear),
           %w(ease ease),
           %w(ease-in ease-in),

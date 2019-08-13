@@ -12,8 +12,8 @@ app.templates.notFoundPage = ->
 
 app.templates.pageLoadError = ->
   error """ The page failed to load. """,
-        """ It may be missing from the server (try reloading the app) or you could be offline.<br>
-            If you keep seeing this, you're likely behind a proxy or firewall that blocks cross-domain requests. """,
+        """ It may be missing from the server (try reloading the app) or you could be offline (try <a href="/offline">installing the documentation for offline usage</a> when online again).<br>
+            If you're online and you keep seeing this, you're likely behind a proxy or firewall that blocks cross-domain requests. """,
         """ #{back} &middot; <a href="/##{location.pathname}" target="_top" class="_error-link">Reload</a>
             &middot; <a href="#" class="_error-link" data-retry>Retry</a> """
 
@@ -57,17 +57,17 @@ app.templates.unsupportedBrowser = """
     <p class="_fail-text">DevDocs is an API documentation browser which supports the following browsers:
     <ul class="_fail-list">
       <li>Recent versions of Firefox, Chrome, or Opera
-      <li>Safari 9.1+
-      <li>Edge 16+
-      <li>iOS 10+
+      <li>Safari 11.1+
+      <li>Edge 17+
+      <li>iOS 11.3+
     </ul>
     <p class="_fail-text">
-      If you're unable to upgrade, I apologize.
-      I decided to prioritize speed and new features over support for older browsers.
+      If you're unable to upgrade, we apologize.
+      We decided to prioritize speed and new features over support for older browsers.
     <p class="_fail-text">
       Note: if you're already using one of the browsers above, check your settings and add-ons.
       The app uses feature detection, not user agent sniffing.
     <p class="_fail-text">
-      &mdash; Thibaut <a href="https://twitter.com/DevDocs" class="_fail-link">@DevDocs</a>
+      &mdash; <a href="https://twitter.com/DevDocs">@DevDocs</a>
   </div>
 """

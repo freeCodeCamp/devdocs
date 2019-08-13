@@ -14,5 +14,10 @@ module Docs
       &copy; 2017 Google Inc<br>
       Licensed under the Apache License 2.0.
     HTML
+
+    def get_latest_version(opts)
+      contents = get_github_file_contents('GoogleChrome', 'puppeteer', 'README.md', opts)
+      contents.scan(/\/v([0-9.]+)\/docs\/api\.md/)[0][0]
+    end
   end
 end
