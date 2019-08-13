@@ -5,7 +5,7 @@
   }
 
   th[align=left] {
-    border-left: 1px solid $boxBorder;
+    border-left: 1px solid var(--boxBorder);
   }
 
   code { @extend %label; }

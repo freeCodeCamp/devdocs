@@ -2,7 +2,7 @@ module Docs
   class ApachePig < UrlScraper
     self.name = 'Apache Pig'
     self.slug = 'apache_pig'
-    self.type = 'apache_pig'
+    self.type = 'simple'
     self.links = {
       home: 'https://pig.apache.org/'
     }
@@ -43,5 +43,10 @@ module Docs
       self.base_url = "https://pig.apache.org/docs/r#{release}/"
     end
 
+    def get_latest_version(opts)
+      doc = fetch_doc('https://pig.apache.org/', opts)
+      item = doc.at_css('div[id="menu_1.2"] > .menuitem:last-child')
+      item.content.strip.sub(/Release /, '')
+    end
   end
 end

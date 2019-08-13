@@ -111,6 +111,7 @@ module Docs
         css('.qmlproto').each do |node|
           title = node.content.strip
           id = node.at_css('tr')['id']
+          id = node.at_css('a')['name'] if id.blank?
 
           # Remove options
           title.remove!(%r{^\[.*\] })

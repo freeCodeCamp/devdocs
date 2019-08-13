@@ -23,7 +23,7 @@
 
   .t-spar { // language/switch, language/for, etc.
     font-style: italic;
-    color: $textColorLight;
+    color: var(--textColorLight);
   }
   .t-sdsc-nopad dl, .t-sdsc-nopad dd { margin: 0; }
 
@@ -57,7 +57,7 @@
     margin: 1rem 0;
     padding: .375rem;
     font-size: .75rem;
-    border: 1px solid $boxBorder;
+    border: 1px solid var(--boxBorder);
     border-radius: 2px;
   }
 

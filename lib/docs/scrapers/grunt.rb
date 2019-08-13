@@ -1,7 +1,7 @@
 module Docs
   class Grunt < UrlScraper
     self.name = 'Grunt'
-    self.type = 'grunt'
+    self.type = 'simple'
     self.release = '1.0.1'
     self.base_url = 'https://gruntjs.com/'
     self.root_path = 'getting-started'
@@ -26,5 +26,9 @@ module Docs
       &copy; GruntJS Team<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('grunt-cli', opts)
+    end
   end
 end

@@ -1,6 +1,6 @@
 module Docs
   class Less < UrlScraper
-    self.type = 'less'
+    self.type = 'simple'
     self.release = '2.7.2'
     self.base_url = 'http://lesscss.org'
     self.root_path = '/features'
@@ -21,5 +21,11 @@ module Docs
       &copy; 2009&ndash;2016 The Core Less Team<br>
       Licensed under the Creative Commons Attribution License 3.0.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('http://lesscss.org/features/', opts)
+      label = doc.at_css('.footer-links > li').content
+      label.scan(/([0-9.]+)/)[0][0]
+    end
   end
 end

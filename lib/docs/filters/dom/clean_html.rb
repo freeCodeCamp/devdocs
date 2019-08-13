@@ -30,7 +30,7 @@ module Docs
         end
 
         # Remove <div> wrapping .overheadIndicator
-        css('div > .overheadIndicator:first-child:last-child').each do |node|
+        css('div > .overheadIndicator:first-child:last-child', 'div > .blockIndicator:first-child:last-child').each do |node|
           node.parent.replace(node)
         end
 

@@ -856,7 +856,7 @@ Raven.prototype = {
   },
 
   _triggerEvent: function(eventType, options) {
-    // NOTE: `event` is a native browser thing, so let's avoid conflicting wiht it
+    // NOTE: `event` is a native browser thing, so let's avoid conflicting with it
     var evt, key;
 
     if (!this._hasDocument) return;

@@ -1,16 +1,9 @@
 module Docs
   class Ruby < Rdoc
-    # Generated with:
-    #   ./configure && make html
-    # or:
-    #   rdoc \
-    #     --root . \
-    #     --page-dir doc \
-    #     --encoding=UTF-8 \
-    #     --visibility=public \
-    #     --format=darkfish \
-    #     --no-line-numbers \
-    #     --op html .
+    # Instructions:
+    #   1. Download Ruby's source code
+    #   2. Run "./configure && make html" (in the Ruby directory)
+    #   3. Copy the ".ext/html" directory to "docs/ruby~[version]"
 
     include FixInternalUrlsBehavior
 
@@ -77,23 +70,30 @@ module Docs
     HTML
 
     version '2.5' do
-      self.release = '2.5.0'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby25'
+      self.release = '2.5.3'
     end
 
     version '2.4' do
-      self.release = '2.4.3'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby24'
+      self.release = '2.4.5'
     end
 
     version '2.3' do
-      self.release = '2.3.6'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby23'
+      self.release = '2.3.8'
     end
 
     version '2.2' do
-      self.release = '2.2.9'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby22'
+      self.release = '2.2.10'
+    end
+
+    def get_latest_version(opts)
+      tags = get_github_tags('ruby', 'ruby', opts)
+      tags.each do |tag|
+        version = tag['name'].gsub(/_/, '.')[1..-1]
+
+        if !/^([0-9.]+)$/.match(version).nil? && version.count('.') == 2
+          return version
+        end
+      end
     end
   end
 end

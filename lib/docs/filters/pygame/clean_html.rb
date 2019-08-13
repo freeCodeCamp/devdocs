@@ -85,7 +85,7 @@ module Docs
               if initial_header.start_with?(@section)
                 sig.content = @section + '.' + sig.text
               end
-              # seperate the signatures on different lines.
+              # separate the signatures on different lines.
               header.add_child "<br>"
             end
           end

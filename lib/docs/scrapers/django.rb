@@ -34,40 +34,44 @@ module Docs
       Licensed under the BSD License.
     HTML
 
+    version '2.2' do
+      self.release = '2.2.4'
+      self.base_url = 'https://docs.djangoproject.com/en/2.2/'
+    end
+
     version '2.1' do
-      self.release = '2.1.0'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/Django21'
+      self.release = '2.1.11'
       self.base_url = 'https://docs.djangoproject.com/en/2.1/'
     end
 
     version '2.0' do
-      self.release = '2.0.7'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/Django20'
+      self.release = '2.0.13'
       self.base_url = 'https://docs.djangoproject.com/en/2.0/'
     end
 
     version '1.11' do
-      self.release = '1.11.9'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/Django111'
+      self.release = '1.11.23'
       self.base_url = 'https://docs.djangoproject.com/en/1.11/'
     end
 
     version '1.10' do
       self.release = '1.10.8'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/Django110'
       self.base_url = 'https://docs.djangoproject.com/en/1.10/'
     end
 
     version '1.9' do
       self.release = '1.9.13'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/Django19'
       self.base_url = 'https://docs.djangoproject.com/en/1.9/'
     end
 
     version '1.8' do
       self.release = '1.8.18'
-      self.dir = '/Users/Thibaut/DevDocs/Docs/Django18'
       self.base_url = 'https://docs.djangoproject.com/en/1.8/'
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://docs.djangoproject.com/', opts)
+      doc.at_css('#doc-versions > li.current > span > strong').content
     end
   end
 end

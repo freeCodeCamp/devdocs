@@ -1,7 +1,7 @@
 module Docs
   class Phoenix < UrlScraper
     self.type = 'elixir'
-    self.release = '1.3.2'
+    self.release = '1.3.4'
     self.base_url = 'https://hexdocs.pm/'
     self.root_path = 'phoenix/Phoenix.html'
     self.initial_paths = %w(
@@ -46,5 +46,10 @@ module Docs
         HTML
       end
     }
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://hexdocs.pm/phoenix/Phoenix.html', opts)
+      doc.at_css('.sidebar-projectVersion').content.strip[1..-1]
+    end
   end
 end

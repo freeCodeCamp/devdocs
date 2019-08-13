@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html<%= ' manifest="/manifest.appcache"' if App.production? %> prefix="og: http://ogp.me/ns#" lang="en" class="_booting">
+<html prefix="og: http://ogp.me/ns#" lang="en" class="_booting">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no">
@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#eee">
   <meta name="robots" content="noodp">
   <title>DevDocs API Documentation</title>
   <link rel="canonical" href="<%= canonical_origin %>">
@@ -30,9 +31,9 @@
   <link rel="apple-touch-icon" sizes="152x152" href="<%= App.cdn_origin %>/images/apple-icon-152.png">
   <link rel="apple-touch-icon" sizes="160x160" href="<%= App.cdn_origin %>/images/apple-icon-160.png">
   <link rel="mask-icon" href="<%= App.cdn_origin %>/images/webkit-mask-icon.svg" color="#398df0">
-  <link rel="stylesheet" href="<%= main_stylesheet_path %>" data-alt="<%= alternate_stylesheet_path %>">
+  <%= stylesheet_tag 'application' %>
 </head>
-<body<%= %( class="#{app_layout}") if app_layout %>>
+<body>
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
 <%= erb :app -%>
 <%= javascript_tag 'application', asset_host: false %>

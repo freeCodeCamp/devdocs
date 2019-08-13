@@ -34,7 +34,8 @@ module Docs
         'rtree' => 'R*Tree Module',
         'rbu' => 'RBU Extension',
         'limits' => 'Limits',
-        'howtocorrupt' => 'How To Corrupt'
+        'howtocorrupt' => 'How To Corrupt',
+        'geopoly' => 'Geopoly'
       }
 
       def get_type

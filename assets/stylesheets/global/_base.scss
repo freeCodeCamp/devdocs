@@ -1,9 +1,10 @@
 html {
   height: 100%;
   font-size: 100%;
-  background: $documentBackground;
+  background: #fff; // fallback to show the error message to browsers that don't support CSS variables.
+  background: var(--documentBackground);
 
-  @media #{$mediumScreen} { font-size: 93.75%; }
+  @include mobile { font-size: 93.75%; }
 
   @include print { background: none; }
   @import 'global/print';
@@ -17,10 +18,11 @@ body {
   font-weight: normal;
   font-family: $baseFont;
   line-height: 1.7;
-  color: $textColor;
+  color: $textColor; // fallback to show the error message to browsers that don't support CSS variables.
+  color: var(--textColor);
   word-wrap: break-word;
   overflow-wrap: break-word;
-  background: $contentBackground;
+  background: var(--contentBackground);
   touch-action: manipulation;
   -webkit-tap-highlight-color: rgba(black, 0);
   -webkit-touch-callout: none;
@@ -29,11 +31,11 @@ body {
 }
 
 a {
-  color: $linkColor;
-  text-decoration: $linkTextDecoration;
+  color: var(--linkColor);
+  text-decoration: var(--linkTextDecoration);
 
   &:hover {
-    color: $linkColorHover;
+    color: var(--linkColorHover);
     text-decoration: underline;
   }
 }
@@ -47,7 +49,7 @@ img {
 h1, h2, h3, h4, h5, h6 {
   margin: 1.5em 0 1em;
   line-height: 1.3;
-  font-weight: $bolderFontWeight;
+  font-weight: var(--bolderFontWeight);
 }
 
 h1 { font-size: 1.5em; }
@@ -59,7 +61,7 @@ h5, h6 { font-size: 1em; }
 p { margin: 0 0 1em; }
 p:last-child { margin-bottom: 0; }
 
-b, strong { font-weight: $boldFontWeight; }
+b, strong { font-weight: var(--boldFontWeight); }
 
 small { font-size: .9em; }
 
@@ -79,7 +81,7 @@ li > ul, li > ol, dd > ul, dd > ol { margin: .5em 0; }
 li > p { margin-bottom: .25em; }
 
 dl { margin: 1.5em 0; }
-dt { font-weight: $boldFontWeight; }
+dt { font-weight: var(--boldFontWeight); }
 dd {
   margin: .375em;
   padding-left: 1em;
@@ -91,15 +93,15 @@ dfn, var { font-style: normal; }
 
 abbr, acronym, dfn {
   cursor: help;
-  border-bottom: 1px dotted $textColor;
+  border-bottom: 1px dotted var(--textColor);
 }
 
 pre, code, samp, %pre, %code {
-  font-family: $monoFont;
+  font-family: var(--monoFont);
   font-weight: normal;
   font-style: normal;
   font-size: .9em;
-  color: $textColor;
+  color: var(--textColor);
   white-space: pre-wrap;
   direction: ltr;
   -moz-tab-size: 2;
@@ -121,14 +123,14 @@ a > code { color: inherit; }
 table {
   margin: 1.5em 0;
   background: none;
-  border: 1px solid $boxBorder;
+  border: 1px solid var(--boxBorder);
   border-collapse: separate;
   border-spacing: 0;
   border-radius: 3px;
 }
 
 caption {
-  font-weight: $boldFontWeight;
+  font-weight: var(--boldFontWeight);
   padding: 0 .7em .3em;
 }
 
@@ -142,15 +144,15 @@ th, td {
 }
 
 th {
-  font-weight: $boldFontWeight;
+  font-weight: var(--boldFontWeight);
   border: 0;
-  border-bottom: 1px solid $boxBorder;
+  border-bottom: 1px solid var(--boxBorder);
   border-radius: 0;
   @extend %heading-box;
 
   &:empty { background: none; }
 
-  + th, + td { border-left: 1px solid $boxBorder; }
+  + th, + td { border-left: 1px solid var(--boxBorder); }
 
   tr:first-child > &:first-child { border-top-left-radius: 3px; }
   tr:first-child > &:last-child { border-top-right-radius: 3px; }
@@ -161,10 +163,10 @@ th {
 }
 
 td {
-  background: $contentBackground;
-  border-bottom: 1px solid $boxBorderLight;
+  background: var(--contentBackground);
+  border-bottom: 1px solid var(--boxBorderLight);
 
-  + td { border-left: 1px solid $boxBorderLight; }
+  + td { border-left: 1px solid var(--boxBorderLight); }
   tr:last-child > & { border-bottom: 0; }
 
   > pre:only-child, > p:only-child, > ul:only-child, > ol:only-child {
@@ -190,7 +192,7 @@ input, button {
   margin: 0;
   font-family: inherit;
   font-size: 100%;
-  color: $textColor;
+  color: var(--textColor);
   line-height: normal;
   @extend %border-box;
 }
@@ -219,7 +221,7 @@ button:focus {
 }
 
 img, iframe {
-  background: $externalsBackground;
+  background: var(--externalsBackground);
 }
 
 input[type="search"]::-webkit-search-cancel-button,
@@ -234,9 +236,9 @@ input[type="search"]::-webkit-search-decoration {
   border: 0 !important;
 }
 
-::-webkit-input-placeholder { color: $textColorLighter; }
-::-moz-placeholder          { color: $textColorLighter; opacity: 1; }
-:-ms-input-placeholder      { color: $textColorLighter; }
+::-webkit-input-placeholder { color: var(--textColorLighter); }
+::-moz-placeholder          { color: var(--textColorLighter); opacity: 1; }
+:-ms-input-placeholder      { color: var(--textColorLighter); }
 
 body:not(._native-scrollbars) {
   *::-webkit-scrollbar { -webkit-appearance: none; }
@@ -247,12 +249,12 @@ body:not(._native-scrollbars) {
   *::-webkit-scrollbar-corner { display: none; }
 
   *::-webkit-scrollbar-track {
-    background: $contentBackground;
-    border: 1px solid $contentBackground;
+    background: var(--contentBackground);
+    border: 1px solid var(--contentBackground);
 
     &:hover {
-      background: $sidebarBackground;
-      border-color: $sidebarBorder;
+      background: var(--sidebarBackground);
+      border-color: var(--sidebarBorder);
     }
 
     &:vertical { border-width: 0 0 0 1px; }
@@ -270,14 +272,14 @@ body:not(._native-scrollbars) {
 
   *::-webkit-scrollbar-thumb {
     min-height: 2rem;
-    background: $scrollbarColor;
+    background: var(--scrollbarColor);
     background-clip: padding-box;
     border: 5px solid rgba(black, 0);
     border-radius: 10px;
 
     &:hover,
     &:active {
-      background-color: $scrollbarColorHover;
+      background-color: var(--scrollbarColorHover);
       border-width: 4px;
     }
   }

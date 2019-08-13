@@ -2,7 +2,7 @@ module Docs
   class Marionette < UrlScraper
     self.name = 'Marionette.js'
     self.slug = 'marionette'
-    self.type = 'marionette'
+    self.type = 'simple'
     self.root_path = 'index'
     self.links = {
       home: 'https://marionettejs.com/',
@@ -37,6 +37,10 @@ module Docs
       self.base_url = "https://marionettejs.com/docs/v#{release}/"
 
       html_filters.push 'marionette/entries_v2'
+    end
+
+    def get_latest_version(opts)
+      get_npm_version('backbone.marionette', opts)
     end
   end
 end

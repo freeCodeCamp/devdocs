@@ -1,7 +1,7 @@
 module Docs
   class Haxe < UrlScraper
     self.name = 'Haxe'
-    self.type = 'haxe'
+    self.type = 'simple'
     self.release = '3.4.7'
     self.base_url = 'https://api.haxe.org/'
 
@@ -65,6 +65,12 @@ module Docs
 
     version 'Python' do
       self.base_url = 'https://api.haxe.org/python/'
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://api.haxe.org/', opts)
+      label = doc.at_css('.container.main-content h1 > small').content
+      label.sub(/version /, '')
     end
   end
 end
