@@ -2,6 +2,11 @@ module Docs
   class SaltStack
     class CleanHtmlFilter < Filter
       def call
+        if root_page?
+          doc.inner_html = '<h1>SaltStack</h1>'
+          return doc
+        end
+
         css('.headerlink').remove
 
         css('div[class^="highlight-"]').each do |node|
