@@ -10,7 +10,7 @@ module Docs
   # The generated html can be found in salt/doc/_build/html
   class SaltStack < FileScraper
     self.type = 'simple'
-    self.slug = 'salt_stack'
+    self.slug = 'saltstack'
     self.release = '2019.2.0'
     self.base_url = 'https://docs.saltstack.com/en/latest/'
     self.root_path = 'ref/index.html'
