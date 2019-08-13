@@ -15,5 +15,9 @@ module Docs
       &copy; 2009&ndash;2017 The Modernizr team<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('modernizr', opts)
+    end
   end
 end

@@ -54,5 +54,9 @@ module Docs
       JS
       capybara.html
     end
+
+    def get_latest_version(opts)
+      get_npm_version('immutable', opts)
+    end
   end
 end
