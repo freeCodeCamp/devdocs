@@ -736,9 +736,9 @@ credits = [
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
   ], [
     'Vue Router',
-    '2013-2018 Evan You, Vue.js contributors',
+    '2013-present Evan You',
     'MIT',
-    'https://github.com/vuejs/vue-router/blob/dev/LICENSE'
+    'https://raw.githubusercontent.com/vuejs/vue-router/dev/LICENSE'
   ], [
     'Vulkan',
     '2014-2017 Khronos Group Inc.<br>Vulkan and the Vulkan logo are registered trademarks of the Khronos Group Inc.',

@@ -3,16 +3,13 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = at_css('h1').content
-
         name.remove! '# '
-
         name
       end
 
       def get_type
         return 'Other Guides' if subpath.start_with?('guide/advanced')
         return 'Basic Guides' if subpath.start_with?('guide') || subpath.start_with?('installation')
-
         'API Reference'
       end
 
@@ -21,7 +18,7 @@ module Docs
       end
 
       def additional_entries
-        return [] unless subpath.start_with?('api') 
+        return [] unless subpath.start_with?('api')
 
         entries = [
           ['<router-link>', 'router-link', 'API Reference'],
@@ -31,7 +28,7 @@ module Docs
         ]
 
         css('h3').each do |node|
-          entryName = node.content.strip
+          entry_name = node.content.strip
 
           # Get the previous h2 title
           title = node
@@ -39,29 +36,32 @@ module Docs
           title = title.content.strip
           title.remove! '# '
 
-          entryName.remove! '# '
+          entry_name.remove! '# '
 
-          if title == "Router Construction Options"
-            entryName = "RouterOptions.#{entryName}"
-          elsif title == "<router-view> Props"
-            entryName = "<router-view> `#{entryName}` prop"
-          elsif title == "<router-link> Props"
-            entryName = "<router-link> `#{entryName}` prop"
-          elsif title == "Router Instance Methods"
-            entryName = "#{entryName}()"
+          case title
+          when 'Router Construction Options'
+            entry_name = "RouterOptions.#{entry_name}"
+          when '<router-view> Props'
+            entry_name = "<router-view> `#{entry_name}` prop"
+          when '<router-link> Props'
+            entry_name = "<router-link> `#{entry_name}` prop"
+          when 'Router Instance Methods'
+            entry_name = "#{entry_name}()"
           end
 
-          unless title == "Component Injections" || node['id'] == 'applying-active-class-to-outer-element' || node['id'] == 'route-object-properties'
-            entries << [entryName, node['id'], 'API Reference']
+          entry_name = entry_name.split(' API ')[0] if entry_name.start_with?('v-slot')
+
+          unless title == "Component Injections" || node['id'] == 'route-object-properties'
+            entries << [entry_name, node['id'], 'API Reference']
           end
         end
 
         css('#route-object-properties + ul > li > p:first-child > strong').each do |node|
-          entryName = node.content.strip
-          id = "route-object-#{entryName.remove('$route.')}"
+          entry_name = node.content.strip
+          id = "route-object-#{entry_name.remove('$route.')}"
 
           node['id'] = id
-          entries << [entryName, node['id'], 'API Reference']
+          entries << [entry_name, node['id'], 'API Reference']
         end
 
         entries
