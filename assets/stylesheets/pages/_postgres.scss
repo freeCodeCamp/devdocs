@@ -16,7 +16,7 @@
   }
 
   p > code { @extend %label; }
-  p.c2 { font-weight: $boldFontWeight; }
+  p.c2 { font-weight: var(--boldFontWeight); }
 
   .navfooter > table { width: 100%; }
   td[align=center] { text-align: center; }

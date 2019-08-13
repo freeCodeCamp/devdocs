@@ -29,13 +29,18 @@ module Docs
     end
 
     version '3.0' do
-      self.release = '3.0'
+      self.release = '3.0.6'
       self.base_url = "http://docs.godotengine.org/en/#{self.version}/"
     end
 
     version '2.1' do
       self.release = '2.1'
       self.base_url = "http://docs.godotengine.org/en/#{self.version}/"
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://docs.godotengine.org/', opts)
+      doc.at_css('.version').content.strip
     end
   end
 end

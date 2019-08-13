@@ -3,10 +3,10 @@ module Docs
     self.name = 'Underscore.js'
     self.slug = 'underscore'
     self.type = 'underscore'
-    self.release = '1.9.0'
-    self.base_url = 'http://underscorejs.org'
+    self.release = '1.9.1'
+    self.base_url = 'https://underscorejs.org'
     self.links = {
-      home: 'http://underscorejs.org',
+      home: 'https://underscorejs.org',
       code: 'https://github.com/jashkenas/underscore'
     }
 
@@ -17,8 +17,13 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2009&ndash;2017 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors<br>
+      &copy; 2009&ndash;2018 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://underscorejs.org/', opts)
+      doc.at_css('.version').content[1...-1]
+    end
   end
 end

@@ -1,0 +1,8 @@
+daysUntilClose: 30
+responseRequiredLabel: needs-info
+closeComment: >
+  This issue has been automatically closed because there has been no response
+  to our request for more information from the original author. With only the
+  information that’s currently in the issue, we don’t have enough information
+  to take action. Please comment if you have or find the answer we need so we
+  can investigate further.

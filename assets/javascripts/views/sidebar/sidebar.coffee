@@ -28,7 +28,7 @@ class app.views.Sidebar extends app.View
 
     app.on 'ready', @onReady
 
-    $.on document.documentElement, 'mouseleave', (event) => @display() if event.clientX < 10
+    $.on document.documentElement, 'mouseleave', (event) => @display() unless event.clientX <= 0
     $.on document.documentElement, 'mouseenter', => @resetDisplay(forceNoHover: false)
     return
 

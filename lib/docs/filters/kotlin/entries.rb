@@ -5,7 +5,9 @@ module Docs
         if subpath.start_with?('api')
           breadcrumbs[1..-1].join('.')
         else
-          (at_css('h1') || at_css('h2')).content
+          node = (at_css('h1') || at_css('h2'))
+          return node.content unless node.nil?
+          subpath[/\/([a-z0-9_-]+)\./][1..-2].titleize.sub('Faq', 'FAQ')
         end
       end
 

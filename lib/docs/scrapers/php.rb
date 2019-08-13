@@ -1,5 +1,7 @@
 module Docs
   class Php < FileScraper
+    # Downloaded from php.net/download-docs.php
+
     include FixInternalUrlsBehavior
 
     self.name = 'PHP'
@@ -22,9 +24,6 @@ module Docs
       home: 'https://secure.php.net/',
       code: 'https://git.php.net/?p=php-src.git;a=summary'
     }
-
-    # Downloaded from php.net/download-docs.php
-    self.dir = '/Users/Thibaut/DevDocs/Docs/PHP'
 
     html_filters.push 'php/internal_urls', 'php/entries', 'php/clean_html', 'title'
     text_filters.push 'php/fix_urls'
@@ -67,5 +66,11 @@ module Docs
       &copy; 1997&ndash;2018 The PHP Documentation Group<br>
       Licensed under the Creative Commons Attribution License v3.0 or later.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://secure.php.net/manual/en/doc.changelog.php', opts)
+      label = doc.at_css('tbody.gen-changelog > tr > td').content
+      label.split(',').last.strip
+    end
   end
 end

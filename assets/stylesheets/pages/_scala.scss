@@ -1,0 +1,4 @@
+._scala {
+  @extend %simple;
+  .deprecated { @extend %label-red; }
+}
