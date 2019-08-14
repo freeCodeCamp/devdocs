@@ -568,6 +568,12 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Pony',
+    '2016-2018, The Pony Developers & 2014-2015, Causality Ltd.',
+    'BSD',
+    'https://raw.githubusercontent.com/ponylang/ponyc/master/LICENSE'
+  ],
+  [
     'PostgreSQL',
     '1996-2018 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
