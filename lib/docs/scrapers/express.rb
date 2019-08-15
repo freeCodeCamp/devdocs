@@ -28,5 +28,9 @@ module Docs
       &copy; 2017 StrongLoop, IBM, and other expressjs.com contributors.<br>
       Licensed under the Creative Commons Attribution-ShareAlike License v3.0.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('express', opts)
+    end
   end
 end

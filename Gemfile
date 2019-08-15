@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
-ruby '2.5.1'
+ruby '2.6.3'
 
 gem 'rake'
 gem 'thor'
-gem 'pry', '~> 0.11.0'
+gem 'pry', '~> 0.12.0'
 gem 'activesupport', '~> 5.2', require: false
 gem 'yajl-ruby', require: false
 gem 'html-pipeline'
@@ -22,6 +22,8 @@ group :app do
   gem 'browser'
   gem 'sass'
   gem 'coffee-script'
+  gem 'chunky_png'
+  gem 'sprockets-sass'
 end
 
 group :production do
@@ -40,6 +42,7 @@ group :docs do
   gem 'unix_utils', require: false
   gem 'tty-pager', require: false
   gem 'net-sftp', '>= 2.1.3.rc2', require: false
+  gem 'terminal-table', require: false
 end
 
 group :test do

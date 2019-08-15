@@ -80,5 +80,11 @@ module Docs
 
       html_filters.insert_before 'postgresql/extract_metadata', 'postgresql/normalize_class_names'
     end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://www.postgresql.org/docs/current/index.html', opts)
+      label = doc.at_css('#pgContentWrap h1.title').content
+      label.scan(/([0-9.]+)/)[0][0]
+    end
   end
 end

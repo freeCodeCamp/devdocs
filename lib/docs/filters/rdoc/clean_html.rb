@@ -37,8 +37,10 @@ module Docs
         end
 
         # Add class to differentiate Ruby code from C code
-        css('.method-source-code > pre').each do |node|
-          node['class'] = node.at_css('.ruby-keyword') ? 'ruby' : 'c'
+        css('.method-source-code').each do |node|
+          node.parent.prepend_child(node)
+          pre = node.at_css('pre')
+          pre['class'] = pre.at_css('.ruby-keyword') ? 'ruby' : 'c'
         end
 
         # Remove code highlighting

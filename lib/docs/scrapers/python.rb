@@ -24,31 +24,36 @@ module Docs
     HTML
 
     version '3.7' do # docs.python.org/3.7/download.html
-      self.release = '3.7.0'
+      self.release = '3.7.4'
       self.base_url = 'https://docs.python.org/3.7/'
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
     end
 
     version '3.6' do # docs.python.org/3.6/download.html
-      self.release = '3.6.6'
+      self.release = '3.6.9'
       self.base_url = 'https://docs.python.org/3.6/'
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
     end
 
     version '3.5' do # docs.python.org/3.5/download.html
-      self.release = '3.5.3'
+      self.release = '3.5.7'
       self.base_url = 'https://docs.python.org/3.5/'
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
     end
 
     version '2.7' do # docs.python.org/2.7/download.html
-      self.release = '2.7.13'
+      self.release = '2.7.16'
       self.base_url = 'https://docs.python.org/2.7/'
 
       html_filters.push 'python/entries_v2', 'sphinx/clean_html', 'python/clean_html'
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://docs.python.org/', opts)
+      doc.at_css('.version_switcher_placeholder').content
     end
   end
 end

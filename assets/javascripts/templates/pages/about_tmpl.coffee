@@ -11,22 +11,18 @@ app.templates.aboutPage = -> """
   </nav>
 
   <h1 class="_lined-heading">DevDocs: API Documentation Browser</h1>
-  <p>DevDocs combines multiple API documentations in a clean and organized web UI with instant search, offline support, mobile version, dark theme, keyboard shortcuts, and more.
-  <ul>
-    <li>Created and maintained by <a href="https://thibaut.me">Thibaut Courouble</a>
-    <li>Free and <a href="https://github.com/freeCodeCamp/devdocs">open source</a>
-        <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=freeCodeCamp&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20" tabindex="-1"></iframe>
-  </ul>
+  <p>DevDocs combines multiple developer documentations in a clean and organized web UI with instant search, offline support, mobile version, dark theme, keyboard shortcuts, and more.
+  <p>DevDocs is free and <a href="https://github.com/freeCodeCamp/devdocs">open source</a>. It was created by <a href="https://thibaut.me">Thibaut Courouble</a> and is operated by <a href="https://www.freecodecamp.org/">freeCodeCamp</a>.
   <p>To keep up-to-date with the latest news:
   <ul>
     <li>Follow <a href="https://twitter.com/DevDocs">@DevDocs</a> on Twitter
-    <li>Watch the repository on <a href="https://github.com/freeCodeCamp/devdocs/subscription">GitHub</a>
-    <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
+    <li>Watch the repository on <a href="https://github.com/freeCodeCamp/devdocs/subscription">GitHub</a> <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=freeCodeCamp&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20" tabindex="-1"></iframe>
+    <li>Join the <a href="https://gitter.im/FreeCodeCamp/DevDocs">Gitter</a> chat room
   </ul>
 
   <h2 class="_block-heading" id="copyright">Copyright and License</h2>
   <p class="_note">
-    <strong>Copyright 2013&ndash;2018 Thibaut Courouble and <a href="https://github.com/freeCodeCamp/devdocs/graphs/contributors">other contributors</a></strong><br>
+    <strong>Copyright 2013&ndash;2019 Thibaut Courouble and <a href="https://github.com/freeCodeCamp/devdocs/graphs/contributors">other contributors</a></strong><br>
     This software is licensed under the terms of the Mozilla Public License v2.0.<br>
     You may obtain a copy of the source code at <a href="https://github.com/freeCodeCamp/devdocs">github.com/freeCodeCamp/devdocs</a>.<br>
     For more information, see the <a href="https://github.com/freeCodeCamp/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
@@ -48,11 +44,10 @@ app.templates.aboutPage = -> """
     <dt>Where can I suggest new docs and features?
     <dd>You can suggest and vote for new docs on the <a href="https://trello.com/b/6BmTulfx/devdocs-documentation">Trello board</a>.<br>
         If you have a specific feature request, add it to the <a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>.<br>
-        Otherwise use the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>.
+        Otherwise, come talk to us in the <a href="https://gitter.im/FreeCodeCamp/DevDocs">Gitter</a> chat room.
     <dt>Where can I report bugs?
     <dd>In the <a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>. Thanks!
   </dl>
-  <p>For anything else, feel free to email me at <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
 
   <h2 class="_block-heading" id="credits">Credits</h2>
 
@@ -76,12 +71,13 @@ app.templates.aboutPage = -> """
 
   <h2 class="_block-heading" id="privacy">Privacy Policy</h2>
   <ul>
-    <li><a href="https://devdocs.io">devdocs.io</a> ("App") is operated by Thibaut Courouble ("We").
-    <li>We do not collect personal information.
-    <li>We use Google Analytics, Gauges and Sentry to collect anonymous traffic information and improve the app.
+    <li><a href="https://devdocs.io">devdocs.io</a> ("App") is operated by <a href="https://www.freecodecamp.org/">freeCodeCamp</a> ("We").
+    <li>We do not collect personal information through the app.
+    <li>We use Google Analytics and Gauges to collect anonymous traffic information if you have given consent to this. You can change your decision in the <a href="/settings">settings</a>.
+    <li>We use Sentry to collect crash data and improve the app.
     <li>The app uses cookies to store user preferences.
     <li>By using the app, you signify your acceptance of this policy. If you do not agree to this policy, please do not use the app.
-    <li>If you have any questions regarding privacy, please email <a href="mailto:thibaut@devdocs.io">thibaut@devdocs.io</a>.
+    <li>If you have any questions regarding privacy, please email <a href="mailto:privacy@freecodecamp.org">privacy@freecodecamp.org</a>.
   </ul>
 """
 
@@ -92,7 +88,7 @@ credits = [
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Ansible',
-    '2012-2018 Michael DeHaan<br>&copy; 2018 Red Hat, Inc.',
+    '2012-2018 Michael DeHaan<br>&copy; 2018–2019 Red Hat, Inc.',
     'GPLv3',
     'https://raw.githubusercontent.com/ansible/ansible/devel/COPYING'
   ], [
@@ -127,7 +123,7 @@ credits = [
     'https://raw.githubusercontent.com/petkaantonov/bluebird/master/LICENSE'
   ], [
     'Bootstrap',
-    '2011-2018 Twitter, Inc.<br>2011-2018 The Bootstrap Authors',
+    '2011-2019 Twitter, Inc.<br>2011-2019 The Bootstrap Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
@@ -167,7 +163,7 @@ credits = [
     'https://github.com/clojure/clojure/blob/master/epl-v10.html'
   ], [
     'CMake',
-    '2000-2018 Kitware, Inc. and Contributors',
+    '2000-2019 Kitware, Inc. and Contributors',
     'BSD',
     'https://cmake.org/licensing/'
   ], [
@@ -191,6 +187,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/coffeescript/master/LICENSE'
   ], [
+    'Composer',
+    'Nils Adermann, Jordi Boggiano',
+    'MIT',
+    'https://raw.githubusercontent.com/composer/composer/master/LICENSE'
+  ], [
     'Cordova',
     '2012-2018 The Apache Software Foundation',
     'Apache',
@@ -206,6 +207,12 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
   ], [
+    'Cypress',
+    '2017 Cypress.io',
+    'MIT',
+    'https://raw.githubusercontent.com/cypress-io/cypress-documentation/develop/LICENSE.md'
+  ],
+  [
     'D',
     '1999-2018 The D Language Foundation',
     'Boost',
@@ -227,7 +234,7 @@ credits = [
     'https://raw.githubusercontent.com/django/django/master/LICENSE'
   ], [
     'Docker',
-    '2017 Docker, Inc.<br>Docker and the Docker logo are trademarks of Docker, Inc.',
+    '2019 Docker, Inc.<br>Docker and the Docker logo are trademarks of Docker, Inc.',
     'Apache',
     'https://raw.githubusercontent.com/docker/docker.github.io/master/LICENSE'
   ], [
@@ -392,7 +399,7 @@ credits = [
     'https://raw.githubusercontent.com/koajs/koa/master/LICENSE'
   ], [
     'Kotlin',
-    '2010-2018 JetBrains s.r.o.',
+    '2010-2019 JetBrains s.r.o.',
     'Apache',
     'https://raw.githubusercontent.com/JetBrains/kotlin/master/license/LICENSE.txt'
   ], [
@@ -402,7 +409,7 @@ credits = [
     'https://raw.githubusercontent.com/laravel/framework/master/LICENSE.txt'
   ], [
     'Leaflet',
-    '2010-2018 Vladimir Agafonkin<br>&copy; 2010-2011, CloudMade<br>Maps &copy; OpenStreetMap contributors.',
+    '2010-2019 Vladimir Agafonkin<br>&copy; 2010-2011, CloudMade<br>Maps &copy; OpenStreetMap contributors.',
     'BSD',
     'https://raw.githubusercontent.com/Leaflet/Leaflet/master/LICENSE'
   ], [
@@ -477,7 +484,7 @@ credits = [
     'https://github.com/LearnBoost/mongoose/blob/master/README.md#license'
   ], [
     'nginx',
-    '2002-2018 Igor Sysoev<br>&copy; 2011-2018 Nginx, Inc.',
+    '2002-2019 Igor Sysoev<br>&copy; 2011-2019 Nginx, Inc.',
     'BSD',
     'http://nginx.org/LICENSE'
   ], [
@@ -522,7 +529,7 @@ credits = [
     'https://raw.githubusercontent.com/OpenTSDB/opentsdb.net/gh-pages/COPYING.LESSER'
   ], [
     'Padrino',
-    '2010-2016 Padrino',
+    '2010-2019 Padrino',
     'MIT',
     'https://raw.githubusercontent.com/padrino/padrino-framework/master/padrino/LICENSE.txt'
   ], [
@@ -561,6 +568,12 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
+    'Pony',
+    '2016-2018, The Pony Developers & 2014-2015, Causality Ltd.',
+    'BSD',
+    'https://raw.githubusercontent.com/ponylang/ponyc/master/LICENSE'
+  ],
+  [
     'PostgreSQL',
     '1996-2018 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
@@ -572,7 +585,7 @@ credits = [
     'https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/LICENSE'
   ], [
     'Pygame',
-    'Pygame Developpers',
+    'Pygame Developers',
     'LGPLv2.1',
     'https://raw.githubusercontent.com/pygame/pygame/master/LICENSE'
   ], [
@@ -636,11 +649,23 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT'
   ], [
+    'Salt Stack',
+    '2019 SaltStack',
+    'Apache',
+    'https://raw.githubusercontent.com/saltstack/salt/develop/LICENSE'
+  ],
+  [
     'Sass',
     '2006-2016 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',
     'https://raw.githubusercontent.com/sass/sass/stable/MIT-LICENSE'
   ], [
+    'Scala',
+    '2002-2019 EPFL, with contributions from Lightbend',
+    'Apache',
+    'https://raw.githubusercontent.com/scala/scala-lang/master/license.md'
+  ],
+  [
     'scikit-image',
     '2011 the scikit-image team',
     'BSD',
@@ -711,10 +736,20 @@ credits = [
     'MPL',
     'https://raw.githubusercontent.com/mitchellh/vagrant/master/website/LICENSE.md'
   ], [
+    'Vue Router',
+    '2013-present Evan You',
+    'MIT',
+    'https://raw.githubusercontent.com/vuejs/vue-router/dev/LICENSE'
+  ], [
     'Vue.js',
     '2013-2018 Evan You, Vue.js contributors',
     'MIT',
     'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
+  ], [
+    'Vuex',
+    '2015-present Evan You',
+    'MIT',
+    'https://raw.githubusercontent.com/vuejs/vuex/dev/LICENSE'
   ], [
     'Vulkan',
     '2014-2017 Khronos Group Inc.<br>Vulkan and the Vulkan logo are registered trademarks of the Khronos Group Inc.',
@@ -726,6 +761,12 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
+    'Wordpress',
+    '2003-2019 WordPress Foundation',
+    'GPLv2+',
+    'https://wordpress.org/about/license/'
+  ],
+  [
     'Yarn',
     '2016-present Yarn Contributors',
     'BSD',

@@ -13,5 +13,9 @@ module Docs
       &copy; 2004 John Gruber<br>
       Licensed under the BSD License.
     HTML
+
+    def get_latest_version(opts)
+      '1.0.0'
+    end
   end
 end
