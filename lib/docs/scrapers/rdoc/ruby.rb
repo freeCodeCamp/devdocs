@@ -69,6 +69,10 @@ module Docs
       Licensed under their own licenses.
     HTML
 
+    version '2.6' do
+      self.release = '2.6.3'
+    end
+
     version '2.5' do
       self.release = '2.5.3'
     end
