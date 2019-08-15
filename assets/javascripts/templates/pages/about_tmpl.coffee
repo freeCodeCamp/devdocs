@@ -649,12 +649,6 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT'
   ], [
-    'Salt Stack',
-    '2019 SaltStack',
-    'Apache',
-    'https://raw.githubusercontent.com/saltstack/salt/develop/LICENSE'
-  ],
-  [
     'Sass',
     '2006-2016 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',
