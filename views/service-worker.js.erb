@@ -11,6 +11,34 @@ const urlsToCache = [
   '<%= doc_index_urls.join "',\n  '" %>',
 ];
 
+<%# Clone a request with the mode set to 'cors' %>
+function corsify(request) {
+  const options = {
+    mode: 'cors',
+  };
+
+  const keys = [
+    'body',
+    'cache',
+    'credentials',
+    'headers',
+    'integrity',
+    'keepalive',
+    'method',
+    'redirect',
+    'referrer',
+    'referrerPolicy',
+    'signal',
+    'window',
+  ];
+
+  for (const key of keys) {
+    options[key] = request[key];
+  }
+
+  return new Request(request.url, options);
+}
+
 <%# Set-up the cache %>
 self.addEventListener('install', event => {
   self.skipWaiting();
@@ -36,9 +64,11 @@ self.addEventListener('fetch', event => {
     if (cachedResponse) return cachedResponse;
 
     try {
-      const response = await fetch(event.request);
+      const response = await fetch(corsify(event.request));
 
-      if (!response.ok) {
+      <%# If the status code is 0 it means the response is opaque %>
+      <%# If the response is opaque it's not possible to read whether it is successful or not, so we assume it is %>
+      if (!response.ok && response.status !== 0) {
         throw new Error(`The HTTP request failed with status code ${response.status}`);
       }
 
@@ -46,11 +76,13 @@ self.addEventListener('fetch', event => {
     } catch (err) {
       const url = new URL(event.request.url);
 
-      <%# Attempt to return the index page from the cache if the user is visiting a url like devdocs.io/offline or devdocs.io/javascript/global_objects/array/find %>
-      <%# The index page will make sure the correct documentation or a proper offline page is shown  %>
       const pathname = url.pathname;
       const filename = pathname.substr(1 + pathname.lastIndexOf('/')).split(/\#|\?/g)[0];
-      if (url.origin === location.origin && !['.css', '.js', '.json', '.png', '.ico', '.svg', '.xml'].some(ext => filename.endsWith(ext))) {
+      const extensions = ['.html', '.css', '.js', '.json', '.png', '.ico', '.svg', '.xml'];
+
+      <%# Attempt to return the index page from the cache if the user is visiting a url like devdocs.io/offline or devdocs.io/javascript/global_objects/array/find %>
+      <%# The index page will make sure the correct documentation or a proper offline page is shown  %>
+      if (url.origin === location.origin && !extensions.some(ext => filename.endsWith(ext))) {
         const cachedIndex = await caches.match('/');
         if (cachedIndex) return cachedIndex;
       }
