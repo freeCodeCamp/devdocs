@@ -22,11 +22,11 @@ module Docs
         css('.example').each do |node|
           node.name = 'pre'
           node['data-language'] = 'matlab'
-          node.content = node.content
+          node.content = node.content.strip
         end
 
-        css('a[name] + dl').each do |node|
-          node['id'] = node.previous['name']
+        css('a[name] + dl, a[name] + h4').each do |node|
+          node['id'] = node.previous_element['name']
         end
 
         css('dt > a[name]', 'th > a[name]').each do |node|
@@ -39,6 +39,7 @@ module Docs
           node.parent.content = node.content
         end
 
+        xpath('//td[text()=" " and not(descendant::*)]').remove
       end
     end
   end
