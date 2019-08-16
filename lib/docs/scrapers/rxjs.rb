@@ -18,7 +18,7 @@ module Docs
     options[:only_patterns] = [/guide\//, /api\//]
     options[:skip_patterns] = [/api\/([^\/]+)\.json/]
     options[:fix_urls_before_parse] = ->(url) do
-      url.sub! %r{\Aguide/}, '/guide/'
+      url.sub! %r{\A(\.\/)?guide/}, '/guide/'
       url.sub! %r{\Aapi/}, '/api/'
       url.sub! %r{\Agenerated/}, '/generated/'
       url
