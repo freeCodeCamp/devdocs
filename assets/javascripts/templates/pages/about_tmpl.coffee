@@ -519,7 +519,7 @@ credits = [
   ], [
     'Octave',
     '1996-2018 John W. Eaton',
-    'Custom',
+    'Octave',
     'https://octave.org/doc/interpreter/'
   ], [
     'OpenJDK',
