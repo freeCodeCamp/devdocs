@@ -517,6 +517,11 @@ credits = [
     'NumPy',
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
   ], [
+    'Octave',
+    '1996-2018 John W. Eaton',
+    'Octave',
+    'https://octave.org/doc/interpreter/'
+  ], [
     'OpenJDK',
     '1993-2017, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
     'GPLv2',
