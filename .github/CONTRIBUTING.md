@@ -58,9 +58,9 @@ In addition to the [guidelines for contributing code](#contributing-code-and-fea
 
 ## Updating existing documentations
 
-Please don't submit a pull request updating the version number of a documentation, unless a change is required in the scraper and you've verified that it works.
+Please don't submit a pull request updating only the version number and/or the attribution of a documentation. Do submit a pull request if a bigger change is required in the scraper and you've verified that it works.
 
-To ask that an existing documentation be updated, first check the last two [documentation versions reports](https://github.com/freeCodeCamp/devdocs/issues?utf8=%E2%9C%93&q=Documentation+versions+report+is%3Aissue+author%3Adevdocs-bot+sort%3Acreated-desc). Only create an issue if the documentation has been wrongly marked as up-to-date.
+To ask that an existing documentation be updated, first check the latest [documentation versions report](https://github.com/freeCodeCamp/devdocs/issues?utf8=%E2%9C%93&q=Documentation+versions+report+is%3Aissue+author%3Adevdocs-bot+sort%3Acreated-desc). Only create an issue if the documentation has been wrongly marked as up-to-date.
 
 ## Coding conventions
 

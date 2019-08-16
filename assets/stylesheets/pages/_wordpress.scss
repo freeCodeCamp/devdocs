@@ -1,0 +1,15 @@
+._wordpress {
+  @extend %simple;
+
+  .breadcrumbs {
+    display: none;
+  }
+
+  .callout-warning {
+    @extend %note, %note-red;
+  }
+
+  .callout-alert {
+    @extend %note, %note-orange;
+  }
+}
