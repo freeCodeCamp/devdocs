@@ -7,6 +7,11 @@ module Docs
           at_css('h1').content = 'RxJS Documentation'
         end
 
+        if at_css('h1').nil?
+          title = subpath.rpartition('/').last.titleize
+          doc.prepend_child("<h1>#{title}</h1>")
+        end
+
         css('br', 'hr', '.material-icons', '.header-link', '.breadcrumb').remove
 
         css('.content', 'article', '.api-header', 'section', '.instance-member').each do |node|
@@ -65,6 +70,16 @@ module Docs
 
           if node['class'] && node['class'].include?('api-heading')
             node.name = 'h3'
+
+            unless node.ancestors('.instance-method').empty?
+              matches = node.inner_html.scan(/([^(& ]+)[(&]/)
+
+              unless matches.empty? || matches[0][0] == 'constructor'
+                node['name'] = matches[0][0]
+                node['id'] = node['name'].downcase + '-'
+              end
+            end
+
             node.inner_html = "<code>#{node.inner_html}</code>"
           end
 
@@ -77,24 +92,47 @@ module Docs
           node.remove_attribute('class')
         end
 
+        css('td > .overloads').each do |node|
+          node.replace node.at_css('.detail-contents')
+        end
+
+        css('td.short-description p').each do |node|
+          signature = node.parent.parent.next_element.at_css('h3[id]')
+          signature.after(node) unless signature.nil?
+        end
+
+        css('.method-table').each do |node|
+          node.replace node.at_css('tbody')
+        end
+
+        css('.api-body > table > caption').each do |node|
+          node.name = 'center'
+          lift_out_of_table node
+        end
+
+        css('.api-body > table > tbody > tr:not([class]) > td > *').each do |node|
+          lift_out_of_table node
+        end
+
+        css('.api-body > table').each do |node|
+          node.remove if node.content.strip.blank?
+        end
+
         css('h1[class]').remove_attr('class')
         css('table[class]').remove_attr('class')
         css('table[width]').remove_attr('width')
         css('tr[style]').remove_attr('style')
-
-        if at_css('.api-type-label.module')
-          at_css('h1').content = subpath.remove('api/')
-        end
-
-        css('th h3').each do |node|
-          node.name = 'span'
-        end
 
         css('code code').each do |node|
           node.before(node.children).remove
         end
 
         doc
+      end
+
+      def lift_out_of_table(node)
+        table = node.ancestors('table').first
+        table.previous_element.after(node)
       end
     end
   end
