@@ -31,17 +31,17 @@ module Docs
     ]
 
     version '2.8' do
-      self.release = '2.8.3'
-      self.base_url = 'https://docs.ansible.com/ansible/2.7/'
+      self.release = '2.8.4'
+      self.base_url = 'https://docs.ansible.com/ansible/2.8/'
     end
 
     version '2.7' do
-      self.release = '2.7.12'
+      self.release = '2.7.13'
       self.base_url = 'https://docs.ansible.com/ansible/2.7/'
     end
 
     version '2.6' do
-      self.release = '2.6.18'
+      self.release = '2.6.19'
       self.base_url = 'https://docs.ansible.com/ansible/2.6/'
     end
 
