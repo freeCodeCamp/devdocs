@@ -1,0 +1,24 @@
+._rxjs {
+  @extend %simple;
+
+  .pre-title { @extend %pre-heading; }
+
+  .breadcrumbs { @extend %note; }
+  .banner { @extend %note-green; }
+  code.stable { @extend %label-green; }
+  code.experimental { @extend %label-orange; }
+  code.deprecated { @extend %label-red; }
+  .alert.is-important { @extend %note-red; }
+  .alert.is-helpful, .breadcrumbs { @extend %note-blue; }
+
+  .breadcrumbs { padding-left: 2em; }
+
+  img { margin: 1em 0; }
+
+  .location-badge {
+    font-style: italic;
+    text-align: right;
+  }
+
+  td h3 { margin: 0 !important; }
+}

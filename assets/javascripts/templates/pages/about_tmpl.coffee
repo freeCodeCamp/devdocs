@@ -211,8 +211,7 @@ credits = [
     '2017 Cypress.io',
     'MIT',
     'https://raw.githubusercontent.com/cypress-io/cypress-documentation/develop/LICENSE.md'
-  ],
-  [
+  ], [
     'D',
     '1999-2018 The D Language Foundation',
     'Boost',
@@ -572,8 +571,7 @@ credits = [
     '2016-2018, The Pony Developers & 2014-2015, Causality Ltd.',
     'BSD',
     'https://raw.githubusercontent.com/ponylang/ponyc/master/LICENSE'
-  ],
-  [
+  ], [
     'PostgreSQL',
     '1996-2018 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
@@ -649,12 +647,16 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT'
   ], [
+    'RxJS',
+    '2015-2018 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors',
+    'Apache',
+    'https://raw.githubusercontent.com/ReactiveX/rxjs/master/LICENSE.txt'
+  ], [
     'Salt Stack',
     '2019 SaltStack',
     'Apache',
     'https://raw.githubusercontent.com/saltstack/salt/develop/LICENSE'
-  ],
-  [
+  ], [
     'Sass',
     '2006-2016 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',
@@ -664,8 +666,7 @@ credits = [
     '2002-2019 EPFL, with contributions from Lightbend',
     'Apache',
     'https://raw.githubusercontent.com/scala/scala-lang/master/license.md'
-  ],
-  [
+  ], [
     'scikit-image',
     '2011 the scikit-image team',
     'BSD',
@@ -765,8 +766,7 @@ credits = [
     '2003-2019 WordPress Foundation',
     'GPLv2+',
     'https://wordpress.org/about/license/'
-  ],
-  [
+  ], [
     'Yarn',
     '2016-present Yarn Contributors',
     'BSD',
