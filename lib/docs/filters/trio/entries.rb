@@ -11,7 +11,6 @@ module Docs
 
       def additional_entries
         css('.descname').each_with_object [] do |node, entries|
-
           name = node.text
           if node.previous.classes.include? 'descclassname'
             name = node.previous.text + name
@@ -25,9 +24,11 @@ module Docs
               or dl.classes.include?('data')
             parent = dl.parent.previous_element
             cls = ''
+
             if n = parent.at_css('.descclassname')
               cls += n.text
             end
+
             if n = parent.at_css('.descname')
               if n.text == "The nursery interface"
                 cls += "Nursery."
@@ -35,6 +36,7 @@ module Docs
                 cls += n.text + '.'
               end
             end
+
             name = cls + name
           end
 

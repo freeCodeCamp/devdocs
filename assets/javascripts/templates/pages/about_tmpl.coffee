@@ -722,6 +722,11 @@ credits = [
     'MPL',
     'https://raw.githubusercontent.com/hashicorp/terraform-website/master/LICENSE.md'
   ], [
+    'Trio',
+    '2017 Nathaniel J. Smith',
+    'MIT',
+    'https://raw.githubusercontent.com/python-trio/trio/master/LICENSE.MIT'
+  ], [
     'Twig',
     '2009-2018 The Twig Team',
     'BSD',

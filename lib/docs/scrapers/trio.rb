@@ -1,8 +1,8 @@
 module Docs
   class Trio < UrlScraper
     self.type = 'simple'
-    self.release = '0.11'
-    self.base_url = 'https://trio.readthedocs.io/en/latest/'
+    self.release = '0.12.1'
+    self.base_url = 'https://trio.readthedocs.io/en/v0.12.1/'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://trio.readthedocs.io/',
@@ -19,9 +19,13 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2017-2019 Nathaniel J. Smith<br>
-      Licensed under MIT and Apache2.
+      &copy; 2017 Nathaniel J. Smith<br>
+      Licensed under the MIT License.
     HTML
 
+    def get_latest_version(opts)
+      doc = fetch_doc('https://trio.readthedocs.io/en/stable/', opts)
+      doc.at_css('.rst-other-versions a[href^="/en/v"]').content[1..-1]
+    end
   end
 end
