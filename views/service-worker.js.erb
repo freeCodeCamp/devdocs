@@ -11,34 +11,6 @@ const urlsToCache = [
   '<%= doc_index_urls.join "',\n  '" %>',
 ];
 
-<%# Clone a request with the mode set to 'cors' %>
-function corsify(request) {
-  const options = {
-    mode: 'cors',
-  };
-
-  const keys = [
-    'body',
-    'cache',
-    'credentials',
-    'headers',
-    'integrity',
-    'keepalive',
-    'method',
-    'redirect',
-    'referrer',
-    'referrerPolicy',
-    'signal',
-    'window',
-  ];
-
-  for (const key of keys) {
-    options[key] = request[key];
-  }
-
-  return new Request(request.url, options);
-}
-
 <%# Set-up the cache %>
 self.addEventListener('install', event => {
   self.skipWaiting();
@@ -64,14 +36,7 @@ self.addEventListener('fetch', event => {
     if (cachedResponse) return cachedResponse;
 
     try {
-      const response = await fetch(corsify(event.request));
-
-      <%# If the status code is 0 it means the response is opaque %>
-      <%# If the response is opaque it's not possible to read whether it is successful or not, so we assume it is %>
-      if (!response.ok && response.status !== 0) {
-        throw new Error(`The HTTP request failed with status code ${response.status}`);
-      }
-
+      const response = await fetch(event.request);
       return response;
     } catch (err) {
       const url = new URL(event.request.url);

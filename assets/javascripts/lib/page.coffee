@@ -199,6 +199,8 @@ page.track = (fn) ->
   return
 
 track = ->
+  return unless app.config.env == 'production'
+
   consentGiven = Cookies.get('analyticsConsent')
   consentAsked = Cookies.get('analyticsConsentAsked')
 
