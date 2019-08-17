@@ -24,12 +24,12 @@ Want to contribute? Great. Please review the following guidelines carefully and 
 ## Requesting new features
 
 1. Search for similar feature requests; someone may have already requested it.
-2. Make sure your feature fits DevDocs's [vision](https://github.com/freeCodeCamp/devdocs/blob/master/README.md#vision).
+2. Make sure your feature fits DevDocs's [vision](../README.md#vision).
 3. Provide a clear and detailed explanation of the feature and why it's important to add it.
 
 ## Requesting new documentations
 
-Please don't open issues to request new documentations.  
+Please don't open issues to request new documentations.
 Use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) where everyone can vote.
 
 ## Contributing code and features
@@ -55,13 +55,12 @@ In addition to the [guidelines for contributing code](#contributing-code-and-fea
 * Remove as much content and HTML markup as possible, particularly content not associated with any entry (e.g. introduction, changelog, etc.).
 * Names must be as short as possible and unique across the documentation.
 * The number of types (categories) should ideally be less than 100.
-* Don't modify the icon sprite. I'll do it after your pull request is merged.
 
 ## Updating existing documentations
 
-Please don't submit a pull request updating the version number of a documentation, unless a change is required in the scraper and you've verified that it works.
+Please don't submit a pull request updating only the version number and/or the attribution of a documentation. Do submit a pull request if a bigger change is required in the scraper and you've verified that it works.
 
-To ask that an existing documentation be updated, please use the [Trello board](https://trello.com/c/2B0hmW7M/52-request-updates-here).
+To ask that an existing documentation be updated, first check the latest [documentation versions report](https://github.com/freeCodeCamp/devdocs/issues?utf8=%E2%9C%93&q=Documentation+versions+report+is%3Aissue+author%3Adevdocs-bot+sort%3Acreated-desc). Only create an issue if the documentation has been wrongly marked as up-to-date.
 
 ## Coding conventions
 

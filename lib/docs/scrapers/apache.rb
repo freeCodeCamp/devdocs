@@ -33,5 +33,10 @@ module Docs
       &copy; 2018 The Apache Software Foundation<br>
       Licensed under the Apache License, Version 2.0.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('http://httpd.apache.org/docs/', opts)
+      doc.at_css('#apcontents > ul a')['href'][0...-1]
+    end
   end
 end

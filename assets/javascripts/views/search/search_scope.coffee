@@ -6,7 +6,9 @@ class app.views.SearchScope extends app.View
     tag:   '._search-tag'
 
   @events:
+    click: 'onClick'
     keydown: 'onKeydown'
+    textInput: 'onTextInput'
 
   @routes:
     after: 'afterRoute'
@@ -87,17 +89,33 @@ class app.views.SearchScope extends app.View
     @trigger 'change', null, previousDoc
     return
 
+  doScopeSearch: (event) =>
+    @search @input.value[0...@input.selectionStart]
+    $.stopEvent(event) if @doc
+    return
+
+  onClick: (event) =>
+    if event.target is @tag
+      @reset()
+      $.stopEvent(event)
+    return
+
   onKeydown: (event) =>
     if event.which is 8 # backspace
-      if @doc and not @input.value
-        $.stopEvent(event)
+      if @doc and @input.selectionEnd is 0
         @reset()
-    else if not @doc and @input.value
+        $.stopEvent(event)
+    else if not @doc and @input.value and not $.isChromeForAndroid()
       return if event.ctrlKey or event.metaKey or event.altKey or event.shiftKey
       if event.which is 9 or # tab
          (event.which is 32 and app.isMobile()) # space
-        @search @input.value[0...@input.selectionStart]
-        $.stopEvent(event) if @doc
+        @doScopeSearch(event)
+    return
+
+  onTextInput: (event) =>
+    return unless $.isChromeForAndroid()
+    if not @doc and @input.value and event.data == ' '
+      @doScopeSearch(event)
     return
 
   extractHashValue: ->

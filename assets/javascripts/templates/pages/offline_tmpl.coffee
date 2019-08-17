@@ -25,8 +25,8 @@ app.templates.offlinePage = (docs) -> """
   <h2 class="_block-heading">Questions & Answers</h2>
   <dl>
     <dt>How does this work?
-    <dd>Each page is cached as a key-value pair in <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">IndexedDB</a> (downloaded from a single file).<br>
-        The app also uses <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Using_the_application_cache">AppCache</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API">localStorage</a> to cache the assets and index files.
+    <dd>Each page is cached as a key-value pair in <a href="https://devdocs.io/dom/indexeddb_api">IndexedDB</a> (downloaded from a single file).<br>
+        The app also uses <a href="https://devdocs.io/dom/service_worker_api/using_service_workers">Service Workers</a> and <a href="https://devdocs.io/dom/web_storage_api">localStorage</a> to cache the assets and index files.
     <dt>Can I close the tab/browser?
     <dd>#{canICloseTheTab()}
     <dt>What if I don't update a documentation?
@@ -41,10 +41,15 @@ app.templates.offlinePage = (docs) -> """
 """
 
 canICloseTheTab = ->
-  if app.AppCache.isEnabled()
+  if app.ServiceWorker.isEnabled()
     """ Yes! Even offline, you can open a new tab, go to <a href="//devdocs.io">devdocs.io</a>, and everything will work as if you were online (provided you installed all the documentations you want to use beforehand). """
   else
-    """ No. AppCache isn't available in your browser (or is disabled), so loading <a href="//devdocs.io">devdocs.io</a> offline won't work.<br>
+    reason = "aren't available in your browser (or are disabled)"
+
+    if app.config.env != 'production'
+      reason = "are disabled in your development instance of DevDocs (enable them by setting the <code>ENABLE_SERVICE_WORKER</code> environment variable to <code>true</code>)"
+
+    """ No. Service Workers #{reason}, so loading <a href="//devdocs.io">devdocs.io</a> offline won't work.<br>
         The current tab will continue to function even when you go offline (provided you installed all the documentations beforehand). """
 
 app.templates.offlineDoc = (doc, status) ->

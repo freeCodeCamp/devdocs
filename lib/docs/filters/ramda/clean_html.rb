@@ -11,7 +11,7 @@ module Docs
         css('.card').each do |card|
           title = card.at_css('h2')
           added_in = card.at_css('small')
-          added_in.parent = title
+          added_in.parent = title if added_in.present?
         end
 
         css('.params').each do |node|

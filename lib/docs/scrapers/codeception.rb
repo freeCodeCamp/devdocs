@@ -18,5 +18,10 @@ module Docs
       &copy; 2011 Michael Bodnarchuk and contributors<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://codeception.com/changelog', opts)
+      doc.at_css('#page > h4').content
+    end
   end
 end

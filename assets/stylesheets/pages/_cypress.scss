@@ -1,0 +1,21 @@
+._cypress {
+  @extend %simple;
+
+  .note {
+    h1 {
+      margin-left: inherit
+    }
+
+    &.danger {
+      @extend %note-red
+    }
+
+    &.info {
+      @extend %note-blue
+    }
+
+    &.success {
+      @extend %note-green
+    }
+  }
+}
