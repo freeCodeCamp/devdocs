@@ -18,7 +18,7 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      Copyright 2011&ndash;present Encode OSS Ltd.<br>
+      Copyright &copy; 2011&ndash;present Encode OSS Ltd.<br>
       Licensed under the BSD License.
     HTML
 
