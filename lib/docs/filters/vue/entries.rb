@@ -2,13 +2,16 @@ module Docs
   class Vue
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        if slug == 'api/'
+        if slug == 'api/' || slug == 'api/index'
           'API'
         elsif slug == 'style-guide/'
           'Style Guide'
         else
           name = at_css('.content h1').content
           node = at_css(".sidebar .menu-root a[href='#{File.basename(slug)}']")
+
+          return name if node.nil?
+
           index = node.parent.parent.css('> li > a').to_a.index(node)
           name.prepend "#{index + 1}. " if index
           name
