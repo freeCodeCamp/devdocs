@@ -758,9 +758,9 @@ credits = [
     'https://raw.githubusercontent.com/vuejs/vue-router/dev/LICENSE'
   ], [
     'Vue.js',
-    '2013-2018 Evan You, Vue.js contributors',
+    '2013-present Yuxi Evan You',
     'MIT',
-    'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
+    'https://raw.githubusercontent.com/vuejs/vuejs.org/master/LICENSE'
   ], [
     'Vuex',
     '2015-present Evan You',

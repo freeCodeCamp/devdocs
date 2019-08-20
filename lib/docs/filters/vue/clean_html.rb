@@ -16,8 +16,17 @@ module Docs
           node['data-language'] = node['class'][/highlight (\w+)/, 1]
         end
 
+        css('pre').each do |node|
+          node.content = node.content.strip
+          node['data-language'] = 'javascript'
+        end
+
         css('iframe').each do |node|
           node['sandbox'] = 'allow-forms allow-scripts allow-same-origin'
+        end
+
+        css('details').each do |node|
+          node.name = 'div'
         end
 
         doc
