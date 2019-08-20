@@ -17,6 +17,7 @@ module Docs
         css('#plusone', '#nav', '.pkgGopher', '#footer', '.collapsed', '.permalink', '#pkg-callgraph').remove
 
         css('span[style]', '.toggleVisible', '.expanded', 'div.toggle').each do |node|
+          node.first_element_child['id'] = node['id'] if node['id']
           node.before(node.children).remove
         end
 

@@ -30,6 +30,9 @@ class app.views.Search extends app.View
       .on 'results', @onResults
       .on 'end', @onEnd
 
+    @scope
+      .on 'change', @onScopeChange
+
     app.on 'ready', @onReady
     $.on window, 'hashchange', @searchUrl
     $.on window, 'focus', @onWindowFocus
@@ -136,6 +139,11 @@ class app.views.Search extends app.View
 
   onSubmit: (event) ->
     $.stopEvent(event)
+    return
+
+  onScopeChange: =>
+    @value = ''
+    @onInput()
     return
 
   afterRoute: (name, context) =>

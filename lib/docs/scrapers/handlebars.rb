@@ -19,5 +19,9 @@ module Docs
       &copy; 2011&ndash;2017 by Yehuda Katz<br>
       Licensed under the MIT License.
     HTML
+
+    def get_latest_version(opts)
+      get_npm_version('handlebars', opts)
+    end
   end
 end
