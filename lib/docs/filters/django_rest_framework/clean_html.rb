@@ -1,14 +1,14 @@
 module Docs
-  class RestFramework
+  class DjangoRestFramework
     class CleanHtmlFilter < Docs::Filter
       def call
         css('hr').remove
-
         css('.badges').remove
 
         css('pre').attr('data-language', 'python')
 
-        css('h1').attr('style', nil)
+        css('h1').remove_attribute('style')
+        css('.promo a').remove_attribute('style')
 
         # Translate source files links to DevDocs links
         links = Nokogiri::XML::Node.new('p', doc)
@@ -20,6 +20,7 @@ module Docs
           node['class'] = '_links-link'
           links.add_child(node)
         end
+
         doc.add_child(links)
 
         doc

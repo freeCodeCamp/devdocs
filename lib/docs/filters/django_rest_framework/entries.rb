@@ -1,7 +1,6 @@
 module Docs
-  class RestFramework
+  class DjangoRestFramework
     class EntriesFilter < Docs::EntriesFilter
-
       def get_name
         name = css('h1').first.content
         name.slice! 'Tutorial '
@@ -46,7 +45,7 @@ module Docs
               next
             end
             entries << [node.content, node['id'], local_type]
-          elsif accepted_headers.include? node.content 
+          elsif accepted_headers.include? node.content
             in_category = true
           elsif endings.any? { |word| node.content.ends_with?(word) }
             entries << [node.content, node['id'], local_type]
