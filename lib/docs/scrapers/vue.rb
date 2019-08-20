@@ -15,7 +15,7 @@ module Docs
     options[:replace_paths] = { 'guide/' => 'guide/index.html' }
 
     options[:attribution] = <<-HTML
-      &copy; 2013&ndash;2019 Evan You, Vue.js contributors<br>
+      &copy; 2013&ndash;present Yuxi Evan You<br>
       Licensed under the MIT License.
     HTML
 

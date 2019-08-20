@@ -4,6 +4,8 @@ module Docs
       def get_name
         if slug == 'api/'
           'API'
+        elsif slug == 'style-guide/'
+          'Style Guide'
         else
           name = at_css('.content h1').content
           node = at_css(".sidebar .menu-root a[href='#{File.basename(slug)}']")
@@ -16,6 +18,8 @@ module Docs
       def get_type
         if slug.start_with?('guide')
           'Guide'
+        elsif slug == 'style-guide/'
+          'Style Guide'
         else
           'API'
         end
@@ -31,7 +35,15 @@ module Docs
           else
             name = node.content.strip
             name.sub! %r{\(.*\)}, '()'
-            entries << [name, node['id'], "API: #{type}"]
+            name.sub! /(essential|strongly recommended|recommended|use with caution)\Z/, ''
+
+            current_type = "API: #{type}"
+            if slug == 'style-guide/'
+              current_type = "Style Guide: "
+              current_type += type.sub(/( Rules: )/, ': ').split('(')[0]
+            end
+
+            entries << [name, node['id'], current_type]
           end
         end
       end

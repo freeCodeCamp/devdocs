@@ -720,9 +720,9 @@ credits = [
     'https://raw.githubusercontent.com/mitchellh/vagrant/master/website/LICENSE.md'
   ], [
     'Vue.js',
-    '2013-2019 Evan You, Vue.js contributors',
+    '2013-present Yuxi Evan You',
     'MIT',
-    'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
+    'https://raw.githubusercontent.com/vuejs/vuejs.org/master/LICENSE'
   ], [
     'Vulkan',
     '2014-2017 Khronos Group Inc.<br>Vulkan and the Vulkan logo are registered trademarks of the Khronos Group Inc.',
