@@ -232,6 +232,11 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/django/django/master/LICENSE'
   ], [
+    'Django REST Framework',
+    '2011-present Encode OSS Ltd.',
+    'BSD',
+    'https://raw.githubusercontent.com/encode/django-rest-framework/master/LICENSE.md'
+  ], [
     'Docker',
     '2019 Docker, Inc.<br>Docker and the Docker logo are trademarks of Docker, Inc.',
     'Apache',
