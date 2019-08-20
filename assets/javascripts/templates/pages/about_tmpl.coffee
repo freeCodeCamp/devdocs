@@ -363,8 +363,8 @@ credits = [
     'https://raw.githubusercontent.com/jekyll/jekyll/master/LICENSE'
   ], [
     'Jest',
-    '2014-present Facebook Inc.',
-    'BSD',
+    'Facebook, Inc. and its affiliates.',
+    'MIT',
     'https://raw.githubusercontent.com/facebook/jest/master/LICENSE'
   ], [
     'jQuery',

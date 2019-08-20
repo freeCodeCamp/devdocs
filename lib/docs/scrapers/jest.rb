@@ -1,11 +1,11 @@
 module Docs
   class Jest < UrlScraper
     self.type = 'simple'
-    self.release = '23.5.0'
+    self.release = '24.9'
     self.base_url = 'https://jestjs.io/docs/en/'
     self.root_path = 'getting-started'
     self.links = {
-      home: 'https://facebook.github.io/jest/',
+      home: 'https://jestjs.io/',
       code: 'https://github.com/facebook/jest'
     }
 
@@ -14,8 +14,8 @@ module Docs
     options[:container] = '.docMainWrapper'
 
     options[:attribution] = <<-HTML
-      &copy; 2014&ndash;present Facebook Inc.<br>
-      Licensed under the BSD License.
+      &copy; 2019 Facebook, Inc. and its affiliates.<br>
+      Licensed under the MIT License.
     HTML
 
     def get_latest_version(opts)
