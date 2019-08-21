@@ -25,5 +25,7 @@ If you're updating an existing documentation to it's latest version, please ensu
 - [ ] Ensured the license is up-to-date and that the documentation's entry in the array in `about_tmpl.coffee` matches it's data in `self.attribution`
 - [ ] Ensured the icons and the `SOURCE` file in <code>public/icons/*your_scraper_name*/</code> are up-to-date if the documentation has a custom icon
 - [ ] Ensured `self.links` contains up-to-date urls if `self.links` is defined
-- [ ] Tested the changes locally to ensure the scraper still works without errors
-- [ ] Tested the changes locally to ensure the scraped documentation still looks consistent with the rest of DevDocs and that the categorization of entries is still good
+- [ ] Tested the changes locally to ensure:
+  - The scraper still works without errors
+  - The scraped documentation still looks consistent with the rest of DevDocs
+  - The categorization of entries is still good
