@@ -14,10 +14,7 @@ This document is intended for [DevDocs maintainers](#list-of-maintainers).
 
 The process for updating docs is as follow:
 
-- Make version/release changes in the scraper file.
-- If needed, update the copyright notice of the documentation in the scraper file (`options[:attribution]`) and the about page (`about_tmpl.coffee`). The copyright notice must be the same as the one on the original documentation.
-- Run `thor docs:generate`.
-- Make sure the documentation still works well. The `thor docs:generate` command outputs a summary of the changes, which helps identifying issues (e.g. deleted files) and new pages to check out in the app. Verify locally that everything works, especially the files that were created (if any), and that the categorization of entries is still good. Often, updates will require code changes to tweak some new markup in the source website or categorize new entries.
+- Follow the checklist in [CONTRIBUTING.md#updating-existing-documentations](../.github/CONTRIBUTING.md#updating-existing-documentations).
 - Commit the changes (protip: use the `thor docs:commit` command documented below).
 - Optional: do more updates.
 - Run `thor docs:upload` (documented below).
