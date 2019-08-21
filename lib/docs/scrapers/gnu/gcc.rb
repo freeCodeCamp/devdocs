@@ -6,7 +6,7 @@ module Docs
       home: 'https://gcc.gnu.org/'
     }
 
-    html_filters.push 'title'
+    html_filters.push 'gcc/clean_html', 'title'
 
     options[:root_title] = false
     options[:title] = false
