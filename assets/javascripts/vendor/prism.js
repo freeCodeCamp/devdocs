@@ -1,5 +1,5 @@
 /* PrismJS 1.17.1
-https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+c+bash+cpp+coffeescript+ruby+d+dart+markup-templating+elixir+erlang+go+java+php+json+kotlin+crystal+lua+django+matlab+typescript+nginx+nim+perl+sql+scss+python+jsx+rust+yaml */
+https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+c+bash+cpp+coffeescript+ruby+d+dart+markup-templating+elixir+erlang+go+java+php+json+julia+kotlin+crystal+lua+django+matlab+typescript+nginx+nim+perl+sql+scss+python+jsx+rust+yaml */
 var _self = (typeof window !== 'undefined')
   ? window   // if in browser
   : (
@@ -1892,6 +1892,20 @@ Prism.languages.json = {
     pattern: /\bnull\b/,
     alias: 'keyword'
   }
+};
+
+Prism.languages.julia= {
+  'comment': {
+    pattern: /(^|[^\\])#.*/,
+    lookbehind: true
+  },
+  'string': /("""|''')[\s\S]+?\1|("|')(?:\\.|(?!\2)[^\\\r\n])*\2/,
+  'keyword' : /\b(?:abstract|baremodule|begin|bitstype|break|catch|ccall|const|continue|do|else|elseif|end|export|finally|for|function|global|if|immutable|import|importall|in|let|local|macro|module|print|println|quote|return|struct|try|type|typealias|using|while)\b/,
+  'boolean' : /\b(?:true|false)\b/,
+  'number' : /(?:\b(?=\d)|\B(?=\.))(?:0[box])?(?:[\da-f]+\.?\d*|\.\d+)(?:[efp][+-]?\d+)?j?/i,
+  'operator': /[-+*^%÷&$\\]=?|\/[\/=]?|!=?=?|\|[=>]?|<(?:<=?|[=:])?|>(?:=|>>?=?)?|==?=?|[~≠≤≥]/,
+  'punctuation' : /[{}[\];(),.:]/,
+  'constant': /\b(?:(?:NaN|Inf)(?:16|32|64)?)\b/
 };
 
 (function (Prism) {
