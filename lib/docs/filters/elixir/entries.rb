@@ -2,6 +2,7 @@ module Docs
   class Elixir
     class EntriesFilter < Docs::EntriesFilter
       def get_name
+        at_css('h1 .app-vsn').remove
         if current_url.path.start_with?('/getting-started')
           at_css('h1').content.strip.remove(/\.\z/)
         else
