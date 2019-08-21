@@ -67,7 +67,7 @@ Follow the following steps to update documentations to their latest version:
 1. Make version/release changes in the scraper file.
 2. Check if the license is still correct. If you update `options[:attribution]`, also update the documentation's entry in the array in [`assets/javascripts/templates/pages/about_tmpl.coffee`](../assets/javascripts/templates/pages/about_tmpl.coffee) to match.
 3. If the documentation has a custom icon, ensure the icons in <code>public/icons/*your_scraper_name*/</code> are up-to-date. If you pull the updated icon from a place different than the one specified in the `SOURCE` file, make sure to replace the old link with the new one.
-4. If `self.links` is defined, check if the home and code urls are still correct.
+4. If `self.links` is defined, check if the urls are still correct.
 5. Generate the docs using `thor docs:generate <doc>`.
 6. Make sure `thor docs:generate` doesn't show errors and that the documentation still works well. The `thor docs:generate` command outputs a summary of the changes, which helps identifying issues (e.g. deleted files) and new pages to check out in the app. Verify locally that everything works, especially the files that were created (if any), and that the categorization of entries is still good. Often, updates will require code changes in the scraper or it's filters to tweak some new markup in the source website or to categorize new entries.
 7. Repeat steps 5 and 6 for all versions that you updated. `thor docs:generate` accepts a `--version` argument to specify which version to scrape.
