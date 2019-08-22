@@ -17,9 +17,7 @@ module Docs
       PRIMITIVE_SLUG = /\A(\w+)\/(primitive)\./
 
       def get_type
-        if slug.start_with?('book')
-          'Guide'
-        elsif slug.start_with?('reference')
+        if slug.start_with?('reference')
           'Reference'
         elsif slug == 'error-index'
           'Compiler Errors'

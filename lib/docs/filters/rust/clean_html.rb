@@ -34,8 +34,10 @@ module Docs
         end
 
         css('a.header').each do |node|
-          node.first_element_child['id'] = node['name'] || node['id']
-          node.before(node.children).remove
+          unless node.first_element_child.nil?
+            node.first_element_child['id'] = node['name'] || node['id']
+            node.before(node.children).remove
+          end
         end
 
         css('.docblock > h1:not(.section-header)').each { |node| node.name = 'h4' }
@@ -53,7 +55,7 @@ module Docs
         end
 
         css('h1 > a', 'h2 > a', 'h3 > a', 'h4 > a', 'h5 > a').each do |node|
-          node.before(node.children).remove
+          node.before(node.children).remove if node.parent.at_css('.srclink').nil?
         end
 
         css('pre > code').each do |node|

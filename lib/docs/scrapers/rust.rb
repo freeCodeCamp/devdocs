@@ -5,7 +5,7 @@ module Docs
     self.type = 'rust'
     self.release = '1.37.0'
     self.base_url = 'https://doc.rust-lang.org/'
-    self.root_path = 'book/second-edition/index.html'
+    self.root_path = 'book/index.html'
     self.initial_paths = %w(
       reference/introduction.html
       collections/index.html
@@ -19,12 +19,11 @@ module Docs
     html_filters.push 'rust/entries', 'rust/clean_html'
 
     options[:only_patterns] = [
-      /\Abook\/second-edition\//,
       /\Areference\//,
       /\Acollections\//,
       /\Astd\// ]
 
-    options[:skip] = %w(book/second-edition/README.html)
+    options[:skip] = %w(book/README.html)
     options[:skip_patterns] = [/(?<!\.html)\z/, /\/print\.html/]
 
     options[:fix_urls] = ->(url) do
