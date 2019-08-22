@@ -655,7 +655,7 @@ credits = [
     'Rust',
     '2010 The Rust Project Developers',
     'MIT',
-    'https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT'
+    'https://raw.githubusercontent.com/rust-lang/book/master/LICENSE-MIT'
   ], [
     'RxJS',
     '2015-2018 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors',
