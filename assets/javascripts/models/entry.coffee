@@ -58,6 +58,7 @@ class app.models.Entry extends app.Model
     'crystal': 'cr'
     'elixir': 'ex'
     'javascript': 'js'
+    'julia': 'jl'
     'jquery': '$'
     'knockout.js': 'ko'
     'less': 'ls'
