@@ -27,6 +27,9 @@ module Docs
 
         css('a.toc', '.nav-tabs', '#select-platform', '.guide-controls + .list-group', '.guide-controls').remove
 
+        css('.install-select-os', '#install-instructions > .install-os-instructions:first-child').remove
+        css('.install-os-instructions[style]').remove_attribute('style')
+
         css('.guide-content', '.tabs', '.tab-content').each do |node|
           node.before(node.children).remove
         end
