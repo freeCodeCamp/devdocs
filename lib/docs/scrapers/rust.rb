@@ -19,12 +19,13 @@ module Docs
     html_filters.push 'rust/entries', 'rust/clean_html'
 
     options[:only_patterns] = [
+      /\Abook\//,
       /\Areference\//,
       /\Acollections\//,
       /\Astd\// ]
 
-    options[:skip] = %w(book/README.html)
-    options[:skip_patterns] = [/(?<!\.html)\z/, /\/print\.html/]
+    options[:skip] = %w(book/README.html book/ffi.html)
+    options[:skip_patterns] = [/(?<!\.html)\z/, /\/print\.html/, /\Abook\/second-edition\//]
 
     options[:fix_urls] = ->(url) do
       url.sub! %r{(#{Rust.base_url}.+/)\z}, '\1index.html'
