@@ -5,6 +5,7 @@ module Docs
         css('pre').each do |node|
           node['data-language'] = 'cpp'
         end
+
         doc
       end
     end
