@@ -2,7 +2,8 @@ module Docs
   class Elixir
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('h1 .app-vsn').remove
+        css('h1 .app-vsn').remove
+
         if current_url.path.start_with?('/getting-started')
           at_css('h1').content.strip.remove(/\.\z/)
         else
@@ -30,6 +31,8 @@ module Docs
           else
             if name.start_with?('Phoenix')
               name.split('.')[0..2].join('.')
+            elsif name.start_with?('mix ')
+              'Mix Tasks'
             else
               name.split('.').first
             end
