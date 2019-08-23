@@ -109,7 +109,7 @@ class SpritesCLI < Thor
     end
 
     avg = contrast.reduce(:+) / contrast.size.to_f
-    avg < 3.5
+    avg < 2.5
   end
 
   def get_contrast(base, other)
@@ -133,7 +133,7 @@ class SpritesCLI < Thor
 
     rgb.map! do |value|
       value /= 255
-      value < 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4
+      value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4
     end
 
     0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]
