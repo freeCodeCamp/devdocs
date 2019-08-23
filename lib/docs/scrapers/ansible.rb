@@ -32,27 +32,27 @@ module Docs
 
     version '2.8' do
       self.release = '2.8.3'
-      self.base_url = 'https://docs.ansible.com/ansible/2.7/'
+      self.base_url = "https://docs.ansible.com/ansible/#{version}/"
     end
 
     version '2.7' do
       self.release = '2.7.12'
-      self.base_url = 'https://docs.ansible.com/ansible/2.7/'
+      self.base_url = "https://docs.ansible.com/ansible/#{version}/"
     end
 
     version '2.6' do
       self.release = '2.6.18'
-      self.base_url = 'https://docs.ansible.com/ansible/2.6/'
+      self.base_url = "https://docs.ansible.com/ansible/#{version}/"
     end
 
     version '2.5' do
       self.release = '2.5.15'
-      self.base_url = 'https://docs.ansible.com/ansible/2.5/'
+      self.base_url = "https://docs.ansible.com/ansible/#{version}/"
     end
 
     version '2.4' do
       self.release = '2.4.6'
-      self.base_url = 'https://docs.ansible.com/ansible/2.4/'
+      self.base_url = "https://docs.ansible.com/ansible/#{version}/"
 
       options[:skip] = %w(
         glossary.html

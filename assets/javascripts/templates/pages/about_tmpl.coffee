@@ -211,8 +211,7 @@ credits = [
     '2017 Cypress.io',
     'MIT',
     'https://raw.githubusercontent.com/cypress-io/cypress-documentation/develop/LICENSE.md'
-  ],
-  [
+  ], [
     'D',
     '1999-2018 The D Language Foundation',
     'Boost',
@@ -232,6 +231,11 @@ credits = [
     'Django Software Foundation and individual contributors',
     'BSD',
     'https://raw.githubusercontent.com/django/django/master/LICENSE'
+  ], [
+    'Django REST Framework',
+    '2011-present Encode OSS Ltd.',
+    'BSD',
+    'https://raw.githubusercontent.com/encode/django-rest-framework/master/LICENSE.md'
   ], [
     'Docker',
     '2019 Docker, Inc.<br>Docker and the Docker logo are trademarks of Docker, Inc.',
@@ -294,9 +298,9 @@ credits = [
     'https://www.gnu.org/licenses/fdl-1.3.en.html'
   ], [
     'Git',
-    '2005-2018 Linus Torvalds and others',
-    'GPLv2',
-    'https://raw.githubusercontent.com/git/git/master/COPYING'
+    '2012-2018 Scott Chacon and others',
+    'MIT',
+    'https://raw.githubusercontent.com/git/git-scm.com/master/MIT-LICENSE.txt'
   ], [
     'Go',
     'Google, Inc.',
@@ -359,8 +363,8 @@ credits = [
     'https://raw.githubusercontent.com/jekyll/jekyll/master/LICENSE'
   ], [
     'Jest',
-    '2014-present Facebook Inc.',
-    'BSD',
+    'Facebook, Inc. and its affiliates.',
+    'MIT',
     'https://raw.githubusercontent.com/facebook/jest/master/LICENSE'
   ], [
     'jQuery',
@@ -379,7 +383,7 @@ credits = [
     'https://raw.githubusercontent.com/jquery/api.jqueryui.com/master/LICENSE.txt'
   ], [
     'Julia',
-    '2009-2018 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
+    '2009-2019 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/JuliaLang/julia/master/LICENSE.md'
   ], [
@@ -518,6 +522,11 @@ credits = [
     'NumPy',
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
   ], [
+    'Octave',
+    '1996-2018 John W. Eaton',
+    'Octave',
+    'https://octave.org/doc/interpreter/'
+  ], [
     'OpenJDK',
     '1993-2017, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
     'GPLv2',
@@ -567,6 +576,11 @@ credits = [
     '2005-2017 Sebastian Bergmann',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
+  ], [
+    'Pony',
+    '2016-2018, The Pony Developers & 2014-2015, Causality Ltd.',
+    'BSD',
+    'https://raw.githubusercontent.com/ponylang/ponyc/master/LICENSE'
   ], [
     'PostgreSQL',
     '1996-2018 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
@@ -646,14 +660,18 @@ credits = [
     'Rust',
     '2010 The Rust Project Developers',
     'MIT',
-    'https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT'
+    'https://raw.githubusercontent.com/rust-lang/book/master/LICENSE-MIT'
+  ], [
+    'RxJS',
+    '2015-2018 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors',
+    'Apache',
+    'https://raw.githubusercontent.com/ReactiveX/rxjs/master/LICENSE.txt'
   ], [
     'Salt Stack',
     '2019 SaltStack',
     'Apache',
     'https://raw.githubusercontent.com/saltstack/salt/develop/LICENSE'
-  ],
-  [
+  ], [
     'Sass',
     '2006-2016 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',
@@ -663,8 +681,7 @@ credits = [
     '2002-2019 EPFL, with contributions from Lightbend',
     'Apache',
     'https://raw.githubusercontent.com/scala/scala-lang/master/license.md'
-  ],
-  [
+  ], [
     'scikit-image',
     '2011 the scikit-image team',
     'BSD',
@@ -715,6 +732,11 @@ credits = [
     'MPL',
     'https://raw.githubusercontent.com/hashicorp/terraform-website/master/LICENSE.md'
   ], [
+    'Trio',
+    '2017 Nathaniel J. Smith',
+    'MIT',
+    'https://raw.githubusercontent.com/python-trio/trio/master/LICENSE.MIT'
+  ], [
     'Twig',
     '2009-2018 The Twig Team',
     'BSD',
@@ -735,15 +757,20 @@ credits = [
     'MPL',
     'https://raw.githubusercontent.com/mitchellh/vagrant/master/website/LICENSE.md'
   ], [
-    'Vue.js',
-    '2013-2018 Evan You, Vue.js contributors',
-    'MIT',
-    'https://raw.githubusercontent.com/vuejs/vue/master/LICENSE'
-  ], [
     'Vue Router',
     '2013-present Evan You',
     'MIT',
     'https://raw.githubusercontent.com/vuejs/vue-router/dev/LICENSE'
+  ], [
+    'Vue.js',
+    '2013-present Yuxi Evan You',
+    'MIT',
+    'https://raw.githubusercontent.com/vuejs/vuejs.org/master/LICENSE'
+  ], [
+    'Vuex',
+    '2015-present Evan You',
+    'MIT',
+    'https://raw.githubusercontent.com/vuejs/vuex/dev/LICENSE'
   ], [
     'Vulkan',
     '2014-2017 Khronos Group Inc.<br>Vulkan and the Vulkan logo are registered trademarks of the Khronos Group Inc.',
@@ -759,8 +786,7 @@ credits = [
     '2003-2019 WordPress Foundation',
     'GPLv2+',
     'https://wordpress.org/about/license/'
-  ],
-  [
+  ], [
     'Yarn',
     '2016-present Yarn Contributors',
     'BSD',

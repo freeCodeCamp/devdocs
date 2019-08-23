@@ -1,0 +1,9 @@
+._octave {
+  @extend %simple;
+
+  dl:not([compact]) > dt { @extend %block-label, %label-blue; }
+
+  dl[compact] > dt { @extend %block-label; }
+
+  .footnotes-heading { @extend %block-heading; }
+}

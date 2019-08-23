@@ -6,7 +6,7 @@ module Docs
       home: 'https://gcc.gnu.org/'
     }
 
-    html_filters.push 'title'
+    html_filters.push 'gcc/clean_html', 'title'
 
     options[:root_title] = false
     options[:title] = false
@@ -46,13 +46,37 @@ module Docs
       'Wtrigraphs.html' => 'Invocation.html'
     }
 
+    version '9' do
+      self.release = '9.2.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
+    end
+
+    version '9 CPP' do
+      self.release = '9.2.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
+
+      options[:replace_paths] = CPP_PATHS
+    end
+
+    version '8' do
+      self.release = '8.3.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
+    end
+
+    version '8 CPP' do
+      self.release = '8.3.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
+
+      options[:replace_paths] = CPP_PATHS
+    end
+
     version '7' do
-      self.release = '7.3.0'
+      self.release = '7.4.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '7 CPP' do
-      self.release = '7.3.0'
+      self.release = '7.4.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS

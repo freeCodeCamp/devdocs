@@ -37,20 +37,17 @@ self.addEventListener('fetch', event => {
 
     try {
       const response = await fetch(event.request);
-
-      if (!response.ok) {
-        throw new Error(`The HTTP request failed with status code ${response.status}`);
-      }
-
       return response;
     } catch (err) {
       const url = new URL(event.request.url);
 
-      <%# Attempt to return the index page from the cache if the user is visiting a url like devdocs.io/offline or devdocs.io/javascript/global_objects/array/find %>
-      <%# The index page will make sure the correct documentation or a proper offline page is shown  %>
       const pathname = url.pathname;
       const filename = pathname.substr(1 + pathname.lastIndexOf('/')).split(/\#|\?/g)[0];
-      if (url.origin === location.origin && !filename.includes('.')) {
+      const extensions = ['.html', '.css', '.js', '.json', '.png', '.ico', '.svg', '.xml'];
+
+      <%# Attempt to return the index page from the cache if the user is visiting a url like devdocs.io/offline or devdocs.io/javascript/global_objects/array/find %>
+      <%# The index page will make sure the correct documentation or a proper offline page is shown  %>
+      if (url.origin === location.origin && !extensions.some(ext => filename.endsWith(ext))) {
         const cachedIndex = await caches.match('/');
         if (cachedIndex) return cachedIndex;
       }
