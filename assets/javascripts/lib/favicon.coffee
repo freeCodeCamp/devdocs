@@ -49,11 +49,6 @@ withImage = (url, action) ->
       docIconPercentage = 65
       destinationCoords = size / 100 * (100 - docIconPercentage)
       destinationSize = size / 100 * docIconPercentage
-      paddingSize = destinationSize + 1
-
-      imageData = ctx.getImageData(destinationCoords, destinationCoords, paddingSize, paddingSize)
-      transparentImageData = new ImageData(new Uint8ClampedArray(imageData.data.length), paddingSize, paddingSize)
-      ctx.putImageData(transparentImageData, destinationCoords, destinationCoords)
 
       ctx.drawImage(docImg, sourceX, sourceY, sourceSize, sourceSize, destinationCoords, destinationCoords, destinationSize, destinationSize)
 
