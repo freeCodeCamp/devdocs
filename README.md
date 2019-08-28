@@ -152,7 +152,6 @@ Contributions are welcome. Please read the [contributing guidelines](./.github/C
 * [Vim search plugin with Devdocs in its defaults](https://github.com/waiting-for-dev/vim-www) Just set `let g:www_shortcut_engines = { 'devdocs': ['Devdocs', '<leader>dd'] }` to have a `:Devdocs` command and a `<leader>dd` mapping.
 * [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=akfish.vscode-devdocs ) (1)
 * [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=deibit.devdocs) (2)
-* [Desktop application](https://github.com/egoist/devdocs-desktop)
 * [Doc Browser](https://github.com/qwfy/doc-browser) is a native Linux app that supports DevDocs docsets
 * [GNOME Application](https://github.com/hardpixel/devdocs-desktop) GTK3 application with search integrated in headerbar
 * [macOS Application](https://github.com/dteoh/devdocs-macos)
