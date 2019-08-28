@@ -10,7 +10,7 @@ module Docs
 
     html_filters.push 'enzyme/entries', 'enzyme/clean_html'
 
-    options[:skip] = %w(CHANGELOG.html docs/future.html CONTRIBUTING.html)
+    options[:skip] = %w(CHANGELOG.html docs/future.html docs/guides.html docs/api/ CONTRIBUTING.html)
 
     options[:attribution] = <<-HTML
       &copy; 2015 Airbnb, Inc.<br>
