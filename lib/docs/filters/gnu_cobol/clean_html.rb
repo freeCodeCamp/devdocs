@@ -13,6 +13,9 @@ module Docs
         at_css('p').remove
         at_css('ol').remove
 
+        # Remove horizontal lines
+        css('hr').remove
+
         # Remove everything after Appendix B
         # This includes the license text, the document changelog, the compiler changelog and the footnote
         start_element = at_css('a[name="Appendix-C-_002d-GNU-Free-Documentation-License"]').previous_element
@@ -25,27 +28,40 @@ module Docs
 
         # Make headers bigger
         css('h4').each {|node| node.name = 'h3'}
+        css('h3.unnumberedsec').each {|node| node.name = 'h2'}
 
         # Remove the newlines
         # All paragraphs are inside <p> tags already anyways
         css('br').remove
 
         # The original document contains sub-headers surrounded by equal signs
-        # Convert that to actual header elements
+        # Convert those to actual header elements
         css('div[align="center"]').each do |node|
           if node.content.include?('=' * 50)
-            node.replace('<hr>')
-          else
-            node.remove_attribute('align')
-            node.name = 'h4'
+            previous = node.previous_element
+            if !previous.nil? && previous.name == 'div' && previous['align'] == 'center'
+              previous.name = 'h4'
+            end
+
+            node.remove
           end
         end
 
-        # Remove all hr's after h4's
-        css('h4').each do |node|
-          next_element = node.next_element
-          if !next_element.nil? && next_element.name == 'hr'
-            next_element.remove
+        # Remove align="center" attributes
+        css('[align="center"]').remove_attribute('align')
+
+        # Convert tt tags into inline code blocks and remove any surrounding quotes
+        css('tt').each do |node|
+          node.name = 'code'
+
+          previous_node = node.previous
+          if !previous_node.nil? && previous_node.text?
+            previous_node.content = previous_node.content.sub(/([^"]?")\Z/, '')
+          end
+
+          next_node = node.next
+          if !next_node.nil? && next_node.text?
+            next_node.content = next_node.content.sub(/\A("[^"]?)/, '')
           end
         end
 
