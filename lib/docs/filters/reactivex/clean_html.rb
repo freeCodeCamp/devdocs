@@ -8,6 +8,36 @@ module Docs
         # Remove breadcrumbs
         css('.breadcrumb').remove
 
+        # Titleize title on Backpressure Operators page
+        if subpath == 'documentation/operators/backpressure.html'
+          title = at_css('h1')
+          title.content = title.content.titleize
+        end
+
+        # Lower all h1 headers except the first one
+        css('* + h1').each do |node|
+          node.name = 'h2'
+        end
+
+        # Pull code blocks in links out of their <strong> parent (if possible)
+        css('a > strong > code').each do |node|
+          # Skip if the parent had multiple code nodes and node.parent.replace already ran for one
+          next unless node.parent.name == 'strong'
+
+          node.parent.replace node.parent.children
+        end
+
+        # Pull header out of trees
+        tree = at_css('#tree')
+        unless tree.nil?
+          title = tree.at_css('h1')
+          title.name = 'h2'
+          tree.before(title)
+        end
+
+        # Beautify operator descriptions
+        at_css('h3').name = 'blockquote' if subpath.include?('operators/')
+
         # Replace interactive demo's with links to them
         css('rx-marbles').each do |node|
           node.name = 'a'
@@ -37,8 +67,9 @@ module Docs
 
         # Make language specific implementation titles prettier
         css('.panel-title').each do |node|
-          # Remove the link, keep the text
-          node.content = node.content
+          # Remove the link, keep the children
+          link = node.at_css('a')
+          link.replace(link.children) unless link.nil?
 
           # Transform it into a header for better styling
           node.name = 'h3'
