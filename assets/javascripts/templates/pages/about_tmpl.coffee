@@ -267,6 +267,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/emberjs/ember.js/master/LICENSE'
   ], [
+    'Enzyme',
+    '2015 Airbnb, Inc.',
+    'MIT',
+    'https://raw.githubusercontent.com/airbnb/enzyme/master/LICENSE.md'
+  ], [
     'Erlang',
     '2010-2017 Ericsson AB',
     'Apache',
