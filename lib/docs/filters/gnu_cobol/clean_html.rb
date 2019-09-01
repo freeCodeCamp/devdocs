@@ -16,14 +16,16 @@ module Docs
         # Remove horizontal lines
         css('hr').remove
 
+        # Remove acronym tags but keep the content
+        css('acronym').each {|node| node.name = 'span'}
+
         # Remove everything after Appendix B
         # This includes the license text, the document changelog, the compiler changelog and the footnote
-        start_element = at_css('a[name="Appendix-C-_002d-GNU-Free-Documentation-License"]').previous_element
-        next_element = start_element.next_element
-        until start_element.nil?
-          start_element.remove
-          start_element = next_element
-          next_element = start_element.nil? ? nil : start_element.next_element
+        current_element = at_css('a[name="Appendix-C-_002d-GNU-Free-Documentation-License"]').previous
+        until current_element.nil?
+          next_element = current_element.next
+          current_element.remove
+          current_element = next_element
         end
 
         # Make headers bigger
