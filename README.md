@@ -138,11 +138,11 @@ Contributions are welcome. Please read the [contributing guidelines](./.github/C
 * [Filter Reference](./docs/filter-reference.md)
 * [Maintainers’ Guide](./docs/maintainers.md)
 
-## Related software
+## Related Projects
 
 Made something cool? Feel free to open a PR to add a new row to this table!
 
-| Item                                                                                                    | Description                                                            | Last commit                                                                                                                                                                |
+| Project                                                                                                 | Description                                                            | Last commit                                                                                                                                                                |
 |---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [Chrome web app](https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe)    | Chrome Web App which adds a shortcut to DevDocs apps page.             | N/A                                                                                                                                                                        |
 | [Ubuntu Touch app](https://uappexplorer.com/app/devdocsunofficial.berkes)                               | Application for phones running Ubuntu Touch.                           | N/A                                                                                                                                                                        |
