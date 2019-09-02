@@ -138,25 +138,28 @@ Contributions are welcome. Please read the [contributing guidelines](./.github/C
 * [Filter Reference](./docs/filter-reference.md)
 * [Maintainers’ Guide](./docs/maintainers.md)
 
-## Plugins and Extensions
+## Related software
 
-* [Chrome web app](https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe)
-* [Ubuntu Touch app](https://uappexplorer.com/app/devdocsunofficial.berkes)
-* [Sublime Text plugin](https://sublime.wbond.net/packages/DevDocs)
-* [Atom plugin](https://atom.io/packages/devdocs)
-* [Brackets extension](https://github.com/gruehle/dev-docs-viewer)
-* [Fluid](http://fluidapp.com) for turning DevDocs into a real OS X app
-* [GTK shell / Vim integration](https://github.com/naquad/devdocs-shell)
-* [Emacs lookup](https://github.com/skeeto/devdocs-lookup)
-* [Alfred Workflow](https://github.com/yannickglt/alfred-devdocs)
-* [Vim search plugin with Devdocs in its defaults](https://github.com/waiting-for-dev/vim-www) Just set `let g:www_shortcut_engines = { 'devdocs': ['Devdocs', '<leader>dd'] }` to have a `:Devdocs` command and a `<leader>dd` mapping.
-* [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=akfish.vscode-devdocs ) (1)
-* [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=deibit.devdocs) (2)
-* [Desktop application](https://github.com/egoist/devdocs-desktop)
-* [Doc Browser](https://github.com/qwfy/doc-browser) is a native Linux app that supports DevDocs docsets
-* [GNOME Application](https://github.com/hardpixel/devdocs-desktop) GTK3 application with search integrated in headerbar
-* [macOS Application](https://github.com/dteoh/devdocs-macos)
-* [Android Application](https://github.com/Merith-TK/devdocs_webapp_kotlin) is a fully working, advanced WebView
+Made something cool? Feel free to open a PR to add a new row to this table!
+
+| Item                                                                                                    | Description                                                            | Last commit                                                                                                                                                                |
+|---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Chrome web app](https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe)    | Chrome Web App which adds a shortcut to DevDocs apps page.             | N/A                                                                                                                                                                        |
+| [Ubuntu Touch app](https://uappexplorer.com/app/devdocsunofficial.berkes)                               | Application for phones running Ubuntu Touch.                           | N/A                                                                                                                                                                        |
+| [Sublime Text plugin](https://sublime.wbond.net/packages/DevDocs)                                       | Sublime Text plugin to search DevDocs by selection or by input.        | [![Latest GitHub commit](https://img.shields.io/github/last-commit/vitorbritto/sublime-devdocs?logo=github&label)](https://github.com/vitorbritto/sublime-devdocs)         |
+| [Atom plugin](https://atom.io/packages/devdocs)                                                         | Atom plugin adding the `doc` command to search DevDocs.                | [![Latest GitHub commit](https://img.shields.io/github/last-commit/masnun/atom-devdocs?logo=github&label)](https://github.com/masnun/atom-devdocs)                         |
+| [gruehle/dev-docs-viewer](https://github.com/gruehle/dev-docs-viewer)                                   | Brackets extension for searching and viewing DevDocs content.          | [![Latest GitHub commit](https://img.shields.io/github/last-commit/gruehle/dev-docs-viewer?logo=github&label)](https://github.com/gruehle/dev-docs-viewer)                 |
+| [naquad/devdocs-shell](https://github.com/naquad/devdocs-shell)                                         | GTK shell with Vim integration.                                        | [![Latest GitHub commit](https://img.shields.io/github/last-commit/naquad/devdocs-shell?logo=github&label)](https://github.com/naquad/devdocs-shell)                       |
+| [skeeto/devdocs-lookup](https://github.com/skeeto/devdocs-lookup)                                       | Quick Emacs API lookup on DevDocs.                                     | [![Latest GitHub commit](https://img.shields.io/github/last-commit/skeeto/devdocs-lookup?logo=github&label)](https://github.com/skeeto/devdocs-lookup)                     |
+| [yannickglt/alfred-devdocs](https://github.com/yannickglt/alfred-devdocs)                               | Alfred workflow for DevDocs.                                           | [![Latest GitHub commit](https://img.shields.io/github/last-commit/yannickglt/alfred-devdocs?logo=github&label)](https://github.com/yannickglt/alfred-devdocs)             |
+| [waiting-for-dev/vim-www](https://github.com/waiting-for-dev/vim-www)                                   | Vim search plugin with DevDocs in its defaults.                        | [![Latest GitHub commit](https://img.shields.io/github/last-commit/waiting-for-dev/vim-www?logo=github&label)](https://github.com/waiting-for-dev/vim-www)                 |
+| [vscode-devdocs for VS Code](https://marketplace.visualstudio.com/items?itemName=akfish.vscode-devdocs) | VS Code plugin to open and search DevDocs inside VS Code.              | [![Latest GitHub commit](https://img.shields.io/github/last-commit/akfish/vscode-devdocs?logo=github&label)](https://github.com/akfish/vscode-devdocs)                     |
+| [devdocs for VS Code](https://marketplace.visualstudio.com/items?itemName=deibit.devdocs)               | VS Code plugin to open the browser to search selected text on DevDocs. | [![Latest GitHub commit](https://img.shields.io/github/last-commit/deibit/vscode-devdocs?logo=github&label)](https://github.com/deibit/vscode-devdocs)                     |
+| [egoist/devdocs-desktop](https://github.com/egoist/devdocs-desktop)                                     | Deprecated cross-platform desktop application for DevDocs.             | [![Latest GitHub commit](https://img.shields.io/github/last-commit/egoist/devdocs-desktop?logo=github&label)](https://github.com/egoist/devdocs-desktop)                   |
+| [qwfy/doc-browser](https://github.com/qwfy/doc-browser)                                                 | Native Linux app that supports DevDocs docsets.                        | [![Latest GitHub commit](https://img.shields.io/github/last-commit/qwfy/doc-browser?logo=github&label)](https://github.com/qwfy/doc-browser)                               |
+| [hardpixel/devdocs-desktop](https://github.com/hardpixel/devdocs-desktop)                               | GTK3 application for DevDocs with search integrated in the headerbar.  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/hardpixel/devdocs-desktop?logo=github&label)](https://github.com/hardpixel/devdocs-desktop)             |
+| [dteoh/devdocs-macos](https://github.com/dteoh/devdocs-macos)                                           | Native macOS application for DevDocs.                                  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/dteoh/devdocs-macos?logo=github&label)](https://github.com/dteoh/devdocs-macos)                         |
+| [Merith-TK/devdocs_webapp_kotlin](https://github.com/Merith-TK/devdocs_webapp_kotlin)                   | Android application which shows DevDocs in a webview.                  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/Merith-TK/devdocs_webapp_kotlin?logo=github&label)](https://github.com/Merith-TK/devdocs_webapp_kotlin) |
 
 ## Copyright / License
 
