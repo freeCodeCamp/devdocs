@@ -148,7 +148,7 @@ credits = [
     'https://raw.githubusercontent.com/cakephp/cakephp/master/LICENSE'
   ], [
     'Chai',
-    '2016 Chai.js Assertion Library',
+    '2017 Chai.js Assertion Library',
     'MIT',
     'https://raw.githubusercontent.com/chaijs/chai/master/LICENSE'
   ], [
