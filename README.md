@@ -10,7 +10,7 @@ Keep track of development news:
 * Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 
-**Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [Documentation](#documentation) · [Plugins and Extensions](#plugins-and-extensions) · [License](#copyright--license) · [Questions?](#questions)
+**Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [Documentation](#documentation) · [Related Projects](#related-projects) · [License](#copyright--license) · [Questions?](#questions)
 
 ## Quick Start
 
