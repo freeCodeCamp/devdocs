@@ -24,6 +24,7 @@ module Docs
     options[:only_patterns] = [/\.html\z/]
 
     options[:fix_urls] = ->(url) do
+      url = CGI.unescape(url)
       url.sub! %r{\A.+/http%3A/}, 'http://'
       url.sub! 'http://en.cppreference.com/upload.cppreference.com', 'http://upload.cppreference.com'
       url
