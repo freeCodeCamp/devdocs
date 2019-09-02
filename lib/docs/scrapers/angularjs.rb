@@ -38,7 +38,7 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2018 Google, Inc.<br>
+      &copy; 2010&ndash;2019 Google, Inc.<br>
       Licensed under the Creative Commons Attribution License 4.0.
     HTML
 
