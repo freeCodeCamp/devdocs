@@ -108,7 +108,7 @@ credits = [
     'https://raw.githubusercontent.com/babel/website/master/LICENSE'
   ], [
     'Backbone.js',
-    '2010-2016 Jeremy Ashkenas, DocumentCloud',
+    '2010-2019 Jeremy Ashkenas, DocumentCloud',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
   ], [
