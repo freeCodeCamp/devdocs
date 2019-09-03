@@ -7,6 +7,8 @@ class SpritesCLI < Thor
     require 'docs'
     require 'chunky_png'
     require 'fileutils'
+    require 'image_optim'
+    require 'terminal-table'
     super
   end
 
@@ -34,7 +36,7 @@ class SpritesCLI < Thor
 
     return unless items_with_icons.length > 0
 
-    log_details(items_with_icons, icons_per_row)
+    log_details(items_with_icons, icons_per_row) if options[:verbose]
 
     generate_spritesheet(16, items_with_icons) {|item| item[:icon_16]}
     generate_spritesheet(32, items_with_icons) {|item| item[:icon_32]}
@@ -199,22 +201,12 @@ class SpritesCLI < Thor
   end
 
   def log_details(items_with_icons, icons_per_row)
-    logger.debug("Amount of icons: #{items_with_icons.length}")
-    logger.debug("Amount of icons needing the dark icon fix: #{items_with_icons.count {|item| item[:dark_icon_fix]}}")
-    logger.debug("Amount of icons per row: #{icons_per_row}")
+    title = "#{items_with_icons.length} items with icons (#{icons_per_row} per row)"
+    headings = ['Type', 'Row', 'Column', "Dark icon fix (#{items_with_icons.count {|item| item[:dark_icon_fix]}})"]
+    rows = items_with_icons.map {|item| [item[:type], item[:row], item[:col], item[:dark_icon_fix] ? 'Yes' : 'No']}
 
-    max_type_length = items_with_icons.map {|item| item[:type].length}.max
-    border = "+#{'-' * (max_type_length + 2)}+#{'-' * 5}+#{'-' * 8}+#{'-' * 15}+"
-
-    logger.debug(border)
-    logger.debug("| #{'Type'.ljust(max_type_length)} | Row | Column | Dark icon fix |")
-    logger.debug(border)
-
-    items_with_icons.each do |item|
-      logger.debug("| #{item[:type].ljust(max_type_length)} | #{item[:row].to_s.ljust(3)} | #{item[:col].to_s.ljust(6)} | #{(item[:dark_icon_fix] ? 'Yes' : 'No').ljust(13)} |")
-    end
-
-    logger.debug(border)
+    table = Terminal::Table.new :title => title, :headings => headings, :rows => rows
+    puts table
   end
 
   def get_output_path(size)
