@@ -2,9 +2,7 @@ module Docs
   class Numpy
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('#spc-section-body')
-
-        doc
+        at_css('#spc-section-body')
       end
     end
   end

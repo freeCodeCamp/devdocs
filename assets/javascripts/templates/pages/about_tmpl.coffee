@@ -528,8 +528,8 @@ credits = [
     'https://raw.githubusercontent.com/npm/npm/master/LICENSE'
   ], [
     'NumPy',
-    '2008-2017 NumPy Developers',
-    'NumPy',
+    '2005-2019 NumPy Developers',
+    'BSD',
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
   ], [
     'Octave',
