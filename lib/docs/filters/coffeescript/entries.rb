@@ -48,7 +48,7 @@ module Docs
 
         css('.navbar > nav > .nav-link').each do |node|
           name = node.content.strip
-          next if name.in?(%w(Overview Changelog)) || !node['href'].start_with?('#')
+          next if name.in?(%w(Overview Changelog Introduction)) || !node['href'].start_with?('#')
           entries << [name, node['href'].remove('#'), 'Miscellaneous']
 
           if name == 'Language Reference'

@@ -3,7 +3,7 @@ module Docs
     self.name = 'CoffeeScript'
     self.type = 'coffeescript'
     self.links = {
-      home: 'http://coffeescript.org',
+      home: 'https://coffeescript.org',
       code: 'https://github.com/jashkenas/coffeescript'
     }
 
@@ -16,15 +16,15 @@ module Docs
     HTML
 
     version '2' do
-      self.release = '2.3.0'
-      self.base_url = 'http://coffeescript.org/'
+      self.release = '2.4.1'
+      self.base_url = 'https://coffeescript.org/'
 
       html_filters.push 'coffeescript/entries', 'coffeescript/clean_html', 'title'
     end
 
     version '1' do
-      self.release = '1.12.6'
-      self.base_url = 'http://coffeescript.org/v1/'
+      self.release = '1.12.7'
+      self.base_url = 'https://coffeescript.org/v1/'
 
       html_filters.push 'coffeescript/clean_html_v1', 'coffeescript/entries_v1', 'title'
 
