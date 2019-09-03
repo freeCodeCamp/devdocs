@@ -6,6 +6,10 @@ module Docs
         type.remove! %r{#.+\z}
         type.split('::')[0..2].join('::')
       end
+
+      def include_default_entry?
+        true
+      end
     end
   end
 end
