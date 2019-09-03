@@ -24,6 +24,8 @@ group :app do
   gem 'coffee-script'
   gem 'chunky_png'
   gem 'sprockets-sass'
+  gem 'image_optim'
+  gem 'image_optim_pack', platforms: :ruby
 end
 
 group :production do
@@ -36,8 +38,6 @@ group :development do
 end
 
 group :docs do
-  gem 'image_optim'
-  gem 'image_optim_pack', platforms: :ruby
   gem 'progress_bar', require: false
   gem 'unix_utils', require: false
   gem 'tty-pager', require: false
