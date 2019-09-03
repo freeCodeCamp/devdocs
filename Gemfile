@@ -26,6 +26,7 @@ group :app do
   gem 'sprockets-sass'
   gem 'image_optim'
   gem 'image_optim_pack', platforms: :ruby
+  gem 'terminal-table'
 end
 
 group :production do
