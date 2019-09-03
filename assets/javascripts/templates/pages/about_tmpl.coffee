@@ -253,7 +253,7 @@ credits = [
     'https://api.drupal.org/api/drupal/LICENSE.txt'
   ], [
     'Electron',
-    '2013-2018 GitHub Inc.',
+    '2013-2019 GitHub Inc.',
     'MIT',
     'https://raw.githubusercontent.com/electron/electron/master/LICENSE'
   ], [
