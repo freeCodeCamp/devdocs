@@ -56,7 +56,7 @@ class App < Sinatra::Application
     require 'thor'
     load 'tasks/sprites.thor'
 
-    SpritesCLI.new.invoke(:generate)
+    SpritesCLI.new.invoke(:generate, [], :disable_optimization => true)
 
     require 'active_support/per_thread_registry'
     require 'active_support/cache'

@@ -10,8 +10,9 @@ class SpritesCLI < Thor
     super
   end
 
-  desc 'generate [--remove-public-icons] [--verbose]', 'Generate the documentation icon spritesheets'
+  desc 'generate [--remove-public-icons] [--disable-optimization] [--verbose]', 'Generate the documentation icon spritesheets'
   option :remove_public_icons, type: :boolean, desc: 'Remove public/icons after generating the spritesheets'
+  option :disable_optimization, type: :boolean, desc: 'Disable optimizing the spritesheets with OptiPNG'
   option :verbose, type: :boolean
   def generate
     items = get_items
@@ -35,8 +36,13 @@ class SpritesCLI < Thor
 
     log_details(items_with_icons, icons_per_row)
 
-    generate_spritesheet(16, items_with_icons, 'assets/images/sprites/docs.png') {|item| item[:icon_16]}
-    generate_spritesheet(32, items_with_icons, 'assets/images/sprites/docs@2x.png') {|item| item[:icon_32]}
+    generate_spritesheet(16, items_with_icons) {|item| item[:icon_16]}
+    generate_spritesheet(32, items_with_icons) {|item| item[:icon_32]}
+
+    unless options[:disable_optimization]
+      optimize_spritesheet(get_output_path(16))
+      optimize_spritesheet(get_output_path(32))
+    end
 
     # Add Mongoose's icon details to docs without custom icons
     default_item = items_with_icons.find {|item| item[:type] == 'mongoose'}
@@ -139,8 +145,10 @@ class SpritesCLI < Thor
     0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]
   end
 
-  def generate_spritesheet(size, items_with_icons, output_path, &item_to_icon)
-    logger.info("Generating spritesheet #{output_path} with icons of size #{size} x #{size}")
+  def generate_spritesheet(size, items_with_icons, &item_to_icon)
+    output_path = get_output_path(size)
+
+    logger.info("Generating spritesheet to #{output_path} with icons of size #{size} x #{size}")
 
     icons_per_row = Math.sqrt(items_with_icons.length).ceil
     spritesheet = ChunkyPNG::Image.new(size * icons_per_row, size * icons_per_row)
@@ -161,6 +169,11 @@ class SpritesCLI < Thor
 
     FileUtils.mkdir_p(File.dirname(output_path))
     spritesheet.save(output_path)
+  end
+
+  def optimize_spritesheet(path)
+    logger.info("Optimizing spritesheet at #{path}")
+    image_optim.optimize_image!(path)
   end
 
   def save_manifest(items, icons_per_row, path)
@@ -202,6 +215,29 @@ class SpritesCLI < Thor
     end
 
     logger.debug(border)
+  end
+
+  def get_output_path(size)
+    "assets/images/sprites/docs#{size == 32 ? '@2x' : ''}.png"
+  end
+
+  def image_optim
+    @image_optim ||= ImageOptim.new(
+      :config_paths => [],
+      :advpng => false,
+      :gifsicle => false,
+      :jhead => false,
+      :jpegoptim => false,
+      :jpegrecompress => false,
+      :jpegtran => false,
+      :pngcrush => false,
+      :pngout => false,
+      :pngquant => false,
+      :svgo => false,
+      :optipng => {
+        :level => 7,
+      },
+    )
   end
 
   def logger
