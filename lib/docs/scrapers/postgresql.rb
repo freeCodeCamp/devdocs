@@ -55,6 +55,11 @@ module Docs
       Licensed under the PostgreSQL License.
     HTML
 
+    version '11' do
+      self.release = '11.5'
+      self.base_url = 'https://www.postgresql.org/docs/11/static/'
+    end
+
     version '10' do
       self.release = '10.3'
       self.base_url = 'https://www.postgresql.org/docs/10/static/'
