@@ -51,7 +51,7 @@ module Docs
       /\Aunsupported-features/ ]
 
     options[:attribution] = <<-HTML
-      &copy; 1996&ndash;2018 The PostgreSQL Global Development Group<br>
+      &copy; 1996&ndash;2019 The PostgreSQL Global Development Group<br>
       Licensed under the PostgreSQL License.
     HTML
 

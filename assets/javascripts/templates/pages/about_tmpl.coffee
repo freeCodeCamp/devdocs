@@ -593,7 +593,7 @@ credits = [
     'https://raw.githubusercontent.com/ponylang/ponyc/master/LICENSE'
   ], [
     'PostgreSQL',
-    '1996-2018 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
+    '1996-2019 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
   ], [
