@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'image_optim'
+
 module Docs
   class ImagesFilter < Filter
     include Instrumentable
