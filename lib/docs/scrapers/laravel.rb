@@ -29,6 +29,19 @@ module Docs
       Laravel is a trademark of Taylor Otwell.
     HTML
 
+    version '6.0' do
+      self.release = '6.0.1'
+      self.root_path = '/api/6.x/index.html'
+      self.initial_paths = %w(/docs/6.0/installation /api/6.x/classes.html)
+
+      options[:only_patterns] = [%r{\A/api/6\.x/}, %r{\A/docs/6\.0/}]
+
+      options[:fix_urls] = ->(url) do
+        url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/6.0/"
+        url
+      end
+    end
+
     version '5.8' do
       self.release = '5.8.35'
       self.root_path = '/api/5.8/index.html'
