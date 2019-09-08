@@ -56,7 +56,7 @@ module Docs
     end
 
     version '5.7' do
-      self.release = '5.7.7'
+      self.release = '5.7.28'
       self.root_path = '/api/5.7/index.html'
       self.initial_paths = %w(/docs/5.7/installation /api/5.7/classes.html)
 
@@ -69,7 +69,7 @@ module Docs
     end
 
     version '5.6' do
-      self.release = '5.6.33'
+      self.release = '5.6.39'
       self.root_path = '/api/5.6/index.html'
       self.initial_paths = %w(/docs/5.6/installation /api/5.6/classes.html)
 
@@ -82,7 +82,7 @@ module Docs
     end
 
     version '5.5' do
-      self.release = '5.5.28'
+      self.release = '5.5.48'
       self.root_path = '/api/5.5/index.html'
       self.initial_paths = %w(/docs/5.5/installation /api/5.5/classes.html)
 
@@ -95,7 +95,7 @@ module Docs
     end
 
     version '5.4' do
-      self.release = '5.4.30'
+      self.release = '5.4.36'
       self.root_path = '/api/5.4/index.html'
       self.initial_paths = %w(/docs/5.4/installation /api/5.4/classes.html)
 
@@ -108,7 +108,7 @@ module Docs
     end
 
     version '5.3' do
-      self.release = '5.3.30'
+      self.release = '5.3.31'
       self.root_path = '/api/5.3/index.html'
       self.initial_paths = %w(/docs/5.3/installation /api/5.3/classes.html)
 
@@ -121,7 +121,7 @@ module Docs
     end
 
     version '5.2' do
-      self.release = '5.2.31'
+      self.release = '5.2.45'
       self.root_path = '/api/5.2/index.html'
       self.initial_paths = %w(/docs/5.2/installation /api/5.2/classes.html)
 
@@ -134,7 +134,7 @@ module Docs
     end
 
     version '5.1' do
-      self.release = '5.1.33'
+      self.release = '5.1.46'
       self.root_path = '/api/5.1/index.html'
       self.initial_paths = %w(/docs/5.1/installation /api/5.1/classes.html)
 
@@ -146,9 +146,21 @@ module Docs
       end
     end
 
+    version '5.0' do
+      self.release = '5.0.35'
+      self.root_path = '/api/5.0/index.html'
+      self.initial_paths = %w(/docs/5.0/installation /api/5.0/classes.html)
+
+      options[:only_patterns] = [%r{\A/api/5\.0/}, %r{\A/docs/5\.0/}]
+
+      options[:fix_urls] = ->(url) do
+        url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/5.0/"
+        url
+      end
+    end
 
     version '4.2' do
-      self.release = '4.2.11'
+      self.release = '4.2.22'
       self.root_path = '/api/4.2/index.html'
       self.initial_paths = %w(/docs/4.2/installation /api/4.2/classes.html)
 
