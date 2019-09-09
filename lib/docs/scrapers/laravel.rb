@@ -10,7 +10,7 @@ module Docs
     html_filters.push 'laravel/entries', 'laravel/clean_html'
 
     options[:container] = ->(filter) {
-      filter.subpath.start_with?('/api') ? '#content' : '.docs-wrapper'
+      filter.subpath.start_with?('/api') ? '#content' : 'section.docs_body'
     }
 
     options[:skip_patterns] = [

@@ -13,7 +13,7 @@ module Docs
 
       def get_type
         unless api_page?
-          link = at_css(".sidebar li a[href='#{result[:path].split('/').last}']")
+          link = at_css("section.docs_main li a[href=\"/#{result[:path]}\"]")
           heading = link.ancestors('li').last.at_css('> h2')
           return heading ? "Guides: #{heading.content.strip}" : 'Guides'
         end
