@@ -5,7 +5,7 @@ module Docs
     self.root_path = 'guide/overview/index.html'
     self.links = {
       home: 'https://cordova.apache.org/',
-      code: 'https://git-wip-us.apache.org/repos/asf/cordova-cli.git'
+      code: 'https://github.com/apache/cordova'
     }
 
     html_filters.push 'cordova/entries', 'cordova/clean_html'
@@ -24,23 +24,28 @@ module Docs
     end
 
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2018 The Apache Software Foundation<br>
+      &copy; 2012, 2013, 2015 The Apache Software Foundation<br>
       Licensed under the Apache License 2.0.
     HTML
 
+    version '9' do
+      self.release = '9.0.0'
+      self.base_url = "https://cordova.apache.org/docs/en/#{self.version}.x/"
+    end
+
     version '8' do
       self.release = '8.1.2'
-      self.base_url = 'https://cordova.apache.org/docs/en/8.x/'
+      self.base_url = "https://cordova.apache.org/docs/en/#{self.version}.x/"
     end
 
     version '7' do
       self.release = '7.1.0'
-      self.base_url = 'https://cordova.apache.org/docs/en/7.x/'
+      self.base_url = "https://cordova.apache.org/docs/en/#{self.version}.x/"
     end
 
     version '6' do
       self.release = '6.5.0'
-      self.base_url = 'https://cordova.apache.org/docs/en/6.x/'
+      self.base_url = "https://cordova.apache.org/docs/en/#{self.version}.x/"
     end
 
     def get_latest_version(opts)

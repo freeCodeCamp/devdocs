@@ -3,7 +3,7 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         return 'CLI' if slug == 'reference/cordova-cli/index'
-        name = at_css('#page-toc-source h1').content.strip
+        name = at_css('#page-toc-source').at_css('h1, h2').content.strip
         name.remove! ' Guide'
         name
       end
