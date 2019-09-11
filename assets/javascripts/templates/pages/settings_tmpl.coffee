@@ -2,12 +2,22 @@ app.templates.settingsPage = (settings) -> """
   <h1 class="_lined-heading">Preferences</h1>
 
   <div class="_settings-fieldset">
+    <h2 class="_settings-legend">Theme:</h2>
+    <div class="_settings-inputs">
+      <label class="_settings-label">
+        <select form="settings" name="theme">
+          <option value=""#{if not settings.theme then ' selected' else ''}>automatic</option>
+          <option value="default"#{if settings.theme == 'default' then ' selected' else ''}>light</option>
+          <option value="dark"#{if settings.theme == 'dark' then ' selected' else ''}>dark</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="_settings-fieldset">
     <h2 class="_settings-legend">General:</h2>
 
     <div class="_settings-inputs">
-      <label class="_settings-label">
-        <input type="checkbox" form="settings" name="dark" value="1"#{if settings.dark then ' checked' else ''}>Enable dark theme
-      </label>
       <label class="_settings-label _setting-max-width">
         <input type="checkbox" form="settings" name="layout" value="_max-width"#{if settings['_max-width'] then ' checked' else ''}>Enable fixed-width layout
       </label>

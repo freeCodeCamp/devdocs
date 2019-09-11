@@ -7,7 +7,8 @@ class app.Settings
     'arrowScroll'
     'analyticsConsent'
     'docs'
-    'dark'
+    'dark' # legacy
+    'theme'
     'layout'
     'size'
     'tips'
@@ -43,7 +44,7 @@ class app.Settings
   set: (key, value) ->
     @store.set(key, value)
     delete @cache[key]
-    @toggleDark(value) if key == 'dark'
+    @setTheme(value) if key == 'theme'
     return
 
   del: (key) ->
@@ -114,15 +115,20 @@ class app.Settings
     return
 
   initLayout: ->
-    @toggleDark(@get('dark') is 1)
+    if @get('dark') is 1
+      @set('theme', 'dark')
+      @del 'dark'
+    @setTheme(@get('theme'))
     @toggleLayout(layout, @hasLayout(layout)) for layout in @LAYOUTS
     @initSidebarWidth()
     return
 
-  toggleDark: (enable) ->
+  setTheme: (theme) ->
+    if not theme
+      theme = if window.matchMedia('(prefers-color-scheme: dark)').matches then 'dark' else 'default'
     classList = document.documentElement.classList
-    classList.toggle('_theme-default', !enable)
-    classList.toggle('_theme-dark', enable)
+    classList.remove('_theme-default', '_theme-dark')
+    classList.add('_theme-' + theme)
     color = getComputedStyle(document.documentElement).getPropertyValue('--headerBackground').trim()
     $('meta[name=theme-color]').setAttribute('content', color)
     return
