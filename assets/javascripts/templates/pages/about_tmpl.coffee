@@ -213,7 +213,7 @@ credits = [
     'https://raw.githubusercontent.com/cypress-io/cypress-documentation/develop/LICENSE.md'
   ], [
     'D',
-    '1999-2018 The D Language Foundation',
+    '1999-2019 The D Language Foundation',
     'Boost',
     'https://raw.githubusercontent.com/dlang/phobos/master/LICENSE_1_0.txt'
   ], [
