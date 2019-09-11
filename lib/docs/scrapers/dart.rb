@@ -3,7 +3,7 @@ module Docs
     self.type = 'dart'
     self.root_path = 'index.html'
     self.links = {
-      home: 'https://www.dartlang.org/',
+      home: 'https://dart.dev/',
       code: 'https://github.com/dart-lang/sdk'
     }
 
@@ -23,13 +23,13 @@ module Docs
     # Download the documentation from https://www.dartlang.org/tools/sdk/archive
 
     version '2' do
-      self.release = '2.0.0'
-      self.base_url = "https://api.dartlang.org/stable/#{release}/"
+      self.release = '2.5.0'
+      self.base_url = "https://api.dart.dev/stable/#{release}/"
     end
 
     version '1' do
       self.release = '1.24.3'
-      self.base_url = "https://api.dartlang.org/stable/#{release}/"
+      self.base_url = "https://api.dart.dev/stable/#{release}/"
     end
 
     def get_latest_version(opts)

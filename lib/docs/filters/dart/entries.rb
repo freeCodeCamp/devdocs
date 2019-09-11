@@ -7,7 +7,7 @@ module Docs
           name = title.element_children.last.content.strip
           kind = title.at_css('.kind').content
         else # v2
-          title = at_css('.main-content > h1')
+          title = at_css('.main-content > div > h1')
           name = title.content[/(.*)( )/, 1].split(' top-level')[0]
           kind = title.content[/(.*)( )(.+)/, 3]
         end
@@ -15,7 +15,7 @@ module Docs
         breadcrumbs = at_css('.breadcrumbs').css('li:not(.self-crumb) > a')
         first_part = ''
 
-        if breadcrumbs.length == 2 && !kind.include?('class')
+        if breadcrumbs.length == 2 && kind.blank?
           first_part = breadcrumbs[1].content
         elsif breadcrumbs.length == 3
           first_part = breadcrumbs[2].content

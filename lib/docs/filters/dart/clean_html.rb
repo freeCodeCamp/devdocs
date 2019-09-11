@@ -33,13 +33,22 @@ module Docs
         # We can't use options[:container] here because the entries filter uses the breadcrumbs node
         @doc = at_css('.main-content')
 
+        # Remove external links
+        css('#external-links').remove
+
+        # Properly format header in v2 docs
+        nested_title = at_css('div > h1')
+        unless nested_title.nil?
+          nested_title.parent.replace nested_title
+        end
+
         # Move the features (i.e. "read-only, inherited") into the blue header
         css('.features').each do |node|
           header = node.xpath('parent::dd/preceding::dt').last
           header.add_child node unless header.nil?
         end
 
-        css('section').each do |node|
+        css('section:not(.multi-line-signature)').each do |node|
           if node['id'] && node.first_element_child
             node.first_element_child['id'] ||= node['id']
           end
@@ -54,7 +63,7 @@ module Docs
         # Make code blocks detectable by Prism
         css('pre').each do |node|
           node['data-language'] = 'dart'
-          node.content = node.content
+          node.content = node.content.strip
         end
 
         css('.properties', '.property', '.callables', '.callable').remove_attr('class')
