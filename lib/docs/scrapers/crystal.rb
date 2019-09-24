@@ -1,7 +1,6 @@
 module Docs
   class Crystal < UrlScraper
     self.type = 'crystal'
-    self.release = '0.30.1'
     self.base_url = 'https://crystal-lang.org/'
     self.root_path = "api/#{release}/index.html"
     self.initial_paths = %w(docs/index.html)
@@ -34,6 +33,14 @@ module Docs
         HTML
       end
     }
+
+    version '0.31' do
+      self.release = '0.31.0'
+    end
+
+    version '0.30' do
+      self.release = '0.30.1'
+    end
 
     def get_latest_version(opts)
       body = fetch('https://crystal-lang.org/api', opts)
