@@ -167,7 +167,7 @@ Copyright 2013-2019 Thibaut Courouble and [other contributors](https://github.co
 
 This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](./COPYRIGHT) and [LICENSE](./LICENSE) files.
 
-Please do not use the name DevDocs to endorse or promote products derived from this software without the maintainers' permission, except as may be necessary to comply with the notice/attribution requirements.
+Please do not use the name DevDocs to endorse or promote products derived from this software without the maintainer's permission, except as may be necessary to comply with the notice/attribution requirements.
 
 We also wish that any documentation file generated using this software be attributed to DevDocs. Let's be fair to all contributors by giving credit where credit's due. Thanks!
 
