@@ -1,9 +1,7 @@
 module Docs
   class Crystal < UrlScraper
     self.type = 'crystal'
-    self.release = '0.30.1'
     self.base_url = 'https://crystal-lang.org/'
-    self.root_path = "api/#{release}/index.html"
     self.initial_paths = %w(docs/index.html)
     self.links = {
       home: 'https://crystal-lang.org/',
@@ -11,14 +9,6 @@ module Docs
     }
 
     html_filters.push 'crystal/entries', 'crystal/clean_html'
-
-    options[:only_patterns] = [/\Adocs\//, /\Aapi\/#{release}\//]
-    options[:skip_patterns] = [/debug/i]
-
-    options[:replace_paths] = {
-      "api/#{release}/" => "api/#{release}/index.html",
-      'docs/' => 'docs/index.html'
-    }
 
     options[:attribution] = ->(filter) {
       if filter.slug.start_with?('docs')
@@ -35,9 +25,35 @@ module Docs
       end
     }
 
+    version '0.31' do
+      self.release = '0.31.1'
+      self.root_path = "api/#{release}/index.html"
+
+      options[:only_patterns] = [/\Adocs\//, /\Aapi\/#{release}\//]
+      options[:skip_patterns] = [/debug/i]
+
+      options[:replace_paths] = {
+        "api/#{release}/" => "api/#{release}/index.html",
+        'docs/' => 'docs/index.html'
+      }
+    end
+
+    version '0.30' do
+      self.release = '0.30.1'
+      self.root_path = "api/#{release}/index.html"
+
+      options[:only_patterns] = [/\Adocs\//, /\Aapi\/#{release}\//]
+      options[:skip_patterns] = [/debug/i]
+
+      options[:replace_paths] = {
+        "api/#{release}/" => "api/#{release}/index.html",
+        'docs/' => 'docs/index.html'
+      }
+    end
+
     def get_latest_version(opts)
-      body = fetch('https://crystal-lang.org/api', opts)
-      body.scan(/Crystal Docs ([0-9.]+)/)[0][0]
+      doc = fetch_doc('https://crystal-lang.org/', opts)
+      doc.at_css('.latest-release').content.scan(/([0-9.]+)/)[0][0]
     end
   end
 end
