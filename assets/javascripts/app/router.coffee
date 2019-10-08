@@ -124,6 +124,9 @@ class app.Router
   isIndex: ->
     @context?.path is '/' or (app.isSingleDoc() and @context?.entry?.isIndex())
 
+  isSettings: ->
+    @context?.path is '/settings'
+
   setInitialPath: ->
     # Remove superfluous forward slashes at the beginning of the path
     if (path = location.pathname.replace /^\/{2,}/g, '/') isnt location.pathname
