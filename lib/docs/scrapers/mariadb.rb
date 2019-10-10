@@ -2,7 +2,7 @@ module Docs
   class Mariadb < UrlScraper
     self.name = 'MariaDB'
     self.type = 'mariadb'
-    self.release = '10.4.7'
+    self.release = '10.4.8'
     self.base_url = 'https://mariadb.com/kb/en/'
     self.root_path = 'library/documentation/'
     self.links = {
@@ -20,6 +20,10 @@ module Docs
       /-changelog\//,
       /^documentation\//,
       /^mariadb-server-documentation\//,
+      /signal-statement\//,
+      /resignal-statement\//,
+      /isolation-level\//,
+      /rollback-statement\//
     ]
 
     options[:attribution] = <<-HTML
