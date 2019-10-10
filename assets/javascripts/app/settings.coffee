@@ -129,7 +129,7 @@ class app.Settings
 
   toggleLayout: (layout, enable) ->
     classList = document.body.classList
-    classList.toggle(layout, enable) unless layout is '_sidebar-hidden'
+    classList.toggle(layout, enable) unless app.router?.isSettings
     classList.toggle('_overlay-scrollbars', $.overlayScrollbarsEnabled())
     return
 
