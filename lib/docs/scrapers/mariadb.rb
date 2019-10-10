@@ -13,6 +13,7 @@ module Docs
     html_filters.insert_before 'internal_urls', 'mariadb/erase_invalid_pages'
     html_filters.push 'mariadb/entries', 'mariadb/clean_html'
 
+    options[:rate_limit] = 200
     options[:skip_patterns] = [
       /\+/,
       /\/ask\//,
@@ -20,10 +21,6 @@ module Docs
       /-changelog\//,
       /^documentation\//,
       /^mariadb-server-documentation\//,
-      /signal-statement\//,
-      /resignal-statement\//,
-      /isolation-level\//,
-      /rollback-statement\//
     ]
 
     options[:attribution] = <<-HTML
