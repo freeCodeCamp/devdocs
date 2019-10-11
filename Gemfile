@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.6.3'
+ruby '~> 2.6.0'
 
 gem 'rake'
 gem 'thor'
@@ -9,6 +9,7 @@ gem 'yajl-ruby', require: false
 gem 'html-pipeline'
 gem 'typhoeus'
 gem 'nokogiri'
+gem 'terminal-table'
 
 group :app do
   gem 'rack'
@@ -26,7 +27,6 @@ group :app do
   gem 'sprockets-sass'
   gem 'image_optim'
   gem 'image_optim_pack', platforms: :ruby
-  gem 'terminal-table'
 end
 
 group :production do
@@ -43,7 +43,6 @@ group :docs do
   gem 'unix_utils', require: false
   gem 'tty-pager', require: false
   gem 'net-sftp', '>= 2.1.3.rc2', require: false
-  gem 'terminal-table', require: false
 end
 
 group :test do
