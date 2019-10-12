@@ -25,6 +25,11 @@ module Docs
           pre['data-language'] = 'typescript' if node['class'] == 'lang-ts'
         end
 
+        # Add syntax highlighting to source files
+        css('pre.raw-source-code').each do |node|
+          node['data-language'] = 'javascript'
+        end
+
         # Return the cleaned-up document
         doc
       end
