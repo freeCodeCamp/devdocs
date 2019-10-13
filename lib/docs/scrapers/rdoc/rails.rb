@@ -45,6 +45,15 @@ module Docs
       ActiveSupport/Dependencies/WatchStack.html
       ActiveSupport/Notifications/Fanout.html)
 
+    # False positives found by docs:generate
+    options[:skip].concat %w(
+      ActionDispatch/www.example.com
+      ActionDispatch/Http/www.rubyonrails.org
+      ActionDispatch/Http/www.rubyonrails.co.uk
+      'TZ'
+      active_record_migrations.html
+      association_basics.html)
+
     options[:skip_patterns] += [
       /release_notes/,
       /\AActionController\/Testing/,
