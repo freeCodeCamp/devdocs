@@ -23,6 +23,13 @@ module Docs
       Licensed under the PSF License.
     HTML
 
+    version '3.8' do # docs.python.org/3.8/download.html
+      self.release = '3.8.0'
+      self.base_url = 'https://docs.python.org/3.8/'
+
+      html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
+    end
+
     version '3.7' do # docs.python.org/3.7/download.html
       self.release = '3.7.4'
       self.base_url = 'https://docs.python.org/3.7/'
