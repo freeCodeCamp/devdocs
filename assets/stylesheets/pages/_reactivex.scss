@@ -1,0 +1,51 @@
+._reactivex {
+  @extend %simple;
+
+  img {
+    max-width: 50%;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  dfn {
+    cursor: text;
+    font-style: italic;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  #tree {
+    dt, dd {
+      font-weight: normal;
+    }
+
+    dt {
+      float: left;
+      clear: left;
+
+      margin-top: 0;
+
+      &:before {
+        content: "\2026";
+      }
+    }
+
+    dd:not(.sub) {
+      float: left;
+
+      margin: 0 0 0 5px;
+      padding: 0;
+    }
+
+    dl#outer > dt {
+      font-weight: bold;
+      margin-top: 5px;
+
+      & + dd {
+        margin-top: 5px;
+      }
+    }
+  }
+}
