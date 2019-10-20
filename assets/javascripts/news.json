@@ -1,5 +1,8 @@
 [
   [
+    "2019-10-20",
+    "New documentations: <a href=\"/mariadb/\">MariaDB</a> and <a href=\"/reactivex/\">ReactiveX</a>"
+  ], [
     "2019-09-02",
     "New documentations added over the last 3 weeks: <a href=\"/scala~2.13_library/\">Scala</a>, <a href=\"/wordpress/\">WordPress</a>, <a href=\"/cypress/\">Cypress</a>, <a href=\"/saltstack/\">SaltStack</a>, <a href=\"/composer/\">Composer</a>, <a href=\"/vue_router/\">Vue Router</a>, <a href=\"/vuex/\">Vuex</a>, <a href=\"/pony/\">Pony</a>, <a href=\"/rxjs/\">RxJS</a>, <a href=\"/octave/\">Octave</a>, <a href=\"/trio/\">Trio</a>, <a href=\"/django_rest_framework/\">Django REST Framework</a>, <a href=\"/enzyme/\">Enzyme</a> and <a href=\"/gnu_cobol/\">GnuCOBOL</a>"
   ], [
