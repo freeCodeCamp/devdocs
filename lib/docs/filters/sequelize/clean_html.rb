@@ -18,11 +18,11 @@ module Docs
           # Remove image cards pointing to entries of the manual
           css('.manual-cards').remove
 
-          # Pull the header out of it's container
+          # Pull the header out of its container
           header = at_css('h1')
           header.parent.parent.parent.add_previous_sibling header
         else
-          # Pull the header out of it's container
+          # Pull the header out of its container
           header = at_css('h1')
           header.parent.add_previous_sibling header
         end
@@ -44,11 +44,6 @@ module Docs
           pre['data-language'] = 'shell'      if node['class'] == 'lang-sh' || node['class'] == 'lang-bash'
           pre['data-language'] = 'sql'        if node['class'] == 'lang-sql'
           pre['data-language'] = 'typescript' if node['class'] == 'lang-ts'
-        end
-
-        # Add syntax highlighting to source files
-        css('pre.raw-source-code').each do |node|
-          node['data-language'] = 'javascript'
         end
 
         # Return the cleaned-up document
