@@ -91,7 +91,6 @@ If this is your first deploy, make sure another maintainer is around to assist.
 ## List of maintainers
 
 - [Jed Fox](https://github.com/j-f1)
-- [Jasper van Merle](https://github.com/jmerle)
 - [Ahmad Abdolsaheb](https://github.com/ahmadabdolsaheb)
 - [Mrugesh Mohapatra](https://github.com/raisedadead)
 - [Thibaut Courouble](https://github.com/thibaut)
