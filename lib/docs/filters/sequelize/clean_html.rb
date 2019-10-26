@@ -2,16 +2,37 @@ module Docs
   class Sequelize
     class CleanHtmlFilter < Filter
       def call
+        @doc = at_css('.content')
+
         # Clean up the home page
-        if root_page?
+        if root_page? || subpath == "index.html"
           # Remove logo
           css('.manual-user-index > div > div.logo').remove
-          # Convert title to proper H1 element
+
+          # Convert title to proper h1 element
           at_css('.manual-user-index > div > div.sequelize').name = 'h1'
+
           # Remove badges (NPM, Travis, test coverage, etc.)
           css('.manual-user-index > p:nth-child(4)').remove
+
           # Remove image cards pointing to entries of the manual
           css('.manual-cards').remove
+
+          # Pull the header out of it's container
+          header = at_css('h1')
+          header.parent.parent.parent.add_previous_sibling header
+        else
+          # Pull the header out of it's container
+          header = at_css('h1')
+          header.parent.add_previous_sibling header
+        end
+
+        # Remove header notice
+        css('.header-notice').remove
+
+        # Change td in thead to th
+        css('table > thead > tr > td').each do |node|
+          node.name = 'th'
         end
 
         # Add syntax highlighting to code blocks

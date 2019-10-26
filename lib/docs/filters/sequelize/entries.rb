@@ -9,17 +9,24 @@ module Docs
       # Assign the pages to main categories
       def get_type
         if path.start_with?('manual/')
-          type = 'Manual'
-        elsif path.start_with?('file/lib/')
-          type = 'Source files'
+          'Manual'
+        elsif path.include?('lib/data-types')
+          'datatypes'
+        elsif path.include?('lib/errors/validation')
+          'errors/validation'
+        elsif path.include?('lib/errors/database')
+          'errors/database'
+        elsif path.include?('lib/errors/connection')
+          'errors/connection'
+        elsif path.include?('lib/errors')
+          'errors'
+        elsif path.include?('lib/associations')
+          'associations'
+        elsif path.include?('master/variable')
+          'variables'
         else
-          # API Reference pages. The `path` for most of these starts with 'class/lib/',
-          # but there's also 'variable/index' (pseudo-classes), and 'identifiers' (the main index)
-          # so we use an unqualified `else` as a catch-all.
-          type = 'Reference'
+          'classes'
         end
-
-        type
       end
     end
   end

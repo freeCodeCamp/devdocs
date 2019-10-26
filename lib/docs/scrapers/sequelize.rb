@@ -3,18 +3,18 @@ module Docs
     self.name = 'Sequelize'
     self.slug = 'sequelize'
     self.type = 'simple'
-    self.release = '5.19.6'
+    self.release = '5.21.1'
     self.base_url = 'https://sequelize.org/master/'
     self.links = {
       home: 'https://sequelize.org/',
-      code: 'https://github.com/sequelize/sequelize/'
+      code: 'https://github.com/sequelize/sequelize'
     }
 
     # List of content filters (to be applied sequentially)
     html_filters.push 'sequelize/entries', 'sequelize/clean_html'
 
-    # Wrapper element that holds the main content
-    options[:container] = '.content'
+    # Skip the source files, the license page and the "Who's using Sequelize" page
+    options[:skip_patterns] = [/\.js\.html/, /manual\/legal\.html/, /manual\/whos-using\.html/]
 
     # License information that appears appears at the bottom of the entry page
     options[:attribution] = <<-HTML
