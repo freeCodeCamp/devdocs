@@ -45,6 +45,15 @@ module Docs
       ActiveSupport/Dependencies/WatchStack.html
       ActiveSupport/Notifications/Fanout.html)
 
+    # False positives found by docs:generate
+    options[:skip].concat %w(
+      ActionDispatch/www.example.com
+      ActionDispatch/Http/www.rubyonrails.org
+      ActionDispatch/Http/www.rubyonrails.co.uk
+      'TZ'
+      active_record_migrations.html
+      association_basics.html)
+
     options[:skip_patterns] += [
       /release_notes/,
       /\AActionController\/Testing/,
@@ -63,15 +72,19 @@ module Docs
     options[:attribution] = ->(filter) do
       if filter.slug.start_with?('guides')
         <<-HTML
-          &copy; 2004&ndash;2018 David Heinemeier Hansson<br>
+          &copy; 2004&ndash;2019 David Heinemeier Hansson<br>
           Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.
         HTML
       else
         <<-HTML
-          &copy; 2004&ndash;2018 David Heinemeier Hansson<br>
+          &copy; 2004&ndash;2019 David Heinemeier Hansson<br>
           Licensed under the MIT License.
         HTML
       end
+    end
+
+    version '6.0' do
+      self.release = '6.0.0'
     end
 
     version '5.2' do
