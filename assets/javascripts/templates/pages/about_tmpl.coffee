@@ -712,6 +712,11 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/sinonjs/sinon/master/LICENSE'
   ], [
+    'Sequelize',
+    '2014—present Sequelize contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/sequelize/sequelize/master/LICENSE'
+  ], [
     'Socket.io',
     '2014-2015 Automattic',
     'MIT',
