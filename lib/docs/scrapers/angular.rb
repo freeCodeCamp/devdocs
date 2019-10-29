@@ -11,7 +11,7 @@ module Docs
     options[:max_image_size] = 256_000
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2018 Google, Inc.<br>
+      &copy; 2010&ndash;2019 Google, Inc.<br>
       Licensed under the Creative Commons Attribution License 4.0.
     HTML
 
@@ -59,6 +59,46 @@ module Docs
     end
 
     version do
+      self.release = '8.2.12'
+      self.base_url = 'https://v7.angular.io/'
+      self.root_path = 'docs'
+
+      html_filters.push 'angular/clean_html', 'angular/entries'
+
+      options[:follow_links] = false
+      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
+      options[:fix_urls_before_parse] = ->(url) do
+        url.sub! %r{\Aguide/}, '/guide/'
+        url.sub! %r{\Atutorial/}, '/tutorial/'
+        url.sub! %r{\Aapi/}, '/api/'
+        url.sub! %r{\Agenerated/}, '/generated/'
+        url
+      end
+
+      include Docs::Angular::Common
+    end
+
+    version '7' do
+      self.release = '7.2.15'
+      self.base_url = 'https://v7.angular.io/'
+      self.root_path = 'docs'
+
+      html_filters.push 'angular/clean_html', 'angular/entries'
+
+      options[:follow_links] = false
+      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
+      options[:fix_urls_before_parse] = ->(url) do
+        url.sub! %r{\Aguide/}, '/guide/'
+        url.sub! %r{\Atutorial/}, '/tutorial/'
+        url.sub! %r{\Aapi/}, '/api/'
+        url.sub! %r{\Agenerated/}, '/generated/'
+        url
+      end
+
+      include Docs::Angular::Common
+    end
+
+    version '6' do
       self.release = '6.0.4'
       self.base_url = 'https://angular.io/'
       self.root_path = 'docs'
