@@ -2,7 +2,7 @@ module Docs
   class Typescript
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('h1').content
+        name = at_css('h1').content.strip
         name.sub! ' and ', ' & '
         name
       end
@@ -24,6 +24,7 @@ module Docs
 
         css('.post-content h1, .post-content h2').each_with_object [] do |node, entries|
           next if node.next_element.try(:name) == 'h2'
+          node.css('.anchor-hash').remove
           name = node.content.strip
           next if name.length > 40
           next if name == self.name || SKIP_ENTRIES.any? { |str| name.include?(str) }

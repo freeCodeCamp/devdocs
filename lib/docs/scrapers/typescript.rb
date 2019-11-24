@@ -2,7 +2,7 @@ module Docs
   class Typescript < UrlScraper
     self.name = 'TypeScript'
     self.type = 'simple'
-    self.release = '3.1.6'
+    self.release = '3.7.2'
     self.base_url = 'https://www.typescriptlang.org/docs/'
     self.root_path = 'tutorial.html'
     self.links = {
@@ -21,7 +21,7 @@ module Docs
     }
 
     options[:attribution] = <<-HTML
-      &copy; Microsoft and other contributors<br>
+      &copy; 2012-2019 Microsoft<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 

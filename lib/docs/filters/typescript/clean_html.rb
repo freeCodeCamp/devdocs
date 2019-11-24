@@ -9,6 +9,7 @@ module Docs
         end
 
         css('.xs-toc-container').remove
+        css('.anchor-hash').remove
 
         css('article h1').each do |node|
           node.name = 'h2'
@@ -19,7 +20,7 @@ module Docs
         end
 
         css('pre > code').each do |node|
-          node.parent['data-language'] = node['class'].sub('ts', 'typescript').sub('js', 'javascript').remove('language-')
+          node.parent['data-language'] = node['class'].sub('ts', 'typescript').sub('js', 'javascript').remove('language-') if node['class']
           node.content = node.content.gsub('    ', '  ')
           node.before(node.children).remove
         end
