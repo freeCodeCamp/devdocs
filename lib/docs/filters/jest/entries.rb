@@ -22,7 +22,7 @@ module Docs
 
         entries = []
 
-        at_css('.mainContainer ul').css('li > a').each do |node|
+        at_css('.mainContainer h2 + ul, ul.toc-headings').css('li > a').each do |node|
           code = node.at_css('code')
           next if code.nil?
 
@@ -35,7 +35,6 @@ module Docs
 
           entries << [name, id]
         end
-
         entries
       end
     end
