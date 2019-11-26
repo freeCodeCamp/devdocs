@@ -3,11 +3,11 @@ module Docs
     self.name = 'Immutable.js'
     self.slug = 'immutable'
     self.type = 'simple'
-    self.release = '3.8.1'
-    self.base_url = 'https://facebook.github.io/immutable-js/docs/'
+    self.release = '3.8.2'
+    self.base_url = 'https://immutable-js.github.io/immutable-js/docs/'
     self.links = {
-      home: 'https://facebook.github.io/immutable-js/',
-      code: 'https://github.com/facebook/immutable-js'
+      home: 'https://immutable-js.github.io/immutable-js/',
+      code: 'https://github.com/immutable-js/immutable-js'
     }
 
     html_filters.push 'immutable/clean_html', 'immutable/entries', 'title'
@@ -17,13 +17,13 @@ module Docs
     options[:root_title] = 'Immutable.js'
 
     options[:attribution] = <<-HTML
-      &copy; 2014&ndash;2015 Facebook, Inc.<br>
-      Licensed under the 3-clause BSD License.
+      &copy; 2014&ndash;present Facebook, Inc.<br>
+      Licensed under the MIT License.
     HTML
 
     stub '' do
       capybara = load_capybara_selenium
-      capybara.app_host = 'https://facebook.github.io'
+      capybara.app_host = 'https://immutable-js.github.io'
       capybara.visit(URL.parse(self.base_url).path)
       capybara.execute_script <<-JS
         var content, event, links, link;

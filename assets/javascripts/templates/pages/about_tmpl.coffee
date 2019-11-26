@@ -353,9 +353,9 @@ credits = [
     'https://raw.githubusercontent.com/Homebrew/brew/master/LICENSE.txt'
   ], [
     'Immutable.js',
-    '2014-2016 Facebook, Inc.',
-    'BSD',
-    'https://raw.githubusercontent.com/facebook/immutable-js/master/LICENSE'
+    '2014-present Facebook, Inc.',
+    'MIT',
+    'https://raw.githubusercontent.com/immutable-js/immutable-js/master/LICENSE'
   ], [
     'InfluxData',
     '2015 InfluxData, Inc.',
