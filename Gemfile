@@ -10,6 +10,7 @@ gem 'html-pipeline'
 gem 'typhoeus'
 gem 'nokogiri'
 gem 'terminal-table'
+gem 'commonmarker'
 
 group :app do
   gem 'rack'
