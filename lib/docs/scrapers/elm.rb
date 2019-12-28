@@ -50,6 +50,36 @@ module Docs
 
     INDEX_PAGE_ERB = <<-HTML.strip_heredoc
       <h1>Elm</h1>
+
+      <div style="display: block; max-width: 600px; margin: 0px auto;">
+          <div><h1 id="documentation">Documentation</h1>
+              <p>The best place to start is the official guide. It will give you a solid foundation for creating applications
+                  with Elm. Once you have worked through that, the next place to look for documentation is on the packages you
+                  are using.</p>
+          </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; font-size: 24px; padding: 16px 0;">
+        <a style='color: #1293D8; border: 2px solid #1293D8; text-decoration: none; padding: 8px 24px; margin-right: 24px;'
+          href="https://guide.elm-lang.org/">Official Guide</a>
+        <a style='color: #1293D8; border: 2px solid #1293D8; text-decoration: none; padding: 8px 24px; margin-right: 24px;'
+          href="https://package.elm-lang.org/">Package Docs</a>
+      </div>
+
+      <div style="display: block; max-width: 600px; margin: 0px auto;">
+          <div><h3 id="additional-resources">Additional Resources</h3>
+              <ul>
+                  <li><a href="https://guide.elm-lang.org/install/elm.html">Install</a></li>
+                  <li><a href="http://elm-community.github.io/elm-faq/">FAQ</a></li>
+                  <li><a href="/docs/syntax">Syntax</a></li>
+                  <li><a href="/docs/from-javascript">Syntax vs JS</a></li>
+                  <li><a href="/docs/style-guide">Style Guide</a></li>
+                  <li><a href="http://package.elm-lang.org/help/design-guidelines">Package Design</a></li>
+                  <li><a href="http://package.elm-lang.org/help/documentation-format">Writing Documentation</a></li>
+                  <li><a href="/docs/advanced-topics">Advanced Topics</a></li>
+              </ul>
+          </div>
+      </div>
     HTML
 
     PAGE_ERB = <<-HTML.strip_heredoc
