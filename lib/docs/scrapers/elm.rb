@@ -71,12 +71,12 @@ module Docs
               <ul>
                   <li><a href="https://guide.elm-lang.org/install/elm.html">Install</a></li>
                   <li><a href="http://elm-community.github.io/elm-faq/">FAQ</a></li>
-                  <li><a href="/docs/syntax">Syntax</a></li>
-                  <li><a href="/docs/from-javascript">Syntax vs JS</a></li>
-                  <li><a href="/docs/style-guide">Style Guide</a></li>
-                  <li><a href="http://package.elm-lang.org/help/design-guidelines">Package Design</a></li>
-                  <li><a href="http://package.elm-lang.org/help/documentation-format">Writing Documentation</a></li>
-                  <li><a href="/docs/advanced-topics">Advanced Topics</a></li>
+                  <li><a href="https://elm-lang.org/docs/syntax">Syntax</a></li>
+                  <li><a href="https://elm-lang.org/docs/from-javascript">Syntax vs JS</a></li>
+                  <li><a href="https://elm-lang.org/docs/style-guide">Style Guide</a></li>
+                  <li><a href="https://package.elm-lang.org/help/design-guidelines">Package Design</a></li>
+                  <li><a href="https://package.elm-lang.org/help/documentation-format">Writing Documentation</a></li>
+                  <li><a href="https://elm-lang.org/docs/advanced-topics">Advanced Topics</a></li>
               </ul>
           </div>
       </div>
