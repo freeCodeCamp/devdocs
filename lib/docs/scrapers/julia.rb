@@ -5,7 +5,6 @@ module Docs
       code: 'https://github.com/JuliaLang/julia'
     }
 
-    options[:only_patterns] = [/\Amanual\//, /\Astdlib\//]
 
     options[:attribution] = <<-HTML
       &copy; 2009&ndash;2019 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors<br>
@@ -20,6 +19,7 @@ module Docs
       html_filters.push 'julia/entries', 'julia/clean_html'
 
       options[:container] = '#docs'
+      options[:only_patterns] = [/\Amanual\//, /\Abase\//, /\Astdlib\//]
     end
 
     version '1.1' do
@@ -30,6 +30,7 @@ module Docs
       html_filters.push 'julia/entries', 'julia/clean_html'
 
       options[:container] = '#docs'
+      options[:only_patterns] = [/\Amanual\//, /\Abase\//, /\Astdlib\//]
     end
 
     version '1.0' do
@@ -40,6 +41,7 @@ module Docs
       html_filters.push 'julia/entries', 'julia/clean_html'
 
       options[:container] = '#docs'
+      options[:only_patterns] = [/\Amanual\//, /\Abase\//, /\Astdlib\//]
     end
 
     version '0.7' do
@@ -50,6 +52,7 @@ module Docs
       html_filters.push 'julia/entries', 'julia/clean_html'
 
       options[:container] = '#docs'
+      options[:only_patterns] = [/\Amanual\//, /\Abase\//, /\Astdlib\//]
     end
 
     version '0.6' do
@@ -60,6 +63,7 @@ module Docs
       html_filters.push 'julia/entries', 'julia/clean_html'
 
       options[:container] = '#docs'
+      options[:only_patterns] = [/\Amanual\//, /\Astdlib\//]
     end
 
     version '0.5' do
@@ -68,6 +72,8 @@ module Docs
       self.type = 'sphinx_simple'
 
       html_filters.push 'julia/entries_sphinx', 'julia/clean_html_sphinx', 'sphinx/clean_html'
+
+      options[:only_patterns] = [/\Amanual\//, /\Astdlib\//]
     end
 
     def get_latest_version(opts)
