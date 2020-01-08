@@ -59,7 +59,7 @@ module Docs
     end
 
     version do
-      self.release = '8.2.12'
+      self.release = '8.2.14'
       self.base_url = 'https://angular.io/'
       self.root_path = 'docs'
 
@@ -99,7 +99,7 @@ module Docs
     end
 
     version '6' do
-      self.release = '6.0.4'
+      self.release = '6.1.10'
       self.base_url = 'https://v6.angular.io/'
       self.root_path = 'docs'
 
