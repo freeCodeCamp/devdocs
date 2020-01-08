@@ -5,7 +5,7 @@ module Docs
     self.release = '5.7.7'
     self.base_url = 'https://mongoosejs.com/docs/'
     self.root_path = 'index.html'
-    self.initial_paths = %w(guide.html api.html)
+    self.initial_paths = %w(guide.html)
     self.force_gzip = true
     self.links = {
       home: 'http://mongoosejs.com/',
@@ -17,6 +17,7 @@ module Docs
     options[:container] = '#content'
 
     options[:skip] = %w(
+      api.html
       faq.html
       prior.html
       migration.html

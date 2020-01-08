@@ -2,23 +2,30 @@ module Docs
   class Mongoose
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        if slug == 'api'
-          'Mongoose'
-        else
-          at_css('h1').content
-        end
+        at_css('h1').content
       end
 
       def get_type
-        if slug == 'api'
-          'Mongoose'
+        if slug.start_with? 'api'
+          for heading in css('h3[id]')
+            type = get_type_from heading
+            return type if type
+          end
+        end
+        'Guides'
+      end
+
+      def get_type_from node
+        name = node.content.strip
+        type = name.split(/[#\.\(]/).first
+        if type.empty? || name.include?(' ')
+          nil
         else
-          'Guides'
+          type
         end
       end
 
       def additional_entries
-        return [] unless slug == 'api'
         entries = []
 
         css('h3[id]').each do |node|
@@ -32,8 +39,8 @@ module Docs
           name.sub! %r{\(.+\)}, '()'
           next if name.include?(' ')
 
-          type = name.split(/[#\.\(]/).first
-          next if type.empty?
+          type = get_type_from node
+          next if type.nil?
           entries << [name, id, type]
         end
 
