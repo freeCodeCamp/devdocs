@@ -23,4 +23,4 @@ deploy:
     branch: master
     condition: $TRAVIS_EVENT_TYPE != cron
   api_key:
-    secure: "4p1klvWJZSOImzFcKOduILjP93hlOlAhceWlYMKS4tU+TCFE8qTBzdKdFPSCsCgjB+YR9pBss+L0lJpVVMjSwFHXqpKe6EeUSltO2k7DFHfW7kXLUM/L0AfqXz+YXk76XUyZMhvOEbldPfaMaj10e8vgDOQCSHABDyK/4CU+hnI="
+    secure: NFfTIdMdNzm99u2bMq/iNo6Sl05XOcHvNEDrEpHvCWG79V1aTN53+sHww+PeTX1wgJA6ZrBAOyTduPlTZbmWH1iHkUhX2vagM1q680rJWkXccO42rJ1V0coKXIfN3/XYzim07YTT4PBdrDoBRd0NJN/fGXl6uNwBBX+7hHt5O4s=
