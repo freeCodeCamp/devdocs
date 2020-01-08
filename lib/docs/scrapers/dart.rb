@@ -20,8 +20,6 @@ module Docs
       Licensed under the Creative Commons Attribution-ShareAlike License v4.0.
     HTML
 
-    # Download the documentation from https://www.dartlang.org/tools/sdk/archive
-
     version '2' do
       self.release = '2.5.0'
       self.base_url = "https://api.dart.dev/stable/#{release}/"
