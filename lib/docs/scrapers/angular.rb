@@ -60,7 +60,7 @@ module Docs
 
     version do
       self.release = '8.2.12'
-      self.base_url = 'https://v7.angular.io/'
+      self.base_url = 'https://angular.io/'
       self.root_path = 'docs'
 
       html_filters.push 'angular/clean_html', 'angular/entries'
@@ -100,7 +100,7 @@ module Docs
 
     version '6' do
       self.release = '6.0.4'
-      self.base_url = 'https://angular.io/'
+      self.base_url = 'https://v6.angular.io/'
       self.root_path = 'docs'
 
       html_filters.push 'angular/clean_html', 'angular/entries'
