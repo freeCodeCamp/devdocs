@@ -44,6 +44,24 @@ Go to https://www.erlang.org/downloads and download the HTML documentation file.
 
 ## Python
 
+### Versions 3.6+
+
+```sh
+mkdir docs/python~$VERSION
+cd docs/python~$VERSION
+curl -L https://docs.python.org/$VERSION/archives/python-$RELEASE-docs-html.tar.bz2 | \
+tar xj --strip-components=1
+```
+
+### < 3.6
+
+```sh
+mkdir docs/python~$VERSION
+cd docs/python~$VERSION
+curl -L https://docs.python.org/ftp/python/doc/$RELEASE/python-$RELEASE-docs-html.tar.bz2 | \
+tar xj --strip-components=1
+```
+
 ## RDoc
 
 ### Nokogiri
