@@ -19,12 +19,25 @@ module Docs
       library/sunau.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2001&ndash;2018 Python Software Foundation<br>
+      &copy; 2001&ndash;2019 Python Software Foundation<br>
       Licensed under the PSF License.
     HTML
 
+    # In order to download the documentation, run:
+    # $ mkdir -p docs/python~3.8 && \
+    #   cd docs/python~3.8 && \
+    #   curl -L https://docs.python.org/3.8/archives/python-3.8.0-docs-html.tar.bz2 | \
+    #   tar xj --strip-components=1
+
+    version '3.8' do # docs.python.org/3.8/download.html
+      self.release = '3.8.0'
+      self.base_url = 'https://docs.python.org/3.8/'
+
+      html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
+    end
+
     version '3.7' do # docs.python.org/3.7/download.html
-      self.release = '3.7.4'
+      self.release = '3.7.5'
       self.base_url = 'https://docs.python.org/3.7/'
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
@@ -38,7 +51,7 @@ module Docs
     end
 
     version '3.5' do # docs.python.org/3.5/download.html
-      self.release = '3.5.7'
+      self.release = '3.5.9'
       self.base_url = 'https://docs.python.org/3.5/'
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
