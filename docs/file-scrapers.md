@@ -87,3 +87,6 @@ The generated html is in `salt/doc/_build/html`. Copy it to
 See `lib/docs/scrapers/scala.rb`
 
 ## SQLite
+
+Download the docs from https://sqlite.org/download.html, unzip it, and rename
+it to `/path/to/devdocs/docs/sqlite`
