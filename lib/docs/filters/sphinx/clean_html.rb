@@ -57,14 +57,6 @@ module Docs
           node.parent.before(node.content).remove
         end
 
-        css('dt').each do |node|
-          next unless node['id'] || node.at_css('code, .classifier')
-          links = []
-          links << node.children.last.remove while node.children.last.try(:name) == 'a'
-          node.inner_html = "<code>#{CGI::escapeHTML(node.content.strip)}</code> "
-          links.reverse_each { |link| node << link }
-        end
-
         css('li > p:first-child:last-child').each do |node|
           node.before(node.children).remove
         end
