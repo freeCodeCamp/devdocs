@@ -59,10 +59,14 @@ withImage = (url, action) ->
 
       ctx.drawImage(docImg, sourceX, sourceY, sourceSize, sourceSize, destinationCoords, destinationCoords, destinationSize, destinationSize)
 
-      urlCache[doc.slug] = canvas.toDataURL()
-      favicon.href = urlCache[doc.slug]
+      try
+        urlCache[doc.slug] = canvas.toDataURL()
+        favicon.href = urlCache[doc.slug]
 
-      currentSlug = doc.slug
+        currentSlug = doc.slug
+      catch error
+        Raven.captureException error, { level: 'info' }
+        @resetFavicon()
     )
   )
 
