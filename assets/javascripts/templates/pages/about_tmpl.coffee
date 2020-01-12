@@ -763,7 +763,7 @@ credits = [
     'https://twig.symfony.com/license'
   ], [
     'TypeScript',
-    'Microsoft and other contributors',
+    '2012-2019 Microsoft',
     'Apache',
     'https://raw.githubusercontent.com/Microsoft/TypeScript-Handbook/master/LICENSE'
   ], [
