@@ -34,6 +34,26 @@ Go to https://www.erlang.org/downloads and download the HTML documentation file.
 ### GCC
 ### GNU Fortran
 
+## Gnuplot
+
+NOTE: these steps may not work on macOS.
+
+Find the most recent tagged version on https://sourceforge.net/p/gnuplot/gnuplot-main/ref/master/tags/
+and change `1.2.3` below to that tag when running the clone.
+
+```sh
+DEVDOCS_ROOT=/path/to/devdocs
+mkdir gnuplot-src gnuplot-conf $DEVDOCS_ROOT/docs/gnuplot
+git clone -b $RELEASE --depth 1 https://git.code.sf.net/p/gnuplot/gnuplot-main ./gnuplot-src
+cd gnuplot-src/
+./prepare
+cd ../gnuplot-conf
+../gnuplot-src/configure
+cd docs/
+make nofigures.tex
+latex2html -html 5.0,math -split 4 -link 8 -long_titles 5 -dir $DEVDOCS_ROOT/docs/gnuplot -ascii_mode -no_auto_link nofigures.tex
+```
+
 ## NumPy
 
 ## OpenJDK
