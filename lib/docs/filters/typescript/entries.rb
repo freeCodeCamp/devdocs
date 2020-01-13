@@ -15,7 +15,7 @@ module Docs
         type
       end
 
-      SKIP_ENTRIES = ['Introduction', 'A note', 'A Note', ', and', 'Techniques', ' Concepts', 'Hello World', 'Working with', 'Our ', 'Implementing ', 'Difference between', 'Basic', 'sample', 'Questions', 'Example', 'Export as close', 'Red Flags', 'First steps', 'Pitfalls', 'Well-known', 'Starting out', 'Comparing ', 'Do not', 'Trade-off', ' vs', 'Overview', 'Related']
+      SKIP_ENTRIES = ['Introduction', 'A note', 'A Note', ', and', 'Techniques', ' Concepts', 'Hello World', 'Working with', 'Our ', 'Implementing ', 'Difference between', 'Basic', 'sample', 'Questions', 'Example', 'Export as close', 'Red Flags', 'First steps', 'Pitfalls', 'Well-known', 'Starting out', 'Comparing ', 'Do not', 'Trade-off', ' vs', 'Overview', 'Related', 'Table of contents']
 
       def additional_entries
         return [] unless slug.start_with?('handbook')

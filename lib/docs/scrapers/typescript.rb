@@ -2,7 +2,7 @@ module Docs
   class Typescript < UrlScraper
     self.name = 'TypeScript'
     self.type = 'simple'
-    self.release = '3.7.2'
+    self.release = '3.7.4'
     self.base_url = 'https://www.typescriptlang.org/docs/'
     self.root_path = 'tutorial.html'
     self.links = {
@@ -13,7 +13,7 @@ module Docs
     html_filters.push 'typescript/entries', 'typescript/clean_html'
 
     options[:container] = '#doc-content'
-    options[:skip] = %w(home.html)
+    options[:skip] = %w(home.html handbook/release-notes/overview.html)
     options[:skip_link] = ->(node) { node.parent.parent['class'] == 'dropdown-menu' }
     options[:fix_urls] = ->(url) {
       url.sub!(/(\w+)\.md/) { "#{$1.downcase}.html" }
@@ -30,5 +30,3 @@ module Docs
     end
   end
 end
-
-
