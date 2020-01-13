@@ -10,6 +10,13 @@ html {
   @import 'global/print';
 }
 
+html._theme-default {
+  color-scheme: light only;
+}
+html._theme-dark {
+  color-scheme: dark only;
+}
+
 body {
   height: 100%;
   margin: 0;

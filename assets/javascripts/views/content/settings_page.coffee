@@ -11,19 +11,20 @@ class app.views.SettingsPage extends app.View
 
   currentSettings: ->
     settings = {}
-    settings.dark = app.settings.get('dark')
+    settings.theme = app.settings.get('theme')
     settings.smoothScroll = !app.settings.get('fastScroll')
     settings.arrowScroll = app.settings.get('arrowScroll')
     settings.autoInstall = app.settings.get('autoInstall')
     settings.analyticsConsent = app.settings.get('analyticsConsent')
+    settings.autoSupported = app.settings.autoSupported
     settings[layout] = app.settings.hasLayout(layout) for layout in app.settings.LAYOUTS
     settings
 
   getTitle: ->
     'Preferences'
 
-  toggleDark: (enable) ->
-    app.settings.set('dark', !!enable)
+  setTheme: (value) ->
+    app.settings.set('theme', value)
     return
 
   toggleLayout: (layout, enable) ->
@@ -74,8 +75,8 @@ class app.views.SettingsPage extends app.View
   onChange: (event) =>
     input = event.target
     switch input.name
-      when 'dark'
-        @toggleDark input.checked
+      when 'theme'
+        @setTheme input.value
       when 'layout'
         @toggleLayout input.value, input.checked
       when 'smoothScroll'

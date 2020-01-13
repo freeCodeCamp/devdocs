@@ -7,7 +7,8 @@ class app.Settings
     'arrowScroll'
     'analyticsConsent'
     'docs'
-    'dark'
+    'dark' # legacy
+    'theme'
     'layout'
     'size'
     'tips'
@@ -31,10 +32,16 @@ class app.Settings
     manualUpdate: false
     schema: 1
     analyticsConsent: false
+    theme: 'auto'
 
   constructor: ->
     @store = new CookiesStore
     @cache = {}
+    @autoSupported = window.matchMedia('(prefers-color-scheme)').media != 'not all'
+    if @autoSupported
+      @darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)')
+      @darkModeQuery.addListener => @setTheme(@get('theme'))
+
 
   get: (key) ->
     return @cache[key] if @cache.hasOwnProperty(key)
@@ -43,7 +50,7 @@ class app.Settings
   set: (key, value) ->
     @store.set(key, value)
     delete @cache[key]
-    @toggleDark(value) if key == 'dark'
+    @setTheme(value) if key == 'theme'
     return
 
   del: (key) ->
@@ -114,15 +121,24 @@ class app.Settings
     return
 
   initLayout: ->
-    @toggleDark(@get('dark') is 1)
+    if @get('dark') is 1
+      @set('theme', 'dark')
+      @del 'dark'
+    @setTheme(@get('theme'))
     @toggleLayout(layout, @hasLayout(layout)) for layout in @LAYOUTS
     @initSidebarWidth()
     return
 
-  toggleDark: (enable) ->
+  setTheme: (theme) ->
+    if theme is 'auto'
+      theme = if @darkModeQuery.matches then 'dark' else 'default'
     classList = document.documentElement.classList
-    classList.toggle('_theme-default', !enable)
-    classList.toggle('_theme-dark', enable)
+    classList.remove('_theme-default', '_theme-dark')
+    classList.add('_theme-' + theme)
+    @updateColorMeta()
+    return
+
+  updateColorMeta: ->
     color = getComputedStyle(document.documentElement).getPropertyValue('--headerBackground').trim()
     $('meta[name=theme-color]').setAttribute('content', color)
     return

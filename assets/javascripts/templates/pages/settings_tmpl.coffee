@@ -1,13 +1,29 @@
+themeOption = ({ label, value }, settings) -> """
+  <label class="_settings-label _theme-label">
+    <input type="radio" name="theme" value="#{value}"#{if settings.theme == value then ' checked' else ''}>
+    #{label}
+  </label>
+"""
+
 app.templates.settingsPage = (settings) -> """
   <h1 class="_lined-heading">Preferences</h1>
+
+  <div class="_settings-fieldset">
+    <h2 class="_settings-legend">Theme:</h2>
+    <div class="_settings-inputs">
+      #{if settings.autoSupported
+          themeOption label: "Automatic <small>Matches system setting</small>", value: "auto", settings
+        else
+          ""}
+      #{themeOption label: "Light", value: "default", settings}
+      #{themeOption label: "Dark", value: "dark", settings}
+    </div>
+  </div>
 
   <div class="_settings-fieldset">
     <h2 class="_settings-legend">General:</h2>
 
     <div class="_settings-inputs">
-      <label class="_settings-label">
-        <input type="checkbox" form="settings" name="dark" value="1"#{if settings.dark then ' checked' else ''}>Enable dark theme
-      </label>
       <label class="_settings-label _setting-max-width">
         <input type="checkbox" form="settings" name="layout" value="_max-width"#{if settings['_max-width'] then ' checked' else ''}>Enable fixed-width layout
       </label>

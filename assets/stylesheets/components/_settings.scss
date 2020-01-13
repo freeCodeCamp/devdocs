@@ -48,15 +48,21 @@
 }
 
 ._settings-label {
-  margin: 0 0 .375rem;
+  &:not(._theme-label) {
+    margin: 0 0 .375rem;
+  }
 
   > small {
     display: block;
     color: var(--textColorLight);
     margin-left: 1.75rem;
   }
+  &._theme-label > small {
+    display: inline-block;
+    margin-left: 0.75rem;
+  }
 
-  input[type=checkbox] {
+  input[type=checkbox], input[type=radio] {
     vertical-align: top;
     margin: .25rem .375rem;
   }
