@@ -163,7 +163,7 @@ Made something cool? Feel free to open a PR to add a new row to this table!
 
 ## Copyright / License
 
-Copyright 2013-2019 Thibaut Courouble and [other contributors](https://github.com/freeCodeCamp/devdocs/graphs/contributors)
+Copyright 2013-2020 Thibaut Courouble and [other contributors](https://github.com/freeCodeCamp/devdocs/graphs/contributors)
 
 This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](./COPYRIGHT) and [LICENSE](./LICENSE) files.
 
