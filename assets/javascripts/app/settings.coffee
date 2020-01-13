@@ -32,10 +32,16 @@ class app.Settings
     manualUpdate: false
     schema: 1
     analyticsConsent: false
+    theme: 'auto'
 
   constructor: ->
     @store = new CookiesStore
     @cache = {}
+    @autoSupported = window.matchMedia('(prefers-color-scheme)').media != 'not all'
+    if @autoSupported
+      @darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)')
+      @darkModeQuery.onchange = -> @setTheme(@get('theme'))
+
 
   get: (key) ->
     return @cache[key] if @cache.hasOwnProperty(key)
@@ -124,11 +130,15 @@ class app.Settings
     return
 
   setTheme: (theme) ->
-    if not theme
-      theme = if window.matchMedia('(prefers-color-scheme: dark)').matches then 'dark' else 'default'
+    if theme is 'auto'
+      theme = if @darkModeQuery.matches then 'dark' else 'default'
     classList = document.documentElement.classList
     classList.remove('_theme-default', '_theme-dark')
     classList.add('_theme-' + theme)
+    @updateColorMeta()
+    return
+
+  updateColorMeta: ->
     color = getComputedStyle(document.documentElement).getPropertyValue('--headerBackground').trim()
     $('meta[name=theme-color]').setAttribute('content', color)
     return

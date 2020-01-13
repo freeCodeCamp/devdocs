@@ -1,16 +1,22 @@
+themeOption = ({ label, value }, settings) -> """
+  <label class="_settings-label _theme-label">
+    <input type="radio" name="theme" value="#{value}"#{if settings.theme == value then ' checked' else ''}>
+    #{label}
+  </label>
+"""
+
 app.templates.settingsPage = (settings) -> """
   <h1 class="_lined-heading">Preferences</h1>
 
   <div class="_settings-fieldset">
     <h2 class="_settings-legend">Theme:</h2>
     <div class="_settings-inputs">
-      <label class="_settings-label">
-        <select form="settings" name="theme">
-          <option value=""#{if not settings.theme then ' selected' else ''}>automatic</option>
-          <option value="default"#{if settings.theme == 'default' then ' selected' else ''}>light</option>
-          <option value="dark"#{if settings.theme == 'dark' then ' selected' else ''}>dark</option>
-        </select>
-      </label>
+      #{if settings.autoSupported
+          themeOption label: "Automatic <small>Matches system setting</small>", value: "auto", settings
+        else
+          ""}
+      #{themeOption label: "Light", value: "default", settings}
+      #{themeOption label: "Dark", value: "dark", settings}
     </div>
   </div>
 
