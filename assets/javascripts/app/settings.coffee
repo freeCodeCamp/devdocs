@@ -40,7 +40,7 @@ class app.Settings
     @autoSupported = window.matchMedia('(prefers-color-scheme)').media != 'not all'
     if @autoSupported
       @darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)')
-      @darkModeQuery.onchange = -> @setTheme(@get('theme'))
+      @darkModeQuery.addListener => @setTheme(@get('theme'))
 
 
   get: (key) ->
