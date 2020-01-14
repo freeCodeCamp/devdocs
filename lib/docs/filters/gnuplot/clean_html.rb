@@ -36,6 +36,10 @@ module Docs
           node.remove if node.content.strip.empty?
         end
 
+        css('pre').each do |node|
+          node.content = dedent(node.content)
+        end
+
         # links generated are of the form (NB: some might have been removed):
         # <B>{text} (p.&nbsp;<A HREF="{target}"><IMG  ALT="[*]" SRC="crossref.png"></A>)<A NAME="{anchor}"></A></B>
         # transform to <b><a href="{target}>{text}</a></b>
@@ -55,6 +59,25 @@ module Docs
         end
 
         doc
+      end
+
+      private
+      def dedent string
+        lines = string.split "\n"
+        indent = lines.reduce Float::INFINITY do |least, line|
+          if line == ''
+            least
+          else
+            [least, line.index(line.lstrip)].min
+          end
+        end
+        if indent == Float::INFINITY
+          string
+        else
+          lines
+            .map { |line| line[indent..] || '' }
+            .join("\n")
+        end
       end
     end
   end
