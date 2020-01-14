@@ -1,13 +1,12 @@
 module Docs
   class Gnuplot < FileScraper
-    self.name = 'Gnuplot'
-    self.slug = 'gnuplot'
     self.type = 'gnuplot'
+    self.release = '5.2.8'
     self.links = {
       home: 'http://gnuplot.sourceforge.net/'
     }
 
-    self.root_path = 'index.html'
+    self.root_path = 'nofigures.html'
 
     html_filters.push 'gnuplot/entries', 'gnuplot/clean_html'
 
@@ -30,6 +29,7 @@ module Docs
       Commands.html
       Contents.html
       Bugs.html
+      Index.html
     )
 
     options[:attribution] = <<-HTML
