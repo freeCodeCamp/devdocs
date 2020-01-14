@@ -36,23 +36,42 @@ Go to https://www.erlang.org/downloads and download the HTML documentation file.
 
 ## Gnuplot
 
-NOTE: these steps may not work on macOS.
-
-Find the most recent tagged version on https://sourceforge.net/p/gnuplot/gnuplot-main/ref/master/tags/
-and change `1.2.3` below to that tag when running the clone.
+The most recent release can be found near the bottom of
+https://sourceforge.net/p/gnuplot/gnuplot-main/ref/master/tags/
 
 ```sh
 DEVDOCS_ROOT=/path/to/devdocs
-mkdir gnuplot-src gnuplot-conf $DEVDOCS_ROOT/docs/gnuplot
+mkdir gnuplot-src $DEVDOCS_ROOT/docs/gnuplot
 git clone -b $RELEASE --depth 1 https://git.code.sf.net/p/gnuplot/gnuplot-main ./gnuplot-src
 cd gnuplot-src/
 ./prepare
-cd ../gnuplot-conf
-../gnuplot-src/configure
+./configure
 cd docs/
 make nofigures.tex
 latex2html -html 5.0,math -split 4 -link 8 -long_titles 5 -dir $DEVDOCS_ROOT/docs/gnuplot -ascii_mode -no_auto_link nofigures.tex
 ```
+
+To install `latex2html` on macOS: `brew install basictex latex2html`, then edit
+`/usr/local/Cellar/latex2html/2019.2/l2hconf.pm` to include the path to LaTeX:
+
+<details>
+
+On line 21 (approximately):
+
+```
+#  Give the paths to latex and dvips on your system:
+#
+$LATEX = '/Library/TeX/texbin/latex';	# LaTeX
+$PDFLATEX = '/Library/TeX/texbin/pdflatex';	# pdfLaTeX
+$LUALATEX = '/Library/TeX/texbin/lualatex';	# LuaLaTeX
+$DVILUALATEX = '/Library/TeX/texbin/dvilualatex';	# dviLuaLaTeX
+$DVIPS = '/Library/TeX/texbin/dvips';	# dvips
+$DVIPNG = '';	# dvipng
+$PDFTOCAIRO = '/usr/local/bin/pdf2svg';	# pdf to svg converter
+$PDFCROP = '';	# pdfcrop
+$GS = '/usr/local/opt/ghostscript/bin/gs';	# GhostScript
+```
+</details>
 
 ## NumPy
 
