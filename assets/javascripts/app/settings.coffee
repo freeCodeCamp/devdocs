@@ -46,6 +46,10 @@ class app.Settings
   get: (key) ->
     return @cache[key] if @cache.hasOwnProperty(key)
     @cache[key] = @store.get(key) ? @constructor.defaults[key]
+    if key == 'theme' and @cache[key] == 'auto' and !@darkModeQuery
+      @cache[key] = 'default'
+    else
+      @cache[key]
 
   set: (key, value) ->
     @store.set(key, value)
