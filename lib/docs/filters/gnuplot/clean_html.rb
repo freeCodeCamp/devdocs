@@ -28,6 +28,7 @@ module Docs
         css('.navigation').remove
         css('#CHILD_LINKS, ul.ChildLinks').remove
         css('hr').remove
+        css('br').remove
         # Anchors that use only names are some numerical IDs that latex2html distributes through the document
         css('a[name]:not([href]):not([id])').remove
 
