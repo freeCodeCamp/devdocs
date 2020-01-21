@@ -4,7 +4,7 @@ module Docs
   class Tensorflow < UrlScraper
     self.name = 'TensorFlow'
     self.type = 'tensorflow'
-    self.release = '1.8'
+    self.release = '2.1'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://www.tensorflow.org/',
@@ -16,44 +16,23 @@ module Docs
     options[:max_image_size] = 300_000
     options[:container] = '.devsite-main-content'
 
-    options[:fix_urls] = ->(url) do
-      url.sub! 'how_tos/../tutorials', 'tutorials'
-      url
-    end
-
     options[:attribution] = <<-HTML
-      &copy; 2018 The TensorFlow Authors. All rights reserved.<br>
+      &copy; 2019 The TensorFlow Authors. All rights reserved.<br>
       Licensed under the Creative Commons Attribution License 3.0.<br>
       Code samples licensed under the Apache 2.0 License.
     HTML
 
     version 'Python' do
-      include MultipleBaseUrls
-      self.base_urls = ['https://www.tensorflow.org/api_docs/python/', 'https://www.tensorflow.org/api_guides/python/']
+      self.base_url = 'https://www.tensorflow.org/api_docs/python/'
     end
 
     version 'C++' do
-      include MultipleBaseUrls
-      self.base_urls = ['https://www.tensorflow.org/api_docs/cc/', 'https://www.tensorflow.org/api_guides/cc/']
+      self.base_url = 'https://www.tensorflow.org/api_docs/cc/'
     end
 
     version 'Guide' do
-      self.base_url = 'https://www.tensorflow.org/'
-      self.root_path = 'get_started/get_started'
-      self.initial_paths = %w(
-        programmers_guide/reading_data
-        tutorials/mandelbrot
-        performance/performance_guide
-        deploy/hadoop
-        extend/architecture)
-
-      options[:only_patterns] = [
-        /\Aget_started/,
-        /\Aprogrammers_guide/,
-        /\Atutorials/,
-        /\Aperformance/,
-        /\Adeploy/,
-        /\Aextend/]
+      include MultipleBaseUrls
+      self.base_urls = ['https://www.tensorflow.org/guide/', 'https://www.tensorflow.org/tutorials/']
     end
 
     def get_latest_version(opts)

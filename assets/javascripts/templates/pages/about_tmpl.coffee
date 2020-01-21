@@ -748,7 +748,7 @@ credits = [
     'http://tcl.tk/software/tcltk/license.html'
   ], [
     'TensorFlow',
-    '2018 The TensorFlow Authors',
+    '2019 The TensorFlow Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
