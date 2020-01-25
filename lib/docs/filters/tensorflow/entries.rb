@@ -15,9 +15,9 @@ module Docs
       end
 
       def get_type
-        if version == 'Guide' and base_url.path.start_with?('/guide')
+        if base_url.path.start_with?('/guide')
           'Guides'
-        elsif version == 'Guide' and base_url.path.start_with?('/tutorials')
+        elsif base_url.path.start_with?('/tutorials')
           'Tutorials'
         elsif slug.start_with?('tf/audio')
           'tf.audio'

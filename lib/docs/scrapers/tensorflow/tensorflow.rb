@@ -1,10 +1,7 @@
-# frozen_string_literal: true
-
 module Docs
   class Tensorflow < UrlScraper
     self.name = 'TensorFlow'
     self.type = 'tensorflow'
-    self.release = '2.1'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://www.tensorflow.org/',
@@ -22,17 +19,19 @@ module Docs
       Code samples licensed under the Apache 2.0 License.
     HTML
 
-    version 'Python' do
-      self.base_url = 'https://www.tensorflow.org/api_docs/python/'
+    version '2.1' do
+      self.release = '2.1.0'
+      self.base_url = "https://www.tensorflow.org/versions/r#{version}/api_docs/python"
     end
 
-    version 'C++' do
-      self.base_url = 'https://www.tensorflow.org/api_docs/cc/'
+    version '2.0' do
+      self.release = '2.0.0'
+      self.base_url = "https://www.tensorflow.org/versions/r#{version}/api_docs/python"
     end
 
-    version 'Guide' do
-      include MultipleBaseUrls
-      self.base_urls = ['https://www.tensorflow.org/guide/', 'https://www.tensorflow.org/tutorials/']
+    version '1.15' do
+      self.release = '1.15.0'
+      self.base_url = "https://www.tensorflow.org/versions/r#{version}/api_docs/python"
     end
 
     def get_latest_version(opts)
@@ -42,7 +41,7 @@ module Docs
     private
 
     def parse(response)
-      unless response.url == root_url || self.class.version == 'Guide'
+      unless response.url == root_url
         response.body.sub!(/<nav class="devsite-nav-responsive-sidebar.+?<\/nav>/m, '')
         response.body.gsub!(/<li class="devsite-nav-item">.+?<\/li>/m, '')
       end
