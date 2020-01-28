@@ -420,7 +420,7 @@ credits = [
     'Laravel',
     'Taylor Otwell',
     'MIT',
-    'https://raw.githubusercontent.com/laravel/framework/master/LICENSE.txt'
+    'https://raw.githubusercontent.com/laravel/framework/master/LICENSE.md'
   ], [
     'Leaflet',
     '2010-2019 Vladimir Agafonkin<br>&copy; 2010-2011, CloudMade<br>Maps &copy; OpenStreetMap contributors.',
