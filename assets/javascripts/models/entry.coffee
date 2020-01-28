@@ -56,6 +56,7 @@ class app.models.Entry extends app.Model
     'c++': 'cpp'
     'coffeescript': 'cs'
     'crystal': 'cr'
+    'django': 'dj'
     'elixir': 'ex'
     'javascript': 'js'
     'julia': 'jl'
