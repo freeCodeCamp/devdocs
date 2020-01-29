@@ -14,7 +14,10 @@ module Docs
         end
 
         css('a.card').each do |node|
-          node.at_css('.text-primary').replace %(<br><a href="#{node['href']}">Read more</a>)
+          title = node.at_css('.card-title')
+          title.inner_html = %(<a href="#{node['href']}">#{title.inner_html}</a>)
+          node.at_css('.text-primary').remove
+          node.css('[class]').each { |node| node.delete 'class' }
           node.before(node.children).remove
         end
       end
