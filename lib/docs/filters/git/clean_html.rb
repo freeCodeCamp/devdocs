@@ -42,6 +42,8 @@ module Docs
 
         css('pre').each do |node|
           node.content = node.content.gsub("\t", ' ' * 8)
+          node['data-language'] = 'shell' if node.content.starts_with?('git ')
+          node['data-language'] = 'shell-session' if node.content[0] == '$'
         end
       end
     end
