@@ -377,7 +377,7 @@
 ._note-green { @extend %note-green; }
 ._label { @extend %label; }
 ._code { @extend %code; }
-._highlight { background: var(--highlightBackground) !important; }
+._highlight, ._highlight > td { background: var(--highlightBackground) !important; }
 
 ._table { width: 100%; }
 ._mobile ._table { overflow-x: auto; }
