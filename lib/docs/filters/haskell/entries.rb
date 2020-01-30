@@ -53,19 +53,15 @@ module Docs
         return [] if IGNORE_ENTRIES_PATHS.include?(subpath.split('/').last)
 
         css('#synopsis > details > ul > li').each_with_object [] do |node, entries|
-          link = node.at_css('a')
-          name = node.content.strip
-          name.remove! %r{\A(?:module|data|newtype|class|type family m|type)\s+}
-          name.sub! %r{\A\((.+?)\)}, '\1'
-          name.sub!(/ (?:\:\: (\w+))?.*\z/) { |_| $1 ? " (#{$1})" : '' }
+          link = node.at_css('a:not([title])')
+          name = link.content
 
           if ADD_SUB_ENTRIES_KEYWORDS.include?(node.at_css('.keyword').try(:content))
             node.css('.subs > li').each do |sub_node|
               sub_link = sub_node.at_css('a')
               next unless sub_link['href'].start_with?('#')
-              sub_name = sub_node.content.strip
-              sub_name.remove! %r{\s.*}
-              sub_name.prepend "#{name} "
+              sub_name = sub_link.content
+              sub_name << " (#{name})"
               entries << [sub_name, sub_link['href'].remove('#')]
             end
           end
