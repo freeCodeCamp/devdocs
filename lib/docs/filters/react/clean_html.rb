@@ -8,7 +8,7 @@ module Docs
           at_css('h1').content = 'React Documentation'
         end
 
-        css('header', 'div[class^="css-"]', '.gatsby-resp-image-link span').each do |node|
+        css('header', 'div[class^="css-"]', '.gatsby-resp-image-link span', 'div.scary').each do |node|
           node.before(node.children).remove
         end
 
@@ -23,6 +23,11 @@ module Docs
 
         css('a').remove_attr('rel').remove_attr('target').remove_attr('class').remove_attr('style')
         css('img').remove_attr('style').remove_attr('srcset').remove_attr('sizes').remove_attr('class')
+
+        css('[class*="css-"]').each do |node|
+          node['class'] = node['class'].sub(/css-[^ ]+(\b|$)/, '')
+          node.delete 'class' if node['class'] == ''
+        end
 
         doc
       end
