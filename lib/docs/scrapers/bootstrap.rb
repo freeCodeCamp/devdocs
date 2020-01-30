@@ -10,15 +10,15 @@ module Docs
 
     # https://github.com/twbs/bootstrap/blob/master/LICENSE
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2019 Twitter, Inc.<br>
-      &copy; 2011&ndash;2019 The Bootstrap Authors<br>
+      &copy; 2011&ndash;2020 Twitter, Inc.<br>
+      &copy; 2011&ndash;2020 The Bootstrap Authors<br>
       Code licensed under the MIT License.<br>
       Documentation licensed under the Creative Commons Attribution License v3.0.
     HTML
 
     version '4' do
-      self.release = '4.3.1'
-      self.base_url = 'https://getbootstrap.com/docs/4.3/'
+      self.release = '4.4.1'
+      self.base_url = 'https://getbootstrap.com/docs/4.4/'
       self.root_path = 'getting-started/introduction/'
 
       html_filters.push 'bootstrap/entries_v4', 'bootstrap/clean_html_v4'
@@ -27,8 +27,8 @@ module Docs
     end
 
     version '3' do
-      self.release = '3.3.7'
-      self.base_url = 'https://getbootstrap.com/docs/3.3/'
+      self.release = '3.4.1'
+      self.base_url = 'https://getbootstrap.com/docs/3.4/'
       self.root_path = 'getting-started/'
 
       html_filters.push 'bootstrap/entries_v3', 'bootstrap/clean_html_v3'
