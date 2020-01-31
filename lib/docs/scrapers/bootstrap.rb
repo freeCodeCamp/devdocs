@@ -23,7 +23,7 @@ module Docs
 
       html_filters.push 'bootstrap/entries_v4', 'bootstrap/clean_html_v4'
 
-      options[:only_patterns] = [/\Agetting-started\//, /\Alayout\//, /\Acontent\//, /\Acomponents\//, /\Autilities\//, /\Amigration\//]
+      options[:only_patterns] = [/\Agetting-started\//, /\Alayout\//, /\Acontent\//, /\Acomponents\//, /\Autilities\/.+/, /\Amigration\//]
     end
 
     version '3' do
