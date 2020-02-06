@@ -75,9 +75,8 @@ Follow the following steps to update documentations to their latest version:
 
 ## Coding conventions
 
-* two spaces; no tabs
-* no trailing whitespace; blank lines should have no spaces; new line at end-of-file
-* use the same coding style as the rest of the codebase
+Please use the same coding style as the rest of the codebase via [our `.editorconfig` file](../.editorconfig).
+Check out [EditorConfig.org](https://editorconfig.org/) to learn how to make your tools adhere to it.
 
 ## Questions?
 
