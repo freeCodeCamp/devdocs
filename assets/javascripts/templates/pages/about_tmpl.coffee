@@ -82,10 +82,15 @@ app.templates.aboutPage = -> """
 """
 
 credits = [
-  [ 'Angular<br>Angular.js',
+  [ 'Angular.js',
     '2010-2020 Google, Inc.',
     'CC BY 3.0',
     'https://creativecommons.org/licenses/by/3.0/'
+  ], [
+    'Angular',
+    '2010-2020 Google, Inc.',
+    'CC BY',
+    'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Ansible',
     '2012-2018 Michael DeHaan<br>&copy; 2018–2019 Red Hat, Inc.',
