@@ -14,7 +14,7 @@ module Docs
       end
 
       def additional_entries
-        return [] unless slug.start_with?('stdlib')
+        return [] if slug.start_with?('manual')
 
         entries = []
         used_names = {}
