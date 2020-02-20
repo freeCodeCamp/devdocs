@@ -2,7 +2,7 @@ module Docs
   class Haxe < UrlScraper
     self.name = 'Haxe'
     self.type = 'simple'
-    self.release = '3.4.7'
+    self.release = '4.0.5'
     self.base_url = 'https://api.haxe.org/'
 
     html_filters.push 'haxe/clean_html', 'haxe/entries'
@@ -10,7 +10,7 @@ module Docs
     options[:container] = '.span9'
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2018 Haxe Foundation<br>
+      &copy; 2005&ndash;2020 Haxe Foundation<br>
       Licensed under a MIT license.
     HTML
 
@@ -20,7 +20,7 @@ module Docs
         code: 'https://github.com/HaxeFoundation/haxe'
       }
 
-      options[:skip_patterns] = [/\A(?:cpp|cs|flash|java|js|neko|php|python|lua|hl|sys)/i]
+      options[:skip_patterns] = [/\A(?:cpp|cs|flash|java|js|neko|php|python|lua|hl|sys|eval)/i]
     end
 
     version 'C++' do
@@ -65,6 +65,10 @@ module Docs
 
     version 'Python' do
       self.base_url = 'https://api.haxe.org/python/'
+    end
+
+    version 'Eval' do
+      self.base_url = 'https://api.haxe.org/eval/'
     end
 
     def get_latest_version(opts)
