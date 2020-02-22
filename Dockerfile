@@ -12,7 +12,8 @@ RUN apt-get update && \
 
 COPY Gemfile Gemfile.lock Rakefile /devdocs/
 
-RUN bundle install --system && \
+RUN bundle config set system 'true' && \
+    bundle install && \
     rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache
 
 COPY . /devdocs
