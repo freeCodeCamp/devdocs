@@ -37,7 +37,7 @@ module Docs
           options[:only_patterns] = [%r{\A/api/6\.x/}, %r{\A/docs/6\.x/}]
 
           options[:fix_urls] = ->(url) do
-            url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/5.x/"
+            url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/6.x/"
             url
           end
         end
