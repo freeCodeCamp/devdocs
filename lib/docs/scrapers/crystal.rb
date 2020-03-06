@@ -25,6 +25,32 @@ module Docs
       end
     }
 
+    version '0.33' do
+      self.release = '0.33.0'
+      self.root_path = "api/#{release}/index.html"
+
+      options[:only_patterns] = [/\Adocs\//, /\Aapi\/#{release}\//]
+      options[:skip_patterns] = [/debug/i]
+
+      options[:replace_paths] = {
+        "api/#{release}/" => "api/#{release}/index.html",
+        'docs/' => 'docs/index.html'
+      }
+    end
+
+    version '0.32' do
+      self.release = '0.32.1'
+      self.root_path = "api/#{release}/index.html"
+
+      options[:only_patterns] = [/\Adocs\//, /\Aapi\/#{release}\//]
+      options[:skip_patterns] = [/debug/i]
+
+      options[:replace_paths] = {
+        "api/#{release}/" => "api/#{release}/index.html",
+        'docs/' => 'docs/index.html'
+      }
+    end
+
     version '0.31' do
       self.release = '0.31.1'
       self.root_path = "api/#{release}/index.html"
