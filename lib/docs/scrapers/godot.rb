@@ -28,18 +28,13 @@ module Docs
       end
     end
 
-    version '3.1' do
-      self.release = '3.1.1'
-      self.base_url = "http://docs.godotengine.org/en/#{self.version}/"
-    end
-
-    version '3.0' do
-      self.release = '3.0.6'
+    version '3.2' do
+      self.release = '3.2.1'
       self.base_url = "http://docs.godotengine.org/en/#{self.version}/"
     end
 
     version '2.1' do
-      self.release = '2.1'
+      self.release = '2.1.6'
       self.base_url = "http://docs.godotengine.org/en/#{self.version}/"
     end
 
