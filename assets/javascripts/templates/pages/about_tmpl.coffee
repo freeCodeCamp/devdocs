@@ -563,8 +563,8 @@ credits = [
     'https://raw.githubusercontent.com/padrino/padrino-framework/master/padrino/LICENSE.txt'
   ], [
     'pandas',
-    '2008-2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team',
-    'BSD',
+    '2008-2011, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team. All rights reserved. <br> 2011-2020, Open source contributors.',
+    'BSD 3-Clause License',
     'https://raw.githubusercontent.com/pydata/pandas/master/LICENSE'
   ], [
     'Perl',

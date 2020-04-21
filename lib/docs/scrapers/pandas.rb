@@ -17,8 +17,8 @@ module Docs
     options[:skip_patterns] = [/whatsnew\//]
 
     options[:attribution] = <<-HTML
-      &copy; 2008&ndash;2012, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>
-      Licensed under the 3-clause BSD License.
+      BSD 3-Clause License <br>
+      2008-2011, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team. All rights reserved. <br> 2011-2020, Open source contributors.
     HTML
 
     version '1.0' do
