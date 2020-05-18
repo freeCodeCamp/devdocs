@@ -10,24 +10,63 @@ module Docs
     html_filters.push 'laravel/entries', 'laravel/clean_html'
 
     options[:container] = ->(filter) {
-      filter.subpath.start_with?('/api') ? '#content' : '.docs-wrapper'
+      filter.subpath.start_with?('/api') ? '#content' : '.page_contain'
     }
 
     options[:skip_patterns] = [
-      %r{\A/api/\d\.\d/\.html},
-      %r{\A/api/\d\.\d/panel\.html},
-      %r{\A/api/\d\.\d/namespaces\.html},
-      %r{\A/api/\d\.\d/interfaces\.html},
-      %r{\A/api/\d\.\d/traits\.html},
-      %r{\A/api/\d\.\d/doc-index\.html},
-      %r{\A/api/\d\.\d/Illuminate\.html},
-      %r{\A/api/\d\.\d/search\.html} ]
+      %r{\A/api/\d\.[0-9x]/\.html},
+      %r{\A/api/\d\.[0-9x]/panel\.html},
+      %r{\A/api/\d\.[0-9x]/namespaces\.html},
+      %r{\A/api/\d\.[0-9x]/interfaces\.html},
+      %r{\A/api/\d\.[0-9x]/traits\.html},
+      %r{\A/api/\d\.[0-9x]/doc-index\.html},
+      %r{\A/api/\d\.[0-9x]/Illuminate\.html},
+      %r{\A/api/\d\.[0-9x]/search\.html} ]
 
     options[:attribution] = <<-HTML
       &copy; Taylor Otwell<br>
       Licensed under the MIT License.<br>
       Laravel is a trademark of Taylor Otwell.
     HTML
+
+    version '7.0' do
+      self.release = '7.11.0'
+      self.root_path = '/api/7.x/index.html'
+      self.initial_paths = %w(/docs/7.x/installation /api/7.x/classes.html)
+
+      options[:only_patterns] = [%r{\A/api/7\.x/}, %r{\A/docs/7\.x/}]
+
+      options[:fix_urls] = ->(url) do
+        url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/7.x/"
+        url
+      end
+    end
+
+    version '6.0' do
+      self.release = '6.18.14'
+      self.root_path = '/api/6.x/index.html'
+      self.initial_paths = %w(/docs/6.x/installation /api/6.x/classes.html)
+
+      options[:only_patterns] = [%r{\A/api/6\.x/}, %r{\A/docs/6\.x/}]
+
+      options[:fix_urls] = ->(url) do
+        url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/6.x/"
+        url
+      end
+    end
+
+    version '5.8' do
+      self.release = '5.8.38'
+      self.root_path = '/api/5.8/index.html'
+      self.initial_paths = %w(/docs/5.8/installation /api/5.8/classes.html)
+
+      options[:only_patterns] = [%r{\A/api/5\.8/}, %r{\A/docs/5\.8/}]
+
+      options[:fix_urls] = ->(url) do
+        url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/5.8/"
+        url
+      end
+    end
 
     version '5.7' do
       self.release = '5.7.7'

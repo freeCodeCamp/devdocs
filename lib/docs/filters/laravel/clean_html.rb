@@ -56,7 +56,7 @@ module Docs
       end
 
       def other
-        @doc = at_css('article')
+        @doc = at_css('.docs_body')
 
         # Clean up headings
         css('h2 > a').each do |node|
@@ -70,6 +70,12 @@ module Docs
         css('blockquote').each do |node|
           node['class'] = 'tip' if node.inner_html.include?('{tip}')
           node.inner_html = node.inner_html.remove(/\{(tip|note)\}\s?/)
+        end
+
+        css('blockquote').each do |node|
+          if node.inner_html.include?('You\'re browsing the documentation for an old version of Laravel.')
+            node.remove
+          end
         end
       end
     end
