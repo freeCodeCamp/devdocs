@@ -41,21 +41,25 @@ module Docs
       end
 
       def additional_entries
-        return [] if type == 'Exceptions' || type == 'Guide'
+        return [] if type == 'Exceptions' || type == 'Guide' || root_page?
 
-        css('.detail-header .signature').map do |node|
-          id = node.parent['id']
+        css('.detail-header').map do |node|
+          id = node['id']
           name = node.content.strip
+
           name.remove! %r{\(.*\)}
           name.remove! 'left '
           name.remove! ' right'
           name.sub! 'sigil_', '~'
 
-          unless node.parent['class'].end_with?('macro') || self.name.start_with?('Kernel')
+          if self.name && !self.name.start_with?('Kernel')
             name.prepend "#{self.name}."
           end
 
-          name << " (#{id.split('/').last})" if id =~ /\/\d+\z/
+          if id =~ %r{/\d+\z}
+            arity = id.split('/').last
+            name << " (#{arity})"
+          end
 
           [name, id]
         end
