@@ -542,6 +542,11 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
   ], [
+    'OCaml',
+    '1995-2020 Inria',
+    'CC BY-SA',
+    'https://ocaml.org/docs/'
+  ], [
     'Octave',
     '1996-2018 John W. Eaton',
     'Octave',
