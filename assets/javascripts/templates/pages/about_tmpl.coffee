@@ -622,6 +622,11 @@ credits = [
     'PSFL',
     'https://docs.python.org/3/license.html'
   ], [
+    'PyTorch',
+    '2019 Torch Contributors',
+    'BSD',
+    'https://raw.githubusercontent.com/pytorch/pytorch/master/LICENSE'
+  ], [
     'Q',
     '2009-2017 Kristopher Michael Kowal',
     'MIT',
