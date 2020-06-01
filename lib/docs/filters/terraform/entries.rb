@@ -20,6 +20,7 @@ module Docs
         'http'             => 'HTTP',
         'mysql'            => 'MySQL',
         'newrelic'         => 'New Relic',
+        'oci'              => 'Oracle Cloud Infrastructure',
         'oneandone'        => '1&1',
         'opentelekomcloud' => 'OpenTelekomCloud',
         'opsgenie'         => 'OpsGenie',
@@ -50,11 +51,9 @@ module Docs
         "google"  => true,
       }
 
-
       def get_name
-        name ||= at_css('#inner h1').content
+        name ||= at_css('#inner h1')&.content || at_css('#inner h2').content
         name.remove! "» "
-        name.remove! "Data Source: "
         name
       end
 
