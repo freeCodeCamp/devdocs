@@ -2,7 +2,7 @@ module Docs
   class Codeigniter < UrlScraper
     self.name = 'CodeIgniter'
     self.type = 'sphinx'
-    self.base_url = 'https://www.codeigniter.com/user_guide/'
+    self.base_url = 'https://codeigniter.com/userguide3/'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://codeigniter.com/',
@@ -31,7 +31,7 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2014&ndash;2018 British Columbia Institute of Technology<br>
+      &copy; 2014&ndash;2019 British Columbia Institute of Technology<br>
       Licensed under the MIT License.
     HTML
 
@@ -40,7 +40,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://codeigniter.com/user_guide/changelog.html', opts)
+      doc = fetch_doc('https://codeigniter.com/userguide3/changelog.html', opts)
       header = doc.at_css('#change-log h2')
       header.content.scan(/([0-9.]+)/)[0][0]
     end
