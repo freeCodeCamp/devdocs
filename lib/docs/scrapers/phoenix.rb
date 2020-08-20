@@ -1,7 +1,7 @@
 module Docs
   class Phoenix < UrlScraper
     self.type = 'elixir'
-    self.release = '1.3.4'
+    self.release = '1.5.4'
     self.base_url = 'https://hexdocs.pm/'
     self.root_path = 'phoenix/Phoenix.html'
     self.initial_paths = %w(
@@ -31,7 +31,8 @@ module Docs
     options[:attribution] = -> (filter) {
       if filter.slug.start_with?('ecto')
         <<-HTML
-          &copy; 2012 Plataformatec<br>
+          &copy; 2013 Plataformatec<br>
+          &copy; 2020 Dashbit<br>
           Licensed under the Apache License, Version 2.0.
         HTML
       elsif filter.slug.start_with?('plug')
