@@ -1,13 +1,14 @@
 module Docs
   class Phoenix < UrlScraper
     self.type = 'elixir'
-    self.release = '1.5.4'
+    self.release = '1.5.6'
     self.base_url = 'https://hexdocs.pm/'
     self.root_path = 'phoenix/Phoenix.html'
     self.initial_paths = %w(
       phoenix/api-reference.html
       ecto/api-reference.html
       phoenix_html/api-reference.html
+      phoenix_live_view/api-reference.html
       phoenix_pubsub/api-reference.html
       plug/api-reference.html)
     self.links = {
@@ -25,6 +26,7 @@ module Docs
       /\Aecto\//,
       /\Aphoenix_pubsub\//,
       /\Aphoenix_html\//,
+      /\Aphoenix_live_view\//,
       /\Aplug\//
     ]
 
@@ -39,6 +41,11 @@ module Docs
         <<-HTML
           &copy; 2013 Plataformatec<br>
           Licensed under the Apache License, Version 2.0.
+        HTML
+      elsif filter.slug.start_with?('phoenix_live_view')
+        <<-HTML
+          &copy; 2018 Chris McCord<br>
+          Licensed under the MIT License.
         HTML
       else
         <<-HTML
