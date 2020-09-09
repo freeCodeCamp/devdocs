@@ -3,7 +3,6 @@ ruby '~> 2.6.0'
 
 gem 'rake'
 gem 'thor'
-gem 'pry', '~> 0.12.0'
 gem 'activesupport', '~> 5.2', require: false
 gem 'yajl-ruby', require: false
 gem 'html-pipeline'
@@ -49,6 +48,10 @@ group :test do
   gem 'minitest'
   gem 'rr', require: false
   gem 'rack-test', require: false
+end
+
+group :development, :test do
+  gem 'pry', '~> 0.12.0'
 end
 
 if ENV['SELENIUM'] == '1'
