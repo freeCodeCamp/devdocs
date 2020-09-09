@@ -1,0 +1,9 @@
+._elisp {
+    div > b {
+        @extend %block-label, %label-blue;
+    }
+
+    div > b {
+        margin: 2% auto;
+    }
+}

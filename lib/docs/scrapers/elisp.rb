@@ -61,5 +61,10 @@ module Docs
       Licensed under the GNU GPL license.
     HTML
 
+    def get_latest_version(opts)
+      body = fetch('https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html', opts)
+      body.scan(/version \d*\.?\d*/)[0].sub('version', '')
+    end
+
   end
 end

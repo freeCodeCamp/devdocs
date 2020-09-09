@@ -47,7 +47,20 @@ module Docs
         # add id to each defun section that contains a functions, macro, etc.
         css('.defun').each do |node|
           node['id']= node.first_element_child.content
+
+          # change all <var> tags to <b>, this helps pages style
+          functionName = node.first_element_child
+          arguments = functionName.next_sibling
+          arguments.parent= functionName
         end
+
+        # remove br for style purposes
+        css('br').each do |node|
+          node.remove
+        end
+
+        # remove footnotes
+        css('.footnote').remove
 
         doc
       end
