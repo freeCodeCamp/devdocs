@@ -25,12 +25,16 @@ app.views.OfflinePage = class OfflinePage extends app.View {
       if (statuses === false) {
         this.html(this.tmpl("offlineError", app.db.reason, app.db.error));
       } else {
-        let html = "";
-        for (var doc of app.docs.all()) {
-          html += this.renderDoc(doc, statuses[doc.slug]);
-        }
-        this.html(this.tmpl("offlinePage", html));
-        this.refreshLinks();
+        this.checkPersistence((hasPersistence, isPersistent) => {
+          let html = "";
+          for (var doc of app.docs.all()) {
+            html += this.renderDoc(doc, statuses[doc.slug]);
+          }
+          this.html(
+            this.tmpl("offlinePage", html, hasPersistence, isPersistent)
+          );
+          this.refreshLinks();
+        });
       }
     });
   }
@@ -93,6 +97,8 @@ app.views.OfflinePage = class OfflinePage extends app.View {
       for (el of Array.from(this.findAll(`[data-action='${action}']`))) {
         $.click(el);
       }
+    } else if (el.hasAttribute("data-enable-persistence")) {
+      this.requestPersistence();
     }
   }
 
@@ -140,6 +146,34 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   onChange(event) {
     if (event.target.name === "autoUpdate") {
       app.settings.set("manualUpdate", !event.target.checked);
+    }
+  }
+
+  checkPersistence(callback) {
+    if (navigator.storage && navigator.storage.persisted) {
+      navigator.storage
+        .persisted()
+        .then((persisted) => callback(true, persisted))
+        .catch(() => callback(false, persisted));
+    } else {
+      callback(false, false);
+    }
+  }
+
+  requestPersistence() {
+    navigator.storage
+      .persist()
+      .then((success) => this.onPersistenceRequestCompleted(success))
+      .catch((exception) =>
+        this.onPersistenceRequestCompleted(false, exception)
+      );
+  }
+
+  onPersistenceRequestCompleted(success, exception) {
+    if (success) {
+      this.render();
+    } else {
+      this.html(this.tmpl("persistenceError", exception));
     }
   }
 };
