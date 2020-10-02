@@ -12,7 +12,7 @@ Keep track of development news:
 
 **Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [Documentation](#documentation) · [Related Projects](#related-projects) · [License](#copyright--license) · [Questions?](#questions)
 
-## Quick Start
+## quick start
 
 Unless you wish to contribute to the project, we recommend using the hosted version at [devdocs.io](https://devdocs.io). It's up-to-date and works offline out-of-the-box.
 
