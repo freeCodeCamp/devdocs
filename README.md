@@ -4,6 +4,10 @@ DevDocs combines multiple developer documentations in a clean and organized web 
 
 DevDocs was created by [Thibaut Courouble](https://thibaut.me) and is operated by [freeCodeCamp](https://www.freecodecamp.org).
 
+## We are currently searching for maintainers
+
+Please reach out to `@Thibaut` on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs) if you would like to join the team!
+
 Keep track of development news:
 
 * Join the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs)
