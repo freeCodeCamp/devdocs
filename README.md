@@ -6,7 +6,7 @@ DevDocs was created by [Thibaut Courouble](https://thibaut.me) and is operated b
 
 ## We are currently searching for maintainers
 
-Please reach out to `@Thibaut` on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs) if you would like to join the team!
+Please reach out to the community on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs) if you would like to join the team!
 
 Keep track of development news:
 
