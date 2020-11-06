@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$ref": "#/definitions/Doc",
+  "definitions": {
+    "Doc": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "links": {
+          "$ref": "#/definitions/Links"
+        },
+        "version": {
+          "type": "string"
+        },
+        "release": {
+          "type": "string"
+        },
+        "mtime": {
+          "type": "integer"
+        },
+        "db_size": {
+          "type": "integer"
+        }
+      },
+      "required": ["db_size", "mtime", "name", "release", "slug", "type"]
+    },
+    "Links": {
+      "type": "object",
+      "properties": {
+        "home": {
+          "type": "string",
+          "format": "uri"
+        },
+        "code": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": ["code", "home"]
+    }
+  }
+}
