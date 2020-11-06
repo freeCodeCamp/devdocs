@@ -26,8 +26,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://scikit-learn.org/stable/documentation.html', opts)
-      doc.at_css('.body h1').content.scan(/([0-9.]+)/)[0][0]
+      get_latest_github_release('scikit-learn', 'scikit-learn', opts)
     end
   end
 end

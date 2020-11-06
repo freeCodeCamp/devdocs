@@ -60,7 +60,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://docs.python.org/', opts)
-      doc.at_css('.version_switcher_placeholder').content
+      doc.at_css('title').content.split(' ')[0]
     end
   end
 end

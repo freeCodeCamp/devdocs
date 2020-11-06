@@ -37,5 +37,9 @@ module Docs
       Distributed under the <a href="https://sourceforge.net/p/gnuplot/gnuplot-main/ci/master/tree/Copyright">gnuplot license</a> (rights to distribute modified versions are withheld).
     HTML
 
+    def get_latest_version(opts)
+      doc = fetch_doc('https://sourceforge.net/projects/gnuplot/files/gnuplot/', opts)
+      doc.at_css('#files_list > tbody > tr:nth-child(2)')['title']
+    end
   end
 end

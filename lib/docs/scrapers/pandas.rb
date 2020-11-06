@@ -63,8 +63,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('http://pandas.pydata.org/pandas-docs/stable/', opts)
-      label = doc.at_css('.body > .section > p').content
-      label.scan(/Version: ([0-9.]+)/)[0][0]
+      doc.at_css('#pandas-documentation').content.scan(/Version: ([0-9.]+)/)[0][0]
     end
   end
 end
