@@ -35,8 +35,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('http://httpd.apache.org/docs/', opts)
-      doc.at_css('#apcontents > ul a')['href'][0...-1]
+      doc = fetch_doc('http://httpd.apache.org/download', opts)
+      doc.at_css('#apcontents li > a').content
     end
   end
 end

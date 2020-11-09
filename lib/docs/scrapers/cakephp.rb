@@ -82,8 +82,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://api.cakephp.org/3.7/', opts)
-      doc.at_css('.version-picker .dropdown-toggle').content.strip
+      doc = fetch_doc('https://cakephp.org', opts)
+      doc.at_css('.title-home h1').content.scan(/\d\.\d*\.*\d*\.*\d*\.*/)[0]
     end
 
     private
