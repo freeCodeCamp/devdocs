@@ -23,7 +23,14 @@ module Docs
       Licensed under the PSF License.
     HTML
 
-    # mkdir -p docs/python~3.8 && cd docs/python~3.8 && curl -L https://docs.python.org/3.8/archives/python-3.8.6-docs-html.tar.bz2 | tar xj --strip-components=1
+    # mkdir -p docs/python~3.9 && cd docs/python~3.9 && curl -L https://docs.python.org/3.9/archives/python-3.9.0-docs-html.tar.bz2 | tar xj --strip-components=1
+    version '3.9' do # docs.python.org/3.9/download.html
+      self.release = '3.9.0'
+      self.base_url = 'https://docs.python.org/3.9/'
+
+      html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
+    end
+
     version '3.8' do # docs.python.org/3.8/download.html
       self.release = '3.8.6'
       self.base_url = 'https://docs.python.org/3.8/'
