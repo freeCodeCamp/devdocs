@@ -1,7 +1,7 @@
 module Docs
   class Jest < UrlScraper
     self.type = 'simple'
-    self.release = '24.9'
+    self.release = '26.6'
     self.base_url = 'https://jestjs.io/docs/en/'
     self.root_path = 'getting-started'
     self.links = {
@@ -14,7 +14,7 @@ module Docs
     options[:container] = '.docMainWrapper'
 
     options[:attribution] = <<-HTML
-      &copy; 2019 Facebook, Inc. and its affiliates.<br>
+      &copy; 2020 Facebook, Inc.<br>
       Licensed under the MIT License.
     HTML
 
