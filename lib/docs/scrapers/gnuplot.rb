@@ -37,5 +37,11 @@ module Docs
       Distributed under the <a href="https://sourceforge.net/p/gnuplot/gnuplot-main/ci/master/tree/Copyright">gnuplot license</a> (rights to distribute modified versions are withheld).
     HTML
 
+    def get_latest_version(opts)
+      doc = fetch_doc('http://www.gnuplot.info/download.html', opts)
+      label = doc.at_css('h2').content.strip
+      label.sub(/[^0-9.]*/, '')
+    end
+
   end
 end

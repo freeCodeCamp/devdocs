@@ -71,7 +71,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://docs.ansible.com/ansible/latest/index.html', opts)
-      doc.at_css('.DocSiteProduct-CurrentVersion').content.strip
+      doc.at_css('.version').content.strip
     end
   end
 end

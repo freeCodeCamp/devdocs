@@ -33,7 +33,7 @@ module Docs
     def get_latest_version(opts)
       doc = fetch_doc('https://api.dartlang.org/', opts)
       label = doc.at_css('footer > span').content.strip
-      label.sub(/Dart /, '')
+      label.sub(/Dart\s*/, '')
     end
   end
 end
