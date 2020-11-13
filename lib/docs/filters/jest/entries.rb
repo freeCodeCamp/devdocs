@@ -19,6 +19,7 @@ module Docs
 
       def additional_entries
         return [] unless !root_page? && self.type == self.name # api page
+        return [] if self.slug == 'environment-variables'
 
         entries = []
 
