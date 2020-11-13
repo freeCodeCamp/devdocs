@@ -38,8 +38,9 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://sourceforge.net/projects/gnuplot/files/gnuplot/', opts)
-      doc.at_css('#files_list > tbody > tr:nth-child(2)')['title']
+      doc = fetch_doc('http://www.gnuplot.info/download.html', opts)
+      label = doc.at_css('h2').content.strip
+      label.sub(/[^0-9.]*/, '')
     end
   end
 end

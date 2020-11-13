@@ -8,12 +8,17 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 1994&ndash;2017 Lua.org, PUC-Rio.<br>
+      &copy; 1994&ndash;2020 Lua.org, PUC-Rio.<br>
       Licensed under the MIT License.
     HTML
 
+    version '5.4' do
+      self.release = '5.4.1'
+      self.base_url = 'https://www.lua.org/manual/5.4/'
+    end
+
     version '5.3' do
-      self.release = '5.3.4'
+      self.release = '5.3.6'
       self.base_url = 'https://www.lua.org/manual/5.3/'
     end
 
