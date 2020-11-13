@@ -18,12 +18,19 @@ module Docs
       /doc-files\//]
 
     options[:attribution] = <<-HTML
-      &copy; 1993&ndash;2017, Oracle and/or its affiliates. All rights reserved.<br>
+      &copy; 1993, 2020, Oracle and/or its affiliates. All rights reserved.<br>
       Documentation extracted from Debian's OpenJDK Development Kit package.<br>
       Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>
       Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>
       Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.
     HTML
+
+    version '11' do
+      self.release = '11.0.9'
+      self.root_path = 'index.html'
+      self.base_url = 'https://docs.oracle.com/en/java/javase/11/docs/api/'
+      options[:only_patterns] = [/\Ajava\./]
+    end
 
     version '8' do
       self.release = '8'

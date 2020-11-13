@@ -33,7 +33,7 @@ module Docs
           node.content = node.content.remove(' Summary').remove(' Detail').pluralize
         end
 
-        if root_page?
+        if root_page? && version == '8'
           css('.header')[1].remove
           css('.contentContainer')[0].remove
           css('.contentContainer')[-1].remove
@@ -45,7 +45,10 @@ module Docs
             end
           end
 
-          at_css('h1').content = "OpenJDK #{release} Documentation" + (version != release ? " (#{version.split(' ').last})" : '')
+        end
+
+        if root_page?
+          at_css('h1').content = "OpenJDK #{release} Documentation"
         end
 
         css('table').each do |node|
