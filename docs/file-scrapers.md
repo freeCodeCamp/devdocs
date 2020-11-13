@@ -80,6 +80,24 @@ $GS = '/usr/local/opt/ghostscript/bin/gs';	# GhostScript
 
 ## OpenJDK
 
+https://packages.debian.org/sid/openjdk-11-doc
+
+```sh
+mkdir docs/openjdk~11
+curl --remote-name http://ftp.debian.org/debian/pool/main/o/openjdk-11/openjdk-11-doc_11.0.9.1+1-1_all.deb
+bsdtar --extract --to-stdout --file openjdk-11-doc_11.0.9.1+1-1_all.deb data.tar.xz | \
+bsdtar --extract --xz --file - --strip-components=6 --directory=docs/openjdk\~11/ ./usr/share/doc/openjdk-11-jre-headless/api/
+```
+
+https://packages.debian.org/sid/openjdk-8-doc
+
+```sh
+mkdir docs/openjdk~8
+curl --remote-name http://ftp.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-doc_8u272-b10-1_all.deb
+bsdtar --extract --to-stdout --file openjdk-8-doc_8u272-b10-1_all.deb data.tar.xz | \
+bsdtar --extract --xz --file - --strip-components=6 --directory=docs/openjdk\~8/ ./usr/share/doc/openjdk-8-jre-headless/api/
+```
+
 ## Perl
 
 ## PHP
