@@ -26,60 +26,9 @@ module Docs
     HTML
 
     version '8' do
-      self.release = '8'
-
-      options[:only_patterns] = [
-        /\Ajava\/beans\//,
-        /\Ajava\/io\//,
-        /\Ajava\/lang\//,
-        /\Ajava\/math\//,
-        /\Ajava\/net\//,
-        /\Ajava\/nio\//,
-        /\Ajava\/security\//,
-        /\Ajava\/text\//,
-        /\Ajava\/time\//,
-        /\Ajava\/util\//,
-        /\Ajavax\/annotation\//,
-        /\Ajavax\/crypto\//,
-        /\Ajavax\/imageio\//,
-        /\Ajavax\/lang\//,
-        /\Ajavax\/management\//,
-        /\Ajavax\/naming\//,
-        /\Ajavax\/net\//,
-        /\Ajavax\/print\//,
-        /\Ajavax\/script\//,
-        /\Ajavax\/security\//,
-        /\Ajavax\/sound\//,
-        /\Ajavax\/tools\//]
-    end
-
-    version '8 GUI' do
-      self.release = '8'
-
-      options[:only_patterns] = [
-        /\Ajava\/awt\//,
-        /\Ajavax\/swing\//]
-    end
-
-    version '8 Web' do
-      self.release = '8'
-
-      options[:only_patterns] = [
-        /\Ajava\/applet\//,
-        /\Ajava\/rmi\//,
-        /\Ajava\/sql\//,
-        /\Ajavax\/accessibility\//,
-        /\Ajavax\/activation\//,
-        /\Ajavax\/activity\//,
-        /\Ajavax\/jws\//,
-        /\Ajavax\/rmi\//,
-        /\Ajavax\/sql\//,
-        /\Ajavax\/transaction\//,
-        /\Ajavax\/xml\//,
-        /\Aorg\/ietf\//,
-        /\Aorg\/omg\//,
-        /\Aorg\/w3c\//,
-        /\Aorg\/xml\//]
+      self.release = '8u272'
+      self.base_url = 'https://docs.oracle.com/javase/8/docs/api/'
+      options[:only_patterns] = [/\A(java|javax|org)\//]
     end
 
     # Monkey patch to properly read HTML files encoded in ISO-8859-1
