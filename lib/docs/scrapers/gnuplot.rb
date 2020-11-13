@@ -42,6 +42,5 @@ module Docs
       label = doc.at_css('h2').content.strip
       label.sub(/[^0-9.]*/, '')
     end
-
   end
 end

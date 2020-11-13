@@ -24,8 +24,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('http://momentjs.com/', opts)
-      doc.at_css('.hero-title > h1 > span').content
+      get_github_tags('moment', 'moment', opts)[0]['name']
     end
   end
 end

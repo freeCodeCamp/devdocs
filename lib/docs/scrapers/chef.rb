@@ -49,8 +49,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://downloads.chef.io/chef', opts)
-      doc.at_css('h1.product-heading > span').content.strip
+      doc = fetch_doc('https://downloads.chef.io/products/infra', opts)
+      doc.at_css('#versions > option').content.strip
     end
   end
 end

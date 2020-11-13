@@ -22,8 +22,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('http://www.statsmodels.org/stable/', opts)
-      doc.at_css('.sphinxsidebarwrapper h3 + p > b').content[1..-1]
+      get_latest_github_release('statsmodels', 'statsmodels', opts)
     end
   end
 end

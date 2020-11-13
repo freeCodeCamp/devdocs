@@ -18,9 +18,11 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://open-cobol.sourceforge.io/HTML/gnucobpg.html', opts)
-      title = doc.at_css('h1').content
-      title.scan(/([0-9.]+)/)[0][0]
+      fetch_doc('https://sourceforge.net/projects/gnucobol/files/gnucobol/', opts)
+        .css('#files_list > tbody > tr')
+        .map { |file| file['title'] }
+        .sort_by { |version| version.to_f }
+        .last
     end
   end
 end

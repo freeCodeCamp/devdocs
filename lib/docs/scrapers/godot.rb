@@ -44,8 +44,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://docs.godotengine.org/', opts)
-      doc.at_css('.version').content.strip
+      get_latest_github_release('godotengine', 'godot', opts).split('-')[0]
     end
   end
 end

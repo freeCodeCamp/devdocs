@@ -54,8 +54,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('http://fishshell.com/docs/current/index.html', opts)
-      doc.at_css('#toc-index').content.scan(/([0-9.]+)/)[0][0]
+      get_latest_github_release('fish-shell', 'fish-shell', opts)
     end
   end
 end
