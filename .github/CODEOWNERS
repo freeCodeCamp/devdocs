@@ -1,0 +1,4 @@
+# This controls who gets notified for review and allows branches to be protected.
+# Protected branches can only be merged into after being approved by a codeowner.
+
+* @freeCodeCamp/devdocs
