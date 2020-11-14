@@ -23,7 +23,7 @@ module Docs
         entries = []
 
         css('.class').each do |node|
-          class_name = node.at_css('dt > .descname').content
+          class_name = node.at_css('dt > .descname').content.split('\\').last
           class_id = node.at_css('dt[id]')['id']
           entries << [class_name, class_id]
 
