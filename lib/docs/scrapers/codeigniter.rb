@@ -2,7 +2,6 @@ module Docs
   class Codeigniter < UrlScraper
     self.name = 'CodeIgniter'
     self.type = 'sphinx'
-    self.base_url = 'https://codeigniter.com/userguide3/'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://codeigniter.com/',
@@ -31,12 +30,18 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2014&ndash;2019 British Columbia Institute of Technology<br>
+      &copy; 2014&ndash;2020 British Columbia Institute of Technology<br>
       Licensed under the MIT License.
     HTML
 
+    version '4' do
+      self.release = '4.0.4'
+      self.base_url = 'https://codeigniter.com/userguide4/'
+    end
+
     version '3' do
       self.release = '3.1.8'
+      self.base_url = 'https://codeigniter.com/userguide3/'
     end
 
     def get_latest_version(opts)

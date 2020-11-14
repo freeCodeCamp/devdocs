@@ -183,7 +183,7 @@ credits = [
     'https://raw.githubusercontent.com/Codeception/CodeceptJS/master/LICENSE'
   ], [
     'CodeIgniter',
-    '2014-2018 British Columbia Institute of Technology',
+    '2014-2020 British Columbia Institute of Technology',
     'MIT',
     'https://raw.githubusercontent.com/bcit-ci/CodeIgniter/develop/license.txt'
   ], [
