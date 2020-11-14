@@ -108,7 +108,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      get_latest_github_release('rails', 'rails', opts)
+      doc = fetch_doc('https://rubyonrails.org/', opts)
+      doc.at_css('.version p a').content.scan(/\d\.\d*\.*\d*\.*\d*/)[0]
     end
   end
 end
