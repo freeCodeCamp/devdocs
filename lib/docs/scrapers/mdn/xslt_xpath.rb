@@ -15,10 +15,7 @@ module Docs
     options[:only_patterns] = [/\A\/XSLT/, /\A\/XPath/]
 
     options[:fix_urls] = ->(url) do
-      url.sub! 'https://developer.mozilla.org/en/XPath', "#{XsltXpath.base_url}/XPath"
-      url.sub! 'https://developer.mozilla.org/en/XSLT', "#{XsltXpath.base_url}/XSLT"
-      url.sub! 'https://developer.mozilla.org/en-US/docs/XPath', "#{XsltXpath.base_url}/XPath"
-      url.sub! 'https://developer.mozilla.org/en-US/docs/XSLT', "#{XsltXpath.base_url}/XSLT"
+      url.sub! 'https://developer.mozilla.org/en-US/docs/Web/XSLT/Element', "#{XsltXpath.base_url}/XSLT"
       url
     end
   end
