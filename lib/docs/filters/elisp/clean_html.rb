@@ -8,7 +8,7 @@ module Docs
           css('table ~ p').remove
 
           # remove "Detailed Node Listing" header
-          css('h3').remove
+          css('h2').remove
 
           # remove "Detailed Node Listing" table
           css('table')[1].remove
@@ -21,10 +21,10 @@ module Docs
         end
 
         # remove navigation bar
-        css('.node').remove
+        css('.header').remove
 
         # Remove content in headers
-        css('h2', 'h3', 'h4', 'h5', 'h6').each do |node|
+        css('.chapter', '.section', '.subsection', '.subsubsection', '.appendix').each do |node|
 
           # remove numbers at the beginning of all headers
           node.content = node.content.slice(/[[:alpha:]]...*/)
@@ -45,13 +45,10 @@ module Docs
         end
 
         # add id to each defun section that contains a functions, macro, etc.
-        css('.defun').each do |node|
-          node['id']= node.first_element_child.content
-
-          # change all <var> tags to <b>, this helps pages style
-          functionName = node.first_element_child
-          arguments = functionName.next_sibling
-          arguments.parent= functionName
+        css('dl > dt').each do |node|
+          if !(node.parent.attribute('compact'))
+            node['id'] = node.at_css('strong').content
+          end
         end
 
         # remove br for style purposes

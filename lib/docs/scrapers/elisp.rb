@@ -1,7 +1,7 @@
 module Docs
   class Elisp < UrlScraper
     self.type = 'elisp'
-    self.release = '26.3'
+    self.release = '27.1'
     self.base_url= 'https://www.gnu.org/software/emacs/manual/html_node/elisp/'
     self.root_path = 'index.html'
     self.links = {
