@@ -2,7 +2,7 @@ module Docs
   class Haxe
     class CleanHtmlFilter < Filter
       def call
-        css('.viewsource', 'hr', 'h1 > small', '.inherited-fields').remove
+        css('.viewsource', 'hr', 'h1 > small', '.inherited-fields', '.label-meta').remove
 
         css('h4 + h1').each do |node|
           node.after(node.previous_element)
@@ -28,8 +28,10 @@ module Docs
         end
 
         css('.field').each do |node|
+          h3 = node.at_css('h3:not(:empty)')
+          next unless h3.present?
           link = node.at_css('a[name]')
-          node.at_css('h3:not(:empty)')['id'] = link['name']
+          h3['id'] = link['name']
           link.before(link.children).remove
           node.before(node.children).remove
         end

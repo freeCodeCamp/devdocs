@@ -68,9 +68,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://secure.php.net/manual/en/doc.changelog.php', opts)
-      label = doc.at_css('tbody.gen-changelog > tr > td').content
-      label.split(',').last.strip
+      doc = fetch_doc('https://www.php.net/supported-versions.php', opts)
+      doc.at_css('table > tbody > .stable:last-of-type > td > a').content.strip
     end
   end
 end

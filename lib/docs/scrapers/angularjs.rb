@@ -38,8 +38,8 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2018 Google, Inc.<br>
-      Licensed under the Creative Commons Attribution License 4.0.
+      &copy; 2010&ndash;2020 Google, Inc.<br>
+      Licensed under the Creative Commons Attribution License 3.0.
     HTML
 
     stub '' do
@@ -47,6 +47,11 @@ module Docs
       capybara.app_host = 'https://code.angularjs.org'
       capybara.visit("/#{self.class.release}/docs/api")
       capybara.execute_script("return document.querySelector('.side-navigation').innerHTML")
+    end
+
+    version '1.8' do
+      self.release = '1.8.2'
+      self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
     version '1.7' do

@@ -20,8 +20,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      contents = get_github_file_contents('hashicorp', 'vagrant', 'website/config.rb', opts)
-      contents.scan(/version\s+=\s+"([0-9.]+)"/)[0][0]
+      get_github_tags('hashicorp', 'vagrant', opts)[0]['name'][1..-1]
     end
   end
 end

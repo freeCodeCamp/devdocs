@@ -32,8 +32,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://facebook.github.io/react-native/docs/getting-started.html', opts)
-      doc.at_css('header > a > h3').content
+      doc = fetch_doc('https://reactnative.dev/docs/getting-started', opts)
+      doc.at_css('meta[name="docsearch:version"]')['content']
     end
   end
 end

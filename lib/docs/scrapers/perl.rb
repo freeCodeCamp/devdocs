@@ -46,8 +46,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://perldoc.perl.org/', opts)
-      header = doc.at_css('h2.h1').content
-      header.scan(/Perl ([0-9.]+)/)[0][0]
+      doc.at_css('#dropdownlink-stable').content
     end
   end
 end

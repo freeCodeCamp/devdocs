@@ -30,18 +30,23 @@ module Docs
       /\Aroadmap.*/i,
     ]
 
+    version '2.10' do
+      self.release = '2.10.3'
+      self.base_url = "https://docs.ansible.com/ansible/#{version}/"
+    end
+
     version '2.9' do
-      self.release = '2.9.1'
+      self.release = '2.9.15'
       self.base_url = "https://docs.ansible.com/ansible/#{version}/"
     end
 
     version '2.8' do
-      self.release = '2.8.7'
+      self.release = '2.8.16'
       self.base_url = "https://docs.ansible.com/ansible/#{version}/"
     end
 
     version '2.7' do
-      self.release = '2.7.15'
+      self.release = '2.7.17'
       self.base_url = "https://docs.ansible.com/ansible/#{version}/"
     end
 
@@ -71,7 +76,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://docs.ansible.com/ansible/latest/index.html', opts)
-      doc.at_css('.DocSiteProduct-CurrentVersion').content.strip
+      doc.at_css('.version').content.strip
     end
   end
 end

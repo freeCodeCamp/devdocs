@@ -48,9 +48,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://docs.influxdata.com/influxdb/', opts)
-      label = doc.at_css('.navbar--current-product').content.strip
-      label.scan(/([0-9.]+)/)[0][0]
+      get_latest_github_release('influxdata', 'influxdb', opts)
     end
   end
 end

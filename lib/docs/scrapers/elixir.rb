@@ -126,7 +126,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://hexdocs.pm/elixir/api-reference.html', opts)
-      doc.at_css('h2.sidebar-projectVersion').content.strip[1..-1]
+      doc.at_css('.sidebar-projectVersion').content.strip[1..-1]
     end
   end
 end

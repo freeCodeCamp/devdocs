@@ -24,8 +24,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://babeljs.io/docs/en/', opts)
-      doc.at_css('a[href="/versions"] > h3').content
+      get_latest_github_release('babel', 'babel', opts)
     end
   end
 end

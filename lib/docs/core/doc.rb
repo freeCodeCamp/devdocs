@@ -220,6 +220,8 @@ module Docs
 
       if opts.key?(:github_token) and url.start_with?('https://api.github.com/')
         headers['Authorization'] = "token #{opts[:github_token]}"
+      elsif ENV['GITHUB_TOKEN'] and url.start_with?('https://api.github.com/')
+        headers['Authorization'] = "token #{ENV['GITHUB_TOKEN']}"
       end
 
       opts[:logger].debug("Fetching #{url}")

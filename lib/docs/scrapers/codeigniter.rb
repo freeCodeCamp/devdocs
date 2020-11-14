@@ -40,9 +40,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://codeigniter.com/userguide3/changelog.html', opts)
-      header = doc.at_css('#change-log h2')
-      header.content.scan(/([0-9.]+)/)[0][0]
+      tags = get_github_tags('codeigniter4', 'codeigniter4', opts)
+      tags[0]['name'][1..-1]
     end
   end
 end

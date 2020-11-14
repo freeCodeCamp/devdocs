@@ -23,22 +23,30 @@ module Docs
       Licensed under the PSF License.
     HTML
 
+    # mkdir -p docs/python~3.9 && cd docs/python~3.9 && curl -L https://docs.python.org/3.9/archives/python-3.9.0-docs-html.tar.bz2 | tar xj --strip-components=1
+    version '3.9' do # docs.python.org/3.9/download.html
+      self.release = '3.9.0'
+      self.base_url = 'https://docs.python.org/3.9/'
+
+      html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
+    end
+
     version '3.8' do # docs.python.org/3.8/download.html
-      self.release = '3.8.1'
+      self.release = '3.8.6'
       self.base_url = 'https://docs.python.org/3.8/'
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
     end
 
     version '3.7' do # docs.python.org/3.7/download.html
-      self.release = '3.7.6'
+      self.release = '3.7.9'
       self.base_url = 'https://docs.python.org/3.7/'
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
     end
 
     version '3.6' do # docs.python.org/3.6/download.html
-      self.release = '3.6.10'
+      self.release = '3.6.12'
       self.base_url = 'https://docs.python.org/3.6/'
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
@@ -60,7 +68,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://docs.python.org/', opts)
-      doc.at_css('.version_switcher_placeholder').content
+      doc.at_css('title').content.split(' ')[0]
     end
   end
 end

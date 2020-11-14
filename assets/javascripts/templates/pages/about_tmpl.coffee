@@ -22,7 +22,7 @@ app.templates.aboutPage = -> """
 
   <h2 class="_block-heading" id="copyright">Copyright and License</h2>
   <p class="_note">
-    <strong>Copyright 2013&ndash;2019 Thibaut Courouble and <a href="https://github.com/freeCodeCamp/devdocs/graphs/contributors">other contributors</a></strong><br>
+    <strong>Copyright 2013&ndash;2020 Thibaut Courouble and <a href="https://github.com/freeCodeCamp/devdocs/graphs/contributors">other contributors</a></strong><br>
     This software is licensed under the terms of the Mozilla Public License v2.0.<br>
     You may obtain a copy of the source code at <a href="https://github.com/freeCodeCamp/devdocs">github.com/freeCodeCamp/devdocs</a>.<br>
     For more information, see the <a href="https://github.com/freeCodeCamp/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
@@ -82,8 +82,13 @@ app.templates.aboutPage = -> """
 """
 
 credits = [
-  [ 'Angular<br>Angular.js',
-    '2010-2019 Google, Inc.',
+  [ 'Angular.js',
+    '2010-2020 Google, Inc.',
+    'CC BY 3.0',
+    'https://creativecommons.org/licenses/by/3.0/'
+  ], [
+    'Angular',
+    '2010-2020 Google, Inc.',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
@@ -378,7 +383,7 @@ credits = [
     'https://raw.githubusercontent.com/jekyll/jekyll/master/LICENSE'
   ], [
     'Jest',
-    'Facebook, Inc. and its affiliates.',
+    '2020 Facebook, Inc.',
     'MIT',
     'https://raw.githubusercontent.com/facebook/jest/master/LICENSE'
   ], [
@@ -448,7 +453,7 @@ credits = [
     'https://raw.githubusercontent.com/lodash/lodash/master/LICENSE'
   ], [
     'Lua',
-    '1994–2017 Lua.org, PUC-Rio',
+    '1994–2020 Lua.org, PUC-Rio',
     'MIT',
     'http://www.lua.org/license.html'
   ], [
@@ -508,7 +513,7 @@ credits = [
     'https://github.com/LearnBoost/mongoose/blob/master/README.md#license'
   ], [
     'nginx',
-    '2002-2019 Igor Sysoev<br>&copy; 2011-2019 Nginx, Inc.',
+    '2002-2020 Igor Sysoev<br>&copy; 2011-2020 Nginx, Inc.',
     'BSD',
     'http://nginx.org/LICENSE'
   ], [
@@ -548,7 +553,7 @@ credits = [
     'https://octave.org/doc/interpreter/'
   ], [
     'OpenJDK',
-    '1993-2017, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
+    '1993, 2020, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
     'GPLv2',
     'http://openjdk.java.net/legal/gplv2+ce.html'
   ], [
@@ -603,7 +608,7 @@ credits = [
     'https://raw.githubusercontent.com/ponylang/ponyc/master/LICENSE'
   ], [
     'PostgreSQL',
-    '1996-2019 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
+    '1996-2020 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
   ], [
