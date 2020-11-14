@@ -29,8 +29,8 @@ module Docs
       Laravel is a trademark of Taylor Otwell.
     HTML
 
-    version '7.0' do
-      self.release = '7.11.0'
+    version '7' do
+      self.release = '7.30.1'
       self.root_path = '/api/7.x/index.html'
       self.initial_paths = %w(/docs/7.x/installation /api/7.x/classes.html)
 
@@ -42,8 +42,8 @@ module Docs
       end
     end
 
-    version '6.0' do
-      self.release = '6.18.14'
+    version '6' do
+      self.release = '6.20.0'
       self.root_path = '/api/6.x/index.html'
       self.initial_paths = %w(/docs/6.x/installation /api/6.x/classes.html)
 
