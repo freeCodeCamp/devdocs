@@ -14,7 +14,7 @@ module Docs
 
           name
         else
-          name = at_css('h1').children.last.content.strip
+          name = at_css('.type-name').children.last.content.strip
           name.remove! %r{\(.*\)}
           name
         end
