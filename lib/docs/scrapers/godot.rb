@@ -30,12 +30,12 @@ module Docs
 
     version '3.2' do
       self.release = '3.2.3'
-      self.base_url = "http://docs.godotengine.org/en/#{self.version}/"
+      self.base_url = "https://docs.godotengine.org/en/#{self.version}/"
     end
 
     version '2.1' do
       self.release = '2.1.6'
-      self.base_url = "http://docs.godotengine.org/en/#{self.version}/"
+      self.base_url = "https://docs.godotengine.org/en/#{self.version}/"
     end
 
     def get_latest_version(opts)
