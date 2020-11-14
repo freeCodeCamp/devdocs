@@ -7,6 +7,13 @@ module Docs
         name.remove! %r{ \- .*}
         name.remove! 'Introduction To '
         name.remove! %r{ Guide\z}
+
+        if version == "2.10"
+          if slug =~ /\Acollections\// and slug !~ /index$/
+            name = name.split('.')[2]
+          end
+        end
+
         name
       end
 
@@ -18,6 +25,12 @@ module Docs
             else
               return 'Modules'
             end
+          end
+        end
+
+        if version == "2.10"
+          if slug =~ /\Acollections\//
+            return "Collection #{slug.split('/')[1..-2].join(".")}"
           end
         end
 
