@@ -1,9 +1,14 @@
 ._elisp {
-    div > b {
+    dl > dt {
         @extend %block-label, %label-blue;
     }
 
-    div > b {
-        margin: 2% auto;
+    dl[compact] > dt {
+        background: none;
+        border-color: none;
+        line-height: normal;
+        margin: auto;
+        border: none;
     }
+
 }
