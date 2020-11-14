@@ -29,7 +29,7 @@ module Docs
     end
 
     version '3.2' do
-      self.release = '3.2.1'
+      self.release = '3.2.3'
       self.base_url = "http://docs.godotengine.org/en/#{self.version}/"
     end
 
