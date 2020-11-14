@@ -25,41 +25,38 @@ module Docs
       end
 
       def api
-        css('footer', '.view-source', 'h1 .visible-xs').remove
+        css('.hover-link', '.view-source', 'footer').remove
 
-        css('section section.docstring h2').each do |node|
-          node.name = 'h4'
+        css('.summary').each do |node|
+          node.name = 'dl'
         end
 
-        css('h1 .hover-link', '.detail-link').each do |node|
-          node.parent['id'] = node['href'].remove('#')
-          node.remove
+        css('.summary h2').each do |node|
+          node.content = node.inner_text
+          node.parent.before(node)
         end
 
-        css('.details-list').each do |list|
-          type = list['id'].remove(/s\z/) if list['id']
-          list.css('.detail-header').each do |node|
+        css('.summary-signature').each do |node|
+          node.name = 'dt'
+        end
+
+        css('.summary-synopsis').each do |node|
+          node.name = 'dd'
+        end
+
+        css('section.detail').each do |detail|
+          id = detail['id']
+          detail.remove_attribute('id')
+
+          detail.css('.detail-header').each do |node|
             node.name = 'h3'
-            node['class'] += " #{type}" if type
+            node['id'] = id
+            node.content = node.at_css('.signature').inner_text
           end
-        end
 
-        css('.summary h2').each { |node| node.parent.before(node) }
-        css('.summary').each { |node| node.name = 'dl' }
-        css('.summary-signature').each { |node| node.name = 'dt' }
-        css('.summary-synopsis').each { |node| node.name = 'dd' }
-
-        css('section', 'div:not(.type-detail)', 'h2 a').each do |node|
-          node.before(node.children).remove
-        end
-
-        css('.detail-header > pre').each do |node|
-          node.parent.after(node)
-        end
-
-        css('.signature').each do |node|
-          non_text_children = node.xpath('node()[not(self::text())]')
-          non_text_children.to_a.reverse.each { |child| node.parent.add_next_sibling(child) }
+          detail.css('.docstring h2').each do |node|
+            node.name = 'h4'
+          end
         end
 
         css('pre').each do |node|
