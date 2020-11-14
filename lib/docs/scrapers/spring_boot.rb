@@ -3,8 +3,6 @@ module Docs
     self.name = 'Spring Boot'
     self.slug = 'spring_boot'
     self.type = 'simple'
-    self.release = '2.3.0.RELEASE'
-    self.base_url = 'https://docs.spring.io/spring-boot/docs/current/reference/html/'
     self.root_path = "index.html"
     self.links = {
       home: 'https://spring.io/',
@@ -16,12 +14,16 @@ module Docs
     options[:skip_patterns] = [/legal/]
 
     options[:attribution] = <<-HTML
-    Copyright &copy; 2002 - 2020 Pivotal, Inc. All Rights Reserved.
+    Copyright &copy; 2002–2020 Pivotal, Inc. All Rights Reserved.
     HTML
 
+    version do
+      self.release = '2.4.0'
+      self.base_url = "https://docs.spring.io/spring-boot/docs/#{release}/reference/html/"
+    end
+
     def get_latest_version(opts)
-      doc = fetch_doc('https://docs.spring.io/spring-boot/docs/current/reference/html/legal.html', opts)
-      table = doc.at_css('#content p').inner_text
+      get_latest_github_release('spring-projects', 'spring-boot', opts)
     end
 
   end
