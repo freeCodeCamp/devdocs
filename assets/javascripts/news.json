@@ -1,5 +1,13 @@
 [
   [
+    "2020-11-14",
+    "Newly added documentations: <a href=\"/pytorch/\">PyTorch</a>, <a href=\"/spring_boot/\">Spring Boot</a>"
+  ],
+  [
+    "2020-11-14",
+    "Updated documentations: <a href=\"/angular/\">Angular</a>, <a href=\"/angularjs/\">Angular.js</a>, <a href=\"/ansible/\">Ansible</a>, <a href=\"/cmake/\">CMake</a>, <a href=\"/codeigniter/\">CodeIgniter</a>, <a href=\"/crystal/\">Crystal</a>, <a href=\"/css/\">CSS</a>, <a href=\"/elixir/\">Elixir</a>, <a href=\"/go/\">Go</a>, <a href=\"/godot/\">Godot</a>, <a href=\"/haxe/\">Haxe</a>, <a href=\"/html/\">HTML</a>, <a href=\"/javascript/\">JavaScript</a>, <a href=\"/jest/\">Jest</a>, <a href=\"/laravel/\">Laravel</a>, <a href=\"/leaflet/\">Leaflet</a>, <a href=\"/lua/\">Lua</a>, <a href=\"/nginx/\">nginx</a>, <a href=\"/node/\">Node.js</a>, <a href=\"/openjdk/\">OpenJDK</a>, <a href=\"/postgresql/\">PostgreSQL</a>, <a href=\"/pug/\">Pug</a>, <a href=\"/python/\">Python</a>, <a href=\"/rails/\">Rails</a>, <a href=\"/react/\">React</a>, <a href=\"/ruby/\">Ruby</a>, <a href=\"/sqlite/\">SQLite</a>, <a href=\"/svg/\">SVG</a>, <a href=\"/xslt_xpath/\">XSLT + XPath</a>"
+  ],
+  [
     "2020-01-13",
     "New “Automatic” theme: match your browser or system dark mode setting. <a href=\"/settings\">Enable it in preferences</a>."
   ],
