@@ -14,6 +14,8 @@ module Docs
         css('.article-footer').remove
         css('.article-footer-updated').remove
 
+        css('.dashboard-ad').remove
+
         css('pre').each do |node|
           node.content = node.content
           node['data-language'] = 'javascript'
