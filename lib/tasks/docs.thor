@@ -119,7 +119,7 @@ class DocsCLI < Thor
     puts 'Done'
   end
 
-  desc 'download (<doc> <doc@version>... | --default | --installed)', 'Download documentations'
+  desc 'download (<doc> <doc@version>... | --default | --installed | --all)', 'Download documentations'
   option :default, type: :boolean
   option :installed, type: :boolean
   option :all, type: :boolean
