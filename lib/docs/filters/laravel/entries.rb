@@ -13,12 +13,12 @@ module Docs
 
       def get_type
         unless api_page?
-          link = at_css(".sidebar li a[href='#{result[:path].split('/').last}']")
+          link = at_css(".docs_sidebar li a[href='#{result[:path].split('/').last}']")
           heading = link.ancestors('li').last.at_css('> h2')
           return heading ? "Guides: #{heading.content.strip}" : 'Guides'
         end
 
-        type = slug.remove(%r{api/\d.\d/}).remove('Illuminate/').remove(/\/\w+?\z/).gsub('/', '\\')
+        type = slug.remove(%r{api/\d.[0-9x]/}).remove('Illuminate/').remove(/\/\w+?\z/).gsub('/', '\\')
 
         if type.end_with?('Console')
           type.split('\\').first
