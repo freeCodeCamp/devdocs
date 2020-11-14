@@ -10,6 +10,7 @@ module Docs
 
       TYPE_BY_DIR = {
         'command' => 'Commands',
+        'guide' => 'Guides',
         'manual' => 'Manual',
         'module' => 'Modules',
         'policy' => 'Policies',

@@ -16,17 +16,37 @@ module Docs
     options[:skip_patterns] = [/\Agenerator/, /\Acpack_gen/, /\Ainclude/, /\Arelease/]
 
     options[:attribution] = <<-HTML
-      &copy; 2000&ndash;2019 Kitware, Inc. and Contributors<br>
+      &copy; 2000&ndash;2020 Kitware, Inc. and Contributors<br>
       Licensed under the BSD 3-clause License.
     HTML
 
+    version '3.19' do
+      self.release = '3.19.0'
+      self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
+    end
+
+    version '3.18' do
+      self.release = '3.18.4'
+      self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
+    end
+
+    version '3.17' do
+      self.release = '3.17.5'
+      self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
+    end
+
+    version '3.16' do
+      self.release = '3.16.9'
+      self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
+    end
+
     version '3.15' do
-      self.release = '3.15.2'
+      self.release = '3.15.7'
       self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
     end
 
     version '3.14' do
-      self.release = '3.14.6'
+      self.release = '3.14.7'
       self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
     end
 
