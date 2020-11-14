@@ -3,8 +3,6 @@ module Docs
     self.name = 'PyTorch'
     self.slug = 'pytorch'
     self.type = 'sphinx'
-    self.release = '1.5.0'
-    self.base_url = 'https://pytorch.org/docs/stable/'
     self.force_gzip = true
     self.links = {
       home: 'https://pytorch.org/',
@@ -19,19 +17,16 @@ module Docs
 
     options[:attribution] = <<-HTML
     &copy; 2019 Torch Contributors<br>
-    Licensed under the 3-clause BSD License.<br>
-    <a href="https://raw.githubusercontent.com/pytorch/pytorch/master/LICENSE" class="_attribution-link">Read the full license.</a>
+    Licensed under the 3-clause BSD License.
     HTML
 
+    version do
+      self.release = '1.7.0'
+      self.base_url = "https://pytorch.org/docs/#{release}/"
+    end
+
     def get_latest_version(opts)
-      doc = fetch_doc('https://pytorch.org/docs/versions.html', opts)
-      doc.css('li.toctree-l1').each do |node|
-        match = /v(.+?) \(stable release\)/.match(node.content)
-        if match
-          return match[1]
-        end
-      end
+      get_latest_github_release('pytorch', 'pytorch', opts)
     end
   end
 end
-  
