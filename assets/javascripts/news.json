@@ -1,370 +1,245 @@
 [
-  [
-    "2020-11-14",
-    "Newly added documentations: <a href=\"/pytorch/\">PyTorch</a>, <a href=\"/spring_boot/\">Spring Boot</a>"
-  ],
-  [
-    "2020-11-14",
-    "Updated documentations: <a href=\"/angular/\">Angular</a>, <a href=\"/angularjs/\">Angular.js</a>, <a href=\"/ansible/\">Ansible</a>, <a href=\"/cmake/\">CMake</a>, <a href=\"/codeigniter/\">CodeIgniter</a>, <a href=\"/crystal/\">Crystal</a>, <a href=\"/css/\">CSS</a>, <a href=\"/elixir/\">Elixir</a>, <a href=\"/go/\">Go</a>, <a href=\"/godot/\">Godot</a>, <a href=\"/haxe/\">Haxe</a>, <a href=\"/html/\">HTML</a>, <a href=\"/javascript/\">JavaScript</a>, <a href=\"/jest/\">Jest</a>, <a href=\"/laravel/\">Laravel</a>, <a href=\"/leaflet/\">Leaflet</a>, <a href=\"/lua/\">Lua</a>, <a href=\"/nginx/\">nginx</a>, <a href=\"/node/\">Node.js</a>, <a href=\"/openjdk/\">OpenJDK</a>, <a href=\"/postgresql/\">PostgreSQL</a>, <a href=\"/pug/\">Pug</a>, <a href=\"/python/\">Python</a>, <a href=\"/rails/\">Rails</a>, <a href=\"/react/\">React</a>, <a href=\"/ruby/\">Ruby</a>, <a href=\"/sqlite/\">SQLite</a>, <a href=\"/svg/\">SVG</a>, <a href=\"/xslt_xpath/\">XSLT + XPath</a>"
-  ],
-  [
-    "2020-01-13",
-    "New “Automatic” theme: match your browser or system dark mode setting. <a href=\"/settings\">Enable it in preferences</a>."
-  ],
-  [
-    "2020-01-13",
-    "New documentation: <a href=\"/gnuplot/\">Gnuplot</a>"
-  ],
-  [
-    "2019-10-26",
-    "New documentation: <a href=\"/sequelize/\">Sequelize</a>"
-  ], [
-    "2019-10-20",
-    "New documentations: <a href=\"/mariadb/\">MariaDB</a> and <a href=\"/reactivex/\">ReactiveX</a>"
-  ], [
-    "2019-09-02",
-    "New documentations added over the last 3 weeks: <a href=\"/scala~2.13_library/\">Scala</a>, <a href=\"/wordpress/\">WordPress</a>, <a href=\"/cypress/\">Cypress</a>, <a href=\"/saltstack/\">SaltStack</a>, <a href=\"/composer/\">Composer</a>, <a href=\"/vue_router/\">Vue Router</a>, <a href=\"/vuex/\">Vuex</a>, <a href=\"/pony/\">Pony</a>, <a href=\"/rxjs/\">RxJS</a>, <a href=\"/octave/\">Octave</a>, <a href=\"/trio/\">Trio</a>, <a href=\"/django_rest_framework/\">Django REST Framework</a>, <a href=\"/enzyme/\">Enzyme</a> and <a href=\"/gnu_cobol/\">GnuCOBOL</a>"
-  ], [
-    "2019-07-21",
-    "Fixed several bugs, added an option to automatically download documentation and <a href=\"https://github.com/freeCodeCamp/devdocs/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aclosed+sort%3Aupdated-desc+closed%3A%3E2019-07-18+977+988+986+870+886+1024+979+975+941+831+1005+848+942\" target=\"_blank\">more</a>."
-  ], [
-    "2019-07-19",
-    "Replaced the AppCache with a Service Worker (which makes DevDocs an installable PWA) and fixed layout preferences on Firefox."
-  ], [
-    "2018-09-23",
-    "New documentations: <a href=\"/puppeteer/\">Puppeteer</a> and <a href=\"/handlebars/\">Handlebars.js</a>"
-  ], [
-    "2018-08-12",
-    "New documentations: <a href=\"/dart/\">Dart</a> and <a href=\"/qt/\">Qt</a>"
-  ], [
-    "2018-07-29",
-    "New documentations: <a href=\"/bash/\">Bash</a>, <a href=\"/graphite/\">Graphite</a> and <a href=\"/pygame/\">Pygame</a>"
-  ], [
-    "2018-07-08",
-    "New documentations: <a href=\"/leaflet/\">Leaflet</a>, <a href=\"/terraform/\">Terraform</a> and <a href=\"/koa/\">Koa</a>"
-  ], [
-    "2018-03-26",
-    "DevDocs is joining the freeCodeCamp community. Read the announcement <a href=\"https://medium.freecodecamp.org/devdocs-is-joining-the-freecodecamp-community-ae185a1c14a6\" target=\"_blank\">here</a>."
-  ], [
-    "2018-02-04",
-    "New documentations: <a href=\"/babel/\">Babel</a>, <a href=\"/jekyll/\">Jekyll</a> and <a href=\"/jsdoc/\">JSDoc</a>"
-  ], [
-    "2017-11-26",
-    "New documentations: <a href=\"/bluebird/\">Bluebird</a>, <a href=\"/eslint/\">ESLint</a> and <a href=\"/homebrew/\">Homebrew</a>"
-  ], [
-    "2017-11-18",
-    "Added print & PDF stylesheet.\nFeedback welcome on <a href=\"https://twitter.com/DevDocs\" target=\"_blank\" rel=\"noopener\">Twitter</a> and <a href=\"https://github.com/freeCodeCamp/devdocs\" target=\"_blank\" rel=\"noopener\">GitHub</a>."
-  ], [
-    "2017-09-10",
-    "<a href=\"/settings\">Preferences</a> can now be exported and imported."
-  ], [
-    "2017-09-03",
-    "New documentations: <a href=\"/d/\">D</a>, <a href=\"/nim/\">Nim</a> and <a href=\"/vulkan/\">Vulkan</a>"
-  ], [
-    "2017-07-23",
-    "New documentation: <a href=\"/godot/\">Godot</a>"
-  ], [
-    "2017-06-04",
-    "New documentations: <a href=\"/electron/\">Electron</a>, <a href=\"/pug/\">Pug</a>, and <a href=\"/falcon/\">Falcon</a>"
-  ], [
-    "2017-05-14",
-    "New documentations: <a href=\"/jest/\">Jest</a>, <a href=\"/jasmine/\">Jasmine</a> and <a href=\"/liquid/\">Liquid</a>"
-  ], [
-    "2017-04-30",
-    "New documentation: <a href=\"/openjdk/\">OpenJDK</a>"
-  ], [
-    "2017-02-26",
-    "Refreshed design.",
-    "Added <a href=\"/settings\">Preferences</a>."
-  ], [
-    "2017-01-22",
-    "New <a href=\"/http/\">HTTP</a> documentation (thanks Mozilla)"
-  ], [
-    "2016-12-04",
-    "New documentations: <a href=\"/sqlite/\">SQLite</a>, <a href=\"/codeception/\">Codeception</a> and <a href=\"/codeceptjs/\">CodeceptJS</a>"
-  ], [
-    "2016-11-20",
-    "New documentations: <a href=\"/yarn/\">Yarn</a>, <a href=\"/immutable/\">Immutable.js</a> and <a href=\"/async/\">Async</a>"
-  ], [
-    "2016-10-10",
-    "New documentations: <a href=\"/scikit_learn/\">scikit-learn</a> and <a href=\"/statsmodels/\">Statsmodels</a>"
-  ], [
-    "2016-09-18",
-    "New documentations: <a href=\"/pandas/\">pandas</a> and <a href=\"/twig/\">Twig</a>"
-  ], [
-    "2016-09-05",
-    "New documentations: <a href=\"/fish/\">Fish</a>, <a href=\"/bottle/\">Bottle</a> and <a href=\"/scikit_image/\">scikit-image</a>"
-  ], [
-    "2016-08-07",
-    "New documentation: <a href=\"/docker/\">Docker</a>"
-  ], [
-    "2016-07-31",
-    "New documentations: <a href=\"/bootstrap~3/\">Bootstrap 3</a> and <a href=\"/bootstrap~4/\">Bootstrap 4</a>"
-  ], [
-    "2016-07-24",
-    "New documentations: <a href=\"/julia/\">Julia</a>, <a href=\"/crystal/\">Crystal</a> and <a href=\"/redux/\">Redux</a>"
-  ], [
-    "2016-07-03",
-    "New documentations: <a href=\"/cmake/\">CMake</a> and <a href=\"/matplotlib/\">Matplotlib</a>"
-  ], [
-    "2016-06-19",
-    "New documentation: <a href=\"/love/\">L&Ouml;VE</a>"
-  ], [
-    "2016-06-12",
-    "New documentation: <a href=\"/angular/\">Angular 2</a>"
-  ], [
-    "2016-06-05",
-    "New documentations: <a href=\"/kotlin/\">Kotlin</a> and <a href=\"/padrino/\">Padrino</a>"
-  ], [
-    "2016-04-24",
-    "New documentations: <a href=\"/numpy/\">NumPy</a> and <a href=\"/apache_pig/\">Apache Pig</a>"
-  ], [
-    "2016-04-17",
-    "New documentation: <a href=\"/perl/\">Perl</a>"
-  ], [
-    "2016-04-10",
-    "New documentations: <a href=\"/browser_support_tables/\">Support tables (caniuse.com)</a>, <a href=\"/gcc/\">GCC</a> and <a href=\"/gnu_fortran/\">GNU Fortran</a>"
-  ], [
-    "2016-03-27",
-    "New documentation: <a href=\"/typescript/\">TypeScript</a>"
-  ], [
-    "2016-03-06",
-    "New documentations: <a href=\"/tensorflow/\">TensorFlow</a>, <a href=\"/haxe/\">Haxe</a> and <a href=\"/ansible/\">Ansible</a>"
-  ], [
-    "2016-02-28",
-    "New documentations: <a href=\"/codeigniter/\">CodeIgniter</a>, <a href=\"/nginx_lua_module/\">nginx Lua Module</a> and <a href=\"/influxdata/\">InfluxData</a>"
-  ], [
-    "2016-02-15",
-    "New documentations: <a href=\"/cakephp/\">CakePHP</a>, <a href=\"/chef/\">Chef</a> and <a href=\"/ramda/\">Ramda</a>"
-  ], [
-    "2016-01-31",
-    "New documentations: <a href=\"/erlang/\">Erlang</a> and <a href=\"/tcl_tk/\">Tcl/Tk</a>"
-  ], [
-    "2016-01-24",
-    "&ldquo;Multi-version support&rdquo; has landed!"
-  ], [
-    "2015-11-22",
-    "New documentations: <a href=\"/phoenix/\">Phoenix</a>, <a href=\"/dojo/\">Dojo</a>, <a href=\"/relay/\">Relay</a> and <a href=\"/flow/\">Flow</a>"
-  ], [
-    "2015-11-08",
-    "New documentations: <a href=\"/elixir/\">Elixir</a> and <a href=\"/vagrant/\">Vagrant</a>"
-  ], [
-    "2015-10-18",
-    "Added a \"Copy to clipboard\" button inside each code block."
-  ], [
-    "2015-09-13",
-    "New documentation: <a href=\"/phalcon/\">Phalcon</a>"
-  ], [
-    "2015-08-09",
-    "New documentation: <a href=\"/react_native/\">React Native</a>"
-  ], [
-    "2015-08-03",
-    "Added an icon in the sidebar to constrain the width of the UI (visible when applicable)."
-  ], [
-    "2015-08-02",
-    "New documentations: <a href=\"/q/\">Q</a> and <a href=\"/opentsdb/\">OpenTSDB</a>"
-  ], [
-    "2015-07-26",
-    "Added search aliases (e.g. <code class=\"_label\">$</code> is an alias for <code class=\"_label\">jQuery</code>).\n<a href=\"/help#aliases\">Click here</a> to see the full list. Feel free to suggest more on <a href=\"https://github.com/freeCodeCamp/devdocs/issues/new\" target=\"_blank\" rel=\"noopener\">GitHub</a>.",
-    "Added <code class=\"_label\">shift + &darr;/&uarr;</code> shortcut for scrolling (same as <code class=\"_label\">alt + &darr;/&uarr;</code>)."
-  ], [
-    "2015-07-05",
-    "New documentations: <a href=\"/drupal/\">Drupal</a>, <a href=\"/vue/\">Vue.js</a>, <a href=\"/phaser/\">Phaser</a> and <a href=\"/webpack/\">webpack</a>"
-  ], [
-    "2015-05-24",
-    "New <a href=\"/rust/\">Rust</a> documentation"
-  ], [
-    "2015-04-26",
-    "New <a href=\"/apache_http_server/\">Apache HTTP Server</a> and <a href=\"/npm/\">npm</a> documentations"
-  ], [
-    "2015-03-22",
-    "New <a href=\"/meteor/\">Meteor</a> and <a href=\"/mocha/\">mocha</a> documentations"
-  ], [
-    "2015-02-22",
-    "Improved <a href=\"/http/\">HTTP</a> documentation",
-    "New <a href=\"/minitest/\">Minitest</a> documentation"
-  ], [
-    "2015-02-16",
-    "The sidebar is now resizable (drag & drop)."
-  ], [
-    "2015-02-15",
-    "New <a href=\"/iojs/\">io.js</a>, <a href=\"/symfony/\">Symfony</a>, <a href=\"/clojure/\">Clojure</a>, <a href=\"/lua/\">Lua</a> and <a href=\"/yii1/\">Yii 1.1</a> documentations"
-  ], [
-    "2015-02-08",
-    "New dark theme"
-  ], [
-    "2015-01-13",
-    "<a href=\"/offline\">Offline mode</a> has landed!"
-  ], [
-    "2014-12-21",
-    "New <a href=\"/react/\">React</a>, <a href=\"/rethinkdb/\">RethinkDB</a>, <a href=\"/socketio/\">Socket.IO</a>, <a href=\"/modernizr/\">Modernizr</a> and <a href=\"/bower/\">Bower</a> documentations"
-  ], [
-    "2014-11-30",
-    "New <a href=\"/phpunit/\">PHPUnit</a> and <a href=\"/nokogiri/\">Nokogiri</a> documentations"
-  ], [
-    "2014-11-16",
-    "New <a href=\"/python2/\">Python 2</a> documentation"
-  ], [
-    "2014-11-09",
-    "New design\nFeedback welcome on <a href=\"https://twitter.com/DevDocs\" target=\"_blank\" rel=\"noopener\">Twitter</a> and <a href=\"https://github.com/freeCodeCamp/devdocs\" target=\"_blank\" rel=\"noopener\">GitHub</a>."
-  ], [
-    "2014-10-19",
-    "New <a href=\"/svg/\">SVG</a>, <a href=\"/marionette/\">Marionette.js</a>, and <a href=\"/mongoose/\">Mongoose</a> documentations"
-  ], [
-    "2014-10-18",
-    "New <a href=\"/nginx/\">nginx</a> documentation"
-  ], [
-    "2014-10-13",
-    "New <a href=\"/xpath/\">XPath</a> documentation"
-  ], [
-    "2014-09-07",
-    "Updated the HTML, CSS, JavaScript, and DOM documentations with additional content."
-  ], [
-    "2014-08-04",
-    "New <a href=\"/django/\">Django</a> documentation"
-  ], [
-    "2014-07-27",
-    "New <a href=\"/markdown/\">Markdown</a> documentation"
-  ], [
-    "2014-07-05",
-    "New <a href=\"/cordova/\">Cordova</a> documentation"
-  ], [
-    "2014-07-01",
-    "New <a href=\"/chai/\">Chai</a> and <a href=\"/sinon/\">Sinon</a> documentations"
-  ], [
-    "2014-06-15",
-    "New <a href=\"/requirejs/\">RequireJS</a> documentation"
-  ], [
-    "2014-06-14",
-    "New <a href=\"/haskell/\">Haskell</a> documentation"
-  ], [
-    "2014-05-25",
-    "New <a href=\"/laravel/\">Laravel</a> documentation"
-  ], [
-    "2014-05-04",
-    "New <a href=\"/express/\">Express</a>, <a href=\"/grunt/\">Grunt</a>, and <a href=\"/maxcdn/\">MaxCDN</a> documentations"
-  ], [
-    "2014-04-06",
-    "New <a href=\"/go/\">Go</a> documentation"
-  ], [
-    "2014-03-30",
-    "New <a href=\"/cpp/\">C++</a> documentation"
-  ], [
-    "2014-03-16",
-    "New <a href=\"/yii/\">Yii</a> documentation"
-  ], [
-    "2014-03-08",
-    "Added path bar."
-  ], [
-    "2014-02-22",
-    "New <a href=\"/c/\">C</a> documentation"
-  ], [
-    "2014-02-16",
-    "New <a href=\"/moment/\">Moment.js</a> documentation"
-  ], [
-    "2014-02-12",
-    "The root/category pages are now included in the search index (e.g. <a href=\"/#q=CSS\">CSS</a>)"
-  ], [
-    "2014-01-19",
-    "New <a href=\"/d3/\">D3.js</a> and <a href=\"/knockout/\">Knockout.js</a> documentations"
-  ], [
-    "2014-01-18",
-    "DevDocs is now available as a <a href=\"https://marketplace.firefox.com/app/devdocs/\">Firefox web app</a>."
-  ], [
-    "2014-01-12",
-    "Added <code class=\"_label\">alt + g</code> shortcut for searching on Google.",
-    "Added <code class=\"_label\">alt + r</code> shortcut for revealing the current page in the sidebar."
-  ], [
-    "2013-12-14",
-    "New <a href=\"/postgresql/\">PostgreSQL</a> documentation"
-  ], [
-    "2013-12-13",
-    "New <a href=\"/git/\">Git</a> and <a href=\"/redis/\">Redis</a> documentations"
-  ], [
-    "2013-11-26",
-    "New <a href=\"/python/\">Python</a> documentation"
-  ], [
-    "2013-11-19",
-    "New <a href=\"/rails/\">Ruby on Rails</a> documentation"
-  ], [
-    "2013-11-16",
-    "New <a href=\"/ruby/\">Ruby</a> documentation"
-  ], [
-    "2013-10-24",
-    "DevDocs is now <a href=\"https://github.com/freeCodeCamp/devdocs\">open source</a>."
-  ], [
-    "2013-10-09",
-    "DevDocs is now available as a <a href=\"https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe\">Chrome web app</a>."
-  ], [
-    "2013-09-22",
-    "New <a href=\"/php/\">PHP</a> documentation"
-  ], [
-    "2013-09-06",
-    "New <a href=\"/lodash/\">Lo-Dash</a> documentation ",
-    "On mobile devices you can now search a specific documentation by typing its name and <code class=\"_label\">Space</code>."
-  ], [
-    "2013-09-01",
-    "New <a href=\"/jqueryui/\">jQuery UI</a> and <a href=\"/jquerymobile/\">jQuery Mobile</a> documentations"
-  ], [
-    "2013-08-28",
-    "New smartphone interface\nTested on iOS 6+ and Android 4.1+"
-  ], [
-    "2013-08-25",
-    "New <a href=\"/ember/\">Ember.js</a> documentation"
-  ], [
-    "2013-08-18",
-    "New <a href=\"/coffeescript/\">CoffeeScript</a> documentation",
-    "URL search now automatically opens the first result."
-  ], [
-    "2013-08-13",
-    "New <a href=\"/angularjs/\">Angular.js</a> documentation"
-  ], [
-    "2013-08-11",
-    "New <a href=\"/sass/\">Sass</a> and <a href=\"/less/\">Less</a> documentations"
-  ], [
-    "2013-08-05",
-    "New <a href=\"/node/\">Node.js</a> documentation"
-  ], [
-    "2013-08-03",
-    "Added support for OpenSearch"
-  ], [
-    "2013-07-30",
-    "New <a href=\"/backbone/\">Backbone.js</a> documentation"
-  ], [
-    "2013-07-27",
-    "You can now customize the list of documentations.\nNew docs will be hidden by default, but you'll see a notification when there are new releases.",
-    "New <a href=\"/http/\">HTTP</a> documentation"
-  ], [
-    "2013-07-15",
-    "URL search now works with single documentations: <a href=\"/#q=js%20sort\">devdocs.io/#q=js sort</a>"
-  ], [
-    "2013-07-13",
-    "Added syntax highlighting",
-    "Added documentation versions"
-  ], [
-    "2013-07-11",
-    "New <a href=\"/underscore/\">Underscore.js</a> documentation ",
-    "Improved compatibility with tablets\nA mobile version is planned as soon as other high priority features have been implemented."
-  ], [
-    "2013-07-10",
-    "You can now search specific documentations.\nSimply type the documentation's name and press <code class=\"_label\">Tab</code>.\nThe name is fuzzy matched so you can use abbreviations like <code>js</code> for <code>JavaScript</code>."
-  ], [
-    "2013-07-08",
-    "Improved search with fuzzy matching and better results\nFor example, searching <code>jqmka</code> now returns <code>jQuery.makeArray()</code>.",
-    "DevDocs finally has an icon.",
-    "<code class=\"_label\">space</code> has replaced <code class=\"_label\">alt + space</code> for scrolling down."
-  ], [
-    "2013-07-06",
-    "New <a href=\"/dom/\">DOM</a> and <a href=\"/dom_events/\">DOM Events</a> documentations\nDevDocs now includes almost all reference documents available on the Mozilla Developer Network.\nBig thank you to Mozilla and all the people that contributed to MDN.",
-    "Implemented URL search: <a href=\"/#q=sort\">devdocs.io/#q=sort</a>"
-  ], [
-    "2013-07-02",
-    "New <a href=\"/javascript/\">JavaScript</a> documentation"
-  ], [
-    "2013-06-28",
-    "DevDocs made the front page of Hacker News!\nHi everyone &mdash; thanks for trying DevDocs.\nPlease bear with me while I fix bugs and scramble to add more docs.\nThis is only v1. There's a lot more to come."
-  ], [
-    "2013-06-18",
-    "Initial release"
-  ]
+  { "date": "2020-11-14", "added": ["pytorch", "spring_boot"] },
+  {
+    "date": "2020-01-13",
+    "text": "New “Automatic” theme: match your browser or system dark mode setting. <a href=\"/settings\">Enable it in preferences</a>."
+  },
+  { "date": "2020-01-13", "added": ["gnuplot"] },
+  { "date": "2019-10-26", "added": ["sequelize"] },
+  { "date": "2019-10-20", "added": ["mariadb", "reactivex"] },
+  {
+    "date": "2019-09-02",
+    "text": "New documentations added over the last 3 weeks: <a href=\"/scala~2.13_library/\">Scala</a>, <a href=\"/wordpress/\">WordPress</a>, <a href=\"/cypress/\">Cypress</a>, <a href=\"/saltstack/\">SaltStack</a>, <a href=\"/composer/\">Composer</a>, <a href=\"/vue_router/\">Vue Router</a>, <a href=\"/vuex/\">Vuex</a>, <a href=\"/pony/\">Pony</a>, <a href=\"/rxjs/\">RxJS</a>, <a href=\"/octave/\">Octave</a>, <a href=\"/trio/\">Trio</a>, <a href=\"/django_rest_framework/\">Django REST Framework</a>, <a href=\"/enzyme/\">Enzyme, gnu_cobol/\">GnuCOBOL</a>"
+  },
+  {
+    "date": "2019-07-21",
+    "text": "Fixed several bugs, added an option to automatically download documentation and <a href=\"https://github.com/freeCodeCamp/devdocs/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aclosed+sort%3Aupdated-desc+closed%3A%3E2019-07-18+977+988+986+870+886+1024+979+975+941+831+1005+848+942\" target=\"_blank\">more</a>."
+  },
+  {
+    "date": "2019-07-19",
+    "text": "Replaced the AppCache with a Service Worker (which makes DevDocs an installable PWA) and fixed layout preferences on Firefox."
+  },
+  { "date": "2018-09-23", "added": ["puppeteer", "handlebars"] },
+  { "date": "2018-08-12", "added": ["dart", "qt"] },
+  { "date": "2018-07-29", "added": ["bash", "graphite", "pygame"] },
+  { "date": "2018-07-08", "added": ["leaflet", "terraform", "koa"] },
+  {
+    "date": "2018-03-26",
+    "text": "DevDocs is joining the freeCodeCamp community. Read the announcement <a href=\"https://medium.freecodecamp.org/devdocs-is-joining-the-freecodecamp-community-ae185a1c14a6\" target=\"_blank\">here</a>."
+  },
+  { "date": "2018-02-04", "added": ["babel", "jekyll", "jsdoc"] },
+  { "date": "2017-11-26", "added": ["bluebird", "eslint", "homebrew"] },
+  {
+    "date": "2017-11-18",
+    "text": "Added print & PDF stylesheet.\nFeedback welcome on <a href=\"https://twitter.com/DevDocs\" target=\"_blank\" rel=\"noopener\">Twitter, ttps://github.com/freeCodeCamp/devdocs\" target=\"_blank\" rel=\"noopener\">GitHub</a>."
+  },
+  {
+    "date": "2017-09-10",
+    "text": "<a href=\"/settings\">Preferences</a> can now be exported and imported."
+  },
+  { "date": "2017-09-03", "added": ["d", "nim", "vulkan"] },
+  { "date": "2017-07-23", "added": ["godot"] },
+  { "date": "2017-06-04", "added": ["electron", "pug", "falcon"] },
+  { "date": "2017-05-14", "added": ["jest", "jasmine", "liquid"] },
+  { "date": "2017-04-30", "added": ["openjdk"] },
+  {
+    "date": "2017-02-26",
+    "text": "Refreshed design.\nAdded <a href=\"/settings\">Preferences</a>."
+  },
+  { "date": "2017-01-22", "added": ["http"] },
+  { "date": "2016-12-04", "added": ["sqlite", "codeception", "codeceptjs"] },
+  { "date": "2016-11-20", "added": ["yarn", "immutable", "async"] },
+  { "date": "2016-10-10", "added": ["scikit_learn", "statsmodels"] },
+  { "date": "2016-09-18", "added": ["pandas", "twig"] },
+  { "date": "2016-09-05", "added": ["fish", "bottle", "scikit_image"] },
+  { "date": "2016-08-07", "added": ["docker"] },
+  { "date": "2016-07-31", "added": ["bootstrap~4"] },
+  { "date": "2016-07-24", "added": ["julia", "crystal", "redux"] },
+  { "date": "2016-07-03", "added": ["cmake", "matplotlib"] },
+  { "date": "2016-06-19", "added": ["love"] },
+  { "date": "2016-06-12", "added": ["angular"] },
+  { "date": "2016-06-05", "added": ["kotlin", "padrino"] },
+  { "date": "2016-04-24", "added": ["numpy", "apache_pig"] },
+  { "date": "2016-04-17", "added": ["perl"] },
+  {
+    "date": "2016-04-10",
+    "added": ["browser_support_tables", "gcc", "gnu_fortran"]
+  },
+  { "date": "2016-03-27", "added": ["typescript"] },
+  { "date": "2016-03-06", "added": ["tensorflow", "haxe", "ansible"] },
+  {
+    "date": "2016-02-28",
+    "added": ["codeigniter", "nginx_lua_module", "influxdata"]
+  },
+  { "date": "2016-02-15", "added": ["cakephp", "chef", "ramda"] },
+  { "date": "2016-01-31", "added": ["erlang", "tcl_tk"] },
+  {
+    "date": "2016-01-24",
+    "text": "&ldquo;Multi-version support&rdquo; has landed!"
+  },
+  { "date": "2015-11-22", "added": ["phoenix", "dojo", "relay", "flow"] },
+  { "date": "2015-11-08", "added": ["elixir", "vagrant"] },
+  {
+    "date": "2015-10-18",
+    "text": "Added a \"Copy to clipboard\" button inside each code block."
+  },
+  { "date": "2015-09-13", "added": ["phalcon"] },
+  { "date": "2015-08-09", "added": ["react_native"] },
+  {
+    "date": "2015-08-03",
+    "text": "Added an icon in the sidebar to constrain the width of the UI (visible when applicable)."
+  },
+  { "date": "2015-08-02", "added": ["q", "opentsdb"] },
+  {
+    "date": "2015-07-26",
+    "text": "Added search aliases (e.g. <code class=\"_label\">$</code> is an alias for <code class=\"_label\">jQuery</code>).\n<a href=\"/help#aliases\">Click here</a> to see the full list. Feel free to suggest more on <a href=\"https://github.com/freeCodeCamp/devdocs/issues/new\" target=\"_blank\" rel=\"noopener\">GitHub</a>.\nAdded <code class=\"_label\">shift + &darr;/&uarr;</code> shortcut for scrolling (same as <code class=\"_label\">alt + &darr;/&uarr;</code>)."
+  },
+  { "date": "2015-07-05", "added": ["drupal", "vue", "phaser", "webpack"] },
+  { "date": "2015-05-24", "added": ["rust"] },
+  { "date": "2015-04-26", "added": ["apache_http_server", "npm"] },
+  { "date": "2015-03-22", "added": ["meteor", "mocha"] },
+  {
+    "date": "2015-02-22",
+    "text": "Improved <a href=\"/http/\">HTTP</a> documentation\nNew <a href=\"/minitest/\">Minitest</a> documentation"
+  },
+  {
+    "date": "2015-02-16",
+    "text": "The sidebar is now resizable (drag & drop)."
+  },
+  {
+    "date": "2015-02-15",
+    "added": ["iojs", "symfony", "clojure", "lua", "yii1"]
+  },
+  {
+    "date": "2015-02-08",
+    "text": "New dark theme"
+  },
+  {
+    "date": "2015-01-13",
+    "text": "<a href=\"/offline\">Offline mode</a> has landed!"
+  },
+  {
+    "date": "2014-12-21",
+    "added": ["react", "rethinkdb", "socketio", "modernizr", "bower"]
+  },
+  { "date": "2014-11-30", "added": ["phpunit", "nokogiri"] },
+  { "date": "2014-11-16", "added": ["python2"] },
+  {
+    "date": "2014-11-09",
+    "text": "New design\nFeedback welcome on <a href=\"https://twitter.com/DevDocs\" target=\"_blank\" rel=\"noopener\">Twitter, ttps://github.com/freeCodeCamp/devdocs\" target=\"_blank\" rel=\"noopener\">GitHub</a>."
+  },
+  { "date": "2014-10-19", "added": ["svg", "marionette", "mongoose"] },
+  { "date": "2014-10-18", "added": ["nginx"] },
+  { "date": "2014-10-13", "added": ["xpath"] },
+  {
+    "date": "2014-09-07",
+    "text": "Updated the HTML, CSS, JavaScript, and DOM documentations with additional content."
+  },
+  { "date": "2014-08-04", "added": ["django"] },
+  { "date": "2014-07-27", "added": ["markdown"] },
+  { "date": "2014-07-05", "added": ["cordova"] },
+  { "date": "2014-07-01", "added": ["chai", "sinon"] },
+  { "date": "2014-06-15", "added": ["requirejs"] },
+  { "date": "2014-06-14", "added": ["haskell"] },
+  { "date": "2014-05-25", "added": ["laravel"] },
+  { "date": "2014-05-04", "added": ["express", "grunt", "maxcdn"] },
+  { "date": "2014-04-06", "added": ["go"] },
+  { "date": "2014-03-30", "added": ["cpp"] },
+  { "date": "2014-03-16", "added": ["yii"] },
+  {
+    "date": "2014-03-08",
+    "text": "Added path bar."
+  },
+  { "date": "2014-02-22", "added": ["c"] },
+  { "date": "2014-02-16", "added": ["moment"] },
+  {
+    "date": "2014-02-12",
+    "text": "The root/category pages are now included in the search index (e.g. <a href=\"/#q=CSS\">CSS</a>)"
+  },
+  { "date": "2014-01-19", "added": ["d3", "knockout"] },
+  {
+    "date": "2014-01-18",
+    "text": "DevDocs is now available as a <a href=\"https://marketplace.firefox.com/app/devdocs/\">Firefox web app</a>."
+  },
+  {
+    "date": "2014-01-12",
+    "text": "Added <code class=\"_label\">alt + g</code> shortcut for searching on Google.\nAdded <code class=\"_label\">alt + r</code> shortcut for revealing the current page in the sidebar."
+  },
+  { "date": "2013-12-14", "added": ["postgresql"] },
+  { "date": "2013-12-13", "added": ["git", "redis"] },
+  { "date": "2013-11-26", "added": ["python"] },
+  { "date": "2013-11-19", "added": ["rails"] },
+  { "date": "2013-11-16", "added": ["ruby"] },
+  {
+    "date": "2013-10-24",
+    "text": "DevDocs is now <a href=\"https://github.com/freeCodeCamp/devdocs\">open source</a>."
+  },
+  {
+    "date": "2013-10-09",
+    "text": "DevDocs is now available as a <a href=\"https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe\">Chrome web app</a>."
+  },
+  { "date": "2013-09-22", "added": ["php/"] },
+  { "date": "2013-09-06", "added": ["lodash"] },
+  {
+    "date": "2013-09-06",
+    "text": "On mobile devices you can now search a specific documentation by typing its name and <code class=\"_label\">Space</code>."
+  },
+  { "date": "2013-09-01", "added": ["jqueryui", "jquerymobile"] },
+  {
+    "date": "2013-08-28",
+    "text": "New smartphone interface\nTested on iOS 6+ and Android 4.1+"
+  },
+  { "date": "2013-08-25", "added": ["ember"] },
+  { "date": "2013-08-18", "added": ["coffeescript"] },
+  {
+    "date": "2013-08-18",
+    "text": "URL search now automatically opens the first result."
+  },
+  { "date": "2013-08-13", "added": ["angularjs"] },
+  { "date": "2013-08-11", "added": ["sass", "less"] },
+  { "date": "2013-08-05", "added": ["node"] },
+  {
+    "date": "2013-08-03",
+    "text": "Added support for OpenSearch"
+  },
+  { "date": "2013-07-30", "added": ["backbone"] },
+  {
+    "date": "2013-07-27",
+    "text": "You can now customize the list of documentations.\nNew docs will be hidden by default, but you'll see a notification when there are new releases.\nNew <a href=\"/http/\">HTTP</a> documentation"
+  },
+  {
+    "date": "2013-07-15",
+    "text": "URL search now works with single documentations: <a href=\"/#q=js%20sort\">devdocs.io/#q=js sort</a>"
+  },
+  {
+    "date": "2013-07-13",
+    "text": "Added syntax highlighting\nAdded documentation versions"
+  },
+  { "date": "2013-07-11", "added": ["underscore"] },
+  {
+    "date": "2013-07-11",
+    "text": "Improved compatibility with tablets\nA mobile version is planned as soon as other high priority features have been implemented."
+  },
+  {
+    "date": "2013-07-10",
+    "text": "You can now search specific documentations.\nSimply type the documentation's name and press <code class=\"_label\">Tab</code>.\nThe name is fuzzy matched so you can use abbreviations like <code>js</code> for <code>JavaScript</code>."
+  },
+  {
+    "date": "2013-07-08",
+    "text": "Improved search with fuzzy matching and better results\nFor example, searching <code>jqmka</code> now returns <code>jQuery.makeArray()</code>.\nDevDocs finally has an icon.\n<code class=\"_label\">space</code> has replaced <code class=\"_label\">alt + space</code> for scrolling down."
+  },
+  { "date": "2013-07-06", "added": ["dom"] },
+  {
+    "date": "2013-07-06",
+    "text": "DevDocs now includes almost all reference documents available on the Mozilla Developer Network.\nBig thank you to Mozilla and all the people that contributed to MDN.\nImplemented URL search: <a href=\"/#q=sort\">devdocs.io/#q=sort</a>"
+  },
+  { "date": "2013-07-02", "added": ["javascript"] },
+  {
+    "date": "2013-06-28",
+    "text": "DevDocs made the front page of Hacker News!\nHi everyone &mdash; thanks for trying DevDocs.\nPlease bear with me while I fix bugs and scramble to add more docs.\nThis is only v1. There's a lot more to come."
+  },
+  {
+    "date": "2013-06-18",
+    "text": "Initial release"
+  }
 ]

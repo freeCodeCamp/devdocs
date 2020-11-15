@@ -12,11 +12,11 @@ app.templates.newsList = (news, options = {}) ->
   result = ''
 
   for value in news
-    date = new Date(value[0])
+    date = new Date(value.date)
     if options.years isnt false and year isnt date.getUTCFullYear()
       year = date.getUTCFullYear()
       result += """<h2 class="_block-heading">#{year}</h2>"""
-    result += newsItem(date, value[1..])
+    result += newsItem(date, value)
 
   result
 
@@ -24,13 +24,16 @@ MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Augus
 
 newsItem = (date, news) ->
   date = """<span class="_news-date">#{MONTHS[date.getUTCMonth()]} #{date.getUTCDate()}</span>"""
-  result = ''
-
-  for text, i in news
-    text = text.split "\n"
-    title = """<span class="_news-title">#{text.shift()}</span>"""
-    result += """<div class="_news-row">#{if i is 0 then date else ''} #{title} #{text.join '<br>'}</div>"""
-
+  text = if news.text then news.text.split "\n" else []
+  if news.added
+    links = (linkForSlug n for n in news.added)
+    text.push """New #{if links.length > 1 then 'documentations' else 'documentation'}: #{links.join ', '}"""
+  title = """<span class="_news-title">#{text.shift()}</span>"""
+  result = """<div class="_news-row">#{date} #{title} #{text.join '<br>'}</div>"""
   result
+
+linkForSlug = (slug) ->
+  doc = app.docs.findBySlug(slug) or app.disabledDocs.findBySlug(slug)
+  if doc then """<a href="/#{slug}/">#{doc.name}</a>""" else ""
 
 app.news = <%= App.news.to_json %>
