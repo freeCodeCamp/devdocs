@@ -24,9 +24,16 @@ MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Augus
 
 newsItem = (date, news) ->
   date = """<span class="_news-date">#{MONTHS[date.getUTCMonth()]} #{date.getUTCDate()}</span>"""
-  text = news.text.split "\n"
+  text = if news.text then news.text.split "\n" else []
+  if news.added
+    links = (linkForSlug n for n in news.added)
+    text.push """New #{if links.length > 1 then 'documentations' else 'documentation'}: #{links.join ', '}"""
   title = """<span class="_news-title">#{text.shift()}</span>"""
   result = """<div class="_news-row">#{date} #{title} #{text.join '<br>'}</div>"""
   result
+
+linkForSlug = (slug) ->
+  doc = app.docs.findBySlug(slug) or app.disabledDocs.findBySlug(slug)
+  if doc then """<a href="/#{slug}/">#{doc.name}</a>""" else ""
 
 app.news = <%= App.news.to_json %>
