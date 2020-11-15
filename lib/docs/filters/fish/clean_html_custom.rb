@@ -1,6 +1,6 @@
 module Docs
   class Fish
-    class CleanHtmlFilter < Filter
+    class CleanHtmlCustomFilter < Filter
       def call
         @doc = at_css('.fish_right_bar')
 

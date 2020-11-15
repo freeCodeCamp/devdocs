@@ -1,6 +1,6 @@
 module Docs
   class Fish
-    class EntriesFilter < Docs::EntriesFilter
+    class EntriesCustomFilter < Docs::EntriesFilter
       def get_name
         if slug == 'faq'
           'FAQ'
