@@ -15,11 +15,7 @@ module Docs
       end
 
       def get_type
-        if base_url.path.start_with?('/guide')
-          'Guides'
-        elsif base_url.path.start_with?('/tutorials')
-          'Tutorials'
-        elsif slug.start_with?('tf/audio')
+        if slug.start_with?('tf/audio')
           'tf.audio'
         elsif slug.start_with?('tf/autograph')
           'tf.autograph'
