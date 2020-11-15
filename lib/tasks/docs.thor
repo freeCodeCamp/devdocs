@@ -244,11 +244,17 @@ class DocsCLI < Thor
           FileUtils.mkpath(dir)
 
           ['index.json', 'meta.json'].each do |filename|
-            open("https://docs.devdocs.io/#{doc.path}/#{filename}?#{time}") do |file|
-              mutex.synchronize do
-                path = File.join(dir, filename)
-                File.write(path, file.read)
+            json = "https://docs.devdocs.io/#{doc.path}/#{filename}?#{time}"
+            begin
+              open(json) do |file|
+                mutex.synchronize do
+                  path = File.join(dir, filename)
+                  File.write(path, file.read)
+                end
               end
+            rescue => e
+              puts "Docs -- Failed to download #{json}!"
+              throw e
             end
           end
 
