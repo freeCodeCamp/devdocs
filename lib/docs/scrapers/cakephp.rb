@@ -8,7 +8,7 @@ module Docs
       code: 'https://github.com/cakephp/cakephp'
     }
 
-    options[:skip_patterns] = [/\Asource-/]
+    options[:skip_patterns] = [/\Asource-/, /\Anamespace-Cake.html/]
 
     options[:attribution] = <<-HTML
       &copy; 2005&ndash;present The Cake Software Foundation, Inc.<br>
