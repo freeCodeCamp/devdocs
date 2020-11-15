@@ -20,6 +20,7 @@ module Docs
       self.release = '3.1.2'
       self.base_url = "https://fishshell.com/docs/#{version}/"
 
+      options[:skip].concat %w(genindex.html commands.html)
       html_filters.push 'sphinx/clean_html', 'fish/clean_html_sphinx', 'fish/entries_sphinx'
     end
 
