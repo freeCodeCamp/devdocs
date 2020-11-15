@@ -9,6 +9,13 @@ module Docs
           node['data-language'] = 'javascript'
         end
 
+        css('#more-information ~ p').remove
+        css('#more-information').remove
+
+        css('h2 > a, h3 > a').each do |node|
+          node.remove
+        end
+
         doc
       end
     end

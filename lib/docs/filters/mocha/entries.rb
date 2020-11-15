@@ -9,10 +9,11 @@ module Docs
         'bdd' => ['describe()', 'context()', 'it()', 'specify()'],
         'tdd' => ['suite()', 'test()'],
         'exports' => ['exports'],
-        'qunit' => ['QUnit'],
         'require' => ['require'],
-        'browser-specific-methods' => ['mocha.allowUncaught()', 'mocha.setup()', 'mocha.run()', 'mocha.globals()', 'mocha.checkLeaks()'],
-        'timeouts' => ['timeout()']
+        'running-mocha-in-the-browser' => ['mocha.setup()', 'mocha.run()', 'mocha.globals()', 'mocha.checkLeaks()'],
+        'timeouts' => ['timeout()'],
+        'delayed-root-suite' => ['run()'],
+        'command-line-usage' => ['mocha cli options']
       }
 
       def additional_entries
@@ -24,10 +25,10 @@ module Docs
           end
         end
 
-        css('h2').each do |node|
+        css('h2, h3').each do |node|
           name = node.content.strip
+          next if name.match?(/\A-/)
           next if name.in?(%w(Examples Getting\ Started Installation More\ Information Testing\ Mocha))
-          name = 'mocha' if name == 'Usage'
           entries << [name, node['id']]
         end
 
