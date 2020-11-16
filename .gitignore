@@ -1,5 +1,6 @@
 .DS_Store
 .bundle
+.bash_history
 log
 tmp
 public/assets

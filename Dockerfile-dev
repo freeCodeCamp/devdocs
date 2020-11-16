@@ -1,0 +1,40 @@
+FROM ruby:2.6.5
+
+ENV LANG=C.UTF-8
+ENV ENABLE_SERVICE_WORKER=true
+
+ARG USER_ID
+ARG GROUP_ID
+
+RUN apt-get update && \
+    apt-get -y install git nodejs libcurl4 && \
+    gem install bundler
+
+# Create the dev user and set up a home dir
+RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ]; then \
+    groupadd -g ${GROUP_ID} devuser &&\
+    useradd -l -u ${USER_ID} -g devuser devuser &&\
+    install -d -m 0755 -o devuser -g devuser /home/devuser &&\
+    chown --changes --silent --no-dereference --recursive \
+          --from=33:33 ${USER_ID}:${GROUP_ID} \
+        /home/devuser \
+    ;fi
+
+# Host directories cannot be mounted by Dockerfiles so we have to use
+# a temporary directory to hold the lock files while the gems are installed.
+WORKDIR /devdocs/
+
+COPY Gemfile Gemfile.lock Rakefile /devdocs/
+
+RUN bundle install && rm -rf /devdocs/
+
+WORKDIR /home/devuser/
+
+EXPOSE 9292
+
+# This entrypoint lets you
+# docker-compose run --rm --service-ports devdocs
+# straight into a bash shell
+ENTRYPOINT [ "/bin/bash" ]
+
+USER devuser
