@@ -2,36 +2,21 @@ module Docs
   class Babel
     class CleanHtmlFilter < Filter
       def call
-        if root_page?
-          doc.inner_html = '<h1>Babel</h1>'
-          return doc
-        end
 
-        header = at_css('.docs-header .col-md-12')
-        @doc = at_css('.docs-content')
-        doc.prepend_child(header)
+        css('.fixedHeaderContainer').remove
 
-        css('.btn-clipboard', '.package-links').remove
+        css('.toc').remove
 
-        css('.col-md-12', 'h1 a', 'h2 a', 'h3 a', 'h4 a', 'h5 a', 'h5 a').each do |node|
-          node.before(node.children).remove
-        end
+        css('.toc-headings').remove
 
-        css('div.highlighter-rouge').each do |node|
-          pre = node.at_css('pre')
+        css('.postHeader > a').remove
 
-          lang = node['class'][/language-(\w+)/, 1]
-          lang = 'bash' if lang == 'sh'
-          pre['data-language'] = lang
+        css('.nav-footer').remove
 
-          pre.remove_attribute('class')
-          pre.content = pre.content
-          node.replace(pre)
-        end
-
-        css('code').remove_attr('class')
+        css('.docs-prevnext').remove
 
         doc
+
       end
     end
   end
