@@ -17,7 +17,8 @@ class UpdatesCLI < Thor
     super
   end
 
-  desc 'check [--github-token] [--upload] [--verbose] [doc]...', 'Check for outdated documentations'
+  desc 'check [--markdown] [--github-token] [--upload] [--verbose] [doc]...', 'Check for outdated documentations'
+  option :markdown, :type => :boolean
   option :github_token, :type => :string
   option :upload, :type => :boolean
   option :verbose, :type => :boolean
@@ -109,6 +110,10 @@ class UpdatesCLI < Thor
   #
 
   def log_results(outdated_results, up_to_date_results, failed_results)
+    if options[:markdown]
+      puts all_results_to_markdown(outdated_results, up_to_date_results, failed_results)
+      return
+    end
     log_failed_results(failed_results) unless failed_results.empty?
     log_successful_results('Up-to-date', up_to_date_results) unless up_to_date_results.empty?
     log_successful_results('Outdated', outdated_results) unless outdated_results.empty?
@@ -156,7 +161,10 @@ class UpdatesCLI < Thor
 
     logger.info('Creating a new GitHub issue')
 
-    issue = results_to_issue(outdated_results, up_to_date_results, failed_results)
+    issue = {
+      title: "Documentation versions report for #{Date.today.strftime('%B %Y')}",
+      body: all_results_to_markdown(outdated_results, up_to_date_results, failed_results)
+    }
     created_issue = github_post("/repos/#{UPLOAD_REPO}/issues", issue)
 
     logger.info('Checking if the previous issue is still open')
@@ -189,7 +197,7 @@ class UpdatesCLI < Thor
     end
   end
 
-  def results_to_issue(outdated_results, up_to_date_results, failed_results)
+  def all_results_to_markdown(outdated_results, up_to_date_results, failed_results)
     results = [
       successful_results_to_markdown('Outdated', outdated_results),
       successful_results_to_markdown('Up-to-date', up_to_date_results),
@@ -199,7 +207,6 @@ class UpdatesCLI < Thor
     results_str = results.select {|result| !result.nil?}.join("\n\n")
     travis_str = ENV['TRAVIS'].nil? ? '' : "\n\nThis issue was created by Travis CI build [##{ENV['TRAVIS_BUILD_NUMBER']}](#{ENV['TRAVIS_BUILD_WEB_URL']})."
 
-    title = "Documentation versions report for #{Date.today.strftime('%B %Y')}"
     body = <<-MARKDOWN
 ## What is this?
 
@@ -214,11 +221,7 @@ The #{outdated_results.length + up_to_date_results.length + failed_results.lengt
 - #{up_to_date_results.length} that #{up_to_date_results.length == 1 ? 'is' : 'are'} up-to-date (patch updates are ignored)
 - #{failed_results.length} that could not be checked
     MARKDOWN
-
-    {
-      title: title,
-      body: body.strip + "\n\n" + results_str
-    }
+    body.strip + "\n\n" + results_str
   end
 
   def successful_results_to_markdown(label, results)
