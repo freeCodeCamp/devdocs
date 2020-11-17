@@ -2,7 +2,7 @@ module Docs
   class Tensorflow < UrlScraper
     self.name = 'TensorFlow'
     self.type = 'tensorflow'
-    self.root_path = 'all_symbols'
+    self.root_path = '/'
     self.links = {
       home: 'https://www.tensorflow.org/',
       code: 'https://github.com/tensorflow/tensorflow'
