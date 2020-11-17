@@ -2,7 +2,6 @@ module Docs
   class Babel < UrlScraper
     self.type = 'simple'
     self.base_url = 'https://babeljs.io/docs/en/'
-    self.release = '7.12.6'
     self.links = {
       home: 'https://babeljs.io/',
       code: 'https://github.com/babel/babel'
@@ -29,6 +28,14 @@ module Docs
       &copy; 2020 Sebastian McKenzie<br>
       Licensed under the MIT License.
     HTML
+
+    version '7' do
+      self.release = '7.12.6'
+    end
+
+    version '6' do
+      self.release = '6.26.1'
+    end
 
     def get_latest_version(opts)
       get_latest_github_release('babel', 'babel', opts)
