@@ -19,8 +19,13 @@ module Docs
       Code samples licensed under the Apache 2.0 License.
     HTML
 
-    for version in ['2.3', '2.2', '2.1', '2.0', '1.15'] do
-      self.release = version + '.0'
+    version '2.3' do
+      self.release = "#{version}.0"
+      self.base_url = "https://www.tensorflow.org/versions/r#{version}/api_docs/python/tf"
+    end
+
+    version '1.15' do
+      self.release = "#{version}.0"
       self.base_url = "https://www.tensorflow.org/versions/r#{version}/api_docs/python/tf"
     end
 
