@@ -293,7 +293,7 @@ credits = [
     'https://raw.githubusercontent.com/expressjs/expressjs.com/gh-pages/LICENSE.md'
   ], [
     'Falcon',
-    '2012-2016 by Rackspace Hosting, Inc. and other contributors',
+    '2019 by Falcon contributors',
     'Apache',
     'https://raw.githubusercontent.com/falconry/falcon/master/LICENSE'
   ], [
