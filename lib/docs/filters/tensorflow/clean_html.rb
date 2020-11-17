@@ -2,9 +2,9 @@ module Docs
   class Tensorflow
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.devsite-article-inner')
+        @doc = at_css('.devsite-article')
 
-        css('hr', '.devsite-nav', '.devsite-content-footer', '.devsite-article-body > br', '.devsite-article-meta', 'devsite-nav-buttons', '.devsite-banner', '.tfo-api img').remove
+        css('hr', '.devsite-nav', '.devsite-content-footer', '.devsite-article-body > br', '.devsite-article-meta', 'devsite-nav-buttons', '.devsite-banner', '.tfo-api img', '.tfo-notebook-buttons img', '.tfo-notebook-buttons>:first-child').remove
 
         css('aside.note').each do |node|
           node.name = 'blockquote'
