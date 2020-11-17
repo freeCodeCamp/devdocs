@@ -2,6 +2,7 @@ module Docs
   class TensorflowCpp < Tensorflow
     self.name = 'TensorFlow C++'
     self.slug = 'tensorflow_cpp'
+    self.root_path = '/'
 
     version '2.3' do
       self.release = "#{version}.0"
