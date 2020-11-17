@@ -438,7 +438,7 @@ credits = [
     'https://raw.githubusercontent.com/Leaflet/Leaflet/master/LICENSE'
   ], [
     'Less',
-    '2009-2016 The Core Less Team',
+    '2009-2020 The Core Less Team',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
