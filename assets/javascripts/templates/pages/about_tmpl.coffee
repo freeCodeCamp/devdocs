@@ -378,7 +378,7 @@ credits = [
     'https://raw.githubusercontent.com/jasmine/jasmine/master/MIT.LICENSE'
   ], [
     'Jekyll',
-    '2008-2018 Tom Preston-Werner and Jekyll contributors',
+    '2020 Jekyll Core Team and contributors',
     'MIT',
     'https://raw.githubusercontent.com/jekyll/jekyll/master/LICENSE'
   ], [
