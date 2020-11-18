@@ -69,66 +69,66 @@ module Docs
     end
 
     version '8' do
-      self.release = '8.4.0'
+      self.release = '8.3.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '8 CPP' do
-      self.release = '8.4.0'
+      self.release = '8.3.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
     end
 
     version '7' do
-      self.release = '7.5.0'
+      self.release = '7.4.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '7 CPP' do
-      self.release = '7.5.0'
+      self.release = '7.4.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
     end
 
     version '6' do
-      self.release = '6.5.0'
+      self.release = '6.4.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
 
       options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
     end
 
     version '6 CPP' do
-      self.release = '6.5.0'
+      self.release = '6.4.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
     end
 
     version '5' do
-      self.release = '5.5.0'
+      self.release = '5.4.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
 
       options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
     end
 
     version '5 CPP' do
-      self.release = '5.5.0'
+      self.release = '5.4.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
     end
 
     version '4' do
-      self.release = '4.9.4'
+      self.release = '4.9.3'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
 
       options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
     end
 
     version '4 CPP' do
-      self.release = '4.9.4'
+      self.release = '4.9.3'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
