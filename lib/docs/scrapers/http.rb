@@ -37,6 +37,7 @@ module Docs
          https://tools.ietf.org/html/rfc7233
          https://tools.ietf.org/html/rfc7234
          https://tools.ietf.org/html/rfc7235
+         https://tools.ietf.org/html/rfc7540
          https://tools.ietf.org/html/rfc5023)
     end
   end
