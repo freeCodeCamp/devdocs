@@ -53,6 +53,13 @@ tar --extract --gzip --strip-components=1 --directory=docs/gcc~${VERSION}_cpp
 ```
 
 ### GNU Fortran
+Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of Fortran manual or run the following commands to download the tarball:
+
+```sh
+mkdir docs/gnu_fortran~$VERSION; \
+curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/gfortran-html.tar.gz | \
+tar --extract --gzip --strip-components=1 --directory=docs/gnu_fortran~$VERSION
+```
 
 ## Gnuplot
 
