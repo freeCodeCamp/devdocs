@@ -17,8 +17,8 @@ module Docs
     HTML
 
     version '4' do
-      self.release = '4.4.1'
-      self.base_url = 'https://getbootstrap.com/docs/4.4/'
+      self.release = '4.5'
+      self.base_url = 'https://getbootstrap.com/docs/4.5/'
       self.root_path = 'getting-started/introduction/'
 
       html_filters.push 'bootstrap/entries_v4', 'bootstrap/clean_html_v4'

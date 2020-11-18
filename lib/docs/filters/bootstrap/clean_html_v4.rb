@@ -27,8 +27,9 @@ module Docs
             node['class'] = 'bd-example'
             node.remove_attribute('data-example-id')
             prev = node.previous_element
-            prev = prev.previous_element until prev['id']
-            node.inner_html = %(<a href="#{current_url}##{prev['id']}">Open example on getbootstrap.com</a>)
+            prev = prev.previous_element until !prev || prev['id']
+            anchor = prev ? %(##{prev['id']}) : ''
+            node.inner_html = %(<a href="#{current_url}#{anchor}">Open example on getbootstrap.com</a>)
           end
         end
 
