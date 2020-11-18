@@ -24,7 +24,7 @@ DevDocs is made of two pieces: a Ruby scraper that generates the documentation a
 
 DevDocs requires Ruby 2.6.x, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
 
-```
+```sh
 git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
 gem install bundler
 bundle install
@@ -40,7 +40,7 @@ The `thor docs:download` command is used to download pre-generated documentation
 
 Alternatively, DevDocs may be started as a Docker container:
 
-```
+```sh
 # First, build the image
 git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
 docker build -t thibaut/devdocs .
@@ -99,7 +99,7 @@ More information about [scrapers](./docs/scraper-reference.md) and [filters](./d
 
 The command-line interface uses [Thor](http://whatisthor.com). To see all commands and options, run `thor list` from the project's root.
 
-```
+```sh
 # Server
 rackup              # Start the server (ctrl+c to stop)
 rackup --help       # List server options
@@ -116,10 +116,9 @@ thor docs:clean     # Delete documentation packages
 # Console
 thor console        # Start a REPL
 thor console:docs   # Start a REPL in the "Docs" module
-Note: tests can be run quickly from within the console using the "test" command. Run "help test"
-for usage instructions.
 
-# Tests
+# Tests can be run quickly from within the console using the "test" command. 
+# Run "help test" for usage instructions.
 thor test:all       # Run all tests
 thor test:docs      # Run "Docs" tests
 thor test:app       # Run "App" tests
