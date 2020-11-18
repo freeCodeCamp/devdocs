@@ -7,7 +7,7 @@ module Docs
           node.remove
         end
 
-        css('.source-link', 'a[id$="md"]', 'br').remove
+        css('.navbar', '.source-link', 'a[id$="md"]', 'br').remove
 
         css('#functions-overview').each do |node|
           node.ancestors('.docs-section').remove

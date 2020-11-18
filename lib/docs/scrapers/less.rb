@@ -1,7 +1,6 @@
 module Docs
   class Less < UrlScraper
     self.type = 'simple'
-    self.release = '2.7.2'
     self.base_url = 'http://lesscss.org'
     self.root_path = '/features'
     self.initial_paths = %w(/functions)
@@ -18,9 +17,17 @@ module Docs
     options[:trailing_slash] = false
 
     options[:attribution] = <<-HTML
-      &copy; 2009&ndash;2016 The Core Less Team<br>
+      &copy; 2009&ndash;2020 The Core Less Team<br>
       Licensed under the Creative Commons Attribution License 3.0.
     HTML
+
+    version '3' do
+      self.release = '3.12.0'
+    end
+
+    version '2' do
+      self.release = '2.7.2'
+    end
 
     def get_latest_version(opts)
       doc = fetch_doc('http://lesscss.org/features/', opts)
