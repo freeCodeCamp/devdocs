@@ -1,7 +1,6 @@
 module Docs
   class Jekyll < UrlScraper
     self.type = 'jekyll'
-    self.release = '4.1.1'
     self.base_url = 'https://jekyllrb.com/docs/'
     self.root_path = 'index.html'
     self.links = {
@@ -27,6 +26,14 @@ module Docs
       &copy; 2020 Jekyll Core Team and contributors<br>
       Licensed under the MIT license.
     HTML
+
+    version '4' do
+      self.release = '4.1.1'
+    end
+
+    version '3' do
+      self.release = '3.7.2'
+    end
 
     def get_latest_version(opts)
       doc = fetch_doc('https://jekyllrb.com/docs/', opts)
