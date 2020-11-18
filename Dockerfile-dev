@@ -7,13 +7,15 @@ ARG USER_ID
 ARG GROUP_ID
 
 RUN apt-get update && \
-    apt-get -y install git nodejs libcurl4 && \
+    apt-get -y install git nodejs libcurl4 sudo && \
     gem install bundler
 
-# Create the dev user and set up a home dir
+# Create the dev user, add them to sudoers and set up a home dir
 RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ]; then \
     groupadd -g ${GROUP_ID} devuser &&\
     useradd -l -u ${USER_ID} -g devuser devuser &&\
+    usermod -aG sudo devuser &&\
+    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers &&\
     install -d -m 0755 -o devuser -g devuser /home/devuser &&\
     chown --changes --silent --no-dereference --recursive \
           --from=33:33 ${USER_ID}:${GROUP_ID} \
