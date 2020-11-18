@@ -1,9 +1,8 @@
 module Docs
   class Jekyll < UrlScraper
     self.type = 'jekyll'
-    self.release = '3.7.2'
     self.base_url = 'https://jekyllrb.com/docs/'
-    self.root_path = 'home/'
+    self.root_path = 'index.html'
     self.links = {
       home: 'https://jekyllrb.com/',
       code: 'https://github.com/jekyll/jekyll'
@@ -20,14 +19,21 @@ module Docs
       /contributing/,
     ]
     options[:replace_paths] = {
-      '' => 'home/',
-      '/' => 'home/'
+      'templates/' => 'liquid/'
     }
 
     options[:attribution] = <<-HTML
-      &copy; 2008&ndash;2018 Tom Preston-Werner and Jekyll contributors<br>
+      &copy; 2020 Jekyll Core Team and contributors<br>
       Licensed under the MIT license.
     HTML
+
+    version '4' do
+      self.release = '4.1.1'
+    end
+
+    version '3' do
+      self.release = '3.7.2'
+    end
 
     def get_latest_version(opts)
       doc = fetch_doc('https://jekyllrb.com/docs/', opts)
