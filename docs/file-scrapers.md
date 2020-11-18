@@ -38,21 +38,17 @@ Go to https://www.erlang.org/downloads and download the HTML documentation file.
 Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of GCC Manual and GCC CPP manual or run the following commands to download the tarballs:
 
 ```sh
-# Gcc manual
-wget https://gcc.gnu.org/onlinedocs/gcc-<version>/gcc-html.tar.gz
-# Gcc cpp manual
-wget https://gcc.gnu.org/onlinedocs/gcc-<version>/cpp-html.tar.gz
+# GCC manual
+mkdir docs/gcc~${VERSION}; \
+curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/gcc-html.tar.gz | \
+tar --extract --gzip --strip-components=1 --directory=docs/gcc~${VERSION}
+
+# GCC CPP manual
+mkdir docs/gcc~${VERSION}_cpp; \
+curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/cpp-html.tar.gz | \
+tar --extract --gzip --strip-components=1 --directory=docs/gcc~${VERSION}_cpp
 ```
 
-Then extract the content of the tarball and move it to the devdocs directory.
-
-```sh
-tar xf <tarball>
-# Gcc
-mv <extracted_directory> path/to/devdocs/docs/gcc~<version>/
-# Gcc Cpp
-mv <extracted_directory> path/to/devdocs/docs/gcc~<version>_cpp/
-```
 ### GNU Fortran
 
 ## Gnuplot
