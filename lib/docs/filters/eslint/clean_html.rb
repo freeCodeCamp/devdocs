@@ -4,6 +4,7 @@ module Docs
       def call
         @doc = at_css('.doc') if at_css('.doc')
 
+        css('.eslint-ad').remove
         css('.glyphicon').remove
         css('hr', 'colgroup', 'td:empty').remove
 
@@ -11,8 +12,8 @@ module Docs
           node.before(node.children).remove
         end
 
-        css('div.highlighter-rouge').each do |node|
-          lang = node['class'][/language-(\w+)/, 1]
+        css('pre.hljs').each do |node|
+          lang = node['class'][/highlight-(\w+)/, 1]
           node['data-language'] = lang if lang
           node.content = node.content.strip
           node.name = 'pre'
