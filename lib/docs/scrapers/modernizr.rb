@@ -2,7 +2,7 @@ module Docs
   class Modernizr < UrlScraper
     self.name = 'Modernizr'
     self.type = 'modernizr'
-    self.release = '3.5.0'
+    self.release = '3.11.3'
     self.base_url = 'https://modernizr.com/docs/'
 
     html_filters.push 'modernizr/entries', 'modernizr/clean_html', 'title'
@@ -12,7 +12,7 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2009&ndash;2017 The Modernizr team<br>
+      &copy; 2009&ndash;2020 The Modernizr team<br>
       Licensed under the MIT License.
     HTML
 
