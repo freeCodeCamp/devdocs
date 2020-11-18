@@ -46,13 +46,23 @@ module Docs
       'Wtrigraphs.html' => 'Invocation.html'
     }
 
+    version '10' do
+      self.release = '10.2.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
+    end
+
+    version '10 CPP' do
+      self.release = '10.2.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
+    end
+
     version '9' do
-      self.release = '9.2.0'
+      self.release = '9.3.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '9 CPP' do
-      self.release = '9.2.0'
+      self.release = '9.3.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
