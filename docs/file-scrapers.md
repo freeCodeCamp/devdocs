@@ -39,14 +39,9 @@ Go to https://www.erlang.org/downloads and download the HTML documentation file.
 Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of Fortran manual or run the following commands to download the tarball:
 
 ```sh
-wget https://gcc.gnu.org/onlinedocs/gcc-<version>/gfortran-html.tar.gz
-```
-
-Then extract the content of the tarball and move it to the devdocs directory.
-
-```sh
-tar xf <tarball>
-mv <extracted_directory> path/to/devdocs/docs/gnu_fortran~<version>/
+mkdir docs/gnu_fortran~$VERSION; \
+curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/gfortran-html.tar.gz | \
+tar --extract --gzip --strip-components=1 --directory=docs/gnu_fortran~$VERSION
 ```
 
 ## Gnuplot
