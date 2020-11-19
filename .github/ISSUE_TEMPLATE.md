@@ -1,5 +1,5 @@
 <!--
-  ⚠ Please do not report outdated docs, we have an automated versions report:
+  ⚠ Please check the automated versions report before reporting outdated docs:
   https://github.com/freeCodeCamp/devdocs/issues?q="Documentation+versions+report"
 
   ⚠ Please read the contributing guidelines before opening an issue:
