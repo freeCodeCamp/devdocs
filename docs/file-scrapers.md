@@ -108,6 +108,12 @@ $GS = '/usr/local/opt/ghostscript/bin/gs';	# GhostScript
 
 ## NumPy
 
+```sh
+mkdir --parent docs/numpy~$VERSION/; \
+curl https://numpy.org/doc/$VERSION/numpy-html.zip | \
+bsdtar --extract --file=- --directory=docs/numpy~$VERSION/
+```
+
 ## OCaml
 
 Download from https://www.ocaml.org/docs/ the HTML reference:

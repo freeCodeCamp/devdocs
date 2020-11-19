@@ -14,10 +14,10 @@ module Docs
       def get_type
         nav_items = css('.nav.nav-pills.pull-left > li')
 
-        if nav_items[3]
-          type = nav_items[3].content
-        elsif nav_items[2] && nav_items[2].content !~ /Manual|Reference/
-          type = nav_items[2].content
+        if nav_items[5]
+          type = nav_items[5].content
+        elsif nav_items[4] && nav_items[4].content !~ /Manual|Reference/
+          type = nav_items[4].content
         else
           type = at_css('h1').content.strip
           type.remove! "\u{00B6}"
@@ -29,7 +29,7 @@ module Docs
             type = 'Universal functions'
           elsif type.start_with?('numpy.nditer.') || type.start_with?('numpy.lib.Arrayterator.') || type.start_with?('numpy.flatiter.')
             type = 'Indexing routines'
-          elsif type.start_with?('numpy.record.') || type.start_with?('numpy.recarray.') || type.start_with?('numpy.broadcast.') || type.start_with?('numpy.matrix.')
+          elsif type.start_with?('numpy.record.') || type.start_with?('numpy.recarray.') || type.start_with?('numpy.broadcast.') || type.start_with?('numpy.matrix.') || type.start_with?('numpy.ma.')
             type = 'Standard array subclasses'
           elsif type.start_with?('numpy.busdaycalendar.')
             type = 'Datetime support functions'
@@ -41,9 +41,9 @@ module Docs
             type = 'Data type objects'
           elsif type.start_with?('numpy.generic.')
             type = 'Scalars'
-          elsif type.start_with?('numpy.char.chararray.') || type.start_with?('numpy.core.defchararray.chararray.')
+          elsif type.start_with?('numpy.chararray.') || type.start_with?('numpy.char.chararray.') || type.start_with?('numpy.core.defchararray.chararray.')
             type = 'String operations'
-          elsif type == 'numpy.memmap.shape'
+          elsif type.start_with?('numpy.memmap.')
             type = 'Input and output'
           elsif type == 'numpy.poly1d.variable'
             type = 'Polynomials'
