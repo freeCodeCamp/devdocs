@@ -2,9 +2,9 @@ module Docs
   class Typescript < UrlScraper
     self.name = 'TypeScript'
     self.type = 'simple'
-    self.release = '3.7.4'
-    self.base_url = 'https://www.typescriptlang.org/docs/'
-    self.root_path = 'tutorial.html'
+    self.release = '4.0.5'
+    self.base_url = 'https://www.typescriptlang.org/docs/handbook'
+    self.root_path = 'index.html'
     self.links = {
       home: 'https://www.typescriptlang.org',
       code: 'https://github.com/Microsoft/TypeScript'
@@ -12,16 +12,27 @@ module Docs
 
     html_filters.push 'typescript/entries', 'typescript/clean_html'
 
-    options[:container] = '#doc-content'
-    options[:skip] = %w(home.html handbook/release-notes/overview.html)
-    options[:skip_link] = ->(node) { node.parent.parent['class'] == 'dropdown-menu' }
-    options[:fix_urls] = ->(url) {
-      url.sub!(/(\w+)\.md/) { "#{$1.downcase}.html" }
-      url
-    }
+    options[:skip] = [
+      '/react-&-webpack.html',
+      '/asp-net-core.html',
+      '/gulp.html',
+      '/dom-manipulation.html',
+      '/migrating-from-javascript.html',
+      '/babel-with-typescript.html',
+      '/intro.html'
+    ]
+
+    options[:skip_patterns] = [
+      /2/,
+      /typescript-/,
+      /release-notes/,
+      /introduction/,
+      /tutorials/,
+      /intro.html/
+    ]
 
     options[:attribution] = <<-HTML
-      &copy; 2012-2019 Microsoft<br>
+      &copy; 2012-2020 Microsoft<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 
