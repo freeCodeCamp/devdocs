@@ -11,6 +11,8 @@ RUN apt-get update && \
     gem install bundler
 
 # Create the dev user, add them to sudoers and set up a home dir
+# Adapted slightly from this excellent blog post:
+# https://jtreminio.com/blog/running-docker-containers-as-current-host-user
 RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ]; then \
     groupadd -g ${GROUP_ID} devuser &&\
     useradd -l -u ${USER_ID} -g devuser devuser &&\
