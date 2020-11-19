@@ -16,7 +16,7 @@ Scrapers rely on the following libraries:
 * [HTML::Pipeline](https://github.com/jch/html-pipeline) for applying filters
 * [Nokogiri](http://nokogiri.org/) for parsing HTML
 
-There are currently two kinds of scrapers: [`UrlScraper`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/core/scrapers/url_scraper.rb) which downloads files via HTTP and [`FileScraper`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/core/scrapers/file_scraper.rb) which reads them from the local filesystem. They function almost identically (both use URLs), except that `FileScraper` substitutes the base URL with a local path before reading a file. `FileScraper` uses the placeholder `localhost` base URL by default and includes a filter to remove any URL pointing to it at the end.
+There are currently two kinds of scrapers: [`UrlScraper`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/core/scrapers/url_scraper.rb) which downloads files via HTTP and [`FileScraper`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/core/scrapers/file_scraper.rb) which reads them from the local filesystem. They function almost identically (both use URLs), except that `FileScraper` substitutes the base URL with a local path before reading a file. `FileScraper` uses the placeholder `localhost` base URL by default and includes a filter to remove any URL pointing to it at the end.
 
 To be processed, a response must meet the following requirements:
 
@@ -36,7 +36,7 @@ Configuration is done via class attributes and divided into three main categorie
 * [Filter stacks](#filter-stacks) — the list of filters that will be applied to each page.
 * [Filter options](#filter-options) — the options passed to said filters.
 
-**Note:** scrapers are located in the [`lib/docs/scrapers`](https://github.com/Thibaut/devdocs/tree/master/lib/docs/scrapers/) directory. The class's name must be the [CamelCase](http://api.rubyonrails.org/classes/String.html#method-i-camelize) equivalent of the filename.
+**Note:** scrapers are located in the [`lib/docs/scrapers`](https://github.com/freeCodeCamp/devdocs/tree/master/lib/docs/scrapers/) directory. The class's name must be the [CamelCase](http://api.rubyonrails.org/classes/String.html#method-i-camelize) equivalent of the filename.
 
 ### Attributes
 
@@ -76,12 +76,12 @@ Configuration is done via class attributes and divided into three main categorie
   Defaults to `{}`.
 
 * `abstract` [Boolean]
-  Make the scraper abstract / not runnable. Used for sharing behavior with other scraper classes (e.g. all MDN scrapers inherit from the abstract [`Mdn`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/scrapers/mdn/mdn.rb) class).
+  Make the scraper abstract / not runnable. Used for sharing behavior with other scraper classes (e.g. all MDN scrapers inherit from the abstract [`Mdn`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/scrapers/mdn/mdn.rb) class).
   Defaults to `false`.
 
 ### Filter stacks
 
-Each scraper has two [filter](https://github.com/Thibaut/devdocs/blob/master/lib/docs/core/filter.rb) [stacks](https://github.com/Thibaut/devdocs/blob/master/lib/docs/core/filter_stack.rb): `html_filters` and `text_filters`. They are combined into a pipeline (using the [HTML::Pipeline](https://github.com/jch/html-pipeline) library) which causes each filter to hand its output to the next filter's input.
+Each scraper has two [filter](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/core/filter.rb) [stacks](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/core/filter_stack.rb): `html_filters` and `text_filters`. They are combined into a pipeline (using the [HTML::Pipeline](https://github.com/jch/html-pipeline) library) which causes each filter to hand its output to the next filter's input.
 
 HTML filters are executed first and manipulate a parsed version of the document (a [Nokogiri](http://nokogiri.org/Nokogiri/XML/Node.html) node object), whereas text filters manipulate the document as a string. This separation avoids parsing the document multiple times.
 
@@ -98,23 +98,23 @@ replace(index, name)         # replace one filter with another (index can be a n
 
 Default `html_filters`:
 
-* [`ContainerFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/container.rb) — changes the root node of the document (remove everything outside)
-* [`CleanHtmlFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/clean_html.rb) — removes HTML comments, `<script>`, `<style>`, etc.
-* [`NormalizeUrlsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/normalize_urls.rb) — replaces all URLs with their fully qualified counterpart
-* [`InternalUrlsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/internal_urls.rb) — detects internal URLs (the ones to scrape) and replaces them with their unqualified, relative counterpart
-* [`NormalizePathsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/normalize_paths.rb) — makes the internal paths consistent (e.g. always end with `.html`)
-* [`CleanLocalUrlsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/clean_local_urls.rb) — removes links, iframes and images pointing to localhost (`FileScraper` only)
+* [`ContainerFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/container.rb) — changes the root node of the document (remove everything outside)
+* [`CleanHtmlFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/clean_html.rb) — removes HTML comments, `<script>`, `<style>`, etc.
+* [`NormalizeUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/normalize_urls.rb) — replaces all URLs with their fully qualified counterpart
+* [`InternalUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/internal_urls.rb) — detects internal URLs (the ones to scrape) and replaces them with their unqualified, relative counterpart
+* [`NormalizePathsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/normalize_paths.rb) — makes the internal paths consistent (e.g. always end with `.html`)
+* [`CleanLocalUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/clean_local_urls.rb) — removes links, iframes and images pointing to localhost (`FileScraper` only)
 
 Default `text_filters`:
 
-* [`InnerHtmlFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/inner_html.rb) — converts the document to a string
-* [`CleanTextFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/clean_text.rb) — removes empty nodes
-* [`AttributionFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/attribution.rb) — appends the license info and link to the original document
+* [`InnerHtmlFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/inner_html.rb) — converts the document to a string
+* [`CleanTextFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/clean_text.rb) — removes empty nodes
+* [`AttributionFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/attribution.rb) — appends the license info and link to the original document
 
 Additionally:
 
-* [`TitleFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/title.rb) is a core HTML filter, disabled by default, which prepends the document with a title (`<h1>`).
-* [`EntriesFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/entries.rb) is an abstract HTML filter that each scraper must implement and responsible for extracting the page's metadata.
+* [`TitleFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/title.rb) is a core HTML filter, disabled by default, which prepends the document with a title (`<h1>`).
+* [`EntriesFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/entries.rb) is an abstract HTML filter that each scraper must implement and responsible for extracting the page's metadata.
 
 ### Filter options
 
@@ -122,7 +122,7 @@ The filter options are stored in the `options` Hash. The Hash is inheritable (a 
 
 More information about how filters work is available on the [Filter Reference](./filter-reference.md) page.
 
-* [`ContainerFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/container.rb)
+* [`ContainerFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/container.rb)
 
   - `:container` [String or Proc]
     A CSS selector of the container element. Everything outside of it will be removed and become unavailable to the other filters. If more than one element match the selector, the first one inside the DOM is used. If no elements match the selector, an error is raised.
@@ -130,7 +130,7 @@ More information about how filters work is available on the [Filter Reference](.
     The default container is the `<body>` element.
     _Note: links outside of the container element will not be followed by the scraper. To remove links that should be followed, use a [`CleanHtml`](./filter-reference.md#cleanhtmlfilter) filter later in the stack._
 
-* [`NormalizeUrlsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/normalize_urls.rb)
+* [`NormalizeUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/normalize_urls.rb)
   The following options are used to modify URLs in the pages. They are useful to remove duplicates (when the same page is accessible from multiple URLs) and fix websites that have a bunch of redirections in place (when URLs that should be scraped, aren't, because they are behind a redirection which is outside of the `base_url` — see the MDN scrapers for examples of this).
 
   - `:replace_urls` [Hash]
@@ -144,7 +144,7 @@ More information about how filters work is available on the [Filter Reference](.
 
   _Note: before these rules are applied, all URLs are converted to their fully qualified counterpart (http://...)._
 
-* [`InternalUrlsFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/internal_urls.rb)
+* [`InternalUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/internal_urls.rb)
 
   Internal URLs are the ones _inside_ the scraper's `base_url` ("inside" more or less means "starting with", except that `/docs` is outside `/doc`). They will be scraped unless excluded by one of the following rules. All internal URLs are converted to relative URLs inside the pages.
 
@@ -170,12 +170,12 @@ More information about how filters work is available on the [Filter Reference](.
 
   _Note: pages can be excluded from the index based on their content using the [`Entries`](./filter-reference.md#entriesfilter) filter. However, their URLs will still be converted to relative in the other pages and trying to open them will return a 404 error. Although not ideal, this is often better than having to maintain a long list of `:skip` URLs._
 
-* [`AttributionFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/attribution.rb)
+* [`AttributionFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/attribution.rb)
 
   - `:attribution` [String] **(required)**
     An HTML string with the copyright and license information. See the other scrapers for examples.
 
-* [`TitleFilter`](https://github.com/Thibaut/devdocs/blob/master/lib/docs/filters/core/title.rb)
+* [`TitleFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/title.rb)
 
   - `:title` [String or Boolean or Proc]
     Unless the value is `false`, adds a title to every page.
