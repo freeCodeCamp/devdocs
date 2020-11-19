@@ -17,6 +17,13 @@ module Docs
           node.name = 'h1'
         end
 
+        css('a:contains("Try")').remove
+        css('pre').each do |node|
+          node.content = node.content
+          node['data-language'] = 'typescript'
+          node.remove_attribute('class')
+        end
+
         # 'Next' title area
         css('.whitespace-tight').remove
 
