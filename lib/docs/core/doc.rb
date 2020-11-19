@@ -196,8 +196,8 @@ module Docs
     # 1.1 -> 1.2 = outdated
     # 1.1.1 -> 1.1.2 = not outdated
     def is_outdated(scraper_version, latest_version)
-      scraper_parts = scraper_version.to_s.split(/\./).map(&:to_i)
-      latest_parts = latest_version.to_s.split(/\./).map(&:to_i)
+      scraper_parts = scraper_version.to_s.split(/[-.]/).map(&:to_i)
+      latest_parts = latest_version.to_s.split(/[-.]/).map(&:to_i)
 
       # Only check the first two parts, the third part is for patch updates
       [0, 1].each do |i|
