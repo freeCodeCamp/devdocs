@@ -123,7 +123,7 @@ credits = [
     'https://www.gnu.org/licenses/fdl-1.3.en.html'
   ], [
     'Bluebird',
-    '2013-2017 Petka Antonov',
+    '2013-2018 Petka Antonov',
     'MIT',
     'https://raw.githubusercontent.com/petkaantonov/bluebird/master/LICENSE'
   ], [
@@ -258,7 +258,7 @@ credits = [
     'https://api.drupal.org/api/drupal/LICENSE.txt'
   ], [
     'Electron',
-    '2013-2018 GitHub Inc.',
+    'GitHub Inc.',
     'MIT',
     'https://raw.githubusercontent.com/electron/electron/master/LICENSE'
   ], [

@@ -7,9 +7,9 @@ module Docs
           return doc
         end
 
-        @doc = doc.at_css('div.reference div[role=main]')
+        @doc = doc.at_css('article div.content__default')
 
-        css('hr').remove
+        css('hr, a.header-anchor').remove
 
         unless at_css('h1')
           at_css('h2').name = 'h1'

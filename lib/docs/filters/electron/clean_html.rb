@@ -11,9 +11,13 @@ module Docs
         if root_page?
           doc.child.before('<h1>Electron Documentation</h1>')
 
+          css("div.subtron, div.py-6").remove
+
           css('h2 > a').each do |node|
             node.before(node.children).remove
           end
+        else
+          @doc = doc.at_css('div.docs > div.markdown-body')
         end
 
         at_css('h2').name = 'h1' if !at_css('h1') && at_css('h2')
