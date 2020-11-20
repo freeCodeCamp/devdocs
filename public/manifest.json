@@ -3,7 +3,7 @@
   "short_name": "DevDocs",
   "description": "API Documentation Browser",
   "start_url": "/",
-  "display": "standalone",
+  "display": "minimal-ui",
   "background_color": "#EEEEEE",
   "icons": [
     {
