@@ -2,9 +2,10 @@ module Docs
   class Pytorch
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        # retrive the name in breadcrumb from the auxiliary node
-        name_in_breadcrumb = doc.child.content
-        doc.child.remove
+        breadcrumbs = at_css('.pytorch-breadcrumbs')
+        name_in_breadcrumb = breadcrumbs.css('li')[1].content
+
+        article = at_css('.pytorch-article')
 
         # hard-coded name replacements, for better presentation.
         name_replacements = {
@@ -14,9 +15,9 @@ module Docs
         # The id of the container `div.section` indicates the page type.
         # If the id starts with `module-`, then it's an API reference,
         # otherwise it is a note or design doc.
-        # After the `sphinx/clean_html` filter, that id is assigned to the second element.
-        if doc.element_children[1]['id']&.starts_with? 'module-'
-          /\Amodule-(.*)/.match(doc.element_children[1]['id'])[1]
+        article_id = article.at_css('div.section')['id']
+        if article_id.starts_with? 'module-'
+          /\Amodule-(.*)/.match(article_id)[1]
         else
           name_in_breadcrumb = name_in_breadcrumb.delete_suffix(' >')
           name_in_breadcrumb = name_replacements.fetch(name_in_breadcrumb, name_in_breadcrumb)
