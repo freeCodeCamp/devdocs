@@ -2,7 +2,7 @@ module Docs
   class Typescript < UrlScraper
     self.name = 'TypeScript'
     self.type = 'simple'
-    self.release = '4.0.5'
+    self.release = '4.1.2'
     self.base_url = 'https://www.typescriptlang.org/docs/handbook'
     self.root_path = 'index.html'
     self.links = {
