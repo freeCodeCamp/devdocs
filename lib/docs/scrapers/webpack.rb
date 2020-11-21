@@ -3,49 +3,46 @@ module Docs
     self.name = 'webpack'
     self.type = 'webpack'
 
-    version do
-      self.release = '4.16.5'
+    self.root_path = 'guides/'
+    self.initial_paths = %w(
+      concepts/
+      guides/
+      api/
+      configuration/
+      loaders/
+      plugins/
+    )
+    self.links = {
+      home: 'https://webpack.js.org/',
+      code: 'https://github.com/webpack/webpack'
+    }
+
+    html_filters.push 'webpack/clean_html', 'webpack/entries'
+
+    options[:container] = '.page'
+    options[:trailing_slash] = false
+    options[:only_patterns] = [
+      /\Aconcepts\//,
+      /\Aguides\//,
+      /\Aapi\//,
+      /\Aconfiguration\//,
+      /\Aloaders\//,
+      /\Aplugins\//
+    ]
+
+    options[:attribution] = <<-HTML
+      &copy; JS Foundation and other contributors<br>
+      Licensed under the Creative Commons Attribution License 4.0.
+    HTML
+
+    version '5' do
+      self.release = '5.6.0'
       self.base_url = 'https://webpack.js.org/'
-      self.root_path = 'guides/'
-      self.initial_paths = %w(
-        concepts/
-        guides/
-        api/
-        configuration/
-        loaders/
-        plugins/
-      )
-      self.links = {
-        home: 'https://webpack.js.org/',
-        code: 'https://github.com/webpack/webpack'
-      }
+    end
 
-      html_filters.push 'webpack/clean_html', 'webpack/entries'
-
-      options[:container] = '.page'
-      options[:trailing_slash] = false
-      options[:only_patterns] = [
-        /\Aconcepts\//,
-        /\Aguides\//,
-        /\Aapi\//,
-        /\Aconfiguration\//,
-        /\Aloaders\//,
-        /\Aplugins\//
-      ]
-
-      options[:attribution] = <<-HTML
-        &copy; JS Foundation and other contributors<br>
-        Licensed under the Creative Commons Attribution License 4.0.
-      HTML
-
-      ([self.root_path] + self.initial_paths).each do |path|
-        stub(path) do
-          capybara = load_capybara_selenium
-          capybara.app_host = self.base_url.origin
-          capybara.visit("#{self.base_url}#{path}")
-          capybara.execute_script('return document.body.innerHTML')
-        end
-      end
+    version '4' do
+      self.release = '4.44.2'
+      self.base_url = 'https://v4.webpack.js.org/'
     end
 
     version '1' do
