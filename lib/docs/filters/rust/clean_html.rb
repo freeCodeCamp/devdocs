@@ -97,6 +97,22 @@ module Docs
           node.previous_element.before(node)
         end
 
+        css('.collapse-toggle').remove
+
+        # Fix how notable-traits sections are shown
+
+        css('.method').each do |node|
+          traitSection = node.at_css('.notable-traits')
+
+          if traitSection
+            traitSectionContent = traitSection.css('.notable-traits-tooltiptext')
+            traitSection.css('.notable-traits-tooltip').remove
+            traitSection.add_child(traitSectionContent)
+            node.after(traitSection)
+          end
+
+        end
+
         doc
       end
     end
