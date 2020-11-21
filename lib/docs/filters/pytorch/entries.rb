@@ -1,27 +1,23 @@
 module Docs
   class Pytorch
     class EntriesFilter < Docs::EntriesFilter
+      NAME_REPLACEMENTS = {
+        "Distributed communication package - torch.distributed" => "torch.distributed"
+      }
+
+      def get_breadcrumbs()
+        css('.pytorch-breadcrumbs > li').map { |node| node.content.delete_suffix(' >') }
+      end
+
       def get_name
-        breadcrumbs = at_css('.pytorch-breadcrumbs')
-        name_in_breadcrumb = breadcrumbs.css('li')[1].content
-
-        article = at_css('.pytorch-article')
-
-        # hard-coded name replacements, for better presentation.
-        name_replacements = {
-          "Distributed communication package - torch.distributed" => "torch.distributed"
-        }
-
         # The id of the container `div.section` indicates the page type.
         # If the id starts with `module-`, then it's an API reference,
         # otherwise it is a note or design doc.
-        article_id = article.at_css('div.section')['id']
-        if article_id.starts_with? 'module-'
+        if at_css('.section')['id'].starts_with? 'module-'
           /\Amodule-(.*)/.match(article_id)[1]
         else
-          name_in_breadcrumb = name_in_breadcrumb.delete_suffix(' >')
-          name_in_breadcrumb = name_replacements.fetch(name_in_breadcrumb, name_in_breadcrumb)
-          name_in_breadcrumb
+          name = get_breadcrumbs()[1]
+          NAME_REPLACEMENTS.fetch(name, name)
         end
       end
 
