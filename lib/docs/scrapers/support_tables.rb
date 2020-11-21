@@ -7,6 +7,7 @@ module Docs
     self.name = 'Support Tables'
     self.slug = 'browser_support_tables'
     self.type = 'support_tables'
+    self.release = '1.0.30001159'
 
     def build_pages
       url = 'https://github.com/Fyrd/caniuse/raw/master/data.json'
@@ -174,15 +175,13 @@ module Docs
         <p class="_attribution-p">
           Data by caniuse.com<br>
           Licensed under the Creative Commons Attribution License v4.0.<br>
-          <a href="http://caniuse.com/#feat=<%= feature_id %>" class="_attribution-link">http://caniuse.com/#feat=<%= feature_id %></a>
+          <a href="https://caniuse.com/<%= feature_id %>" class="_attribution-link">https://caniuse.com/<%= feature_id %></a>
         </p>
       </div>
     HTML
 
     def get_latest_version(opts)
-      body = fetch('https://feeds.feedburner.com/WhenCanIUse?format=xml', opts)
-      timestamp = body.scan(/<updated>([^<]+)<\/updated>/)[0][0]
-      DateTime.parse(timestamp).to_time.to_i
+      get_npm_version('caniuse-db', opts)
     end
   end
 end
