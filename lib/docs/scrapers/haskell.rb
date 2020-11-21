@@ -13,6 +13,7 @@ module Docs
     options[:container] = ->(filter) {filter.subpath.start_with?('users_guide') ? '.body' : '#content'}
 
     options[:only_patterns] = [/\Alibraries\//, /\Ausers_guide\//]
+
     options[:skip_patterns] = [
       /-notes/,
       /editing-guide/,
@@ -36,6 +37,7 @@ module Docs
       /Data-Map-Internal\.html\z/i,
       /Data-Sequence-Internal\.html\z/i
     ]
+
     options[:skip] = %w(
       users_guide/license.html
       users_guide/genindex.html
@@ -57,7 +59,7 @@ module Docs
     end
 
     version '8' do
-      self.release = '8.8.3'
+      self.release = '8.10.2'
       self.base_url = "https://downloads.haskell.org/~ghc/#{release}/docs/html/"
     end
 
@@ -75,5 +77,6 @@ module Docs
       versions = links.map {|link| link['href'].scan(/ghc-([0-9.]+)/)}
       versions.find {|version| !version.empty?}[0][0]
     end
+
   end
 end
