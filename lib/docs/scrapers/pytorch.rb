@@ -9,7 +9,7 @@ module Docs
       code: 'https://github.com/pytorch/pytorch'
     }
 
-    html_filters.push 'pytorch/clean_html', 'sphinx/clean_html', 'pytorch/entries'
+    html_filters.push 'pytorch/entries', 'pytorch/clean_html', 'sphinx/clean_html'
 
     options[:skip] = ['cpp_index.html', 'packages.html', 'py-modindex.html', 'genindex.html']
     options[:skip_patterns] = [/\Acommunity/, /\A_modules/, /\Anotes/, /\Aorg\/pytorch\//]

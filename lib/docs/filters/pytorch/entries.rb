@@ -1,15 +1,23 @@
 module Docs
   class Pytorch
     class EntriesFilter < Docs::EntriesFilter
+      NAME_REPLACEMENTS = {
+        "Distributed communication package - torch.distributed" => "torch.distributed"
+      }
+
+      def get_breadcrumbs()
+        css('.pytorch-breadcrumbs > li').map { |node| node.content.delete_suffix(' >') }
+      end
+
       def get_name
         # The id of the container `div.section` indicates the page type.
         # If the id starts with `module-`, then it's an API reference,
         # otherwise it is a note or design doc.
-        # After the `sphinx/clean_html` filter, that id is assigned to the second element.
-        if doc.element_children[1]['id']&.starts_with? 'module-'
-          /\Amodule-(.*)/.match(doc.element_children[1]['id'])[1]
+        if at_css('.section')['id'].starts_with? 'module-'
+          /\Amodule-(.*)/.match(article_id)[1]
         else
-          at_css('h1').content
+          name = get_breadcrumbs()[1]
+          NAME_REPLACEMENTS.fetch(name, name)
         end
       end
 
@@ -18,9 +26,8 @@ module Docs
       end
 
       def include_default_entry?
-        # If the page is not an API reference, we only include it in the index when it
-        # contains additional entries. See the doc for `get_name`.
-        doc.element_children[1]['id']&.starts_with? 'module-'
+        # Only include API references, and ignore notes or design docs
+        !subpath.start_with? 'generated/' and type.start_with? 'torch'
       end
 
       def additional_entries
