@@ -21,7 +21,7 @@ module Docs
     HTML
 
     version '2' do
-      self.release = '2.5.0'
+      self.release = '2.10.4'
       self.base_url = "https://api.dart.dev/stable/#{release}/"
     end
 
@@ -31,9 +31,10 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://api.dartlang.org/', opts)
+      doc = fetch_doc('https://api.dart.dev/', opts)
       label = doc.at_css('footer > span').content.strip
       label.sub(/Dart\s*/, '')
     end
+
   end
 end

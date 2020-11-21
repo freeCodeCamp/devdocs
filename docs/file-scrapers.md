@@ -20,6 +20,12 @@ Click the “API docs” link under the “Stable channel” header on
 https://www.dartlang.org/tools/sdk/archive. Rename the expanded ZIP to `dart~2`
 and put it in `/path/to/devdocs/docs/`
 
+Or run the following commands in your terminal:
+
+```sh
+curl https://storage.googleapis.com/dart-archive/channels/stable/release/$RELEASE/api-docs/dartdocs-gen-api-zip > dartApi.zip; \
+unzip dartApi.zip; mv gen-dartdocs docs/dart~$VERSION
+```
 ## Django
 
 Go to https://docs.djangoproject.com/, select the version from the
