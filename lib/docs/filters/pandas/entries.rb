@@ -1,29 +1,29 @@
 module Docs
   class Pandas
     class EntriesFilter < Docs::EntriesFilter
+
       def get_name
-        if subpath.start_with?('generated') || (subpath.include?('reference') && !subpath.include?('reference/index'))
-          name_node = at_css('dt')
-          name_node = at_css('h1') if name_node.nil?
-          name = name_node.content.strip
-          name.sub! %r{\(.*}, '()'
-          name.remove! %r{\s=.*}
-          name.remove! %r{\A(class(method)?) (pandas\.)?}
-        else
-          name = at_css('h1').content.strip
-          name.prepend "#{css('.toctree-l1 > a:not([href^="http"])').to_a.index(at_css('.toctree-l1.current > a')) + 1}. "
-        end
-        name.remove! "\u{00B6}"
-        name
+        at_css('h1').content
       end
 
       def get_type
-        if subpath.start_with?('generated') || (subpath.include?('reference') && !subpath.include?('reference/index'))
-          css('.toctree-l2.current > a').last.content.remove(/\s\(.+?\)/)
-        else
-          'Manual'
-        end
+        return 'Manual' if slug.include?('user_guide')
+        return 'General utility functions' if slug.match?('option|assert|errors|types|show_versions')
+        return 'Extensions' if slug.match?(/extensions|check_array/)
+        return 'Style' if slug.match?(/style/)
+        return 'Input/output' if slug.match?(/read|io|HDFStore/)
+        return 'Series' if slug.match?(/Series/)
+        return 'GroupBy' if slug.match?(/groupby|Grouper/)
+        return 'DataFrame' if slug.match?(/DataFrame|frame/)
+        return 'Window' if slug.match?(/window|indexers/)
+        return 'Index Objects' if slug.match?(/Index|indexing/)
+        return 'Data offsets' if slug.match?(/offsets?/)
+        return 'Resampling' if slug.match?(/resample/)
+        return 'Plotting' if slug.match?(/plotting/)
+        return 'Pandas arrays' if slug.match?(/arrays?|Timestamp|Datetime|Timedelta|Period|Interval|Categorical|Dtype/)
+        'General functions'
       end
+
     end
   end
 end
