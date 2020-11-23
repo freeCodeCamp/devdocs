@@ -3,9 +3,20 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
 
+        if root_page?
+          css('img').remove
+        end
+
         css('#navbar-main').remove
 
         css('form').remove
+
+        # add ':' to '.classifier' clases
+        css('.classifier').each do |node|
+          text = node.content
+          node.content = ':' + text
+          node.content = node.content.gsub(/::/, ' : ')
+        end
 
         # sidebar
         css('ul.nav.bd-sidenav').remove
