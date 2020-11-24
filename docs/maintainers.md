@@ -88,11 +88,14 @@ If any issue arises, run `heroku rollback` to rollback to the previous version o
 
 If this is your first deploy, make sure another maintainer is around to assist. 
 
-## List of maintainers
+## List of maintainers in alphabetical order
 
-- [Jed Fox](https://github.com/j-f1)
 - [Ahmad Abdolsaheb](https://github.com/ahmadabdolsaheb)
+- [Jasper van Merle](https://github.com/jmerle)
+- [Jed Fox](https://github.com/j-f1)
 - [Mrugesh Mohapatra](https://github.com/raisedadead)
+- [Oliver Eyton-Williams](https://github.com/ojeytonwilliams)
+- [Simon Legner](https://github.com/simon04)
 - [Thibaut Courouble](https://github.com/thibaut)
 
 Interested in helping maintain DevDocs? Come talk to us on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs) :)
