@@ -18,6 +18,7 @@ module Docs
         name = at_css('h1').content.strip
         name.remove! 'The '
         name.sub! %r{"(.+?)"}, '\1'
+        name.sub! %r{"(.+?)"}, '\1'
         name.gsub!(/ [A-Z]/) { |str| str.downcase! }
         name
       end
@@ -27,10 +28,12 @@ module Docs
           'Observables'
         elsif slug =~ /component/i
           'Components'
-        elsif slug.include?('binding') && !name.end_with?('binding')
-          'Binding'
         elsif slug.include? 'binding'
-          'Bindings'
+          if at_css('#purpose')
+            'Bindings'
+          else
+            'Binding'
+          end
         elsif slug.include? 'plugin'
           'Plugins'
         else
