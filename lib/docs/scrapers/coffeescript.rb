@@ -16,7 +16,7 @@ module Docs
     HTML
 
     version '2' do
-      self.release = '2.4.1'
+      self.release = '2.5.1'
       self.base_url = 'https://coffeescript.org/'
 
       html_filters.push 'coffeescript/entries', 'coffeescript/clean_html', 'title'
@@ -34,5 +34,6 @@ module Docs
     def get_latest_version(opts)
       get_npm_version('coffeescript', opts)
     end
+
   end
 end
