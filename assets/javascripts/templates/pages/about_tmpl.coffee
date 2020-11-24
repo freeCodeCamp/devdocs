@@ -378,7 +378,7 @@ credits = [
     'https://github.com/influxdata/docs.influxdata.com/blob/master/LICENSE'
   ], [
     'Jasmine',
-    '2008-2017 Pivotal Labs',
+    '2008-2019 Pivotal Labs',
     'MIT',
     'https://raw.githubusercontent.com/jasmine/jasmine/master/MIT.LICENSE'
   ], [

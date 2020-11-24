@@ -1,8 +1,8 @@
 module Docs
   class Jasmine < UrlScraper
     self.type = 'simple'
-    self.release = '3.3.0'
-    self.base_url = 'https://jasmine.github.io/api/3.2/'
+    self.release = '3.6.0'
+    self.base_url = 'https://jasmine.github.io/api/3.6/'
     self.root_path = 'index.html'
     self.links = {
       home: 'https://jasmine.github.io/',
@@ -14,7 +14,7 @@ module Docs
     options[:container] = '.main-content'
 
     options[:attribution] = <<-HTML
-      &copy; 2008&ndash;2017 Pivotal Labs<br>
+      &copy; 2008&ndash;2019 Pivotal Labs<br>
       Licensed under the MIT License.
     HTML
 
