@@ -188,7 +188,7 @@ credits = [
     'https://raw.githubusercontent.com/bcit-ci/CodeIgniter/develop/license.txt'
   ], [
     'CoffeeScript',
-    '2009-2018 Jeremy Ashkenas',
+    '2009-2020 Jeremy Ashkenas',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/coffeescript/master/LICENSE'
   ], [
