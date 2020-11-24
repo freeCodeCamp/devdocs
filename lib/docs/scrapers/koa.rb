@@ -3,7 +3,7 @@
 module Docs
   class Koa < Github
     self.base_url = 'https://github.com/koajs/koa/blob/master/docs/'
-    self.release = '2.6.1'
+    self.release = '2.13.0'
 
     self.root_path = 'api/index.md'
     self.initial_paths = %w[
@@ -30,8 +30,13 @@ module Docs
     options[:trailing_slash] = false
     options[:container] = '.markdown-body'
 
+    options[:fix_urls] = ->(url) do
+      url.sub! 'https://koajs.com/#error-handling', Koa.base_url + '/error-handling.md'
+      url
+    end
+
     options[:attribution] = <<-HTML
-      &copy; 2018 Koa contributors<br>
+      &copy; 2020 Koa contributors<br>
       Licensed under the MIT License.
     HTML
 
