@@ -4,6 +4,10 @@ module Docs
     self.type = 'modernizr'
     self.release = '3.11.3'
     self.base_url = 'https://modernizr.com/docs/'
+    self.links = {
+      home: 'https://modernizr.com/',
+      code: 'https://github.com/Modernizr/Modernizr'
+    }
 
     html_filters.push 'modernizr/entries', 'modernizr/clean_html', 'title'
 

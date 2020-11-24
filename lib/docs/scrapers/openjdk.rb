@@ -5,6 +5,10 @@ module Docs
     self.name = 'OpenJDK'
     self.type = 'openjdk'
     self.root_path = 'overview-summary.html'
+    self.links = {
+      home: 'https://openjdk.java.net/',
+      code: 'https://github.com/openjdk/jdk'
+    }
 
     html_filters.insert_after 'internal_urls', 'openjdk/clean_urls'
     html_filters.push 'openjdk/entries', 'openjdk/clean_html'
