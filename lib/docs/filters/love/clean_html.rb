@@ -45,6 +45,11 @@ module Docs
           node.remove
         end
 
+        css('img[src$="Deprecate.png"]').each do |node|
+          node.parent['class'] = 'cell-orange'
+          node.remove
+        end
+
         css('table, tr, td, th').each do |node|
           %w(style cellpadding cellspacing width height valign).each do |attribute|
             node.remove_attribute(attribute)
