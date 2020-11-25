@@ -6,7 +6,7 @@ This document is intended for [DevDocs maintainers](#list-of-maintainers).
 
 - PRs should be approved by at least one maintainer before being merged.
 
-- PRs that add or update documentations should always be merged locally, and the app deployed, before the merge is pushed to GitHub.
+- PRs that add or update documentations should always be built and tested locally, and the doc files uploaded by the `thor docs:upload` command, before the PR is merged on GitHub.
 
   This workflow is required because there is a dependency between the local and production environments. The `thor docs:download` command downloads documentations from production files uploaded by the `thor docs:upload` command. If a PR adding a new documentation is merged and pushed to GitHub before the files have been uploaded to production, the `thor docs:download` will fail for the new documentation and the docker container will not build properly until the new documentation is deployed to production.
 
