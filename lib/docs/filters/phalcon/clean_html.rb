@@ -18,6 +18,8 @@ module Docs
           css('.docSearch-content > ul').remove
         end
 
+        css('hr').remove
+
         ### syntax highlight ###
 
         css('.highlighter-rouge').each do |node|
