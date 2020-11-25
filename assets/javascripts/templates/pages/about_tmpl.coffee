@@ -423,7 +423,7 @@ credits = [
     'https://raw.githubusercontent.com/knockout/knockout/master/LICENSE'
   ], [
     'Koa',
-    '2018 Koa contributors',
+    '2020 Koa contributors',
     'MIT',
     'https://raw.githubusercontent.com/koajs/koa/master/LICENSE'
   ], [
