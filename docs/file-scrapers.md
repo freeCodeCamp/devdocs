@@ -128,8 +128,6 @@ bsdtar --extract --to-stdout --file openjdk-8-doc_8u272-b10-1_all.deb data.tar.x
 bsdtar --extract --xz --file - --strip-components=6 --directory=docs/openjdk\~8/ ./usr/share/doc/openjdk-8-jre-headless/api/
 ```
 
-## Perl
-
 ## PHP
 
 ## Python

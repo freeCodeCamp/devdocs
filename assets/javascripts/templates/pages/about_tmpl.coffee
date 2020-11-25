@@ -578,7 +578,7 @@ credits = [
     'https://raw.githubusercontent.com/pydata/pandas/master/LICENSE'
   ], [
     'Perl',
-    '1993-2016 Larry Wall and others',
+    '1993-2020 Larry Wall and others',
     'GPLv1',
     'https://perldoc.perl.org/index-licence.html'
   ], [
