@@ -708,7 +708,7 @@ credits = [
     'https://raw.githubusercontent.com/saltstack/salt/develop/LICENSE'
   ], [
     'Sass',
-    '2006-2016 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
+    '2006-2020 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
     'MIT',
     'https://raw.githubusercontent.com/sass/sass/stable/MIT-LICENSE'
   ], [
