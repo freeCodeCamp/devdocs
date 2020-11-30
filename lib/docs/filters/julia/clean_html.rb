@@ -4,11 +4,19 @@ module Docs
       def call
         css('> header', '> footer').remove
 
+        # Julia 1.4+ uses different HTML
+        at_css('h1').content = at_css('h1').content
+
+        if at_css('#documenter-page')
+          @doc.children = at_css('#documenter-page').children
+        end
+        # End 1.4+ specific cleaning
+
         css('.docstring', 'div:not([class])').each do |node|
           node.before(node.children).remove
         end
 
-        css('.docstring-header').each do |node|
+        css('.docstring-header', 'header').each do |node|
           node.name = 'h3'
           node.children.each { |child| child.remove if child.text? }
           node.remove_attribute('class')
