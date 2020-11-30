@@ -66,6 +66,7 @@ class app.models.Entry extends app.Model
     'löve': 'love'
     'marionette': 'mn'
     'markdown': 'md'
+    'matplotlib': 'mpl'
     'modernizr': 'mdr'
     'moment.js': 'mt'
     'openjdk': 'java'
