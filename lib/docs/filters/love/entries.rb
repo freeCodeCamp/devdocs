@@ -2,23 +2,27 @@ module Docs
   class Love
     class EntriesFilter < Docs::EntriesFilter
       TYPES = {
+        'cdata'                   => 'Lua',
         'require'                 => 'Lua',
         'light_userdata'          => 'Lua',
         'value'                   => 'Lua',
         'variable'                => 'Lua',
 
         'Audio_Formats'           => 'love.sound',
+        'Image_Formats'           => 'love.graphics',
         'ImageFontFormat'         => 'love.font',
         'BlendMode_Formulas'      => 'love.graphics',
         'Shader_Variables'        => 'love.graphics',
 
+        'AttributeDataType'       => 'love.graphics',
         'AreaSpreadDistribution'  => 'love.graphics',
-        'BodyType'                => 'love.physics',
         'BufferMode'              => 'love.filesystem',
         'CompressedFormat'        => 'love.image',
+        'FilterType'              => 'love.audio',
+        'ImageFlag'               => 'love.graphics',
         'JoystickConstant'        => 'love.joystick',
+        'MatrixLayout'            => 'love.math',
         'ParticleInsertMode'      => 'love.graphics',
-        'String'                  => 'love',
         'TextureMode'             => 'love.graphics'
       }
 

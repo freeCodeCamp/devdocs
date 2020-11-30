@@ -3,15 +3,16 @@ module Docs
     self.name = 'LÖVE'
     self.slug = 'love'
     self.type = 'love'
-    self.release = '0.10.2'
+    self.release = '11.3'
     self.base_url = 'https://love2d.org/wiki/'
     self.root_path = 'Main_Page'
-    self.initial_paths = %w(love love.audio love.event love.filesystem love.font love.graphics
-      love.image love.joystick love.keyboard love.math love.mouse love.physics love.sound
-      love.system love.thread love.timer love.touch love.video love.window enet socket utf8)
+    self.initial_paths = %w(love love.audio love.data love.event love.filesystem love.font
+      love.graphics love.image love.joystick love.keyboard love.math love.mouse love.physics
+      love.sound love.system love.thread love.timer love.touch love.video love.window lua-enet
+      socket utf8)
     self.links = {
       home: 'https://love2d.org/',
-      code: 'https://bitbucket.org/rude/love'
+      code: 'https://github.com/love2d/love'
     }
 
     html_filters.push 'love/entries', 'love/clean_html', 'title'
@@ -32,11 +33,12 @@ module Docs
     options[:replace_paths] = {
       'Config_Files' => 'love.conf',
       'conf.lua' => 'love.conf',
-      'lua-enet' => 'enet'
+      'enet' => 'lua-enet',
+      'ImageFormat' => 'ImageEncodeFormat'
     }
 
     options[:attribution] = <<-HTML
-      &copy; 2006&ndash;2016 L&Ouml;VE Development Team<br>
+      &copy; 2006&ndash;2020 L&Ouml;VE Development Team<br>
       Licensed under the GNU Free Documentation License, Version 1.3.
     HTML
 
