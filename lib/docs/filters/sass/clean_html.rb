@@ -2,62 +2,99 @@ module Docs
   class Sass
     class CleanHtmlFilter < Filter
       def call
-        css('tt').each do |node|
-          node.name = 'code'
+
+        css('.sl-c-alert').remove
+
+        css('.sl-l-medium-holy-grail__navigation').remove
+
+        css('.sl-r-banner').remove
+
+        css('.site-footer').remove
+
+        # Add id to code blocks
+        css('pre.signature').each do |node|
+
+          id = node.content
+
+          if id.match(/\(/)
+            id = id.scan(/.+\(/)[0].chop
+          end
+
+          if id.include?('$pi')
+            node.set_attribute('id', 'pi')
+          elsif id.include?('$e')
+            node.set_attribute('id', 'e')
+          else
+            node.set_attribute('id', id)
+          end
+
         end
 
-        css('pre').each do |node|
-          node.content = node.content
+        # Remove duplicate ids
+        css('.sl-c-callout--function').each do |node|
+           node.remove_attribute('id')
         end
 
-        root_page? ? root : other
+        # Hidden title links
+        css('.visuallyhidden').remove
+
+        ### Syntax Highlight ###
+        css('.kt').each do |node|
+          node.remove_attribute('class')
+          node.add_class('token constant')
+        end
+
+        css('.k, .kn, .kc, .cp, .ow').each do |node|
+          node.remove_attribute('class')
+          node.add_class('token keyword')
+        end
+
+        css('.nv, .no').each do |node|
+          node.remove_attribute('class')
+          node.add_class('token variable')
+        end
+
+        css('.nb, .n').each do |node|
+          node.remove_attribute('class')
+          node.add_class('token string')
+        end
+
+        css('.p').each do |node|
+          node.remove_attribute('class')
+          node.add_class('token punctuation')
+        end
+
+        css('.nf').each do |node|
+          node.remove_attribute('class')
+          node.add_class('token function')
+        end
+
+        css('.o').each do |node|
+          node.remove_attribute('class')
+          node.add_class('token operator')
+        end
+
+        css('.c1, .cm, .c').each do |node|
+          node.remove_attribute('class')
+          node.add_class('token comment')
+        end
+
+        css('.mh, .m, .mi').each do |node|
+          node.remove_attribute('class')
+          node.add_class('token number')
+        end
+
+        css('.nc, .nt').each do |node|
+          node.remove_attribute('class')
+          node.add_class('token selector')
+        end
+
+        css('.nl').each do |node|
+          node.remove_attribute('class')
+          node.add_class('token property')
+        end
 
         doc
-      end
-
-      def root
-        at_css('h1 + ul').remove
-      end
-
-      def other
-        at_css('h2').remove
-
-        css('.showSource', '.source_code').remove
-
-        css('div.docstring', 'div.discussion').each do |node|
-          node.before(node.children).remove
-        end
-
-        # Remove "See Also"
-        css('.see').each do |node|
-          node.previous_element.remove
-          node.remove
-        end
-
-        # Remove "- ([...])" before method names
-        css('.signature', 'span.overload', 'span.signature').each do |node|
-          next if node.at_css('.overload')
-          node.child.remove while node.child.name != 'strong'
-        end
-
-        # Clean up .inline divs
-        css('div.inline').each do |node|
-          node.content = node.content
-          node.name = 'span'
-        end
-
-        # Remove links to type classes (e.g. Number)
-        css('.type > code').each do |node|
-          node.before(node.content.remove('Sass::Script::Value::').remove('Sass::Script::')).remove
-        end
-
-        css('li > span.signature').each do |node|
-          node.name = 'p'
-        end
-
-        css('h3 strong', 'span.overload').each do |node|
-          node.before(node.children).remove
-        end
       end
     end
   end
