@@ -19,7 +19,7 @@ module Docs
 
         css('#feedback').remove
 
-        css('.mini-toc-header').remove
+        css('.mini-toc-header', '.TOC-button').remove
 
         doc
       end
