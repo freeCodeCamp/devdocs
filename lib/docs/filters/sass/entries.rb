@@ -7,14 +7,26 @@ module Docs
       end
 
       def get_type
-        return 'Syntax' if slug.include?('syntax')
-        return 'Style rules' if slug.include?('style')
-        return 'At-Rules' if slug.include?('at')
-        return 'Values' if slug.include?('values')
-        return 'Operators' if slug.include?('operators')
-        return 'Command line' if slug.include?('cli')
-        return 'Modules' if slug.include?('modules')
-        'Misc'
+
+        case slug
+        when /syntax/
+          'Syntax'
+        when /style/
+          'Style rules'
+        when /at/
+          'At-Rules'
+        when /values/
+          'Values'
+        when /operators/
+          'Operators'
+        when /cli/
+          'Command line'
+        when /modules/
+          'Modules'
+        else
+          'Misc'
+        end
+
       end
 
       def additional_entries
