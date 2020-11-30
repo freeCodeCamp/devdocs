@@ -2,33 +2,24 @@ module Docs
   class Chef
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('div[role="main"]')
+        @doc = at_css('#main-content-col')
 
-        css('.headerlink').remove
-
-        css('em', 'div.align-center', 'a[href$=".svg"]').each do |node|
-          node.before(node.children).remove
+        if root_page?
+          css('img').remove
         end
 
-        css('.section').each do |node|
-          node.first_element_child['id'] = node['id'] if node['id']
-          node.before(node.children).remove
+        css('pre').each do |node|
+          node.remove_attribute('style')
+
+          if !(node.classes.include?('highlight'))
+            node.add_class('highlight')
+            node['data-language'] = 'ruby'
+          end
         end
 
-        css('tt').each do |node|
-          node.content = node.content.strip
-          node.name = 'code'
-        end
+        css('#feedback').remove
 
-        css('table[border]').each do |node|
-          node.remove_attribute('border')
-        end
-
-        css('div[class*="highlight-"]').each do |node|
-          node.content = node.content.strip
-          node.name = 'pre'
-          node['data-language'] = node['class'][/highlight\-(\w+)/, 1]
-        end
+        css('.mini-toc-header', '.TOC-button').remove
 
         doc
       end
