@@ -1,8 +1,8 @@
 module Docs
   class Enzyme < UrlScraper
     self.type = 'simple'
-    self.release = '3.10.0'
-    self.base_url = 'https://airbnb.io/enzyme/'
+    self.release = '3.11.0'
+    self.base_url = 'https://enzymejs.github.io/enzyme/'
     self.root_path = 'index.html'
     self.links = {
       code: 'https://github.com/airbnb/enzyme'
