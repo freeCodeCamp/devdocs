@@ -352,6 +352,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/wycats/handlebars.js/master/LICENSE'
   ], [
+    'HAProxy',
+    '2020 Willy Tarreau, HAProxy contributors',
+    'GPLv2',
+    'https://raw.githubusercontent.com/haproxy/haproxy/master/LICENSE'
+  ], [
     'Haskell',
     'The University of Glasgow',
     'BSD',
