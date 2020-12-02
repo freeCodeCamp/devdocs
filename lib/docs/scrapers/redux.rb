@@ -1,28 +1,27 @@
 module Docs
   class Redux < UrlScraper
+
     self.type = 'simple'
-    self.release = '3.7.2'
-    self.base_url = 'http://redux.js.org/docs/'
+    self.release = '4.0.5'
+    self.base_url = 'https://redux.js.org/api'
+    self.root_path = 'index.html'
     self.links = {
       home: 'http://redux.js.org/',
-      code: 'https://github.com/reactjs/redux/'
+      code: 'https://github.com/reduxjs/redux/'
     }
 
-    html_filters.push 'redux/entries', 'redux/clean_html'
+    html_filters.push 'redux/clean_html', 'redux/entries'
 
-    options[:skip] = %w(Feedback.html)
+    options[:container] = '.markdown'
 
     options[:attribution] = <<-HTML
-      &copy; 2015&ndash;2017 Dan Abramov<br>
+      &copy; 2015&ndash;2020 Dan Abramov<br>
       Licensed under the MIT License.
     HTML
-
-    stub '' do
-      request_one('http://redux.js.org/index.html').body
-    end
 
     def get_latest_version(opts)
       get_npm_version('redux', opts)
     end
+
   end
 end

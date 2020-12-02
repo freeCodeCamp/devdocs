@@ -2,36 +2,30 @@ module Docs
   class Redux
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.page-inner section')
 
-        css('#edit-link', 'hr').remove
+        css('h1, h2, h3, h4').each do |node|
+          node.css('a').remove
+        end
 
-        at_css('h2').name = 'h1' unless at_css('h1')
+        css('h3').each do |node|
+          node['id'] = node.content.gsub(/\(|\)/, '').downcase
+        end
 
-        if root_page?
-          at_css('h1').content = 'Redux'
+        css('.codeBlockLines_b7E3').each do |node|
+          node.remove_attribute('style')
+          node.name = 'pre'
+          node['data-language'] = 'javascript'
 
-          at_css('a[href="https://www.npmjs.com/package/redux"]').parent.remove
-
-          css('a[target]').each do |node|
-            node.remove_attribute('target') unless node['href'].start_with?('http')
+          node.css('div, span').each do |subnode|
+            subnode.remove_attribute('style')
           end
+
         end
 
-        css('a[id]:empty').each do |node|
-          (node.next_element || node.parent.next_element)['id'] = node['id']
-        end
-
-        css('h1 > code').each do |node|
-          node.before(node.children).remove
-        end
-
-        css('pre > code').each do |node|
-          node.parent['data-language'] = node['class'][/lang-(\w+)/, 1] if node['class']
-          node.parent.content = node.parent.content
-        end
+        css('.copyButton_10dd').remove
 
         doc
+
       end
     end
   end
