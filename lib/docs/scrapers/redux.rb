@@ -2,7 +2,6 @@ module Docs
   class Redux < UrlScraper
 
     self.type = 'simple'
-    self.release = '4.0.5'
     self.base_url = 'https://redux.js.org/api'
     self.root_path = 'index.html'
     self.links = {
@@ -18,6 +17,14 @@ module Docs
       &copy; 2015&ndash;2020 Dan Abramov<br>
       Licensed under the MIT License.
     HTML
+
+    version do
+      self.release = '4.0.5'
+    end
+
+    version '3' do
+      self.release = '3.7.2'
+    end
 
     def get_latest_version(opts)
       get_npm_version('redux', opts)
