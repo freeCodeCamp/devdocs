@@ -1,0 +1,13 @@
+._groovy {
+  padding-left: 1rem;
+
+  h1, h2 { margin-left: -1rem; }
+  h2 { @extend %block-heading; }
+  h3 { @extend %block-label; }
+
+  .constructor { @extend %label-blue; }
+  .method { @extend %label-blue; }
+  .element { @extend %label-green; }
+  .field { @extend %label-green; }
+  .enum_constant { @extend %label-orange; }
+}
