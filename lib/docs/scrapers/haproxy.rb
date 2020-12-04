@@ -1,5 +1,6 @@
 module Docs
   class Haproxy < UrlScraper
+    self.name = 'HAProxy'
     self.type = 'haproxy'
     self.root_path = 'intro.html'
     self.initial_paths = %w(intro.html configuration.html management.html)

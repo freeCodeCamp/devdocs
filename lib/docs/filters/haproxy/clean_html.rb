@@ -2,7 +2,7 @@ module Docs
   class Haproxy
     class CleanHtmlFilter < Filter
       def call
-        css('br', 'hr' '.text-right', '.dropdown-menu', 'table.summary').remove
+        css('br, hr, .text-right, .dropdown-menu, table.summary').remove
         css('.alert-success > img[src$="check.png"]').remove
         css('.alert-error > img[src$="cross.png"]').remove
 
@@ -27,6 +27,10 @@ module Docs
 
         css('.keyword').each do |node|
           node['id'] = node.at_css('.anchor')['name']
+        end
+
+        css('.keyword > b').each do |node|
+          node.content = node.content
         end
 
         css('.dropdown').each do |node|

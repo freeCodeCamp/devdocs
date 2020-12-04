@@ -33,7 +33,7 @@ module Docs
           elsif node.name == 'div'
             node.css('.keyword').each do |n|
               name = n.at_css('b').content
-              id = n.at_css('a.anchor')['name']
+              id = n['id']
               entries << [name, URI.escape(id), REPLACE_TYPE[type] || type]
             end
           end
