@@ -86,6 +86,10 @@ module Docs
           node.name = node.name.sub(/\d/) { |i| i.to_i - 1 }
         end
 
+        css('pre').each do |node|
+          node['data-language'] = 'groovy'
+        end
+
         doc
       end
     end
