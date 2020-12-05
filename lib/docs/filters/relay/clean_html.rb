@@ -2,37 +2,16 @@ module Docs
   class Relay
     class CleanHtmlFilter < Filter
       def call
+        @doc = at_css('.post')
 
-        if slug == 'index'
-          css('img').remove
-
-          css('.projectTitle').each do |node|
-            node.name = 'h1'
-            node.content = 'Relay'
-          end
-
-          css('pre').remove
-
-        end
-
-        css('.docLastUpdate').remove
-
-        css('.docs-prevnext').remove
-
-        css('.edit-page-link').remove
-
-        css('h2, h3').each do |node|
-          node.css('a').remove
-          node['id'] = node.content.gsub(/\s/, '-').downcase
-        end
-
-        css('.onPageNav').remove
-
-        css('#docsNav').remove
-
-        css('.fixedHeaderContainer').remove
+        header = at_css('h1')
+        header.parent.before(header).remove
 
         css('footer').remove
+
+        css('h2, h3').each do |node|
+          node['id'] = node.at_css('a.anchor')['id']
+        end
 
         # syntax highlight
         css('pre').each do |node|
