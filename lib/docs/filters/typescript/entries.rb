@@ -3,7 +3,6 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
 
       def get_name
-        return 'Typescript' if current_url == root_url
         return at_css('h2').content
       end
 
@@ -12,13 +11,9 @@ module Docs
       end
 
       def additional_entries
-        entries = []
-
-        css('h2').each do |node|
-            entries << [node.content, node['id'], name]
+        css('h2').each_with_object [] do |node,entries|
+          entries << [node.content, node['id'], name]
         end
-
-        entries
       end
 
     end
