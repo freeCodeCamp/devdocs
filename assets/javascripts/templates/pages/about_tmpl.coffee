@@ -307,6 +307,11 @@ credits = [
     'GPLv2',
     'https://fishshell.com/docs/current/license.html'
   ], [
+    'Flask',
+    '2007-2020 Pallets',
+    'BSD',
+    'https://github.com/pallets/flask/blob/master/LICENSE.rst'
+  ], [
     'GCC<br>GNU Fortran',
     'Free Software Foundation',
     'GFDL',
@@ -401,6 +406,11 @@ credits = [
     '2020 Facebook, Inc.',
     'MIT',
     'https://raw.githubusercontent.com/facebook/jest/master/LICENSE'
+  ], [
+    'Jinja',
+    '2007-2020 Pallets',
+    'BSD',
+    'https://github.com/pallets/jinja/blob/master/LICENSE.rst'
   ], [
     'jQuery',
     'Packt Publishing<br>&copy; jQuery Foundation and other contributors',
@@ -831,6 +841,11 @@ credits = [
     'JS Foundation and other contributors',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
+  ], [
+    'Werkzeug',
+    '2007-2020 Pallets',
+    'BSD',
+    'https://github.com/pallets/werkzeug/blob/master/LICENSE.rst'
   ], [
     'Wordpress',
     '2003-2019 WordPress Foundation',
