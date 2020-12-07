@@ -1,51 +1,47 @@
 module Docs
   class Relay
     class EntriesFilter < Docs::EntriesFilter
+      ONLY_SECTIONS = ['API Reference', 'Principles & Architecture']
+      ONLY_SLUGS = []
+
+      def call
+        if root_page?
+          css('.navGroup > h3').each do |node|
+            next if not ONLY_SECTIONS.include? node.content
+            node.next_element.css('a').each do |anchor|
+              ONLY_SLUGS << anchor['href'].split('/').last.strip
+            end
+          end
+        end
+        super
+      end
 
       def get_name
-        if slug == 'index'
-          return 'Relay'
-        end
-
         at_css('h1').content
       end
 
       def get_type
-        if slug == 'index'
-          return 'Relay'
-        end
-
         at_css('h1').content
       end
 
+      def include_default_entry?
+        ONLY_SLUGS.include? slug
+      end
+
       def additional_entries
-        entries = []
+        return [] if not include_default_entry?
 
-        if slug == 'index'
-          return entries
-        end
+        css('article h2, article h3').each_with_object [] do |node, entries|
+          next if node.content.include?('Argument') ||
+                  node.content.starts_with?('Example')
 
-        ## avoid adding non-desired entries removing tags
-        # remove header which contains a <h2> tag
-        css('.fixedHeaderContainer').remove
-
-        # remove table of content whose title is an <h2> tag
-        css('.toc').remove
-        ##
-
-        css('h2, h3').each do |node|
-          next if node.content.include?('Argument')
-          entry_name = node.content
-
-          if entry_name.include?('(')
-            entry_name = entry_name.match(/.*\(/)[0] + ')'
+          name = node.content
+          if name.include?('(')
+            name = name.match(/.*\(/)[0] + ')'
           end
-
-          entry_id = node.content.gsub(/\s/, '-').downcase
-          entries << [entry_name, entry_id]
+          id = node.at_css('a.anchor')['id']
+          entries << [name, id]
         end
-
-        entries
       end
 
     end
