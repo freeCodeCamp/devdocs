@@ -37,8 +37,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://getbootstrap.com/', opts)
-      doc.at_css('#bd-versions').content.strip[1..-1]
+      doc = fetch_doc('https://getbootstrap.com/docs/versions/', opts)
+      doc.at_css('span:contains("Latest")').parent.content.split(' ').first
     end
   end
 end
