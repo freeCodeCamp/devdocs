@@ -1,6 +1,15 @@
 module Docs
   class Nim
     class EntriesFilter < Docs::EntriesFilter
+
+      REFERENCE = [
+        'API naming design', 'Internals of the Nim Compiler', 'Nim Backend Integration',
+        'Nim Compiler', 'Nim Destructors and Move Semantics', 'Nim Enhancement Proposal #1',
+        'Nim Experimental Features', 'Nim IDE Integration Guide',
+        'Nim maintenance script', 'Nim Standard Library', "Nim's Memory Management",
+        'NimScript', 'Packaging Nim', 'segfaults', 'Source Code Filters'
+      ]
+
       def get_name
         name = at_css('h1').content
         name.remove! 'Module '
@@ -12,35 +21,20 @@ module Docs
       end
 
       def get_type
-        if name.include?('Tutorial')
-          'Tutorial'
-        elsif slug == 'manual'
+        if slug == 'manual'
           'Manual'
-        elsif at_css('h1').content.include?('Module ')
-          name
-        else
+        elsif REFERENCE.include?(name)
           'Reference'
+        else
+          name
         end
       end
 
       def additional_entries
         entries = []
 
-        if at_css('h1').content.include?('Module ')
-          css('#toc-list > li > .simple-toc-section').each do |node|
-            type = node.previous_element.content.strip
+        if slug == 'manual'
 
-            node.css('a.reference:not(.reference-toplevel)').each do |n|
-              n.css('span').remove
-              name = n.content.strip
-              name << '()' if (type == 'Procs' || type == 'Templates') && !name.include?('`')
-              name.remove! '`'
-              name.prepend "#{self.name}."
-              id = n['href'].remove('#')
-              entries << [name, id] unless entries.any? { |e| e[0] == name }
-            end
-          end
-        elsif slug == 'manual'
           css('#toc-list > li > a').each do |node|
             name = node.content.strip
             next if name.start_with?('About')
@@ -54,11 +48,23 @@ module Docs
             node.css('> li > a').each do |n|
               entries << [n.content.strip, n['href'].remove('#'), "Manual: #{type}"]
             end
+
           end
+
+        else
+
+          css('.simple-toc-section a').each do |node|
+            entry_name = node.content
+            entry_name.gsub!(/,.*/, '')
+            entry_id = slug + node['href']
+            entries << [entry_name, entry_id, name]
+          end
+
         end
 
         entries
       end
+
     end
   end
 end
