@@ -2,20 +2,23 @@ module Docs
   class Typescript
     class CleanHtmlFilter < Filter
       def call
+        root_page? ? root : other
+        doc
+      end
 
-        # Top menu bar
-        css('#top-menu').remove
-        css('.skip-to-main').remove
+      def root
+        header = at_css('h1')
+        header.parent.before(header).remove
 
-        # Sidebar
-        css('#sidebar').remove
-
-        # Pound symbol before each title
-        css('.anchor').remove
-
-        css('#handbook-content > h2').each do |node|
-          node.name = 'h1'
+        css('h4').each do |node|
+          node.name = 'h2'
         end
+      end
+
+      def other
+        @doc = at_css('article > .whitespace > .markdown')
+
+        css('.anchor').remove
 
         css('a:contains("Try")').remove
         css('pre').each do |node|
@@ -23,17 +26,6 @@ module Docs
           node['data-language'] = 'typescript'
           node.remove_attribute('class')
         end
-
-        # 'Next' title area
-        css('.whitespace-tight').remove
-
-        # Right side floating box
-        css('.handbook-toc').remove
-
-        css('#site-footer').remove
-
-        doc
-
       end
     end
   end
