@@ -613,7 +613,7 @@ credits = [
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Pony',
-    '2016-2018, The Pony Developers & 2014-2015, Causality Ltd.',
+    '2016-2020, The Pony Developers & 2014-2015, Causality Ltd.',
     'BSD',
     'https://raw.githubusercontent.com/ponylang/ponyc/master/LICENSE'
   ], [
