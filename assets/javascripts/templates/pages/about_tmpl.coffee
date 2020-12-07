@@ -533,7 +533,7 @@ credits = [
     'https://github.com/openresty/lua-nginx-module#copyright-and-license'
   ], [
     'Nim',
-    '2006-2017 Andreas Rumpf',
+    '2006-2020 Andreas Rumpf',
     'MIT',
     'https://github.com/nim-lang/Nim#license'
   ], [
