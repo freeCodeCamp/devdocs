@@ -1,7 +1,7 @@
 module Docs
   class Pony < UrlScraper
     self.type = 'simple'
-    self.release = '0.30.0'
+    self.release = '0.38.1'
     self.base_url = 'https://stdlib.ponylang.io/'
     self.links = {
       home: 'https://www.ponylang.io/',
@@ -11,7 +11,7 @@ module Docs
     html_filters.push 'pony/clean_html', 'pony/entries'
 
     options[:attribution] = <<-HTML
-      &copy; 2016-2018, The Pony Developers<br>
+      &copy; 2016-2020, The Pony Developers<br>
       &copy; 2014-2015, Causality Ltd.<br>
       Licensed under the BSD 2-Clause License.
     HTML
