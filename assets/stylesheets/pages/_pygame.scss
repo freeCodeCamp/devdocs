@@ -1,0 +1,12 @@
+._pygame {
+  @extend %simple;
+
+  dl.class > dt { @extend %block-label, %label-orange; }
+  dl.function > dt, dl.method > dt { @extend %block-label, %label-blue; }
+  dl.attribute > dt, dl.exception > dt , dl.data > dt { @extend %block-label, %label-green; }
+
+  .line-block { @extend %note; }
+  .line-block > .line:first-child { margin-bottom: 1em; }
+  .line-block > .line:only-child { margin-bottom: 0em; }
+  span.signature { font-family: monospace; }
+}
