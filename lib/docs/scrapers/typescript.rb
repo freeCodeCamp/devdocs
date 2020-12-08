@@ -16,21 +16,11 @@ module Docs
 
     options[:skip] = [
       'react-&-webpack.html',
-      'asp-net-core.html',
-      'gulp.html',
-      'dom-manipulation.html',
-      'migrating-from-javascript.html',
-      'babel-with-typescript.html',
-      'intro.html'
     ]
 
     options[:skip_patterns] = [
       /2/,
-      /typescript-/,
       /release-notes/,
-      /introduction/,
-      /tutorials/,
-      /intro.html/
     ]
 
     options[:attribution] = <<-HTML
