@@ -8,11 +8,11 @@ module Docs
         # remove 'E.' notation for appendixes
         if name.match?(/[[:upper:]]\./)
           # remove 'E.'
-          name = name.sub(/[[:upper:]]\./, '')
+          name.sub!(/[[:upper:]]\./, '')
           # remove all dots (.)
-          name = name.gsub(/\./, '')
+          name.gsub!(/\./, '')
           # remove all numbers
-          name = name.gsub(/[[:digit:]]/, '')
+          name.gsub!(/[[:digit:]]/, '')
         end
 
         name.strip
