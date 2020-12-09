@@ -1,13 +1,22 @@
 module Docs
   class Bash
     class EntriesFilter < Docs::EntriesFilter
+
       def get_name
-        name = at_css('hr + a + *').content.gsub(/(\d+\.?)+/, '')
+        name = at_css('h1','h2', 'h3', 'h4').content.gsub(/(\d+\.?)+/, '')
 
-        # Remove the "D. " from names like "D. Concept Index" and "D. Function Index"
-        name = name[3..-1] if name.start_with?('D. ')
+        # remove 'E.' notation for appendixes
+        if name.match?(/[[:upper:]]\./)
+          # remove 'E.'
+          name.sub!(/[[:upper:]]\./, '')
+          # remove all dots (.)
+          name.gsub!(/\./, '')
+          # remove all numbers
+          name.gsub!(/[[:digit:]]/, '')
+        end
 
-        name
+        name.strip
+
       end
 
       def get_type
@@ -44,13 +53,14 @@ module Docs
           end
 
           # Construct path to the page which the index links to
-          entry_path = '/html_node/' + page + '#' + hash
+          entry_path = page + '#' + hash
 
           entries << [entry_name, entry_path, entry_type]
         end
 
         entries
       end
+
     end
   end
 end
