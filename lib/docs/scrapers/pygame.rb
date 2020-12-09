@@ -1,7 +1,7 @@
 module Docs
   class Pygame < UrlScraper
-    self.type = 'simple'
-    self.release = '1.9.6'
+    self.type = 'pygame'
+    self.release = '2.0.0'
     self.base_url = 'https://www.pygame.org/docs/'
     self.root_path = 'py-modindex.html'
     self.links = {
@@ -9,7 +9,7 @@ module Docs
       code: 'https://github.com/pygame/pygame'
     }
 
-    html_filters.push 'pygame/clean_html', 'pygame/entries'
+    html_filters.push 'pygame/pre_clean_html', 'pygame/entries', 'pygame/clean_html'
 
     options[:only_patterns] = [/ref\//]
 
