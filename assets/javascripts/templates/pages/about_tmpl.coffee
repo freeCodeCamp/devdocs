@@ -798,7 +798,7 @@ credits = [
     'https://raw.githubusercontent.com/python-trio/trio/master/LICENSE.MIT'
   ], [
     'Twig',
-    '2009-2018 The Twig Team',
+    '2009-2020 The Twig Team',
     'BSD',
     'https://twig.symfony.com/license'
   ], [
