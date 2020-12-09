@@ -588,7 +588,7 @@ credits = [
     'https://raw.githubusercontent.com/OpenTSDB/opentsdb.net/gh-pages/COPYING.LESSER'
   ], [
     'Padrino',
-    '2010-2019 Padrino',
+    '2010-2020 Padrino',
     'MIT',
     'https://raw.githubusercontent.com/padrino/padrino-framework/master/padrino/LICENSE.txt'
   ], [

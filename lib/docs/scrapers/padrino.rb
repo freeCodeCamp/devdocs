@@ -2,7 +2,7 @@ module Docs
   class Padrino < UrlScraper
     self.slug = 'padrino'
     self.type = 'rubydoc'
-    self.release = '0.14.4'
+    self.release = '0.15'
     self.base_url = 'https://www.rubydoc.info/github/padrino/padrino-framework/'
     self.root_path = 'file/README.rdoc'
     self.initial_paths = %w(index2)
@@ -16,7 +16,7 @@ module Docs
     options[:container] = ->(filter) { filter.root_page? ? '#filecontents' : '#content' }
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2019 Padrino<br>
+      &copy; 2010&ndash;2020 Padrino<br>
       Licensed under the MIT License.
     HTML
 
