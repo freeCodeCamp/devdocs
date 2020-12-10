@@ -3,7 +3,7 @@ module Docs
     self.name = 'RethinkDB'
     self.type = 'rethinkdb'
     self.base_url = 'https://rethinkdb.com/'
-    self.release = '2.3.5'
+    self.release = '2.4.1'
     self.root_path = 'docs/'
     self.links = {
       home: 'https://rethinkdb.com/',
