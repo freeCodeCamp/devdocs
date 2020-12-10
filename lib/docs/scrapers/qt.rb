@@ -103,6 +103,11 @@ module Docs
       Licensed under the GNU Free Documentation License, Version 1.3.
     HTML
 
+    version '6.0' do
+      self.release = '6.0'
+      self.base_url = "https://doc.qt.io/qt-#{self.release}/"
+    end
+
     version '5.15' do
       self.release = '5.15'
       self.base_url = "https://doc.qt.io/qt-#{self.release}/"
@@ -120,7 +125,7 @@ module Docs
 
     version '5.12' do
       self.release = '5.12'
-      self.base_url = "https://doc.qt.io/archivex/qt-#{self.release}/"
+      self.base_url = "https://doc.qt.io/archives/qt-#{self.release}/"
     end
 
     version '5.11' do
@@ -139,7 +144,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://doc.qt.io/qt-5/index.html', opts)
+      doc = fetch_doc('https://doc.qt.io/qt-6/index.html', opts)
       doc.at_css('.mainContent h1.title').content.sub(/Qt /, '')
     end
   end
