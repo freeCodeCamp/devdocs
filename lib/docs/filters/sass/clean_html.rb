@@ -39,62 +39,16 @@ module Docs
         css('.visuallyhidden').remove
 
         ### Syntax Highlight ###
-        css('.kt').each do |node|
-          node.remove_attribute('class')
-          node.add_class('token constant')
+        css('.highlight.scss', '.highlight.sass').each do |node|
+          node['data-language'] = 'scss'
         end
 
-        css('.k, .kn, .kc, .cp, .ow').each do |node|
-          node.remove_attribute('class')
-          node.add_class('token keyword')
-        end
-
-        css('.nv, .no').each do |node|
-          node.remove_attribute('class')
-          node.add_class('token variable')
-        end
-
-        css('.nb, .n').each do |node|
-          node.remove_attribute('class')
-          node.add_class('token string')
-        end
-
-        css('.p').each do |node|
-          node.remove_attribute('class')
-          node.add_class('token punctuation')
-        end
-
-        css('.nf').each do |node|
-          node.remove_attribute('class')
-          node.add_class('token function')
-        end
-
-        css('.o').each do |node|
-          node.remove_attribute('class')
-          node.add_class('token operator')
-        end
-
-        css('.c1, .cm, .c').each do |node|
-          node.remove_attribute('class')
-          node.add_class('token comment')
-        end
-
-        css('.mh, .m, .mi').each do |node|
-          node.remove_attribute('class')
-          node.add_class('token number')
-        end
-
-        css('.nc, .nt').each do |node|
-          node.remove_attribute('class')
-          node.add_class('token selector')
-        end
-
-        css('.nl').each do |node|
-          node.remove_attribute('class')
-          node.add_class('token property')
+        css('.highlight.css').each do |node|
+          node['data-language'] = 'css'
         end
 
         doc
+
       end
     end
   end
