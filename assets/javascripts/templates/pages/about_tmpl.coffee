@@ -738,7 +738,7 @@ credits = [
     'https://raw.githubusercontent.com/scala/scala-lang/master/license.md'
   ], [
     'scikit-image',
-    '2011 the scikit-image team',
+    '2019 the scikit-image team',
     'BSD',
     'http://scikit-image.org/docs/dev/license.html'
   ], [
