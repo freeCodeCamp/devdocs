@@ -3,10 +3,10 @@ module Docs
     self.name = 'scikit-image'
     self.slug = 'scikit_image'
     self.type = 'sphinx'
-    self.release = '0.14.1'
-    self.base_url = 'http://scikit-image.org/docs/0.14.x/'
+    self.release = '0.17.2'
+    self.base_url = 'https://scikit-image.org/docs/0.17.x/'
     self.links = {
-      home: 'http://scikit-image.org/',
+      home: 'https://scikit-image.org/',
       code: 'https://github.com/scikit-image/scikit-image'
     }
 
@@ -17,7 +17,7 @@ module Docs
     options[:only_patterns] = [/\Aapi/, /\Auser_guide/]
 
     options[:attribution] = <<-HTML
-      &copy; 2011 the scikit-image team<br>
+      &copy; 2019 the scikit-image team<br>
       Licensed under the BSD 3-clause License.
     HTML
 
