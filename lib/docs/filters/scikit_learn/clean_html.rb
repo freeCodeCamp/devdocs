@@ -3,22 +3,23 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         if root_page?
-          at_css('h1').content = 'scikit-learn'
-
-          css('.row-fluid').each do |node|
+          css('.row').each do |node|
             html = '<dl>'
-            node.css('.span4').each do |n|
-              html += "<dt>#{n.first_element_child.inner_html}</dt>"
-              html += "<dd>#{n.last_element_child.inner_html}</dd>"
+            node.css('.card-body').each do |n|
+              html += '<dt>'
+              html += "<a href='#{n.at_css('a')['href']}'>#{n.at_css('h4').content}</a>"
+              html += '</dt>'
+              html += "<dd>#{n.css('.card-text').to_html}</dd>"
             end
             html += '</dl>'
             node.replace(html)
           end
         end
 
+        css('.sphx-glr-signature').remove
+
         doc
       end
     end
   end
 end
-
