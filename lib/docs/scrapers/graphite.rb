@@ -4,6 +4,7 @@ module Docs
     self.release = '1.1.4'
     self.base_url = 'https://graphite.readthedocs.io/en/latest/'
     self.links = {
+      home: 'https://graphiteapp.org/',
       code: 'https://github.com/graphite-project/graphite-web'
     }
 

@@ -2,6 +2,10 @@ module Docs
   class Clojure < UrlScraper
     self.type = 'clojure'
     self.root_path = 'api-index.html'
+    self.links = {
+      home: 'https://clojure.org',
+      code: 'https://github.com/clojure/clojure'
+    }
 
     html_filters.push 'clojure/entries', 'clojure/clean_html'
 
