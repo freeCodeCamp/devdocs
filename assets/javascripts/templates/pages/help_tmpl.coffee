@@ -1,6 +1,7 @@
 app.templates.helpPage = ->
   ctrlKey = if $.isMac() then 'cmd' else 'ctrl'
   navKey = if $.isMac() then 'cmd' else 'alt'
+  arrowScroll = app.settings.get('arrowScroll')
 
   aliases_one = {}
   aliases_two = {}
@@ -66,12 +67,12 @@ app.templates.helpPage = ->
   <h3 class="_shortcuts-title">Sidebar</h3>
   <dl class="_shortcuts-dl">
     <dt class="_shortcuts-dt">
-      #{if app.settings.cache.arrowScroll then '<code class="_shortcut-code">shift</code> + ' else ''}
+      #{if arrowScroll then '<code class="_shortcut-code">shift</code> + ' else ''}
       <code class="_shortcut-code">&darr;</code>
       <code class="_shortcut-code">&uarr;</code>
     <dd class="_shortcuts-dd">Move selection
     <dt class="_shortcuts-dt">
-      #{if app.settings.cache.arrowScroll then '<code class="_shortcut-code">shift</code> + ' else ''}
+      #{if arrowScroll then '<code class="_shortcut-code">shift</code> + ' else ''}
       <code class="_shortcut-code">&rarr;</code>
       <code class="_shortcut-code">&larr;</code>
     <dd class="_shortcuts-dd">Show/hide sub-list
@@ -92,7 +93,7 @@ app.templates.helpPage = ->
       <code class="_shortcut-code">#{navKey} + &rarr;</code>
     <dd class="_shortcuts-dd">Go back/forward
     <dt class="_shortcuts-dt">
-      #{if app.settings.cache.arrowScroll
+      #{if arrowScroll
           '<code class="_shortcut-code">&darr;</code> ' +
           '<code class="_shortcut-code">&uarr;</code>'
         else
