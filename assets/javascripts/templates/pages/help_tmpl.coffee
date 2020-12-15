@@ -66,10 +66,12 @@ app.templates.helpPage = ->
   <h3 class="_shortcuts-title">Sidebar</h3>
   <dl class="_shortcuts-dl">
     <dt class="_shortcuts-dt">
+      #{if app.settings.cache.arrowScroll then '<code class="_shortcut-code">shift</code> + ' else ''}
       <code class="_shortcut-code">&darr;</code>
       <code class="_shortcut-code">&uarr;</code>
     <dd class="_shortcuts-dd">Move selection
     <dt class="_shortcuts-dt">
+      #{if app.settings.cache.arrowScroll then '<code class="_shortcut-code">shift</code> + ' else ''}
       <code class="_shortcut-code">&rarr;</code>
       <code class="_shortcut-code">&larr;</code>
     <dd class="_shortcuts-dd">Show/hide sub-list
@@ -90,11 +92,15 @@ app.templates.helpPage = ->
       <code class="_shortcut-code">#{navKey} + &rarr;</code>
     <dd class="_shortcuts-dd">Go back/forward
     <dt class="_shortcuts-dt">
-      <code class="_shortcut-code">alt + &darr;</code>
-      <code class="_shortcut-code">alt + &uarr;</code>
-      <br>
-      <code class="_shortcut-code">shift + &darr;</code>
-      <code class="_shortcut-code">shift + &uarr;</code>
+      #{if app.settings.cache.arrowScroll
+          '<code class="_shortcut-code">&darr;</code> ' +
+          '<code class="_shortcut-code">&uarr;</code>'
+        else
+          '<code class="_shortcut-code">alt + &darr;</code> ' +
+          '<code class="_shortcut-code">alt + &uarr;</code>' +
+          '<br>' +
+          '<code class="_shortcut-code">shift + &darr;</code> ' +
+          '<code class="_shortcut-code">shift + &uarr;</code>'}
     <dd class="_shortcuts-dd">Scroll step by step<br><br>
     <dt class="_shortcuts-dt">
       <code class="_shortcut-code">space</code>
