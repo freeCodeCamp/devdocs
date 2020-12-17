@@ -3,7 +3,7 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
 
       def get_name
-        return at_css('h2').content
+        at_css('h1') ? at_css('h1').content : at_css('h2').content
       end
 
       def get_type
@@ -11,9 +11,25 @@ module Docs
       end
 
       def additional_entries
-        css('h2').each_with_object [] do |node,entries|
+        entries = []
+
+        css('h2').each do |node|
+
+          if slug == 'tsconfig/'
+            node.css('a').remove
+          end
+
           entries << [node.content, node['id'], name]
         end
+
+        if slug == 'tsconfig/'
+          css('h3').each do |node|
+            node.css('a').remove
+            entries << [node.content, node['id'], name]
+          end
+        end
+
+        entries
       end
 
     end
