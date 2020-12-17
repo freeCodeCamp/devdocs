@@ -10,8 +10,6 @@ module Docs
 
     html_filters.push 'codeigniter/entries', 'sphinx/clean_html'
 
-    options[:container] = '.document'
-
     options[:skip] = %w(
       license.html
       changelog.html
@@ -26,6 +24,7 @@ module Docs
     options[:skip_patterns] = [
       /\Acontributing/,
       /\Adocumentation/,
+      /\Achangelogs/,
       /\Ainstallation\/upgrade/
     ]
 
@@ -37,11 +36,15 @@ module Docs
     version '4' do
       self.release = '4.0.4'
       self.base_url = 'https://codeigniter.com/userguide4/'
+
+      options[:container] = '.document > div'
     end
 
     version '3' do
       self.release = '3.1.8'
       self.base_url = 'https://codeigniter.com/userguide3/'
+
+      options[:container] = '.document'
     end
 
     def get_latest_version(opts)

@@ -22,12 +22,12 @@ module Docs
       def additional_entries
         entries = []
 
-        css('.class').each do |node|
+        css('.class', '.interface').each do |node|
           class_name = node.at_css('dt > .descname').content.split('\\').last
           class_id = node.at_css('dt[id]')['id']
           entries << [class_name, class_id]
 
-          node.css('.method').each do |n|
+          node.css('.method', '.staticmethod').each do |n|
             next unless n.at_css('dt[id]')
             name = n.at_css('.descname').content
             name = "#{class_name}::#{name}()"
@@ -40,6 +40,13 @@ module Docs
           name = "#{node.at_css('.descname').content}()"
           id = node.at_css('dt[id]')['id']
           type = self.type.start_with?('User guide') ? 'Functions' : self.type
+          entries << [name, id, type]
+        end
+
+        css('.const').each do |node|
+          name = node.at_css('.descname').content
+          id = node.at_css('dt[id]')['id']
+          type = self.type.start_with?('User guide') ? 'Global Constants' : self.type
           entries << [name, id, type]
         end
 
