@@ -19,6 +19,12 @@ module Docs
           end
         end
 
+        if name == 'package.json'
+          css('h3').each do |node|
+            entries << [node['id'],  slug + '#' + node['id'], 'Package.json Settings']
+          end
+        end
+
         entries
       end
 
