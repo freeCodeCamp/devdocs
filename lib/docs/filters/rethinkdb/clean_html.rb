@@ -19,10 +19,6 @@ module Docs
           node.content = node.content
         end
 
-        css('.highlight', 'section', 'div.highlighter-rouge', 'a > p', 'li > h1').each do |node|
-          node.before(node.children).remove
-        end
-
         css('h2, h3, h4').each do |node|
           node.name = node.name.sub(/\d/) { |i| i.to_i + 1 }
         end
@@ -45,6 +41,8 @@ module Docs
         end
 
         css('> .infobox:last-child:contains("Contribute:")').remove
+
+        css('.additional-help').remove
 
         doc
       end
