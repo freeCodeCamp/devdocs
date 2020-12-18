@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  devdocs:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+      args:
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+    volumes:
+      - ${PWD}:/home/devuser
+    ports:
+      - "9292:9292"

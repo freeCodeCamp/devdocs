@@ -12,7 +12,8 @@ Want to contribute? Great. Please review the following guidelines carefully and 
 6. [Updating existing documentations](#updating-existing-documentations)
 7. [Other contributions](#other-contributions)
 8. [Coding conventions](#coding-conventions)
-9. [Questions?](#questions)
+9. [Developing in Docker](#developing-in-docker)
+10. [Questions?](#questions)
 
 ## Reporting bugs
 
@@ -78,6 +79,23 @@ Follow the following steps to update documentations to their latest version:
 * two spaces; no tabs
 * no trailing whitespace; blank lines should have no spaces; new line at end-of-file
 * use the same coding style as the rest of the codebase
+
+## Developing in Docker
+
+To set up a Docker development enviroment:
+
+1. Install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/).
+2. Navigate to the root of this repository.
+3. `cp sample.env .env`
+4. `docker-compose up -d`
+5. `docker-compose run --rm --service-ports devdocs`
+  
+You should now be in a bash shell inside the Docker container.  The repo is mounted at `/home/devuser`, so any changes you make there will be reflected on the host (your machine) and vice versa.  Commands can all be run inside the container:
+
+1. `thor docs:download --default` to get the default docs.
+2. `rackup -o 0.0.0.0` to start the server
+
+Navigate to `http://localhost:9292` to see the running site.
 
 ## Questions?
 
