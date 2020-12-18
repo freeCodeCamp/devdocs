@@ -1,8 +1,16 @@
 module Docs
   class Typescript
     class CleanHtmlFilter < Filter
+
       def call
-        root_page? ? root : other
+        if slug.include?('index')
+          root
+        elsif slug == ('tsconfig/')
+          tsconfig
+        else
+          other
+        end
+
         doc
       end
 
@@ -27,6 +35,12 @@ module Docs
           node.remove_attribute('class')
         end
       end
+
+      def tsconfig
+        css('h2 a', 'h3 a').remove
+        css('svg').remove
+      end
+
     end
   end
 end
