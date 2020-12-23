@@ -1,13 +1,19 @@
 module Docs
   class Typescript < UrlScraper
+    include MultipleBaseUrls
+
     self.name = 'TypeScript'
     self.type = 'simple'
     self.release = '4.1.3'
-    self.base_url = 'https://www.typescriptlang.org/'
-    self.root_path = 'docs/handbook/index.html'
-    self.initial_paths = [
-      'tsconfig/'
+    self.base_urls = [
+      'https://www.typescriptlang.org/docs/handbook/',
+      'https://www.typescriptlang.org/'
     ]
+
+    def initial_urls
+      [ 'https://www.typescriptlang.org/docs/handbook/',
+        'https://www.typescriptlang.org/tsconfig' ]
+    end
 
     self.links = {
       home: 'https://www.typescriptlang.org',
@@ -19,23 +25,14 @@ module Docs
     options[:container] = 'main'
 
     options[:skip] = [
-      'docs/handbook/react-&-webpack.html'
+      'react-&-webpack.html'
     ]
 
     options[:skip_patterns] = [
       /2/,
-      /release-notes/
+      /release-notes/,
+      /play\//
     ]
-
-    options[:only_patterns] = [
-      /docs\/handbook\//,
-      /tsconfig\//
-    ]
-
-    options[:fix_urls] = -> (url) do
-      url.gsub!(/docs\/handbook\/index.html/, "index.html")
-      url
-    end
 
     options[:attribution] = <<-HTML
       &copy; 2012-2020 Microsoft<br>

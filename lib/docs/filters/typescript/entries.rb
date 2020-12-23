@@ -11,25 +11,19 @@ module Docs
       end
 
       def additional_entries
-        entries = []
+        base_url.path == '/' ? tsconfig_entries : handbook_entries
+      end
 
-        css('h2').each do |node|
-
-          if slug == 'tsconfig/'
-            node.css('a').remove
-          end
-
-          entries << [node.content, node['id'], name]
+      def tsconfig_entries
+        css('h3 > code').each_with_object [] do |node, entries|
+          entries << [node.content, node.parent['id']]
         end
+      end
 
-        if slug == 'tsconfig/'
-          css('h3').each do |node|
-            node.css('a').remove
-            entries << [node.content, node['id'], name]
-          end
+      def handbook_entries
+        css('h2').each_with_object [] do |node, entries|
+          entries << [node.content, node['id']]
         end
-
-        entries
       end
 
     end
