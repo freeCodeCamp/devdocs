@@ -103,3 +103,5 @@ The following people (used to) maintain DevDocs:
 To reach out, please ping [@freeCodeCamp/devdocs](https://github.com/orgs/freeCodeCamp/teams/devdocs).
 
 Interested in helping maintain DevDocs? Come talk to us on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs) :)
+
+In addition, we appreciate the major contributions made by [these great people](https://github.com/freeCodeCamp/devdocs/graphs/contributors).
