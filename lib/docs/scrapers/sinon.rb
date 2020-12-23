@@ -14,12 +14,31 @@ module Docs
     options[:container] = '.content .container'
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2018 Christian Johansen<br>
+      &copy; 2010&ndash;2020 Christian Johansen<br>
       Licensed under the BSD License.
     HTML
 
+    # Links in page point to '../page' what makes devdocs points to non-existent links
+    options[:fix_urls] = -> (url) do
+      if !(url =~ /releases\/v\d*/)
+        url.gsub!(/.*releases\//, "")
+      end
+
+      url
+    end
+
+    version '9' do
+      self.release = '9.2.2'
+      self.base_url = "https://sinonjs.org/releases/v#{release}/"
+    end
+
+    version '8' do
+      self.release = '8.1.1'
+      self.base_url = "https://sinonjs.org/releases/v#{release}/"
+    end
+
     version '7' do
-      self.release = '7.1.1'
+      self.release = '7.5.0'
       self.base_url = "https://sinonjs.org/releases/v#{release}/"
     end
 
@@ -54,8 +73,9 @@ module Docs
     end
 
     def get_latest_version(opts)
-      body = fetch('https://sinonjs.org/', opts)
-      body.scan(/\/releases\/v([0-9.]+)/)[0][0]
+      tags = get_github_tags('sinonjs', 'sinon', opts)
+      tags[0]['name'][1..-1]
     end
+
   end
 end
