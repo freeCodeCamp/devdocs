@@ -90,6 +90,8 @@ If this is your first deploy, make sure another maintainer is around to assist.
 
 ## List of maintainers in alphabetical order
 
+The following people (used to) maintain DevDocs:
+
 - [Ahmad Abdolsaheb](https://github.com/ahmadabdolsaheb)
 - [Jasper van Merle](https://github.com/jmerle)
 - [Jed Fox](https://github.com/j-f1)
@@ -97,5 +99,7 @@ If this is your first deploy, make sure another maintainer is around to assist.
 - [Oliver Eyton-Williams](https://github.com/ojeytonwilliams)
 - [Simon Legner](https://github.com/simon04)
 - [Thibaut Courouble](https://github.com/thibaut)
+
+To reach out, please ping [@freeCodeCamp/devdocs](https://github.com/orgs/freeCodeCamp/teams/devdocs).
 
 Interested in helping maintain DevDocs? Come talk to us on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs) :)
