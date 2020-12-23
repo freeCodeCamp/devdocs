@@ -1,0 +1,15 @@
+._gtk {
+  padding-left: 1rem;
+
+  h1, h2, h3 { margin-left: -1rem; }
+  h2 { @extend %block-heading; }
+  h3 { @extend %block-label, %label-blue; }
+
+  div.toc { margin-top: 1.5em; }
+  .toc dl { margin-top: 0; margin-bottom: 0; }
+
+  .note { @extend %note, %note-green; }
+  .warning { @extend %note, %note-orange; }
+
+  .gallery-float { float:left; }
+}

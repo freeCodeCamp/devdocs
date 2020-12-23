@@ -357,6 +357,11 @@ credits = [
     'MIT',
     'https://github.com/gruntjs/grunt-docs/blob/master/package.json#L10'
   ], [
+    'GTK',
+    'The GNOME Project',
+    'LGPLv2.1+',
+    'https://gitlab.gnome.org/GNOME/gtk/-/blob/master/COPYING'
+  ], [
     'Handlebars',
     '2011-2017 Yehuda Katz',
     'MIT',
