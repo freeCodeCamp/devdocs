@@ -190,6 +190,8 @@ More information about how filters work is available on the [Filter Reference](.
 In order to keep scrapers up-to-date the `get_latest_version(opts)` method should be overridden. If `self.release` is defined, this should return the latest version of the documentation. If `self.release` is not defined, it should return the Epoch time when the documentation was last modified. If the documentation will never change, simply return `1.0.0`. The result of this method is periodically reported in a "Documentation versions report" issue which helps maintainers keep track of outdated documentations.
 
 To make life easier, there are a few utility methods that you can use in `get_latest_version`:
+
+### General HTTP methods
 * `fetch(url, opts)`
 
   Makes a GET request to the url and returns the response body.
@@ -205,11 +207,15 @@ To make life easier, there are a few utility methods that you can use in `get_la
   Makes a GET request to the url and returns the JSON body converted to a dictionary.
 
   Example: [lib/docs/scrapers/mdn/mdn.rb](../lib/docs/scrapers/mdn/mdn.rb)
+
+### Package repository methods
 * `get_npm_version(package, opts)`
 
   Returns the latest version of the given npm package.
 
   Example: [lib/docs/scrapers/bower.rb](../lib/docs/scrapers/bower.rb)
+
+### GitHub methods
 * `get_latest_github_release(owner, repo, opts)`
 
   Returns the tag name of the latest GitHub release of the given repository. If the tag name is preceded by a "v", the "v" will be removed.
@@ -225,3 +231,8 @@ To make life easier, there are a few utility methods that you can use in `get_la
   Returns the contents of the requested file in the default branch of the given repository.
 
   Example: [lib/docs/scrapers/minitest.rb](../lib/docs/scrapers/minitest.rb)
+* `get_latest_github_commit_date(owner, repo, opts)`
+
+    Returns the date of the most recent commit in the default branch of the given repository.
+
+    Example: [lib/docs/scrapers/reactivex.rb](../lib/docs/scrapers/reactivex.rb)
