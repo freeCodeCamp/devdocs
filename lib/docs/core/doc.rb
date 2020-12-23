@@ -270,5 +270,9 @@ module Docs
       timestamp = commits[0]['commit']['author']['date']
       Date.iso8601(timestamp).to_time.to_i
     end
+
+    def get_gitlab_tags(hostname, group, project, opts)
+      fetch_json("https://#{hostname}/api/v4/projects/#{group}%2F#{project}/repository/tags", opts)
+    end
   end
 end

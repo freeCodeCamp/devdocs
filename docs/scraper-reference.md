@@ -236,3 +236,10 @@ To make life easier, there are a few utility methods that you can use in `get_la
     Returns the date of the most recent commit in the default branch of the given repository.
 
     Example: [lib/docs/scrapers/reactivex.rb](../lib/docs/scrapers/reactivex.rb)
+
+### GitLab methods
+* `get_gitlab_tags(hostname, group, project, opts)`
+
+  Returns the list of tags on the given repository ([format](https://docs.gitlab.com/ee/api/tags.html)).
+
+  Example: [lib/docs/scrapers/gtk.rb](../lib/docs/scrapers/gtk.rb)
