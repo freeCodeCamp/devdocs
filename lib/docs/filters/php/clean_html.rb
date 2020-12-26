@@ -1,6 +1,8 @@
+# coding: utf-8
 module Docs
   class Php
     class CleanHtmlFilter < Filter
+
       def call
         root_page? ? root : other
         doc
@@ -11,24 +13,11 @@ module Docs
       end
 
       def other
-        css('.manualnavbar:first-child', '.manualnavbar .up', '.manualnavbar .home', 'hr').remove
+        # css('.manualnavbar:first-child', '.manualnavbar .up', '.manualnavbar .home', 'hr').remove
 
-        nav = at_css('.manualnavbar').remove
+        css('#breadcrumbs').remove
 
-        if prev_link = nav.at_css('.prev a')
-          prev_link.content = "← #{prev_link.content}"
-        end
-
-        if next_link = nav.at_css('.next a')
-          next_link.content = "#{next_link.content} →"
-        end
-
-        # Remove top-level <div>
-        if doc.elements.length == 1
-          @doc = doc.first_element_child
-        end
-
-        doc << nav
+        css('.nav').remove
 
         # Remove code highlighting
         br = /<br\s?\/?>/i
@@ -50,7 +39,9 @@ module Docs
         css('.title + .verinfo + .title').each do |node|
           node.after(node.previous_element)
         end
+
       end
+
     end
   end
 end

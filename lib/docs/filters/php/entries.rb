@@ -12,7 +12,6 @@ module Docs
         'Exception'       => 'Predefined Exceptions',
         'Http'            => 'HTTP',
         'Json'            => 'JSON',
-        'Lua'             => 'Lua',
         'Mutex'           => 'pthreads',
         'php_user_filter' => 'Stream',
         'Pool'            => 'pthreads',
@@ -31,11 +30,14 @@ module Docs
         'Weak'            => 'Weakref',
         'Worker'          => 'pthreads',
         'XsltProcessor'   => 'XSLT',
-        'Yar'             => 'Yar',
-        'ZipArchive'      => 'Zip' }
+        'ZipArchive'      => 'Zip',
+        'Rar'             => 'Rar',
+        'Direct IO'       => 'Dio',
+        'Zoo'             => 'Zookeeper'
+      }
 
       %w(APC Directory DOM Event Gearman Gmagick Imagick mysqli OAuth PDO Phar Reflection
-        Session SimpleXML Solr Sphinx SQLite3 Varnish XSLT Yaf).each do |str|
+        Session SimpleXML Solr Sphinx SQLite3 Varnish XSLT Yaf OpenAL Blenc Componere OPcache phpdbg runkit7 Uopz WinCache Xhprof Yac Radius Ncurses Readline Lzf Mhash Sodium SVM dbx FPM xattr xdiff Enchant Pspell Parle Recode FDF GnuPG ssdeep Yar Lua Stomp SPL zookeeper SDO).each do |str|
         TYPE_BY_NAME_STARTS_WITH[str] = str
       end
 
@@ -76,7 +78,7 @@ module Docs
       TYPE_GROUPS = {
         'Classes and Functions' => ['Classes/Object', 'Function handling', 'Predefined Interfaces and Classes', 'runkit', 'Throwable'],
         'Encoding'              => ['Gettext', 'iconv', 'Multibyte String'],
-        'Compression'           => ['Bzip2', 'Zip', 'Zlib'],
+        'Compression'           => ['Bzip2', 'Zip', 'Zlib', 'Rar'],
         'Cryptography'          => ['Hash', 'Mcrypt', 'OpenSSL', 'Password Hashing'],
         'Database'              => ['DBA', 'ODBC', 'PDO'],
         'Date and Time'         => ['Calendar', 'Date/Time'],
@@ -94,7 +96,13 @@ module Docs
 
       def get_name
         return 'IntlException' if slug == 'class.intlexception'
-        name = css('> .sect1 > .title', 'h1', 'h2').first.content
+
+        if at_css('h1')
+          name = at_css('h1').content.strip
+        else
+          name = at_css('h2').content.strip
+        end
+
         name.remove! 'The '
         name.sub! ' class', ' (class)'
         name.sub! ' interface', ' (interface)'
@@ -102,10 +110,10 @@ module Docs
       end
 
       def get_type
-        return 'Language Reference' if subpath.start_with?('language.') || subpath.start_with?('functions.')
+        return 'Language Reference' if subpath.start_with?('language.') || subpath.start_with?('functions.') || subpath.start_with?('reserved')
         return 'PCRE Reference' if subpath.start_with?('regexp.')
 
-        type = at_css('.up').content.strip
+        type = at_css('.breadcrumbs-container li ~ li').content.strip
         type = 'SPL/Iterators' if type.end_with? 'Iterator'
         type = 'Ev' if type =~ /\AEv[A-Z]/
         type.remove! ' Functions'
@@ -167,6 +175,7 @@ module Docs
       def include_default_entry?
         !initial_page? && doc.at_css('.reference', '.refentry', '.sect1', '.simpara', '.para')
       end
+
     end
   end
 end
