@@ -79,6 +79,9 @@ Follow the following steps to update documentations to their latest version:
 * no trailing whitespace; blank lines should have no spaces; new line at end-of-file
 * use the same coding style as the rest of the codebase
 
+These conventions are formalized in [our `.editorconfig` file](../.editorconfig).
+Check out [EditorConfig.org](https://editorconfig.org/) to learn how to make your tools adhere to it.
+
 ## Questions?
 
 If you have any questions, please feel free to ask them on the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs).
