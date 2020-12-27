@@ -129,7 +129,14 @@ bsdtar --extract --xz --file - --strip-components=6 --directory=docs/openjdk\~8/
 ```
 
 ## PHP
+Click the link under the "Many HTML files" column on https://www.php.net/download-docs.php, extract the tarball, change its name to `php` and put it in `/path/to/devdocs/docs/`.
 
+Or run the following commands in your terminal:
+
+```sh
+curl https://www.php.net/distributions/manual/php_manual_en.tar.gz > php.tar; \
+tar -xf php.tar; mv php-chunked-xhtml/ path/to/devdocs/docs/php/
+```
 ## Python
 
 ### Versions 3.6+
