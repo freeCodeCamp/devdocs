@@ -21,6 +21,10 @@ module Docs
       Licensed under the Creative Commons Attribution License 3.0.
     HTML
 
+    version '4' do
+      self.release = '4.0.0'
+    end
+
     version '3' do
       self.release = '3.12.0'
     end
