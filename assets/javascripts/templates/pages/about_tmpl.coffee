@@ -688,7 +688,7 @@ credits = [
     'https://raw.githubusercontent.com/ReactiveX/reactivex.github.io/develop/LICENSE'
   ], [
     'Redis',
-    '2009-2018 Salvatore Sanfilippo',
+    '2009-2020 Salvatore Sanfilippo',
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
