@@ -3,8 +3,6 @@ module Docs
     self.name = 'Sequelize'
     self.slug = 'sequelize'
     self.type = 'simple'
-    self.release = '5.21.1'
-    self.base_url = 'https://sequelize.org/master/'
     self.links = {
       home: 'https://sequelize.org/',
       code: 'https://github.com/sequelize/sequelize'
@@ -21,6 +19,21 @@ module Docs
       Copyright &copy; 2014&ndash;present Sequelize contributors<br>
       Licensed under the MIT License.
     HTML
+
+    version '6' do
+      self.release = '6.3.5'
+      self.base_url = "https://sequelize.org/master/"
+    end
+
+    version '5' do
+      self.release = '5.22.0'
+      self.base_url = "https://sequelize.org/v#{version}/"
+    end
+
+    version '4' do
+      self.release = '4.44.4'
+      self.base_url = "https://sequelize.org/v#{version}/"
+    end
 
     # Method to fetch the most recent version of the project
     def get_latest_version(opts)
