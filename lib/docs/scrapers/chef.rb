@@ -21,7 +21,7 @@ module Docs
     HTML
 
     version '16' do
-      self.release = '16.7.61'
+      self.release = '16.8.14'
 
       options[:container] = '.off-canvas-wrapper'
 
