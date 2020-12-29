@@ -16,14 +16,36 @@ module Docs
       Documentation licensed under the Creative Commons Attribution License v3.0.
     HTML
 
+    version '5' do
+      self.release = '5.0'
+      self.base_url = "https://getbootstrap.com/docs/#{self.release}/"
+      self.root_path = 'getting-started/introduction/'
+
+      html_filters.push 'bootstrap/entries_v5', 'bootstrap/clean_html_v5'
+
+      options[:only_patterns] = [
+        /\Agetting-started\//, /\Alayout\//, /\Acontent\//,
+        /\Acomponents\//, /\Autilities\/.+/, /\Ahelpers\//
+      ]
+
+      options[:replace_paths] = {
+        'components/breadcrumb//' => '/components/breadcrumb/'
+      }
+
+    end
+
     version '4' do
       self.release = '4.5'
-      self.base_url = 'https://getbootstrap.com/docs/4.5/'
+      self.base_url = "https://getbootstrap.com/docs/#{self.release}/"
       self.root_path = 'getting-started/introduction/'
 
       html_filters.push 'bootstrap/entries_v4', 'bootstrap/clean_html_v4'
 
-      options[:only_patterns] = [/\Agetting-started\//, /\Alayout\//, /\Acontent\//, /\Acomponents\//, /\Autilities\/.+/, /\Amigration\//]
+      options[:only_patterns] = [
+        /\Agetting-started\//, /\Alayout\//, /\Acontent\//,
+        /\Acomponents\//, /\Autilities\/.+/, /\Amigration\//
+      ]
+
     end
 
     version '3' do
@@ -40,5 +62,6 @@ module Docs
       doc = fetch_doc('https://getbootstrap.com/docs/versions/', opts)
       doc.at_css('span:contains("Latest")').parent.content.split(' ').first
     end
+
   end
 end
