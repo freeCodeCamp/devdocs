@@ -163,6 +163,18 @@ tar xj --strip-components=1
 ### Ruby / Minitest
 ### Ruby on Rails
 ### Ruby
+Download the tarball of Ruby from https://www.ruby-lang.org/en/downloads/, extract it, run
+`./configure && make html` in your terminal (while your are in the ruby directory) and move
+`.ext/html` to `path/to/devdocs/docs/ruby~$VERSION/`.
+
+Or run the following commands in your terminal:
+```sh
+curl https://cache.ruby-lang.org/pub/ruby/$VERSION/ruby-$RELEASE.tar.gz > ruby.tar; \
+tar -xf ruby.tar; cd ruby-$RELEASE; ./configure && make html; mv .ext/html path/to/devdocs/docs/ruby~$VERSION
+```
+
+To generate the htmls file you have to run `make` command but it does not install Ruby in your system, only generates html files so you have not
+to worry about cleaning or removing a new Ruby installation.
 
 ## Salt Stack
 
