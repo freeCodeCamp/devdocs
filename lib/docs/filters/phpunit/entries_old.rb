@@ -1,13 +1,12 @@
 module Docs
   class Phpunit
-    class EntriesFilter < Docs::EntriesFilter
-
+    class EntriesOldFilter < Docs::EntriesFilter
       def get_name
         at_css('h1').content
       end
 
       def get_type
-        if name.in? ['Assertions', 'Annotations', 'The XML Configuration File']
+        if name.in?(%w(Assertions Annotations))
           name
         else
           'Guides'
@@ -21,7 +20,6 @@ module Docs
           [node.content, node['id']]
         end
       end
-
     end
   end
 end
