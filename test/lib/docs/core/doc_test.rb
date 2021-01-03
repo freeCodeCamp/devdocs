@@ -390,16 +390,16 @@ class DocsDocTest < MiniTest::Spec
 
     it "compares versions" do
       instance = doc.versions.first.new
-      assert !instance.is_outdated('1', '1')
-      assert !instance.is_outdated('1.2', '1.2')
-      assert !instance.is_outdated('1.2.2', '1.2.2')
-      assert !instance.is_outdated('1.2.2', '1.2.3')
-      assert instance.is_outdated('1', '2')
-      assert instance.is_outdated('1.2', '1.3')
-      assert instance.is_outdated('9', '10')
-      assert instance.is_outdated('99', '101')
-      assert !instance.is_outdated('2006-01-02', '2006-01-03')
-      assert instance.is_outdated('2006-01-02', '2006-02-03')
+      assert_equal 'Up-to-date', instance.outdated_state('1', '1')
+      assert_equal 'Up-to-date', instance.outdated_state('1.2', '1.2')
+      assert_equal 'Up-to-date', instance.outdated_state('1.2.2', '1.2.2')
+      assert_equal 'Up-to-date', instance.outdated_state('1.2.2', '1.2.3')
+      assert_equal "Outdated major version", instance.outdated_state('1', '2')
+      assert_equal "Outdated minor version", instance.outdated_state('1.2', '1.3')
+      assert_equal "Outdated major version", instance.outdated_state('9', '10')
+      assert_equal "Outdated major version", instance.outdated_state('99', '101')
+      assert_equal 'Up-to-date', instance.outdated_state('2006-01-02', '2006-01-03')
+      assert_equal "Outdated minor version", instance.outdated_state('2006-01-02', '2006-02-03')
     end
   end
 end
