@@ -37,11 +37,8 @@ module Docs
 
         module_node = css('h1').at_css('span')
 
-        css('pre').each do |node|
-          next unless span = node.at_css('span')
-          if span['id'].nil?
-            next
-          elsif span['id'].start_with?('VAL')
+        css('pre > span[id]').each do |span|
+          if span['id'].start_with?('VAL')
             entry_type = 'Values'
           elsif span['id'].start_with?('MODULE')
             entry_type = 'Modules'
@@ -52,12 +49,9 @@ module Docs
           end
 
           name = span.content
-          if not module_node.nil?
-            name = "#{name} [#{module_node.content}]"
-          end
+          name += " [#{module_node.content}]" unless module_node.nil?
           entries << [name, span['id'], entry_type]
         end
-
         entries
       end
     end
