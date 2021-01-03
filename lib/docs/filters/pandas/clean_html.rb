@@ -18,6 +18,11 @@ module Docs
           node.content = node.content.gsub(/::/, ' : ')
         end
 
+        css('.highlight pre').each do |node|
+          node.content = node.content
+          node['data-language'] = 'python'
+        end
+
         # sidebar
         css('ul.nav.bd-sidenav').remove
 
