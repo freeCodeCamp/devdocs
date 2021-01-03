@@ -673,7 +673,7 @@ credits = [
     'https://doc.qt.io/qt-5/licensing.html'
   ], [
     'Ramda',
-    '2013-2016 Scott Sauyet and Michael Hurley',
+    '2013-2020 Scott Sauyet and Michael Hurley',
     'MIT',
     'https://raw.githubusercontent.com/ramda/ramda/master/LICENSE.txt'
   ], [
