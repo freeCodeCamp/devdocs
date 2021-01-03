@@ -8,6 +8,7 @@ module Docs
 
         # Remove links to previous versions of the reference
         at_css('h1 + ul').remove
+        at_css('h1 + ul').remove
 
         # Remove table of contents
         at_css('h1 + h5').remove
