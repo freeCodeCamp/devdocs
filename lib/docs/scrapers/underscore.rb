@@ -3,7 +3,7 @@ module Docs
     self.name = 'Underscore.js'
     self.slug = 'underscore'
     self.type = 'underscore'
-    self.release = '1.11.0'
+    self.release = '1.12.0'
     self.base_url = 'https://underscorejs.org'
     self.links = {
       home: 'https://underscorejs.org',
