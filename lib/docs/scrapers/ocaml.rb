@@ -26,5 +26,10 @@ module Docs
       &copy; INRIA 1995-2020.
     HTML
 
+    def get_latest_version(opts)
+      doc = fetch_doc('https://www.ocaml.org/releases/', opts)
+      doc.css('#main-contents li > a').first.content
+    end
+
   end
 end
