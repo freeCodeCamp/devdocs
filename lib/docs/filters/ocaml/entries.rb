@@ -35,7 +35,7 @@ module Docs
       def additional_entries
         entries = []
 
-        module_node = css('h1').at_css('span')
+        module_node = at_css('h1')
 
         css('pre > span[id]').each do |span|
           if span['id'].start_with?('VAL')
@@ -49,7 +49,7 @@ module Docs
           end
 
           name = span.content
-          name += " [#{module_node.content}]" unless module_node.nil?
+          name += " [#{module_node.content}]" if module_node
           entries << [name, span['id'], entry_type]
         end
         entries
