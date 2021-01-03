@@ -108,6 +108,18 @@ $GS = '/usr/local/opt/ghostscript/bin/gs';	# GhostScript
 
 ## NumPy
 
+## OCaml
+
+Download from https://www.ocaml.org/docs/ the HTML reference:
+https://ocaml.org/releases/4.11/ocaml-4.11-refman-html.tar.gz
+and extract it as `/path/to/devdocs/docs/ocaml`:
+
+```sh
+cd /path/to/devdocs/docs
+wget https://ocaml.org/releases/4.11/ocaml-4.11-refman-html.tar.gz
+tar xf ocaml-4.10-refman-html.tar.gz --transform 's/htmlman/ocaml/'
+```
+
 ## OpenJDK
 
 https://packages.debian.org/sid/openjdk-11-doc
