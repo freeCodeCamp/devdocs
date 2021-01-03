@@ -34,7 +34,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      get_latest_github_release('vuejs', 'vue', opts)
+      get_latest_github_release('vuejs', 'vue-next', opts)
     end
   end
 end

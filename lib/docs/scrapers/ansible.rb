@@ -75,8 +75,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://docs.ansible.com/ansible/latest/index.html', opts)
-      doc.at_css('.version').content.strip
+      tags = get_github_tags('ansible', 'ansible', opts)
+      tags[0]['name'][1..-1]
     end
   end
 end

@@ -66,8 +66,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      html = fetch('https://docs.scipy.org/doc/', opts)
-      html.scan(/Numpy ([0-9.]+) Reference Guide/)[0][0]
+      get_latest_github_release('numpy', 'numpy', opts)
     end
   end
 end

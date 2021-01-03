@@ -22,9 +22,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      json = fetch_json("https://developer.mozilla.org/en-US/docs/feeds/json/tag/#{options[:mdn_tag]}", opts)
-      dates = json.map { |i| i['pubdate'] }
-      DateTime.parse(dates.max).to_time.to_i
+      get_latest_github_commit_date('mdn', 'content', opts)
     end
 
     private
