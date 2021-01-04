@@ -127,23 +127,16 @@ tar xf ocaml-4.10-refman-html.tar.gz --transform 's/htmlman/ocaml/'
 ```
 
 ## OpenJDK
+Search 'Openjdk' in https://www.debian.org/distrib/packages, find the `openjdk-$VERSION-doc` package,
+download it, extract it with `dpkg -x $PACKAGE ./` and move `./usr/share/doc/openjdk-16-jre-headless/api/`
+to `path/to/devdocs/docs/openjdk~$VERSION`
 
-https://packages.debian.org/sid/openjdk-11-doc
-
+If you use or have access to a Debian-based GNU/Linux distribution you can run the following command:
 ```sh
-mkdir docs/openjdk~11
-curl --remote-name http://ftp.debian.org/debian/pool/main/o/openjdk-11/openjdk-11-doc_11.0.9.1+1-1_all.deb
-bsdtar --extract --to-stdout --file openjdk-11-doc_11.0.9.1+1-1_all.deb data.tar.xz | \
-bsdtar --extract --xz --file - --strip-components=6 --directory=docs/openjdk\~11/ ./usr/share/doc/openjdk-11-jre-headless/api/
-```
-
-https://packages.debian.org/sid/openjdk-8-doc
-
-```sh
-mkdir docs/openjdk~8
-curl --remote-name http://ftp.debian.org/debian/pool/main/o/openjdk-8/openjdk-8-doc_8u272-b10-1_all.deb
-bsdtar --extract --to-stdout --file openjdk-8-doc_8u272-b10-1_all.deb data.tar.xz | \
-bsdtar --extract --xz --file - --strip-components=6 --directory=docs/openjdk\~8/ ./usr/share/doc/openjdk-8-jre-headless/api/
+apt download openjdk-$VERSION-doc
+dpkg -x $PACKAGE ./
+# previous command makes a directory called 'usr' in the current directory
+mv ./usr/share/doc/openjdk-16-jre-headless/api/ path/to/devdocs/docs/openjdk~$VERSION
 ```
 
 ## PHP
