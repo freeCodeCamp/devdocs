@@ -6,7 +6,11 @@ module Docs
       end
 
       def get_type
-        'Guides'
+        if slug =~ /events|room|emit/ && version.eql?('3')
+          'Events'
+        else
+          'Guides'
+        end
       end
 
       def additional_entries
