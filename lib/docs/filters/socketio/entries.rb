@@ -18,12 +18,8 @@ module Docs
 
         css('h3').each_with_object([]) do |node, entries|
           name = node.content
-          name.remove! %r{\(.*}
-          name.remove! %r{\:.*}
 
-          unless entries.any? { |entry| entry[0] == name }
-            entries << [name, node['id'], self.name.remove(' API')]
-          end
+          entries << [name, node['id'], self.name.remove(' API')]
         end
       end
     end
