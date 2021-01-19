@@ -2,6 +2,7 @@ module Docs
   class Phpunit
     class CleanHtmlFilter < Filter
       def call
+        @doc = at_css('.section') if not root_page?
 
         css('pre').each do |node|
           node['class'] = 'highlight'
