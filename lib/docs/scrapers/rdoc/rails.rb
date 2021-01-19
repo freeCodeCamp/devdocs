@@ -84,7 +84,7 @@ module Docs
     end
 
     version '6.1' do
-      self.release = '6.1.0'
+      self.release = '6.1.1'
     end
 
     version '6.0' do
