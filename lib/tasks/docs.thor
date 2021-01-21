@@ -198,6 +198,7 @@ class DocsCLI < Thor
     puts '[S3] Done syncing.'
 
     # Upload packages to dl.devdocs.io (used by the "thor docs:download" command)
+    # TODO(MIGRATION): replace this with an S3 bucket upload.
     puts '[MaxCDN] Begin uploading.'
     Net::SFTP.start('ftp.devdocs-dl.devdocs.netdna-cdn.com', ENV['DEVDOCS_DL_USERNAME'], password: ENV['DEVDOCS_DL_PASSWORD']) do |sftp|
       docs.each do |doc|
