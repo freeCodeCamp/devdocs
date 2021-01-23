@@ -22,7 +22,9 @@ module Docs
       reference_appendices/tower.html
       user_guide/quickstart.html
       modules/modules_by_category.html
-      modules/list_of_all_modules.html)
+      modules/list_of_all_modules.html
+      collections/all_plugins.html
+      collections/index_vars.html)
 
     options[:skip_patterns] = [
       /\Acommunity.*/i,
@@ -31,7 +33,7 @@ module Docs
     ]
 
     version '2.10' do
-      self.release = '2.10.3'
+      self.release = '2.10.5'
       self.base_url = "https://docs.ansible.com/ansible/#{version}/"
     end
 
