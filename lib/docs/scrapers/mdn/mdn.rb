@@ -7,7 +7,6 @@ module Docs
     params[:macros] = 1
 
     html_filters.push 'mdn/clean_html'
-    text_filters.insert_before 'attribution', 'mdn/contribute_link'
 
     options[:rate_limit] = 200
     options[:trailing_slash] = false
