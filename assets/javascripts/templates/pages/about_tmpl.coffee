@@ -283,7 +283,7 @@ credits = [
     'https://raw.githubusercontent.com/airbnb/enzyme/master/LICENSE.md'
   ], [
     'Erlang',
-    '2010-2017 Ericsson AB',
+    '2010-2020 Ericsson AB',
     'Apache',
     'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
   ], [

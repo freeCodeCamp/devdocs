@@ -41,6 +41,12 @@ bsdtar --extract --file - --directory=docs/django\~$VERSION/
 
 Go to https://www.erlang.org/downloads and download the HTML documentation file.
 
+```ah
+mkdir --parent docs/erlang\~$VERSION/; \
+curl http://erlang.org/download/otp_doc_html_23.2.tar.gz | \
+bsdtar --extract --file - --directory=docs/erlang\~$VERSION/
+```
+
 ## Gnu
 
 ### GCC
