@@ -1,8 +1,6 @@
 module Docs
   class Vuex < UrlScraper
     self.type = 'simple'
-    self.release = '3.1.1'
-    self.base_url = 'https://vuex.vuejs.org/'
     self.links = {
       home: 'https://vuex.vuejs.org',
       code: 'https://github.com/vuejs/vuex'
@@ -20,8 +18,18 @@ module Docs
       Licensed under the MIT License.
     HTML
 
+    version '4' do
+      self.release = '4.0.0-rc.2'
+      self.base_url = 'https://next.vuex.vuejs.org/'
+    end
+
+    version '3' do
+      self.release = '3.6.2'
+      self.base_url = 'https://vuex.vuejs.org/'
+    end
+
     def get_latest_version(opts)
-      get_npm_version('vuex', opts)
+      get_npm_version('vuex', opts, 'next')
     end
   end
 end

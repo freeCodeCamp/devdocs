@@ -246,9 +246,9 @@ module Docs
       JSON.parse fetch(url, opts)
     end
 
-    def get_npm_version(package, opts)
+    def get_npm_version(package, opts, tag='latest')
       json = fetch_json("https://registry.npmjs.com/#{package}", opts)
-      json['dist-tags']['latest']
+      json['dist-tags'][tag]
     end
 
     def get_latest_github_release(owner, repo, opts)
