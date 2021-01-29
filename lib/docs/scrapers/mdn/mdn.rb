@@ -3,12 +3,9 @@ module Docs
     self.abstract = true
     self.type = 'mdn'
 
-    params[:raw] = 1
-    params[:macros] = 1
-
     html_filters.push 'mdn/clean_html'
 
-    options[:rate_limit] = 200
+    options[:container] = '#content'
     options[:trailing_slash] = false
 
     options[:skip_link] = ->(link) {
@@ -22,13 +19,6 @@ module Docs
 
     def get_latest_version(opts)
       get_latest_github_commit_date('mdn', 'content', opts)
-    end
-
-    private
-
-    def process_response?(response)
-      response.effective_url.host = 'developer.mozilla.org' if response.effective_url.host == 'wiki.developer.mozilla.org'
-      super && response.effective_url.query == 'raw=1&macros=1'
     end
   end
 end
