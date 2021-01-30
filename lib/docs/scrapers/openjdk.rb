@@ -34,15 +34,6 @@ module Docs
 
     NEWFILTERS = ['openjdk/entries_new', 'openjdk/clean_html_new']
 
-    version '16' do
-      self.release = '16'
-      self.root_path = 'index.html'
-
-      html_filters.push NEWFILTERS
-
-      options[:container] = 'main'
-    end
-
     version '15' do
       self.release = '15.0.1'
       self.root_path = 'index.html'
