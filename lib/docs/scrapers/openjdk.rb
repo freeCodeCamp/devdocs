@@ -1,7 +1,6 @@
 module Docs
   class Openjdk < FileScraper
-    # Downloaded from packages.debian.org/sid/openjdk-8-doc
-    # Extracting subdirectory /usr/share/doc/openjdk-8-jre-headless/api
+
     self.name = 'OpenJDK'
     self.type = 'openjdk'
     self.root_path = 'overview-summary.html'
@@ -11,7 +10,6 @@ module Docs
     }
 
     html_filters.insert_after 'internal_urls', 'openjdk/clean_urls'
-    html_filters.push 'openjdk/entries', 'openjdk/clean_html'
 
     options[:skip_patterns] = [
       /compact[123]-/,
@@ -19,7 +17,12 @@ module Docs
       /package-tree\.html/,
       /package-use\.html/,
       /class-use\//,
-      /doc-files\//]
+      /doc-files\//,
+      /\.svg/,
+      /\.png/
+    ]
+
+    options[:only_patterns] = [/\Ajava\./]
 
     options[:attribution] = <<-HTML
       &copy; 1993, 2020, Oracle and/or its affiliates. All rights reserved.<br>
@@ -29,15 +32,31 @@ module Docs
       Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.
     HTML
 
+    NEWFILTERS = ['openjdk/entries_new', 'openjdk/clean_html_new']
+
+    version '15' do
+      self.release = '15.0.1'
+      self.root_path = 'index.html'
+
+      html_filters.push NEWFILTERS
+
+      options[:container] = 'main'
+    end
+
+    OLDFILTERS = ['openjdk/entries', 'openjdk/clean_html']
+
     version '11' do
       self.release = '11.0.9'
       self.root_path = 'index.html'
       self.base_url = 'https://docs.oracle.com/en/java/javase/11/docs/api/'
-      options[:only_patterns] = [/\Ajava\./]
+
+      html_filters.push OLDFILTERS
     end
 
     version '8' do
       self.release = '8'
+
+      html_filters.push OLDFILTERS
 
       options[:only_patterns] = [
         /\Ajava\/beans\//,
@@ -61,19 +80,26 @@ module Docs
         /\Ajavax\/script\//,
         /\Ajavax\/security\//,
         /\Ajavax\/sound\//,
-        /\Ajavax\/tools\//]
+        /\Ajavax\/tools\//
+      ]
     end
 
     version '8 GUI' do
       self.release = '8'
 
+      html_filters.push OLDFILTERS
+
       options[:only_patterns] = [
         /\Ajava\/awt\//,
-        /\Ajavax\/swing\//]
+        /\Ajavax\/swing\//
+      ]
+
     end
 
     version '8 Web' do
       self.release = '8'
+
+      html_filters.push OLDFILTERS
 
       options[:only_patterns] = [
         /\Ajava\/applet\//,

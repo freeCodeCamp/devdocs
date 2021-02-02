@@ -1,3 +1,4 @@
+# coding: utf-8
 # frozen_string_literal: true
 
 module Docs
@@ -128,6 +129,13 @@ module Docs
 
         css('*[class]').each do |node|
           node.remove_attribute('class') unless node['class'] == 'inheritance'
+        end
+
+        # fix ul section that contains summaries or tables
+        css('ul').each do |node|
+          node.css('section').each do |subnode|
+            node.add_previous_sibling(subnode)
+          end
         end
 
         doc
