@@ -45,24 +45,6 @@ module Docs
 
     OLDFILTERS = ['openjdk/entries', 'openjdk/clean_html']
 
-    version '14' do
-      self.release = '14.0.2'
-      self.root_path = 'index.html'
-
-      html_filters.push OLDFILTERS
-
-      options[:container] = 'main'
-    end
-
-    version '13' do
-      self.release = '13.0.5'
-      self.root_path = 'index.html'
-
-      html_filters.push OLDFILTERS
-
-      options[:container] = 'main'
-    end
-
     version '11' do
       self.release = '11.0.9'
       self.root_path = 'index.html'
