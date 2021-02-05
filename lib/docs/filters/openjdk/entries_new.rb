@@ -28,16 +28,14 @@ module Docs
       end
 
       def additional_entries
-        css('a[name$=".summary"]').each_with_object({}) do |summary, entries|
-          next if summary['name'].include?('nested') || summary['name'].include?('constructor') ||
-                  summary['name'].include?('field') || summary['name'].include?('constant')
-          summary.parent.css('.memberNameLink a').each do |node|
-            name = node.parent.parent.content.strip
-            name.sub! %r{\(.+?\)}m, '()'
-            id = node['href'].remove(%r{.*#})
-            entries[name] ||= ["#{self.name}.#{name}", id]
-          end
-        end.values
+        entries = []
+
+        css('section[id]').each do |node|
+          next if !(node['id'].match?(/\(/))
+          entries << [self.name+ '.' +node.at_css('h3').content + '()', node['id']]
+        end
+
+        entries
       end
 
     end

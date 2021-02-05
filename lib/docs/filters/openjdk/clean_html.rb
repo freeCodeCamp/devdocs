@@ -5,14 +5,14 @@ module Docs
   class Openjdk
     class CleanHtmlFilter < Filter
       def call
-        css('.topNav', '.subNav', '.bottomNav', '.legalCopy', 'noscript', '.subTitle').remove
+        css('.topNav', '.subNav', '.bottomNav', '.legalCopy', 'noscript', '.subTitle', 'hr').remove
 
         # Preserve internal fragment links
         # Transform <a name="foo"><!-- --></a><bar>text</bar>
         #      into <bar id="foo">text</bar>
-        css('a[name]').each do |node|
+        css('a[name]','a[id]').each do |node|
           if node.children.all?(&:blank?)
-            node.next_element['id'] = node['name'] if node.next_element
+            node.next_element['id'] = (node['id'] || node['name'])if node.next_element
             node.remove
           end
         end
@@ -23,11 +23,9 @@ module Docs
           node.remove
         end
 
-        # Replace summary tables with their detail content
-        css('h3[id$=".summary"]').each do |node|
-          id = node['id'].sub('summary', 'detail')
-          detail = at_css("h3[id='#{id}']") || at_css("h3[id='#{id.remove('optional.').remove('required.')}']")
-          node.parent.children = detail.parent.children if detail
+        # remove captions in tables
+        css('table caption').each do |node|
+          node.remove
         end
 
         css('h3[id$=".summary"]', 'h3[id$=".detail"]').each do |node|

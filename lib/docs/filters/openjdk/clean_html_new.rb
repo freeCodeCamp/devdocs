@@ -7,21 +7,20 @@ module Docs
           at_css('h1').content = "OpenJDK #{release} Documentation"
         end
 
-        css('.header .sub-title').remove
-
-        css('blockquote pre').each do |node|
-          node.parent.name = 'pre'
-          node.parent['class'] = 'highlight'
-          node.parent['data-language'] = 'java'
-          node.parent.content = node.content
-          node.remove
-        end
+        css('.header .sub-title', 'hr', '.table-tabs').remove
 
         # fix ul section that contains summaries or tables
         css('ul').each do |node|
           node.css('section').each do |subnode|
             node.add_previous_sibling(subnode)
           end
+        end
+
+        css('ul.summary-list').each do |node|
+          node.css('li').each do |subnode|
+            subnode.name = 'div'
+          end
+          node.name = 'div'
         end
 
         # add syntax highlight to code blocks
