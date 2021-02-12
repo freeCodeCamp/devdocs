@@ -88,6 +88,37 @@ If any issue arises, run `heroku rollback` to rollback to the previous version o
 
 If this is your first deploy, make sure another maintainer is around to assist. 
 
+## Infrastructure
+
+The bundled documents are available at downloads.devdocs.io and the documents themselves at documents.devdocs.io.  Download and document requests are proxied to S3 buckets devdocs-downloads.s3.amazonaws.com and devdocs-documents.s3.amazonaws.com respectively.
+
+If there's ever a need to create a new proxy VM (and the `devdocs-proxy` snapshot is not available) then the new vm should be provisioned as follows:
+
+```bash
+# we need at least nginx 1.19.x
+wget https://nginx.org/keys/nginx_signing.key
+apt-key add nginx_signing.key
+echo 'deb https://nginx.org/packages/mainline/ubuntu/ focal nginx' >> /etc/apt/sources.list
+echo 'deb-src https://nginx.org/packages/mainline/ubuntu/ focal nginx' >> /etc/apt/sources.list
+apt-get -y remove nginx-common
+apt-get -y update
+apt-get -y install nginx
+
+# the config is on github
+rm -rf /etc/nginx/*
+rm -rf /etc/nginx/.* 2> /dev/null
+git clone https://github.com/freeCodeCamp/devdocs-nginx-config.git /etc/nginx
+
+# at this point we need to add the certs from Cloudflare and test the config
+nginx -t 
+
+# if nginx is already running, just 
+# ps aux | grep nginx 
+# find the number and kill it
+
+nginx
+```
+
 ## List of maintainers in alphabetical order
 
 The following people (used to) maintain DevDocs:
