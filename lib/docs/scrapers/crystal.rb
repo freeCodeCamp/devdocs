@@ -26,7 +26,7 @@ module Docs
     }
 
     version do
-      self.release = '0.35.1'
+      self.release = '0.36.1'
       self.root_path = "api/#{release}/index.html"
 
       options[:only_patterns] = [/\Adocs\//, /\Aapi\/#{release}\//]
