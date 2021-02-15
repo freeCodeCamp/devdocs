@@ -22,7 +22,10 @@ module Docs
       /\.png/
     ]
 
-    options[:only_patterns] = [/\Ajava\./]
+    options[:only_patterns] = [
+      /\Ajava\./,
+      /\Ajdk\./
+    ]
 
     options[:attribution] = <<-HTML
       &copy; 1993, 2020, Oracle and/or its affiliates. All rights reserved.<br>
@@ -37,6 +40,7 @@ module Docs
     version '15' do
       self.release = '15.0.1'
       self.root_path = 'index.html'
+      self.base_url = 'https://docs.oracle.com/en/java/javase/15/docs/api/'
 
       html_filters.push NEWFILTERS
 
