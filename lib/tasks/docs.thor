@@ -203,7 +203,7 @@ class DocsCLI < Thor
     docs.each do |doc|
       filename = "#{doc.path}.tar.gz"
       print "[S3 bundle] Uploading #{filename}..."
-      cmd = "aws s3 cp #{File.join(Docs.store_path, filename)} s3://devdocs-downloads/bundles/#{filename} --profile devdocs"
+      cmd = "aws s3 cp #{File.join(Docs.store_path, filename)} s3://devdocs-downloads/#{filename} --profile devdocs"
       cmd << ' --dryrun' if options[:dryrun]
       system(cmd)
     end
@@ -337,7 +337,7 @@ class DocsCLI < Thor
 
   def download_doc(doc)
     target_path = File.join(Docs.store_path, doc.path)
-    open "https://downloads.devdocs.io/bundles/#{doc.path}.tar.gz" do |file|
+    open "https://downloads.devdocs.io/#{doc.path}.tar.gz" do |file|
       FileUtils.mkpath(target_path)
       file.close
       tar = UnixUtils.gunzip(file.path)
