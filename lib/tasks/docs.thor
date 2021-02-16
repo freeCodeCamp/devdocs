@@ -191,7 +191,7 @@ class DocsCLI < Thor
     puts '[S3] Begin syncing.'
     docs.each do |doc|
       puts "[S3] Syncing #{doc.path}..."
-      cmd = "aws s3 sync #{File.join(Docs.store_path, doc.path)} s3://devdocs-staging-documents/#{doc.path} --delete --profile devdocs"
+      cmd = "aws s3 sync #{File.join(Docs.store_path, doc.path)} s3://devdocs-documents/#{doc.path} --delete --profile devdocs"
       cmd << ' --dryrun' if options[:dryrun]
       system(cmd)
     end
@@ -204,7 +204,7 @@ class DocsCLI < Thor
     docs.each do |doc|
       filename = "#{doc.path}.tar.gz"
       print "[S3 bundle] Uploading #{filename}..."
-      cmd = "aws s3 cp #{File.join(Docs.store_path, filename)} s3://devdocs-staging-downloads/bundles/#{filename} --profile devdocs"
+      cmd = "aws s3 cp #{File.join(Docs.store_path, filename)} s3://devdocs-downloads/bundles/#{filename} --profile devdocs"
       cmd << ' --dryrun' if options[:dryrun]
       system(cmd)
     end
