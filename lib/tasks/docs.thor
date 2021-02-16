@@ -241,7 +241,7 @@ class DocsCLI < Thor
           FileUtils.mkpath(dir)
 
           ['index.json', 'meta.json'].each do |filename|
-            json = "https://documents.devdocs.in/#{doc.path}/#{filename}?#{time}"
+            json = "https://documents.devdocs.io/#{doc.path}/#{filename}?#{time}"
             begin
               open(json) do |file|
                 mutex.synchronize do
@@ -338,7 +338,7 @@ class DocsCLI < Thor
 
   def download_doc(doc)
     target_path = File.join(Docs.store_path, doc.path)
-    open "https://downloads.devdocs.in/bundles/#{doc.path}.tar.gz" do |file|
+    open "https://downloads.devdocs.io/bundles/#{doc.path}.tar.gz" do |file|
       FileUtils.mkpath(target_path)
       file.close
       tar = UnixUtils.gunzip(file.path)
