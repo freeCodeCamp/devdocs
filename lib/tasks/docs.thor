@@ -202,7 +202,7 @@ class DocsCLI < Thor
 
     docs.each do |doc|
       filename = "#{doc.path}.tar.gz"
-      print "[S3 bundle] Uploading #{filename}..."
+      puts "[S3 bundle] Uploading #{filename}..."
       cmd = "aws s3 cp #{File.join(Docs.store_path, filename)} s3://devdocs-downloads/#{filename} --profile devdocs"
       cmd << ' --dryrun' if options[:dryrun]
       system(cmd)
