@@ -197,8 +197,7 @@ class DocsCLI < Thor
     end
     puts '[S3] Done syncing.'
 
-    # Upload packages to dl.devdocs.io (used by the "thor docs:download" command)
-    # TODO(MIGRATION): replace this with an S3 bucket upload.
+    # Upload packages to downloads.devdocs.io (used by the "thor docs:download" command)
     puts '[S3 bundle] Begin uploading.'
 
     docs.each do |doc|
