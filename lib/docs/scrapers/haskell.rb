@@ -58,6 +58,12 @@ module Docs
       end
     end
 
+    version '9' do
+      self.release = '9.0.1'
+      self.base_url = "https://downloads.haskell.org/~ghc/#{release}/docs/html/"
+      options[:container] = ->(filter) {filter.subpath.start_with?('users_guide') ? '.document' : '#content'}
+    end
+
     version '8' do
       self.release = '8.10.2'
       self.base_url = "https://downloads.haskell.org/~ghc/#{release}/docs/html/"
