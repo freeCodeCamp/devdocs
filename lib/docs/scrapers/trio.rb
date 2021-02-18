@@ -1,8 +1,8 @@
 module Docs
   class Trio < UrlScraper
     self.type = 'simple'
-    self.release = '0.12.1'
-    self.base_url = 'https://trio.readthedocs.io/en/v0.12.1/'
+    self.release = '0.18.0'
+    self.base_url = "https://trio.readthedocs.io/en/v#{self.release}/"
     self.root_path = 'index.html'
     self.links = {
       home: 'https://trio.readthedocs.io/',
@@ -15,7 +15,7 @@ module Docs
       /reference-core/,
       /reference-io/,
       /reference-testing/,
-      /reference-hazmat/,
+      /reference-lowlevel/,
     ]
 
     options[:attribution] = <<-HTML
