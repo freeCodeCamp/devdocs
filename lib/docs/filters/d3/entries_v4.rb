@@ -18,8 +18,13 @@ module Docs
       def additional_entries
         css('h6[id]').each_with_object [] do |node, entries|
           name = node.content.strip
+          name.remove! 'Source, Examples'
           name.remove! 'Source'
+          name.remove! 'Examples'
           name.remove! '<>'
+          name.remove! ' · '
+          name.remove! '0,' # from d3.quickselect
+          name.remove! '=' # from d3.quickselect
           name.remove! %r{\s\-.*}
           name.remove! %r{\s*\[.*\]}
           name.gsub! %r{\(.+?\)\)?}, '()'

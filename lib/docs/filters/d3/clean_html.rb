@@ -31,6 +31,9 @@ module Docs
           node.content = 'Source'
           node['class'] = 'source'
         end
+        css('h6 a:contains("Source"), h6 a:contains("Examples")').each do |node|
+          node['class'] = 'source'
+        end
 
         # Fix internal links
         css('a[href]').each do |node|
