@@ -2,10 +2,11 @@ module Docs
   class Crystal
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        if slug.start_with?('docs/')
-          name = at_css('.page-inner h1').content.strip
+        if slug.start_with?('reference/')
+          name = at_css('main h1').content.strip
+          name.remove! '¶'
 
-          if slug.start_with?('docs/syntax_and_semantics')
+          if slug.start_with?('reference/syntax_and_semantics')
             name.prepend "#{slug.split('/')[2].titleize}: " if slug.split('/').length > 3
           elsif slug.split('/').length > 1
             chapter = slug.split('/')[1].titleize.capitalize
@@ -23,9 +24,9 @@ module Docs
       def get_type
         return if root_page?
 
-        if slug.start_with?('docs/syntax_and_semantics')
+        if slug.start_with?('reference/syntax_and_semantics')
           'Book: Language'
-        elsif slug.start_with?('docs/')
+        elsif slug.start_with?('reference/')
           'Book'
         else
           hierarchy = at_css('.superclass-hierarchy')
