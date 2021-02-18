@@ -20,8 +20,6 @@ class App < Sinatra::Application
     set :root, Pathname.new(File.expand_path('../..', __FILE__))
     set :sprockets, Sprockets::Environment.new(root)
 
-    set :cdn_origin, ''
-
     set :assets_prefix, 'assets'
     set :assets_path, File.join(public_folder, assets_prefix)
     set :assets_manifest_path, File.join(assets_path, 'manifest.json')
@@ -75,9 +73,8 @@ class App < Sinatra::Application
 
   configure :production do
     set :static, false
-    set :cdn_origin, 'https://cdn.devdocs.io'
-    set :docs_origin, '//docs.devdocs.io'
-    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+    set :docs_origin, '//documents.devdocs.io'
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' https://www.google-analytics.com https://secure.gaug.es https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
     use Rack::ETag
@@ -102,7 +99,6 @@ class App < Sinatra::Application
 
     Sprockets::Helpers.configure do |config|
       config.digest = true
-      config.asset_host = 'cdn.devdocs.io'
       config.manifest = Sprockets::Manifest.new(sprockets, assets_manifest_path)
     end
   end
@@ -202,7 +198,7 @@ class App < Sinatra::Application
 
     def service_worker_asset_urls
       @@service_worker_asset_urls ||= [
-        javascript_path('application', asset_host: false),
+        javascript_path('application'),
         stylesheet_path('application'),
         image_path('sprites/docs.png'),
         image_path('sprites/docs@2x.png'),

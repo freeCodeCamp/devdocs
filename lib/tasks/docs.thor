@@ -191,27 +191,23 @@ class DocsCLI < Thor
     puts '[S3] Begin syncing.'
     docs.each do |doc|
       puts "[S3] Syncing #{doc.path}..."
-      cmd = "aws s3 sync #{File.join(Docs.store_path, doc.path)} s3://devdocs-assets/#{doc.path} --delete --profile devdocs"
+      cmd = "aws s3 sync #{File.join(Docs.store_path, doc.path)} s3://devdocs-documents/#{doc.path} --delete --profile devdocs"
       cmd << ' --dryrun' if options[:dryrun]
       system(cmd)
     end
     puts '[S3] Done syncing.'
 
-    # Upload packages to dl.devdocs.io (used by the "thor docs:download" command)
-    puts '[MaxCDN] Begin uploading.'
-    Net::SFTP.start('ftp.devdocs-dl.devdocs.netdna-cdn.com', ENV['DEVDOCS_DL_USERNAME'], password: ENV['DEVDOCS_DL_PASSWORD']) do |sftp|
-      docs.each do |doc|
-        filename = "#{doc.path}.tar.gz"
-        print "[MaxCDN] Uploading #{filename}..."
-        if options[:dryrun]
-          print "\n"
-        else
-          sftp.upload! File.join(Docs.store_path, filename), File.join('', 'public_html', filename)
-          print " OK\n"
-        end
-      end
+    # Upload packages to downloads.devdocs.io (used by the "thor docs:download" command)
+    puts '[S3 bundle] Begin uploading.'
+
+    docs.each do |doc|
+      filename = "#{doc.path}.tar.gz"
+      puts "[S3 bundle] Uploading #{filename}..."
+      cmd = "aws s3 cp #{File.join(Docs.store_path, filename)} s3://devdocs-downloads/#{filename} --profile devdocs"
+      cmd << ' --dryrun' if options[:dryrun]
+      system(cmd)
     end
-    puts '[MaxCDN] Done uploading.'
+    puts '[S3 bundle] Done uploading.'
   end
 
   desc 'commit', '[private]'
@@ -244,7 +240,7 @@ class DocsCLI < Thor
           FileUtils.mkpath(dir)
 
           ['index.json', 'meta.json'].each do |filename|
-            json = "https://docs.devdocs.io/#{doc.path}/#{filename}?#{time}"
+            json = "https://documents.devdocs.io/#{doc.path}/#{filename}?#{time}"
             begin
               open(json) do |file|
                 mutex.synchronize do
@@ -341,7 +337,7 @@ class DocsCLI < Thor
 
   def download_doc(doc)
     target_path = File.join(Docs.store_path, doc.path)
-    open "http://dl.devdocs.io/#{doc.path}.tar.gz" do |file|
+    open "https://downloads.devdocs.io/#{doc.path}.tar.gz" do |file|
       FileUtils.mkpath(target_path)
       file.close
       tar = UnixUtils.gunzip(file.path)
