@@ -2,7 +2,7 @@ module Docs
   class Crystal < UrlScraper
     self.type = 'crystal'
     self.base_url = 'https://crystal-lang.org/'
-    self.initial_paths = %w(docs/index.html)
+    self.initial_paths = %w(reference/index.html)
     self.links = {
       home: 'https://crystal-lang.org/',
       code: 'https://github.com/crystal-lang/crystal'
@@ -11,7 +11,7 @@ module Docs
     html_filters.push 'crystal/entries', 'crystal/clean_html'
 
     options[:attribution] = ->(filter) {
-      if filter.slug.start_with?('docs')
+      if filter.slug.start_with?('reference')
         <<-HTML
           To the extent possible under law, the persons who contributed to this work
           have waived<br>all copyright and related or neighboring rights to this work
@@ -29,12 +29,12 @@ module Docs
       self.release = '0.36.1'
       self.root_path = "api/#{release}/index.html"
 
-      options[:only_patterns] = [/\Adocs\//, /\Aapi\/#{release}\//]
+      options[:only_patterns] = [/\Aapi\/#{release}\//, /\Areference\//]
       options[:skip_patterns] = [/debug/i]
 
       options[:replace_paths] = {
         "api/#{release}/" => "api/#{release}/index.html",
-        'docs/' => 'docs/index.html'
+        'reference/' => 'reference/index.html'
       }
     end
 

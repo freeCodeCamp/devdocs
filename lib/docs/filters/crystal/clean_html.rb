@@ -2,14 +2,17 @@ module Docs
   class Crystal
     class CleanHtmlFilter < Filter
       def call
-        slug.start_with?('docs') ? book : api
+        slug.start_with?('reference') ? book : api
         doc
       end
 
       def book
-        @doc = at_css('.page-inner section')
+        @doc = at_css('main article')
+
+        css('.headerlink').remove
 
         css('pre > code').each do |node|
+          node.parent['data-language'] = 'crystal'
           node.parent['data-language'] = node['class'][/lang-(\w+)/, 1] if node['class']
           node.parent.content = node.parent.content
         end
