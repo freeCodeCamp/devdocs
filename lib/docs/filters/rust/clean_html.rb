@@ -63,6 +63,11 @@ module Docs
         end
 
         css('> .impl-items', '> .docblock', 'pre > pre', '.tooltiptext', '.tooltip').each do |node|
+          # see .tooltip.ignore::after in https://doc.rust-lang.org/rustdoc1.50.0.css
+          node.content += ' This example is not tested' if node['class'].include?('ignore')
+          node.content += ' This example deliberately fails to compile' if node['class'].include?('compile_fail')
+          node.content += ' This example panics' if node['class'].include?('should_panic')
+          node.content += ' This code runs with edition ' + node['data-edition'] if node['class'].include?('edition')
           node.before(node.children).remove
         end
 
