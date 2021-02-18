@@ -7,4 +7,4 @@ public/fonts
 public/docs/**/*
 docs/**/*
 !docs/*.md
-vendor
+/vendor
