@@ -12,6 +12,16 @@ module Docs
       end
 
       def get_type
+        if version >= "1.20"
+          if slug.start_with?('user')
+            return 'User Guide'
+          elsif slug.start_with?('dev')
+            return 'Development'
+          end
+          li_a = css('nav li.active > a')
+          return li_a.last.content if li_a
+        end
+
         nav_items = css('.nav.nav-pills.pull-left > li')
 
         if nav_items[5]

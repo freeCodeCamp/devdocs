@@ -573,7 +573,7 @@ credits = [
     'https://raw.githubusercontent.com/npm/npm/master/LICENSE'
   ], [
     'NumPy',
-    '2005-2020 NumPy Developers',
+    '2005-2021 NumPy Developers',
     'BSD',
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
   ], [
