@@ -27,34 +27,17 @@ module Docs
       end
 
       def additional_entries
-        # Only keep the first found entry with a unique name,
-        # i.e. overloaded methods are skipped in index
-        if version == '8' || version == '8 Gui' || version == '8 Web'
-          css('a[name$=".summary"]').each_with_object({}) do |summary, entries|
-            next if summary['name'].include?('nested') || summary['name'].include?('constructor') ||
-                    summary['name'].include?('field') || summary['name'].include?('constant')
-            summary.parent.css('.memberNameLink a').each do |node|
-              name = node.parent.parent.content.strip
-              name.sub! %r{\(.+?\)}m, '()'
-              id = node['href'].remove(%r{.*#})
-              entries[name] ||= ["#{self.name}.#{name}", id]
-            end
-          end.values
+        entries = []
 
-        else
-          css('a[id$=".summary"]').each_with_object({}) do |summary, entries|
-            next if summary['id'].include?('nested') || summary['id'].include?('constructor') ||
-                    summary['id'].include?('field') || summary['id'].include?('constant')
-            summary.parent.css('.memberNameLink a').each do |node|
-              name = node.parent.parent.content.strip
-              name.sub! %r{\(.+?\)}m, '()'
-              id = node['href'].remove(%r{.*#})
-              entries[name] ||= ["#{self.name}.#{name}", id]
-            end
-          end.values
+        css('.memberNameLink a').each do |node|
+          next if  !(node['href'].match?(/\(/)) # skip non-methods
+          entries << [self.name + '.' + node.content + '()', slug.downcase + node['href']]
         end
 
+        entries
+
       end
+
     end
   end
 end
