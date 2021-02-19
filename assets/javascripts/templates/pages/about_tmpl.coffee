@@ -273,7 +273,7 @@ credits = [
     'https://www.gnu.org/licenses/gpl-3.0.html'
   ], [
     'Ember.js',
-    '2017 Yehuda Katz, Tom Dale and Ember.js contributors',
+    '2020 Yehuda Katz, Tom Dale and Ember.js contributors',
     'MIT',
     'https://raw.githubusercontent.com/emberjs/ember.js/master/LICENSE'
   ], [
