@@ -37,7 +37,7 @@ class app.Shortcuts
     return
 
   onKeypress: (event) =>
-    return if @buggyEvent(event)
+    return if @buggyEvent(event) or (event.charCode == 63 and document.activeElement.tagName == 'INPUT')
     unless event.ctrlKey or event.metaKey
       result = @handleKeypressEvent event
       event.preventDefault() if result is false
