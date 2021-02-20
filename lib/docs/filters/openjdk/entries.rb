@@ -30,8 +30,15 @@ module Docs
         entries = []
 
         css('.memberNameLink a').each do |node|
-          next if  !(node['href'].match?(/\(/)) # skip non-methods
-          entries << [self.name + '.' + node.content + '()', slug.downcase + node['href']]
+          next unless node['href'].match?(/[-(]/) # skip non-methods
+
+          if (version=='8' || version == '8 GUI' || version == '8 Web')
+            id = node['href'].gsub(/.*#/, '')
+          else
+            id = slug.downcase + node['href']
+          end
+
+          entries << [self.name + '.' + node.content + '()', id]
         end
 
         entries
