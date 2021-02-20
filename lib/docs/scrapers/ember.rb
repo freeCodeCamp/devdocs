@@ -7,12 +7,6 @@ module Docs
     self.name = 'Ember.js'
     self.slug = 'ember'
     self.type = 'ember'
-    self.release = '3.25.0'
-    self.base_urls = %w[
-      https://guides.emberjs.com/v3.25.0/
-      https://api.emberjs.com/ember/3.25/
-      https://api.emberjs.com/ember-data/3.25/
-    ]
     self.links = {
       home: 'https://emberjs.com/',
       code: 'https://github.com/emberjs/ember.js'
@@ -54,12 +48,23 @@ module Docs
 
     options[:decode_and_clean_paths] = true # handle paths like @ember/application
 
-    def initial_urls
-      %w(
+    version '3' do
+      self.release = '3.25.0'
+      self.base_urls = %w[
         https://guides.emberjs.com/v3.25.0/
         https://api.emberjs.com/ember/3.25/
         https://api.emberjs.com/ember-data/3.25/
-      )
+      ]
+    end
+
+    version '2' do
+      self.release = '2.18.0'
+      self.base_urls = %w[
+        https://guides.emberjs.com/v2.18.0/
+        https://api.emberjs.com/ember/2.18/
+        https://api.emberjs.com/ember-data/2.18/
+      ]
+      options[:skip_patterns].push(/handlebars-basics$/)
     end
 
     def get_latest_version(opts)

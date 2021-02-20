@@ -2,7 +2,7 @@ module Docs
   class Ember
     class CleanHtmlFilter < Filter
       def call
-        css('hr', '.edit-page', '.heading__link__edit', 'aside').remove
+        css('hr', '.edit-page', '.heading__link__edit', 'aside', '.old-version-warning').remove
 
         base_url.host.start_with?('api') ? api : guide
 

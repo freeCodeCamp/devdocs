@@ -17,15 +17,17 @@ module Docs
       def get_type
         if base_url.host.start_with?('api')
           name = self.name.remove(/ \(.*/)
-          if name.start_with?('@') || name == 'rsvp'
-            'Packages'
-          elsif name == 'Function'
-            'Functions'
+          if name == 'Function'
+            '3. Functions'
+          elsif at_css('h1').content.start_with?('Package')
+            '2. Packages'
           else
-            'Classes'
+            name = name.remove(' (methods)').remove(' (properties)').remove(' (events)')
+            # Reference gets sorted to the top by default, need to have it with other classes so add a zero width space
+            name == 'Reference' ? 'Reference​' : name
           end
         else
-          'Guide'
+          '1. Guide'
         end
       end
 
