@@ -2,8 +2,14 @@ module Docs
   class Ember
     class CleanHtmlFilter < Filter
       def call
-        css('hr', '.edit-page').remove
+        css('hr', '.edit-page', '.heading__link__edit', 'aside', '.old-version-warning').remove
 
+        base_url.host.start_with?('api') ? api : guide
+
+        doc
+      end
+
+      def api
         # Remove code highlighting
         css('.highlight').each do |node|
           node.before(%(<div class="pre-title"><code>#{node.at_css('thead').content.strip}</code></div>)) if node.at_css('thead')
@@ -13,12 +19,6 @@ module Docs
           node['data-language'] = node['data-language'].sub(/(hbs|handlebars)/, 'html')
         end
 
-        base_url.path.start_with?('/api') ? api : guide
-
-        doc
-      end
-
-      def api
         css('h1 .access').each do |node|
           node.replace(" (#{node.content})")
         end
@@ -72,7 +72,13 @@ module Docs
       end
 
       def guide
-        @doc = at_css('article')
+        # Remove code highlighting
+        css('.filename').each do |node|
+          node.content = node.at_css('pre code').content
+          node.name = 'pre'
+          node['data-language'] = node['class'][/(javascript|js|html|hbs|handlebars)/, 1]
+          node['data-language'] = node['data-language'].sub(/(hbs|handlebars)/, 'html')
+        end
 
         if root_page?
           at_css('h1').content = 'Ember.js'
