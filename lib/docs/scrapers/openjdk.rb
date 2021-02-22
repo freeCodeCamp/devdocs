@@ -59,6 +59,7 @@ module Docs
 
     version '8' do
       self.release = '8'
+      self.base_url = 'https://docs.oracle.com/javase/8/docs/api/'
 
       html_filters.push OLDFILTERS
 
@@ -90,6 +91,7 @@ module Docs
 
     version '8 GUI' do
       self.release = '8'
+      self.base_url = 'https://docs.oracle.com/javase/8/docs/api/'
 
       html_filters.push OLDFILTERS
 
@@ -102,6 +104,7 @@ module Docs
 
     version '8 Web' do
       self.release = '8'
+      self.base_url = 'https://docs.oracle.com/javase/8/docs/api/'
 
       html_filters.push OLDFILTERS
 
