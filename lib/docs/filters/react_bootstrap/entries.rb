@@ -15,7 +15,7 @@ module Docs
           type = slug.split('/').join('')
         end
         type.gsub!('-', ' ')
-        type.split.map(&:capitalize).join(' ')
+        type = type.split.map(&:capitalize).join(' ')
         type
       end
     end
