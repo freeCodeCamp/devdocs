@@ -687,6 +687,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/facebook/react/master/LICENSE'
   ], [
+    'React Bootstrap',
+    '2014-present Stephen J. Collings, Matthew Honnibal, Pieter Vanderwerff',
+    'MIT',
+    'https://raw.githubusercontent.com/react-bootstrap/react-bootstrap/master/LICENSE'
+  ], [
     'ReactiveX',
     'ReactiveX contributors',
     'Apache',

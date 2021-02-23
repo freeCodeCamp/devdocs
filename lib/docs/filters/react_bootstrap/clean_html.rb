@@ -5,10 +5,12 @@ module Docs
         css('.flex-column.d-flex').remove
         css('header').remove
         css('.bs-example').remove
-        css('.position-relative').each do |node|
-          code = node.at_css('textarea')
-          code.name = 'pre'
-          code['style'] = code['style'] + '; border: solid 1px;'
+
+        css('.position-relative pre').each do |node|
+          # node.content = node.content
+          node.remove_attribute('style')
+          node['data-language'] = 'jsx'
+          node.parent.replace(node)
         end
         doc
       end
