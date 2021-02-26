@@ -1,5 +1,6 @@
 module Docs
   class ReactBootstrap < UrlScraper
+    self.name = 'React Bootstrap'
     self.slug = 'react_bootstrap'
     self.type = 'simple'
     self.release = '1.5.0'
