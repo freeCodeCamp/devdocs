@@ -2,7 +2,7 @@ module Docs
   class Ocaml
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        title = context[:html_title].gsub(/\u00A0/, " ")
+        title = context[:html_title].gsub(/[[:space:]\u200d]+/, " ")
         title = title.split.join(" ").strip
         title.gsub!(/^Chapter /, "")
 

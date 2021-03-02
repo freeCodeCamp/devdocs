@@ -578,7 +578,7 @@ credits = [
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
   ], [
     'OCaml',
-    '1995-2020 Inria',
+    '1995-2021 INRIA',
     'CC BY-SA',
     'https://ocaml.org/docs/'
   ], [
