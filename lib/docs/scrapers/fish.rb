@@ -12,9 +12,17 @@ module Docs
 
     # https://fishshell.com/docs/current/license.html
     options[:attribution] = <<-HTML
-      &copy; 2019 fish-shell developers<br>
+      &copy; 2020 fish-shell developers<br>
       Licensed under the GNU General Public License, version 2.
     HTML
+
+    version '3.2' do
+      self.release = '3.2.0'
+      self.base_url = "https://fishshell.com/docs/#{version}/"
+
+      options[:skip].concat %w(genindex.html relnotes.html)
+      html_filters.push 'sphinx/clean_html', 'fish/clean_html_sphinx', 'fish/entries_sphinx'
+    end
 
     version '3.1' do
       self.release = '3.1.2'
