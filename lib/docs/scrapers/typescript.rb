@@ -4,7 +4,7 @@ module Docs
 
     self.name = 'TypeScript'
     self.type = 'simple'
-    self.release = '4.1.3'
+    self.release = '4.2.2'
     self.base_urls = [
       'https://www.typescriptlang.org/docs/handbook/',
       'https://www.typescriptlang.org/'
@@ -35,7 +35,7 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2012-2020 Microsoft<br>
+      &copy; 2012-2021 Microsoft<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 
