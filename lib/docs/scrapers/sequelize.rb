@@ -21,7 +21,7 @@ module Docs
     HTML
 
     version '6' do
-      self.release = '6.3.5'
+      self.release = '6.5.0'
       self.base_url = "https://sequelize.org/master/"
     end
 
