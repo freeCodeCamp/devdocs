@@ -2,7 +2,7 @@ module Docs
   class Sqlite < FileScraper
     self.name = 'SQLite'
     self.type = 'sqlite'
-    self.release = '3.33.0'
+    self.release = '3.34.0'
     self.base_url = 'https://sqlite.org/'
     self.root_path = 'docs.html'
     self.initial_paths = %w(keyword_index.html)
@@ -14,6 +14,7 @@ module Docs
     html_filters.insert_before 'clean_html', 'sqlite/clean_js_tables'
     html_filters.push 'sqlite/entries', 'sqlite/clean_html'
 
+    options[:clean_text] = false  # keep SVG elements
     options[:only_patterns] = [/\.html\z/]
     options[:skip_patterns] = [/releaselog/, /consortium/]
     options[:skip] = %w(

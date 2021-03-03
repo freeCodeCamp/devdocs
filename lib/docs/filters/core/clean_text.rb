@@ -5,6 +5,7 @@ module Docs
     EMPTY_NODES_RGX = /<(?!td|th|iframe|mspace)(\w+)[^>]*>[[:space:]]*<\/\1>/
 
     def call
+      return html if context[:clean_text] == false
       html.strip!
       while html.gsub!(EMPTY_NODES_RGX, ''); end
       html

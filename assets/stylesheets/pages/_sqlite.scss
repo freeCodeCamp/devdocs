@@ -4,3 +4,9 @@
   dt { @extend %block-label, %label-blue; }
   .todo { @extend %note, %note-red; }
 }
+
+svg {
+  text.fill { fill: var(--textColor); }
+  .fill { fill: var(--textColorLighter); }
+  .stroke { fill: none; stroke-width: 2.16; stroke: var(--textColorLighter); }
+}
