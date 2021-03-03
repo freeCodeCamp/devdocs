@@ -28,8 +28,12 @@ class app.views.Sidebar extends app.View
 
     app.on 'ready', @onReady
 
-    $.on document.documentElement, 'mouseleave', (event) => @display() unless event.clientX <= 0
+    $.on document.documentElement, 'mouseleave', => @hide()
     $.on document.documentElement, 'mouseenter', => @resetDisplay(forceNoHover: false)
+    return
+
+  hide: ->
+    @removeClass 'show'
     return
 
   display: ->
