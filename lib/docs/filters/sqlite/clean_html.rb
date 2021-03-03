@@ -7,13 +7,14 @@ module Docs
         css('.rightsidebar', 'hr', '.sh_mark', '.fancy_toc > a', '.fancy_toc_mark', 'h[style*="none"]',
             'a[href$="intro.html"] > h2', 'a[href$="intro"] > h2', '#document_title + #toc_header',
             '#document_title ~ #toc').remove
+        css('a[href$="intro.html"]:empty', 'a[href$="intro"]:empty').remove
 
         css('.fancy_title', '> h2[align=center]', '#document_title').each do |node|
           node.name = 'h1'
         end
 
         unless at_css('h1')
-          if at_css('h2').content == context[:html_title]
+          if at_css('h2') && at_css('h2').content == context[:html_title]
             at_css('h2').name = 'h1'
           else
             doc.child.before("<h1>#{context[:html_title]}</h1>")
@@ -81,8 +82,26 @@ module Docs
           node.remove_attribute('onclick')
         end
 
-        css('*[align]').remove_attr('align')
+        css('svg *[style], svg *[fill]').each do |node|
+          # transform style in SVG diagrams, e.g. on https://sqlite.org/lang_insert.html
+          if node['style'] == 'fill:rgb(0,0,0)' or node['fill'] == 'rgb(0,0,0)'
+            node.add_class('fill')
+            node.remove_attribute('fill')
+          elsif node['style'] == 'fill:none;stroke-width:2.16;stroke:rgb(0,0,0);'
+            node.add_class('stroke')
+          elsif node['style'] == 'fill:none;stroke-width:3.24;stroke:rgb(211,211,211);'
+            node.add_class('stroke')
+          elsif node['style']
+            raise NotImplementedError, "SVG style #{node['style']}"
+          end
+          node.remove_attribute('style')
+        end
+
+        css('.imgcontainer > div[style]').add_class('imgcontainer')
         css('*[style]:not(.imgcontainer)').remove_attr('style')
+        css('.imgcontainer').remove_class('imgcontainer')
+
+        css('*[align]').remove_attr('align')
         css('table[border]').remove_attr('border')
 
         doc
