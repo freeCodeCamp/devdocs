@@ -24,7 +24,11 @@ module Docs
 
       def other
         if base_url.path == '/docs/handbook/'
+          deprecated = at_css('#deprecated-content')
+          deprecated.css('h3', '#deprecated-icon').remove if deprecated
+          deprecated.add_class('deprecated') if deprecated
           @doc = at_css('article > .whitespace > .markdown')
+          doc.child.before(deprecated) if deprecated
         else # tsconfig page
           @doc = at_css('.markdown > div')
 
@@ -36,9 +40,14 @@ module Docs
         css('pre').each do |node|
           language = node.at_css('.language-id') ? node.at_css('.language-id').content : 'typescript'
           node.css('.language-id').remove
-          node.content = node.content
+          if node.at_css('.line').nil?
+            node.content = node.content
+          else
+            node.content = node.css('.line').map(&:content).join("\n")
+          end
           node['data-language'] = LANGUAGE_REPLACE[language] || language
           node.remove_attribute('class')
+          node.remove_attribute('style')
         end
       end
 

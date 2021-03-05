@@ -3,8 +3,8 @@ module Docs
     include MultipleBaseUrls
 
     self.name = 'TypeScript'
-    self.type = 'simple'
-    self.release = '4.2.2'
+    self.type = 'typescript'
+    self.release = '4.2.3'
     self.base_urls = [
       'https://www.typescriptlang.org/docs/handbook/',
       'https://www.typescriptlang.org/'
@@ -29,7 +29,6 @@ module Docs
     ]
 
     options[:skip_patterns] = [
-      /2/,
       /release-notes/,
       /play\//
     ]
