@@ -21,7 +21,7 @@ module Docs
     HTML
 
     version do
-      self.release = '1.7.0'
+      self.release = '1.8.0'
       self.base_url = "https://pytorch.org/docs/#{release}/"
     end
 
