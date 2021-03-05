@@ -115,6 +115,7 @@ Additionally:
 
 * [`TitleFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/title.rb) is a core HTML filter, disabled by default, which prepends the document with a title (`<h1>`).
 * [`EntriesFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/entries.rb) is an abstract HTML filter that each scraper must implement and responsible for extracting the page's metadata.
+* [`ExternalUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/external_urls.rb) is an HTML filter that replaces external URLs found in `<a>` tags to urls pointing to existant devdocs documentation.
 
 ### Filter options
 
@@ -184,6 +185,10 @@ More information about how filters work is available on the [Filter Reference](.
     Overrides the `:title` option for the root page only.
 
   _Note: this filter is disabled by default._
+
+* [`ExternalUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/external_urls.rb)
+
+  - `:external_urls` [Hash or Proc] If it is a Hash, replaces all URLs found in `<a>` tags for URLs of existant devdocs documentation. If it is a Proc, it is called with an URL (string) as argument and should return a relative URL pointing to an existant devdocs documentation. See [`backbone.rb`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/scrapers/backbone.rb)
 
 ## Keeping scrapers up-to-date
 

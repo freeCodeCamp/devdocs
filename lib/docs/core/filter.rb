@@ -96,5 +96,15 @@ module Docs
       path = path.gsub %r{\+}, '_plus_'
       path
     end
+
+    def path_to_root
+      if subpath == ''
+        return '../'
+      else
+        previous_dirs = subpath.scan(/\//)
+        return '../' * previous_dirs.length
+      end
+    end
+
   end
 end

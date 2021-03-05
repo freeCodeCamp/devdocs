@@ -84,6 +84,7 @@ The `call` method must return either `doc` or `html`, depending on the type of f
 * [`AttributionFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/attribution.rb) — appends the license info and link to the original document
 * [`TitleFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/title.rb) — prepends the document with a title (disabled by default)
 * [`EntriesFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/entries.rb) — abstract filter for extracting the page's metadata
+* [`ExternalUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/external_urls.rb) — replaces external URLs for relative URLs of existant devdocs documentation.
 
 ## Custom filters
 
