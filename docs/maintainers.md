@@ -36,19 +36,13 @@ In order to deploy DevDocs, you must:
   aws configure --profile devdocs
   ```
 
-- be provided with DevDocs's MaxCDN push zone credentials, and add them to your `.bash_profile` as such:
-  ```
-  export DEVDOCS_DL_USERNAME="username"
-  export DEVDOCS_DL_PASSWORD="password"
-  ```
-
 ## Thor commands
 
 In addition to the [publicly-documented commands](https://github.com/freeCodeCamp/devdocs#available-commands), the following commands are aimed at DevDocs maintainers:
 
 - `thor docs:package`
 
-  Generates packages for one or more documentations. Those packages are intended to be uploaded to DevDocs's MaxCDN push zone by maintainers via the `thor docs:upload` command, and downloaded by users via the `thor docs:download` command.
+  Generates packages for one or more documentations. Those packages are intended to be uploaded to DevDocs's S3 bundle zone by maintainers via the `thor docs:upload` command, and downloaded by users via the `thor docs:download` command.
 
   Versions can be specified as such: `thor docs:package rails@5.2 node@10\ LTS`.
 
@@ -59,9 +53,9 @@ In addition to the [publicly-documented commands](https://github.com/freeCodeCam
   This command does two operations:
   
     1. sync the files for the specified documentations with S3 (used by the Heroku app);
-    2. upload the documentations' packages to DevDocs's MaxCDN push zone (used by the `thor docs:download` command).
+    2. upload the documentations' packages to DevDocs's S3 bundle zone (used by the `thor docs:download` command).
   
-  For the command to work, you must have the AWS CLI and MaxCDN credentials configured as indicated above.
+  For the command to work, you must have the AWS CLI configured as indicated above.
   
   **Important:** the app should always be deployed immediately after this command has finished running. Do not run this command unless you are able and ready to deploy DevDocs.
   
