@@ -2,7 +2,7 @@ module Docs
   class Electron
     class CleanHtmlFilter < Filter
       def call
-        css('.header-link', 'hr + .text-center', 'hr').remove
+        css('.header-link', 'hr + .text-center', 'hr', '.docs__actions-bar').remove
 
         css('.grid', '.row', '.col-ms-12', 'ul.docs-list > ul.docs-list', '.sub-section').each do |node|
           node.before(node.children).remove
