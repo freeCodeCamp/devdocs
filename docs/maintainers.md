@@ -124,6 +124,7 @@ nginx
 The following people (used to) maintain DevDocs:
 
 - [Ahmad Abdolsaheb](https://github.com/ahmadabdolsaheb)
+- [Bryan Hernández](https://github.com/MasterEnoc)
 - [Jasper van Merle](https://github.com/jmerle)
 - [Jed Fox](https://github.com/j-f1)
 - [Mrugesh Mohapatra](https://github.com/raisedadead)
