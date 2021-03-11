@@ -2,7 +2,7 @@ module Docs
   class Wordpress < UrlScraper
     self.name = 'WordPress'
     self.type = 'wordpress'
-    self.release = '5.6'
+    self.release = '5.7'
     self.base_url = 'https://developer.wordpress.org/reference/'
     self.initial_paths = %w(
       functions/
@@ -32,7 +32,7 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2003&ndash;2020 WordPress Foundation<br>
+      &copy; 2003&ndash;2021 WordPress Foundation<br>
       Licensed under the GNU GPLv2+ License.
     HTML
 
