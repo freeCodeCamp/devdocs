@@ -14,12 +14,17 @@ module Docs
     options[:skip] = %w(/faq /glossary)
 
     options[:attribution] = <<-HTML
-      &copy; 2014&ndash;2020 Automattic<br>
+      &copy; 2014&ndash;2021 Automattic<br>
       Licensed under the MIT License.
     HTML
 
+    version '4' do
+      self.release = '4.0.0'
+      self.base_url = "https://socket.io/docs/v#{version}"
+    end
+
     version '3' do
-      self.release = '3.0.5'
+      self.release = '3.1.2'
       self.base_url = "https://socket.io/docs/v#{version}"
     end
 

@@ -773,7 +773,7 @@ credits = [
     'https://raw.githubusercontent.com/sequelize/sequelize/master/LICENSE'
   ], [
     'Socket.io',
-    '2014-2015 Automattic',
+    '2014-2018 Automattic',
     'MIT',
     'https://raw.githubusercontent.com/Automattic/socket.io/master/LICENSE'
   ], [

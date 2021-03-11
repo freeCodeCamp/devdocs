@@ -6,7 +6,7 @@ module Docs
       end
 
       def get_type
-        if slug =~ /events|room|emit/ && version.eql?('3')
+        if slug =~ /events|room|emit/ && !version.eql?('2')
           'Events'
         else
           'Guides'
