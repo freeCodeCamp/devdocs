@@ -5,6 +5,7 @@ module Docs
         at_css('.nosearch').remove
 
         css('.rightsidebar', 'hr', '.sh_mark', '.fancy_toc > a', '.fancy_toc_mark', 'h[style*="none"]',
+            '#docsearch',
             'a[href$="intro.html"] > h2', 'a[href$="intro"] > h2', '#document_title + #toc_header',
             '#document_title ~ #toc').remove
         css('a[href$="intro.html"]:empty', 'a[href$="intro"]:empty').remove
