@@ -3,8 +3,8 @@ module Docs
     self.name = 'scikit-learn'
     self.slug = 'scikit_learn'
     self.type = 'sphinx'
-    self.release = '0.23.2'
-    self.base_url = 'https://scikit-learn.org/0.23/'
+    self.release = '0.24.1'
+    self.base_url = 'https://scikit-learn.org/0.24/'
     self.root_path = 'index.html'
     self.force_gzip = true
     self.links = {
