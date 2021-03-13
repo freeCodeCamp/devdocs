@@ -755,7 +755,7 @@ credits = [
     'scikit-image',
     '2019 the scikit-image team',
     'BSD',
-    'http://scikit-image.org/docs/dev/license.html'
+    'https://scikit-image.org/docs/dev/license.html'
   ], [
     'scikit-learn',
     '2007-2020 The scikit-learn developers',
