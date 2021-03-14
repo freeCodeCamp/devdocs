@@ -1,8 +1,8 @@
 ---
-name: Documentation style bug
-about: Report documentation that has lost its style
+name: Documentation bug
+about: Report a problem with a specific documentation
 title: ''
-labels: ''
+labels: 'docs/improvement'
 assignees: ''
 ---
 

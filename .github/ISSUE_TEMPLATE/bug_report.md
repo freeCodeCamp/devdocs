@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve Devdocs
 title: ''
-labels: ''
+labels: 'bug'
 assignees: ''
 ---
 
@@ -13,9 +13,7 @@ If possible fill each section
 # Bug report
 
 <!--
-Verify this steps before writing a new issue
-
- - Update to the most recent master release; the bug may already be fixed.
+Verify this steps before writing a new issue:
 
  - Search for existing issues; it's possible someone has already encountered this bug.
 -->
@@ -23,14 +21,14 @@ Verify this steps before writing a new issue
 ## OS information
 
 <!--
-Write what operative system and web browser you use
+What operating system and browser version are you using?
 -->
 
 ## Steps to reproduce
 
 <!--
-Write the steps to reproduce this bug or write a description about when and how is
-this happening
+Write the steps to reproduce this bug or write a description about when and how you
+encountered it
 -->
 
 ## More resources
