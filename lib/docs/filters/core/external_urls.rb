@@ -6,8 +6,6 @@ module Docs
     def call
       if context[:external_urls]
 
-        root = path_to_root
-
         css('a').each do |node|
 
           next unless anchorUrl = node['href']
@@ -24,7 +22,7 @@ module Docs
 
           context[:external_urls].each do |host, name|
             if url.host.to_s.match?(host)
-              node['href'] = root + name + url.path.to_s + '#' + url.fragment.to_s
+              node['href'] = '/' + name + url.path.to_s + '#' + url.fragment.to_s
             end
           end
 

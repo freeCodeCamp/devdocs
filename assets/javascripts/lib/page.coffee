@@ -178,15 +178,21 @@ onclick = (event) ->
   link = $.eventTarget(event)
   link = link.parentNode while link and link.tagName isnt 'A'
 
-  if link and not link.target and isSameOrigin(link.href)
+  if link and not link.target and isSameOrigin(link.href) and isSameOriginDifferentDoc(link)
     event.preventDefault()
     path = link.pathname + link.search + link.hash
     path = path.replace /^\/\/+/, '/' # IE11 bug
     page.show(path)
+
   return
 
 isSameOrigin = (url) ->
   url.indexOf("#{location.protocol}//#{location.hostname}") is 0
+
+isSameOriginDifferentDoc = (url) ->
+  console.log(url.pathname)
+  console.log(location.pathname)
+  url.pathname == location.pathname
 
 updateCanonicalLink = ->
   @canonicalLink ||= document.head.querySelector('link[rel="canonical"]')
