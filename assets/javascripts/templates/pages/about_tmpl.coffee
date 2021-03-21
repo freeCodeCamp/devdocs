@@ -318,7 +318,7 @@ credits = [
     'https://www.gnu.org/licenses/fdl-1.3.en.html'
   ], [
     'Git',
-    '2012-2018 Scott Chacon and others',
+    '2012-2021 Scott Chacon and others',
     'MIT',
     'https://raw.githubusercontent.com/git/git-scm.com/master/MIT-LICENSE.txt'
   ], [
