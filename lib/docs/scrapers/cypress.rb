@@ -4,7 +4,7 @@ module Docs
   class Cypress < UrlScraper
     self.name = 'Cypress'
     self.type = 'cypress'
-    self.release = '6.1.0'
+    self.release = '6.8.0'
     self.base_url = 'https://docs.cypress.io'
     self.root_path = '/api/api/table-of-contents.html'
     self.links = {
@@ -29,7 +29,7 @@ module Docs
     }
 
     options[:attribution] = <<-HTML
-      &copy; 2020 Cypress.io<br>
+      &copy; 2017 Cypress.io<br>
       Licensed under the MIT License.
     HTML
 
