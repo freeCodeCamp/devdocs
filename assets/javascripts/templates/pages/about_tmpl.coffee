@@ -400,7 +400,7 @@ credits = [
     'Jasmine',
     '2008-2019 Pivotal Labs',
     'MIT',
-    'https://raw.githubusercontent.com/jasmine/jasmine/master/MIT.LICENSE'
+    'https://raw.githubusercontent.com/jasmine/jasmine/main/MIT.LICENSE'
   ], [
     'Jekyll',
     '2020 Jekyll Core Team and contributors',
