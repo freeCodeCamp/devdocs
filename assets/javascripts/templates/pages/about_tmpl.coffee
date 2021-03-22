@@ -88,7 +88,7 @@ credits = [
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Angular',
-    '2010-2020 Google, Inc.',
+    '2010-2021 Google, Inc.',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
