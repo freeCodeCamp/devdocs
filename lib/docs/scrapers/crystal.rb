@@ -19,24 +19,22 @@ module Docs
         HTML
       else
         <<-HTML
-          &copy; 2012&ndash;2020 Manas Technology Solutions.<br>
+          &copy; 2012&ndash;2021 Manas Technology Solutions.<br>
           Licensed under the Apache License, Version 2.0.
         HTML
       end
     }
 
-    version do
-      self.release = '0.36.1'
-      self.root_path = "api/#{release}/index.html"
+    self.release = '1.0.0'
+    self.root_path = "api/#{release}/index.html"
 
-      options[:only_patterns] = [/\Aapi\/#{release}\//, /\Areference\//]
-      options[:skip_patterns] = [/debug/i]
+    options[:only_patterns] = [/\Aapi\/#{release}\//, /\Areference\//]
+    options[:skip_patterns] = [/debug/i]
 
-      options[:replace_paths] = {
-        "api/#{release}/" => "api/#{release}/index.html",
-        'reference/' => 'reference/index.html'
-      }
-    end
+    options[:replace_paths] = {
+      "api/#{release}/" => "api/#{release}/index.html",
+      'reference/' => 'reference/index.html'
+    }
 
     def get_latest_version(opts)
       doc = fetch_doc('https://crystal-lang.org/', opts)
