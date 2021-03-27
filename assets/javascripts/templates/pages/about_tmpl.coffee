@@ -433,7 +433,7 @@ credits = [
     'https://raw.githubusercontent.com/jquery/api.jqueryui.com/master/LICENSE.txt'
   ], [
     'Julia',
-    '2009-2020 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
+    '2009-2021 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/JuliaLang/julia/master/LICENSE.md'
   ], [
