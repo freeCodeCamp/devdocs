@@ -179,14 +179,20 @@ onclick = (event) ->
   link = link.parentNode while link and link.tagName isnt 'A'
 
   if link and not link.target and isSameOrigin(link.href)
-    event.preventDefault()
-    path = link.pathname + link.search + link.hash
-    path = path.replace /^\/\/+/, '/' # IE11 bug
-    page.show(path)
+
+    if link.className.match('_list-item') or not isSameOriginDifferentDoc(link)
+      event.preventDefault()
+      path = link.pathname + link.search + link.hash
+      path = path.replace /^\/\/+/, '/' # IE11 bug
+      page.show(path)
+
   return
 
 isSameOrigin = (url) ->
   url.indexOf("#{location.protocol}//#{location.hostname}") is 0
+
+isSameOriginDifferentDoc = (url) ->
+  url.pathname.split('/')[1] != location.pathname.split('/')[1]
 
 updateCanonicalLink = ->
   @canonicalLink ||= document.head.querySelector('link[rel="canonical"]')

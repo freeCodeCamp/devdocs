@@ -21,6 +21,10 @@ module Docs
       Licensed under the MIT License.
     HTML
 
+    options[:external_urls] = {
+      'underscorejs.org' => 'underscore'
+    }
+
     def get_latest_version(opts)
       doc = fetch_doc('https://backbonejs.org/', opts)
       doc.at_css('.version').content[1...-1]
