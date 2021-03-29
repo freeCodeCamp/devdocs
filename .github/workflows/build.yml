@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ $default-branch ]
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2.3.4
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1.66.1
+      with:
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Run tests
+      run: bundle exec rake
+    - name: Deploy to Heroku
+      uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "devdocs"
+        heroku_email: "team@freecodecamp.com"
+        dontuseforce: true # --force should never be necessary
+        dontautocreate: true # The app exists, it should not be created
