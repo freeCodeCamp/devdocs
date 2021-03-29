@@ -25,8 +25,8 @@ app.templates.aboutPage = -> """
     <strong>Copyright 2013&ndash;2021 Thibaut Courouble and <a href="https://github.com/freeCodeCamp/devdocs/graphs/contributors">other contributors</a></strong><br>
     This software is licensed under the terms of the Mozilla Public License v2.0.<br>
     You may obtain a copy of the source code at <a href="https://github.com/freeCodeCamp/devdocs">github.com/freeCodeCamp/devdocs</a>.<br>
-    For more information, see the <a href="https://github.com/freeCodeCamp/devdocs/blob/master/COPYRIGHT">COPYRIGHT</a>
-    and <a href="https://github.com/freeCodeCamp/devdocs/blob/master/LICENSE">LICENSE</a> files.
+    For more information, see the <a href="https://github.com/freeCodeCamp/devdocs/blob/main/COPYRIGHT">COPYRIGHT</a>
+    and <a href="https://github.com/freeCodeCamp/devdocs/blob/main/LICENSE">LICENSE</a> files.
 
   <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
   <ul>

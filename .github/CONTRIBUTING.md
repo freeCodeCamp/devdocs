@@ -16,7 +16,7 @@ Want to contribute? Great. Please review the following guidelines carefully and 
 
 ## Reporting bugs
 
-1. Update to the most recent master release; the bug may already be fixed.
+1. Update to the most recent main release; the bug may already be fixed.
 2. Search for existing issues; it's possible someone has already encountered this bug.
 3. Try to isolate the problem and include steps to reproduce it.
 4. Share as much information as possible (e.g. browser/OS environment, log output, stack trace, screenshots, etc.).
@@ -44,7 +44,7 @@ Use the [Trello board](https://trello.com/b/6BmTulfx/devdocs-documentation) wher
 
 ## Contributing new documentations
 
-See the [`docs` folder](https://github.com/freeCodeCamp/devdocs/tree/master/docs) to learn how to add new documentations.
+See the [`docs` folder](https://github.com/freeCodeCamp/devdocs/tree/main/docs) to learn how to add new documentations.
 
 **Important:** the documentation's license must permit alteration, redistribution and commercial use, and the documented software must be released under an open source license. Feel free to get in touch if you're not sure if a documentation meets those requirements.
 
