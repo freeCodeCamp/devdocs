@@ -1,4 +1,4 @@
-# [DevDocs](https://devdocs.io) — API Documentation Browser [![Build Status](https://travis-ci.org/freeCodeCamp/devdocs.svg?branch=master)](https://travis-ci.org/freeCodeCamp/devdocs)
+# [DevDocs](https://devdocs.io) — API Documentation Browser
 
 DevDocs combines multiple developer documentations in a clean and organized web UI with instant search, offline support, mobile version, dark theme, keyboard shortcuts, and more.
 
