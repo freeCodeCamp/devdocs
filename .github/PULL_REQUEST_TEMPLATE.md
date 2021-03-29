@@ -4,7 +4,7 @@
 <!-- Please create a draft PR when you haven't completed all steps yet upon creation of the PR. -->
 
 <!-- SECTION A - Adding a new scraper -->
-<!-- See https://github.com/freeCodeCamp/devdocs/blob/master/.github/CONTRIBUTING.md#contributing-new-documentations -->
+<!-- See https://github.com/freeCodeCamp/devdocs/blob/main/.github/CONTRIBUTING.md#contributing-new-documentations -->
 
 If you’re adding a new scraper, please ensure that you have:
 
@@ -17,7 +17,7 @@ If you’re adding a new scraper, please ensure that you have:
   - [ ] `SOURCE`: A text file containing the URL to the page the image can be found on or the URL of the original image itself
 
 <!-- SECTION B - Updating an existing documentation to it's latest version -->
-<!-- See https://github.com/freeCodeCamp/devdocs/blob/master/.github/CONTRIBUTING.md#updating-existing-documentations -->
+<!-- See https://github.com/freeCodeCamp/devdocs/blob/main/.github/CONTRIBUTING.md#updating-existing-documentations -->
 
 If you're updating an existing documentation to it's latest version, please ensure that you have:
 

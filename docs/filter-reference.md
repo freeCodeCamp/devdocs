@@ -11,7 +11,7 @@
 
 Filters use the [HTML::Pipeline](https://github.com/jch/html-pipeline) library. They take an HTML string or [Nokogiri](http://nokogiri.org/) node as input, optionally perform modifications and/or extract information from it, and then outputs the result. Together they form a pipeline where each filter hands its output to the next filter's input. Every documentation page passes through this pipeline before being copied on the local filesystem.
 
-Filters are subclasses of the [`Docs::Filter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/core/filter.rb) class and require a `call` method. A basic implementation looks like this:
+Filters are subclasses of the [`Docs::Filter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/core/filter.rb) class and require a `call` method. A basic implementation looks like this:
 
 ```ruby
 module Docs
@@ -46,7 +46,7 @@ The `call` method must return either `doc` or `html`, depending on the type of f
   - `:path` — the page's normalized path
   - `:store_path` — the path where the page will be stored (equal to `:path` with `.html` at the end)
   - `:internal_urls` — the list of distinct internal URLs found within the page
-  - `:entries` — the [`Entry`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/core/models/entry.rb) objects to add to the index
+  - `:entries` — the [`Entry`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/core/models/entry.rb) objects to add to the index
 
 * `css`, `at_css`, `xpath`, `at_xpath`
   Shortcuts for `doc.css`, `doc.xpath`, etc.
@@ -73,23 +73,23 @@ The `call` method must return either `doc` or `html`, depending on the type of f
 
 ## Core filters
 
-* [`ContainerFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/container.rb) — changes the root node of the document (remove everything outside)
-* [`CleanHtmlFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/clean_html.rb) — removes HTML comments, `<script>`, `<style>`, etc.
-* [`NormalizeUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/normalize_urls.rb) — replaces all URLs with their fully qualified counterpart
-* [`InternalUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/internal_urls.rb) — detects internal URLs (the ones to scrape) and replaces them with their unqualified, relative counterpart
-* [`NormalizePathsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/normalize_paths.rb) — makes the internal paths consistent (e.g. always end with `.html`)
-* [`CleanLocalUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/clean_local_urls.rb) — removes links, iframes and images pointing to localhost (`FileScraper` only)
-* [`InnerHtmlFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/inner_html.rb) — converts the document to a string
-* [`CleanTextFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/clean_text.rb) — removes empty nodes
-* [`AttributionFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/attribution.rb) — appends the license info and link to the original document
-* [`TitleFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/title.rb) — prepends the document with a title (disabled by default)
-* [`EntriesFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/entries.rb) — abstract filter for extracting the page's metadata
+* [`ContainerFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/container.rb) — changes the root node of the document (remove everything outside)
+* [`CleanHtmlFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/clean_html.rb) — removes HTML comments, `<script>`, `<style>`, etc.
+* [`NormalizeUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/normalize_urls.rb) — replaces all URLs with their fully qualified counterpart
+* [`InternalUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/internal_urls.rb) — detects internal URLs (the ones to scrape) and replaces them with their unqualified, relative counterpart
+* [`NormalizePathsFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/normalize_paths.rb) — makes the internal paths consistent (e.g. always end with `.html`)
+* [`CleanLocalUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/clean_local_urls.rb) — removes links, iframes and images pointing to localhost (`FileScraper` only)
+* [`InnerHtmlFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/inner_html.rb) — converts the document to a string
+* [`CleanTextFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/clean_text.rb) — removes empty nodes
+* [`AttributionFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/attribution.rb) — appends the license info and link to the original document
+* [`TitleFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/title.rb) — prepends the document with a title (disabled by default)
+* [`EntriesFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/entries.rb) — abstract filter for extracting the page's metadata
 
 ## Custom filters
 
 Scrapers can have any number of custom filters but require at least the two described below.
 
-**Note:** filters are located in the [`lib/docs/filters`](https://github.com/freeCodeCamp/devdocs/tree/master/lib/docs/filters/) directory. The class's name must be the [CamelCase](http://api.rubyonrails.org/classes/String.html#method-i-camelize) equivalent of the filename.
+**Note:** filters are located in the [`lib/docs/filters`](https://github.com/freeCodeCamp/devdocs/tree/main/lib/docs/filters/) directory. The class's name must be the [CamelCase](http://api.rubyonrails.org/classes/String.html#method-i-camelize) equivalent of the filename.
 
 ### `CleanHtmlFilter`
 
@@ -141,10 +141,10 @@ The `Entries` filter is responsible for extracting the page's metadata, represen
 
 The following two models are used under the hood to represent the metadata:
 
-* [`Entry(name, type, path)`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/core/models/entry.rb)
-* [`Type(name, slug, count)`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/core/models/type.rb)
+* [`Entry(name, type, path)`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/core/models/entry.rb)
+* [`Type(name, slug, count)`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/core/models/type.rb)
 
-Each scraper must implement its own `EntriesFilter` by subclassing the [`Docs::EntriesFilter`](https://github.com/freeCodeCamp/devdocs/blob/master/lib/docs/filters/core/entries.rb) class. The base class already implements the `call` method and includes four methods which the subclasses can override:
+Each scraper must implement its own `EntriesFilter` by subclassing the [`Docs::EntriesFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/entries.rb) class. The base class already implements the `call` method and includes four methods which the subclasses can override:
 
 * `get_name` [String]
   The name of the default entry (aka. the page's name).

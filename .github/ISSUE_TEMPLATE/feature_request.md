@@ -19,7 +19,7 @@ Verify this steps before suggeting a new feature:
     https://github.com/freeCodeCamp/devdocs/labels/feature
 
   - Make sure your feature fits DevDocs' vision
-    https://github.com/freeCodeCamp/devdocs/blob/master/README.md#vision
+    https://github.com/freeCodeCamp/devdocs/blob/main/README.md#vision
 -->
 
 ## Summary

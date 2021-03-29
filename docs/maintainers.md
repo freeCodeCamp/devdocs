@@ -78,7 +78,7 @@ In addition to the [publicly-documented commands](https://github.com/freeCodeCam
 
 ## Deploying DevDocs
 
-Once docs have been uploaded via `thor docs:upload` (if applicable), you can push to the DevDocs master branch (or merge the PR containing the updates). If the Travis build succeeds, the Heroku application will be deployed automatically.
+Once docs have been uploaded via `thor docs:upload` (if applicable), you can push to the DevDocs main branch (or merge the PR containing the updates). If the Travis build succeeds, the Heroku application will be deployed automatically.
 
 - If you're deploying documentation updates, verify that the documentations work properly once the deploy is done. Keep in mind that you'll need to wait a few seconds for the service worker to finish caching the new assets. You should see a "DevDocs has been updated" notification appear when the caching is done, after which you need to refresh the page to see the changes.
 - If you're deploying frontend changes, monitor [Sentry](https://sentry.io/devdocs/devdocs-js/) for new JS errors once the deploy is done.
