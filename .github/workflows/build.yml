@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-20.04
-
+    if: github.repository == 'freeCodeCamp/devdocs'
     steps:
     - uses: actions/checkout@v2.3.4
     - name: Set up Ruby
