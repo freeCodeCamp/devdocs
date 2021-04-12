@@ -37,6 +37,16 @@ curl https://media.djangoproject.com/docs/django-docs-$VERSION-en.zip | \
 bsdtar --extract --file - --directory=docs/django\~$VERSION/
 ```
 
+## Elisp
+
+Go to https://www.gnu.org/software/emacs/manual/elisp.html, donwload the HTML tarball and extract its content in `/path/to/devdocs/docs/elisp` or run the following command:
+
+```sh
+mkdir /path/to/devdocs/docs/elisp \
+&& curl curl https://www.gnu.org/software/emacs/manual/elisp.html_node.tar.gz | \
+tar --extract --gzip --strip-components=1 --directory=/path/to/devdocs/docs/elisp
+```
+
 ## Erlang
 
 Go to https://www.erlang.org/downloads and download the HTML documentation file.

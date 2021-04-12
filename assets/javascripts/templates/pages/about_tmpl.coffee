@@ -268,7 +268,7 @@ credits = [
     'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
   ], [
     'Elisp',
-    '1990-1996, 1998-2019 Free Software Foundation, Inc.',
+    '1990-1996, 1998-2021 Free Software Foundation, Inc.',
     'GPLv3',
     'https://www.gnu.org/licenses/gpl-3.0.html'
   ], [
