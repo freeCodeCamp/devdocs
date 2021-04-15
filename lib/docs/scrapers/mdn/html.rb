@@ -7,8 +7,6 @@ module Docs
 
     html_filters.push 'html/clean_html', 'html/entries', 'title'
 
-    options[:mdn_tag] = 'HTML'
-
     options[:root_title] = 'HTML'
 
     options[:title] = ->(filter) do
