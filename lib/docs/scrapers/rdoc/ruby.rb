@@ -3,7 +3,7 @@ module Docs
     # Instructions:
     #   1. Download Ruby's source code
     #   2. Run "./configure && make html" (in the Ruby directory)
-    #   3. Copy the ".ext/html" directory to "docs/ruby~[version]"
+    #   3. Copy the contents of the ".ext/html" directory to "docs/ruby~[version]"
 
     include FixInternalUrlsBehavior
 
