@@ -34,6 +34,11 @@ module Docs
       Licensed under the BSD License.
     HTML
 
+    version '3.2' do
+      self.release = '3.2'
+      self.base_url = 'https://docs.djangoproject.com/en/3.2/'
+    end
+
     version '3.1' do
       self.release = '3.1.4'
       self.base_url = 'https://docs.djangoproject.com/en/3.1/'
