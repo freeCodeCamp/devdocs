@@ -5,7 +5,7 @@ module Docs
 
     html_filters.push 'mdn/clean_html'
 
-    options[:container] = '#content'
+    options[:container] = '#content > .main-page-content'
     options[:trailing_slash] = false
 
     options[:skip_link] = ->(link) {
