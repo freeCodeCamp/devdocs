@@ -8,8 +8,6 @@ module Docs
 
     html_filters.push 'javascript/clean_html', 'javascript/entries', 'title'
 
-    options[:mdn_tag] = 'JavaScript'
-
     options[:root_title] = 'JavaScript'
 
     # Don't want

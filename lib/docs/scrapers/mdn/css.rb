@@ -6,8 +6,6 @@ module Docs
 
     html_filters.push 'css/clean_html', 'css/entries', 'title'
 
-    options[:mdn_tag] = 'CSS'
-
     options[:root_title] = 'CSS'
 
     options[:skip] = %w(/CSS3 /Media/Visual /paged_media /Media/TV /Media/Tactile)

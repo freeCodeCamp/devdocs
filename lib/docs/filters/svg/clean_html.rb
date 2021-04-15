@@ -11,7 +11,7 @@ module Docs
       end
 
       def other
-        css('.prevnext').remove
+        css('.prev-next').remove
 
         if at_css('p').content.include?("\u{00AB}")
           at_css('p').remove

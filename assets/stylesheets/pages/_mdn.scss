@@ -27,6 +27,7 @@
   p > code, li > code { @extend %label; }
 
   > .note,
+  .notecard, // MDN 2021
   .notice,
   .warning,
   .overheadIndicator,

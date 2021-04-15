@@ -41,6 +41,18 @@ module Docs
           node.parent['id'] = node['name']
           node.before(node.content).remove
         end
+        css('h2 > a, h3 > a').each do |node|
+          node.parent.content = node.content
+        end
+
+        css('.notecard > h4').each do |node|
+          node.name = 'strong'
+        end
+
+        css('svg.deprecated').each do |node|
+          node.name = 'span'
+          node.content = node.content
+        end
 
         css('dt > a[id]').each do |node|
           next if node['href']
@@ -64,6 +76,9 @@ module Docs
         end
 
         # New compatibility tables
+        # FIXME(2021):
+        # - fetched from external JSON: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/alignment-baseline/bcd.json
+        # - https://github.com/mdn/yari/blob/master/build/bcd-urls.js
 
         css('.bc-data #Legend + dl', '.bc-data #Legend', '.bc-data #Legend_2 + dl', '.bc-data #Legend_2', '.bc-browser-name').remove
 
