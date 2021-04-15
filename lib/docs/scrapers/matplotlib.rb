@@ -16,9 +16,18 @@ module Docs
     options[:skip] = %w(api_changes.html tutorial.html faq.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2020 Matplotlib Development Team. All rights reserved.<br>
+      &copy; 2012&ndash;2021 Matplotlib Development Team. All rights reserved.<br>
       Licensed under the Matplotlib License Agreement.
     HTML
+
+    version '3.4' do
+      self.release = '3.4.1'
+      self.base_urls = [
+        "https://matplotlib.org/#{release}/api/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
+      ]
+    end
 
     version '3.3' do
       self.release = '3.3.3'
