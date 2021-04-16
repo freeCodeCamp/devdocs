@@ -28,6 +28,30 @@ module Docs
           node.remove
         end
 
+        css('code.language-html').each do |node|
+          node.name = 'pre';
+          node['data-language'] = 'html'
+          node.parent.name = 'div';
+          node.parent['class'] = node.parent['class'].gsub(/bg-.*?\b/, ' ');
+          node.parent.parent['class'] = node.parent.parent['class'].gsub(/bg-.*?\b/, ' ');
+        end
+
+        css('code.language-diff').each do |node|
+          node.name = 'pre';
+          node['data-language'] = 'diff'
+          node.parent.name = 'div';
+          node.parent['class'] = node.parent['class'].gsub(/bg-.*?\b/, ' ');
+          node.parent.parent['class'] = node.parent.parent['class'].gsub(/bg-.*?\b/, ' ');
+        end
+
+        css('code.language-js').each do |node|
+          node.name = 'pre';
+          node['data-language'] = 'js'
+          node.parent.name = 'div';
+          node.parent['class'] = node.parent['class'].gsub(/bg-.*?\b/, ' ');
+          node.parent.parent['class'] = node.parent.parent['class'].gsub(/bg-.*?\b/, ' ');
+        end
+
         doc
 
       end
