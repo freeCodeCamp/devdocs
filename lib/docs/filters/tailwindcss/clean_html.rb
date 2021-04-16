@@ -12,7 +12,24 @@ module Docs
             node.remove()
           end
         end
+
+        # Remove right sidebar
+        css('#content-wrapper > div > div.hidden.xl\:text-sm.xl\:block.flex-none.w-64.pl-8.mr-8 > div > div').each do |node|
+          node.remove
+        end
+
+        # Remove advert
+        css('#__next > div.py-2.bg-gradient-to-r.from-indigo-600.to-light-blue-500.overflow-hidden').each do |node|
+          node.remove
+        end
+
+        # Remove footer prev/next navigation
+        css('#content-wrapper > div > div > div.flex.leading-6.font-medium').each do |node|
+          node.remove
+        end
+
         doc
+
       end
     end
   end
