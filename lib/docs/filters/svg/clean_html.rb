@@ -7,7 +7,7 @@ module Docs
       end
 
       def root
-        doc.inner_html = doc.at_css('#Documentation + dl').to_html
+
       end
 
       def other
@@ -26,7 +26,20 @@ module Docs
           node['class'] = 'index'
           css('h3').each { |n| n.name = 'span' }
         end
+
+        if at_css('#browser_compatibility') \
+          and not at_css('#browser_compatibility').next_sibling.classes.include?('warning') \
+          and not at_css('#browser_compatibility').next_sibling.content.match?('Supported')
+
+          at_css('#browser_compatibility').next_sibling.remove
+
+          compatibility_tables = generate_compatibility_table()
+          compatibility_tables.each do |table|
+            at_css('#browser_compatibility').add_next_sibling(table)
+          end
+        end
       end
+
     end
   end
 end
