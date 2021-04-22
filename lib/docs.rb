@@ -44,7 +44,7 @@ module Docs
   end
 
   def self.defaults
-    %w(css dom dom_events html http javascript).map(&method(:find))
+    %w(css dom html http javascript).map(&method(:find))
   end
 
   def self.installed
