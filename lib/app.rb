@@ -30,7 +30,7 @@ class App < Sinatra::Application
     set :docs_origin, File.join('', docs_prefix)
     set :docs_path, File.join(public_folder, docs_prefix)
     set :docs_manifest_path, File.join(docs_path, 'docs.json')
-    set :default_docs, %w(css dom dom_events html http javascript)
+    set :default_docs, %w(css dom html http javascript)
     set :news_path, File.join(root, assets_prefix, 'javascripts', 'news.json')
 
     set :csp, false
