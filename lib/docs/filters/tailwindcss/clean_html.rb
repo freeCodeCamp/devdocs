@@ -52,6 +52,9 @@ module Docs
           node.parent.parent['class'] = node.parent.parent['class'].gsub(/bg-.*?\b/, ' ');
         end
 
+        #remove weird <hr> (https://github.com/damms005/devdocs/commit/8c9fbd859b71a2525b94a35ea994393ce2b6fedb#commitcomment-50091018)
+        css('hr').remove
+
         doc
 
       end
