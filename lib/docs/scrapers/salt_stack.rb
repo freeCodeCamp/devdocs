@@ -3,11 +3,11 @@ module Docs
   class SaltStack < FileScraper
     self.type = 'simple'
     self.slug = 'saltstack'
-    self.release = '2019.2.0'
-    self.base_url = 'https://docs.saltstack.com/en/latest/'
+    self.release = '3003'
+    self.base_url = 'https://docs.saltproject.io/en/latest/'
     self.root_path = 'ref/index.html'
     self.links = {
-      home: 'https://www.saltstack.com/',
+      home: 'https://www.saltproject.io/',
       code: 'https://github.com/saltstack/salt'
     }
 
@@ -17,7 +17,7 @@ module Docs
     options[:container] = '.body-content > .section'
 
     options[:attribution] = <<-HTML
-      &copy; 2019 SaltStack.<br>
+      &copy; 2021 SaltStack.<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 
