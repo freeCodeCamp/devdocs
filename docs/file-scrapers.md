@@ -202,19 +202,6 @@ tar -xf ruby.tar; cd ruby-$RELEASE; ./configure && make html; mv .ext/html path/
 To generate the htmls file you have to run `make` command but it does not install Ruby in your system, only generates html files so you have not
 to worry about cleaning or removing a new Ruby installation.
 
-## Salt Stack
-
-Replace `2019.2` with the correct tag.
-
-```sh
-git clone https://github.com/saltstack/salt.git --branch 2019.2 --depth 1
-cd salt/doc
-pip install sphinx
-make html
-```
-
-The generated html is in `salt/doc/_build/html`. Copy it to
-
 ## Scala
 
 See `lib/docs/scrapers/scala.rb`

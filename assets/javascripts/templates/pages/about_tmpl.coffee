@@ -738,7 +738,7 @@ credits = [
     'https://raw.githubusercontent.com/ReactiveX/rxjs/master/LICENSE.txt'
   ], [
     'Salt Stack',
-    '2019 SaltStack',
+    '2021 SaltStack',
     'Apache',
     'https://raw.githubusercontent.com/saltstack/salt/develop/LICENSE'
   ], [
