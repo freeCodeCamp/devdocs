@@ -39,10 +39,11 @@ module Docs
 
         css('h2 > a[name]', 'h3 > a[name]').each do |node|
           node.parent['id'] = node['name']
-          node.before(node.content).remove
+          node.before(node.children).remove
         end
         css('h2 > a, h3 > a').each do |node|
-          node.before(node.content).remove
+          # children instead of content for "Using the download attribute to save a <canvas> as a PNG" from https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a
+          node.before(node.children).remove
         end
 
         css('.notecard > h4').each do |node|
