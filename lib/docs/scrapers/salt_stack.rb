@@ -1,6 +1,5 @@
 module Docs
-  # The official documentation website is heavily rate-limited
-  class SaltStack < FileScraper
+  class SaltStack < UrlScraper
     self.type = 'simple'
     self.slug = 'saltstack'
     self.release = '3003'
