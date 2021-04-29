@@ -49,7 +49,7 @@ module Docs
           node.name = 'strong'
         end
 
-        css('svg.deprecated').each do |node|
+        css('svg.icon.deprecated', 'svg.icon.experimental', 'svg.icon.non-standard', 'svg.icon.obsolete').each do |node|
           node.name = 'span'
           node.content = node.content
         end
