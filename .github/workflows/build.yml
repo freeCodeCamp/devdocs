@@ -6,7 +6,8 @@ on:
       - main
 
 jobs:
-  test:
+  deploy:
+    name: Deploy to Heroku
     runs-on: ubuntu-20.04
     if: github.repository == 'freeCodeCamp/devdocs'
     steps:
