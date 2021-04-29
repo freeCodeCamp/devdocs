@@ -8,7 +8,7 @@ module Docs
         name = super
         name.sub!('Element.', '').try(:downcase!)
         name.sub!('Global attributes.', '').try(:concat, ' (attribute)')
-        name.sub!(/input.(\w+)/, 'input type="\1"')
+        name.sub!(/input\.([-\w]+)/, 'input type="\1"')
         name
       end
 
