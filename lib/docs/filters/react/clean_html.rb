@@ -13,7 +13,13 @@ module Docs
         end
 
         css('.gatsby-highlight > pre').each do |node|
-          node.content = node.content
+          node.content = node.at_css('code').children.map do |n|
+            if !n['class'].nil? && n['class'][/gatsby-highlight-code-line/]
+              n.content + "\n"
+            else
+              n.content
+            end
+          end.join("")
           node['data-language'] = node['class'][/(?<=gatsby\-code\-)(\w+)/]
           node.remove_attribute('class')
           node.parent.replace(node)
