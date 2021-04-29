@@ -42,7 +42,7 @@ module Docs
           node.before(node.content).remove
         end
         css('h2 > a, h3 > a').each do |node|
-          node.parent.content = node.content
+          node.before(node.content).remove
         end
 
         css('.notecard > h4').each do |node|

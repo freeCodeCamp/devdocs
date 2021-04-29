@@ -8,7 +8,7 @@ module Docs
 
     options[:root_title] = 'DOM'
 
-    # self.release = '2021-04-29'
+    # self.release = '2021-04-29 21:55'
 
   end
 end
