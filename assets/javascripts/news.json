@@ -1,5 +1,9 @@
 [
   [
+    "2021-04-29",
+    "Added <code class=\"_label\">alt + c</code> shortcut to copy URL of original page."
+  ],
+  [
     "2021-02-26",
     "New documentation: <a href=\"/react_bootstrap/\">React Bootstrap</a>"
   ],
