@@ -14,7 +14,7 @@ module Docs
     options[:container] = '.content .container'
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2020 Christian Johansen<br>
+      &copy; 2010&ndash;2021 Christian Johansen<br>
       Licensed under the BSD License.
     HTML
 
@@ -25,6 +25,11 @@ module Docs
       end
 
       url
+    end
+
+    version '10' do
+      self.release = '10.0.1'
+      self.base_url = "https://sinonjs.org/releases/v#{release}/"
     end
 
     version '9' do
