@@ -163,9 +163,7 @@ Or run the following commands in your terminal:
 curl https://www.php.net/distributions/manual/php_manual_en.tar.gz > php.tar; \
 tar -xf php.tar; mv php-chunked-xhtml/ path/to/devdocs/docs/php/
 ```
-## Python
-
-### Versions 3.6+
+## Python 3.6+
 
 ```sh
 mkdir docs/python~$VERSION
@@ -174,7 +172,7 @@ curl -L https://docs.python.org/$VERSION/archives/python-$RELEASE-docs-html.tar.
 tar xj --strip-components=1
 ```
 
-### < 3.6
+## Python < 3.6
 
 ```sh
 mkdir docs/python~$VERSION
