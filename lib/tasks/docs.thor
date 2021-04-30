@@ -118,7 +118,7 @@ class DocsCLI < Thor
     puts 'Done'
   end
 
-  desc 'download (<doc> <doc@version>... | --default | --installed | --all)', 'Download documentations'
+  desc 'download (<doc> <doc@version>... | --default | --installed | --all)', 'Download documentation packages'
   option :default, type: :boolean
   option :installed, type: :boolean
   option :all, type: :boolean
@@ -141,7 +141,7 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   end
 
-  desc 'package <doc> <doc@version>...', 'Package documentations'
+  desc 'package <doc> <doc@version>...', 'Create documentation packages'
   def package(*names)
     require 'unix_utils'
     docs = find_docs(names)
