@@ -40,8 +40,7 @@ class DocsCLI < Thor
     TTY::Pager.new.page(output)
   end
 
-  desc 'page <doc> [path] [--version] [--verbose] [--debug]', 'Generate a page (no indexing)'
-  option :version, type: :string
+  desc 'page (<doc> | <doc@version>) [path] [--verbose] [--debug]', 'Generate a page (no indexing)'
   option :verbose, type: :boolean
   option :debug, type: :boolean
   def page(name, path = '')
@@ -56,7 +55,8 @@ class DocsCLI < Thor
       Docs.install_report :filter, :request, :doc
     end
 
-    if Docs.generate_page(name, options[:version], path)
+    name, version = name.split(/@|~/)
+    if Docs.generate_page(name, version, path)
       puts 'Done'
     else
       puts "Failed!#{' (try running with --debug for more information)' unless options[:debug]}"
@@ -65,8 +65,7 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   end
 
-  desc 'generate <doc> [--version] [--verbose] [--debug] [--force] [--package]', 'Generate a documentation'
-  option :version, type: :string
+  desc 'generate (<doc> | <doc@version>) [--verbose] [--debug] [--force] [--package]', 'Generate a documentation'
   option :all, type: :boolean
   option :verbose, type: :boolean
   option :debug, type: :boolean
@@ -80,7 +79,7 @@ class DocsCLI < Thor
 
     require 'unix_utils' if options[:package]
 
-    doc = Docs.find(name, options[:version])
+    doc = find_doc(name)
 
     if doc < Docs::UrlScraper && !options[:force]
       puts <<-TEXT.strip_heredoc
@@ -119,7 +118,7 @@ class DocsCLI < Thor
     puts 'Done'
   end
 
-  desc 'download (<doc> <doc@version>... | --default | --installed | --all)', 'Download documentations'
+  desc 'download (<doc> <doc@version>... | --default | --installed | --all)', 'Download documentation packages'
   option :default, type: :boolean
   option :installed, type: :boolean
   option :all, type: :boolean
@@ -142,7 +141,7 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   end
 
-  desc 'package <doc> <doc@version>...', 'Package documentations'
+  desc 'package <doc> <doc@version>...', 'Create documentation packages'
   def package(*names)
     require 'unix_utils'
     docs = find_docs(names)
@@ -267,15 +266,17 @@ class DocsCLI < Thor
 
   private
 
-  def find_docs(names)
-    names.flat_map do |name|
-      name, version = name.split(/@|~/)
-      if version == 'all'
-        Docs.find(name, false).versions
-      else
-        Docs.find(name, version)
-      end
+  def find_doc(name)
+    name, version = name.split(/@|~/)
+    if version == 'all'
+      Docs.find(name, false).versions
+    else
+      Docs.find(name, version)
     end
+  end
+
+  def find_docs(names)
+    names.flat_map {|name| find_doc(name)}
   end
 
   def find_docs_by_slugs(slugs)
