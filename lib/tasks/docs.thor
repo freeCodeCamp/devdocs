@@ -40,8 +40,7 @@ class DocsCLI < Thor
     TTY::Pager.new.page(output)
   end
 
-  desc 'page <doc> [path] [--version] [--verbose] [--debug]', 'Generate a page (no indexing)'
-  option :version, type: :string
+  desc 'page (<doc> | <doc@version>) [path] [--verbose] [--debug]', 'Generate a page (no indexing)'
   option :verbose, type: :boolean
   option :debug, type: :boolean
   def page(name, path = '')
@@ -56,7 +55,8 @@ class DocsCLI < Thor
       Docs.install_report :filter, :request, :doc
     end
 
-    if Docs.generate_page(name, options[:version], path)
+    name, version = name.split(/@|~/)
+    if Docs.generate_page(name, version, path)
       puts 'Done'
     else
       puts "Failed!#{' (try running with --debug for more information)' unless options[:debug]}"
