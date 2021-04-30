@@ -267,15 +267,17 @@ class DocsCLI < Thor
 
   private
 
-  def find_docs(names)
-    names.flat_map do |name|
-      name, version = name.split(/@|~/)
-      if version == 'all'
-        Docs.find(name, false).versions
-      else
-        Docs.find(name, version)
-      end
+  def find_doc(name)
+    name, version = name.split(/@|~/)
+    if version == 'all'
+      Docs.find(name, false).versions
+    else
+      Docs.find(name, version)
     end
+  end
+
+  def find_docs(names)
+    names.flat_map {|name| find_doc(name)}
   end
 
   def find_docs_by_slugs(slugs)
