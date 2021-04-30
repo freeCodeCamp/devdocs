@@ -65,8 +65,7 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   end
 
-  desc 'generate <doc> [--version] [--verbose] [--debug] [--force] [--package]', 'Generate a documentation'
-  option :version, type: :string
+  desc 'generate (<doc> | <doc@version>) [--verbose] [--debug] [--force] [--package]', 'Generate a documentation'
   option :all, type: :boolean
   option :verbose, type: :boolean
   option :debug, type: :boolean
@@ -80,7 +79,7 @@ class DocsCLI < Thor
 
     require 'unix_utils' if options[:package]
 
-    doc = Docs.find(name, options[:version])
+    doc = find_doc(name)
 
     if doc < Docs::UrlScraper && !options[:force]
       puts <<-TEXT.strip_heredoc
