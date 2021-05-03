@@ -1,7 +1,6 @@
 module CompatTables
   require 'json'
   require 'net/http'
-  require 'pry'
 
   BROWSERS = {
     'chrome' => 'Chrome',
@@ -36,7 +35,7 @@ module CompatTables
     uris = []
 
     index_json['doc']['body'].each do |element|
-      uris.push(element['value']['dataURL']) if element['type'] == 'browser_compatibility'
+      uris.push(element['value']['dataURL']) if element['type'] == 'browser_compatibility' and element['value']['dataURL']
     end
 
     uris.map! do |uri|
@@ -94,7 +93,13 @@ module CompatTables
 
     last_table_entry = html_table.at_css('tbody').last_element_child
 
-    last_table_entry.add_child("<th><code>#{key}")
+    if key == '__compat'
+      tmp = slug.split('/')
+      last_table_entry.add_child("<th><code>#{tmp.last}")
+    else
+      last_table_entry.add_child("<th><code>#{key}")
+    end
+
 
     BROWSERS.keys.each do |browser_key|
       if key == '__compat'
@@ -111,71 +116,76 @@ module CompatTables
     version_removed = []
     notes = []
 
-    if json.is_a?(Array)
-      json.each do |element|
+    if json
+      if json.is_a?(Array)
+        json.each do |element|
 
-        if element['version_added']
-        version_added.push(element['version_added'])
-        else
-          version_added.push(false)
+          if element['version_added']
+            version_added.push(element['version_added'])
+          else
+            version_added.push(false)
+          end
+
+          if element['version_removed']
+            version_removed.push(element['version_removed'])
+          else
+            version_removed.push(false)
+          end
+
+          if element['notes']
+            notes.push(element['notes'])
+          else
+            notes.push(false)
+          end
+
         end
-
-        if element['version_removed']
-          version_removed.push(element['version_removed'])
-        else
-          version_removed.push(false)
-        end
-
-        if element['notes']
-          notes.push(element['notes'])
-        else
-          notes.push(false)
-        end
-
-      end
-    else
-      version_added.push(json['version_added'])
-      version_removed.push(json['version_removed'])
-      notes.push(json['notes'])
-    end
-
-    version_added.map! do |version|
-      if version == true
-        version = 'Yes'
-      elsif version == false
-        version = 'No'
-      elsif version.is_a?(Numeric)
       else
-        version = '?'
+        version_added.push(json['version_added'])
+        version_removed.push(json['version_removed'])
+        notes.push(json['notes'])
       end
 
-      version
-    end
+      version_added.map! do |version|
+        if version == true
+          version = 'Yes'
+        elsif version == false
+          version = 'No'
+        elsif version.is_a?(Numeric)
+        else
+          version = '?'
+        end
 
-    if version_removed[0]
-      format_string = "<td class=bc-supports-no>"
-    else
-      if version_added[0] == 'No'
+        version
+      end
+
+      if version_removed[0]
         format_string = "<td class=bc-supports-no>"
       else
-        format_string = "<td class=bc-supports-yes>"
-      end
-    end
-
-    for value in (0..version_added.length-1) do
-      if version_removed[value]
-        format_string += "<div>#{version_added[value]}-#{version_removed[value]}</div>"
-      else
-        if version_added[value] == 'No'
-          format_string += "<div>#{version_added[value]}</div>"
+        if version_added[0] == 'No'
+          format_string = "<td class=bc-supports-no>"
         else
-          format_string += "<div>#{version_added[value]}</div>"
+          format_string = "<td class=bc-supports-yes>"
         end
       end
 
-      if notes[value]
-        format_string += "<div>#{notes[value]}</div>"
+      for value in (0..version_added.length-1) do
+        if version_removed[value]
+          format_string += "<div>#{version_added[value]}-#{version_removed[value]}</div>"
+        else
+          if version_added[value] == 'No'
+            format_string += "<div>#{version_added[value]}</div>"
+          else
+            format_string += "<div>#{version_added[value]}</div>"
+          end
+        end
+
+        if notes[value]
+          format_string += "<div>#{notes[value]}</div>"
+        end
       end
+
+    else
+      format_string = "<td class=bc-supports-no><div>?</div></td>"
     end
 
     entry.add_child(format_string)
