@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
-require './lib/docs/core/compat_tables.rb'
-
 module Docs
   class Filter < ::HTML::Pipeline::Filter
-
-    include CompatTables
-
     def css(*args)
       doc.css(*args)
     end

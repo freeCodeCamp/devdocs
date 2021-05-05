@@ -3,7 +3,7 @@ module Docs
     self.abstract = true
     self.type = 'mdn'
 
-    html_filters.push 'mdn/clean_html'
+    html_filters.push 'mdn/clean_html', 'mdn/compat_tables'
 
     options[:container] = '#content > .main-page-content'
     options[:trailing_slash] = false
