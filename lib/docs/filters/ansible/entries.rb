@@ -28,7 +28,7 @@ module Docs
           end
         end
 
-        if version == "2.10"
+        if version >= "2.10"
           if slug =~ /\Acollections\//
             return "Collection #{slug.split('/')[1..-2].join(".")}"
           end

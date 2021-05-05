@@ -11,7 +11,7 @@ module Docs
 
     options[:attribution] = <<-HTML
       &copy; 2012&ndash;2018 Michael DeHaan<br>
-      &copy; 2018&ndash;2019 Red Hat, Inc.<br>
+      &copy; 2018&ndash;2021 Red Hat, Inc.<br>
       Licensed under the GNU General Public License version 3.
     HTML
 
@@ -31,6 +31,11 @@ module Docs
       /\Adev_guide.*/i,
       /\Aroadmap.*/i,
     ]
+
+    version '2.11' do
+      self.release = '2.11.0'
+      self.base_url = "https://docs.ansible.com/ansible/#{version}/"
+    end
 
     version '2.10' do
       self.release = '2.10.5'
