@@ -29,7 +29,5 @@ module Docs
       url
     end
 
-    # self.release = '2021-04-29 23:00'
-
   end
 end

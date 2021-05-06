@@ -7,7 +7,6 @@ module Docs
       end
 
       def root
-        doc.inner_html = doc.at_css('#Documentation + dl').to_html
       end
 
       def other
