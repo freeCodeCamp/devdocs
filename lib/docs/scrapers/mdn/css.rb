@@ -4,7 +4,7 @@ module Docs
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/CSS'
     self.root_path = '/Reference'
 
-    html_filters.push 'css/clean_html', 'css/entries', 'title'
+    html_filters.push 'css/clean_html', 'css/entries'
 
     options[:root_title] = 'CSS'
 
