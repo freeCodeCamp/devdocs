@@ -21,13 +21,13 @@ module Docs
     HTML
 
     version '2' do
-      self.release = '2.12.2'
-      self.base_url = "https://api.dart.dev/stable/#{release}/"
+      self.release = '2.12.4'
+      self.base_url = "https://api.dart.dev/stable/#{release}/index.html"
     end
 
     version '1' do
       self.release = '1.24.3'
-      self.base_url = "https://api.dart.dev/stable/#{release}/"
+      self.base_url = "https://api.dart.dev/stable/#{release}/index.html"
     end
 
     def get_latest_version(opts)
