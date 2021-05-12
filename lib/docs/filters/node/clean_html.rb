@@ -15,11 +15,26 @@ module Docs
         end
 
         css('pre').each do |node|
+          next unless node.at_css('code')
+
           if lang = node.at_css('code')['class']
             node['data-language'] = lang.remove(%r{lang(uage)?-})
           end
 
           node.content = node.content
+        end
+
+        css('h3 > code, h4 > code, h5 > code').each do |node|
+          tmp = node.content
+          has_parethesis = true if tmp =~ /\(/
+          tmp.gsub!(/\(.*\)/, '')
+
+          if has_parethesis
+            tmp << '()'
+          end
+
+          node.parent['id'] = tmp
+
         end
 
         doc
