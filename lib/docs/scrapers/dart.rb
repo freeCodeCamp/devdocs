@@ -21,7 +21,7 @@ module Docs
     HTML
 
     version '2' do
-      self.release = '2.12.2'
+      self.release = '2.13.0'
       self.base_url = "https://api.dart.dev/stable/#{release}/"
     end
 
