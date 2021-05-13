@@ -413,7 +413,7 @@ credits = [
     'https://raw.githubusercontent.com/facebook/jest/master/LICENSE'
   ], [
     'Jinja',
-    '2007-2020 Pallets',
+    '2007-2021 Pallets',
     'BSD',
     'https://github.com/pallets/jinja/blob/master/LICENSE.rst'
   ], [
