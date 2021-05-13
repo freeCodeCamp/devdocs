@@ -733,7 +733,7 @@ credits = [
     'https://raw.githubusercontent.com/rust-lang/book/master/LICENSE-MIT'
   ], [
     'RxJS',
-    '2015-2018 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors',
+    '2015-2021 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors',
     'Apache',
     'https://raw.githubusercontent.com/ReactiveX/rxjs/master/LICENSE.txt'
   ], [
