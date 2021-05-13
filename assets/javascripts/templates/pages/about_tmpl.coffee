@@ -308,7 +308,7 @@ credits = [
     'https://fishshell.com/docs/current/license.html'
   ], [
     'Flask',
-    '2007-2020 Pallets',
+    '2007-2021 Pallets',
     'BSD',
     'https://github.com/pallets/flask/blob/master/LICENSE.rst'
   ], [
