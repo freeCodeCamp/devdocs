@@ -9,13 +9,18 @@ module Docs
 
     html_filters.push 'werkzeug/entries', 'sphinx/clean_html'
 
-    options[:container] = '.body > .section'
+    options[:container] = '.body > section'
     options[:skip] = %w(changes/)
 
     options[:attribution] = <<-HTML
-      &copy; 2007&ndash;2020 Pallets<br>
+      &copy; 2007&ndash;2021 Pallets<br>
       Licensed under the BSD 3-clause License.
     HTML
+
+    version '2.0' do
+      self.release = '2.0.x'
+      self.base_url = "https://werkzeug.palletsprojects.com/en/#{self.release}/"
+    end
 
     version '1.0' do
       self.release = '1.0.x'

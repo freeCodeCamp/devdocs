@@ -858,7 +858,7 @@ credits = [
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Werkzeug',
-    '2007-2020 Pallets',
+    '2007-2021 Pallets',
     'BSD',
     'https://github.com/pallets/werkzeug/blob/master/LICENSE.rst'
   ], [
