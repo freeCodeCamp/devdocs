@@ -25,7 +25,7 @@ module Docs
       end
 
       def api
-        css('.hover-link', '.view-source', 'footer').remove
+        css('.hover-link', 'footer', ':not(.detail-header) > .view-source').remove
 
         css('.summary').each do |node|
           node.name = 'dl'
@@ -51,7 +51,11 @@ module Docs
           detail.css('.detail-header').each do |node|
             node.name = 'h3'
             node['id'] = id
+
+            source_href = node.at_css('.view-source').attr('href')
+
             node.content = node.at_css('.signature').inner_text
+            node << %(<a href="#{source_href}" class="source">Source</a>)
           end
 
           detail.css('.docstring h2').each do |node|
