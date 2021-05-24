@@ -45,7 +45,8 @@ module Docs
 
         css('.detail-header').map do |node|
           id = node['id']
-          name = node.content.strip
+          # ignore text of children, i.e. source link
+          name = node.children.select(&:text?).map(&:content).join.strip
 
           name.remove! %r{\(.*\)}
           name.remove! 'left '
