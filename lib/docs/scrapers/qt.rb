@@ -103,6 +103,11 @@ module Docs
       Licensed under the GNU Free Documentation License, Version 1.3.
     HTML
 
+    version '6.1' do
+      self.release = '6.1'
+      self.base_url = "https://doc.qt.io/qt-#{self.release}/"
+    end
+
     version '6.0' do
       self.release = '6.0'
       self.base_url = "https://doc.qt.io/qt-#{self.release}/"

@@ -283,7 +283,7 @@ credits = [
     'https://raw.githubusercontent.com/airbnb/enzyme/master/LICENSE.md'
   ], [
     'Erlang',
-    '2010-2020 Ericsson AB',
+    '2010-2021 Ericsson AB',
     'Apache',
     'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
   ], [
@@ -308,7 +308,7 @@ credits = [
     'https://fishshell.com/docs/current/license.html'
   ], [
     'Flask',
-    '2007-2020 Pallets',
+    '2007-2021 Pallets',
     'BSD',
     'https://github.com/pallets/flask/blob/master/LICENSE.rst'
   ], [
@@ -368,7 +368,7 @@ credits = [
     'https://raw.githubusercontent.com/wycats/handlebars.js/master/LICENSE'
   ], [
     'HAProxy',
-    '2020 Willy Tarreau, HAProxy contributors',
+    '2021 Willy Tarreau, HAProxy contributors',
     'GPLv2',
     'https://raw.githubusercontent.com/haproxy/haproxy/master/LICENSE'
   ], [
@@ -413,7 +413,7 @@ credits = [
     'https://raw.githubusercontent.com/facebook/jest/master/LICENSE'
   ], [
     'Jinja',
-    '2007-2020 Pallets',
+    '2007-2021 Pallets',
     'BSD',
     'https://github.com/pallets/jinja/blob/master/LICENSE.rst'
   ], [
@@ -543,7 +543,7 @@ credits = [
     'https://github.com/LearnBoost/mongoose/blob/master/README.md#license'
   ], [
     'nginx',
-    '2002-2020 Igor Sysoev<br>&copy; 2011-2020 Nginx, Inc.',
+    '2002-2021 Igor Sysoev<br>&copy; 2011-2021 Nginx, Inc.',
     'BSD',
     'http://nginx.org/LICENSE'
   ], [
@@ -733,7 +733,7 @@ credits = [
     'https://raw.githubusercontent.com/rust-lang/book/master/LICENSE-MIT'
   ], [
     'RxJS',
-    '2015-2018 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors',
+    '2015-2021 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors',
     'Apache',
     'https://raw.githubusercontent.com/ReactiveX/rxjs/master/LICENSE.txt'
   ], [
@@ -858,7 +858,7 @@ credits = [
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Werkzeug',
-    '2007-2020 Pallets',
+    '2007-2021 Pallets',
     'BSD',
     'https://github.com/pallets/werkzeug/blob/master/LICENSE.rst'
   ], [

@@ -9,13 +9,18 @@ module Docs
 
     html_filters.push 'jinja/entries', 'sphinx/clean_html'
 
-    options[:container] = '.body > .section'
+    options[:container] = '.body > section'
     options[:skip] = %w(integration/ switching/ faq/ changelog/ search/ genindex/)
 
     options[:attribution] = <<-HTML
-      &copy; 2007&ndash;2020 Pallets<br>
+      &copy; 2007&ndash;2021 Pallets<br>
       Licensed under the BSD 3-clause License.
     HTML
+
+    version '3.0' do
+      self.release = '3.0.x'
+      self.base_url = "https://jinja.palletsprojects.com/en/#{self.release}/"
+    end
 
     version '2.11' do
       self.release = '2.11.x'

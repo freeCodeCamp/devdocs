@@ -3,7 +3,7 @@
 module Docs
   class Rust < UrlScraper
     self.type = 'rust'
-    self.release = '1.51.0'
+    self.release = '1.52.1'
     self.base_url = 'https://doc.rust-lang.org/'
     self.root_path = 'book/index.html'
     self.initial_paths = %w(
@@ -28,6 +28,7 @@ module Docs
 
     options[:fix_urls] = ->(url) do
       url.sub! %r{(#{Rust.base_url}.+/)\z}, '\1index.html'
+      url.sub! "#{Rust.base_url}nightly/", Rust.base_url
       url.sub! '/unicode/u_str', '/unicode/str/'
       url.sub! '/std/std/', '/std/'
       url

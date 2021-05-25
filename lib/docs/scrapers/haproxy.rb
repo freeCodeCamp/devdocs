@@ -16,9 +16,14 @@ module Docs
     options[:follow_links] = false
 
     options[:attribution] = <<-HTML
-      &copy; 2020 Willy Tarreau, HAProxy contributors<br>
+      &copy; 2021 Willy Tarreau, HAProxy contributors<br>
       Licensed under the GNU General Public License version 2.
     HTML
+
+    version '2.4' do
+      self.release = '2.4.0'
+      self.base_url = "https://cbonte.github.io/haproxy-dconv/#{self.version}/"
+    end
 
     version '2.3' do
       self.release = '2.3.0'
