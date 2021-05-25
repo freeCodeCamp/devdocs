@@ -22,12 +22,12 @@ module Docs
 
     version '2' do
       self.release = '2.12.4'
-      self.base_url = "https://api.dart.dev/stable/#{release}/index.html"
+      self.base_url = "https://api.dart.dev/stable/#{release}/"
     end
 
     version '1' do
       self.release = '1.24.3'
-      self.base_url = "https://api.dart.dev/stable/#{release}/index.html"
+      self.base_url = "https://api.dart.dev/stable/#{release}/"
     end
 
     def get_latest_version(opts)
