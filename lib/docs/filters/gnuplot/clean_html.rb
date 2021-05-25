@@ -1,3 +1,4 @@
+# coding: utf-8
 module Docs
   class Gnuplot
     class CleanHtmlFilter < Filter
@@ -13,6 +14,9 @@ module Docs
         if root_page?
           title = css('.HUGE')[0]
           title.name = 'h1'
+
+          # weird .svg links
+          css('#tex2html_wrap21553').remove
 
           subtitle = css('.XLARGE')[0]
           title.content = title.content + ' − ' + subtitle.content
