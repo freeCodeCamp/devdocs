@@ -19,5 +19,9 @@ module Docs
       Licensed under the <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 license</a>
     HTML
 
+    def get_latest_version(opts)
+      get_latest_github_release('stedolan', 'jq', opts).split('-')[1]
+    end
+
   end
 end
