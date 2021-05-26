@@ -16,7 +16,7 @@ module Docs
     options[:skip_links] = false
 
     options[:attribution] = <<-HTML
-      Copyright (&copy;) 1999--2012 R Foundation for Statistical Computing.<br>
+      Copyright (&copy;) 1999–2012 R Foundation for Statistical Computing.<br>
       Licensed under the <a href="https://www.gnu.org/copyleft/gpl.html">GNU General Public License</a>.
     HTML
 
