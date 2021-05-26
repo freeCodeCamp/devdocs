@@ -417,6 +417,11 @@ credits = [
     'BSD',
     'https://github.com/pallets/jinja/blob/master/LICENSE.rst'
   ], [
+    'jq',
+    'Stephen Dolan',
+    'CC-BY-3.0',
+    'https://github.com/stedolan/jq/blob/master/COPYING#L24-L28'
+  ], [
     'jQuery',
     'Packt Publishing<br>&copy; jQuery Foundation and other contributors',
     'MIT',
