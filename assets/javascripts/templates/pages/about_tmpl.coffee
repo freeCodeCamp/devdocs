@@ -462,6 +462,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/laravel/framework/master/LICENSE.txt'
   ], [
+    'LaTeX',
+    'Karl Berry',
+    'Public Domain',
+    'https://ctan.org/pkg/latex2e-help-texinfo/'
+  ], [
     'Leaflet',
     '2010-2019 Vladimir Agafonkin<br>&copy; 2010-2011, CloudMade<br>Maps &copy; OpenStreetMap contributors.',
     'BSD',
