@@ -1,26 +1,22 @@
 module Docs
   class WebExtensions
     class EntriesFilter < Docs::EntriesFilter
+      TYPE_BY_PATH = {
+        'manifest.json' => 'manifest.json',
+        'user_interface' => 'User Interface',
+        'WebRequest' => 'webRequest',
+      }
+
       def get_name
-        at_css('main#content h1').text
+        at_css('h1').text
       end
 
       def get_type
         slug_parts = slug.split('/')
         if slug_parts[0] == 'API' and slug_parts.length() > 1
-          if slug_parts[1] == 'WebRequest'
-            return 'webRequest'
-          else
-            return slug_parts[1]
-          end
-        elsif slug_parts[0] == 'manifest.json'
-          return slug_parts[0]
-        elsif slug_parts[0] == 'user_interface'
-          return 'User Interface'
-        elsif slug_parts.length() > 1
-          return slug_parts[0]
+          return TYPE_BY_PATH.fetch(slug_parts[1], slug_parts[1])
         else
-          return 'Miscellaneous'
+          return TYPE_BY_PATH.fetch(slug_parts[0], slug_parts.length() > 1 ? slug_parts[0] : 'Miscellaneous')
         end
       end
     end
