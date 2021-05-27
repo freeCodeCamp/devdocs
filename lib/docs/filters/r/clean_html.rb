@@ -3,7 +3,13 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         slug_parts = slug.split('/')
-        if slug_parts[0] == 'library'
+
+        if root_page?
+          css('a[href$="/00index"]').each do |pkg|
+            pkg['href'] = "/r-#{pkg['href'].split('/')[1]}/"
+          end
+
+        elsif slug_parts[0] == 'library'
           title = at_css('h2')
           title.inner_html = "<code>#{slug_parts[3]}</code> #{title.content}"
 
@@ -11,12 +17,31 @@ module Docs
           summary.remove if summary
 
         elsif slug_parts[-2] == 'manual'
-          css('span[id] + h1, span[id] + h2, span[id] + h3, span[id] + h4, span[id] + h5, span[id] + h6').each do |node|
-            id = node.previous['id']
-            node.previous.remove
-            node['id'] = id.sub(/-1$/, '') if id
+          css('table.menu, div.header, hr, h2.contents-heading, div.contents, table.index-cp, table.index-vr, table[summary]').remove
+
+          css('h2').each do |node|
+            node.remove if node.content.end_with? ' index'
           end
-          css('table.menu, div.header, hr').remove
+
+          css('span[id] + h1, span[id] + h2, span[id] + h3, span[id] + h4, span[id] + h5, span[id] + h6').each do |node|
+            # We need the first of the series of span with ids
+            span = node.previous_element
+            while span.previous
+              prev = span.previous_element
+              break unless prev.name == 'span' and prev['id']
+              span.remove
+              span = prev
+            end
+
+            node['id'] = span['id']
+            span.remove
+
+            css('div.example').each do |node|
+              node.replace(node.children)
+            end
+          end
+
+          css('h1 + h1').remove
 
           css('.footnote h5').each do |node|
             anchor = node.at_css('a[id]')

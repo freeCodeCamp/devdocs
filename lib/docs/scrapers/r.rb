@@ -21,10 +21,33 @@ module Docs
     HTML
 
     # Never want those
+    options[:skip_patterns] = [
+      /\/DESCRIPTION$/,
+      /\/NEWS(\.[^\/]*)?$/,
+      /\/demo$/,
+      /\.pdf$/
+    ]
+
+    ## We want to fix links like so − but only if the targets don’t exist,
+    ## as these target packages or keywords that do not have their own file,
+    ## but exist on another page, and we properly record it.
+    #
+    #options[:fix_urls] = ->(url) do
+    #  url.sub!(%r'/library/([^/]+)/doc/index.html$') { |m| "/r-#{$1.parameterize.downcase}/" }
+    #  url.sub!(%r'/library/([^/]+)/html/([^/]+).html$') { |m| "/library/#{$1.parameterize.downcase}/html/#{$2.parameterize.downcase}" }
+    #end
+
     options[:skip] = %w(
       doc/html/packages-head-utf8.html
       doc/html/SearchOn.html
       doc/html/Search.html
+      doc/html/UserManuals.html
+      doc/html/faq.html
+      doc/manual/R-FAQ.html
+      doc/manual/R-admin.html
+      doc/manual/R-exts.html
+      doc/manual/R-ints.html
+      doc/manual/R-lang.html
     )
 
   end

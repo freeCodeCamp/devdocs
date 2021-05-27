@@ -2,11 +2,16 @@ module Docs
   class R
     class EntriesFilter < Docs::EntriesFilter
 
-      @@include_manual = false
-      @@include_misc = false
+      PKG_INDEX_ENTRIES = Hash.new []
 
       def initialize(*)
         super
+
+        if slug_parts[-1] == '00Index'
+          css('tr a').each do |link|
+            PKG_INDEX_ENTRIES[link['href']] += [link.text]
+          end
+        end
       end
 
       def slug_parts
@@ -18,11 +23,11 @@ module Docs
       end
 
       def is_manual?
-        slug_parts[-2] == 'manual'
+        slug_parts[1] == 'manual'
       end
 
       def get_name
-        return slug_parts[3] + ' − ' + at_css('h2').content if is_package?
+        return at_css('h2').content if is_package?
         title = at_css('h1.settitle')
         title ? title.content : at_css('h1, h2').content
       end
@@ -30,24 +35,41 @@ module Docs
       def get_type
         return slug_parts[1] if is_package?
         return at_css('h1.settitle').content if is_manual?
-        'Miscellaneous'
       end
 
       def include_default_entry?
-        if is_manual? or slug_parts[-1] == '00Index' or slug_parts[-1] == 'index'
-          return false
-        end
-        is_package? or self.include_misc
+        is_package? and not slug_parts[-1] == '00Index'
+      end
+
+      def manual_section(node)
+        title = node.content.sub /^((Appendix )?[A-Z]|[0-9]+)(\.[0-9]+)* /, ''
+        title unless ['References', 'Preface', 'Acknowledgements'].include?(title) or title.end_with?(' index')
       end
 
       def additional_entries
-        return [] unless is_manual? and self.include_manual
+        if is_package? and slug_parts[-1] != '00Index'
+          page = slug_parts[-1]
+          return [page] + PKG_INDEX_ENTRIES.fetch(page, [])
+        end
+
+        return [] unless is_manual?
 
         entries = []
-        css('div.contents > ul > li').each do |node|
-          node.css('a').each do |link|
-            link_name = link.content.sub /^[0-9A-Z]+(\.[0-9]+)* /, ''
-            entries << [link_name, link['href'].split('#')[1], name]
+        unless slug_parts[-1].downcase == 'r-intro'
+          # Single top-level category
+          css('div.contents > ul a').each do |link|
+            link_name = manual_section(link)
+            entries << [link_name, link['href'].split('#')[1], name] unless link_name.nil?
+          end
+        else
+          # Split 1st level of manual into different categories
+          css('div.contents > ul > li').each do |node|
+            type = manual_section(node.at_css('a'))
+            next if type.nil?
+            node.css('> ul a').each do |link|
+              link_name = link.content.sub /^[0-9A-Z]+(\.[0-9]+)* /, ''
+              entries << [link_name, link['href'].split('#')[1], type]
+            end
           end
         end
         return entries
