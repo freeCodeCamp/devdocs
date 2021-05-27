@@ -13,6 +13,10 @@ module Docs
 
         css('h1, h2, h3, h4').each { |node| node.content = node.content.sub /^[0-9A-Z]+(\.[0-9]+)* /, '' }
 
+        css('div.example').each do |node|
+          node.replace(node.children)
+        end
+
         css('pre').each do |node|
           node.delete 'class'
           node['data-language'] = 'latex'
