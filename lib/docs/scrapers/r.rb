@@ -24,6 +24,7 @@ module Docs
     options[:skip_patterns] = [
       /\/DESCRIPTION$/,
       /\/NEWS(\.[^\/]*)?$/,
+      /\/doc\/index\.html$/,
       /\/demo$/,
       /\.pdf$/
     ]
