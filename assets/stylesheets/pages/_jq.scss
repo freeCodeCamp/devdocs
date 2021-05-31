@@ -1,0 +1,26 @@
+._jq {
+  @extend %simple;
+
+  .manual-example table {
+	  border: none;
+
+	  & td {
+		  @extend %pre;
+		  &.jqprogram { font-weight: bold; }
+		  border: none;
+	  }
+
+	  & th {
+		  color: var(--textColor);
+		  background: var(--contentBackground);
+		  text-align: right;
+		  border: none;
+	  }
+
+	  & tr:not(:first-child) th:not(:empty) {
+		  &, & + td {
+			  border-top: 1px solid var(--boxBorder);
+		  }
+	  }
+  }
+}

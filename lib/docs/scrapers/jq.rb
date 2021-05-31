@@ -2,7 +2,7 @@ module Docs
   class Jq < UrlScraper
     self.name = 'jq'
     self.slug = 'jq'
-    self.type = 'simple'
+    self.type = 'jq'
     self.release = '1.6'
     self.links = {
       home: 'https://stedolan.github.io/jq/'
