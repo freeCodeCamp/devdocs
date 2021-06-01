@@ -4,14 +4,17 @@ module Docs
 
       PKG_INDEX_ENTRIES = Hash.new []
 
-      def initialize(*)
-        super
-
+      def call
         if slug_parts[-1] == '00Index'
+          dir = File.dirname(result[:subpath])
           css('tr a').each do |link|
             PKG_INDEX_ENTRIES[link['href']] += [link.text]
+            next if link['href'] == link.text
+            context[:replace_paths][File.join(dir, "#{link.text}.html")] = File.join(dir, "#{link['href']}.html")
           end
         end
+
+        super
       end
 
       def slug_parts

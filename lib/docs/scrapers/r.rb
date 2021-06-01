@@ -29,14 +29,12 @@ module Docs
       /\.pdf$/
     ]
 
-    ## We want to fix links like so − but only if the targets don’t exist,
-    ## as these target packages or keywords that do not have their own file,
-    ## but exist on another page, and we properly record it.
-    #
-    #options[:fix_urls] = ->(url) do
-    #  url.sub!(%r'/library/([^/]+)/doc/index.html$') { |m| "/r-#{$1.parameterize.downcase}/" }
-    #  url.sub!(%r'/library/([^/]+)/html/([^/]+).html$') { |m| "/library/#{$1.parameterize.downcase}/html/#{$2.parameterize.downcase}" }
-    #end
+    options[:replace_paths] = {
+    ## We want to fix links like so − but only if the targets don’t exist:
+    #  'library/MASS/html/cov.mve.html' => 'library/MASS/html/cov.rob.html'
+    ## Paths for target packages or keywords that do not have their own file
+    ## are generated in the entries filter from 00Index.html files
+    }
 
     options[:skip] = %w(
       doc/html/packages-head-utf8.html
