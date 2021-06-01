@@ -16,6 +16,8 @@ module Docs
           summary = at_css('table[summary]')
           summary.remove if summary
 
+          css('hr ~ *, hr').remove
+
         elsif slug_parts[-2] == 'manual'
           css('table.menu, div.header, hr, h2.contents-heading, div.contents, table.index-cp, table.index-vr, table[summary]').remove
 
