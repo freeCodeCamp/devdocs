@@ -163,6 +163,7 @@ Made something cool? Feel free to open a PR to add a new row to this table!
 | [hardpixel/devdocs-desktop](https://github.com/hardpixel/devdocs-desktop)                               | GTK3 application for DevDocs with search integrated in the headerbar.  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/hardpixel/devdocs-desktop?logo=github&label)](https://github.com/hardpixel/devdocs-desktop)             |
 | [dteoh/devdocs-macos](https://github.com/dteoh/devdocs-macos)                                           | Native macOS application for DevDocs.                                  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/dteoh/devdocs-macos?logo=github&label)](https://github.com/dteoh/devdocs-macos)                         |
 | [Merith-TK/devdocs_webapp_kotlin](https://github.com/Merith-TK/devdocs_webapp_kotlin)                   | Android application which shows DevDocs in a webview.                  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/Merith-TK/devdocs_webapp_kotlin?logo=github&label)](https://github.com/Merith-TK/devdocs_webapp_kotlin) |
+| [astoff/devdocs.el](https://github.com/astoff/devdocs.el)                                               | Emacs viewer for DevDocs                                               | [![Latest GitHub commit](https://img.shields.io/github/last-commit/astoff/devdocs.el?logo=github&label)](https://github.com/astoff/devdocs.el)                             |
 
 ## Copyright / License
 
