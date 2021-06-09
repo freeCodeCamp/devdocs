@@ -54,6 +54,10 @@ module Docs
           end
         end
 
+        css('pre').each do |node|
+          node['data-language'] = 'r'
+        end
+
         doc
       end
     end

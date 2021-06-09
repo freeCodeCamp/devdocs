@@ -1,5 +1,5 @@
 /* PrismJS 1.23.0
-https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+bash+c+cpp+coffeescript+crystal+d+dart+diff+django+elixir+erlang+go+groovy+java+json+julia+kotlin+latex+lua+markup-templating+matlab+nginx+nim+ocaml+perl+php+python+jsx+ruby+rust+scss+shell-session+sql+typescript+yaml */
+https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+bash+c+cpp+coffeescript+crystal+d+dart+diff+django+elixir+erlang+go+groovy+java+json+julia+kotlin+latex+lua+markup-templating+matlab+nginx+nim+ocaml+perl+php+python+r+jsx+ruby+rust+scss+shell-session+sql+typescript+yaml */
 /// <reference lib="WebWorker"/>
 
 var _self = (typeof window !== 'undefined')
@@ -1231,7 +1231,7 @@ Prism.languages.markup = {
 		greedy: true,
 		inside: {
 			'internal-subset': {
-				pattern: /(\[)[\s\S]+(?=\]>$)/,
+				pattern: /(^[^\[]*\[)[\s\S]+(?=\]>$)/,
 				lookbehind: true,
 				greedy: true,
 				inside: null // see below
@@ -1369,7 +1369,7 @@ Object.defineProperty(Prism.languages.markup.tag, 'addAttribute', {
 					pattern: /=[\s\S]+/,
 					inside: {
 						'value': {
-							pattern: /(=\s*(["']|(?!["'])))\S[\s\S]*(?=\2$)/,
+							pattern: /(^=\s*(["']|(?!["'])))\S[\s\S]*(?=\2$)/,
 							lookbehind: true,
 							alias: [lang, 'language-' + lang],
 							inside: Prism.languages[lang]
@@ -1399,7 +1399,7 @@ Prism.languages.rss = Prism.languages.xml;
 
 (function (Prism) {
 
-	var string = /("|')(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/;
+	var string = /(?:"(?:\\(?:\r\n|[\s\S])|[^"\\\r\n])*"|'(?:\\(?:\r\n|[\s\S])|[^'\\\r\n])*')/;
 
 	Prism.languages.css = {
 		'comment': /\/\*[\s\S]*?\*\//,
@@ -1432,14 +1432,23 @@ Prism.languages.rss = Prism.languages.xml;
 				}
 			}
 		},
-		'selector': RegExp('[^{}\\s](?:[^{};"\'\\s]|\\s+(?![\\s{])|' + string.source + ')*(?=\\s*\\{)'),
+		'selector': {
+			pattern: RegExp('(^|[{}\\s])[^{}\\s](?:[^{};"\'\\s]|\\s+(?![\\s{])|' + string.source + ')*(?=\\s*\\{)'),
+			lookbehind: true
+		},
 		'string': {
 			pattern: string,
 			greedy: true
 		},
-		'property': /(?!\s)[-_a-z\xA0-\uFFFF](?:(?!\s)[-\w\xA0-\uFFFF])*(?=\s*:)/i,
+		'property': {
+			pattern: /(^|[^-\w\xA0-\uFFFF])(?!\s)[-_a-z\xA0-\uFFFF](?:(?!\s)[-\w\xA0-\uFFFF])*(?=\s*:)/i,
+			lookbehind: true
+		},
 		'important': /!important\b/i,
-		'function': /[-a-z0-9]+(?=\()/i,
+		'function': {
+			pattern: /(^|[^-a-z0-9])[-a-z0-9]+(?=\()/i,
+			lookbehind: true
+		},
 		'punctuation': /[(){};:,]/
 	};
 
@@ -1479,7 +1488,7 @@ Prism.languages.clike = {
 	},
 	'keyword': /\b(?:if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/,
 	'boolean': /\b(?:true|false)\b/,
-	'function': /\w+(?=\()/,
+	'function': /\b\w+(?=\()/,
 	'number': /\b0x[\da-f]+\b|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e[+-]?\d+)?/i,
 	'operator': /[<>]=?|[!=]=?=?|--?|\+\+?|&&?|\|\|?|[?*/~^%]/,
 	'punctuation': /[{}[\];(),.:]/
@@ -1523,8 +1532,8 @@ Prism.languages.insertBefore('javascript', 'keyword', {
 				alias: 'language-regex',
 				inside: Prism.languages.regex
 			},
-			'regex-flags': /[a-z]+$/,
-			'regex-delimiter': /^\/|\/$/
+			'regex-delimiter': /^\/|\/$/,
+			'regex-flags': /^[a-z]+$/,
 		}
 	},
 	// This must be declared before keyword because we use "function" inside the look-forward
@@ -1539,7 +1548,8 @@ Prism.languages.insertBefore('javascript', 'keyword', {
 			inside: Prism.languages.javascript
 		},
 		{
-			pattern: /(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*=>)/i,
+			pattern: /(^|[^$\w\xA0-\uFFFF])(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*=>)/i,
+			lookbehind: true,
 			inside: Prism.languages.javascript
 		},
 		{
@@ -1837,7 +1847,7 @@ Prism.languages.c = Prism.languages.extend('clike', {
 		lookbehind: true
 	},
 	'keyword': /\b(?:__attribute__|_Alignas|_Alignof|_Atomic|_Bool|_Complex|_Generic|_Imaginary|_Noreturn|_Static_assert|_Thread_local|asm|typeof|inline|auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for|goto|if|int|long|register|return|short|signed|sizeof|static|struct|switch|typedef|union|unsigned|void|volatile|while)\b/,
-	'function': /[a-z_]\w*(?=\s*\()/i,
+	'function': /\b[a-z_]\w*(?=\s*\()/i,
 	'number': /(?:\b0x(?:[\da-f]+(?:\.[\da-f]*)?|\.[\da-f]+)(?:p[+-]?\d+)?|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e[+-]?\d+)?)[ful]{0,4}/i,
 	'operator': />>=?|<<=?|->|([-+&|:])\1|[?:~]|[-+*/%&|^!=<>]=?/
 });
@@ -1846,7 +1856,7 @@ Prism.languages.insertBefore('c', 'string', {
 	'macro': {
 		// allow for multiline macro definitions
 		// spaces after the # character compile fine with gcc
-		pattern: /(^\s*)#\s*[a-z](?:[^\r\n\\/]|\/(?!\*)|\/\*(?:[^*]|\*(?!\/))*\*\/|\\(?:\r\n|[\s\S]))*/im,
+		pattern: /(^[\t ]*)#\s*[a-z](?:[^\r\n\\/]|\/(?!\*)|\/\*(?:[^*]|\*(?!\/))*\*\/|\\(?:\r\n|[\s\S]))*/im,
 		lookbehind: true,
 		greedy: true,
 		alias: 'property',
@@ -1913,7 +1923,7 @@ delete Prism.languages.c['boolean'];
 			/\b[A-Z_]\w*(?=\s*::\s*~\w+\s*\()/i,
 			// This also intends to capture the class name of method implementations but here the class has template
 			// parameters, so it can't be a namespace (until C++ adds generic namespaces).
-			/\w+(?=\s*<(?:[^<>]|<(?:[^<>]|<[^<>]*>)*>)*>\s*::\s*\w+\s*\()/
+			/\b\w+(?=\s*<(?:[^<>]|<(?:[^<>]|<[^<>]*>)*>)*>\s*::\s*\w+\s*\()/
 		],
 		'keyword': keyword,
 		'number': {
@@ -2732,7 +2742,7 @@ Prism.languages.elixir = {
 		alias: 'class-name'
 	},
 	// Look-ahead prevents bad highlighting of the :: operator
-	'attr-name': /\w+\??:(?!:)/,
+	'attr-name': /\b\w+\??:(?!:)/,
 	'argument': {
 		// Look-behind prevents bad highlighting of the && operator
 		pattern: /(^|[^&])&\d+/,
@@ -2796,7 +2806,7 @@ Prism.languages.erlang = {
 	'keyword': /\b(?:fun|when|case|of|end|if|receive|after|try|catch)\b/,
 	'number': [
 		/\$\\?./,
-		/\d+#[a-z0-9]+/i,
+		/\b\d+#[a-z0-9]+/i,
 		/(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e[+-]?\d+)?/i
 	],
 	'function': /\b[a-z][\w@]*(?=\()/,
@@ -3034,7 +3044,7 @@ Prism.languages.julia = {
 		// https://docs.julialang.org/en/v1/manual/strings/#String-Basics-1
 		// https://docs.julialang.org/en/v1/manual/strings/#non-standard-string-literals-1
 		// https://docs.julialang.org/en/v1/manual/running-external-programs/#Running-External-Programs-1
-		pattern: /"""[\s\S]+?"""|\w*"(?:\\.|[^"\\\r\n])*"|(^|[^\w'])'(?:\\[^\r\n][^'\r\n]*|[^\\\r\n])'|`(?:[^\\`\r\n]|\\.)*`/,
+		pattern: /"""[\s\S]+?"""|(?:\b\w+)?"(?:\\.|[^"\\\r\n])*"|(^|[^\w'])'(?:\\[^\r\n][^'\r\n]*|[^\\\r\n])'|`(?:[^\\`\r\n]|\\.)*`/,
 		lookbehind: true,
 		greedy: true
 	},
@@ -3058,7 +3068,7 @@ Prism.languages.julia = {
 		},
 		'function': [
 			{
-				pattern: /(?:`[^\r\n`]+`|\w+)(?=\s*\()/,
+				pattern: /(?:`[^\r\n`]+`|\b\w+)(?=\s*\()/,
 				greedy: true
 			},
 			{
@@ -3088,7 +3098,7 @@ Prism.languages.julia = {
 	});
 	Prism.languages.insertBefore('kotlin', 'function', {
 		'label': {
-			pattern: /\w+@|@\w+/,
+			pattern: /\b\w+@|@\w+\b/,
 			alias: 'symbol'
 		}
 	});
@@ -3216,7 +3226,7 @@ Prism.languages.matlab = {
 	// FIXME We could handle imaginary numbers as a whole
 	'number': /(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:[eE][+-]?\d+)?(?:[ij])?|\b[ij]\b/,
 	'keyword': /\b(?:break|case|catch|continue|else|elseif|end|for|function|if|inf|NaN|otherwise|parfor|pause|pi|return|switch|try|while)\b/,
-	'function': /(?!\d)\w+(?=\s*\()/,
+	'function': /\b(?!\d)\w+(?=\s*\()/,
 	'operator': /\.?[*^\/\\']|[+\-:@]|[<>=~]=?|&&?|\|\|?/,
 	'punctuation': /\.{3}|[.,;\[\](){}!]/
 };
@@ -3943,7 +3953,7 @@ Prism.languages.python = {
 		lookbehind: true
 	},
 	'decorator': {
-		pattern: /(^\s*)@\w+(?:\.\w+)*/im,
+		pattern: /(^[\t ]*)@\w+(?:\.\w+)*/im,
 		lookbehind: true,
 		alias: ['annotation', 'punctuation'],
 		inside: {
@@ -3961,6 +3971,29 @@ Prism.languages.python = {
 Prism.languages.python['string-interpolation'].inside['interpolation'].inside.rest = Prism.languages.python;
 
 Prism.languages.py = Prism.languages.python;
+
+Prism.languages.r = {
+	'comment': /#.*/,
+	'string': {
+		pattern: /(['"])(?:\\.|(?!\1)[^\\\r\n])*\1/,
+		greedy: true
+	},
+	'percent-operator': {
+		// Includes user-defined operators
+		// and %%, %*%, %/%, %in%, %o%, %x%
+		pattern: /%[^%\s]*%/,
+		alias: 'operator'
+	},
+	'boolean': /\b(?:TRUE|FALSE)\b/,
+	'ellipsis': /\.\.(?:\.|\d+)/,
+	'number': [
+		/\b(?:NaN|Inf)\b/,
+		/(?:\b0x[\dA-Fa-f]+(?:\.\d*)?|\b\d+(?:\.\d*)?|\B\.\d+)(?:[EePp][+-]?\d+)?[iL]?/
+	],
+	'keyword': /\b(?:if|else|repeat|while|function|for|in|next|break|NULL|NA|NA_integer_|NA_real_|NA_complex_|NA_character_)\b/,
+	'operator': /->?>?|<(?:=|<?-)?|[>=!]=?|::?|&&?|\|\|?|[+*\/^$@~]/,
+	'punctuation': /[(){}\[\],;]/
+};
 
 (function (Prism) {
 
@@ -4213,7 +4246,7 @@ Prism.languages.py = Prism.languages.python;
 		// https://doc.rust-lang.org/1.0.0/style/style/naming/README.html
 		'function': /\b[a-z_]\w*(?=\s*(?:::\s*<|\())/,
 		'macro': {
-			pattern: /\w+!/,
+			pattern: /\b\w+!/,
 			alias: 'property'
 		},
 		'constant': /\b[A-Z_][A-Z_\d]+\b/,
@@ -4283,7 +4316,7 @@ Prism.languages.insertBefore('scss', 'atrule', {
 	'keyword': [
 		/@(?:if|else(?: if)?|forward|for|each|while|import|use|extend|debug|warn|mixin|include|function|return|content)\b/i,
 		{
-			pattern: /( +)(?:from|through)(?= )/,
+			pattern: /( )(?:from|through)(?= )/,
 			lookbehind: true
 		}
 	]
@@ -4546,3 +4579,4 @@ Prism.languages.sql = {
 	Prism.languages.yml = Prism.languages.yaml;
 
 }(Prism));
+
