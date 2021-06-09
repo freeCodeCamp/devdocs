@@ -687,6 +687,11 @@ credits = [
     'GFDL',
     'https://doc.qt.io/qt-5/licensing.html'
   ], [
+    'R',
+    '1999–2012 R Foundation for Statistical Computing',
+    'GPL',
+    'https://svn.r-project.org/R/trunk/COPYING'
+  ], [
     'Ramda',
     '2013-2020 Scott Sauyet and Michael Hurley',
     'MIT',
