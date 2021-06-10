@@ -181,6 +181,28 @@ curl -L https://docs.python.org/ftp/python/doc/$RELEASE/python-$RELEASE-docs-htm
 tar xj --strip-components=1
 ```
 
+## R
+```bash
+DEVDOCSROOT=/path/to/devdocs/docs/R
+RLATEST=https://cran.r-project.org/src/base/R-latest.tar.gz # or /R-${VERSION::1}/R-$VERSION.tar.gz
+
+RSOURCEDIR=${TMPDIR:-/tmp}/R/latest
+RBUILDDIR=${TMPDIR:-/tmp}/R/build
+mkdir -p "$RSOURCEDIR" "$RBUILDDIR" "$DEVDOCSROOT"
+
+# Download, configure, and build with static HTML pages
+curl "$RLATEST" | tar -C "$RSOURCEDIR" -xzf - --strip-components=1
+(cd "$RBUILDDIR" && "$RSOURCEDIR/configure" --enable-prebuilt-html --with-recommended-packages --disable-byte-compiled-packages --disable-shared --disable-java)
+make _R_HELP_LINKS_TO_TOPICS_=FALSE -C "$RBUILDDIR"
+
+# Export all html documentation built − global, and per-package
+cp -r "$RBUILDDIR/doc" "$DEVDOCSROOT/"
+ls -d "$RBUILDDIR"/library/*/html | while read orig; do
+    dest="$DEVDOCSROOT${orig#$RBUILDDIR}"
+    mkdir -p "$dest" && cp -r "$orig"/* "$dest/"
+done
+```
+
 ## RDoc
 
 ### Nokogiri
