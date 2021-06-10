@@ -183,7 +183,7 @@ tar xj --strip-components=1
 
 ## R
 ```bash
-DEVDOCSROOT=/path/to/devdocs/docs/R
+DEVDOCSROOT=/path/to/devdocs/docs/r
 RLATEST=https://cran.r-project.org/src/base/R-latest.tar.gz # or /R-${VERSION::1}/R-$VERSION.tar.gz
 
 RSOURCEDIR=${TMPDIR:-/tmp}/R/latest
