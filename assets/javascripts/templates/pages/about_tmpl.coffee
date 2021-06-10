@@ -408,7 +408,7 @@ credits = [
     'https://raw.githubusercontent.com/jekyll/jekyll/master/LICENSE'
   ], [
     'Jest',
-    '2020 Facebook, Inc.',
+    '2021 Facebook, Inc.',
     'MIT',
     'https://raw.githubusercontent.com/facebook/jest/master/LICENSE'
   ], [

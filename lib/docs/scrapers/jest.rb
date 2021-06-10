@@ -1,8 +1,14 @@
 module Docs
   class Jest < UrlScraper
+    include MultipleBaseUrls
     self.type = 'simple'
-    self.release = '26.6'
-    self.base_url = 'https://jestjs.io/docs/en/'
+    self.release = '27.0.4'
+
+    self.base_urls = [
+      'https://jestjs.io/docs/',
+      'https://jestjs.io/docs/expect'
+    ]
+
     self.root_path = 'getting-started'
     self.links = {
       home: 'https://jestjs.io/',
@@ -11,10 +17,12 @@ module Docs
 
     html_filters.push 'jest/entries', 'jest/clean_html'
 
-    options[:container] = '.docMainWrapper'
+    options[:skip_patterns] = [
+      /\d*.x/ # avoid deprecated versions
+    ]
 
     options[:attribution] = <<-HTML
-      &copy; 2020 Facebook, Inc.<br>
+      &copy; 2021 Facebook, Inc.<br>
       Licensed under the MIT License.
     HTML
 

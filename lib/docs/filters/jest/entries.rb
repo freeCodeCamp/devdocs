@@ -2,28 +2,35 @@ module Docs
   class Jest
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('.mainContainer h1').content
+        at_css('h1').content
       end
 
       def get_type
-        type = at_css('.navListItemActive').ancestors('.navGroup').first.at_css('h3').content
+        type = at_css('.menu__link--sublist.menu__link--active') # active sidebar element
+
+        if type.nil?
+          type = 'API Reference'
+        else
+          type = type.content
+        end
 
         if type == 'Introduction'
           'Guides: Introduction'
         elsif type == 'API Reference'
-          self.name
+          name
         else
           type
         end
       end
 
       def additional_entries
-        return [] unless !root_page? && self.type == self.name # api page
-        return [] if self.slug == 'environment-variables'
+        return [] unless !root_page? && type == name # api page
+        return [] if slug == 'environment-variables'
+        return [] if slug == 'code-transformation'
 
         entries = []
 
-        at_css('.mainContainer h2 + ul, ul.toc-headings').css('li > a').each do |node|
+        css('h3').each do |node|
           code = node.at_css('code')
           next if code.nil?
 
@@ -32,7 +39,7 @@ module Docs
           name.remove! %r{[\s=<].*}
           name.prepend 'jest ' if name.start_with?('--')
           name.prepend 'Config: ' if slug == 'configuration'
-          id = node['href'].remove('#')
+          id = node.at_css('.anchor')['id']
 
           entries << [name, id]
         end
