@@ -49,5 +49,10 @@ module Docs
       doc/manual/R-lang.html
     )
 
+    def get_latest_version(opts)
+      body = fetch('https://cran.r-project.org/src/base/NEWS', opts)
+      body.match(/CHANGES IN R ([\d.]+):/)[1]
+    end
+
   end
 end
