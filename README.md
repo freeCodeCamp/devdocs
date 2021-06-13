@@ -164,6 +164,7 @@ Made something cool? Feel free to open a PR to add a new row to this table!
 | [dteoh/devdocs-macos](https://github.com/dteoh/devdocs-macos)                                           | Native macOS application for DevDocs.                                  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/dteoh/devdocs-macos?logo=github&label)](https://github.com/dteoh/devdocs-macos)                         |
 | [Merith-TK/devdocs_webapp_kotlin](https://github.com/Merith-TK/devdocs_webapp_kotlin)                   | Android application which shows DevDocs in a webview.                  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/Merith-TK/devdocs_webapp_kotlin?logo=github&label)](https://github.com/Merith-TK/devdocs_webapp_kotlin) |
 | [astoff/devdocs.el](https://github.com/astoff/devdocs.el)                                               | Emacs viewer for DevDocs                                               | [![Latest GitHub commit](https://img.shields.io/github/last-commit/astoff/devdocs.el?logo=github&label)](https://github.com/astoff/devdocs.el)                             |
+| [DevDocs Tab for VS Code](https://github.com/mohamed3nan/DevDocs-Tab)                                   | VS Code extension to search for documentation on DevDocs.io faster by displaying it in a tab inside VS Code.| [![Latest GitHub commit](https://img.shields.io/github/last-commit/mohamed3nan/DevDocs-Tab?logo=github&label)](https://github.com/mohamed3nan/DevDocs-Tab)                             |
 
 ## Copyright / License
 
