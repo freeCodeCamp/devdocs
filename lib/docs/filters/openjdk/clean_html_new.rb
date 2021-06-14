@@ -31,6 +31,8 @@ module Docs
 
         # add syntax highlight to each method
         css('.member-signature').each do |node|
+          node.content = node.content.sub(/\u200B/, '') # fix zero width space characters
+
           node.name = 'pre'
           node['class'] = 'lang-java'
           node['data-language'] = 'java'
@@ -38,6 +40,7 @@ module Docs
           node.css('span').each do |subnode|
             subnode.name = 'code'
           end
+
 
         end
 

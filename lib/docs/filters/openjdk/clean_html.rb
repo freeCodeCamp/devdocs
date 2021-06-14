@@ -111,6 +111,7 @@ module Docs
         css('hr + br', 'p + br', 'div + br', 'hr').remove
 
         css('pre').each do |node|
+          node.content = node.content.sub(/\u200B/, '') # fix zero width space characters
           node.content = node.content.strip
           node['data-language'] = 'java'
         end

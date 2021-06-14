@@ -38,7 +38,7 @@ module Docs
     NEWFILTERS = ['openjdk/entries_new', 'openjdk/clean_html_new']
 
     version '15' do
-      self.release = '15.0.1'
+      self.release = '15.0.3'
       self.root_path = 'index.html'
       self.base_url = 'https://docs.oracle.com/en/java/javase/15/docs/api/'
 
@@ -50,7 +50,7 @@ module Docs
     OLDFILTERS = ['openjdk/entries', 'openjdk/clean_html']
 
     version '11' do
-      self.release = '11.0.10'
+      self.release = '11.0.11'
       self.root_path = 'index.html'
       self.base_url = 'https://docs.oracle.com/en/java/javase/11/docs/api/'
 
