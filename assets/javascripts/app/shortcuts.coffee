@@ -18,6 +18,9 @@ class app.Shortcuts
   swapArrowKeysBehavior: ->
     app.settings.get('arrowScroll')
 
+  spaceScroll: ->
+    app.settings.get('spaceScroll')
+  
   showTip: ->
     app.showTip('KeyNav')
     @showTip = null
@@ -59,7 +62,7 @@ class app.Shortcuts
         @trigger 'escape'
         false
       when 32
-        if event.target.type is 'search' and (not @lastKeypress or @lastKeypress < Date.now() - 3000)
+        if event.target.type is 'search' and @spaceScroll() and (not @lastKeypress or @lastKeypress < Date.now() - 1000)
           @trigger 'pageDown'
           false
       when 33
