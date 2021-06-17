@@ -34,7 +34,7 @@ class app.Settings
     schema: 1
     analyticsConsent: false
     theme: 'auto'
-    spaceScroll: 0
+    spaceScroll: 1
 
   constructor: ->
     @store = new CookiesStore
