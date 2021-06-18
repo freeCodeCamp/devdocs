@@ -20,10 +20,13 @@ class app.Shortcuts
 
   spaceScroll: ->
     app.settings.get('spaceScroll')
-  
+
   showTip: ->
     app.showTip('KeyNav')
     @showTip = null
+
+  spaceTimeout: ->
+    app.settings.get('spaceTimeout')
 
   onKeydown: (event) =>
     return if @buggyEvent(event)
@@ -62,7 +65,7 @@ class app.Shortcuts
         @trigger 'escape'
         false
       when 32
-        if event.target.type is 'search' and @spaceScroll() and (not @lastKeypress or @lastKeypress < Date.now() - 500)
+        if event.target.type is 'search' and @spaceScroll() and (not @lastKeypress or @lastKeypress < Date.now() - (@spaceTimeout() * 1000))
           @trigger 'pageDown'
           false
       when 33

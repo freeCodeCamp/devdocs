@@ -17,6 +17,7 @@ class app.views.SettingsPage extends app.View
     settings.autoInstall = app.settings.get('autoInstall')
     settings.analyticsConsent = app.settings.get('analyticsConsent')
     settings.spaceScroll = app.settings.get('spaceScroll')
+    settings.spaceTimeout = app.settings.get('spaceTimeout')
     settings.autoSupported = app.settings.autoSupported
     settings[layout] = app.settings.hasLayout(layout) for layout in app.settings.LAYOUTS
     settings
@@ -44,6 +45,9 @@ class app.views.SettingsPage extends app.View
   toggleSpaceScroll: (enable) ->
     app.settings.set('spaceScroll', if enable then 1 else 0)
     return
+
+  setScrollTimeout: (value) ->
+    app.settings.set('spaceTimeout', value)
 
   toggle: (name, enable) ->
     app.settings.set(name, enable)
@@ -92,6 +96,8 @@ class app.views.SettingsPage extends app.View
         @toggleAnalyticsConsent input.checked
       when 'spaceScroll'
         @toggleSpaceScroll input.checked
+      when 'spaceTimeout'
+        @setScrollTimeout input.value
       else
         @toggle input.name, input.checked
     return
