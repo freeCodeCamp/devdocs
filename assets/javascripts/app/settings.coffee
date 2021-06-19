@@ -13,6 +13,8 @@ class app.Settings
     'size'
     'tips'
     'autoInstall'
+    'spaceScroll'
+    'spaceTimeout'
   ]
 
   INTERNAL_KEYS = [
@@ -33,6 +35,8 @@ class app.Settings
     schema: 1
     analyticsConsent: false
     theme: 'auto'
+    spaceScroll: 1
+    spaceTimeout: 0.5
 
   constructor: ->
     @store = new CookiesStore

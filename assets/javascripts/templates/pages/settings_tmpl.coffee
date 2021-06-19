@@ -56,6 +56,13 @@ app.templates.settingsPage = (settings) -> """
         <input type="checkbox" form="settings" name="arrowScroll" value="1"#{if settings.arrowScroll then ' checked' else ''}>Use arrow keys to scroll the main content area
         <small>With this checked, use <code class="_label">shift</code> + <code class="_label">&uarr;</code><code class="_label">&darr;</code><code class="_label">&larr;</code><code class="_label">&rarr;</code> to navigate the sidebar.</small>
       </label>
+      <label class="_settings-label">
+        <input type="checkbox" form="settings" name="spaceScroll" value="1"#{if settings.spaceScroll then ' checked' else ''}>Use spacebar to scroll during search
+      </label>
+      <label class="_settings-label">
+        <input type="number" form="settings" name="spaceTimeout" min="0" max="5" value="#{settings.spaceTimeout}"> Delay until you can scroll by pressing space
+        <small>Time in seconds</small>
+      </label>
     </div>
   </div>
 
