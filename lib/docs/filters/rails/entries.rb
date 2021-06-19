@@ -1,6 +1,6 @@
 module Docs
   class Rails
-    class EntriesFilter < Docs::Rdoc::EntriesFilter
+    class EntriesFilter < Docs::EntriesFilter# Docs::Rdoc::EntriesFilter
       TYPE_BY_NAME_MATCHES = {
         /Assertions|::Test|Fixture/                          => 'Testing',
         /\AActiveRecord.+mysql/i                             => 'ActiveRecord/MySQL',
@@ -49,7 +49,7 @@ module Docs
       end
 
       def get_type
-        return 'Guides' if slug.start_with?('guides')
+        return 'Guides' if root_url.to_s.match?('guides')
 
         parent = at_css('.meta-parent').try(:content).to_s
 
@@ -69,13 +69,13 @@ module Docs
       end
 
       def include_default_entry?
-        return true if slug.start_with?('guides')
+        return true if root_url.to_s.match?('guides')
 
         super && !skip?
       end
 
       def additional_entries
-        return [] if slug.start_with?('guides')
+        return [] if root_url.to_s.match?('guides')
 
         skip? ? [] : super
       end

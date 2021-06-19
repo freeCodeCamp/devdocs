@@ -2,7 +2,7 @@ module Docs
   class Rails
     class CleanHtmlGuidesFilter < Filter
       def call
-        return doc unless slug.start_with?('guides')
+        return doc unless root_url.to_s.match?('guides')
 
         at_css('#mainCol').prepend_child at_css('#feature .wrapper').children
         @doc = at_css('#mainCol')
