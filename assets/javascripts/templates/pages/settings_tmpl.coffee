@@ -60,7 +60,7 @@ app.templates.settingsPage = (settings) -> """
         <input type="checkbox" form="settings" name="spaceScroll" value="1"#{if settings.spaceScroll then ' checked' else ''}>Use spacebar to scroll during search
       </label>
       <label class="_settings-label">
-        <input type="number" form="settings" name="spaceTimeout" min="0" max="5" value="#{settings.spaceTimeout}"> Delay until you can scroll by pressing space
+        <input type="number" step="0.1" form="settings" name="spaceTimeout" min="0" max="5" value="#{settings.spaceTimeout}"> Delay until you can scroll by pressing space
         <small>Time in seconds</small>
       </label>
     </div>
