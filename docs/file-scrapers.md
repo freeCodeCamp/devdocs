@@ -207,7 +207,6 @@ done
 
 ### Nokogiri
 ### Ruby / Minitest
-### Ruby on Rails
 ### Ruby
 Download the tarball of Ruby from https://www.ruby-lang.org/en/downloads/, extract it, run
 `./configure && make html` in your terminal (while your are in the ruby directory) and move

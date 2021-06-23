@@ -1,10 +1,9 @@
 module Docs
   class Rails < UrlScraper
-    # include FixInternalUrlsBehavior
     include MultipleBaseUrls
 
     self.name = 'Ruby on Rails'
-    self.type = 'rdoc'
+    self.type = 'rails'
     self.slug = 'rails'
 
     self.links = {
@@ -12,10 +11,7 @@ module Docs
       code: 'https://github.com/rails/rails'
     }
 
-    # html_filters.replace 'container', 'rails/container'
-    html_filters.push 'rails/entries', 'rdoc/clean_html', 'rails/clean_html_guides'
-
-    options[:skip_rdoc_filters?] = ->(filter) { filter.root_url.to_s.match?('guides/') }
+    html_filters.push 'rails/entries', 'rails/clean_html'
 
     options[:root_title] = 'Ruby on Rails'
 
@@ -88,35 +84,65 @@ module Docs
       self.release = '6.1.3.2'
 
       self.base_urls = [
-      'https://api.rubyonrails.org/',
-      'https://guides.rubyonrails.org/'
+        'https://api.rubyonrails.org/',
+        'https://guides.rubyonrails.org/'
       ]
 
       options[:skip_patterns] << /v.*\..*\//
     end
 
     version '6.0' do
-      self.release = '6.0.0'
+      self.release = '6.1.3.2'
+
+      self.base_urls = [
+        'https://api.rubyonrails.org/',
+        'https://guides.rubyonrails.org/'
+      ]
     end
 
     version '5.2' do
-      self.release = '5.2.2'
+      self.release = '5.2.5'
+
+      self.base_urls = [
+        'https://api.rubyonrails.org/',
+        'https://guides.rubyonrails.org/v5.2/'
+      ]
     end
 
     version '5.1' do
-      self.release = '5.1.6'
+      self.release = '5.1.7'
+
+      self.base_urls = [
+        'https://api.rubyonrails.org/',
+        'https://guides.rubyonrails.org/v5.1/'
+      ]
     end
 
     version '5.0' do
-      self.release = '5.0.7'
+      self.release = '5.0.7.2'
+
+      self.base_urls = [
+        'https://api.rubyonrails.org/',
+        'https://guides.rubyonrails.org/v5.0/'
+      ]
     end
 
     version '4.2' do
-      self.release = '4.2.11'
+      self.release = '4.2.11.3'
+
+      self.base_urls = [
+        'https://api.rubyonrails.org/',
+        'https://guides.rubyonrails.org/v4.2/'
+      ]
     end
 
     version '4.1' do
       self.release = '4.1.16'
+
+      self.base_urls = [
+        'https://api.rubyonrails.org/',
+        'https://guides.rubyonrails.org/v4.1/'
+      ]
     end
 
     def get_latest_version(opts)
