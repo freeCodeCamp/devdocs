@@ -11,7 +11,7 @@
     try @initErrorTracking() catch
     return unless @browserCheck()
 
-    @showAnaliticsOne = false
+    @analiticsAlreadyShown = false
     @el = $('._app')
     @localStorage = new LocalStorageStore
     @serviceWorker = new app.ServiceWorker if app.ServiceWorker.isEnabled()

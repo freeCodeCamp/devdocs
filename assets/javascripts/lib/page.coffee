@@ -202,7 +202,9 @@ track = ->
   return unless app.config.env == 'production'
   return if app.analiticsAlreadyShown
 
+  # only show the analitics cookie notification once
   app.analiticsAlreadyShown = true
+
   consentGiven = Cookies.get('analyticsConsent')
   consentAsked = Cookies.get('analyticsConsentAsked')
 
