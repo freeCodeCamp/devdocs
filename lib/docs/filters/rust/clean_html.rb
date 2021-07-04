@@ -101,8 +101,8 @@ module Docs
           node.previous_element.before(node)
         end
 
+        css('#copy-path').remove
         css('.sidebar').remove
-
         css('.collapse-toggle').remove
 
         doc
