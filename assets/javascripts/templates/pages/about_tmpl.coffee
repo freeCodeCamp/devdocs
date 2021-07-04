@@ -303,7 +303,7 @@ credits = [
     'https://raw.githubusercontent.com/falconry/falcon/master/LICENSE'
   ], [
     'Fish',
-    '2005-2009 Axel Liljencrantz, 2009-2020 fish-shell contributors',
+    '2005–2009 Axel Liljencrantz, 2009–2021 fish-shell contributors',
     'GPLv2',
     'https://fishshell.com/docs/current/license.html'
   ], [

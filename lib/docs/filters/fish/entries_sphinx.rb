@@ -20,13 +20,17 @@ module Docs
           'Commands'
         elsif slug == 'tutorial'
           'Tutorial'
+        elsif slug == 'interactive'
+          'Interactive use'
+        elsif slug == 'language'
+          'fish language'
         else
           nil # Remaining pages are indexes we don't need
         end
       end
 
       def additional_entries
-        if root_page? || slug == 'tutorial'
+        if root_page? || slug == 'tutorial' || slug == 'interactive' || slug == 'language'
           css('h2').map.with_index do |node, i|
             name = node.content.split(' - ').first.strip
             name.prepend "#{i + 1}. "
