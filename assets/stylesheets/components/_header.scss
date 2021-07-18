@@ -62,7 +62,7 @@
   top: .25rem;
   right: .25rem;
   width: 8.5rem;
-  height: calc(13.75rem + 1px);
+  height: calc(2.25rem  * 6 + 2.5rem + 1px); // (height of each menu element * total menu elements + menu title element total height + menu title border size)
   white-space: nowrap;
   word-wrap: normal;
   overflow-wrap: normal;
