@@ -60,6 +60,8 @@ Configuration is done via class attributes and divided into three main categorie
    Defaults to `localhost` in `FileScraper`. _(Note: any iframe, image, or skipped link pointing to localhost will be removed by the `CleanLocalUrls` filter; the value should be overridden if the documents are available online.)_
   Unless `root_path` is set, the root/initial URL is equal to `base_url`.
 
+* `base_urls` [Array] **(the `MultipleBaseUrls` module must be included)** Documentation's locations. Almost the same as `base_url` but in this case more than one URL can be added, should be used when a documentation is split in different URLs or needs more URLs to be completed. See [`typescript.rb`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/scrapers/typescript.rb).
+
 * `root_path` [String] **(inherited)**
   The path from the `base_url` of the root URL.
 
