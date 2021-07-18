@@ -807,6 +807,11 @@ credits = [
     'MIT',
     'https://symfony.com/doc/current/contributing/code/license.html'
   ], [
+    'TailwindCSS',
+    'Adam Wathan, Jonathan Reinink',
+    'MIT',
+    'https://raw.githubusercontent.com/tailwindlabs/tailwindcss/master/LICENSE'
+  ], [
     'Tcl/Tk',
     'The Regents of the University of California, Sun Microsystems, Inc., Scriptics Corporation, and other parties',
     'Tcl/Tk',
