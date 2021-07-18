@@ -1,4 +1,4 @@
-app.templates.offlinePage = (docs) -> """
+app.templates.offlinePage = (docs, hasPersistence, isPersistent) -> """
   <h1 class="_lined-heading">Offline Documentation</h1>
 
   <div class="_docs-tools">
@@ -21,7 +21,10 @@ app.templates.offlinePage = (docs) -> """
       #{docs}
     </table>
   </div>
-  <p class="_note"><strong>Note:</strong> your browser may delete DevDocs's offline data if your computer is running low on disk space and you haven't used the app in a while. Load this page before going offline to make sure the data is still there.
+  </div>
+  <div id="_offline-persistence-note">
+    #{offlinePersistenceNote(hasPersistence, isPersistent)}
+  </div>
   <h2 class="_block-heading">Questions & Answers</h2>
   <dl>
     <dt>How does this work?
@@ -78,3 +81,19 @@ app.templates.offlineDoc = (doc, status) ->
     """
 
   html + '</tr>'
+
+offlinePersistenceNote = (hasPersistence, isPersistent) ->
+  if isPersistent
+    return ''
+
+  html = """
+    <p class="_note">
+      <strong>Note:</strong> your browser may delete DevDocs's offline data if your computer is running low on disk space and you haven't used the app in a while.
+  """
+
+  if hasPersistence
+    html += ' <button type="button" class ="_btn-link _bold" data-enable-persistence>Enable persistent storage</button>.'
+  else
+    html += ' Load this page before going offline to make sure the data is still there.'
+
+  return html

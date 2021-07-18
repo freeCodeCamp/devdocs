@@ -51,6 +51,14 @@ app.templates.offlineError = (reason, exception) ->
 
   error 'Offline mode is unavailable.', reason
 
+app.templates.persistenceError = (exception) ->
+  reason = if exception
+    """<code class="_label">#{exception.name}: #{exception.message}</code>"""
+  else
+    """Bookmark this site and try again."""
+
+  error 'Persistence request denied by browser.', reason
+
 app.templates.unsupportedBrowser = """
   <div class="_fail">
     <h1 class="_fail-title">Your browser is unsupported, sorry.</h1>

@@ -20,10 +20,11 @@ class app.views.OfflinePage extends app.View
       if statuses is false
         @html @tmpl('offlineError', app.db.reason, app.db.error)
       else
-        html = ''
-        html += @renderDoc(doc, statuses[doc.slug]) for doc in app.docs.all()
-        @html @tmpl('offlinePage', html)
-        @refreshLinks()
+        @checkPersistence (hasPersistence, isPersisted) =>
+          html = ''
+          html += @renderDoc(doc, statuses[doc.slug]) for doc in app.docs.all()
+          @html @tmpl('offlinePage', html, hasPersistence, isPersisted)
+          @refreshLinks()
       return
     return
 
@@ -60,6 +61,8 @@ class app.views.OfflinePage extends app.View
       return unless action isnt 'uninstall' or window.confirm('Uninstall all docs?')
       app.db.migrate()
       $.click(el) for el in @findAll("[data-action='#{action}']")
+    else if el.hasAttribute('data-enable-persistence')
+      @requestPersistence()
     return
 
   onInstallSuccess: (doc) ->
@@ -90,3 +93,24 @@ class app.views.OfflinePage extends app.View
     if event.target.name is 'autoUpdate'
       app.settings.set 'manualUpdate', !event.target.checked
     return
+
+  checkPersistence: (callback) ->
+    if navigator.storage and navigator.storage.persisted
+      navigator.storage.persisted().then((persisted) ->
+        callback true, persisted
+      ).catch ->
+        callback false, persisted
+    else
+      callback false, false
+
+  requestPersistence: ->
+    navigator.storage.persist().then((success) =>
+      @onPersistenceRequestCompleted success
+    ).catch (exception) =>
+      @onPersistenceRequestCompleted false, exception
+
+  onPersistenceRequestCompleted: (success, exception) ->
+    if success
+      @render()
+    else
+      @html @tmpl('persistenceError', exception)
