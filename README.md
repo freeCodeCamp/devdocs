@@ -95,6 +95,8 @@ The end result is a set of normalized HTML partials and two JSON files (index + 
 
 More information about [scrapers](./docs/scraper-reference.md) and [filters](./docs/filter-reference.md) is available in the `docs` folder.
 
+The [JSON Schema](https://json-schema.org/) for a documentation and its metadata is provided in https://github.com/freeCodeCamp/devdocs/tree/master/public/schema.
+
 ## Available Commands
 
 The command-line interface uses [Thor](http://whatisthor.com). To see all commands and options, run `thor list` from the project's root.
