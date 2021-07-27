@@ -81,3 +81,19 @@ class app.views.Settings extends app.View
       $.stopEvent(event)
       app.router.show '/'
     return
+
+  setCheckboxesEvent: =>
+    button = document.getElementById('enable-all')
+    button.addEventListener 'click', @checkAllCheckboxes
+    return
+
+  checkAllCheckboxes: =>
+    checkboxes = document.getElementsByClassName('_list-checkbox')
+    i = 0
+
+    while (i < checkboxes.length)
+      checkboxes[i].checked = true
+      i++
+
+    @addClass('_dirty')
+    return
