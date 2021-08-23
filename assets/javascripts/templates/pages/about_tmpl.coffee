@@ -108,9 +108,9 @@ credits = [
     'https://raw.githubusercontent.com/caolan/async/master/LICENSE'
   ], [
     'Babel',
-    '2018 Sebastian McKenzie',
+    '2014-present Sebastian McKenzie',
     'MIT',
-    'https://raw.githubusercontent.com/babel/website/master/LICENSE'
+    'https://raw.githubusercontent.com/babel/babel/master/LICENSE'
   ], [
     'Backbone.js',
     '2010-2019 Jeremy Ashkenas, DocumentCloud',
