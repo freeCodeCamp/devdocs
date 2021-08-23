@@ -18,7 +18,7 @@ module Docs
     HTML
 
     version '3' do
-      self.release = '3.1.2'
+      self.release = '3.2.4'
       self.base_url = 'https://v3.vuejs.org/'
       self.root_path = 'guide/introduction.html'
       self.initial_paths = %w(api/)
