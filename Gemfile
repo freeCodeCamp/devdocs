@@ -17,14 +17,14 @@ group :app do
   gem 'sinatra-contrib'
   gem 'rack-ssl-enforcer'
   gem 'thin'
-  gem 'sprockets'
+  gem 'sprockets', '>= 4.0.0'
   gem 'sprockets-helpers'
   gem 'erubi'
   gem 'browser'
-  gem 'sass'
+  gem 'sassc'
   gem 'coffee-script'
   gem 'chunky_png'
-  gem 'sprockets-sass'
+  # gem 'sprockets-sass'
   gem 'image_optim'
   gem 'image_optim_pack', platforms: :ruby
 end

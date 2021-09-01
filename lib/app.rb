@@ -95,7 +95,7 @@ class App < Sinatra::Application
       ]
 
     sprockets.js_compressor = Uglifier.new output: { beautify: true, indent_level: 0 }
-    sprockets.css_compressor = :sass
+    sprockets.css_compressor = :sassc
 
     Sprockets::Helpers.configure do |config|
       config.digest = true
