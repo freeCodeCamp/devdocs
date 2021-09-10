@@ -25,7 +25,7 @@ module Docs
       end
     }
 
-    self.release = '1.0.0'
+    self.release = '1.1.1'
     self.root_path = "api/#{release}/index.html"
 
     options[:only_patterns] = [/\Aapi\/#{release}\//, /\Areference\//]
