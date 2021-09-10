@@ -6,7 +6,7 @@ module Docs
 
     html_filters.insert_before 'clean_html', 'cppref/fix_code'
     html_filters.push  'cppref/clean_html', 'title'
-      # 'cpp20/entries',
+
     options[:decode_and_clean_paths] = true
     options[:container] = '#content'
     options[:title] = false
@@ -21,9 +21,13 @@ module Docs
       Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.
     HTML
 
-    # def get_latest_version
-
-    # end
+    # Check if the 'headers' page has changed
+    def get_latest_version(opts)
+      doc = fetch_doc(self.base_url + self.root_path, opts)
+      date = doc.at_css('#footer-info-lastmod').content
+      date = date.match(/[[:digit:]]{1,2} .* [[:digit:]]{4}/).to_s
+      date = DateTime.strptime(date, '%e %B %Y').to_time.to_i
+    end
 
   end
 end
