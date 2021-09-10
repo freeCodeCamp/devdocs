@@ -71,6 +71,7 @@ module Docs
 
       def additional_entries
         css('dl:not(:first-of-type) > dt[id]').each_with_object [] do |node, entries|
+          next if node.ancestors('.citation').present?
           name = dt_to_name(node)
 
           if type == 'NumPy C API'

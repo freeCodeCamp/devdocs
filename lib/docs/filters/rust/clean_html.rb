@@ -45,6 +45,11 @@ module Docs
           node.remove if node.content.include?('#[must_use]')
         end
 
+        css('details').each do |node|
+          node.css('summary:contains("Expand description")').remove
+          node.before(node.children).remove
+        end
+
         css('a.header').each do |node|
           unless node.first_element_child.nil?
             node.first_element_child['id'] = node['name'] || node['id']
