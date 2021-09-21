@@ -4,6 +4,8 @@ module Docs
       def call
         css('.header-link', 'hr + .text-center', 'hr', '.docs__actions-bar').remove
 
+        css('.announcement-banner-contrast').remove
+
         css('.grid', '.row', '.col-ms-12', 'ul.docs-list > ul.docs-list', '.sub-section').each do |node|
           node.before(node.children).remove
         end
