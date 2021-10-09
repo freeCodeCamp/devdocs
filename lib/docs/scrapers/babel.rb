@@ -25,12 +25,12 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2020 Sebastian McKenzie<br>
+      &copy; 2014-present Sebastian McKenzie<br>
       Licensed under the MIT License.
     HTML
 
     version '7' do
-      self.release = '7.12.6'
+      self.release = '7.14.8'
     end
 
     version '6' do

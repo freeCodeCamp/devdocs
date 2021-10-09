@@ -338,7 +338,7 @@ class DocsCLI < Thor
 
   def download_doc(doc)
     target_path = File.join(Docs.store_path, doc.path)
-    open "https://downloads.devdocs.io/#{doc.path}.tar.gz" do |file|
+    URI.open "https://downloads.devdocs.io/#{doc.path}.tar.gz" do |file|
       FileUtils.mkpath(target_path)
       file.close
       tar = UnixUtils.gunzip(file.path)

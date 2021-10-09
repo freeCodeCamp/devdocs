@@ -2,7 +2,7 @@ module Docs
   class Electron < UrlScraper
     self.type = 'simple'
     self.base_url = 'https://www.electronjs.org/docs'
-    self.release = '12.0.0'
+    self.release = '14.0.0'
     self.links = {
       home: 'https://www.electronjs.org/',
       code: 'https://github.com/electron/electron'
@@ -13,7 +13,10 @@ module Docs
     options[:trailing_slash] = false
     options[:container] = 'main'
     options[:skip] = %w(guides development tutorial versions all)
-    options[:skip_patterns] = [/\/history\z/]
+    options[:skip_patterns] = [
+      /\/history\z/,
+      /\/latest/      # beta site
+    ]
     options[:replace_paths] = {
       'api/web-view-tag' => 'api/webview-tag'
     }
