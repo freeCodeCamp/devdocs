@@ -9,7 +9,7 @@ jobs:
   test:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2.3.4
+    - uses: actions/checkout@v2.3.5
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1.83.0
       with:
