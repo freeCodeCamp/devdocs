@@ -133,6 +133,11 @@ If multiple versions of Ruby are installed on your system, commands must be run 
 ## Contributing
 
 Contributions are welcome. Please read the [contributing guidelines](./.github/CONTRIBUTING.md).
+Thanks to our awesome contributors.
+
+<a href="https://github.com/freeCodeCamp/devdocs/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=freeCodeCamp/devdocs&max=100" />
+</a>
 
 ## Documentation
 
