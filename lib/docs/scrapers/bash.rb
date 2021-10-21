@@ -1,5 +1,5 @@
 module Docs
-  class Bash < UrlScraper
+  class Bash < FileScraper
     self.type = 'bash'
     self.release = '5.1'
     self.base_url = 'https://www.gnu.org/software/bash/manual/html_node'

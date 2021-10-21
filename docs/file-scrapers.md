@@ -59,6 +59,15 @@ bsdtar --extract --file - --directory=docs/erlang\~$VERSION/
 
 ## Gnu
 
+### Bash
+Go to https://www.gnu.org/software/bash/manual/, download the HTML tar file (with one web page per node) and extract its content in `/path/to/devdocs/docs/bash` or run the following command:
+
+```sh
+mkdir /path/to/devdocs/docs/bash \
+&& curl https://www.gnu.org/software/bash/manual/bash.html_node.tar.gz | \
+tar --extract --gzip --directory=/path/to/devdocs/docs/bash
+```
+
 ### GCC
 Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of GCC Manual and GCC CPP manual or run the following commands to download the tarballs:
 
