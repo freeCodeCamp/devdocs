@@ -39,7 +39,7 @@ bsdtar --extract --file - --directory=docs/django\~$VERSION/
 
 ## Elisp
 
-Go to https://www.gnu.org/software/emacs/manual/elisp.html, donwload the HTML tarball and extract its content in `/path/to/devdocs/docs/elisp` or run the following command:
+Go to https://www.gnu.org/software/emacs/manual/elisp.html, download the HTML tarball and extract its content in `/path/to/devdocs/docs/elisp` or run the following command:
 
 ```sh
 mkdir /path/to/devdocs/docs/elisp \
