@@ -46,7 +46,9 @@ module Docs
       end
 
       def request_bcd_uris
-        index_json = JSON.load(Net::HTTP.get(URI(current_url.to_s + '/index.json')))
+        url = current_url.to_s + '/index.json'
+        response = Request.run url
+        index_json = JSON.load response.body
 
         uris = []
 
@@ -63,9 +65,9 @@ module Docs
         return uris
       end
 
-      def generate_compatibility_table_wrapper(uri)
-
-        @json_data = JSON.load(Net::HTTP.get(URI(uri)))['data']
+      def generate_compatibility_table_wrapper(url)
+        response = Request.run url
+        @json_data = JSON.load(response.body)['data']
 
         html_table = generate_basic_html_table()
 
