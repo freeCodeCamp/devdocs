@@ -40,7 +40,7 @@ module Docs
 
       def handbook_entries
         css('h2').each_with_object [] do |node, entries|
-          entries << [node.content, node['id']]
+          entries << ["#{name}: #{node.content}", node['id']] if node['id']
         end
       end
 
