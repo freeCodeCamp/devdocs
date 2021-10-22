@@ -24,7 +24,12 @@ class app.Settings
     'news'
   ]
 
-  LAYOUTS: ['_max-width', '_sidebar-hidden', '_native-scrollbars']
+  LAYOUTS: [
+    '_max-width'
+    '_sidebar-hidden'
+    '_native-scrollbars'
+    '_text-justify-hyphenate'
+  ]
 
   @defaults:
     count: 0
