@@ -1,5 +1,6 @@
 module Docs
   class WebExtensions < Mdn
+    # release = '2021-10-22'
     self.name = 'Web Extensions'
     self.slug = 'web_extensions'
     self.links = {
