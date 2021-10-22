@@ -13,7 +13,7 @@ If possible fill each section
 # Feature request
 
 <!--
-Verify this steps before suggeting a new feature:
+Verify this steps before suggesting a new feature:
 
   - Check if anyone has suggested this feature before
     https://github.com/freeCodeCamp/devdocs/labels/feature
@@ -25,12 +25,12 @@ Verify this steps before suggeting a new feature:
 ## Summary
 
 <!--
-Write a description of this feature and write why it should be added to Devdocs
+Write a description of this feature and write why it should be added to DevDocs
 -->
 
 ## Examples
 
 <!--
-If you have seen this feature before you can add images, URLs, gifs and any other
-resouce that might help to undestand how this feature works
+If you have seen this feature before you can add images, URLs, GIFs and any other
+resource that might help to understand how this feature works
 -->
