@@ -107,7 +107,7 @@
 
   code > strong { font-weight: normal; }
 
-  // Compatibility tablees
+  // Compatibility tables
 
   .bc-github-link {
     float: right;
@@ -115,6 +115,7 @@
   }
 
   .bc-supports-yes, .bc-supports-yes + dd, .bc-supports-yes + dd + dd { background: var(--noteGreenBackground); }
+  .bc-supports-unknown, .bc-supports-unknown + dd, .bc-supports-unknown + dd + dd { background: var(--noteBackground); }
   .bc-supports-partial, .bc-supports-partial + dd, .bc-supports-partial + dd + dd { background: var(--noteOrangeBackground); }
   .bc-supports-no, .bc-supports-no + dd, .bc-supports-no + dd + dd { background: var(--noteRedBackground); }
 

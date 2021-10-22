@@ -163,15 +163,14 @@ module Docs
 
           version_added.map! do |version|
             if version == true
-              version = 'Yes'
+              'Yes'
             elsif version == false
-              version = 'No'
+              'No'
             elsif version.is_a?(String)
+              version
             else
-              version = '?'
+              '?'
             end
-
-            version
           end
 
           if version_removed[0]
@@ -179,6 +178,8 @@ module Docs
           else
             if version_added[0] == 'No'
               format_string = "<td class=bc-supports-no>"
+            elsif version_added[0] == '?'
+              format_string = "<td class=bc-supports-unknown>"
             else
               format_string = "<td class=bc-supports-yes>"
             end
@@ -201,7 +202,7 @@ module Docs
           end
 
         else
-          format_string = "<td class=bc-supports-no><div>?</div></td>"
+          format_string = "<td class=bc-supports-unknown><div>?</div></td>"
         end
 
         entry.add_child(format_string)
