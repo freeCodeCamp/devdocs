@@ -10,6 +10,7 @@ module Docs
 
     options[:only_patterns] = [/guide\//, /api\//]
     options[:skip] = %w(guide/team.html)
+    options[:skip_patterns] = [/guide\/contributing/]
     options[:replace_paths] = { 'guide/' => 'guide/index.html' }
 
     options[:attribution] = <<-HTML
@@ -18,7 +19,7 @@ module Docs
     HTML
 
     version '3' do
-      self.release = '3.2.4'
+      self.release = '3.2.20'
       self.base_url = 'https://v3.vuejs.org/'
       self.root_path = 'guide/introduction.html'
       self.initial_paths = %w(api/)

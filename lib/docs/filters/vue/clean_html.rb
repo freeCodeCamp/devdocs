@@ -14,6 +14,15 @@ module Docs
           node.name = 'strong'
         end
 
+        # Remove CodePen div
+        css('.codepen').each do |node|
+          next if node.previous_element.nil?
+          span = node.css('span:contains("See the Pen")').remove
+          node.previous_element.add_child(' ')
+          node.previous_element.add_child(span)
+          node.remove
+        end
+
         # Remove code highlighting
         css('figure').each do |node|
           node.name = 'pre'

@@ -19,7 +19,7 @@ module Docs
     HTML
 
     version '4' do
-      self.release = '4.0.0'
+      self.release = '4.0.2'
       self.base_url = 'https://next.vuex.vuejs.org/'
     end
 
