@@ -46,7 +46,9 @@ module Docs
       end
 
       def request_bcd_uris
-        index_json = JSON.load(Net::HTTP.get(URI(current_url.to_s + '/index.json')))
+        url = current_url.to_s + '/index.json'
+        response = Request.run url
+        index_json = JSON.load response.body
 
         uris = []
 
@@ -63,9 +65,9 @@ module Docs
         return uris
       end
 
-      def generate_compatibility_table_wrapper(uri)
-
-        @json_data = JSON.load(Net::HTTP.get(URI(uri)))['data']
+      def generate_compatibility_table_wrapper(url)
+        response = Request.run url
+        @json_data = JSON.load(response.body)['data']
 
         html_table = generate_basic_html_table()
 
@@ -163,15 +165,14 @@ module Docs
 
           version_added.map! do |version|
             if version == true
-              version = 'Yes'
+              'Yes'
             elsif version == false
-              version = 'No'
+              'No'
             elsif version.is_a?(String)
+              version
             else
-              version = '?'
+              '?'
             end
-
-            version
           end
 
           if version_removed[0]
@@ -179,6 +180,8 @@ module Docs
           else
             if version_added[0] == 'No'
               format_string = "<td class=bc-supports-no>"
+            elsif version_added[0] == '?'
+              format_string = "<td class=bc-supports-unknown>"
             else
               format_string = "<td class=bc-supports-yes>"
             end
@@ -201,7 +204,7 @@ module Docs
           end
 
         else
-          format_string = "<td class=bc-supports-no><div>?</div></td>"
+          format_string = "<td class=bc-supports-unknown><div>?</div></td>"
         end
 
         entry.add_child(format_string)

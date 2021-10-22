@@ -2,7 +2,7 @@ module Docs
   class Http
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        if current_url.host == 'tools.ietf.org'
+        if current_url.host == 'datatracker.ietf.org'
           name = at_css('h1').content
           name.remove! %r{\A.+\:}
           name.remove! %r{\A.+\-\-}
@@ -22,7 +22,7 @@ module Docs
       end
 
       def get_type
-        return name if current_url.host == 'tools.ietf.org'
+        return name if current_url.host == 'datatracker.ietf.org'
 
         if slug.start_with?('Headers/Content-Security-Policy')
           'CSP'
@@ -101,7 +101,7 @@ module Docs
       LEVEL_3 = /\A(\d+)\.\d+\.\d+\z/
 
       def additional_entries
-        return [] unless current_url.host == 'tools.ietf.org'
+        return [] unless current_url.host == 'datatracker.ietf.org'
         type = nil
 
         css('a[href^="#section-"]').each_with_object([]) do |node, entries|
