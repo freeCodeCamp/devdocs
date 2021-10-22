@@ -3,7 +3,7 @@ module Docs
     self.name = 'OCaml'
     self.type = 'ocaml'
     self.root_path = 'index.html'
-    self.release = '4.12'
+    self.release = '4.13'
     self.base_url = "https://www.ocaml.org/releases/#{self.release}/htmlman/"
     self.links = {
       home: 'https://ocaml.org/',
