@@ -4,7 +4,7 @@ module Docs
       def get_name
         name = at_css('h1').content
 
-        name.remove! '# '
+        name.sub! %r{#\s*}, ''
 
         # Add index on guides
         unless subpath.start_with?('api')
@@ -42,9 +42,9 @@ module Docs
           title = node
           title = title.previous_element until title.name == 'h2'
           title = title.content.strip
-          title.remove! '# '
+          title.sub! %r{#\s*}, ''
 
-          entry_name.remove! '# '
+          entry_name.sub! %r{#\s*}, ''
 
           unless entry_name.start_with?('router.')
             case title
