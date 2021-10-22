@@ -288,7 +288,7 @@ credits = [
     'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
   ], [
     'ESLint',
-    'JS Foundation and other contributors',
+    'OpenJS Foundation and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/eslint/eslint/master/LICENSE'
   ], [
