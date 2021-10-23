@@ -2,7 +2,7 @@ module Docs
   class Jsdoc < UrlScraper
     self.name = 'JSDoc'
     self.type = 'simple'
-    self.release = '3.5.5'
+    self.release = '3.6.7'
     self.base_url = 'https://jsdoc.app/'
     self.root_path = 'index.html'
     self.links = {
