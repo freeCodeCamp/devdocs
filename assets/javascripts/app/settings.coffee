@@ -158,7 +158,8 @@ class app.Settings
 
   toggleLayout: (layout, enable) ->
     classList = document.body.classList
-    classList.toggle(layout, enable) unless app.router?.isSettings
+    # sidebar is always shown for settings; its state is updated in app.views.Settings
+    classList.toggle(layout, enable) unless layout is '_sidebar-hidden' and app.router?.isSettings
     classList.toggle('_overlay-scrollbars', $.overlayScrollbarsEnabled())
     return
 
