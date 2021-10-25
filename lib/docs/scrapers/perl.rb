@@ -2,7 +2,6 @@ module Docs
   class Perl < UrlScraper
     self.name = 'Perl'
     self.type = 'perl'
-#    self.root_path = 'index.html'
     self.initial_paths = ['modules.html', 'perlutil.html', 'perl.html']
     self.links = {
       home: 'https://www.perl.org/'
@@ -20,10 +19,15 @@ module Docs
     options[:skip_patterns] = [/\Afunctions/, /\Avariables/, /\.pdf/, /delta/]
 
     options[:attribution] = <<-HTML
-      &copy; 1993&ndash;2020 Larry Wall and others<br>
+      &copy; 1993&ndash;2021 Larry Wall and others<br>
       Licensed under the GNU General Public License version 1 or later, or the Artistic License.<br>
       The Perl logo is a trademark of the Perl Foundation.
     HTML
+
+    version '5.34' do
+      self.release = '5.34.0'
+      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+    end
 
     version '5.32' do
       self.release = '5.32.0'
