@@ -7,7 +7,8 @@ module Docs
 
     html_filters.push 'dom/clean_html', 'dom/entries'
 
-    options[:root_title] = 'DOM'
+    options[:title] = 'Web API'
+    options[:root_title] = 'Web API'
 
   end
 end
