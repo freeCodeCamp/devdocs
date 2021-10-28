@@ -22,7 +22,7 @@ Unless you wish to contribute to the project, we recommend using the hosted vers
 
 DevDocs is made of two pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
-DevDocs requires Ruby 2.7.4, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
+DevDocs requires Ruby 2.7.4, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows, [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
 
 ```sh
 git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
@@ -38,7 +38,7 @@ The `thor docs:download` command is used to download pre-generated documentation
 
 **Note:** there is currently no update mechanism other than `git pull origin main` to update the code and `thor docs:download --installed` to download the latest version of the docs. To stay informed about new releases, be sure to [watch](https://github.com/freeCodeCamp/devdocs/subscription) this repository.
 
-Alternatively, DevDocs may be started as a Docker container:
+Alternatively, DevDocs may be started as a Docker container :
 
 ```sh
 # First, build the image
@@ -65,7 +65,7 @@ Many of the code's design decisions were driven by the fact that the app uses XH
 
 Another driving factor is performance and the fact that everything happens in the browser. A service worker (which comes with its own set of constraints) and `localStorage` are used to speed up the boot time, while memory consumption is kept in check by allowing the user to pick his/her own set of documentations. The search algorithm is kept simple because it needs to be fast even searching through 100,000 strings.
 
-DevDocs being a developer tool, the browser requirements are high:
+DevDocs being a developer tool, the browser requirements are high :
 
 * Recent versions of Firefox, Chrome, or Opera
 * Safari 11.1+
