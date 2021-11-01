@@ -28,7 +28,7 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 1993, 2020, Oracle and/or its affiliates. All rights reserved.<br>
+      &copy; 1993, 2021, Oracle and/or its affiliates. All rights reserved.<br>
       Documentation extracted from Debian's OpenJDK Development Kit package.<br>
       Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>
       Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>
@@ -37,10 +37,10 @@ module Docs
 
     NEWFILTERS = ['openjdk/entries_new', 'openjdk/clean_html_new']
 
-    version '15' do
-      self.release = '15.0.3'
+    version '17' do
+      self.release = '17'
       self.root_path = 'index.html'
-      self.base_url = 'https://docs.oracle.com/en/java/javase/15/docs/api/'
+      self.base_url = 'https://docs.oracle.com/en/java/javase/17/docs/api/'
 
       html_filters.push NEWFILTERS
 
