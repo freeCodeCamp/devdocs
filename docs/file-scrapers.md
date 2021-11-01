@@ -163,6 +163,15 @@ dpkg -x $PACKAGE ./
 mv ./usr/share/doc/openjdk-16-jre-headless/api/ path/to/devdocs/docs/openjdk~$VERSION
 ```
 
+## Pandas
+
+```sh
+mkdir docs/pandas~1
+cd docs/pandas~1
+curl https://pandas.pydata.org/docs/pandas.zip
+bsdtar xf pandas.zip
+```
+
 ## PHP
 Click the link under the "Many HTML files" column on https://www.php.net/download-docs.php, extract the tarball, change its name to `php` and put it in `/path/to/devdocs/docs/`.
 

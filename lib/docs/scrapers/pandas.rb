@@ -1,5 +1,5 @@
 module Docs
-  class Pandas < UrlScraper
+  class Pandas < FileScraper
     self.name = 'pandas'
     self.type = 'sphinx'
     self.root_path = 'index.html'
@@ -8,21 +8,21 @@ module Docs
       code: 'https://github.com/pydata/pandas'
     }
 
-    html_filters.push 'pandas/clean_html', 'pandas/entries'
-
     options[:skip] = %w(internals.html release.html contributing.html whatsnew.html)
     options[:skip_patterns] = [/whatsnew\//]
 
     options[:attribution] = <<-HTML
-      &copy; 2008&ndash;2020, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>
+      &copy; 2008&ndash;2021, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>
       Licensed under the 3-clause BSD License.
     HTML
 
     version '1' do
-      self.release = '1.2.0'
+      self.release = '1.3.4'
       self.base_url = "https://pandas.pydata.org/pandas-docs/version/#{self.release}/"
 
       html_filters.push 'pandas/clean_html', 'pandas/entries'
+
+      options[:container] = 'main section'
 
       options[:skip_patterns] = [
         /development/,
