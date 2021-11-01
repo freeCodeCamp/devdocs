@@ -1,5 +1,5 @@
 /*
- * Cookies.js - 1.2.3
+ * Cookies.js - 1.2.3 (patched for SameSite=Strict and secure=true)
  * https://github.com/ScottHamper/Cookies
  *
  * This is free and unencumbered software released into the public domain.
@@ -28,7 +28,8 @@
 
         Cookies.defaults = {
             path: '/',
-            secure: false
+            SameSite: 'Strict',
+            secure: true
         };
 
         Cookies.get = function (key) {
@@ -58,6 +59,7 @@
             return {
                 path: options && options.path || Cookies.defaults.path,
                 domain: options && options.domain || Cookies.defaults.domain,
+                SameSite: options && options.SameSite || Cookies.defaults.SameSite,
                 expires: options && options.expires || Cookies.defaults.expires,
                 secure: options && options.secure !== undefined ?  options.secure : Cookies.defaults.secure
             };
@@ -93,6 +95,7 @@
             var cookieString = key + '=' + value;
             cookieString += options.path ? ';path=' + options.path : '';
             cookieString += options.domain ? ';domain=' + options.domain : '';
+            cookieString += options.SameSite ? ';SameSite=' + options.SameSite : '';
             cookieString += options.expires ? ';expires=' + options.expires.toUTCString() : '';
             cookieString += options.secure ? ';secure' : '';
 
