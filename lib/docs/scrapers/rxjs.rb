@@ -4,7 +4,7 @@ module Docs
   class Rxjs < UrlScraper
     self.name = 'RxJS'
     self.type = 'rxjs'
-    self.release = '7.0.1'
+    self.release = '7.1.0'
     self.base_url = 'https://rxjs.dev/'
     self.root_path = 'guide/overview'
     self.links = {
