@@ -42,6 +42,8 @@ module Docs
           node.parent.content = node.parent.content
         end
 
+        css('.alert-warning').remove
+
         doc
       end
     end
