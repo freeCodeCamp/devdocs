@@ -388,9 +388,9 @@ credits = [
     'https://raw.githubusercontent.com/Homebrew/brew/master/LICENSE.txt'
   ], [
     'Immutable.js',
-    '2014-2016 Facebook, Inc.',
+    '2014–present Lee Byron and other contributors',
     'BSD',
-    'https://raw.githubusercontent.com/facebook/immutable-js/master/LICENSE'
+    'https://github.com/immutable-js/immutable-js/blob/main/LICENSE'
   ], [
     'InfluxData',
     '2015 InfluxData, Inc.',
