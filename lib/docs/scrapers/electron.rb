@@ -1,8 +1,8 @@
 module Docs
   class Electron < UrlScraper
     self.type = 'simple'
-    self.base_url = 'https://www.electronjs.org/docs'
-    self.release = '14.0.0'
+    self.base_url = 'https://www.electronjs.org/docs/latest'
+    self.release = '15.3.0'
     self.links = {
       home: 'https://www.electronjs.org/',
       code: 'https://github.com/electron/electron'
@@ -15,7 +15,6 @@ module Docs
     options[:skip] = %w(guides development tutorial versions all)
     options[:skip_patterns] = [
       /\/history\z/,
-      /\/latest/      # beta site
     ]
     options[:replace_paths] = {
       'api/web-view-tag' => 'api/webview-tag'
@@ -27,8 +26,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://www.electronjs.org/docs', opts)
-      doc.at_css('.docs-version').content
+      doc = fetch_doc('https://www.electronjs.org/releases/stable', opts)
+      doc.at_css(".tag").content.gsub!(/[a-zA-Z]/, '')
     end
   end
 end

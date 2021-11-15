@@ -3,7 +3,6 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         return 'API' if subpath == '/api'
-        return 'Structures' if slug == 'api/structures'
 
         name = at_css('h1, h2').content
         name.remove! 'Class: '
@@ -15,7 +14,7 @@ module Docs
       end
 
       def get_type
-        return 'API' if subpath == '/api' || slug == 'api/structures'
+        return 'API' if subpath == '/api'
 
         if subpath.start_with?('/tutorial') || subpath.in?(%w(/glossary /faq))
           'Guides'
@@ -34,7 +33,6 @@ module Docs
         return [] unless subpath.start_with?('/api')
 
         css('h3 > code', 'h4 > code').each_with_object [] do |node, entries|
-          next if node.previous.try(:content).present? || node.next.try(:content).present?
           name = node.content
           name.sub! %r{\(.*\)}, '()'
           name.remove! 'new '
