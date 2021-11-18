@@ -2,7 +2,6 @@ module Docs
   class Kotlin
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.page-content')
         subpath.start_with?('api') ? api_page : doc_page
         doc
       end
@@ -12,6 +11,13 @@ module Docs
 
         css('a > img').each do |node|
           node.parent.before(node.parent.content).remove
+        end
+
+        css('div.code-block').each do |node|
+          node.name = 'pre'
+          node['data-language'] = node['data-lang']
+          node.content = node.content
+          # FIXME: newlines in code-block are lost because of <div>? (on https://kotlinlang.org/docs/typecasts.html for instance)
         end
 
         css('pre').each do |node|
