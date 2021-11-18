@@ -4,7 +4,7 @@ module Docs
 
     self.name = 'TypeScript'
     self.type = 'typescript'
-    self.release = '4.4.4'
+    self.release = '4.5.2'
     self.base_urls = [
       'https://www.typescriptlang.org/docs/handbook/',
       'https://www.typescriptlang.org/'
