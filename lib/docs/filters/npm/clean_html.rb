@@ -3,6 +3,10 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
 
+        at_css('#___gatsby').before(at_css('h1'))
+
+        css('details').remove
+
         css('.dZYhXG', '.fONtKn').remove
 
         css('.kSYjyK').remove
