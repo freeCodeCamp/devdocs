@@ -24,7 +24,7 @@ module Docs
     HTML
 
     version '3.0' do
-      self.release = '3.0.7'
+      self.release = '3.0.9'
       self.base_url = "https://docs.groovy-lang.org/#{self.release}/html/gapi/"
     end
 
