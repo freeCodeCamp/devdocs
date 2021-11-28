@@ -21,7 +21,7 @@ module Docs
     HTML
 
     version '3.4' do
-      self.release = '3.4.1'
+      self.release = '3.4.3'
       self.base_urls = [
         "https://matplotlib.org/#{release}/api/",
         "https://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",

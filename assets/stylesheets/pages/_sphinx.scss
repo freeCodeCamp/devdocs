@@ -39,6 +39,8 @@
   .admonition-title + dl { padding-top: .5em; }
 
   td > div { margin: 0 !important; }
+
+  .classifier:before { content:": " }
 }
 
 ._sphinx {
