@@ -4,6 +4,11 @@ module Docs
       def get_name
         name = at_css('h1').content
 
+        # TODO: remove when https://github.com/yarnpkg/berry/issues/3809 is resolved
+        if slug.start_with?('sdks') || slug.start_with?('pnpify')
+          name.prepend('yarn ')
+        end
+
         name
       end
 
