@@ -59,6 +59,7 @@ module Docs
 
         css('dt').each do |node|
           next if current_url.host == 'matplotlib.org'
+          next if current_url.host == 'numpy.org'
           next unless node['id'] || node.at_css('code, .classifier')
           links = []
           links << node.children.last.remove while node.children.last.try(:name) == 'a'

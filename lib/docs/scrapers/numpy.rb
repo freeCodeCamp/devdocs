@@ -27,7 +27,7 @@ module Docs
     HTML
 
     version '1.21' do
-      self.release = '1.21.1'
+      self.release = '1.21.4'
       self.base_url = "https://numpy.org/doc/#{self.version}/"
       options[:container] = nil
     end
