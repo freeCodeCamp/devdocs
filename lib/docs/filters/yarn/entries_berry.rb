@@ -2,24 +2,31 @@ module Docs
   class Yarn
     class EntriesBerryFilter < Docs::EntriesFilter
       def get_name
+        if slug.start_with?('configuration')
+          filename = at_css('main .active code')
+          content = filename.content
+          return filename.parent.content.sub content, " (#{content})"
+        end
+
         name = at_css('h1').content
 
-        # TODO: remove when https://github.com/yarnpkg/berry/issues/3809 is resolved
-        if slug.start_with?('sdks') || slug.start_with?('pnpify')
-          name.prepend('yarn ')
+        if slug.start_with?('getting-started')
+          name.remove! /\d - /
+
+          active_link = at_css('main .active')
+          links = active_link.parent.children.to_a
+          name.prepend "#{links.index(active_link) + 1}. "
         end
+
+        # TODO: remove when https://github.com/yarnpkg/berry/issues/3809 is resolved
+        name.prepend('yarn ') if slug.start_with?('sdks', 'pnpify')
 
         name
       end
 
       def get_type
-        if slug.start_with?('sdks') || slug.start_with?('pnpify')
-          'CLI'
-        else
-          type = at_css('header div:nth-child(2) .active').content.strip
-          type.remove! 'Home'
-          type
-        end
+         return 'CLI' if slug.start_with?('sdks', 'pnpify')
+         at_css('header .active').content
       end
     end
   end

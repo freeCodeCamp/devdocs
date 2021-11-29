@@ -20,6 +20,7 @@ module Docs
         code: 'https://github.com/yarnpkg/berry'
       }
       html_filters.push 'yarn/entries_berry', 'yarn/clean_html_berry', 'title'
+      options[:skip] = ['features', 'cli', 'configuration', 'advanced']
       options[:skip_patterns] = [/\Aapi/, /\Apackage/]
     end
 
