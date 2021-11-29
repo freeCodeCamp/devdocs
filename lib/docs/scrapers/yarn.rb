@@ -8,8 +8,8 @@ module Docs
     options[:skip] = %w(nightly)
 
     options[:attribution] = <<-HTML
-    &copy; 2016&ndash;present Yarn Contributors<br>
-    Licensed under the BSD License.
+      &copy; 2016&ndash;present Yarn Contributors<br>
+      Licensed under the BSD License.
     HTML
 
     version 'Berry' do
