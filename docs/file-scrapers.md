@@ -248,3 +248,7 @@ See `lib/docs/scrapers/scala.rb`
 
 Download the docs from https://sqlite.org/download.html, unzip it, and rename
 it to `/path/to/devdocs/docs/sqlite`
+
+```sh
+curl https://sqlite.org/2021/sqlite-doc-3370000.zip | bsdtar --extract --file - --directory=docs/sqlite/```
+```
