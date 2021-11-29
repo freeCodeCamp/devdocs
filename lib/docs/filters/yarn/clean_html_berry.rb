@@ -2,21 +2,40 @@ module Docs
   class Yarn
     class CleanHtmlBerryFilter < Filter
       def call
-        # Version notice
-        css('#gatsby-focus-wrapper > div').remove
+        if slug.empty?
+          @doc = at_css('main')
+          css(
+            (['div:first-child'] * 3).join('>'), # Tagline
+            'img',
+            'hr', # Footer
+            'hr + div', # Footer
+          ).remove
 
-        # Logo and menu
-        css('header > div:first-child').remove
+          css('a').each do |link|
+            link.name = 'div'
+            link.css('h3').each do |node|
+              node.replace("<h2><a href='#{link['href']}'>#{node.content}</a></h2>")
+            end
+          end
 
-        # Left nav and TOC
-        css('main > div > div:first-child', 'aside').remove
+          return doc
+        end
 
-        # Title and edit link
-        css('article > div:first-child').remove
+        @doc = at_css('article')
+        # Heading & edit link
+        css('h1', 'h1 + a').remove unless slug.start_with?('configuration')
 
-        # Bottom divider on index
-        if slug == ''
-          css('main > hr').remove
+        if slug.start_with?('cli')
+          css('.header-code').each do |node|
+            node.name = 'span'
+          end
+        end
+
+        if slug.start_with?('configuration')
+          css('h1', 'h2').each do |node|
+            node.name = node.name.sub(/\d/) { |i| i.to_i + 1 }
+            node.remove_attribute('style')
+          end
         end
 
         doc
