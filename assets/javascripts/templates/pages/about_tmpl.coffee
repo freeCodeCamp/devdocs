@@ -82,7 +82,12 @@ app.templates.aboutPage = -> """
 """
 
 credits = [
-  [ 'Angular.js',
+  [ 'i3',
+    '2009, Michael Stapelberg and contributors',
+    'BSD',
+    'https://raw.githubusercontent.com/i3/i3/next/LICENSE'
+  ], [
+    'Angular.js',
     '2010-2020 Google, Inc.',
     'CC BY 3.0',
     'https://creativecommons.org/licenses/by/3.0/'
