@@ -18,9 +18,6 @@ module Docs
           name.prepend "#{links.index(active_link) + 1}. "
         end
 
-        # TODO: remove when https://github.com/yarnpkg/berry/issues/3809 is resolved
-        name.prepend('yarn ') if slug.start_with?('sdks', 'pnpify')
-
         name
       end
 
