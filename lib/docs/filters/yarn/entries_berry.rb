@@ -11,8 +11,6 @@ module Docs
         name = at_css('h1').content
 
         if slug.start_with?('getting-started')
-          name.remove! /\d - /
-
           active_link = at_css('main .active')
           links = active_link.parent.children.to_a
           name.prepend "#{links.index(active_link) + 1}. "
