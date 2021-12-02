@@ -36,7 +36,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      get_latest_github_release('yarnpkg', 'berry', opts)
+      get_latest_github_release('yarnpkg', 'berry', opts)[/[\d.]+/]
     end
   end
 end
