@@ -34,8 +34,11 @@ module Docs
         if slug.start_with?('configuration')
           css('h1', 'h2').each do |node|
             node.name = node.name.sub(/\d/) { |i| i.to_i + 1 }
-            node.remove_attribute('style')
           end
+        end
+
+        css('*').each do |node|
+          node.remove_attribute('style')
         end
 
         doc
