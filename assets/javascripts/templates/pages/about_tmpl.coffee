@@ -852,6 +852,11 @@ credits = [
     'MPL',
     'https://raw.githubusercontent.com/mitchellh/vagrant/master/website/LICENSE.md'
   ], [
+    'Vite',
+    '2019–present, Yuxi (Evan) You and Vite contributors',
+    'MIT',
+    'https://github.com/vitejs/vite/blob/main/LICENSE'
+  ], [
     'Vue Router',
     '2013-present Evan You',
     'MIT',

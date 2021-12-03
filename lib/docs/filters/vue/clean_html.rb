@@ -2,7 +2,12 @@ module Docs
   class Vue
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css(version == '3' ? 'main' : '.content')
+        if current_url.host == 'vitejs.dev'
+          return '<h1>Vite</h1>' if root_page?
+          @doc = at_css('.content > div')
+        else
+          @doc = at_css(version == '3' ? 'main' : '.content')
+        end
 
         at_css('h1').content = 'Vue.js' if root_page?
         doc.child.before('<h1>Vue.js API</h1>') if slug == 'api/' || slug == 'api/index'
