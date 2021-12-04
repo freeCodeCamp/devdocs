@@ -292,6 +292,11 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
   ], [
+    'esbulid',
+    '2020 Evan Wallace',
+    'MIT',
+    'https://raw.githubusercontent.com/evanw/esbuild/blob/master/LICENSE.md'
+  ], [
     'ESLint',
     'OpenJS Foundation and other contributors',
     'MIT',
