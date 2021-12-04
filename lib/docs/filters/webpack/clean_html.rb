@@ -20,6 +20,10 @@ module Docs
           node.parent.content = node.parent.content
         end
 
+        css('*').each do |node|
+          node.remove if node['class'] && node['class'][/print:hidden/]
+        end
+
         # for webpack-contrib /loaders and /plugins
         shields = at_css('img[src*="shields.io"]')
         shields.ancestors('p')[0].remove if shields
