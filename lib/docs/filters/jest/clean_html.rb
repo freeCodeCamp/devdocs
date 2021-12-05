@@ -2,7 +2,8 @@ module Docs
   class Jest
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('article')
+        at_css('.markdown').prepend_child(at_css('h1'))
+        @doc = at_css('.markdown')
 
         at_css('h1').content = 'Jest Documentation' if root_page?
 
@@ -14,23 +15,14 @@ module Docs
         end
 
         css('.prism-code').each do |node|
+          node.parent.parent.before(node)
           node.name = 'pre'
-          node['data-language'] = 'js'
-          node['data-language'] = node['class'][/language-(\w+)/, 1] if node['class']
-
-          counter = 0
-
-          node.css('.token-line').each do |subnode| # add newline each line of the code snippets
-            if counter == 0
-            else
-              subnode.content = "\n#{subnode.content}"
-            end
-
-            counter += 1
-          end
-
-          node.content = node.content
+          node.remove_attribute('class')
+          node['data-language'] = 'typescript'
+          node.content = node.css('.token-line').map(&:content).join("\n")
         end
+
+        css('*').remove_attribute('style')
 
         doc
       end
