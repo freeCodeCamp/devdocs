@@ -16,11 +16,9 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    version do
-      self.release = '0.14.2'
-      self.base_url = 'https://esbuild.github.io/'
-      html_filters.push 'esbuild/clean_html', 'esbuild/entries'
-    end
+    self.release = '0.14.2'
+    self.base_url = 'https://esbuild.github.io/'
+    html_filters.push 'esbuild/clean_html', 'esbuild/entries'
 
     def get_latest_version(opts)
       get_npm_version('esbuild', opts)

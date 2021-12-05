@@ -16,12 +16,10 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    version do
-      self.release = '2.6.14'
-      self.base_url = 'https://vitejs.dev/'
-      self.initial_paths = %w(guide/)
-      html_filters.push 'vue/entries_v3', 'vue/clean_html'
-    end
+    self.release = '2.6.14'
+    self.base_url = 'https://vitejs.dev/'
+    self.initial_paths = %w(guide/)
+    html_filters.push 'vue/entries_v3', 'vue/clean_html'
 
     def get_latest_version(opts)
       get_npm_version('vite', opts)
