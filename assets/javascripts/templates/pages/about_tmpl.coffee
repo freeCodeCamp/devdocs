@@ -908,7 +908,7 @@ credits = [
     'https://raw.githubusercontent.com/yiisoft/yii/master/LICENSE'
   ], [
     'Spring Boot',
-    '2002-2020 Pivotal, Inc. All Rights Reserved.',
+    '2002-2021 Pivotal, Inc. All Rights Reserved.',
     'Apache License 2.0',
     'https://raw.githubusercontent.com/spring-projects/spring-boot/master/LICENSE.txt'
   ]
