@@ -667,6 +667,11 @@ credits = [
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
   ], [
+    'Prettier',
+    'James Long and contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/prettier/prettier/main/LICENSE '
+  ], [
     'Puppeteer',
     '2021 Google Inc',
     'Apache',
