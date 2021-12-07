@@ -26,6 +26,13 @@ module Docs
       end
 
       def get_type
+        return 'Language Reference' if slug.start_with? 'reference'
+        return 'Python/C API' if slug.start_with? 'c-api'
+        return 'Tutorial' if slug.start_with? 'tutorial'
+
+        return 'Basics' unless slug.start_with? 'library/'
+        return 'Basics' if slug.start_with? 'library/index'
+
         return 'Logging' if slug.start_with? 'library/logging'
         return 'Asynchronous I/O' if slug.start_with? 'library/asyncio'
 
@@ -53,7 +60,7 @@ module Docs
       end
 
       def additional_entries
-        return [] if root_page? || !include_default_entry? || name == 'errno'
+        return [] if root_page? || slug.start_with?('library/index') || !include_default_entry? || name == 'errno'
         clean_id_attributes
         entries = []
 

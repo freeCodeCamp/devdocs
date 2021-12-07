@@ -1,18 +1,31 @@
 module Docs
   class Python < FileScraper
     self.type = 'python'
-    self.root_path = 'library/index.html'
+    self.root_path = 'index.html'
     self.links = {
       home: 'https://www.python.org/',
       code: 'https://github.com/python/cpython'
     }
 
-    options[:only_patterns] = [/\Alibrary\//]
+    options[:only_patterns] = [
+      # /\Ac-api/,
+      /\Adistributing/,
+      # /\Adistutils/,
+      /\Aextending/,
+      /\Afaq/,
+      /\Ahowto/,
+      /\Aindex.html/,
+      # /\Ainstall/,
+      /\Ainstalling/,
+      /\Alibrary/,
+      /\Areference/,
+      /\Atutorial/,
+      /\Ausing/,
+    ]
 
     options[:skip] = %w(
       library/2to3.html
       library/formatter.html
-      library/index.html
       library/intro.html
       library/undoc.html
       library/unittest.mock-examples.html
@@ -24,7 +37,7 @@ module Docs
     HTML
 
     version '3.10' do
-      self.release = '3.10.0'
+      self.release = '3.10.1'
       self.base_url = "https://docs.python.org/#{self.version}/"
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
