@@ -44,7 +44,7 @@ module Docs
   end
 
   def self.defaults
-    %w(css dom html http javascript).map(&method(:find))
+    %w(css 'Web APIs' html http javascript).map(&method(:find))
   end
 
   def self.installed

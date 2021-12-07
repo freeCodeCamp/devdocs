@@ -1,5 +1,9 @@
 [
   [
+    "2021-12-07",
+    "Renamed documentation: <a href=\"/dom/\">Web APIs</a>"
+  ],
+  [
     "2021-12-05",
     "New documentation: <a href=\"/esbuild/\">esbuild</a>"
   ],
