@@ -16,7 +16,7 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    self.release = '2.6.14'
+    self.release = '2.7.5'
     self.base_url = 'https://vitejs.dev/'
     self.initial_paths = %w(guide/)
     html_filters.push 'vue/entries_v3', 'vue/clean_html'
