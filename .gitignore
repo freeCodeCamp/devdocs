@@ -8,3 +8,7 @@ public/docs/**/*
 docs/**/*
 !docs/*.md
 /vendor
+*.tar
+*.tar.bz2
+*.tar.gz
+*.zip
