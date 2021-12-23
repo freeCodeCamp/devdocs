@@ -1,0 +1,75 @@
+._man {
+  .mandoc {
+    @extend %code;
+    white-space: unset;
+  }
+
+  // from https://manpages.debian.org/testing/darktable/darktable.1.en.html
+  .Bd-indent {
+    margin-left: 3.8em;
+  }
+
+  .Bl-bullet {
+    list-style-type: disc;
+    padding-left: 1em;
+  }
+  .Bl-dash {
+    list-style-type: none;
+    padding-left: 0em;
+  }
+  .Bl-dash > li:before {
+    content: "\2014  ";
+  }
+  .Bl-item {
+    list-style-type: none;
+    padding-left: 0em;
+  }
+  .Bl-compact > li {
+    margin-top: 0em;
+  }
+
+  .Bl-enum {
+    padding-left: 2em;
+  }
+  .Bl-compact > li {
+    margin-top: 0em;
+  }
+
+  .Bl-diag > dt {
+    font-style: normal;
+    font-weight: bold;
+  }
+  .Bl-diag > dd {
+    margin-left: 0em;
+  }
+  .Bl-hang > dd {
+    margin-left: 5.5em;
+  }
+  .Bl-inset > dd {
+    margin-left: 0em;
+  }
+  .Bl-ohang > dd {
+    margin-left: 0em;
+  }
+  .Bl-tag {
+    margin-left: 5.5em;
+  }
+  .Bl-tag > dt {
+    float: left;
+    margin-top: 0em;
+    margin-left: -5.5em;
+    padding-right: 1.2em;
+    vertical-align: top;
+  }
+  .Bl-tag > dd {
+    clear: right;
+    width: 100%;
+    margin-top: 0em;
+    margin-left: 0em;
+    vertical-align: top;
+    overflow: auto;
+  }
+  .Bl-compact > dt {
+    margin-top: 0em;
+  }
+}
