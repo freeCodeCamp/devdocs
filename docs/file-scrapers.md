@@ -92,6 +92,15 @@ curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/gfortran-html.tar.gz | \
 tar --extract --gzip --strip-components=1 --directory=docs/gnu_fortran~$VERSION
 ```
 
+## GNU Make
+Go to https://www.gnu.org/software/make/manual/, download the HTML tarball and extract its content in `/path/to/devdocs/docs/gnu_make` or run the following command:
+
+```sh
+mkdir /path/to/devdocs/docs/gnu_make \
+&& curl https://www.gnu.org/software/make/manual/make.html_node.tar.gz | \
+tar --extract --gzip --strip-components=1 --directory=/path/to/devdocs/docs/gnu_make
+```
+
 ## Gnuplot
 
 The most recent release can be found near the bottom of

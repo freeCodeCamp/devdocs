@@ -337,6 +337,11 @@ credits = [
     'GFDL',
     'https://www.gnu.org/licenses/fdl-1.3.en.html'
   ], [
+    'Gnu Make',
+    'Copyright © 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 Free Software Foundation, Inc.',
+    'GFDL',
+    'https://www.gnu.org/software/make/manual/html_node/GNU-Free-Documentation-License.html'
+   ] ,[
     'Gnuplot',
     'Copyright 1986 - 1993, 1998, 2004 Thomas Williams, Colin Kelley',
     'gnuplot license',
