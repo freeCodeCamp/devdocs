@@ -918,5 +918,9 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/yiisoft/yii/master/LICENSE'
   ], [
+    'Zig',
+    '2015–2021, Zig contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/ziglang/zig/master/LICENSE'
   ]
 ]
