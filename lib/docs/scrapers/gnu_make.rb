@@ -1,7 +1,7 @@
 # coding: utf-8
 module Docs
   class GnuMake < FileScraper
-    self.name = 'Gnu make'
+    self.name = 'GNU Make'
     self.type = 'gnu_make'
     self.slug = 'gnu_make'
     self.release = '4.3'
