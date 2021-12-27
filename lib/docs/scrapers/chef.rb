@@ -20,6 +20,21 @@ module Docs
       We are not affiliated with, endorsed or sponsored by Chef Inc.
     HTML
 
+    version '17' do
+      self.release = '17.9.18'
+
+      options[:container] = '.off-canvas-wrapper'
+
+      options[:skip] = [
+        '/automate/api/',
+        '/habitat/supervisor_api/',
+        '/habitat/builder_api/'
+      ]
+
+      html_filters.push 'chef/entries', 'chef/clean_html'
+
+    end
+
     version '16' do
       self.release = '16.8.14'
 
@@ -82,8 +97,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://downloads.chef.io/products/infra', opts)
-      doc.at_css('#versions > option').content.strip
+      tags = get_github_tags('chef', 'chef', opts)
+      tags[0]['name'][1..-1]
     end
 
   end
