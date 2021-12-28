@@ -5,6 +5,10 @@ module Docs
     self.slug = 'point_cloud_library'
     self.base_url = 'https://pointclouds.org/documentation/'
     self.root_path = 'modules.html'
+    # Add hierarchy.html to crawl all classes*.html that's not reachable from modules.html
+    self.initial_paths = [
+      "https://pointclouds.org/documentation/hierarchy.html"
+    ]
 
     self.links = {
       home: 'https://pointclouds.org/',
@@ -26,7 +30,7 @@ module Docs
     options[:container] = '.contents'
 
     # Skip source code since it doesn't provide any useful docs
-    options[:skip_patterns] = [/_source/]
+    options[:skip_patterns] = [/_source/, /namespace/, /h\.html/, /structsvm/, /struct_/, /classopenni/, /class_/]
 
   end
 end

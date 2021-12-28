@@ -2,41 +2,51 @@ module Docs
   class PointCloudLibrary
     class EntriesFilter < Docs::EntriesFilter
       def get_type
-        if slug.start_with?("group")
-          'Group'
+        if slug.include?("group__") then
+          tmp = slug.dup
+          tmp.sub! "group__", ""
+          tmp.sub! "__", " "
+          tmp
         else
-          'Others'
+          "‎"
+        end
+      end
+
+      def get_name
+        type = get_type()
+        if type == "‎"
+          slug
+        else
+          "Module " + type
         end
       end
 
       def additional_entries
-        return [] if root_page?
+        # Only add additional_entries from PointCloudLibrary modules (group__*.html)
+        return [] if not slug.include?("group")
+        entries = []
 
         css('table.memberdecls td.memItemRight').map do |node|
-          # Get the type of the entry from Doxygen table heading
-          type = node.parent.parent.css("tr.heading").text.strip
-          if type == 'Additional Inherited Members' then
-            return []
-          end
-
-          # Retrieve HREF link
-          first_link = node.css("a").first
-          if first_link.nil? then
-            return []
-          end
-          href = first_link['href']
+          href = node.at_css("a").attr('href')
           if href.index("#").nil? then
-            # If it doesn't have #, it means it's linking to other page.
-            # So append # at the end to make it work
             href += "#"
           end
 
-          [node.content, href, type]
-        end
-      end
+          # Skip page that's not crawled
+          # TODO: Sync this with options[:skip_patterns] in point_cloud_library.rb
+          if href.include?("namespace") || href.include?("structsvm") || href.include?("classopenni") then
+            next
+          end
 
-      def include_default_entry?
-        !at_css('.obsolete')
+          # Only add function and classes documentation
+          doxygen_type = node.parent.parent.at_css("tr.heading").text.strip
+          if not(doxygen_type == "Functions" || doxygen_type == "Classes") then
+            next
+          end
+
+          entries << [node.content, href]
+        end
+        entries
       end
     end
   end
