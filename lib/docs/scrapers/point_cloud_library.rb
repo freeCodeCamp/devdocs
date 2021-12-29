@@ -9,6 +9,7 @@ module Docs
     self.initial_paths = [
       "https://pointclouds.org/documentation/hierarchy.html"
     ]
+    self.release = '1.12.1'
 
     self.links = {
       home: 'https://pointclouds.org/',
@@ -24,7 +25,7 @@ module Docs
     text_filters.push 'images', 'inner_html', 'attribution'
 
     def get_latest_version(opts)
-      get_latest_github_release('PointCloudLibrary', 'pcl', opts)
+      get_latest_github_release('PointCloudLibrary', 'pcl', opts)[4..]
     end
 
     options[:attribution] = <<-HTML
