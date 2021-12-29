@@ -15,7 +15,7 @@ module Docs
       code: 'https://github.com/PointCloudLibrary/pcl'
     }
 
-    html_filters.push 'point_cloud_library/entries'
+    html_filters.push 'point_cloud_library/entries', 'point_cloud_library/clean_html'
 
     # Remove the `clean_text` because Doxygen are actually creating empty
     # anchor such as <a id="asd"></a> to do anchor link.. and that anchor
@@ -27,7 +27,6 @@ module Docs
       get_latest_github_release('PointCloudLibrary', 'pcl', opts)
     end
 
-    options[:container] = '.contents'
     options[:attribution] = <<-HTML
       &copy; 2009–2012, Willow Garage, Inc.<br>
       &copy; 2012–, Open Perception, Inc.<br>

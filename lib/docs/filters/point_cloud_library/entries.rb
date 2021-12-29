@@ -2,23 +2,15 @@ module Docs
   class PointCloudLibrary
     class EntriesFilter < Docs::EntriesFilter
       def get_type
-        if slug.include?("group__") then
-          tmp = slug.dup
-          tmp.sub! "group__", ""
-          tmp.sub! "__", " "
-          tmp
-        else
-          "‎"
-        end
+        group = at_css('.title .ingroups')
+        return group.content unless group.nil?
+        name = get_name
+        return 'pcl' unless name.match(/^pcl::.*::/)
+        name.gsub(/^pcl::/, '').gsub(/::.*/, '')
       end
 
       def get_name
-        type = get_type()
-        if type == "‎"
-          slug
-        else
-          "Module " + type
-        end
+        at_css('.title').content.gsub(/[<(].*/, '')
       end
 
       def additional_entries
