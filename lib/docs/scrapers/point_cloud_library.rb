@@ -21,13 +21,18 @@ module Docs
     # anchor such as <a id="asd"></a> to do anchor link.. and that anchor
     # will be removed by clean_text
     self.text_filters = FilterStack.new
-    text_filters.push 'images', 'inner_html'
+    text_filters.push 'images', 'inner_html', 'attribution'
 
     def get_latest_version(opts)
       get_latest_github_release('PointCloudLibrary', 'pcl', opts)
     end
 
     options[:container] = '.contents'
+    options[:attribution] = <<-HTML
+      &copy; 2009–2012, Willow Garage, Inc.<br>
+      &copy; 2012–, Open Perception, Inc.<br>
+      Licensed under the BSD License.
+    HTML
 
     # Skip source code since it doesn't provide any useful docs
     options[:skip_patterns] = [/_source/, /namespace/, /h\.html/, /structsvm/, /struct_/, /classopenni/, /class_/]
