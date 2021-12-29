@@ -658,6 +658,11 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
+    'PointCloudLibrary',
+    '2009–2012, Willow Garage, Inc.<br>&copy; 2012–, Open Perception, Inc.',
+    'BSD',
+    'https://raw.githubusercontent.com/PointCloudLibrary/pcl/master/LICENSE.txt'
+  ], [
     'Pony',
     '2016-2020, The Pony Developers & 2014-2015, Causality Ltd.',
     'BSD',
