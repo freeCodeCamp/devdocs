@@ -33,13 +33,13 @@ module Docs
     end
 
     version '1.21' do
-      self.release = '1.21.4'
+      self.release = '1.21.5'
       self.base_url = "https://numpy.org/doc/#{self.version}/"
       options[:container] = nil
     end
 
     version '1.20' do
-      self.release = '1.20.1'
+      self.release = '1.20.3'
       self.base_url = "https://numpy.org/doc/#{self.version}/"
       options[:container] = nil
     end
