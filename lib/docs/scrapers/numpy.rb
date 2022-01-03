@@ -26,6 +26,12 @@ module Docs
       Licensed under the 3-clause BSD License.
     HTML
 
+    version '1.22' do
+      self.release = '1.22.0'
+      self.base_url = "https://numpy.org/doc/#{self.version}/"
+      options[:container] = nil
+    end
+
     version '1.21' do
       self.release = '1.21.4'
       self.base_url = "https://numpy.org/doc/#{self.version}/"
