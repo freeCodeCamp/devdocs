@@ -19,7 +19,7 @@ module Docs
             return 'Development'
           end
           li_a = css('nav li.active > a')
-          return li_a.last.content if li_a
+          return li_a.last.content if li_a && li_a.last
         end
 
         nav_items = css('.nav.nav-pills.pull-left > li')
