@@ -1,0 +1,9 @@
+._rails {
+    .title.method-title {
+        @extend %block-label, %label-blue;
+    }
+
+    h2 {
+        @extend %block-heading;
+    }
+}
