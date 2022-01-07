@@ -11,6 +11,7 @@
     try @initErrorTracking() catch
     return unless @browserCheck()
 
+    @analiticsAlreadyShown = false
     @el = $('._app')
     @localStorage = new LocalStorageStore
     @serviceWorker = new app.ServiceWorker if app.ServiceWorker.isEnabled()
@@ -216,7 +217,7 @@
   onCookieBlocked: (key, value, actual) ->
     return if @cookieBlocked
     @cookieBlocked = true
-    new app.views.Notif 'CookieBlocked', autoHide: null
+    new app.views.Notif 'CookieBlocked', autoHide: 2000
     Raven.captureMessage "CookieBlocked/#{key}", level: 'warning', extra: {value, actual}
     return
 

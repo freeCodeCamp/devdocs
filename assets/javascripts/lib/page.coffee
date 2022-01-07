@@ -200,6 +200,10 @@ page.track = (fn) ->
 
 track = ->
   return unless app.config.env == 'production'
+  return if app.analiticsAlreadyShown
+
+  # only show the analitics cookie notification once
+  app.analiticsAlreadyShown = true
 
   consentGiven = Cookies.get('analyticsConsent')
   consentAsked = Cookies.get('analyticsConsentAsked')
@@ -210,7 +214,7 @@ track = ->
     # Only ask for consent once per browser session
     Cookies.set('analyticsConsentAsked', '1')
 
-    new app.views.Notif 'AnalyticsConsent', autoHide: null
+    new app.views.Notif 'AnalyticsConsent', autoHide: 2000
   return
 
 @resetAnalytics = ->
