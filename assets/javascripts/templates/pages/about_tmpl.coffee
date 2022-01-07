@@ -204,7 +204,7 @@ credits = [
     'https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE'
   ], [
     'Crystal',
-    '2012-2021 Manas Technology Solutions',
+    '2012-2022 Manas Technology Solutions',
     'Apache',
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
   ], [

@@ -2,7 +2,7 @@ module Docs
   class Crystal
     class CleanHtmlFilter < Filter
       def call
-        slug.start_with?('reference') ? book : api
+        current_url.path.start_with?('/reference/') ? book : api
         doc
       end
 
@@ -21,7 +21,7 @@ module Docs
       def api
         @doc = at_css('.main-content')
 
-        at_css('h1 + p').remove if root_page?
+        at_css('h1 + p').remove if current_url.path == "/api/#{release}/index.html"
 
         css('.method-permalink', '.doc + br', 'hr', 'a > br', 'div + br').remove
 

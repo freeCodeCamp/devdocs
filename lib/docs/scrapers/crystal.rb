@@ -1,8 +1,17 @@
 module Docs
   class Crystal < UrlScraper
+    include MultipleBaseUrls
     self.type = 'crystal'
-    self.base_url = 'https://crystal-lang.org/'
-    self.initial_paths = %w(reference/index.html)
+    self.release = '1.3.0'
+    self.base_urls = [
+      "https://crystal-lang.org/api/#{release}/",
+      "https://crystal-lang.org/reference/#{release[0..2]}/",
+    ]
+    def initial_urls
+      [ "https://crystal-lang.org/api/#{self.class.release}/index.html",
+        "https://crystal-lang.org/reference/#{self.class.release[0..2]}/index.html" ]
+    end
+
     self.links = {
       home: 'https://crystal-lang.org/',
       code: 'https://github.com/crystal-lang/crystal'
@@ -11,7 +20,7 @@ module Docs
     html_filters.push 'crystal/entries', 'crystal/clean_html'
 
     options[:attribution] = ->(filter) {
-      if filter.slug.start_with?('reference')
+      if filter.current_url.path.start_with?('/reference/')
         <<-HTML
           To the extent possible under law, the persons who contributed to this work
           have waived<br>all copyright and related or neighboring rights to this work
@@ -19,21 +28,10 @@ module Docs
         HTML
       else
         <<-HTML
-          &copy; 2012&ndash;2021 Manas Technology Solutions.<br>
+          &copy; 2012&ndash;2022 Manas Technology Solutions.<br>
           Licensed under the Apache License, Version 2.0.
         HTML
       end
-    }
-
-    self.release = '1.2.1'
-    self.root_path = "api/#{release}/index.html"
-
-    options[:only_patterns] = [/\Aapi\/#{release}\//, /\Areference\//]
-    options[:skip_patterns] = [/debug/i]
-
-    options[:replace_paths] = {
-      "api/#{release}/" => "api/#{release}/index.html",
-      'reference/' => 'reference/index.html'
     }
 
     def get_latest_version(opts)

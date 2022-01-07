@@ -2,11 +2,11 @@ module Docs
   class Crystal
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        if slug.start_with?('reference/')
+        if current_url.path.start_with?('/reference/')
           name = at_css('main h1').content.strip
           name.remove! '¶'
 
-          if slug.start_with?('reference/syntax_and_semantics')
+          if current_url.path.start_with?('/reference/') && slug.match?('syntax_and_semantics')
             name.prepend "#{slug.split('/')[2].titleize}: " if slug.split('/').length > 3
           elsif slug.split('/').length > 1
             chapter = slug.split('/')[1].titleize.capitalize
@@ -15,6 +15,7 @@ module Docs
 
           name
         else
+          return at_css('h1').content.strip unless at_css('.type-name')
           name = at_css('.type-name').children.last.content.strip
           name.remove! %r{\(.*\)}
           name
@@ -22,11 +23,11 @@ module Docs
       end
 
       def get_type
-        return if root_page?
+        return if current_url.path == "/api/#{release}/index.html"
 
-        if slug.start_with?('reference/syntax_and_semantics')
+        if current_url.path.start_with?('/reference/') && slug.match?('syntax_and_semantics')
           'Book: Language'
-        elsif slug.start_with?('reference/')
+        elsif current_url.path.start_with?('/reference/')
           'Book'
         else
           hierarchy = at_css('.superclass-hierarchy')
@@ -44,7 +45,7 @@ module Docs
       end
 
       def additional_entries
-        return [] unless slug.start_with?('api')
+        return [] unless current_url.path.start_with?('/api/')
         entries = []
 
         css('.entry-detail[id$="class-method"]').each do |node|
