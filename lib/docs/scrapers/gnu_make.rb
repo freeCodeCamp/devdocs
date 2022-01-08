@@ -26,7 +26,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      body = fetch(self.base_url, opts)
+      body = fetch("https://www.gnu.org/software/make/manual/html_node/", opts)
       body.scan(/version \d*\.?\d*/)[0].sub('version', '')
     end
 
