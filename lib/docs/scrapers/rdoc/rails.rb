@@ -109,7 +109,6 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://rubyonrails.org/', opts)
-      doc
       doc.at_css('.heading__button span').content.scan(/\d\.\d*\.*\d*\.*\d*/)[0]
     end
   end

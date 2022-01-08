@@ -24,7 +24,9 @@ module Docs
 
         css('pre').each do |node|
           code = node.at_css('code')
-          language = code['class'][/highlight ?(\w+)/, 1]
+          language = code['class']
+          break if language.nil?
+          language = language [/highlight ?(\w+)/, 1]
           node['data-language'] = language unless language == 'plain'
           code.remove_attribute('class')
           node.content = node.content.strip
