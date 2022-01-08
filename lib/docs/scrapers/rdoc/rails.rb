@@ -14,7 +14,7 @@ module Docs
     self.slug = 'rails'
     self.initial_paths = %w(guides/index.html)
     self.links = {
-      home: 'http://rubyonrails.org/',
+      home: 'https://rubyonrails.org/',
       code: 'https://github.com/rails/rails'
     }
 
@@ -72,31 +72,35 @@ module Docs
     options[:attribution] = ->(filter) do
       if filter.slug.start_with?('guides')
         <<-HTML
-          &copy; 2004&ndash;2020 David Heinemeier Hansson<br>
+          &copy; 2004&ndash;2021 David Heinemeier Hansson<br>
           Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.
         HTML
       else
         <<-HTML
-          &copy; 2004&ndash;2020 David Heinemeier Hansson<br>
+          &copy; 2004&ndash;2021 David Heinemeier Hansson<br>
           Licensed under the MIT License.
         HTML
       end
     end
 
+    version '7.0' do
+      self.release = '7.0.0'
+    end
+
     version '6.1' do
-      self.release = '6.1.1'
+      self.release = '6.1.4'
     end
 
     version '6.0' do
-      self.release = '6.0.0'
+      self.release = '6.0.4'
     end
 
     version '5.2' do
-      self.release = '5.2.2'
+      self.release = '5.2.6'
     end
 
     version '5.1' do
-      self.release = '5.1.6'
+      self.release = '5.1.7'
     end
 
     version '5.0' do
