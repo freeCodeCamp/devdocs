@@ -1,13 +1,5 @@
 module Docs
   class Rails < Rdoc
-    # Instructions:
-    #   1. Download a release at https://github.com/rails/rails/releases
-    #   2. Open "railties/lib/rails/api/task.rb" and comment out any code related to sdoc ("configure_sdoc")
-    #   3. Run "bundle install --without db && bundle exec rake rdoc" (in the Rails directory)
-    #   4. Run "cd guides && bundle exec rake guides:generate:html"
-    #   5. Copy the "guides/output" directory to "html/guides"
-    #   6. Copy the "html" directory to "docs/rails~[version]"
-
     include FixInternalUrlsBehavior
 
     self.name = 'Ruby on Rails'
