@@ -2,6 +2,11 @@ module Docs
   class Mdn
     class CompatTablesFilter < Filter
 
+      # Generate browser compatibility table
+      # Fixes "BCD tables only load in the browser"
+      # https://github.com/mdn/browser-compat-data
+      # https://github.com/mdn/yari/tree/main/client/src/document/ingredients/browser-compatibility-table
+
       def call
         if at_css('#browser_compatibility') \
           and not at_css('#browser_compatibility').next_sibling.classes.include?('warning') \
@@ -32,6 +37,26 @@ module Docs
         'safari_ios' => 'Safari on IOS',
         'samsunginternet_android' => 'Samsung Internet'
       }
+
+      def is_javascript
+        current_url.to_s.start_with?('https://developer.mozilla.org/en-US/docs/Web/JavaScript')
+      end
+
+      def browsers
+        if is_javascript
+          {}.merge(BROWSERS).merge({'deno' => 'Deno', 'nodejs' => 'Node.js'})
+        else
+          BROWSERS
+        end
+      end
+
+      def browser_types
+        if is_javascript
+          {'Desktop'=>6, 'Mobile'=>6, 'Server'=>2,}
+        else
+          {'Desktop'=>6, 'Mobile'=>6,}
+        end
+      end
 
       def generate_compatibility_table()
         json_files_uri = request_bcd_uris()
@@ -88,15 +113,15 @@ module Docs
 
         table.css('#bct-browser-type').each do |node|
           node.add_child('<th>')
-          %w(Desktop Mobile).each do |browser_type|
-            node.add_child("<th colspan=6>#{browser_type}")
+          browser_types.each do |browser_type, colspan|
+            node.add_child("<th colspan=#{colspan}>#{browser_type}")
           end
         end
 
         table.css('#bct-browsers').each do |node|
           node.add_child('<th>')
 
-          BROWSERS.values.each do |browser|
+          browsers.values.each do |browser|
             node.add_child("<th>#{browser}")
           end
         end
@@ -119,7 +144,7 @@ module Docs
         end
 
 
-        BROWSERS.keys.each do |browser_key|
+        browsers.keys.each do |browser_key|
           if key == '__compat'
             add_data_to_entry(json['support'][browser_key], last_table_entry)
           else
