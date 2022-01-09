@@ -233,6 +233,11 @@ credits = [
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
+    'Deno',
+    '2018–2021 the Deno authors',
+    'MIT',
+    'https://raw.githubusercontent.com/denoland/manual/main/LICENSE'
+  ], [
     'Django',
     'Django Software Foundation and individual contributors',
     'BSD',
