@@ -15,6 +15,11 @@ module Docs
 
         css('.jRndWL').remove_attribute('style')
 
+        css('pre').each do |node|
+          node.content = node.css('.token-line').map(&:content).join("\n")
+          node['data-language'] = 'javascript'
+        end
+
         doc
 
       end
