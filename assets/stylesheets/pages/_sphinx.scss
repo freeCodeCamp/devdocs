@@ -41,6 +41,10 @@
   td > div { margin: 0 !important; }
 
   .classifier:before { content:": " }
+
+  .property::after { content:" " }
+
+  span.descclassname, span.descname { font-family: var(--monoFont) }
 }
 
 ._sphinx {
