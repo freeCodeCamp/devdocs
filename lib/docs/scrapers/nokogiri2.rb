@@ -8,9 +8,9 @@ module Docs
     self.name = 'Nokogiri'
     self.slug = 'nokogiri'
     self.release = '1.13.0'
+    self.base_url = "https://nokogiri.org/rdoc/"
 
     html_filters.replace 'rdoc/entries', 'nokogiri2/entries'
-    text_filters.replace 'attribution', 'nokogiri2/attribution'
 
     options[:root_title] = 'Nokogiri'
     options[:only_patterns] = [/\ANokogiri/, /\AXSD/]
