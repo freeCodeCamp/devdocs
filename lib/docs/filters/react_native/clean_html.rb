@@ -2,12 +2,29 @@ module Docs
   class ReactNative
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.post')
+        @doc = at_css('main .col .markdown')
 
         if root_page?
           at_css('h1').content = 'React Native Documentation'
           css('h1 ~ *').remove
         end
+
+        css('header').each do |node|
+          node.before(node.children).remove
+        end
+
+        css('.content-banner-img').remove
+        css('.anchor').remove_attribute('class')
+        css('button[aria-label="Copy code to clipboard"]').remove
+        css('h2#example').remove
+
+        css('pre').each do |node|
+          node.content = node.css('.token-line').map(&:content).join("\n")
+          node.remove_attribute('class')
+          node['data-language'] = 'jsx'
+        end
+
+        #
 
         css('.docs-prevnext', '.hash-link', '.edit-page-link', '.edit-github', 'a.hash', '.edit-page-block', 'a.show', 'a.hide', 'hr').remove
 
@@ -21,21 +38,8 @@ module Docs
           node.parent['id'] ||= node['name'] || node['id']
         end
 
-        css('.highlight').each do |node|
-          node.name = 'pre'
-          node.css('.gutter').remove
-          node['data-language'] = node.at_css('[data-lang]').try(:[], 'data-lang') || 'js'
-          node.content = node.content.strip
-        end
-
         css('table.highlighttable').each do |node|
           node.replace(node.at_css('pre.highlight'))
-        end
-
-        css('.prism').each do |node|
-          node.name = 'pre'
-          node['data-language'] = node['class'][/(?<=language\-)(\w+)/]
-          node.content = node.content
         end
 
         css('pre > code.hljs').each do |node|
