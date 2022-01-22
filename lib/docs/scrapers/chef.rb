@@ -20,6 +20,21 @@ module Docs
       We are not affiliated with, endorsed or sponsored by Chef Inc.
     HTML
 
+    version '18' do
+      self.release = '18.0.15'
+
+      options[:container] = '.off-canvas-wrapper'
+
+      options[:skip] = [
+        '/automate/api/',
+        '/habitat/supervisor_api/',
+        '/habitat/builder_api/'
+      ]
+
+      html_filters.push 'chef/entries', 'chef/clean_html'
+
+    end
+
     version '17' do
       self.release = '17.9.18'
 
