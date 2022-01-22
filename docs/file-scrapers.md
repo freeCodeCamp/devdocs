@@ -175,10 +175,7 @@ mv ./usr/share/doc/openjdk-16-jre-headless/api/ path/to/devdocs/docs/openjdk~$VE
 ## Pandas
 
 ```sh
-mkdir docs/pandas~1
-cd docs/pandas~1
-curl https://pandas.pydata.org/docs/pandas.zip
-bsdtar xf pandas.zip
+curl https://pandas.pydata.org/docs/pandas.zip | bsdtar --extract --file - --directory=docs/pandas~1
 ```
 
 ## PHP
@@ -266,5 +263,5 @@ Download the docs from https://sqlite.org/download.html, unzip it, and rename
 it to `/path/to/devdocs/docs/sqlite`
 
 ```sh
-curl https://sqlite.org/2021/sqlite-doc-3370000.zip | bsdtar --extract --file - --directory=docs/sqlite/```
+curl https://sqlite.org/2021/sqlite-doc-3370000.zip | bsdtar --extract --file - --directory=docs/sqlite/
 ```
