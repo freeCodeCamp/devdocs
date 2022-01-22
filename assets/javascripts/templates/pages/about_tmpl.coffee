@@ -84,7 +84,7 @@ app.templates.aboutPage = -> """
 credits = [
   [
     'Angular',
-    '2010-2021 Google, Inc.',
+    '2010-2022 Google, Inc.',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
