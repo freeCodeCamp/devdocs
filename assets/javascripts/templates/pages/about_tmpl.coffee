@@ -919,7 +919,7 @@ credits = [
     'https://github.com/pallets/werkzeug/blob/master/LICENSE.rst'
   ], [
     'Wordpress',
-    '2003-2021 WordPress Foundation',
+    '2003-2022 WordPress Foundation',
     'GPLv2+',
     'https://wordpress.org/about/license/'
   ], [
