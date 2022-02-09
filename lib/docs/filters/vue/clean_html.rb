@@ -6,7 +6,8 @@ module Docs
           return '<h1>Vite</h1>' if root_page?
           @doc = at_css('.content > div')
         else
-          @doc = at_css(version == '3' ? 'main' : '.content')
+          return '<h1>Vue.js</h1>' if root_page?
+          @doc = at_css(version == '3' ? 'main > div > div' : '.content')
         end
 
         at_css('h1').content = 'Vue.js' if root_page?
@@ -14,6 +15,7 @@ module Docs
 
         css('.demo', '.guide-links', '.footer', '#ad').remove
         css('.header-anchor', '.page-edit', '.page-nav').remove
+        css('.next-steps').remove
 
         css('.custom-block-title').each do |node|
           node.name = 'strong'
