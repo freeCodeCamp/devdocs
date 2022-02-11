@@ -75,12 +75,12 @@ module Docs
       # include the companion object.
       def package_name
         name = package_drop_last(slug_parts)
-        name.empty? ? '_root_' : name
+        name.empty? ? 'scala' : name
       end
 
       def parent_package
         parent = package_drop_last(package_name.split('.'))
-        parent.empty? ? '_root_' : parent
+        parent.empty? ? 'scala' : parent
       end
 
       def package_drop_last(parts)
