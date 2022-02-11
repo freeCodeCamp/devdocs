@@ -1,6 +1,6 @@
 module Docs
   class Scala
-    class EntriesFilter < Docs::EntriesFilter
+    class EntriesV2Filter < Docs::EntriesFilter
       REPLACEMENTS = {
         '$eq' => '=',
         '$colon' => ':',

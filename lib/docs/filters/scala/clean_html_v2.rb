@@ -1,6 +1,6 @@
 module Docs
   class Scala
-    class CleanHtmlFilter < Filter
+    class CleanHtmlV2Filter < Filter
       def call
         @doc = at_css('#content')
 

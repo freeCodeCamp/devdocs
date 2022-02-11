@@ -20,7 +20,7 @@ module Docs
       self.base_url = 'https://www.scala-lang.org/api/2.13.0/'
       self.root_path = 'index.html'
 
-      html_filters.push 'scala/entries', 'scala/clean_html'
+      html_filters.push 'scala/entries_v2', 'scala/clean_html_v2'
     end
 
     # https://downloads.lightbend.com/scala/2.13.0/scala-docs-2.13.0.zip
@@ -30,7 +30,7 @@ module Docs
       self.base_url = 'https://www.scala-lang.org/api/2.13.0/scala-reflect/'
       self.root_path = 'index.html'
 
-      html_filters.push 'scala/entries', 'scala/clean_html'
+      html_filters.push 'scala/entries_v2', 'scala/clean_html_v2'
     end
 
     # https://downloads.lightbend.com/scala/2.12.9/scala-docs-2.12.9.zip
@@ -40,7 +40,7 @@ module Docs
       self.base_url = 'https://www.scala-lang.org/api/2.12.9/'
       self.root_path = 'index.html'
 
-      html_filters.push 'scala/entries', 'scala/clean_html'
+      html_filters.push 'scala/entries_v2', 'scala/clean_html_v2'
     end
 
     # https://downloads.lightbend.com/scala/2.12.9/scala-docs-2.12.9.zip
@@ -50,7 +50,7 @@ module Docs
       self.base_url = 'https://www.scala-lang.org/api/2.12.9/scala-reflect/'
       self.root_path = 'index.html'
 
-      html_filters.push 'scala/entries', 'scala/clean_html'
+      html_filters.push 'scala/entries_v2', 'scala/clean_html_v2'
     end
 
     def get_latest_version(opts)
