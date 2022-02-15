@@ -38,7 +38,8 @@ module Docs
       end
 
       def include_default_entry?
-        true
+        # Ignore package pages
+        at_css('.cover-header .micon.pa').nil?
       end
 
       def additional_entries
