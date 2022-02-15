@@ -8,7 +8,6 @@ module Docs
       code: 'https://github.com/vitejs/vite'
     }
 
-    options[:container] = 'main'
     options[:root_title] = 'Vite'
 
     options[:attribution] = <<-HTML
@@ -16,10 +15,10 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    self.release = '2.7.5'
+    self.release = '2.8.3'
     self.base_url = 'https://vitejs.dev/'
     self.initial_paths = %w(guide/)
-    html_filters.push 'vue/entries_v3', 'vue/clean_html'
+    html_filters.push 'vite/entries', 'vite/clean_html'
 
     def get_latest_version(opts)
       get_npm_version('vite', opts)
