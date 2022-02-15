@@ -2,10 +2,15 @@
   @extend %simple;
   
   .deprecated { @extend %label-red; }
+
+  .attributes dl,
+  .attributes pre { 
+    margin: 0;
+  }
   
   .related-types {
     @extend %pre;
-    margin-top: 0;
+    margin: 0;
     white-space: normal;
   }
 

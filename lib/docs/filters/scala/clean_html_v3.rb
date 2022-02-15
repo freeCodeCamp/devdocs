@@ -102,7 +102,6 @@ module Docs
         end
 
         attributes = at_css('.attributes')
-        attributes.add_previous_sibling('<h3>Metadata</h3>')
 
         tabs_names = css('.tabs.single .names .tab')
         tabs_contents = css('.tabs.single .contents .tab')
@@ -112,7 +111,11 @@ module Docs
           attributes.add_child("<dt>#{name.content}</dt>")
           attributes.add_child("<dd>#{contents.inner_html.strip}</dd>")
         end
-        at_css('.tabs').remove
+
+        convert_dl_to_table(attributes)
+
+        tabs = at_css('.tabs')
+        tabs.remove unless tabs.nil? || tabs.parent['class'] == 'membersList'
       end
 
       def format_members
@@ -138,7 +141,7 @@ module Docs
 
           id = element['id']
           element.remove_attribute('id')
-          header['id'] = id
+          header['id'] = id unless id.nil?
 
           annotations = element.at_css('.annotations')
           annotations.name = 'small'
@@ -158,6 +161,10 @@ module Docs
             dd.remove
           end
 
+          # Format attributes as a table
+          dl = element.at_css('.attributes')
+          convert_dl_to_table(dl) unless dl.nil?
+
           # Remove the unnecessary wrapper element
           element.replace(element.inner_html)
         end
@@ -174,6 +181,26 @@ module Docs
           pre['data-language'] = 'scala'
           pre.inner_html = code.inner_html
         end
+      end
+
+      def convert_dl_to_table(dl)
+        table = Nokogiri::XML::Node.new('table', doc)
+        table['class'] = 'attributes'
+
+        dl.css('> dt').each do |dt|
+          dd = dt.next_element
+          has_dd = dd.name == 'dd' rescue false
+
+          tr = Nokogiri::XML::Node.new('tr', doc)
+          colspan = has_dd ? '' : ' colspan="2"' # handle <dt> without following <dt>
+          tr.add_child("<th#{colspan}>#{dt.inner_html.sub(/:$/, '')}</th>")
+
+          tr.add_child("<td>#{dd.inner_html}</td>") if has_dd
+
+          table.add_child(tr)
+        end
+
+        dl.replace(table)
       end
 
     end
