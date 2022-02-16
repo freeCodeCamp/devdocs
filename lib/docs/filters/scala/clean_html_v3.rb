@@ -11,13 +11,7 @@ module Docs
         format_top_links
         format_metadata
         format_members
-
-        # Simplify the HTML structure
-        @doc = at_css('#content > div')
-        css('.documentableList > *').each do |element|
-          element.parent = doc
-        end
-        at_css('.membersList').remove
+        simplify_html
 
         doc
       end
@@ -91,6 +85,10 @@ module Docs
       def format_metadata
         # Metadata (attributes)
         css('.tabs.single .monospace').each do |node|
+          node.css('> div').each do |div|
+            div['class'] = 'member'
+          end
+
           node['class'] = 'related-types'
 
           if node.children.count > 15
@@ -180,6 +178,30 @@ module Docs
           pre = code.parent
           pre['data-language'] = 'scala'
           pre.inner_html = code.inner_html
+        end
+      end
+
+      def simplify_html
+        @doc = at_css('#content > div')
+
+        css('.documentableList > *').each do |element|
+          element.parent = doc
+        end
+        at_css('.membersList').remove
+
+        # Remove useless classes
+        css('.header, .groupHeader, .cover, .documentableName').each do |element|
+          element.remove_attribute('class')
+        end
+
+        # Remove useless attributes
+        css('[t]').each do |element|
+          element.remove_attribute('t')
+        end
+
+        # Remove useless wrapper elements
+        css('.docs, .doc, .memberDocumentation, span, div:not([class])').each do |element|
+          element.replace(element.children)
         end
       end
 
