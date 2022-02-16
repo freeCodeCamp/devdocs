@@ -8,6 +8,7 @@ module Docs
         css('.documentableFilter, .documentableAnchor, .documentableBrief').remove
 
         format_title
+        format_signature
         format_top_links
         format_metadata
         format_members
@@ -16,41 +17,49 @@ module Docs
         doc
       end
 
+      private
+
+      # Formats the title of the page
       def format_title
-        # Add the kind of page to the title
         cover_header = at_css('.cover-header')
-        unless cover_header.nil?
-          icon = cover_header.at_css('.micon')
-          types = {
-            cl: 'Class',
-            ob: 'Object',
-            tr: 'Trait',
-            en: 'Enum',
-            ty: 'Type',
-            pa: 'Package',
-          }
-          type_id = cover_header.at_css('.micon')['class']
-          type_id.remove!('micon ')
-          type_id.remove!('-wc')
-          type = types[type_id.to_sym]
-          name = CGI.escapeHTML cover_header.at_css('h1').text
+        return if cover_header.nil?
 
-          package = at_css('.breadcrumbs a:nth-of-type(3)').text
-          package = package + '.' unless name.empty? || package.empty?
+        # Add the kind of page to the title
+        icon = cover_header.at_css('.micon')
+        types = {
+          cl: 'Class',
+          ob: 'Object',
+          tr: 'Trait',
+          en: 'Enum',
+          ty: 'Type',
+          pa: 'Package',
+        }
+        type_id = cover_header.at_css('.micon')['class']
+        type_id.remove!('micon ')
+        type_id.remove!('-wc')
+        type = types[type_id.to_sym]
+        name = CGI.escapeHTML cover_header.at_css('h1').text
 
-          title = root_page? ? 'Package root' : "#{type} #{package}#{name}".strip
-          cover_header.replace "<h1>#{title}</h1>"
-        end
+        # Add the package name
+        package = at_css('.breadcrumbs a:nth-of-type(3)').text
+        package = package + '.' unless name.empty? || package.empty?
 
-        # Signature
+        # Replace the title
+        title = root_page? ? 'Package root' : "#{type} #{package}#{name}".strip
+        cover_header.replace "<h1>#{title}</h1>"
+      end
+
+      # Formats the signature block at the top of the page
+      def format_signature
         signature = at_css('.signature')
         signature_annotations = signature.at_css('.annotations')
         signature_annotations.name = 'small' unless signature_annotations.nil?
         signature.replace "<h2 id=\"signature\">#{signature.inner_html}</h2>"
       end
 
+      # Formats the top links (companion page, source code)
       def format_top_links
-        # Companion page
+        # Companion page (e.g. List ↔ List$)
         links = []
         at_css('.attributes').css('dt').each do |dt|
           next if dt.content.strip != 'Companion:'
@@ -82,8 +91,9 @@ module Docs
         title.add_next_sibling("<div class=\"links\">#{links.join(' • ')}</div>")
       end
 
+      # Metadata about the whole file (e.g. supertypes)
       def format_metadata
-        # Metadata (attributes)
+        # Format the values
         css('.tabs.single .monospace').each do |node|
           node.css('> div').each do |div|
             div['class'] = 'member'
@@ -91,7 +101,7 @@ module Docs
 
           node['class'] = 'related-types'
 
-          if node.children.count > 15
+          if node.children.count > 15 # Hide too large lists
             node.replace "<details>
               <summary>#{node.children.count} types</summary>
               #{node.to_html}
@@ -101,6 +111,7 @@ module Docs
 
         attributes = at_css('.attributes')
 
+        # Change the HTML structure
         tabs_names = css('.tabs.single .names .tab')
         tabs_contents = css('.tabs.single .contents .tab')
         tabs_names.zip(tabs_contents).each do |name, contents|
@@ -116,8 +127,9 @@ module Docs
         tabs.remove unless tabs.nil? || tabs.parent['class'] == 'membersList'
       end
 
+      # Format the members (methods, values…)
       def format_members
-        # Headings
+        # Section headings
         css('.cover h2').each do |node|
           node.name = 'h3'
         end
@@ -126,13 +138,14 @@ module Docs
           '.membersList h3',
 
           # Custom group headers for which Scaladoc generates invalid HTML
+          # (<h3><p>…</p></h3>)
           '.documentableList > h3:empty + p'
         ).each do |node|
           node.name = 'h2'
           node.content = node.content
         end
 
-        # Methods
+        # Individual members
         css('.documentableElement').each do |element|
           header = element.at_css('.header')
           header.name = 'h3'
@@ -181,9 +194,12 @@ module Docs
         end
       end
 
+      # Simplify the HTML structure by removing useless elements
       def simplify_html
+        # Remove unneeded parts of the document
         @doc = at_css('#content > div')
 
+        # Remove the useless elements around members
         css('.documentableList > *').each do |element|
           element.parent = doc
         end
