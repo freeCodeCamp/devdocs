@@ -11,7 +11,14 @@ module Docs
         format_signature
         format_top_links
         format_metadata
-        format_members
+
+        # Remove the redundant long descriptions on the main page
+        if slug == 'index'
+          css('.contents').remove
+        else
+          format_members
+        end
+        
         simplify_html
 
         doc
