@@ -234,7 +234,7 @@ credits = [
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
     'Deno',
-    '2018–2021 the Deno authors',
+    '2018–2022 the Deno authors',
     'MIT',
     'https://raw.githubusercontent.com/denoland/manual/main/LICENSE'
   ], [
