@@ -25,9 +25,21 @@ module Docs
   class Tailwindcss
     class CleanHtmlFilter < Filter
       def call
-        css('div.sticky.top-0').remove
-        css('.sr-only').remove
-        css('#sidebar').remove
+        # Remove main page headers (top level sticky)
+        css('#__next > .sticky').remove
+        # And anything absolutely positioned (fancy floating navigation elements we don't care about)
+        css('#__next .absolute').remove
+        # Remove the left-navigation we scraped
+        css('nav').remove
+
+        # Remove the duplicate category name at the top of the page - redundant
+        at_css('header#header > div:first-child > p:first-child').remove
+
+        # Remove the right navigation sidebar
+        at_css('header#header').parent.css('> div:has(h5:contains("On this page"))').remove
+
+        # Remove footer + prev/next navigation
+        at_css('footer').remove
 
         css('#nav ul li').each do |node|
           link = node.css("a").attr('href').to_s
@@ -41,14 +53,19 @@ module Docs
           node.remove
         end
 
-        # Remove advert
-        css('#__next > div.py-2.bg-gradient-to-r.from-indigo-600.to-light-blue-500.overflow-hidden').each do |node|
-          node.remove
+        # Remove buttons to expand lists - those are already expanded and the button is useless
+        css('div > button:contains("Show all classes")').each do |node|
+          node.parent.remove
         end
 
-        # Remove footer prev/next navigation
-        css('#content-wrapper > div > div > div.flex.leading-6.font-medium').each do |node|
-          node.remove
+        # Remove class examples - not part of devdocs styleguide? (similar to bootstrap)
+        # Refer to https://github.com/freeCodeCamp/devdocs/pull/1534#pullrequestreview-649818936
+        css('.not-prose').each do |node|
+          if node.parent.children.length == 1
+            node.parent.remove
+          else
+            node.remove
+          end
         end
 
         # Properly format code examples
