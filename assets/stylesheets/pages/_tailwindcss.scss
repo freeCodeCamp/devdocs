@@ -1,0 +1,48 @@
+._tailwindcss {
+  // Styling for customizing-colors page - color swatches (based on original tailwind display design)
+  .colors {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    // Text offset
+    margin-bottom: 1rem;
+  }
+
+  // Color swatch title
+  .color > div:first-child {
+    font-weight: bold;
+  }
+
+  .color-swatch-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .color-swatch-container {
+    display: inline-block;
+  }
+
+  // Tiny box with the color set as background
+  .color-swatch {
+    width: 120px;
+    height: 40px;
+    border-radius: 4px;
+  }
+
+  .color-tone-information {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  // Styling for large quick-reference lookup tables
+  .long-quick-reference {
+    max-height: 40vh;
+    width: fit-content;
+    overflow-y: auto;
+    padding: .3rem;
+    border-top: 1px solid var(--textColor);
+    border-bottom: 1px solid var(--textColor);
+  }
+}
