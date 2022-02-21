@@ -11,15 +11,26 @@ module Docs
 
     # options[:container] = 'body';
 
-    options[:skip_patterns] = [
+    # Fix redirects from older tailwind 2 docs
+    options[:fix_urls] = lambda do |url|
+      if url.include? "installation/"
+        break "/docs/installation"
+      end
 
-        # removed because it focuses on how to use Tailwind with some other niche
-        # technologies and to also align with DevDoc's Vision, which is" to:"
-        # "indexing only the minimum useful to most developers" that use Tailwind
-        %r{\/guides\/.*},
+      if url.end_with? "/breakpoints"
+        break "/docs/screens#{/#.*$/.match(url)}"
+      end
+      if url.end_with? "/adding-base-styles"
+        break "/docs/adding-custom-styles#adding-base-styles"
+      end
+      if url.end_with? "/ring-opacity"
+        break "/docs/ring-color#changing-the-opacity"
+      end
 
-        # removed so it is easy to "get_type" (see tailwindcss/entries.rb line #15)
-        %r{\/colors\z}
+      if url.match(/\/colors#?/)
+        break "/docs/customizing-colors#{/#.*$/.match(url)}"
+      end
+    end
 
     options[:skip_patterns] = [
       # Skip setup instructions
