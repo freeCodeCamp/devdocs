@@ -203,6 +203,8 @@ module Docs
       [0, 1].each do |i|
         break if i >= scraper_parts.length or i >= latest_parts.length
         return 'Outdated major version' if i == 0 and latest_parts[i] > scraper_parts[i]
+        return 'Outdated major version' if i == 1 and latest_parts[i] > scraper_parts[i] and latest_parts[0] == 0 and scraper_parts[0] == 0
+        return 'Outdated major version' if i == 1 and latest_parts[i] > scraper_parts[i] and latest_parts[0] == 1 and scraper_parts[0] == 1
         return 'Outdated minor version' if i == 1 and latest_parts[i] > scraper_parts[i]
         return 'Up-to-date' if latest_parts[i] < scraper_parts[i]
       end
