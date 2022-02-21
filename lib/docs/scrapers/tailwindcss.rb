@@ -49,8 +49,7 @@ module Docs
 
     #Obtainable from https://github.com/tailwindlabs/tailwindcss/blob/master/LICENSE
     options[:attribution] = <<-HTML
-      &copy; Adam Wathan, Jonathan Reinink
-      Licensed under the MIT License.
+      &copy; 2022 Tailwind Labs Inc.
     HTML
 
     def get_latest_version(opts)

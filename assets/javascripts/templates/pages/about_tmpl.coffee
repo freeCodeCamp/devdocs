@@ -844,7 +844,7 @@ credits = [
     'https://symfony.com/doc/current/contributing/code/license.html'
   ], [
     'TailwindCSS',
-    'Adam Wathan, Jonathan Reinink',
+    '2022 Tailwind Labs, Inc.',
     'MIT',
     'https://raw.githubusercontent.com/tailwindlabs/tailwindcss/master/LICENSE'
   ], [
