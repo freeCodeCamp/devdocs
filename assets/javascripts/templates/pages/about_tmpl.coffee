@@ -794,9 +794,9 @@ credits = [
     'https://raw.githubusercontent.com/sass/sass/stable/MIT-LICENSE'
   ], [
     'Scala',
-    '2002-2019 EPFL, with contributions from Lightbend',
+    '2002-2022 EPFL, with contributions from Lightbend',
     'Apache',
-    'https://raw.githubusercontent.com/scala/scala-lang/master/license.md'
+    'https://www.scala-lang.org/license/'
   ], [
     'scikit-image',
     '2019 the scikit-image team',

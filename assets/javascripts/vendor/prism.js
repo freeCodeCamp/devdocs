@@ -1,5 +1,5 @@
-/* PrismJS 1.26.0
-https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+bash+c+cpp+cmake+coffeescript+crystal+d+dart+diff+django+elixir+erlang+go+groovy+java+json+julia+kotlin+latex+lua+markup-templating+matlab+nginx+nim+ocaml+perl+php+python+qml+r+jsx+ruby+rust+scss+shell-session+sql+typescript+yaml+zig */
+/* PrismJS 1.27.0
+https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+bash+c+cpp+cmake+coffeescript+crystal+d+dart+diff+django+elixir+erlang+go+groovy+java+json+julia+kotlin+latex+lua+markup-templating+matlab+nginx+nim+ocaml+perl+php+python+qml+r+jsx+ruby+rust+scss+scala+shell-session+sql+typescript+yaml+zig */
 /// <reference lib="WebWorker"/>
 
 var _self = (typeof window !== 'undefined')
@@ -4659,6 +4659,56 @@ Prism.languages.insertBefore('scss', 'function', {
 });
 
 Prism.languages.scss['atrule'].inside.rest = Prism.languages.scss;
+
+Prism.languages.scala = Prism.languages.extend('java', {
+	'triple-quoted-string': {
+		pattern: /"""[\s\S]*?"""/,
+		greedy: true,
+		alias: 'string'
+	},
+	'string': {
+		pattern: /("|')(?:\\.|(?!\1)[^\\\r\n])*\1/,
+		greedy: true
+	},
+	'keyword': /<-|=>|\b(?:abstract|case|catch|class|def|do|else|extends|final|finally|for|forSome|if|implicit|import|lazy|match|new|null|object|override|package|private|protected|return|sealed|self|super|this|throw|trait|try|type|val|var|while|with|yield)\b/,
+	'number': /\b0x(?:[\da-f]*\.)?[\da-f]+|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e\d+)?[dfl]?/i,
+	'builtin': /\b(?:Any|AnyRef|AnyVal|Boolean|Byte|Char|Double|Float|Int|Long|Nothing|Short|String|Unit)\b/,
+	'symbol': /'[^\d\s\\]\w*/
+});
+
+Prism.languages.insertBefore('scala', 'triple-quoted-string', {
+	'string-interpolation': {
+		pattern: /\b[a-z]\w*(?:"""(?:[^$]|\$(?:[^{]|\{(?:[^{}]|\{[^{}]*\})*\}))*?"""|"(?:[^$"\r\n]|\$(?:[^{]|\{(?:[^{}]|\{[^{}]*\})*\}))*")/i,
+		greedy: true,
+		inside: {
+			'id': {
+				pattern: /^\w+/,
+				greedy: true,
+				alias: 'function'
+			},
+			'escape': {
+				pattern: /\\\$"|\$[$"]/,
+				greedy: true,
+				alias: 'symbol'
+			},
+			'interpolation': {
+				pattern: /\$(?:\w+|\{(?:[^{}]|\{[^{}]*\})*\})/,
+				greedy: true,
+				inside: {
+					'punctuation': /^\$\{?|\}$/,
+					'expression': {
+						pattern: /[\s\S]+/,
+						inside: Prism.languages.scala
+					}
+				}
+			},
+			'string': /[\s\S]+/
+		}
+	}
+});
+
+delete Prism.languages.scala['class-name'];
+delete Prism.languages.scala['function'];
 
 (function (Prism) {
 
