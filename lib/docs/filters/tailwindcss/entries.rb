@@ -2,16 +2,22 @@ module Docs
   class Tailwindcss
     class EntriesFilter < Docs::EntriesFilter
       def get_type
-        # /customizing-colors rediects to /colors, hence making css
-        # selector below not to match the href
-        if result[:path] == 'customizing-colors'
-          selector = "#sidebar a[href='#{result[:path]}']"
-        else
-          selector = "#sidebar a[href='#{result[:path]}']"
-        end
+        # We are only interested in children list items
+        selector = "nav li li a[href='#{result[:path]}']"
 
-        check = at_css(selector).parent.parent.parent.css('h5').inner_text
-        check
+        anchor = at_css(selector)
+        category_list = anchor.ancestors('li')[1]
+        title = category_list.css('h5')
+
+        return title.inner_text
+      end
+
+      def get_name
+        # We are only interested in children list items
+        selector = "nav li li a[href='#{result[:path]}']"
+        item = at_css(selector)
+
+        return item.inner_text
       end
     end
   end
