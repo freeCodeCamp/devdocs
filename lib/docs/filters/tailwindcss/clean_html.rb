@@ -9,6 +9,8 @@ module Docs
         # Remove the left-navigation we scraped
         css('nav').remove
 
+        css('svg').remove if root_page?
+
         # Remove the duplicate category name at the top of the page - redundant
         at_css('header#header > div:first-child > p:first-child').remove
 
