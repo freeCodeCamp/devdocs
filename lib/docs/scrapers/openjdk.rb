@@ -133,10 +133,10 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc("https://jdk.java.net/archive/", opts)
-      puts doc
       version = doc.at_css('#downloads > table > tr > th').content
       version.gsub!(/\(.*\)/, '')
       version.gsub!(/[a-zA-z]/, '')
+      version
     end
   end
 end
