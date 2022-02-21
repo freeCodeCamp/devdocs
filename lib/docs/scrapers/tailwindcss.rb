@@ -1,12 +1,4 @@
 module Docs
-  class NoopFilter < Filter
-    def call
-      return html
-    end
-  end
-end
-
-module Docs
   class Tailwindcss < UrlScraper
     self.name = 'Tailwind CSS'
     self.type = 'tailwindcss'
@@ -18,7 +10,7 @@ module Docs
     html_filters.push 'tailwindcss/entries', 'tailwindcss/clean_html'
 
     # Disable the clean text filter which removes empty nodes - we'll do it ourselves more selectively
-    text_filters.replace("clean_text", "noop")
+    text_filters.replace("clean_text", "tailwindcss/noop")
 
     # Fix redirects from older tailwind 2 docs
     options[:fix_urls] = lambda do |url|
