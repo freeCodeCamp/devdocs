@@ -6,6 +6,10 @@ module Docs
     self.base_url = 'https://tailwindcss.com/docs'
     self.root_path = '/'
     self.release = '2.0.3'
+    self.links = {
+      home: 'tps://tailwindcss.com/',
+      code: 'https://github.com/tailwindlabs/tailwindcss'
+    }
 
     html_filters.push 'tailwindcss/entries', 'tailwindcss/clean_html'
 
