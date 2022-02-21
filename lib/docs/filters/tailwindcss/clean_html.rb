@@ -1,3 +1,26 @@
+# Removes all classes not allowlisted in the below semantic_classes array - such as tailwinds utility classes
+def cleanup_tailwind_classes(node)
+  class_name = node.attr("class")
+
+  if class_name == nil
+    return node.children.each { |child| cleanup_tailwind_classes(child) }
+  end
+
+  semantic_classes = ["code", "color-swatch", "color-swatch-container", "color-tone-information", "color-swatch-group", "color", "colors", "long-quick-reference"]
+
+  classes = class_name.split.select do |klas|
+    semantic_classes.include? klas
+  end
+
+  if classes.length === 0
+    node.delete("class")
+  else
+    node.set_attribute("class", classes.join(" "))
+  end
+
+  node.children.each { |child| cleanup_tailwind_classes(child) }
+end
+
 module Docs
   class Tailwindcss
     class CleanHtmlFilter < Filter
@@ -52,11 +75,12 @@ module Docs
           node.parent.parent['class'] = node.parent.parent['class'].gsub(/bg-.*?\b/, ' ');
         end
 
+        @doc.traverse { |node| cleanup_tailwind_classes(node) }
+
         #remove weird <hr> (https://github.com/damms005/devdocs/commit/8c9fbd859b71a2525b94a35ea994393ce2b6fedb#commitcomment-50091018)
         css('hr').remove
 
         doc
-
       end
     end
   end
