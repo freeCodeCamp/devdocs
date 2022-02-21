@@ -1,26 +1,3 @@
-# Removes all classes not allowlisted in the below semantic_classes array - such as tailwinds utility classes
-def cleanup_tailwind_classes(node)
-  class_name = node.attr("class")
-
-  if class_name == nil
-    return node.children.each { |child| cleanup_tailwind_classes(child) }
-  end
-
-  semantic_classes = ["code", "color-swatch", "color-swatch-container", "color-tone-information", "color-swatch-group", "color", "colors", "long-quick-reference"]
-
-  classes = class_name.split.select do |klas|
-    semantic_classes.include? klas
-  end
-
-  if classes.length === 0
-    node.delete("class")
-  else
-    node.set_attribute("class", classes.join(" "))
-  end
-
-  node.children.each { |child| cleanup_tailwind_classes(child) }
-end
-
 module Docs
   class Tailwindcss
     class CleanHtmlFilter < Filter
@@ -106,6 +83,29 @@ module Docs
         css('hr').remove
 
         doc
+      end
+
+      # Removes all classes not allowlisted in the below semantic_classes array - such as tailwinds utility classes
+      def cleanup_tailwind_classes(node)
+        class_name = node.attr("class")
+
+        if class_name == nil
+          return node.children.each { |child| cleanup_tailwind_classes(child) }
+        end
+
+        semantic_classes = ["code", "color-swatch", "color-swatch-container", "color-tone-information", "color-swatch-group", "color", "colors", "long-quick-reference"]
+
+        classes = class_name.split.select do |klas|
+          semantic_classes.include? klas
+        end
+
+        if classes.length === 0
+          node.delete("class")
+        else
+          node.set_attribute("class", classes.join(" "))
+        end
+
+        node.children.each { |child| cleanup_tailwind_classes(child) }
       end
     end
   end
