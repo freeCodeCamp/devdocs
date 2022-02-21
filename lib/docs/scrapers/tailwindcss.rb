@@ -58,8 +58,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://tailwindcss.com/docs/installation', opts)
-      doc.at_css('select option[value=v2]').inner_text[1..]
+      get_latest_github_release('tailwindlabs', 'tailwindcss', opts)
     end
   end
 end
