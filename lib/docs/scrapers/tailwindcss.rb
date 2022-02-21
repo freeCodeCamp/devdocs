@@ -21,7 +21,15 @@ module Docs
         # removed so it is easy to "get_type" (see tailwindcss/entries.rb line #15)
         %r{\/colors\z}
 
-      ]
+    options[:skip_patterns] = [
+      # Skip setup instructions
+      /\/browser-support$/,
+      /\/editor-setup$/,
+      /\/installation$/,
+      /\/optimizing-for-production$/,
+      /\/upgrade-guide/,
+      /\/using-with-preprocessors/
+    ]
 
     #Obtainable from https://github.com/tailwindlabs/tailwindcss/blob/master/LICENSE
     options[:attribution] = <<-HTML
