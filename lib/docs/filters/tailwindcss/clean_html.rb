@@ -41,16 +41,42 @@ module Docs
         # Remove footer + prev/next navigation
         at_css('footer').remove
 
-        css('#nav ul li').each do |node|
-          link = node.css("a").attr('href').to_s
-          if link.include? "https://"
-            node.remove()
+        # Handle long lists of class reference that otherwise span several scrolled pages
+        if class_reference = at_css('#class-reference')
+          reference_container = class_reference.parent
+          classes_container = reference_container.children.reject{ |child| child == class_reference }.first
+
+          rows = classes_container.css("tr")
+
+          if rows.length > 10
+            classes_container.set_attribute("class", "long-quick-reference")
           end
         end
 
-        # Remove right sidebar
-        css('#content-wrapper > div > div.hidden.xl\:text-sm.xl\:block.flex-none.w-64.pl-8.mr-8 > div > div').each do |node|
-          node.remove
+        # Remove border color preview column as it isn't displayed anyway
+        if result[:path] == "border-color" and class_reference = at_css('#class-reference')
+          class_reference.parent.css("thead th:nth-child(3)").remove
+          class_reference.parent.css("tbody td:nth-child(3)").remove
+        end
+
+        if result[:path] == "customizing-colors"
+          # It's nice to be able to quickly find out what a color looks like
+          css('div[style^="background-color:"]').each do |node|
+            node.set_attribute("class", "color-swatch")
+
+            swatch_container = node.parent
+            swatch_container.set_attribute("class", "color-swatch-container")
+            swatch_container.children.reject{ |child| child == node }.first.set_attribute("class", "color-tone-information")
+
+            swatch_group = swatch_container.parent
+            swatch_group.set_attribute("class", "color-swatch-group")
+
+            color = swatch_group.parent
+            color.set_attribute("class", "color")
+
+            color_list = color.parent.parent
+            color_list.set_attribute("class", "colors")
+          end
         end
 
         # Remove buttons to expand lists - those are already expanded and the button is useless
