@@ -95,22 +95,9 @@ module Docs
         end
 
         # Properly format code examples
-        css('code.language-html').each do |node|
-          node.name = 'pre';
-          node['data-language'] = 'html'
-          node.parent.name = 'div';
-        end
-
-        css('code.language-diff').each do |node|
-          node.name = 'pre';
-          node['data-language'] = 'diff'
-          node.parent.name = 'div';
-        end
-
-        css('code.language-js').each do |node|
-          node.name = 'pre';
-          node['data-language'] = 'js'
-          node.parent.name = 'div';
+        css('pre > code:first-child').each do |node|
+          node.parent['data-language'] = node['class'][/language-(\w+)/, 1] if node['class'] and node['class'][/language-(\w+)/]
+          node.parent.content = node.parent.content
         end
 
         @doc.traverse { |node| cleanup_tailwind_classes(node) }
