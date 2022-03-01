@@ -359,7 +359,7 @@ credits = [
     'https://raw.githubusercontent.com/graphite-project/graphite-web/master/LICENSE'
   ], [
     'Groovy',
-    '2003-2020 The Apache Software Foundation',
+    '2003-2022 The Apache Software Foundation',
     'Apache',
     'https://github.com/apache/groovy-website/blob/asf-site/LICENSE'
   ], [
