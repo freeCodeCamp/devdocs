@@ -1,0 +1,267 @@
+._eigen3 {
+    /* General */
+    a.el {
+        font-weight: bold;
+    }
+    a {
+        color: #3D578C;
+        font-weight: normal;
+        text-decoration: none;
+    }
+    /* end General */
+
+    /* Title */
+    .title {
+        font: 400 14px/28px ,sans-serif;
+        font-size: 150%;
+        font-weight: bold;
+        margin: 10px 2px;
+    }
+
+    div.ingroups {
+        font-size: 8pt;
+        text-align: left;
+    }
+    /* end Title */
+
+    /* Fragments */
+    div.fragment {
+        display: table;
+        padding: 4px;
+        border: 1px solid #C4CFE5;
+    }
+    .fragment {
+        text-align: left;
+        direction: ltr;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    div.line {
+        font-family: var(--monoFont);
+        font-size: 13px;
+        min-height: 13px;
+        line-height: 1.0;
+        text-wrap: unrestricted;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        // text-indent: -53px;
+        // padding-left: 53px;
+        padding-bottom: 0px;
+        margin: 0px;
+        -webkit-transition-property: background-color, box-shadow;
+        -webkit-transition-duration: 0.5s;
+        -moz-transition-property: background-color, box-shadow;
+        -moz-transition-duration: 0.5s;
+        -ms-transition-property: background-color, box-shadow;
+        -ms-transition-duration: 0.5s;
+        -o-transition-property: background-color, box-shadow;
+        -o-transition-duration: 0.5s;
+        transition-property: background-color, box-shadow;
+        transition-duration: 0.5s;
+    }
+
+    .fragment {
+        text-align: left;
+        direction: ltr;
+        overflow-x: auto; /*Fixed: fragment lines overlap floating elements*/
+        overflow-y: hidden;
+    }
+
+    div.line::after {
+        content: "\000A";
+        white-space: pre;
+    }
+
+    a.code, a.code:visited, a.line, a.line:visited {
+        color: #4665A2;
+    }
+
+    a.codeRef, a.codeRef:visited, a.lineRef, a.lineRef:visited {
+        color: #4665A2;
+    }
+
+    /* end Fragements */
+
+    /* Code Colorization */
+
+    span.keyword {
+        color: var(--prismKeyword)
+    }
+
+    span.keywordtype {
+        color: var(--prismKeyword)
+    }
+
+    span.keywordflow {
+        color: var(--prismKeyword)
+    }
+
+    span.comment {
+        color: var(--textColorLight);
+    }
+
+    span.preprocessor {
+        color: var(--prismKeyword);
+    }
+
+    span.stringliteral {
+        color: var(--prismText);
+    }
+
+    span.charliteral {
+        color: var(--prismText);
+    }
+
+    // span.vhdldigit {
+    //     color: #ff00ff
+    // }
+
+    // span.vhdlchar {
+    //     color: #000000
+    // }
+
+    // span.vhdlkeyword {
+    //     color: #700070
+    // }
+
+    // span.vhdllogic {
+    //     color: #ff0000
+    // }
+
+    // blockquote {
+    //     background-color: #F7F8FB;
+    //     border-left: 2px solid #9CAFD4;
+    //     margin: 0 24px 0 4px;
+    //     padding: 0 12px 0 16px;
+    // }
+
+    // blockquote.DocNodeRTL {
+    //     border-left: 0;
+    //     border-right: 2px solid #9CAFD4;
+    //     margin: 0 4px 0 24px;
+    //     padding: 0 16px 0 12px;
+    // }
+
+    /* end Code Colorization */
+
+    /* Member List */
+
+    .memtitle {
+        padding: 8px;
+        border-top: 1px solid; //#A8B8D9;
+        border-left: 1px solid; //#A8B8D9;
+        border-right: 1px solid; //#A8B8D9;
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        margin-bottom: -1px;
+        // background-image: url('nav_f.png');
+        // background-repeat: repeat-x;
+        // background-color: #E2E8F2;
+        line-height: 1.25;
+        font-weight: 300;
+        // float: left;
+      }
+
+    .mdescLeft, .mdescRight, .memItemLeft, .memItemRight, .memTemplItemLeft, .memTemplItemRight, .memTemplParams {
+        // background-color: #F9FAFC;
+        border: none;
+        margin: 4px;
+        padding: 1px 0 0 8px;
+      }
+
+    td.memTemplParams {
+        border: none;
+        white-space: nowrap;
+        font-size: 80%;
+    }
+
+    .memproto, dl.reflist dt {
+        border-top: 0.5px solid; //  #A8B8D9;
+        border-left: 1px solid; // #A8B8D9;
+        border-right: 1px solid; // #A8B8D9;
+        border-bottom: 1px solid; // #A8B8D9;
+        padding: 6px 0px 6px 0px;
+    }
+
+    .memtemplate {
+        font-size: 80%;
+        color: #4665A2;
+        font-weight: normal;
+        margin-left: 9px;
+    }
+
+    .memdoc {
+        padding-left: 6px;
+    }
+
+    table.mlabels {
+        padding: 0;
+        margin: 0;
+        border: none;
+    }
+
+    td.mlabels-left, td.mlabels-right {
+        border: none;
+        padding: 0;
+        vertical-align: bottom;
+    }
+
+    td.memSeparator {
+        line-height: 1px;
+        padding: 0px;
+    }
+    /* end Member List */
+
+    /* Member Name */
+    td.mlabels-right {
+        vertical-align: bottom;
+        padding: 0px;
+        white-space: nowrap;
+    }
+
+    table.memname {
+        border: none;
+        margin-left: 6px;
+        margin-top: 0.5em;
+    }
+
+    table.memname tr{
+        border: none;
+    }
+
+    table.memname th, table.memname td{
+        border: none;
+        padding: 1px;
+        vertical-align: bottom;
+    }
+
+    td.mlabels-left {
+        width: 100%;
+    }
+
+    .paramname {
+        // color: #602020;
+        white-space: nowrap;
+      }
+
+    span.mlabel {
+        background-color: #728DC1;
+        // border-top: 1px solid #5373B4;
+        // border-left: 1px solid #5373B4;
+        // border-right: 1px solid #C4CFE5;
+        // border-bottom: 1px solid #C4CFE5;
+        text-shadow: none;
+        color: white;
+        margin-right: 4px;
+        padding: 2px 3px;
+        border-radius: 3px;
+        font-size: 7pt;
+        white-space: nowrap;
+        vertical-align: middle;
+      }
+    /* end Member Name */
+}
