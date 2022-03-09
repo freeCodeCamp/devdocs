@@ -32,7 +32,7 @@ module Docs
 
     options[:attribution] = <<-HTML
       &copy; Eigen.<br>
-      Licensed under the MPL License.
+      Licensed under the MPL2 License.
     HTML
 
     # Skip source code since it doesn't provide any useful docs

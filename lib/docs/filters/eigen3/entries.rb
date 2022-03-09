@@ -99,7 +99,8 @@ module Docs
             if doxygen_type == "Typedefs"
               content = content.sub(/\s*=.*$/, "")
             end
-            if not (name.end_with?('module') || name.end_with?('typedefs'))
+            if not (name.end_with?('module') || name.end_with?('typedefs')) \
+              and not content.start_with?("Eigen::")
               content = name + "::" + content
             end
 
