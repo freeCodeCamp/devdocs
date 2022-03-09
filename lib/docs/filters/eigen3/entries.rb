@@ -7,34 +7,33 @@ module Docs
         title = get_title()
         downtitle = title.downcase
         name = get_name
+
+        # Remove Empty pages.
         if content.include?('TODO: write this dox page!') ||
             content.blank? || content.empty?
           return nil
         end
+
         if slug.include?('unsupported')
           return 'Unsupported'
-        elsif title.end_with?('module')
-          return name
-        elsif not group.nil? and not group.children[-1].nil? and group.children[-1].content != 'Reference'
-          if group.children[-1].content.end_with?('module') || group.content.include?('Reference')
-            return group.children[-1].content
-          else
-            return 'Chapter: ' + group.children[-1].content
-          end
         elsif slug.start_with?('Topic') || downtitle.end_with?("topics")
-          return 'Topics'
-        elsif downtitle.end_with?("class template reference") || downtitle.end_with?("class reference") || downtitle.end_with?("struct reference")
+            return 'Topics'
+        elsif downtitle.end_with?("class template reference") || downtitle.end_with?("class reference")
           return 'Classes'
+        elsif downtitle.end_with?("struct reference")
+          return 'Structs'
         elsif downtitle.end_with?("typedefs")
           return 'Typedefs'
         elsif downtitle.end_with?("namespace reference")
-          return 'Namespaces'
-        elsif name.match(/^Eigen::.*::/)
-          return name.gsub(/^Eigen::/, '').gsub(/::.*/, '')
-        elsif not group.nil? and not group.children[0].nil?
-          return 'Chapter: ' + group.children[0].content
-        # elsif slug.downcase.include?('tutorial')
-        #   return nil
+            return 'Namespaces'
+        elsif not group.nil? and group.content.include?('Reference') and (downtitle.end_with?("module") || downtitle.end_with?("modules"))
+            return "Modules"
+        elsif not group.nil?
+          if group.children.length > 0
+            return 'Chapter: ' + group.children[-1].content
+          else
+            return 'Chapter: ' + group.content
+          end
         else
           return 'Eigen'
         end
@@ -67,11 +66,13 @@ module Docs
           doxygen_type = table.at_css("tr.heading").text.strip
           case doxygen_type
           when "Functions"
-            type = name == 'Eigen' ? "Functions" : nil
+            type = "Functions"
           when "Public Member Functions", "Static Public Member Functions"
             type = nil
-          when "Classes", "Typedefs"
+          when "Classes"
             type = "Classes"
+          when "Typedefs"
+            type = "Typedefs"
           when "Variables"
             type = "Variables"
           else
@@ -88,11 +89,16 @@ module Docs
             end
 
             href = node.at_css("a").attr('href')
-            if href.index("#").nil? then
-              href += "#"
-            end
-            if slug.include?('unsupported') and not href.include?('unsupported')
+
+            if not href.include?("#") and (name == 'Eigen' || type = "Classes") then
               next
+            end
+            if slug.include?('unsupported')
+              if not (href.include?('unsupported') || href.include?('#'))
+                next
+              elsif href.include?('#') and not href.include?('unsupported')
+                href = 'unsupported/' + href
+              end
             end
 
             content = node.content
