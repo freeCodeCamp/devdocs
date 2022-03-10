@@ -41,5 +41,29 @@ module Docs
     # TODO: replace cppreference
     # options[:replace_urls] = { 'http://en.cppreference.com/w/cpp/' => 'cpp/' }
 
+    def parse(response) # Hook here because Nokogori removes whitespace from code fragments
+      last_idx = 0
+      # Process nested <div>s inside code fragment div.
+      while not (last_idx = response.body.index('<div class="fragment">', last_idx)).nil?
+        # enter code fragment <div>
+        level = 1
+        while not (last_idx = response.body.index(/<\/?div/, last_idx+1)).nil?
+          # skip nested divs inside.
+          if response.body[last_idx..last_idx+3] == '<div'
+            level += 1
+          else
+            level -= 1
+          end
+          break if level == 0 # exit code fragment
+        end
+        if not last_idx.nil? and response.body[last_idx..last_idx+5] == '</div>'
+          response.body[last_idx..last_idx+5] = '</pre>'
+        end
+      end
+      response.body.gsub! /[\r\n\s]*<div class="ttc"[^>]*>.*<\/div>[\r\n\s]*/, ""
+      response.body.gsub! /<div class="line">(.*?)<\/div>/m, "\\1"
+      response.body.gsub! '<div class="fragment">', '<pre class="fragment" data-language="cpp">'
+      super
+    end
   end
 end

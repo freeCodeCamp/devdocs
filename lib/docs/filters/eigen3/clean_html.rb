@@ -12,16 +12,6 @@ module Docs
         css('.top').remove
         css('.dynheader.closed').remove
         css('.permalink').remove
-
-        css("div.fragment").each do |node|
-          node.name = 'pre'
-          node['data-language'] = 'cpp'
-          node_content = ""
-          node.css('div').each do |inner_node|
-            node_content += inner_node.text + "\n"
-          end
-          node.content = node_content
-        end
         doc
       end
     end
