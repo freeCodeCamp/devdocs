@@ -1,12 +1,14 @@
 ._eigen3 {
     /* General */
-    a.el {
-        font-weight: bold;
-    }
     a {
-        color: #3D578C;
         font-weight: normal;
-        text-decoration: none;
+    }
+
+    code {
+        margin: 0 1px;
+        padding: 1px 4px 2px;
+        background: var(--labelBackground);
+        border-radius: 3px;
     }
     /* end General */
 
@@ -23,130 +25,6 @@
         text-align: left;
     }
     /* end Title */
-
-    /* Fragments */
-    div.fragment {
-        display: table;
-        padding: 4px;
-        border: 1px solid #C4CFE5;
-    }
-    .fragment {
-        text-align: left;
-        direction: ltr;
-        overflow-x: auto;
-        overflow-y: hidden;
-    }
-
-    div.line {
-        font-family: var(--monoFont);
-        font-size: 13px;
-        min-height: 13px;
-        line-height: 1.0;
-        text-wrap: unrestricted;
-        white-space: -moz-pre-wrap;
-        white-space: -pre-wrap;
-        white-space: -o-pre-wrap;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        // text-indent: -53px;
-        // padding-left: 53px;
-        padding-bottom: 0px;
-        margin: 0px;
-        -webkit-transition-property: background-color, box-shadow;
-        -webkit-transition-duration: 0.5s;
-        -moz-transition-property: background-color, box-shadow;
-        -moz-transition-duration: 0.5s;
-        -ms-transition-property: background-color, box-shadow;
-        -ms-transition-duration: 0.5s;
-        -o-transition-property: background-color, box-shadow;
-        -o-transition-duration: 0.5s;
-        transition-property: background-color, box-shadow;
-        transition-duration: 0.5s;
-    }
-
-    .fragment {
-        text-align: left;
-        direction: ltr;
-        overflow-x: auto; /*Fixed: fragment lines overlap floating elements*/
-        overflow-y: hidden;
-    }
-
-    div.line::after {
-        content: "\000A";
-        white-space: pre;
-    }
-
-    a.code, a.code:visited, a.line, a.line:visited {
-        color: #4665A2;
-    }
-
-    a.codeRef, a.codeRef:visited, a.lineRef, a.lineRef:visited {
-        color: #4665A2;
-    }
-
-    /* end Fragements */
-
-    /* Code Colorization */
-
-    span.keyword {
-        color: var(--prismKeyword)
-    }
-
-    span.keywordtype {
-        color: var(--prismKeyword)
-    }
-
-    span.keywordflow {
-        color: var(--prismKeyword)
-    }
-
-    span.comment {
-        color: var(--textColorLight);
-    }
-
-    span.preprocessor {
-        color: var(--prismKeyword);
-    }
-
-    span.stringliteral {
-        color: var(--prismText);
-    }
-
-    span.charliteral {
-        color: var(--prismText);
-    }
-
-    // span.vhdldigit {
-    //     color: #ff00ff
-    // }
-
-    // span.vhdlchar {
-    //     color: #000000
-    // }
-
-    // span.vhdlkeyword {
-    //     color: #700070
-    // }
-
-    // span.vhdllogic {
-    //     color: #ff0000
-    // }
-
-    // blockquote {
-    //     background-color: #F7F8FB;
-    //     border-left: 2px solid #9CAFD4;
-    //     margin: 0 24px 0 4px;
-    //     padding: 0 12px 0 16px;
-    // }
-
-    // blockquote.DocNodeRTL {
-    //     border-left: 0;
-    //     border-right: 2px solid #9CAFD4;
-    //     margin: 0 4px 0 24px;
-    //     padding: 0 16px 0 12px;
-    // }
-
-    /* end Code Colorization */
 
     /* Member List */
 
@@ -189,7 +67,7 @@
 
     .memtemplate {
         font-size: 80%;
-        color: #4665A2;
+        color: var(--prismKeyword);
         font-weight: normal;
         margin-left: 9px;
     }
@@ -202,6 +80,12 @@
         padding: 0;
         margin: 0;
         border: none;
+    }
+
+    .memproto a.el, .memberdecls a.el {
+        // font-weight: bold;
+        color: var(--prismKeyword);
+        text-decoration: none;
     }
 
     td.mlabels-left, td.mlabels-right {
@@ -244,24 +128,20 @@
     }
 
     .paramname {
-        // color: #602020;
         white-space: nowrap;
       }
 
     span.mlabel {
-        background-color: #728DC1;
-        // border-top: 1px solid #5373B4;
-        // border-left: 1px solid #5373B4;
-        // border-right: 1px solid #C4CFE5;
-        // border-bottom: 1px solid #C4CFE5;
-        text-shadow: none;
-        color: white;
+        // text-shadow: none;
+        font-family: monospace;
+        color: var(--prismKeyword);
         margin-right: 4px;
         padding: 2px 3px;
-        border-radius: 3px;
-        font-size: 7pt;
+        // border-radius: 3px;
+        font-size: 12px;
         white-space: nowrap;
         vertical-align: middle;
       }
     /* end Member Name */
+
 }

@@ -3,10 +3,15 @@ module Docs
     class CleanHtmlFilter < Filter
 
       def call
-        # TODO doc.inner_html = parse
-        # inner_html = String.new(doc.inner_html).gsub(/<div class="line">(.*?)<\/div>/m, "\\1\n").gsub(/<div class="fragment">(.*?)<\/div>/m, '<pre class="fragment">\1</pre>')
-        # doc.inner_html = inner_html
         @doc = at_css('#doc-content')
+
+        css("div.fragment").each do |node|
+          node.css("div.line").each do |node|
+            node.replace(node.inner_html + "\n")
+          end
+          node.replace("<pre data-language=\"cpp\" class=\"fragment\">" + node.inner_html + "</pre>")
+        end
+
         css('#MSearchSelectWindow').remove
         css('#MSearchResultsWindow').remove
         css('.directory .levels').remove
