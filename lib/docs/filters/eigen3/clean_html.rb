@@ -4,14 +4,6 @@ module Docs
 
       def call
         @doc = at_css('#doc-content')
-
-        css("div.fragment").each do |node|
-          node.css("div.line").each do |node|
-            node.replace(node.inner_html + "\n")
-          end
-          node.replace("<pre data-language=\"cpp\" class=\"fragment\">" + node.inner_html + "</pre>")
-        end
-
         css('#MSearchSelectWindow').remove
         css('#MSearchResultsWindow').remove
         css('.directory .levels').remove
@@ -20,6 +12,16 @@ module Docs
         css('.top').remove
         css('.dynheader.closed').remove
         css('.permalink').remove
+
+        css("div.fragment").each do |node|
+          node.name = 'pre'
+          node['data-language'] = 'cpp'
+          node_content = ""
+          node.css('div').each do |inner_node|
+            node_content += inner_node.text + "\n"
+          end
+          node.content = node_content
+        end
         doc
       end
     end
