@@ -61,7 +61,7 @@ module Docs
           case doxygen_type
           when "Functions"
             type = "Functions"
-          when "Public Member Functions", "Static Public Member Functions"
+          when "Public Member Functions", "Static Public Member Functions", "Public Types", "Additional Inherited Members"
             type = nil
           when "Classes"
             type = "Classes"
@@ -73,20 +73,26 @@ module Docs
             next
           end
 
-          table.css('td.memItemRight,td.memTemplItemRight').map do |node|
-            if node.content.include?('KLU')
-              puts(node.content)
-            end
-            href = node.at_css("a")
-            if href.nil?
-              next
-            end
+          tmp_entries = []
 
-            href = node.at_css("a").attr('href')
+          table.css('td.memItemRight,td.memTemplItemRight').map do |node_r|
+            node_l = node_r.parent.at_css('memItemLeft')
+            if (not node_l.nil? and node_l.text.strip == 'enum') || node_r.content.include?('{')
+              node_r.css("a").each {|n| tmp_entries << [n.content, n.attr('href')]}
+            else
+              n = node_r.at_css("a")
+              next if n.nil?
+              tmp_entries << [node_r.content, n.attr('href')]
+            end
+          end
 
+          tmp_entries.each do |args|
+            (content, href) = args
+            next if href.nil?
             if not href.include?("#") and (name == 'Eigen' || type == "Classes") then
               next
             end
+
             if slug.include?('unsupported')
               if not (href.include?('unsupported') || href.include?('#'))
                 next
@@ -95,17 +101,20 @@ module Docs
               end
             end
 
-            content = node.content
             if doxygen_type == "Typedefs"
               content = content.sub(/\s*=.*$/, "")
             end
+
             if not (name.end_with?('module') || name.end_with?('typedefs')) \
               and not content.start_with?("Eigen::")
               content = name + "::" + content
             end
-
+            content.gsub! /^\s+/, ''
+            content.gsub! /\s+,\s+/, ', '
+            content.gsub! /\s\s+/, ' '
             entries << [content, href, type]
           end
+
         end
         entries
       end
