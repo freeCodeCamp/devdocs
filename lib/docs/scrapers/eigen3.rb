@@ -36,7 +36,7 @@ module Docs
     HTML
 
     # Skip source code since it doesn't provide any useful docs
-    options[:skip_patterns] = [/_source/, /-members/, /__Reference\.html/, /_chapter\.html/,]
+    options[:skip_patterns] = [/_source/, /-members/, /__Reference\.html/, /_chapter\.html/, /\.txt/, /\.tgz/]
 
     # TODO: replace cppreference
     # options[:replace_urls] = { 'http://en.cppreference.com/w/cpp/' => 'cpp/' }
@@ -64,6 +64,13 @@ module Docs
       response.body.gsub! /<div class="line">(.*?)<\/div>/m, "\\1"
       response.body.gsub! '<div class="fragment">', '<pre class="fragment" data-language="cpp">'
       super
+    end
+
+    def process_response?(response)
+      return false unless super
+      # Remove Empty pages.
+      response.body.index(/<div class="contents">[\r\n\s]*<\/div>/m).nil? and \
+        response.body.index(/<p>TODO: write this dox page!<\/p>/).nil?
     end
   end
 end

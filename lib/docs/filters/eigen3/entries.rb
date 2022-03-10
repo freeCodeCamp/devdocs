@@ -8,12 +8,6 @@ module Docs
         downtitle = title.downcase
         name = get_name
 
-        # Remove Empty pages.
-        if content.include?('TODO: write this dox page!') ||
-            content.blank? || content.empty?
-          return nil
-        end
-
         if slug.include?('unsupported')
           return 'Unsupported'
         elsif slug.start_with?('Topic') || downtitle.end_with?("topics")
@@ -90,7 +84,7 @@ module Docs
 
             href = node.at_css("a").attr('href')
 
-            if not href.include?("#") and (name == 'Eigen' || type = "Classes") then
+            if not href.include?("#") and (name == 'Eigen' || type == "Classes") then
               next
             end
             if slug.include?('unsupported')
