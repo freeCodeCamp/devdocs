@@ -187,6 +187,30 @@ More information about how filters work is available on the [Filter Reference](.
 
   _Note: this filter is disabled by default._
 
+### Processing responses before filters
+
+These methods are runned before filter stacks, and can directly process responses.
+
+* `process_response?(response)`
+
+  Determine whether a response should be processed. A response will be dropped if this method returns `false`.
+
+  It is useful to filter pages, such as empty, invalid, or redirecting pages, depending on the content.
+
+  Example: [lib/docs/scrapers/kotlin.rb](../lib/docs/scrapers/kotlin.rb)
+
+
+* `parse(response)`
+
+  Parse HTTP/File response, and convert to a Nokogiri document by default.
+
+  Overrides this method if you want to modified HTML source code before Nokogiri.
+It is useful to preserve whitespaces of code segments within non-pre blocks, because Nokogiri may delete them.
+
+  Example: [lib/docs/scrapers/go.rb](../lib/docs/scrapers/go.rb)
+
+
+
 ## Keeping scrapers up-to-date
 
 In order to keep scrapers up-to-date the `get_latest_version(opts)` method should be overridden. If `self.release` is defined, this should return the latest version of the documentation. If `self.release` is not defined, it should return the Epoch time when the documentation was last modified. If the documentation will never change, simply return `1.0.0`. The result of this method is periodically reported in a "Documentation versions report" issue which helps maintainers keep track of outdated documentations.
