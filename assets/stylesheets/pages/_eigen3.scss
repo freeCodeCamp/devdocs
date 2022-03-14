@@ -1,75 +1,40 @@
 ._eigen3 {
-    /* General */
-    a {
-        font-weight: normal;
-    }
+    code, span.mlabel { @extend %label; }
 
-    code {
-        margin: 0 1px;
-        padding: 1px 4px 2px;
-        background: var(--labelBackground);
-        border-radius: 3px;
-    }
-    /* end General */
+    .title { @extend h1; }
 
-    /* Title */
-    .title {
-        font: 400 14px/28px ,sans-serif;
-        font-size: 150%;
-        font-weight: bold;
-        margin: 10px 2px;
-    }
-
+    /* Breadcrumb Navigation */
     div.ingroups {
-        font-size: 8pt;
+        font-size: 10pt;
         text-align: left;
     }
-    /* end Title */
 
-    /* Member List */
-
+    /* Method Title */
     .memtitle {
-        padding: 8px;
-        border-top: 1px solid; //#A8B8D9;
-        border-left: 1px solid; //#A8B8D9;
-        border-right: 1px solid; //#A8B8D9;
-        border-top-right-radius: 4px;
-        border-top-left-radius: 4px;
-        margin-bottom: -1px;
-        // background-image: url('nav_f.png');
-        // background-repeat: repeat-x;
-        // background-color: #E2E8F2;
-        line-height: 1.25;
-        font-weight: 300;
-        // float: left;
-      }
+        padding: 6px;
+        @extend %heading-box;
+    }
 
-    .mdescLeft, .mdescRight, .memItemLeft, .memItemRight, .memTemplItemLeft, .memTemplItemRight, .memTemplParams {
-        // background-color: #F9FAFC;
+    /* begin Method Declearation */
+    .mdescLeft, .mdescRight, .memItemLeft, .memItemRight,
+    .memTemplItemLeft, .memTemplItemRight, .memtemplate, .memTemplParams {
         border: none;
-        margin: 4px;
-        padding: 1px 0 0 8px;
-      }
+        padding: 1px 8px 0 8px;
+    }
 
-    td.memTemplParams {
-        border: none;
-        white-space: nowrap;
+    .memtemplate, .memTemplParams {
         font-size: 80%;
+        color: var(--prismKeyword);
     }
 
     .memproto, dl.reflist dt {
-        border-top: 0.5px solid; //  #A8B8D9;
-        border-left: 1px solid; // #A8B8D9;
-        border-right: 1px solid; // #A8B8D9;
-        border-bottom: 1px solid; // #A8B8D9;
-        padding: 6px 0px 6px 0px;
+        border: 1px solid var(--boxBorder);
+        margin-bottom: 0.8em;
     }
 
-    .memtemplate {
-        font-size: 80%;
+    .memproto a.el, .memberdecls a.el {
         color: var(--prismKeyword);
-        font-weight: normal;
-        margin-left: 9px;
+        text-decoration: none;
     }
 
     .memdoc {
@@ -82,44 +47,9 @@
         border: none;
     }
 
-    .memproto a.el, .memberdecls a.el {
-        // font-weight: bold;
-        color: var(--prismKeyword);
-        text-decoration: none;
-    }
-
     td.mlabels-left, td.mlabels-right {
         border: none;
         padding: 0;
-        vertical-align: bottom;
-    }
-
-    td.memSeparator {
-        line-height: 1px;
-        padding: 0px;
-    }
-    /* end Member List */
-
-    /* Member Name */
-    td.mlabels-right {
-        vertical-align: bottom;
-        padding: 0px;
-        white-space: nowrap;
-    }
-
-    table.memname {
-        border: none;
-        margin-left: 6px;
-        margin-top: 0.5em;
-    }
-
-    table.memname tr{
-        border: none;
-    }
-
-    table.memname th, table.memname td{
-        border: none;
-        padding: 1px;
         vertical-align: bottom;
     }
 
@@ -127,21 +57,26 @@
         width: 100%;
     }
 
-    .paramname {
-        white-space: nowrap;
-      }
+    td.memSeparator {
+        line-height: 1px;
+        padding: 0px;
+    }
 
-    span.mlabel {
-        // text-shadow: none;
-        font-family: monospace;
-        color: var(--prismKeyword);
-        margin-right: 4px;
-        padding: 2px 3px;
-        // border-radius: 3px;
-        font-size: 12px;
-        white-space: nowrap;
-        vertical-align: middle;
-      }
-    /* end Member Name */
+    table.memname {
+        border: none;
+        margin-left: 6px;
+        margin-top: 0.5em;
+        th, td {
+            padding: 1px;
+            vertical-align: bottom;
+        }
+        tr, th, td {
+            border: none;
+        }
+    }
 
+    .paramname, .mlabels-left, .mlabels-right, .memtemplate, .memTemplParams {
+        white-space: nowrap;
+    }
+    /* end Method Declearation */
 }
