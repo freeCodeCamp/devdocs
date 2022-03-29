@@ -2,7 +2,7 @@ module Docs
   class React < UrlScraper
     self.name = 'React'
     self.type = 'simple'
-    self.release = '17.0.2'
+    self.release = '18.0.0'
     self.base_url = 'https://reactjs.org/docs/'
     self.root_path = 'hello-world.html'
     self.links = {
