@@ -12,6 +12,12 @@ module Docs
         css('.top').remove
         css('.dynheader.closed').remove
         css('.permalink').remove
+        css('.groupheader').remove
+        css('.header').remove
+        css('#details').remove
+        css('*').each do |node|
+          node.remove_attribute('class')
+        end
         doc
       end
     end

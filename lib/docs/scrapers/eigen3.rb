@@ -15,7 +15,7 @@ module Docs
       code: 'https://gitlab.com/libeigen/eigen'
     }
 
-    html_filters.push 'eigen3/entries', 'eigen3/clean_html'
+    html_filters.push 'eigen3/entries', 'eigen3/clean_html', 'title'
 
     # Remove the `clean_text` because Doxygen are actually creating empty
     # anchor such as <a id="asd"></a> to do anchor link.. and that anchor
