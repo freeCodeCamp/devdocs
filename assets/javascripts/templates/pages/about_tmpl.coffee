@@ -262,6 +262,11 @@ credits = [
     '2001-2015 by the original authors<br>Drupal is a registered trademark of Dries Buytaert.',
     'GPLv2',
     'https://api.drupal.org/api/drupal/LICENSE.txt'
+  ],[
+    'Eigen3',
+    'Eigen',
+    'MPL2',
+    'https://www.mozilla.org/en-US/MPL/2.0/'
   ], [
     'Electron',
     'GitHub Inc.',
