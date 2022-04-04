@@ -699,7 +699,7 @@ credits = [
     'https://raw.githubusercontent.com/pygame/pygame/master/LICENSE'
   ], [
     'Python',
-    '2001-2021 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
+    '2001-2022 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
     'PSFL',
     'https://docs.python.org/3/license.html'
   ], [
