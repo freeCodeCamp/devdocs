@@ -27,12 +27,12 @@ module Docs
     end
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2021 JetBrains s.r.o. and Kotlin Programming Language contributors<br>
+      &copy; 2010&ndash;2022 JetBrains s.r.o. and Kotlin Programming Language contributors<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 
     version '1.6' do
-      self.release = '1.6.0'
+      self.release = '1.6.20'
     end
 
     version '1.4' do

@@ -479,7 +479,7 @@ credits = [
     'https://raw.githubusercontent.com/koajs/koa/master/LICENSE'
   ], [
     'Kotlin',
-    '2010-2020 JetBrains s.r.o. and Kotlin Programming Language contributors',
+    '2010-2022 JetBrains s.r.o. and Kotlin Programming Language contributors',
     'Apache',
     'https://raw.githubusercontent.com/JetBrains/kotlin/master/license/LICENSE.txt'
   ], [
