@@ -130,7 +130,7 @@ GEM
     unicode-display_width (1.6.0)
     unicode_utils (1.4.0)
     unix_utils (0.0.15)
-    yajl-ruby (1.4.1)
+    yajl-ruby (1.4.2)
 
 PLATFORMS
   ruby
