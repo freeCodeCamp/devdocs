@@ -15,7 +15,7 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    self.release = '2.8.3'
+    self.release = '2.9.1'
     self.base_url = 'https://vitejs.dev/'
     self.initial_paths = %w(guide/)
     html_filters.push 'vite/entries', 'vite/clean_html'
