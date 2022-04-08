@@ -13,9 +13,14 @@ module Docs
     options[:skip] = %w(changes/)
 
     options[:attribution] = <<-HTML
-      &copy; 2007&ndash;2021 Pallets<br>
+      &copy; 2007&ndash;2022 Pallets<br>
       Licensed under the BSD 3-clause License.
     HTML
+
+    version '2.1' do
+      self.release = '2.1.x'
+      self.base_url = "https://werkzeug.palletsprojects.com/en/#{self.release}/"
+    end
 
     version '2.0' do
       self.release = '2.0.x'
