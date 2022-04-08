@@ -3,7 +3,7 @@ module Docs
     self.name = 'OCaml'
     self.type = 'ocaml'
     self.root_path = 'index.html'
-    self.release = '4.13'
+    self.release = '4.14'
     self.base_url = "https://www.ocaml.org/releases/#{self.release}/htmlman/"
     self.links = {
       home: 'https://ocaml.org/',
@@ -23,7 +23,7 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 1995-2021 INRIA.
+      &copy; 1995-2022 INRIA.
     HTML
 
     def get_latest_version(opts)
