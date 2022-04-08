@@ -12,12 +12,12 @@ module Docs
     options[:container] = '.markdown-body'
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2021 Michael Bostock<br>
+      &copy; 2010&ndash;2022 Michael Bostock<br>
       Licensed under the BSD License.
     HTML
 
     version '7' do
-      self.release = '7.3.0'
+      self.release = '7.4.0'
       self.base_url = 'https://github.com/d3/'
       self.root_path = 'd3/blob/master/API.md'
 
