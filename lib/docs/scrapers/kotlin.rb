@@ -49,5 +49,10 @@ module Docs
       return false unless super
       response.body !~ /http-equiv="refresh"/i
     end
+
+    def parse(response)
+      response.body.gsub! %r{<div\ class="code-block" data-lang="([^"]+)"[^>]*>([\W\w]+?)</div>}, '<pre class="code" data-language="\1">\2</pre>'
+      super
+    end
   end
 end

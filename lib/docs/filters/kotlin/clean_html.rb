@@ -12,24 +12,6 @@ module Docs
         css('a > img').each do |node|
           node.parent.before(node.parent.content).remove
         end
-
-        css('div.code-block').each do |node|
-          node.name = 'pre'
-          node['data-language'] = node['data-lang']
-          node.content = node.content
-          # FIXME: newlines in code-block are lost because of <div>? (on https://kotlinlang.org/docs/typecasts.html for instance)
-        end
-
-        css('pre').each do |node|
-          node['data-language'] = 'kotlin' if node.at_css('code.language-kotlin')
-          node['data-language'] = 'groovy' if node.at_css('code.language-groovy')
-          node['data-language'] = 'javascript' if node.at_css('code.language-javascript')
-          node['data-language'] = 'xml' if node.at_css('code.language-xml')
-          node.content = node.content
-          node.parent.remove_attribute('data-highlight-only')
-          node.parent.remove_attribute('data-lang')
-          node.parent.remove_attribute('theme')
-        end
       end
 
       def api_page
