@@ -739,7 +739,7 @@ credits = [
     'https://raw.githubusercontent.com/react-bootstrap/react-bootstrap/master/LICENSE'
   ], [
     'React Router',
-    'React Training 2015-2019<br>Remix Software 2020-2021',
+    'React Training 2015-2019<br>Remix Software 2020-2022',
     'MIT',
     'https://raw.githubusercontent.com/remix-run/react-router/main/LICENSE.md'
   ], [

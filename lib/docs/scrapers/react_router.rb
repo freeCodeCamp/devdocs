@@ -3,7 +3,7 @@ module Docs
     self.name = 'React Router'
     self.slug = 'react_router'
     self.type = 'simple'
-    self.release = '6.2.1'
+    self.release = '6.3.0'
     self.base_url = 'https://reactrouterdotcom.fly.dev/docs/en/v6/api'
 
     self.links = {
@@ -15,7 +15,7 @@ module Docs
 
     options[:attribution] = <<-HTML
       &copy; React Training 2015-2019<br>
-      &copy; Remix Software 2020-2021<br>
+      &copy; Remix Software 2020-2022<br>
       Licensed under the MIT License (MIT).
     HTML
 
