@@ -619,7 +619,7 @@ credits = [
     'https://octave.org/doc/v7.1.0/'
   ], [
     'OpenJDK',
-    '1993, 2021, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
+    '1993, 2022, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
     'GPLv2',
     'http://openjdk.java.net/legal/gplv2+ce.html'
   ], [
