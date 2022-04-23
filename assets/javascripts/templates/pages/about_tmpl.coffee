@@ -483,6 +483,11 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/JetBrains/kotlin/master/license/LICENSE.txt'
   ], [
+    'Kubernetes',
+    '2022 The Kubernetes Authors and The Linux Foundation',
+    'Apache License 2.0',
+    'https://github.com/kubernetes/kubernetes/blob/master/LICENSE'
+  ], [
     'Laravel',
     'Taylor Otwell',
     'MIT',
