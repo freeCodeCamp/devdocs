@@ -588,6 +588,11 @@ credits = [
     'MIT',
     'https://github.com/nim-lang/Nim#license'
   ], [
+    'Nix',
+    '2022 NixOS Contributors',
+    'LGPLv2.1',
+    'https://github.com/NixOS/nix#license'
+  ], [
     'Node.js',
     'Joyent, Inc. and other Node contributors<br>Node.js is a trademark of Joyent, Inc.',
     'MIT',
