@@ -60,6 +60,8 @@ module Docs
           end
           new_root.add_child(image_sections)
 
+          new_root.css('pre.programlisting').attr('data-language', 'nix')
+
           new_root
         elsif subpath == 'nix/stable/expressions/builtins.html'
           @doc = doc.at_css('main dl')
@@ -81,6 +83,12 @@ module Docs
           end
           doc.css('dd').each do |description|
             description.name = 'div'
+          end
+
+          doc.css('pre > code').each do |code|
+            code.parent['data-language'] = 'nix' if code['class'] == 'language-nix'
+            code.parent['data-language'] = 'xml' if code['class'] == 'language-xml'
+            unwrap(code)
           end
 
           doc
