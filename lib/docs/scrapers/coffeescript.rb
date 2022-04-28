@@ -11,12 +11,12 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2009&ndash;2021 Jeremy Ashkenas<br>
+      &copy; 2009&ndash;2022 Jeremy Ashkenas<br>
       Licensed under the MIT License.
     HTML
 
     version '2' do
-      self.release = '2.6.1'
+      self.release = '2.7.0'
       self.base_url = 'https://coffeescript.org/'
 
       html_filters.push 'coffeescript/entries', 'coffeescript/clean_html', 'title'
