@@ -209,7 +209,7 @@ credits = [
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
   ], [
     'CSS<br>DOM<br>HTTP<br>HTML<br>JavaScript<br>SVG<br>XPath',
-    '2005-2021 MDN contributors',
+    '2005-2022 MDN contributors',
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/2.5/'
   ], [
