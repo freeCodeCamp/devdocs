@@ -27,14 +27,7 @@ module Docs
 
     version '1.20' do
       self.release = "#{version}"
-      verStr = version.sub('.', '-')
-      self.base_url = "https://v#{verStr}.docs.kubernetes.io/docs/reference/generated/kubectl/kubectl-commands"
-    end
-
-    version '1.19' do
-      self.release = "#{version}"
-      verStr = version.sub('.', '-')
-      self.base_url = "https://v#{verStr}.docs.kubernetes.io/docs/reference/generated/kubectl/kubectl-commands"
+      self.base_url = "https://v#{version.sub('.', '-')}.docs.kubernetes.io/docs/reference/generated/kubectl/kubectl-commands"
     end
 
     def get_latest_version(opts)

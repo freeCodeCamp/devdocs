@@ -3,6 +3,10 @@ module Docs
     class CleanHtmlFilter < Filter
 
       def call
+        css('pre').each do |node|
+          node.content = node.content.squish
+          node['data-language'] = 'bash'
+        end
         doc
       end
 
