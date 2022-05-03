@@ -9,6 +9,10 @@ module Docs
         # and all the preceding elements
         css('#Operations ~ *').remove
         css('#Operations').remove
+        # remove horizontal rules
+        css('hr').remove
+        # remove footer (1.20)
+        css('.pre-footer').remove
 
         doc 
       end

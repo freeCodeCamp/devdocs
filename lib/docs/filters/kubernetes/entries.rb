@@ -7,11 +7,13 @@ module Docs
       end
 
       def get_type
-        name
+        @doc.parent.css('nav .breadcrumb-item:not(.active)')[-1].content
       end
 
       def additional_entries
         entries = css('h2').to_a()
+        # remove the Feedback section
+        entries.filter! {|node| node.content.strip != 'Feedback' }
         # remove the Operations section
         entries.filter! {|node| node['id'] != 'Operations' }
         # remove the ObjectList section
