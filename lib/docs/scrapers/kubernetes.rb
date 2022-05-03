@@ -19,8 +19,8 @@ module Docs
     HTML
 
     # latest version has a special URL that does not include the version identifier 
-    version '1.23' do
-      self.release = "#{version}"
+    version do
+      self.release = "1.23"
       self.base_url = "https://kubernetes.io/docs/reference/kubernetes-api/"
     end
 
