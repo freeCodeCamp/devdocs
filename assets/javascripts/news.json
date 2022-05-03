@@ -1,5 +1,9 @@
 [
   [
+    "2022-05-03",
+    "New documentations: <a href=\"/kubernetes/\">Kubernetes</a>, <a href=\"/kubectl/\">Kubectl</a>"
+  ],
+  [
     "2022-04-25",
     "New documentation: <a href=\"/nix/\">Nix</a>"
   ],
