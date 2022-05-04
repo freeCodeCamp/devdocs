@@ -36,7 +36,7 @@ module Docs
     HTML
 
     version '5' do
-      self.release = '5.65.0'
+      self.release = '5.72.0'
       self.base_url = 'https://webpack.js.org/'
     end
 
