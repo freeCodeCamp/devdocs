@@ -1,7 +1,7 @@
 module Docs
   class Flow < UrlScraper
     self.type = 'simple'
-    self.release = '0.169.0'
+    self.release = '0.176.3'
     self.base_url = 'https://flow.org/en/docs/'
     self.links = {
       home: 'https://flow.org/',
