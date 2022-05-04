@@ -2,7 +2,7 @@ module Docs
   class Jest < UrlScraper
     include MultipleBaseUrls
     self.type = 'simple'
-    self.release = '27.4.3'
+    self.release = '28.0.3'
 
     self.base_urls = [
       'https://jestjs.io/docs/',
@@ -23,7 +23,7 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2021 Facebook, Inc.<br>
+      &copy; 2022 Facebook, Inc.<br>
       Licensed under the MIT License.
     HTML
 

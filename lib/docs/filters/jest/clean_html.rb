@@ -9,11 +9,6 @@ module Docs
 
         css('hr', '.hash-link', 'button', '.badge').remove
 
-        css('.anchor').each do |node|
-          node.parent['id'] = node['id']
-          node.remove
-        end
-
         css('.prism-code').each do |node|
           node.parent.parent.before(node)
           node.name = 'pre'
