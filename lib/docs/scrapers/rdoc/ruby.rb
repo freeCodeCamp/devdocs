@@ -63,11 +63,15 @@ module Docs
       /\AXMP/]
 
     options[:attribution] = <<-HTML
-      Ruby Core &copy; 1993&ndash;2020 Yukihiro Matsumoto<br>
+      Ruby Core &copy; 1993&ndash;2022 Yukihiro Matsumoto<br>
       Licensed under the Ruby License.<br>
       Ruby Standard Library &copy; contributors<br>
       Licensed under their own licenses.
     HTML
+
+    version '3.1' do
+      self.release = '3.1.1'
+    end
 
     version '3' do
       self.release = '3.0.0'
