@@ -26,7 +26,7 @@ module Docs
 
 
     def get_latest_version(opts)
-      tags = get_gitlab_tags("https://gitlab.com", "libeigen", "eigen", opts)
+      tags = get_gitlab_tags("gitlab.com", "libeigen", "eigen", opts)
       tags[0]['name']
     end
 
