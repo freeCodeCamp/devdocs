@@ -3,11 +3,11 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         css('h1 .app-vsn').remove
+        name = (at_css('h1 > span') or at_css('h1')).content.strip
 
         if current_url.path.start_with?('/getting-started')
-          (at_css('h1 > span') or at_css('h1')).content.strip.remove(/\.\z/)
+          name.remove(/\.\z/)
         else
-          name = at_css('h1').content.strip
           name = name.split(' ').first unless name.start_with?('mix ') # ecto
           name
         end
