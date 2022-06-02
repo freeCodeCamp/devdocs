@@ -2,16 +2,32 @@ module Docs
   class Vue
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css(version == '3' ? 'main' : '.content')
+        if current_url.host == 'vitejs.dev'
+          return '<h1>Vite</h1>' if root_page?
+          @doc = at_css('.content > div')
+        else
+          return '<h1>Vue.js</h1>' if root_page?
+          @doc = at_css(version == '3' ? 'main > div > div' : '.content')
+        end
 
         at_css('h1').content = 'Vue.js' if root_page?
         doc.child.before('<h1>Vue.js API</h1>') if slug == 'api/' || slug == 'api/index'
 
         css('.demo', '.guide-links', '.footer', '#ad').remove
         css('.header-anchor', '.page-edit', '.page-nav').remove
+        css('.next-steps').remove
 
         css('.custom-block-title').each do |node|
           node.name = 'strong'
+        end
+
+        # Remove CodePen div
+        css('.codepen').each do |node|
+          next if node.previous_element.nil?
+          span = node.css('span:contains("See the Pen")').remove
+          node.previous_element.add_child(' ')
+          node.previous_element.add_child(span)
+          node.remove
         end
 
         # Remove code highlighting

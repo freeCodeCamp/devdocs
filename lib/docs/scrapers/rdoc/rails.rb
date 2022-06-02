@@ -1,20 +1,12 @@
 module Docs
   class Rails < Rdoc
-    # Instructions:
-    #   1. Download a release at https://github.com/rails/rails/releases
-    #   2. Open "railties/lib/rails/api/task.rb" and comment out any code related to sdoc ("configure_sdoc")
-    #   3. Run "bundle install --without db && bundle exec rake rdoc" (in the Rails directory)
-    #   4. Run "cd guides && bundle exec rake guides:generate:html"
-    #   5. Copy the "guides/output" directory to "html/guides"
-    #   6. Copy the "html" directory to "docs/rails~[version]"
-
     include FixInternalUrlsBehavior
 
     self.name = 'Ruby on Rails'
     self.slug = 'rails'
     self.initial_paths = %w(guides/index.html)
     self.links = {
-      home: 'http://rubyonrails.org/',
+      home: 'https://rubyonrails.org/',
       code: 'https://github.com/rails/rails'
     }
 
@@ -72,31 +64,35 @@ module Docs
     options[:attribution] = ->(filter) do
       if filter.slug.start_with?('guides')
         <<-HTML
-          &copy; 2004&ndash;2020 David Heinemeier Hansson<br>
+          &copy; 2004&ndash;2021 David Heinemeier Hansson<br>
           Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.
         HTML
       else
         <<-HTML
-          &copy; 2004&ndash;2020 David Heinemeier Hansson<br>
+          &copy; 2004&ndash;2021 David Heinemeier Hansson<br>
           Licensed under the MIT License.
         HTML
       end
     end
 
+    version '7.0' do
+      self.release = '7.0.0'
+    end
+
     version '6.1' do
-      self.release = '6.1.1'
+      self.release = '6.1.4'
     end
 
     version '6.0' do
-      self.release = '6.0.0'
+      self.release = '6.0.4'
     end
 
     version '5.2' do
-      self.release = '5.2.2'
+      self.release = '5.2.6'
     end
 
     version '5.1' do
-      self.release = '5.1.6'
+      self.release = '5.1.7'
     end
 
     version '5.0' do
@@ -113,7 +109,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://rubyonrails.org/', opts)
-      doc.at_css('.version p a').content.scan(/\d\.\d*\.*\d*\.*\d*/)[0]
+      doc.at_css('.heading__button span').content.scan(/\d\.\d*\.*\d*\.*\d*/)[0]
     end
   end
 end

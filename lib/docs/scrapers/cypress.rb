@@ -4,7 +4,7 @@ module Docs
   class Cypress < UrlScraper
     self.name = 'Cypress'
     self.type = 'cypress'
-    self.release = '7.2.0'
+    self.release = '9.4.1'
     self.base_url = 'https://docs.cypress.io'
     self.root_path = '/api/table-of-contents.html'
     self.links = {

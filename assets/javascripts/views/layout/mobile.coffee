@@ -38,8 +38,6 @@ class app.views.Mobile extends app.View
     super
 
   init: ->
-    window.FastClick?.attach @body
-
     $.on $('._search'), 'touchend', @onTapSearch
 
     @toggleSidebar = $('button[data-toggle-sidebar]')

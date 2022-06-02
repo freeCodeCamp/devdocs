@@ -2,7 +2,7 @@ module Docs
   class Jest < UrlScraper
     include MultipleBaseUrls
     self.type = 'simple'
-    self.release = '27.0.4'
+    self.release = '28.0.3'
 
     self.base_urls = [
       'https://jestjs.io/docs/',
@@ -18,11 +18,12 @@ module Docs
     html_filters.push 'jest/entries', 'jest/clean_html'
 
     options[:skip_patterns] = [
-      /\d*.x/ # avoid deprecated versions
+      /^next/,
+      /\d+\.[x\d]/ # avoid deprecated versions
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2021 Facebook, Inc.<br>
+      &copy; 2022 Facebook, Inc.<br>
       Licensed under the MIT License.
     HTML
 

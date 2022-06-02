@@ -16,7 +16,8 @@ module Docs
       def additional_entries
         entries = []
         css('.method, .element, .field, .enum_constant').each do |node|
-          entries << [@name + '.' + node['id'], node['id']]
+          # Fix useless functions with arg249 https://docs.groovy-lang.org/3.0.9/html/gapi/org/codehaus/groovy/runtime/ArrayUtil.html
+          entries << [@name + '.' + node['id'], node['id']] if node['id'].length <= 192
         end
         css('.constructor').each do |node|
           entries << [node['id'], node['id']]

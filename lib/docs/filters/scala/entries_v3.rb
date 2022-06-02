@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Docs
   class Scala
-    class EntriesFilter < Docs::EntriesFilter
+    class EntriesV3Filter < Docs::EntriesFilter
       REPLACEMENTS = {
         '$eq' => '=',
         '$colon' => ':',
@@ -9,8 +11,7 @@ module Docs
 
       def get_name
         if is_package?
-          symbol = at_css('#definition h1')
-          symbol ? symbol.text.gsub(/\W+/, '') : "package"
+          at_css('.cover-header h1').text
         else
           name = slug.split('/').last
 
@@ -37,29 +38,34 @@ module Docs
       end
 
       def include_default_entry?
-        true
+        # Ignore package pages
+        at_css('.cover-header .micon.pa').nil?
       end
 
       def additional_entries
         entries = []
+        titles = []
 
-        full_name = "#{type}.#{name}".remove('$')
-        css(".members li[name^=\"#{full_name}\"]").each do |node|
-          # Ignore packages
-          kind = node.at_css('.modifier_kind > .kind')
-          next if !kind.nil? && kind.content == 'package'
+        css(".documentableElement").each do |node|
+          # Ignore elements without IDs
+          id = node['id']
+          next if id.nil?
 
-          # Ignore deprecated members
-          next unless node.at_css('.symbol > .name.deprecated').nil?
+          # Ignore deprecated and inherited members
+          next unless node.at_css('.deprecated').nil?
 
-          id = node['name'].rpartition('#').last
-          member_name = node.at_css('.name')
+          member_name = node.at_css('.documentableName').content
+          title = "#{name}.#{member_name}"
+          
+          # Add () to methods that take parameters, i.e. methods who have (…)
+          # in their signature, ignoring occurrences of (implicit …) and (using …)
+          signature = node.at_css('.signature').content
+          title += '()' if signature =~ /\((?!implicit)(?!using ).*\)/
 
-          # Ignore members only existing of hashtags, we can't link to that
-          next if member_name.nil? || member_name.content.strip.remove('#').blank?
-
-          member = "#{name}.#{member_name.content}()"
-          entries << [member, id]
+          next if titles.include?(title) # Ignore duplicates (function overloading)
+        
+          entries << [title, id]
+          titles.push(title)
         end
 
         entries
@@ -75,12 +81,12 @@ module Docs
       # include the companion object.
       def package_name
         name = package_drop_last(slug_parts)
-        name.empty? ? '_root_' : name
+        name.empty? ? 'scala' : name
       end
 
       def parent_package
         parent = package_drop_last(package_name.split('.'))
-        parent.empty? ? '_root_' : parent
+        parent.empty? ? 'scala' : parent
       end
 
       def package_drop_last(parts)
@@ -91,12 +97,8 @@ module Docs
         slug.split('/')
       end
 
-      def owner
-        at_css('#owner')
-      end
-
       def is_package?
-        slug.ends_with?('index') || slug.ends_with?('package')
+        !at_css('.cover-header .micon.pa').nil?
       end
     end
   end

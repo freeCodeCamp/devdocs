@@ -39,7 +39,7 @@ module Docs
           name.remove! %r{[\s=<].*}
           name.prepend 'jest ' if name.start_with?('--')
           name.prepend 'Config: ' if slug == 'configuration'
-          id = node.at_css('.anchor')['id']
+          id = node['id']
 
           entries << [name, id]
         end

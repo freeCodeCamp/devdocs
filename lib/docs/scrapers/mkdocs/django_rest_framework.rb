@@ -1,7 +1,7 @@
 module Docs
   class DjangoRestFramework < Mkdocs
     self.name = 'Django REST Framework'
-    self.release = '3.9.3'
+    self.release = '3.12.4'
     self.slug = 'django_rest_framework'
     self.base_url = 'https://www.django-rest-framework.org/'
     self.root_path = 'index.html'

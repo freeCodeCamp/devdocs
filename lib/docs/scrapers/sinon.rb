@@ -27,6 +27,11 @@ module Docs
       url
     end
 
+    version '11' do
+      self.release = '11.1.2'
+      self.base_url = "https://sinonjs.org/releases/v#{release}/"
+    end
+
     version '10' do
       self.release = '10.0.1'
       self.base_url = "https://sinonjs.org/releases/v#{release}/"

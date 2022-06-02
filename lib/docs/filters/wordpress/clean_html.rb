@@ -14,11 +14,16 @@ module Docs
             '.anchor', '.toc-jump', '.source-code-links', '.user-notes',
             '.show-more', '.hide-more').remove
 
-        br = /<br\s?\/?>/i
-
         header = at_css('h1')
         header.content = header.content.strip
         doc.prepend_child header
+
+        # Remove permalink
+        css('h2 > a, h3 > a').each do |node|
+          node.parent.remove_attribute('class')
+          node.parent.remove_attribute('tabindex')
+          node.parent.content = node.content
+        end
 
         # Add PHP code highlighting
         css('pre').each do |node|
@@ -26,11 +31,14 @@ module Docs
         end
 
         css('.source-code-container').each do |node|
+          node.remove_class('source-code-container')
           node.name = 'pre'
-          node.inner_html = node.inner_html.gsub(br, "\n")
+          node.inner_html = node.inner_html.gsub(/<br\s?\/?>/i, "\n")
           node.content = node.content.strip
           node['data-language'] = 'php'
         end
+
+        css('section').remove_attribute('class')
 
         doc
       end

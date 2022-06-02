@@ -27,6 +27,9 @@ app.templates.settingsPage = (settings) -> """
       <label class="_settings-label _setting-max-width">
         <input type="checkbox" form="settings" name="layout" value="_max-width"#{if settings['_max-width'] then ' checked' else ''}>Enable fixed-width layout
       </label>
+      <label class="_settings-label _setting-text-justify-hyphenate">
+        <input type="checkbox" form="settings" name="layout" value="_text-justify-hyphenate"#{if settings['_text-justify-hyphenate'] then ' checked' else ''}>Enable justified layout and automatic hyphenation
+      </label>
       <label class="_settings-label _hide-on-mobile">
         <input type="checkbox" form="settings" name="layout" value="_sidebar-hidden"#{if settings['_sidebar-hidden'] then ' checked' else ''}>Automatically hide and show the sidebar
         <small>Tip: drag the edge of the sidebar to resize it.</small>

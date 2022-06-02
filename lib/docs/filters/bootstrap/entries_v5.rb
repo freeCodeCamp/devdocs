@@ -20,7 +20,7 @@ module Docs
         entries = []
 
         # titles
-        css('h2', 'h3').each do |node|
+        css('h2:not(.accordion-header)', 'h3').each do |node|
           entries << [ name + ': ' + node.content, node['id']]
         end
 

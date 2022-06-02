@@ -3,7 +3,7 @@
 
   #short-nav, table.dir { margin-left: -1rem; }
 
-  a.source {
+  a.source, span[title^="Added in Go"] {
     float: right;
     font-size: .9em;
   }

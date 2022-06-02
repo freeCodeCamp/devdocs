@@ -2,7 +2,6 @@ module Docs
   class Kotlin
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.page-content')
         subpath.start_with?('api') ? api_page : doc_page
         doc
       end
@@ -12,17 +11,6 @@ module Docs
 
         css('a > img').each do |node|
           node.parent.before(node.parent.content).remove
-        end
-
-        css('pre').each do |node|
-          node['data-language'] = 'kotlin' if node.at_css('code.language-kotlin')
-          node['data-language'] = 'groovy' if node.at_css('code.language-groovy')
-          node['data-language'] = 'javascript' if node.at_css('code.language-javascript')
-          node['data-language'] = 'xml' if node.at_css('code.language-xml')
-          node.content = node.content
-          node.parent.remove_attribute('data-highlight-only')
-          node.parent.remove_attribute('data-lang')
-          node.parent.remove_attribute('theme')
         end
       end
 

@@ -21,6 +21,8 @@ module Docs
         css('h1 + ul a').each_with_object [] do |node, entries|
           name = node.content.strip
           next if name =~ /\A[A-Z]/ || name.start_with?('/')
+          mod = get_name
+          name = "#{name} (#{mod})" unless mod.match?(/ngx_http/)
 
           id = node['href'].remove('#')
           next if id.blank?

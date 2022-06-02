@@ -1,5 +1,58 @@
 [
   [
+    "2022-05-03",
+    "New documentations: <a href=\"/kubernetes/\">Kubernetes</a>, <a href=\"/kubectl/\">Kubectl</a>"
+  ],
+  [
+    "2022-04-25",
+    "New documentation: <a href=\"/nix/\">Nix</a>"
+  ],
+  [
+    "2022-03-31",
+    "New documentation: <a href=\"/eigen3/\">Eigen3</a>"
+  ],
+  [
+    "2022-02-21",
+    "New documentation: <a href=\"/tailwindcss/\">Tailwind CSS</a>"
+  ],
+  [
+    "2022-01-12",
+    "New documentation: <a href=\"/react_router/\">React Router</a>"
+  ],
+  [
+    "2022-01-09",
+    "New documentation: <a href=\"/deno/\">Deno</a>"
+  ],
+  [
+    "2021-12-29",
+    "New documentation: <a href=\"/point_cloud_library/\">PointCloudLibrary</a>"
+  ],
+  [
+    "2021-12-27",
+    "New documentation: <a href=\"/zig/\">Zig</a>"
+  ],
+  [
+    "2021-12-26",
+    "New documentation: <a href=\"/gnu_make/\">GNU Make</a>"
+  ],
+  [
+    "2021-12-07",
+    "New documentation: <a href=\"/prettier/\">Prettier</a>",
+    "Renamed documentation: <a href=\"/dom/\">Web APIs</a>"
+  ],
+  [
+    "2021-12-05",
+    "New documentation: <a href=\"/esbuild/\">esbuild</a>"
+  ],
+  [
+    "2021-12-04",
+    "New documentation: <a href=\"/vite/\">Vite</a>"
+  ],
+  [
+    "2021-11-29",
+    "New documentation: <a href=\"/i3/\">i3</a>"
+  ],
+  [
     "2021-06-09",
     "New documentation: <a href=\"/r/\">R</a>"
   ],

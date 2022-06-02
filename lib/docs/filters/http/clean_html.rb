@@ -2,7 +2,7 @@ module Docs
   class Http
     class CleanHtmlFilter < Filter
       def call
-        current_url.host == 'tools.ietf.org' ? ietf : mdn
+        current_url.host == 'datatracker.ietf.org' ? ietf : mdn
         doc
       end
 
@@ -43,7 +43,7 @@ module Docs
         end
 
         css('.selflink').each do |node|
-          node.parent['id'] = node['name']
+          node.parent['id'] = node['id']
           node.before(node.children).remove
         end
 

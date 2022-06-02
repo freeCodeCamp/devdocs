@@ -13,12 +13,17 @@ module Docs
             node.before(node.children).remove
           end
         else
-          @doc = at_css('#main')
+          @doc = at_css('#main, #main-content')
 
           css('.toggle-wrapper').remove
 
           css('h1.fqn').each do |node|
             node.content = node.at_css('.in-band').content
+          end
+
+          css('.main-heading > h1.fqn').each do |node|
+            node.parent.name = 'h1'
+            node.parent.content = node.content
           end
 
           css('.stability .stab').each do |node|

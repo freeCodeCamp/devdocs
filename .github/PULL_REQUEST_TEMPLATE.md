@@ -16,13 +16,13 @@ If you’re adding a new scraper, please ensure that you have:
   - [ ] `16@2x.png`: a 32×32 pixel icon for the doc
   - [ ] `SOURCE`: A text file containing the URL to the page the image can be found on or the URL of the original image itself
 
-<!-- SECTION B - Updating an existing documentation to it's latest version -->
+<!-- SECTION B - Updating an existing documentation to its latest version -->
 <!-- See https://github.com/freeCodeCamp/devdocs/blob/main/.github/CONTRIBUTING.md#updating-existing-documentations -->
 
-If you're updating an existing documentation to it's latest version, please ensure that you have:
+If you're updating existing documentation to its latest version, please ensure that you have:
 
 - [ ] Updated the versions and releases in the scraper file
-- [ ] Ensured the license is up-to-date and that the documentation's entry in the array in `about_tmpl.coffee` matches it's data in `self.attribution`
+- [ ] Ensured the license is up-to-date and that the documentation's entry in the array in `about_tmpl.coffee` matches its data in `self.attribution`
 - [ ] Ensured the icons and the `SOURCE` file in <code>public/icons/*your_scraper_name*/</code> are up-to-date if the documentation has a custom icon
 - [ ] Ensured `self.links` contains up-to-date urls if `self.links` is defined
 - [ ] Tested the changes locally to ensure:

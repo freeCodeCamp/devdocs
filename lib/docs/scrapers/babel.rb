@@ -30,7 +30,7 @@ module Docs
     HTML
 
     version '7' do
-      self.release = '7.14.8'
+      self.release = '7.16.4'
     end
 
     version '6' do

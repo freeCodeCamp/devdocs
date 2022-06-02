@@ -19,12 +19,17 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2003-2020 The Apache Software Foundation<br>
+      &copy; 2003-2022 The Apache Software Foundation<br>
       Licensed under the Apache license.
     HTML
 
+    version '4.0' do
+      self.release = '4.0.0'
+      self.base_url = "https://docs.groovy-lang.org/#{self.release}/html/gapi/"
+    end
+
     version '3.0' do
-      self.release = '3.0.7'
+      self.release = '3.0.9'
       self.base_url = "https://docs.groovy-lang.org/#{self.release}/html/gapi/"
     end
 
