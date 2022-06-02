@@ -6,7 +6,7 @@ module Docs
     self.initial_paths = %w(intro.html configuration.html management.html)
     self.links = {
       home: 'https://www.haproxy.org/',
-      code: 'https://github.com/haproxy/haproxy/'
+      code: 'https://github.com/haproxy/haproxy'
     }
 
     html_filters.push 'haproxy/clean_html', 'haproxy/entries'
@@ -19,6 +19,11 @@ module Docs
       &copy; 2021 Willy Tarreau, HAProxy contributors<br>
       Licensed under the GNU General Public License version 2.
     HTML
+
+    version '2.5' do
+      self.release = '2.5.0'
+      self.base_url = "https://cbonte.github.io/haproxy-dconv/#{self.version}/"
+    end
 
     version '2.4' do
       self.release = '2.4.0'
