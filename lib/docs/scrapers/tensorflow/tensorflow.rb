@@ -14,10 +14,15 @@ module Docs
     options[:container] = '.devsite-main-content'
 
     options[:attribution] = <<-HTML
-      &copy; 2020 The TensorFlow Authors. All rights reserved.<br>
+      &copy; 2022 The TensorFlow Authors. All rights reserved.<br>
       Licensed under the Creative Commons Attribution License 4.0.<br>
       Code samples licensed under the Apache 2.0 License.
     HTML
+
+    version '2.9' do
+      self.release = "2.9.1"
+      self.base_url = "https://www.tensorflow.org/versions/r#{version}/api_docs/python/tf"
+    end
 
     version '2.4' do
       self.release = "#{version}.0"
