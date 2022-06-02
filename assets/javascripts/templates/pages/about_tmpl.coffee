@@ -30,7 +30,6 @@ app.templates.aboutPage = -> """
 
   <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
   <ul>
-    <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
     <li><a href="https://github.com/egoist/devdocs-app">Desktop app</a>
     <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text package</a>
     <li><a href="https://atom.io/packages/devdocs">Atom package</a>
