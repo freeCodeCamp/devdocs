@@ -4,12 +4,6 @@ module Docs
 
     self.name = 'Docker'
     self.type = 'simple'
-    self.release = '20.10.6'
-
-    self.base_urls = [
-      'https://docs.docker.com/',
-      'https://docs.docker.com/machine/'
-    ]
 
     self.links = {
       home: 'https://docker.com/',
@@ -55,6 +49,15 @@ module Docs
       'compose/aspnet-mssql-compose/' => 'samples/aspnet-mssql-compose/',
       'engine/examples/dotnetcore/' => 'samples/dotnetcore/'
     }
+
+    version do
+      self.release = '20.10.16'
+      self.base_url = "https://docs.docker.com"
+      self.base_urls = [
+        'https://docs.docker.com/',
+        'https://docs.docker.com/machine/'
+      ]
+    end
 
     version '19' do
       self.release = '19.03'
