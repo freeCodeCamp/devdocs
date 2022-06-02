@@ -1,0 +1,4 @@
+._jasmine {
+    .subsection-title, h2 { @extend %block-heading; }
+    h4 { @extend %block-label, %label-blue; }
+}

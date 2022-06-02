@@ -2,26 +2,22 @@ module Docs
   class Jest
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.mainContainer .post')
+        at_css('.markdown').prepend_child(at_css('h1'))
+        @doc = at_css('.markdown')
 
-        at_css('h1').content = 'Jest' if root_page?
+        at_css('h1').content = 'Jest Documentation' if root_page?
 
-        css('.edit-page-link', '.hash-link', 'hr').remove
+        css('hr', '.hash-link', 'button', '.badge').remove
 
-        css('.postHeader', 'article', 'div:not([class])').each do |node|
-          node.before(node.children).remove
+        css('.prism-code').each do |node|
+          node.parent.parent.before(node)
+          node.name = 'pre'
+          node.remove_attribute('class')
+          node['data-language'] = 'typescript'
+          node.content = node.css('.token-line').map(&:content).join("\n")
         end
 
-        css('.anchor').each do |node|
-          node.parent['id'] = node['id']
-          node.remove
-        end
-
-        css('pre').each do |node|
-          node['data-language'] = 'js'
-          node['data-language'] = node['class'][/language-(\w+)/, 1] if node['class']
-          node.content = node.content
-        end
+        css('*').remove_attribute('style')
 
         doc
       end

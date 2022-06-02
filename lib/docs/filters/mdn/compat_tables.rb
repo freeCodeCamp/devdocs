@@ -2,6 +2,11 @@ module Docs
   class Mdn
     class CompatTablesFilter < Filter
 
+      # Generate browser compatibility table
+      # Fixes "BCD tables only load in the browser"
+      # https://github.com/mdn/browser-compat-data
+      # https://github.com/mdn/yari/tree/main/client/src/document/ingredients/browser-compatibility-table
+
       def call
         if at_css('#browser_compatibility') \
           and not at_css('#browser_compatibility').next_sibling.classes.include?('warning') \
@@ -33,6 +38,26 @@ module Docs
         'samsunginternet_android' => 'Samsung Internet'
       }
 
+      def is_javascript
+        current_url.to_s.start_with?('https://developer.mozilla.org/en-US/docs/Web/JavaScript')
+      end
+
+      def browsers
+        if is_javascript
+          {}.merge(BROWSERS).merge({'deno' => 'Deno', 'nodejs' => 'Node.js'})
+        else
+          BROWSERS
+        end
+      end
+
+      def browser_types
+        if is_javascript
+          {'Desktop'=>6, 'Mobile'=>6, 'Server'=>2,}
+        else
+          {'Desktop'=>6, 'Mobile'=>6,}
+        end
+      end
+
       def generate_compatibility_table()
         json_files_uri = request_bcd_uris()
 
@@ -46,7 +71,9 @@ module Docs
       end
 
       def request_bcd_uris
-        index_json = JSON.load(Net::HTTP.get(URI(current_url.to_s + '/index.json')))
+        url = current_url.to_s + '/index.json'
+        response = Request.run url
+        index_json = JSON.load response.body
 
         uris = []
 
@@ -63,9 +90,9 @@ module Docs
         return uris
       end
 
-      def generate_compatibility_table_wrapper(uri)
-
-        @json_data = JSON.load(Net::HTTP.get(URI(uri)))['data']
+      def generate_compatibility_table_wrapper(url)
+        response = Request.run url
+        @json_data = JSON.load(response.body)['data']
 
         html_table = generate_basic_html_table()
 
@@ -86,15 +113,15 @@ module Docs
 
         table.css('#bct-browser-type').each do |node|
           node.add_child('<th>')
-          %w(Desktop Mobile).each do |browser_type|
-            node.add_child("<th colspan=6>#{browser_type}")
+          browser_types.each do |browser_type, colspan|
+            node.add_child("<th colspan=#{colspan}>#{browser_type}")
           end
         end
 
         table.css('#bct-browsers').each do |node|
           node.add_child('<th>')
 
-          BROWSERS.values.each do |browser|
+          browsers.values.each do |browser|
             node.add_child("<th>#{browser}")
           end
         end
@@ -117,7 +144,7 @@ module Docs
         end
 
 
-        BROWSERS.keys.each do |browser_key|
+        browsers.keys.each do |browser_key|
           if key == '__compat'
             add_data_to_entry(json['support'][browser_key], last_table_entry)
           else
@@ -163,15 +190,14 @@ module Docs
 
           version_added.map! do |version|
             if version == true
-              version = 'Yes'
+              'Yes'
             elsif version == false
-              version = 'No'
+              'No'
             elsif version.is_a?(String)
+              version
             else
-              version = '?'
+              '?'
             end
-
-            version
           end
 
           if version_removed[0]
@@ -179,6 +205,8 @@ module Docs
           else
             if version_added[0] == 'No'
               format_string = "<td class=bc-supports-no>"
+            elsif version_added[0] == '?'
+              format_string = "<td class=bc-supports-unknown>"
             else
               format_string = "<td class=bc-supports-yes>"
             end
@@ -201,7 +229,7 @@ module Docs
           end
 
         else
-          format_string = "<td class=bc-supports-no><div>?</div></td>"
+          format_string = "<td class=bc-supports-unknown><div>?</div></td>"
         end
 
         entry.add_child(format_string)

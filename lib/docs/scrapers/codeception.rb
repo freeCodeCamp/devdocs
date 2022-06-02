@@ -2,7 +2,7 @@ module Docs
   class Codeception < UrlScraper
     self.name = 'Codeception'
     self.type = 'codeception'
-    self.release = '4.1.12'
+    self.release = '4.1.22'
     self.base_url = 'https://codeception.com/docs/'
     self.root_path = 'index.html'
     self.links = {
@@ -20,8 +20,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://codeception.com/changelog', opts)
-      doc.at_css('#page > h4').content
+      get_github_tags("Codeception", "Codeception", opts)[1]["name"]
     end
   end
 end

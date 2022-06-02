@@ -200,6 +200,8 @@ page.track = (fn) ->
 
 track = ->
   return unless app.config.env == 'production'
+  return if navigator.doNotTrack == '1'
+  return if navigator.globalPrivacyControl
 
   consentGiven = Cookies.get('analyticsConsent')
   consentAsked = Cookies.get('analyticsConsentAsked')

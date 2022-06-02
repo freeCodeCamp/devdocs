@@ -10,6 +10,12 @@ module Docs
           end
         end
 
+        css('section').each do |node|
+          node.children.each do |subnode|
+            node.previous = subnode
+          end
+        end
+
         doc
       end
     end

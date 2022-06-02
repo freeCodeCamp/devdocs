@@ -20,8 +20,9 @@ module Docs
       end
 
       def additional_entries
-        css('h3[id]').map do |node|
-          ["#{name}.#{node['name']}()", node['id']]
+        css('h3[id]').flat_map do |node|
+          return [] unless node['name']
+          [["#{name}.#{node['name']}()", node['id']]]
         end
       end
     end

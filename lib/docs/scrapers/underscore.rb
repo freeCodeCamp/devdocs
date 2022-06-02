@@ -3,7 +3,7 @@ module Docs
     self.name = 'Underscore.js'
     self.slug = 'underscore'
     self.type = 'underscore'
-    self.release = '1.12.0'
+    self.release = '1.13.1'
     self.base_url = 'https://underscorejs.org'
     self.links = {
       home: 'https://underscorejs.org',
@@ -17,7 +17,7 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2009&ndash;2020 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors<br>
+      &copy; 2009&ndash;2021 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors<br>
       Licensed under the MIT License.
     HTML
 

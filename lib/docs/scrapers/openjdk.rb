@@ -28,7 +28,7 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 1993, 2020, Oracle and/or its affiliates. All rights reserved.<br>
+      &copy; 1993, 2022, Oracle and/or its affiliates. All rights reserved.<br>
       Documentation extracted from Debian's OpenJDK Development Kit package.<br>
       Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>
       Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>
@@ -37,10 +37,20 @@ module Docs
 
     NEWFILTERS = ['openjdk/entries_new', 'openjdk/clean_html_new']
 
-    version '15' do
-      self.release = '15.0.1'
+    version '18' do
+      self.release = '18'
       self.root_path = 'index.html'
-      self.base_url = 'https://docs.oracle.com/en/java/javase/15/docs/api/'
+      self.base_url = 'https://docs.oracle.com/en/java/javase/18/docs/api/'
+
+      html_filters.push NEWFILTERS
+
+      options[:container] = 'main'
+    end
+
+    version '17' do
+      self.release = '17'
+      self.root_path = 'index.html'
+      self.base_url = 'https://docs.oracle.com/en/java/javase/17/docs/api/'
 
       html_filters.push NEWFILTERS
 
@@ -50,7 +60,7 @@ module Docs
     OLDFILTERS = ['openjdk/entries', 'openjdk/clean_html']
 
     version '11' do
-      self.release = '11.0.10'
+      self.release = '11.0.11'
       self.root_path = 'index.html'
       self.base_url = 'https://docs.oracle.com/en/java/javase/11/docs/api/'
 
@@ -132,23 +142,11 @@ module Docs
     end
 
     def get_latest_version(opts)
-      latest_version = 8
-      current_attempt = latest_version
-      attempts = 0
-
-      while attempts < 3
-        current_attempt += 1
-
-        doc = fetch_doc("https://packages.debian.org/sid/openjdk-#{current_attempt}-doc", opts)
-        if doc.at_css('.perror').nil?
-          latest_version = current_attempt
-          attempts = 0
-        else
-          attempts += 1
-        end
-      end
-
-      latest_version
+      doc = fetch_doc("https://jdk.java.net/archive/", opts)
+      version = doc.at_css('#downloads > table > tr > th').content
+      version.gsub!(/\(.*\)/, '')
+      version.gsub!(/[a-zA-z]/, '')
+      version
     end
   end
 end

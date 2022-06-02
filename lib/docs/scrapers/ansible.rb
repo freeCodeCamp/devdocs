@@ -32,6 +32,10 @@ module Docs
       /\Aroadmap.*/i,
     ]
 
+    version do
+      self.base_url = "https://docs.ansible.com/ansible/latest/"
+    end
+
     version '2.11' do
       self.release = '2.11.0'
       self.base_url = "https://docs.ansible.com/ansible/#{version}/"

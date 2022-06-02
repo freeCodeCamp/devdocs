@@ -38,7 +38,7 @@ module Docs
       path = path.downcase
 
       if context[:decode_and_clean_paths]
-        path = URI.unescape(path)
+        path = CGI.unescape(path)
         path = clean_path(path)
       end
 

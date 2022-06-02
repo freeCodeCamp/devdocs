@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve Devdocs
+about: Create a report to help us improve DevDocs
 title: ''
 labels: 'bug'
 assignees: ''
@@ -34,7 +34,7 @@ encountered it
 ## More resources
 
 <!--
-Add images, GIFs, screenshot, console output or any other resource that might help to undestand this bug
+Add images, GIFs, screenshot, console output or any other resource that might help to understand this bug
 -->
 
 ## Possible fix

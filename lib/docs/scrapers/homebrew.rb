@@ -2,7 +2,7 @@ module Docs
   class Homebrew < UrlScraper
     self.name = 'Homebrew'
     self.type = 'simple'
-    self.release = '3.1.2'
+    self.release = '3.3.11'
     self.base_url = 'https://docs.brew.sh/'
     self.links = {
       home: 'https://brew.sh',

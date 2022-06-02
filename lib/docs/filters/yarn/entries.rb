@@ -13,8 +13,7 @@ module Docs
 
       def get_type
         type = at_css('.guide-nav a').content.strip
-        type.remove! ' Introduction'
-        type
+        type.sub 'CLI Introduction', 'CLI Commands'
       end
     end
   end

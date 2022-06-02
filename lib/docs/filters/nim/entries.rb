@@ -53,7 +53,7 @@ module Docs
 
         else
 
-          css('.simple-toc-section a').each do |node|
+          css('.simple-toc-section a, .nested-toc-section a').each do |node|
             entry_name = node.content
             entry_name.gsub!(/,.*/, '')
             entry_id = slug + node['href']

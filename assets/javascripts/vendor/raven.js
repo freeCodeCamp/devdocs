@@ -2222,7 +2222,7 @@ function urlencode(o) {
   return pairs.join('&');
 }
 
-// borrowed from https://tools.ietf.org/html/rfc3986#appendix-B
+// borrowed from https://datatracker.ietf.org/doc/html/rfc3986#appendix-B
 // intentionally using regex and not <a/> href parsing trick because React Native and other
 // environments where DOM might not be available
 function parseUrl(url) {

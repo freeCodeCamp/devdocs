@@ -13,12 +13,17 @@ module Docs
             node.before(node.children).remove
           end
         else
-          @doc = at_css('#main')
+          @doc = at_css('#main, #main-content')
 
           css('.toggle-wrapper').remove
 
           css('h1.fqn').each do |node|
             node.content = node.at_css('.in-band').content
+          end
+
+          css('.main-heading > h1.fqn').each do |node|
+            node.parent.name = 'h1'
+            node.parent.content = node.content
           end
 
           css('.stability .stab').each do |node|
@@ -43,6 +48,11 @@ module Docs
 
         css('.docblock.attributes').each do |node|
           node.remove if node.content.include?('#[must_use]')
+        end
+
+        css('details').each do |node|
+          node.css('summary:contains("Expand description")').remove
+          node.before(node.children).remove
         end
 
         css('a.header').each do |node|
@@ -101,8 +111,8 @@ module Docs
           node.previous_element.before(node)
         end
 
+        css('#copy-path').remove
         css('.sidebar').remove
-
         css('.collapse-toggle').remove
 
         doc

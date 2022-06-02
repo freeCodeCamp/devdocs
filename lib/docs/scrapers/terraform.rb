@@ -20,8 +20,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      contents = get_github_file_contents('hashicorp', 'terraform-website', 'content/config.rb', opts)
-      contents.scan(/version\s+=\s+"([0-9.]+)"/)[0][0]
+      contents = get_latest_github_release('hashicorp', 'terraform', opts)
+      contents.sub("v", "")
     end
   end
 end

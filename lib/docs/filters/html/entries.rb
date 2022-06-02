@@ -1,7 +1,6 @@
 module Docs
   class Html
     class EntriesFilter < Docs::EntriesFilter
-      OBSOLETE = %w(frame frameset hgroup noframes)
       ADDITIONAL_ENTRIES = { 'Element/Heading_Elements' => (1..6).map { |n| ["h#{n}"] } }
 
       def get_name
@@ -15,10 +14,10 @@ module Docs
       def get_type
         return 'Miscellaneous' if slug.include?('CORS') || slug.include?('Using')
 
-        if slug.start_with?('Global_attr')
+        if at_css('.deprecated', '.non-standard', '.obsolete')
+        'Obsolete'
+        elsif slug.start_with?('Global_attr')
           'Attributes'
-        elsif at_css('#deprecated', '#non-standard', '#obsolete') || OBSOLETE.include?(slug.remove('Element/'))
-          'Obsolete'
         elsif slug.start_with?('Element/')
           'Elements'
         else
@@ -38,12 +37,14 @@ module Docs
           css('.standard-table td:first-child').each_with_object [] do |node, entries|
             next if node.next_element.content.include?('Global attribute')
             name = "#{node.content.strip} (attribute)"
+            name = "#{node.at_css('code').content.strip} (attribute)" if node.at_css('code')
             id = node.parent['id'] = name.parameterize
             entries << [name, id, 'Attributes']
           end
         elsif slug == 'Link_types'
           css('.standard-table td:first-child > code').map do |node|
             name = node.content.strip
+            name = "#{node.at_css('code').content.strip} (attribute)" if node.at_css('code')
             id = node.parent.parent['id'] = name.parameterize
             name.prepend 'rel: '
             [name, id, 'Attributes']

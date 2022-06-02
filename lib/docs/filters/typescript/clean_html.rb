@@ -30,12 +30,14 @@ module Docs
           @doc = at_css('article > .whitespace > .markdown')
           doc.child.before(deprecated) if deprecated
         else # tsconfig page
-          @doc = at_css('.markdown > div')
-
-          at_css('h2').remove
         end
 
         css('.anchor', 'a:contains("Try")', 'h2 a', 'h3 a', 'svg', '#full-option-list').remove
+
+        # tsconfig page
+        css('.markdown', '.compiler-option', '.compiler-option-md', '.compiler-content').each do |node|
+          node.remove_attribute('class')
+        end
 
         css('pre').each do |node|
           language = node.at_css('.language-id') ? node.at_css('.language-id').content : 'typescript'

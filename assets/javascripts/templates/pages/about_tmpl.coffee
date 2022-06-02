@@ -30,7 +30,6 @@ app.templates.aboutPage = -> """
 
   <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
   <ul>
-    <li><a href="https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe">Chrome web app</a>
     <li><a href="https://github.com/egoist/devdocs-app">Desktop app</a>
     <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text package</a>
     <li><a href="https://atom.io/packages/devdocs">Atom package</a>
@@ -82,15 +81,16 @@ app.templates.aboutPage = -> """
 """
 
 credits = [
-  [ 'Angular.js',
+  [
+    'Angular',
+    '2010-2022 Google, Inc.',
+    'CC BY',
+    'https://creativecommons.org/licenses/by/4.0/'
+  ], [
+    'Angular.js',
     '2010-2020 Google, Inc.',
     'CC BY 3.0',
     'https://creativecommons.org/licenses/by/3.0/'
-  ], [
-    'Angular',
-    '2010-2021 Google, Inc.',
-    'CC BY',
-    'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Ansible',
     '2012-2018 Michael DeHaan<br>&copy; 2018–2021 Red Hat, Inc.',
@@ -108,9 +108,9 @@ credits = [
     'https://raw.githubusercontent.com/caolan/async/master/LICENSE'
   ], [
     'Babel',
-    '2018 Sebastian McKenzie',
+    '2014-present Sebastian McKenzie',
     'MIT',
-    'https://raw.githubusercontent.com/babel/website/master/LICENSE'
+    'https://raw.githubusercontent.com/babel/babel/master/LICENSE'
   ], [
     'Backbone.js',
     '2010-2019 Jeremy Ashkenas, DocumentCloud',
@@ -183,12 +183,12 @@ credits = [
     'https://raw.githubusercontent.com/Codeception/CodeceptJS/master/LICENSE'
   ], [
     'CodeIgniter',
-    '2014-2020 British Columbia Institute of Technology',
+    '2014-2021 British Columbia Institute of Technology',
     'MIT',
     'https://raw.githubusercontent.com/bcit-ci/CodeIgniter/develop/license.txt'
   ], [
     'CoffeeScript',
-    '2009-2020 Jeremy Ashkenas',
+    '2009-2022 Jeremy Ashkenas',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/coffeescript/master/LICENSE'
   ], [
@@ -202,15 +202,15 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE'
   ], [
-    'CSS<br>DOM<br>HTTP<br>HTML<br>JavaScript<br>SVG<br>XPath',
-    '2005-2021 MDN contributors',
-    'CC BY-SA',
-    'https://creativecommons.org/licenses/by-sa/2.5/'
-  ], [
     'Crystal',
-    '2012-2021 Manas Technology Solutions',
+    '2012-2022 Manas Technology Solutions',
     'Apache',
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
+  ], [
+    'CSS<br>DOM<br>HTTP<br>HTML<br>JavaScript<br>SVG<br>XPath',
+    '2005-2022 MDN contributors',
+    'CC BY-SA',
+    'https://creativecommons.org/licenses/by-sa/2.5/'
   ], [
     'Cypress',
     '2017 Cypress.io',
@@ -223,7 +223,7 @@ credits = [
     'https://raw.githubusercontent.com/dlang/phobos/master/LICENSE_1_0.txt'
   ], [
     'D3.js',
-    '2010-2020 Michael Bostock',
+    '2010-2022 Michael Bostock',
     'BSD',
     'https://raw.githubusercontent.com/d3/d3/master/LICENSE'
   ], [
@@ -231,6 +231,11 @@ credits = [
     '2012 the Dart project authors',
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/4.0/'
+  ], [
+    'Deno',
+    '2018–2022 the Deno authors',
+    'MIT',
+    'https://raw.githubusercontent.com/denoland/manual/main/LICENSE'
   ], [
     'Django',
     'Django Software Foundation and individual contributors',
@@ -256,21 +261,26 @@ credits = [
     '2001-2015 by the original authors<br>Drupal is a registered trademark of Dries Buytaert.',
     'GPLv2',
     'https://api.drupal.org/api/drupal/LICENSE.txt'
+  ],[
+    'Eigen3',
+    'Eigen',
+    'MPL2',
+    'https://www.mozilla.org/en-US/MPL/2.0/'
   ], [
     'Electron',
     'GitHub Inc.',
     'MIT',
     'https://raw.githubusercontent.com/electron/electron/master/LICENSE'
   ], [
-    'Elixir',
-    '2012 Plataformatec',
-    'Apache',
-    'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
-  ], [
     'Elisp',
     '1990-1996, 1998-2021 Free Software Foundation, Inc.',
     'GPLv3',
     'https://www.gnu.org/licenses/gpl-3.0.html'
+  ], [
+    'Elixir',
+    '2012 Plataformatec',
+    'Apache',
+    'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
   ], [
     'Ember.js',
     '2020 Yehuda Katz, Tom Dale and Ember.js contributors',
@@ -287,8 +297,13 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/erlang/otp/maint/LICENSE.txt'
   ], [
+    'esbulid',
+    '2020 Evan Wallace',
+    'MIT',
+    'https://raw.githubusercontent.com/evanw/esbuild/blob/master/LICENSE.md'
+  ], [
     'ESLint',
-    'JS Foundation and other contributors',
+    'OpenJS Foundation and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/eslint/eslint/master/LICENSE'
   ], [
@@ -303,22 +318,22 @@ credits = [
     'https://raw.githubusercontent.com/falconry/falcon/master/LICENSE'
   ], [
     'Fish',
-    '2005-2009 Axel Liljencrantz, 2009-2020 fish-shell contributors',
+    '2005–2009 Axel Liljencrantz, 2009–2022 fish-shell contributors',
     'GPLv2',
     'https://fishshell.com/docs/current/license.html'
   ], [
     'Flask',
-    '2007-2021 Pallets',
+    '2007-2022 Pallets',
     'BSD',
     'https://github.com/pallets/flask/blob/master/LICENSE.rst'
   ], [
-    'GCC<br>GNU Fortran',
+    'GCC<br>GNU Fortran<br>GNU Make',
     'Free Software Foundation',
     'GFDL',
     'https://www.gnu.org/licenses/fdl-1.3.en.html'
   ], [
     'Git',
-    '2012-2021 Scott Chacon and others',
+    '2012-2022 Scott Chacon and others',
     'MIT',
     'https://raw.githubusercontent.com/git/git-scm.com/master/MIT-LICENSE.txt'
   ], [
@@ -348,7 +363,7 @@ credits = [
     'https://raw.githubusercontent.com/graphite-project/graphite-web/master/LICENSE'
   ], [
     'Groovy',
-    '2003-2020 The Apache Software Foundation',
+    '2003-2022 The Apache Software Foundation',
     'Apache',
     'https://github.com/apache/groovy-website/blob/asf-site/LICENSE'
   ], [
@@ -387,10 +402,15 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/Homebrew/brew/master/LICENSE.txt'
   ], [
-    'Immutable.js',
-    '2014-2016 Facebook, Inc.',
+    'i3',
+    '2009, Michael Stapelberg and contributors',
     'BSD',
-    'https://raw.githubusercontent.com/facebook/immutable-js/master/LICENSE'
+    'https://raw.githubusercontent.com/i3/i3/next/LICENSE'
+  ], [
+    'Immutable.js',
+    '2014–present Lee Byron and other contributors',
+    'BSD',
+    'https://github.com/immutable-js/immutable-js/blob/main/LICENSE'
   ], [
     'InfluxData',
     '2015 InfluxData, Inc.',
@@ -408,7 +428,7 @@ credits = [
     'https://raw.githubusercontent.com/jekyll/jekyll/master/LICENSE'
   ], [
     'Jest',
-    '2020 Facebook, Inc.',
+    '2022 Facebook, Inc.',
     'MIT',
     'https://raw.githubusercontent.com/facebook/jest/master/LICENSE'
   ], [
@@ -437,15 +457,15 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/jquery/api.jqueryui.com/master/LICENSE.txt'
   ], [
-    'Julia',
-    '2009-2021 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
-    'MIT',
-    'https://raw.githubusercontent.com/JuliaLang/julia/master/LICENSE.md'
-  ], [
     'JSDoc',
     '2011-2017 the contributors to the JSDoc 3 documentation project',
     'CC BY-SA',
     'https://raw.githubusercontent.com/jsdoc3/jsdoc3.github.com/master/LICENSE'
+  ], [
+    'Julia',
+    '2009-2021 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/JuliaLang/julia/master/LICENSE.md'
   ], [
     'Knockout.js',
     'Steven Sanderson, the Knockout.js team, and other contributors',
@@ -458,9 +478,14 @@ credits = [
     'https://raw.githubusercontent.com/koajs/koa/master/LICENSE'
   ], [
     'Kotlin',
-    '2010-2020 JetBrains s.r.o. and Kotlin Programming Language contributors',
+    '2010-2022 JetBrains s.r.o. and Kotlin Programming Language contributors',
     'Apache',
     'https://raw.githubusercontent.com/JetBrains/kotlin/master/license/LICENSE.txt'
+  ], [
+    'Kubernetes',
+    '2022 The Kubernetes Authors and The Linux Foundation',
+    'Apache License 2.0',
+    'https://github.com/kubernetes/kubernetes/blob/master/LICENSE'
   ], [
     'Laravel',
     'Taylor Otwell',
@@ -473,7 +498,7 @@ credits = [
     'https://ctan.org/pkg/latex2e-help-texinfo/'
   ], [
     'Leaflet',
-    '2010-2019 Vladimir Agafonkin<br>&copy; 2010-2011, CloudMade<br>Maps &copy; OpenStreetMap contributors.',
+    '2010-2022 Vladimir Agafonkin<br>&copy; 2010-2011, CloudMade<br>Maps &copy; OpenStreetMap contributors.',
     'BSD',
     'https://raw.githubusercontent.com/Leaflet/Leaflet/master/LICENSE'
   ], [
@@ -497,8 +522,8 @@ credits = [
     'MIT',
     'http://www.lua.org/license.html'
   ], [
-    'L&Ouml;VE',
-    '2006-2020 L&Ouml;VE Development Team',
+    'LÖVE',
+    '2006-2020 LÖVE Development Team',
     'GFDL',
     'http://www.gnu.org/copyleft/fdl.html'
   ], [
@@ -553,7 +578,7 @@ credits = [
     'https://github.com/LearnBoost/mongoose/blob/master/README.md#license'
   ], [
     'nginx',
-    '2002-2021 Igor Sysoev<br>&copy; 2011-2021 Nginx, Inc.',
+    '2002-2021 Igor Sysoev<br>&copy; 2011-2022 Nginx, Inc.',
     'BSD',
     'http://nginx.org/LICENSE'
   ], [
@@ -563,9 +588,14 @@ credits = [
     'https://github.com/openresty/lua-nginx-module#copyright-and-license'
   ], [
     'Nim',
-    '2006-2020 Andreas Rumpf',
+    '2006-2021 Andreas Rumpf',
     'MIT',
     'https://github.com/nim-lang/Nim#license'
+  ], [
+    'Nix',
+    '2022 NixOS Contributors',
+    'LGPLv2.1',
+    'https://github.com/NixOS/nix#license'
   ], [
     'Node.js',
     'Joyent, Inc. and other Node contributors<br>Node.js is a trademark of Joyent, Inc.',
@@ -573,7 +603,7 @@ credits = [
     'https://raw.githubusercontent.com/nodejs/node/master/LICENSE'
   ], [
     'Nokogiri',
-    '2008-2018 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori MUSHA, John Shahid, Lars Kanis',
+    '2008–2021 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori MUSHA, John Shahid, Lars Kanis',
     'MIT',
     'https://raw.githubusercontent.com/sparklemotion/nokogiri/master/LICENSE.md'
   ], [
@@ -588,17 +618,17 @@ credits = [
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
   ], [
     'OCaml',
-    '1995-2021 INRIA',
+    '1995-2022 INRIA',
     'CC BY-SA',
     'https://ocaml.org/docs/'
   ], [
     'Octave',
-    '1996-2018 John W. Eaton',
+    '1996–2022 The Octave Project Developers',
     'Octave',
-    'https://octave.org/doc/interpreter/'
+    'https://octave.org/doc/v7.1.0/'
   ], [
     'OpenJDK',
-    '1993, 2020, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
+    '1993, 2022, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
     'GPLv2',
     'http://openjdk.java.net/legal/gplv2+ce.html'
   ], [
@@ -613,12 +643,12 @@ credits = [
     'https://raw.githubusercontent.com/padrino/padrino-framework/master/padrino/LICENSE.txt'
   ], [
     'pandas',
-    '2008-2020, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team',
+    '2008-2022, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team',
     'BSD',
     'https://raw.githubusercontent.com/pydata/pandas/master/LICENSE'
   ], [
     'Perl',
-    '1993-2020 Larry Wall and others',
+    '1993-2021 Larry Wall and others',
     'GPLv1',
     'https://perldoc.perl.org/index-licence.html'
   ], [
@@ -638,7 +668,7 @@ credits = [
     'https://raw.githubusercontent.com/phoenixframework/phoenix/master/LICENSE.md'
   ], [
     'PHP',
-    '1997-2018 The PHP Documentation Group',
+    '1997-2021 The PHP Documentation Group',
     'CC BY',
     'https://secure.php.net/manual/en/copyright.php'
   ], [
@@ -647,15 +677,25 @@ credits = [
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
+    'PointCloudLibrary',
+    '2009–2012, Willow Garage, Inc.<br>&copy; 2012–, Open Perception, Inc.',
+    'BSD',
+    'https://raw.githubusercontent.com/PointCloudLibrary/pcl/master/LICENSE.txt'
+  ], [
     'Pony',
     '2016-2020, The Pony Developers & 2014-2015, Causality Ltd.',
     'BSD',
     'https://raw.githubusercontent.com/ponylang/ponyc/master/LICENSE'
   ], [
     'PostgreSQL',
-    '1996-2021 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
+    '1996-2022 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
+  ], [
+    'Prettier',
+    'James Long and contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/prettier/prettier/main/LICENSE '
   ], [
     'Puppeteer',
     '2021 Google Inc',
@@ -668,7 +708,7 @@ credits = [
     'https://raw.githubusercontent.com/pygame/pygame/master/LICENSE'
   ], [
     'Python',
-    '2001-2021 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
+    '2001-2022 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
     'PSFL',
     'https://docs.python.org/3/license.html'
   ], [
@@ -687,13 +727,18 @@ credits = [
     'GFDL',
     'https://doc.qt.io/qt-5/licensing.html'
   ], [
+    'R',
+    '1999–2012 R Foundation for Statistical Computing',
+    'GPL',
+    'https://svn.r-project.org/R/trunk/COPYING'
+  ], [
     'Ramda',
     '2013-2020 Scott Sauyet and Michael Hurley',
     'MIT',
     'https://raw.githubusercontent.com/ramda/ramda/master/LICENSE.txt'
   ], [
     'React, React Native, Flow, Relay',
-    '2013-present Facebook Inc.',
+    'Facebook Inc. and its affiliates',
     'MIT',
     'https://raw.githubusercontent.com/facebook/react/master/LICENSE'
   ], [
@@ -701,6 +746,11 @@ credits = [
     '2014-present Stephen J. Collings, Matthew Honnibal, Pieter Vanderwerff',
     'MIT',
     'https://raw.githubusercontent.com/react-bootstrap/react-bootstrap/master/LICENSE'
+  ], [
+    'React Router',
+    'React Training 2015-2019<br>Remix Software 2020-2022',
+    'MIT',
+    'https://raw.githubusercontent.com/remix-run/react-router/main/LICENSE.md'
   ], [
     'ReactiveX',
     'ReactiveX contributors',
@@ -713,7 +763,7 @@ credits = [
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
     'Redux',
-    '2015-2020 Dan Abramov',
+    '2015-2022 Dan Abramov',
     'MIT',
     'https://raw.githubusercontent.com/reactjs/redux/master/LICENSE.md'
   ], [
@@ -728,12 +778,12 @@ credits = [
     'https://raw.githubusercontent.com/rethinkdb/docs/master/LICENSE'
   ], [
     'Ruby',
-    '1993-2017 Yukihiro Matsumoto',
+    '1993-2022 Yukihiro Matsumoto',
     'Ruby',
     'https://www.ruby-lang.org/en/about/license.txt'
   ], [
     'Ruby on Rails',
-    '2004-2020 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.',
+    '2004-2021 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.',
     'MIT',
     'https://raw.githubusercontent.com/rails/rails/master/activerecord/MIT-LICENSE'
   ], [
@@ -743,7 +793,7 @@ credits = [
     'https://raw.githubusercontent.com/rust-lang/book/master/LICENSE-MIT'
   ], [
     'RxJS',
-    '2015-2021 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors',
+    '2015-2022 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors',
     'Apache',
     'https://raw.githubusercontent.com/ReactiveX/rxjs/master/LICENSE.txt'
   ], [
@@ -758,9 +808,9 @@ credits = [
     'https://raw.githubusercontent.com/sass/sass/stable/MIT-LICENSE'
   ], [
     'Scala',
-    '2002-2019 EPFL, with contributions from Lightbend',
+    '2002-2022 EPFL, with contributions from Lightbend',
     'Apache',
-    'https://raw.githubusercontent.com/scala/scala-lang/master/license.md'
+    'https://www.scala-lang.org/license/'
   ], [
     'scikit-image',
     '2019 the scikit-image team',
@@ -772,20 +822,25 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/scikit-learn/scikit-learn/master/COPYING'
   ], [
-    'Sinon',
-    '2010-2021 Christian Johansen',
-    'BSD',
-    'https://raw.githubusercontent.com/sinonjs/sinon/master/LICENSE'
-  ], [
     'Sequelize',
     '2014—present Sequelize contributors',
     'MIT',
     'https://raw.githubusercontent.com/sequelize/sequelize/master/LICENSE'
   ], [
+    'Sinon',
+    '2010-2021 Christian Johansen',
+    'BSD',
+    'https://raw.githubusercontent.com/sinonjs/sinon/master/LICENSE'
+  ], [
     'Socket.io',
     '2014-2018 Automattic',
     'MIT',
     'https://raw.githubusercontent.com/Automattic/socket.io/master/LICENSE'
+  ], [
+    'Spring Boot',
+    '2002-2022 Pivotal, Inc. All Rights Reserved.',
+    'Apache License 2.0',
+    'https://raw.githubusercontent.com/spring-projects/spring-boot/master/LICENSE.txt'
   ], [
     'SQLite',
     'n/a',
@@ -802,13 +857,18 @@ credits = [
     'MIT',
     'https://symfony.com/doc/current/contributing/code/license.html'
   ], [
+    'TailwindCSS',
+    '2022 Tailwind Labs, Inc.',
+    'MIT',
+    'https://raw.githubusercontent.com/tailwindlabs/tailwindcss/master/LICENSE'
+  ], [
     'Tcl/Tk',
     'The Regents of the University of California, Sun Microsystems, Inc., Scriptics Corporation, and other parties',
     'Tcl/Tk',
     'http://tcl.tk/software/tcltk/license.html'
   ], [
     'TensorFlow',
-    '2020 The TensorFlow Authors',
+    '2022 The TensorFlow Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
@@ -828,12 +888,12 @@ credits = [
     'https://twig.symfony.com/license'
   ], [
     'TypeScript',
-    '2012-2021 Microsoft',
+    '2012-2022 Microsoft',
     'Apache',
     'https://raw.githubusercontent.com/Microsoft/TypeScript-Handbook/master/LICENSE'
   ], [
     'Underscore.js',
-    '2009-2020 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
+    '2009-2021 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/underscore/master/LICENSE'
   ], [
@@ -841,6 +901,11 @@ credits = [
     '2010-2018 Mitchell Hashimoto',
     'MPL',
     'https://raw.githubusercontent.com/mitchellh/vagrant/master/website/LICENSE.md'
+  ], [
+    'Vite',
+    '2019–present, Yuxi (Evan) You and Vite contributors',
+    'MIT',
+    'https://github.com/vitejs/vite/blob/main/LICENSE'
   ], [
     'Vue Router',
     '2013-present Evan You',
@@ -868,12 +933,12 @@ credits = [
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
     'Werkzeug',
-    '2007-2021 Pallets',
+    '2007-2022 Pallets',
     'BSD',
     'https://github.com/pallets/werkzeug/blob/master/LICENSE.rst'
   ], [
     'Wordpress',
-    '2003-2021 WordPress Foundation',
+    '2003-2022 WordPress Foundation',
     'GPLv2+',
     'https://wordpress.org/about/license/'
   ], [
@@ -887,9 +952,9 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/yiisoft/yii/master/LICENSE'
   ], [
-    'Spring Boot',
-    '2002-2020 Pivotal, Inc. All Rights Reserved.',
-    'Apache License 2.0',
-    'https://raw.githubusercontent.com/spring-projects/spring-boot/master/LICENSE.txt'
+    'Zig',
+    '2015–2021, Zig contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/ziglang/zig/master/LICENSE'
   ]
 ]

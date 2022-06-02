@@ -23,6 +23,9 @@ module Docs
           node['data-language'] = 'python'
         end
 
+        # table of contents "on this page"
+        css('.toc-item').remove
+
         # sidebar
         css('ul.nav.bd-sidenav').remove
 
@@ -30,8 +33,7 @@ module Docs
         css('.headerlink').remove
 
         # next and previous section buttons
-        css('next-link').remove
-        css('prev-link').remove
+        css('.prev-next-area').remove
 
         css('footer').remove
 

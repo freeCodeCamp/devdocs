@@ -4,6 +4,8 @@ module Docs
       def call
 
         @doc = at_css('main')
+        at_css('.bd-content').prepend_child(at_css('h1').remove)
+        @doc = at_css('.bd-content')
 
         # Toc
         css('.bd-toc').remove

@@ -13,7 +13,7 @@ module Docs
     }
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2021 MDN contributors.<br>
+      &copy; 2005&ndash;2022 MDN contributors.<br>
       Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.
     HTML
 

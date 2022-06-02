@@ -1,21 +1,24 @@
 module Docs
   class Immutable
     class EntriesFilter < Docs::EntriesFilter
+      def get_name
+        at_css('h1').content
+      end
+
+      def get_type
+        return 'Util' if slug.match?(/^([a-z]|Range|Repeat)/)
+        at_css('h1').content
+      end
+
       def additional_entries
+        return [] if root_page?
         entries = []
-        type = nil
-
-        css('*').each do |node|
-          if node.name == 'h1'
-            name = node.content
-            type = node.content.split('.').first
-            entries << [name, node['id'], type]
-          elsif node.name == 'h3'
-            name = node.content
-            entries << [name, node['id'], type]
-          end
+        css('h2, h3, h4').each do |node|
+          name = node.content
+          id = node.parent['id']
+          next unless id
+          entries << ["#{type}.#{name}", id, type]
         end
-
         entries
       end
     end

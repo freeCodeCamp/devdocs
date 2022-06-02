@@ -3,7 +3,7 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = at_css('h1').content
-        name.remove! '# '
+        name.sub! %r{#\s*}, ''
         name
       end
 
@@ -34,9 +34,9 @@ module Docs
           title = node
           title = title.previous_element until title.name == 'h2'
           title = title.content.strip
-          title.remove! '# '
+          title.sub! %r{#\s*}, ''
 
-          entry_name.remove! '# '
+          entry_name.sub! %r{#\s*}, ''
 
           case title
           when 'Router Construction Options'

@@ -13,7 +13,7 @@ module Docs
           node['id'] = nodeId
         end
 
-        css('.docinfo', '.footer', 'blockquote > p:empty', '.link-seesrc').remove
+        css('.docinfo', '.footer', 'blockquote > p:empty').remove
 
         css('h1:not(.title), h2, h3, h4').each do |node|
           node.name = node.name.sub(/\d/) { |i| i.to_i + 1 }

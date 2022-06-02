@@ -12,7 +12,7 @@ module Docs
 
     html_filters.push 'matplotlib/entries', 'sphinx/clean_html'
 
-    options[:container] = '.body'
+    options[:container] = '.body, section'
     options[:skip] = %w(api_changes.html tutorial.html faq.html)
 
     options[:attribution] = <<-HTML
@@ -20,8 +20,17 @@ module Docs
       Licensed under the Matplotlib License Agreement.
     HTML
 
+    version '3.5' do
+      self.release = '3.5.1'
+      self.base_urls = [
+        "https://matplotlib.org/#{release}/api/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
+      ]
+    end
+
     version '3.4' do
-      self.release = '3.4.1'
+      self.release = '3.4.3'
       self.base_urls = [
         "https://matplotlib.org/#{release}/api/",
         "https://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",

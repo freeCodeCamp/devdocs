@@ -10,9 +10,8 @@ Want to contribute? Great. Please review the following guidelines carefully and 
 4. [Contributing code and features](#contributing-code-and-features)
 5. [Contributing new documentations](#contributing-new-documentations)
 6. [Updating existing documentations](#updating-existing-documentations)
-7. [Other contributions](#other-contributions)
-8. [Coding conventions](#coding-conventions)
-9. [Questions?](#questions)
+7. [Coding conventions](#coding-conventions)
+8. [Questions?](#questions)
 
 ## Reporting bugs
 

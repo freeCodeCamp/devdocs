@@ -60,6 +60,8 @@ Configuration is done via class attributes and divided into three main categorie
    Defaults to `localhost` in `FileScraper`. _(Note: any iframe, image, or skipped link pointing to localhost will be removed by the `CleanLocalUrls` filter; the value should be overridden if the documents are available online.)_
   Unless `root_path` is set, the root/initial URL is equal to `base_url`.
 
+* `base_urls` [Array] **(the `MultipleBaseUrls` module must be included)** Documentation's locations. Almost the same as `base_url` but in this case more than one URL can be added, should be used when a documentation is split in different URLs or needs more URLs to be completed. See [`typescript.rb`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/scrapers/typescript.rb).
+
 * `root_path` [String] **(inherited)**
   The path from the `base_url` of the root URL.
 
@@ -184,6 +186,30 @@ More information about how filters work is available on the [Filter Reference](.
     Overrides the `:title` option for the root page only.
 
   _Note: this filter is disabled by default._
+
+### Processing responses before filters
+
+These methods are runned before filter stacks, and can directly process responses.
+
+* `process_response?(response)`
+
+  Determine whether a response should be processed. A response will be dropped if this method returns `false`.
+
+  It is useful to filter pages, such as empty, invalid, or redirecting pages, depending on the content.
+
+  Example: [lib/docs/scrapers/kotlin.rb](../lib/docs/scrapers/kotlin.rb)
+
+
+* `parse(response)`
+
+  Parse HTTP/File response, and convert to a Nokogiri document by default.
+
+  Overrides this method if you want to modified HTML source code before Nokogiri.
+It is useful to preserve whitespaces of code segments within non-pre blocks, because Nokogiri may delete them.
+
+  Example: [lib/docs/scrapers/go.rb](../lib/docs/scrapers/go.rb)
+
+
 
 ## Keeping scrapers up-to-date
 

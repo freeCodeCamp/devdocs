@@ -9,7 +9,7 @@ module Docs
         elsif slug == 'error-index'
           'Compiler Errors'
         else
-          name = at_css('h1.fqn .in-band').content.remove(/\A.+\s/)
+          name = at_css('h1.fqn .in-band').content.remove(/\A.+\s/).remove('⎘')
           mod = slug.split('/').first
           name.prepend("#{mod}::") unless name.start_with?(mod)
           name

@@ -15,6 +15,14 @@ module Docs
 
         css('.docs-prevnext').remove
 
+        css('pre > code.hljs').each do |node|
+          node.parent['data-language'] = node['class'][/language-(\w+)/, 1]
+        end
+
+        css('pre').each do |node|
+          node.content = node.content
+        end
+
         doc
 
       end

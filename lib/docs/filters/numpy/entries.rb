@@ -19,7 +19,7 @@ module Docs
             return 'Development'
           end
           li_a = css('nav li.active > a')
-          return li_a.last.content if li_a
+          return li_a.last.content if li_a && li_a.last
         end
 
         nav_items = css('.nav.nav-pills.pull-left > li')
@@ -71,6 +71,7 @@ module Docs
 
       def additional_entries
         css('dl:not(:first-of-type) > dt[id]').each_with_object [] do |node, entries|
+          next if node.ancestors('.citation').present?
           name = dt_to_name(node)
 
           if type == 'NumPy C API'

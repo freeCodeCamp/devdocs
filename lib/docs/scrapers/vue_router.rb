@@ -21,7 +21,7 @@ module Docs
     HTML
 
     version '4' do
-      self.release = '4.0.3'
+      self.release = '4.0.12'
       self.base_url = 'https://next.router.vuejs.org/'
     end
 

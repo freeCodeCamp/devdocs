@@ -14,6 +14,7 @@ module Docs
       )
 
       def get_name
+        return 'TSConfig Reference' if slug == 'tsconfig'
         at_css('h1') ? at_css('h1').content : at_css('h2').content
       end
 
@@ -27,6 +28,7 @@ module Docs
 
       def additional_entries
         return [] if DEPRECATED_PAGES.include? slug
+        return [] if slug == 'tsconfig-json'
         base_url.path == '/' ? tsconfig_entries : handbook_entries
       end
 
@@ -38,7 +40,7 @@ module Docs
 
       def handbook_entries
         css('h2').each_with_object [] do |node, entries|
-          entries << [node.content, node['id']]
+          entries << ["#{name}: #{node.content}", node['id']] if node['id']
         end
       end
 

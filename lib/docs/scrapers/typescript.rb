@@ -4,7 +4,7 @@ module Docs
 
     self.name = 'TypeScript'
     self.type = 'typescript'
-    self.release = '4.2.3'
+    self.release = '4.7.2'
     self.base_urls = [
       'https://www.typescriptlang.org/docs/handbook/',
       'https://www.typescriptlang.org/'
@@ -30,11 +30,12 @@ module Docs
 
     options[:skip_patterns] = [
       /release-notes/,
+      /dt\/search/,
       /play\//
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2012-2021 Microsoft<br>
+      &copy; 2012-2022 Microsoft<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 

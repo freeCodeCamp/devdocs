@@ -33,7 +33,6 @@ module Docs
         return [] unless subpath.start_with?('/api')
 
         css('h3 > code', 'h4 > code').each_with_object [] do |node, entries|
-          next if node.previous.try(:content).present? || node.next.try(:content).present?
           name = node.content
           name.sub! %r{\(.*\)}, '()'
           name.remove! 'new '

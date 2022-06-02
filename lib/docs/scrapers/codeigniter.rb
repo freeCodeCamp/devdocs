@@ -29,13 +29,13 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2014&ndash;2020 British Columbia Institute of Technology<br>
+      &copy; 2014&ndash;2021 British Columbia Institute of Technology<br>
       Licensed under the MIT License.
     HTML
 
     version '4' do
-      self.release = '4.0.4'
-      self.base_url = 'https://codeigniter.com/userguide4/'
+      self.release = '4.1.5'
+      self.base_url = 'https://codeigniter.com/user_guide/'
 
       options[:container] = '.document > div'
     end

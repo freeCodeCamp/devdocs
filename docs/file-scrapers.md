@@ -39,7 +39,7 @@ bsdtar --extract --file - --directory=docs/django\~$VERSION/
 
 ## Elisp
 
-Go to https://www.gnu.org/software/emacs/manual/elisp.html, donwload the HTML tarball and extract its content in `/path/to/devdocs/docs/elisp` or run the following command:
+Go to https://www.gnu.org/software/emacs/manual/elisp.html, download the HTML tarball and extract its content in `/path/to/devdocs/docs/elisp` or run the following command:
 
 ```sh
 mkdir /path/to/devdocs/docs/elisp \
@@ -58,6 +58,15 @@ bsdtar --extract --file - --directory=docs/erlang\~$VERSION/
 ```
 
 ## Gnu
+
+### Bash
+Go to https://www.gnu.org/software/bash/manual/, download the HTML tar file (with one web page per node) and extract its content in `/path/to/devdocs/docs/bash` or run the following command:
+
+```sh
+mkdir /path/to/devdocs/docs/bash \
+&& curl https://www.gnu.org/software/bash/manual/bash.html_node.tar.gz | \
+tar --extract --gzip --directory=/path/to/devdocs/docs/bash
+```
 
 ### GCC
 Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of GCC Manual and GCC CPP manual or run the following commands to download the tarballs:
@@ -81,6 +90,15 @@ Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of Fortran m
 mkdir docs/gnu_fortran~$VERSION; \
 curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/gfortran-html.tar.gz | \
 tar --extract --gzip --strip-components=1 --directory=docs/gnu_fortran~$VERSION
+```
+
+## GNU Make
+Go to https://www.gnu.org/software/make/manual/, download the HTML tarball and extract its content in `/path/to/devdocs/docs/gnu_make` or run the following command:
+
+```sh
+mkdir /path/to/devdocs/docs/gnu_make \
+&& curl https://www.gnu.org/software/make/manual/make.html_node.tar.gz | \
+tar --extract --gzip --strip-components=1 --directory=/path/to/devdocs/docs/gnu_make
 ```
 
 ## Gnuplot
@@ -154,14 +172,20 @@ dpkg -x $PACKAGE ./
 mv ./usr/share/doc/openjdk-16-jre-headless/api/ path/to/devdocs/docs/openjdk~$VERSION
 ```
 
+## Pandas
+
+```sh
+curl https://pandas.pydata.org/docs/pandas.zip | bsdtar --extract --file - --directory=docs/pandas~1
+```
+
 ## PHP
-Click the link under the "Many HTML files" column on https://www.php.net/download-docs.php, extract the tarball, change its name to `php` and put it in `/path/to/devdocs/docs/`.
+Click the link under the "Many HTML files" column on https://www.php.net/download-docs.php, extract the tarball, change its name to `php` and put it in `docs/`.
 
 Or run the following commands in your terminal:
 
 ```sh
 curl https://www.php.net/distributions/manual/php_manual_en.tar.gz > php.tar; \
-tar -xf php.tar; mv php-chunked-xhtml/ path/to/devdocs/docs/php/
+tar -xf php.tar; mv php-chunked-xhtml/ docs/php/
 ```
 ## Python 3.6+
 
@@ -181,11 +205,40 @@ curl -L https://docs.python.org/ftp/python/doc/$RELEASE/python-$RELEASE-docs-htm
 tar xj --strip-components=1
 ```
 
+## R
+```bash
+DEVDOCSROOT=/path/to/devdocs/docs/r
+RLATEST=https://cran.r-project.org/src/base/R-latest.tar.gz # or /R-${VERSION::1}/R-$VERSION.tar.gz
+
+RSOURCEDIR=${TMPDIR:-/tmp}/R/latest
+RBUILDDIR=${TMPDIR:-/tmp}/R/build
+mkdir -p "$RSOURCEDIR" "$RBUILDDIR" "$DEVDOCSROOT"
+
+# Download, configure, and build with static HTML pages
+curl "$RLATEST" | tar -C "$RSOURCEDIR" -xzf - --strip-components=1
+(cd "$RBUILDDIR" && "$RSOURCEDIR/configure" --enable-prebuilt-html --with-recommended-packages --disable-byte-compiled-packages --disable-shared --disable-java)
+make _R_HELP_LINKS_TO_TOPICS_=FALSE -C "$RBUILDDIR"
+
+# Export all html documentation built − global, and per-package
+cp -r "$RBUILDDIR/doc" "$DEVDOCSROOT/"
+ls -d "$RBUILDDIR"/library/*/html | while read orig; do
+    dest="$DEVDOCSROOT${orig#$RBUILDDIR}"
+    mkdir -p "$dest" && cp -r "$orig"/* "$dest/"
+done
+```
+
 ## RDoc
 
 ### Nokogiri
 ### Ruby / Minitest
 ### Ruby on Rails
+* Download a release at https://github.com/rails/rails/releases or clone https://github.com/rails/rails.git (checkout to the branch of the rails' version that is going to be scraped)
+* Open "railties/lib/rails/api/task.rb" and comment out any code related to sdoc ("configure_sdoc")
+* Run "bundle install --without db && bundle exec rake rdoc" (in the Rails directory)
+* Run "cd guides && bundle exec rake guides:generate:html"
+* Copy the "guides/output" directory to "html/guides"
+* Copy the "html" directory to "docs/rails~[version]"
+
 ### Ruby
 Download the tarball of Ruby from https://www.ruby-lang.org/en/downloads/, extract it, run
 `./configure && make html` in your terminal (while your are in the ruby directory) and move
@@ -208,3 +261,7 @@ See `lib/docs/scrapers/scala.rb`
 
 Download the docs from https://sqlite.org/download.html, unzip it, and rename
 it to `/path/to/devdocs/docs/sqlite`
+
+```sh
+curl https://sqlite.org/2022/sqlite-doc-3380000.zip | bsdtar --extract --file - --directory=docs/sqlite/ --strip-components=1
+```

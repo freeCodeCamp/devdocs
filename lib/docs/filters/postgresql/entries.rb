@@ -100,21 +100,14 @@ module Docs
         when 'queries-table-expressions'
           entries.concat get_heading_entries('h3[id], .sect3[id] > h3:first-child')
           entries.concat get_custom_entries('dt > .literal:first-child')
-        when 'functions-logical'
-          entries.concat get_custom_entries('> table td:first-child > code')
-        when 'functions-formatting'
-          entries.concat get_custom_entries('#FUNCTIONS-FORMATTING-TABLE td:first-child > code')
         when 'functions-admin'
-          entries.concat get_custom_entries('.table td:first-child > code')
-        when 'functions-string'
-          entries.concat get_custom_entries('> div[id^="FUNC"] td:first-child > code')
-          entries.concat get_custom_entries('> div[id^="FORMAT"] td:first-child > code')
+          entries.concat get_custom_entries('.table td:first-child > p:first-child > code.function')
         else
           if type && type.start_with?('Functions')
             entries.concat get_custom_entries('> .table td:first-child > code.literal:first-child')
             entries.concat get_custom_entries('> .table td:first-child > code.function:first-child')
             entries.concat get_custom_entries('> .table td:first-child > code:not(.literal):first-child + code.literal')
-            entries.concat get_custom_entries('> .table td:first-child > p > code.literal:first-child')
+            entries.concat get_custom_entries('> .table td:first-child > p:first-child > code.literal:first-child')
             entries.concat get_custom_entries('> .table td:first-child > p > code.function:first-child')
             entries.concat get_custom_entries('> .table td:first-child > p > code:not(.literal):first-child + code.literal')
             if slug == 'functions-comparison' && !at_css('#FUNCTIONS-COMPARISON-PRED-TABLE') # before 9.6
@@ -220,6 +213,7 @@ module Docs
           unless entries.any? { |entry| entry[0] == name }
             node['id'] = id
             entries << [name, id]
+            # puts [selector, name].join(' --> ')
           end
         end
       end
