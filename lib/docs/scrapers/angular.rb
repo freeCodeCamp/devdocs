@@ -7,6 +7,10 @@ module Docs
       home: 'https://angular.io/',
       code: 'https://github.com/angular/angular'
     }
+    self.base_url = 'https://angular.io/'
+    self.root_path = 'docs'
+
+    html_filters.push 'angular/clean_html', 'angular/entries'
 
     options[:max_image_size] = 256_000
 
@@ -14,6 +18,16 @@ module Docs
       &copy; 2010&ndash;2022 Google, Inc.<br>
       Licensed under the Creative Commons Attribution License 4.0.
     HTML
+
+    options[:follow_links] = false
+    options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
+    options[:fix_urls_before_parse] = ->(url) do
+      url.sub! %r{\Aguide/}, '/guide/'
+      url.sub! %r{\Atutorial/}, '/tutorial/'
+      url.sub! %r{\Aapi/}, '/api/'
+      url.sub! %r{\Agenerated/}, '/generated/'
+      url
+    end
 
     module Common
       private
@@ -71,220 +85,66 @@ module Docs
     version do
       self.release = '14.0.0'
       self.base_url = 'https://angular.io/'
-      self.root_path = 'docs'
-
-      html_filters.push 'angular/clean_html', 'angular/entries'
-
-      options[:follow_links] = false
-      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
-      options[:fix_urls_before_parse] = ->(url) do
-        url.sub! %r{\Aguide/}, '/guide/'
-        url.sub! %r{\Atutorial/}, '/tutorial/'
-        url.sub! %r{\Aapi/}, '/api/'
-        url.sub! %r{\Agenerated/}, '/generated/'
-        url
-      end
-
       include Docs::Angular::Since12
     end
 
     version '13' do
       self.release = '13.3.8'
       self.base_url = 'https://v13.angular.io/'
-      self.root_path = 'docs'
-
-      html_filters.push 'angular/clean_html', 'angular/entries'
-
-      options[:follow_links] = false
-      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
-      options[:fix_urls_before_parse] = ->(url) do
-        url.sub! %r{\Aguide/}, '/guide/'
-        url.sub! %r{\Atutorial/}, '/tutorial/'
-        url.sub! %r{\Aapi/}, '/api/'
-        url.sub! %r{\Agenerated/}, '/generated/'
-        url
-      end
-
       include Docs::Angular::Since12
     end
 
     version '12' do
       self.release = '12.2.13'
       self.base_url = 'https://v12.angular.io/'
-      self.root_path = 'docs'
-
-      html_filters.push 'angular/clean_html', 'angular/entries'
-
-      options[:follow_links] = false
-      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
-      options[:fix_urls_before_parse] = ->(url) do
-        url.sub! %r{\Aguide/}, '/guide/'
-        url.sub! %r{\Atutorial/}, '/tutorial/'
-        url.sub! %r{\Aapi/}, '/api/'
-        url.sub! %r{\Agenerated/}, '/generated/'
-        url
-      end
-
       include Docs::Angular::Since12
     end
 
     version '11' do
       self.release = '11.2.14'
       self.base_url = 'https://v11.angular.io/'
-      self.root_path = 'docs'
-
-      html_filters.push 'angular/clean_html', 'angular/entries'
-
-      options[:follow_links] = false
-      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
-      options[:fix_urls_before_parse] = ->(url) do
-        url.sub! %r{\Aguide/}, '/guide/'
-        url.sub! %r{\Atutorial/}, '/tutorial/'
-        url.sub! %r{\Aapi/}, '/api/'
-        url.sub! %r{\Agenerated/}, '/generated/'
-        url
-      end
-
       include Docs::Angular::Common
     end
 
     version '10' do
       self.release = '10.2.3'
       self.base_url = 'https://v10.angular.io/'
-      self.root_path = 'docs'
-
-      html_filters.push 'angular/clean_html', 'angular/entries'
-
-      options[:follow_links] = false
-      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
-      options[:fix_urls_before_parse] = ->(url) do
-        url.sub! %r{\Aguide/}, '/guide/'
-        url.sub! %r{\Atutorial/}, '/tutorial/'
-        url.sub! %r{\Aapi/}, '/api/'
-        url.sub! %r{\Agenerated/}, '/generated/'
-        url
-      end
-
       include Docs::Angular::Common
     end
 
     version '9' do
       self.release = '9.1.12'
       self.base_url = 'https://v9.angular.io/'
-      self.root_path = 'docs'
-
-      html_filters.push 'angular/clean_html', 'angular/entries'
-
-      options[:follow_links] = false
-      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
-      options[:fix_urls_before_parse] = ->(url) do
-        url.sub! %r{\Aguide/}, '/guide/'
-        url.sub! %r{\Atutorial/}, '/tutorial/'
-        url.sub! %r{\Aapi/}, '/api/'
-        url.sub! %r{\Agenerated/}, '/generated/'
-        url
-      end
-
       include Docs::Angular::Common
     end
 
     version '8' do
       self.release = '8.2.14'
       self.base_url = 'https://v8.angular.io/'
-      self.root_path = 'docs'
-
-      html_filters.push 'angular/clean_html', 'angular/entries'
-
-      options[:follow_links] = false
-      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
-      options[:fix_urls_before_parse] = ->(url) do
-        url.sub! %r{\Aguide/}, '/guide/'
-        url.sub! %r{\Atutorial/}, '/tutorial/'
-        url.sub! %r{\Aapi/}, '/api/'
-        url.sub! %r{\Agenerated/}, '/generated/'
-        url
-      end
-
       include Docs::Angular::Common
     end
 
     version '7' do
       self.release = '7.2.15'
       self.base_url = 'https://v7.angular.io/'
-      self.root_path = 'docs'
-
-      html_filters.push 'angular/clean_html', 'angular/entries'
-
-      options[:follow_links] = false
-      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
-      options[:fix_urls_before_parse] = ->(url) do
-        url.sub! %r{\Aguide/}, '/guide/'
-        url.sub! %r{\Atutorial/}, '/tutorial/'
-        url.sub! %r{\Aapi/}, '/api/'
-        url.sub! %r{\Agenerated/}, '/generated/'
-        url
-      end
-
       include Docs::Angular::Common
     end
 
     version '6' do
       self.release = '6.1.10'
       self.base_url = 'https://v6.angular.io/'
-      self.root_path = 'docs'
-
-      html_filters.push 'angular/clean_html', 'angular/entries'
-
-      options[:follow_links] = false
-      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
-      options[:fix_urls_before_parse] = ->(url) do
-        url.sub! %r{\Aguide/}, '/guide/'
-        url.sub! %r{\Atutorial/}, '/tutorial/'
-        url.sub! %r{\Aapi/}, '/api/'
-        url.sub! %r{\Agenerated/}, '/generated/'
-        url
-      end
-
       include Docs::Angular::Common
     end
 
     version '5' do
       self.release = '5.2.11'
       self.base_url = 'https://v5.angular.io/'
-      self.root_path = 'docs'
-
-      html_filters.push 'angular/clean_html', 'angular/entries'
-
-      options[:follow_links] = false
-      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
-      options[:fix_urls_before_parse] = ->(url) do
-        url.sub! %r{\Aguide/}, '/guide/'
-        url.sub! %r{\Atutorial/}, '/tutorial/'
-        url.sub! %r{\Aapi/}, '/api/'
-        url.sub! %r{\Agenerated/}, '/generated/'
-        url
-      end
-
       include Docs::Angular::Common
     end
 
     version '4' do
       self.release = '4.4.6'
       self.base_url = 'https://v4.angular.io/'
-      self.root_path = 'docs'
-
-      html_filters.push 'angular/clean_html', 'angular/entries'
-
-      options[:follow_links] = false
-      options[:only_patterns] = [/\Aguide/, /\Atutorial/, /\Aapi/]
-      options[:fix_urls_before_parse] = ->(url) do
-        url.sub! %r{\Aguide/}, '/guide/'
-        url.sub! %r{\Atutorial/}, '/tutorial/'
-        url.sub! %r{\Aapi/}, '/api/'
-        url.sub! %r{\Agenerated/}, '/generated/'
-        url
-      end
-
       include Docs::Angular::Common
     end
 
