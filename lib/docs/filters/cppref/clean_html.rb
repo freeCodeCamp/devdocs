@@ -1,5 +1,5 @@
 module Docs
-  class C
+  class Cppref
     class CleanHtmlFilter < Filter
       def call
         css('h1').remove if root_page?
@@ -107,6 +107,20 @@ module Docs
 
         css('img').each do |node|
           node['src'] = node['src'].sub! %r{http://en.cppreference.com/common/([^"']+?)\.svg}, 'http://upload.cppreference.com/mwiki/\1.svg'
+        end
+
+        # temporary solution due lack of mathjax/mathml support
+        css('.t-mfrac').each do |node|
+          fraction = Nokogiri::XML::Node.new('span', doc)
+
+          node.css('td').each do |node|
+            fraction.add_child("<span>#{node.content}</span>")
+          end
+
+          fraction.last_element_child().before("<span>/</span>")
+
+          node.before(fraction)
+          node.remove
         end
 
         doc

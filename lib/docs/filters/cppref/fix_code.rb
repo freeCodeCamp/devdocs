@@ -1,5 +1,5 @@
 module Docs
-  class C
+  class Cppref
     class FixCodeFilter < Filter
       def call
         css('div > span.source-c', 'div > span.source-cpp').each do |node|
