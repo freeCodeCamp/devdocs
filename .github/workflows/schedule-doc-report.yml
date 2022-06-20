@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-20.04
     if: github.repository == 'freeCodeCamp/devdocs'
     steps:
-    - uses: actions/checkout@v2.4.2
+    - uses: actions/checkout@7884fcad6b5d53d10323aee724dc68d8b9096a2e # tag=v2.4.2
     - name: Set up Ruby
-      uses: ruby/setup-ruby@v1.110.0
+      uses: ruby/setup-ruby@8029ebd6e5bd8f4e0d6f7623ea76a01ec5b1010d # tag=v1.110.0
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Generate report
