@@ -29,11 +29,15 @@
     text-align: center;
     text-decoration: none;
     font-weight: var(--bolderFontWeight);
-    color: #eee;
-  }
 
-  .pilcrow:hover {
-    color: var(--linkColor);
+    html._theme-default & {
+      color: #eee;
+      &:hover { color: var(--linkColor); }
+    }
+    html._theme-dark & {
+      color: #555;
+      &:hover { color: var(--linkColor); }
+    }
   }
 
   .pilcrow.h2 {
