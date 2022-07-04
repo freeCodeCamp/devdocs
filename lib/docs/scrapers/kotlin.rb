@@ -31,6 +31,10 @@ module Docs
       Licensed under the Apache License, Version 2.0.
     HTML
 
+    version '1.7' do
+      self.release = '1.7.0'
+    end
+
     version '1.6' do
       self.release = '1.6.20'
     end
