@@ -10,14 +10,14 @@ module Docs
 
     # https://github.com/twbs/bootstrap/blob/master/LICENSE
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2021 Twitter, Inc.<br>
-      &copy; 2011&ndash;2021 The Bootstrap Authors<br>
+      &copy; 2011&ndash;2022 Twitter, Inc.<br>
+      &copy; 2011&ndash;2022 The Bootstrap Authors<br>
       Code licensed under the MIT License.<br>
       Documentation licensed under the Creative Commons Attribution License v3.0.
     HTML
 
     version '5' do
-      self.release = '5.1'
+      self.release = '5.2'
       self.base_url = "https://getbootstrap.com/docs/#{self.release}/"
       self.root_path = 'getting-started/introduction/'
 
