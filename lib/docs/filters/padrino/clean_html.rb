@@ -3,7 +3,7 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         css('.summary_toggle', '.inheritanceTree', 'h1 .note', '.source_code', '.box_info dl:last-child').remove
-        css('a[href*="travis"]', 'a[href*="gemnasium"]', 'a[href*="codeclimate"]', 'a[href*="discord"]').remove if root_page?
+        css('a[href*="travis"]', 'a[href*="gemnasium"]', 'a[href*="codeclimate"]', 'a[href*="gitter"]').remove if root_page?
 
         css('.signature').each do |node|
           node.name = 'h3'
