@@ -6,11 +6,11 @@ DevDocs was created by [Thibaut Courouble](https://thibaut.me) and is operated b
 
 ## We are currently searching for maintainers
 
-Please reach out to the community on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs) if you would like to join the team!
+Please reach out to the community on [Discord](https://discord.gg/PRyKn3Vbay) if you would like to join the team!
 
 Keep track of development news:
 
-* Join the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs)
+* Join the devdocs chat room on [Discord](https://discord.gg/PRyKn3Vbay)
 * Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 
@@ -176,4 +176,4 @@ We also wish that any documentation file generated using this software be attrib
 
 ## Questions?
 
-If you have any questions, please feel free to ask them on the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs).
+If you have any questions, please feel free to ask them on the contributor chat room on [Discord](https://discord.gg/PRyKn3Vbay).
