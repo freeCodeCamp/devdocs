@@ -83,4 +83,4 @@ Check out [EditorConfig.org](https://editorconfig.org/) to learn how to make you
 
 ## Questions?
 
-If you have any questions, please feel free to ask them on the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs).
+If you have any questions, please feel free to ask them on the contributor chat room on [Discord](https://discord.gg/PRyKn3Vbay).

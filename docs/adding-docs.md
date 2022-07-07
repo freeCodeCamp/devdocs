@@ -1,4 +1,4 @@
-Adding a documentation may look like a daunting task but once you get the hang of it, it's actually quite simple. Don't hesitate to ask for help [in Gitter](https://gitter.im/FreeCodeCamp/DevDocs) if you ever get stuck.
+Adding a documentation may look like a daunting task but once you get the hang of it, it's actually quite simple. Don't hesitate to ask for help [in Discord](https://discord.gg/PRyKn3Vbay) if you ever get stuck.
 
 **Note:** please read the [contributing guidelines](../.github/CONTRIBUTING.md) before submitting a new documentation.
 

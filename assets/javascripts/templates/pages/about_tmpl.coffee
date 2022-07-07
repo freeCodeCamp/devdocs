@@ -17,7 +17,7 @@ app.templates.aboutPage = -> """
   <ul>
     <li>Follow <a href="https://twitter.com/DevDocs">@DevDocs</a> on Twitter
     <li>Watch the repository on <a href="https://github.com/freeCodeCamp/devdocs/subscription">GitHub</a> <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=freeCodeCamp&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20" tabindex="-1"></iframe>
-    <li>Join the <a href="https://gitter.im/FreeCodeCamp/DevDocs">Gitter</a> chat room
+    <li>Join the <a href="https://discord.gg/PRyKn3Vbay">Discord</a> chat room
   </ul>
 
   <h2 class="_block-heading" id="copyright">Copyright and License</h2>
@@ -43,7 +43,7 @@ app.templates.aboutPage = -> """
     <dt>Where can I suggest new docs and features?
     <dd>You can suggest and vote for new docs on the <a href="https://trello.com/b/6BmTulfx/devdocs-documentation">Trello board</a>.<br>
         If you have a specific feature request, add it to the <a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>.<br>
-        Otherwise, come talk to us in the <a href="https://gitter.im/FreeCodeCamp/DevDocs">Gitter</a> chat room.
+        Otherwise, come talk to us in the <a href="https://discord.gg/PRyKn3Vbay">Discord</a> chat room.
     <dt>Where can I report bugs?
     <dd>In the <a href="https://github.com/freeCodeCamp/devdocs/issues">issue tracker</a>. Thanks!
   </dl>
