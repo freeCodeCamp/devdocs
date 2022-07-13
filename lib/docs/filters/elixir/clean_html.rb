@@ -27,6 +27,8 @@ module Docs
       def api
         css('.hover-link', 'footer', ':not(.detail-header) > .view-source').remove
 
+        css('h1 .settings').remove
+
         css('.summary').each do |node|
           node.name = 'dl'
         end
