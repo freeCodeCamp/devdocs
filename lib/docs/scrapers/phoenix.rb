@@ -1,7 +1,7 @@
 module Docs
   class Phoenix < UrlScraper
     self.type = 'elixir'
-    self.release = '1.5.6'
+    self.release = '1.6.11'
     self.base_url = 'https://hexdocs.pm/'
     self.root_path = 'phoenix/Phoenix.html'
     self.initial_paths = %w(
@@ -20,7 +20,7 @@ module Docs
 
     options[:container] = '#content'
 
-    options[:skip_patterns] = [/extra-api-reference/]
+    options[:skip_patterns] = [/extra-api-reference/, /js/, /\d+\.\d+\.\d+/]
     options[:only_patterns] = [
       /\Aphoenix\//,
       /\Aecto\//,
