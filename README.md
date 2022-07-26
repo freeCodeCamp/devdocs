@@ -58,7 +58,8 @@ The app's main goals are to:
 * Keep load times as short as possible
 * Improve the quality, speed, and order of search results
 * Maximize the use of caching and other performance optimizations
-* Maintain a clean and readable user interface; be fully functional offline
+* Maintain a clean and readable user interface 
+* Be fully functional offline
 * Support full keyboard navigation
 * Reduce “context switch” by using a consistent typography and design across all documentations
 * Reduce clutter by focusing on a specific category of content (API/reference) and indexing only the minimum useful to most developers.
