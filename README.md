@@ -53,7 +53,15 @@ docker run --name devdocs -d -p 9292:9292 thibaut/devdocs
 
 DevDocs aims to make reading and searching reference documentation fast, easy and enjoyable.
 
-The app's main goals are to: keep load times as short as possible; improve the quality, speed, and order of search results; maximize the use of caching and other performance optimizations; maintain a clean and readable user interface; be fully functional offline; support full keyboard navigation; reduce “context switch” by using a consistent typography and design across all documentations; reduce clutter by focusing on a specific category of content (API/reference) and indexing only the minimum useful to most developers.
+The app's main goals are to: 
+
+* Keep load times as short as possible
+* Improve the quality, speed, and order of search results
+* Maximize the use of caching and other performance optimizations
+* Maintain a clean and readable user interface; be fully functional offline
+* Support full keyboard navigation
+* Reduce “context switch” by using a consistent typography and design across all documentations
+* Reduce clutter by focusing on a specific category of content (API/reference) and indexing only the minimum useful to most developers.
 
 **Note:** DevDocs is neither a programming guide nor a search engine. All our content is pulled from third-party sources and the project doesn't intend to compete with full-text search engines. Its backbone is metadata; each piece of content is identified by a unique, "obvious" and short string. Tutorials, guides and other content that don't meet this requirement are outside the scope of the project.
 
