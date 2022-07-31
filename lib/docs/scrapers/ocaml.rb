@@ -4,7 +4,7 @@ module Docs
     self.type = 'ocaml'
     self.root_path = 'index.html'
     self.release = '4.14'
-    self.base_url = "https://www.ocaml.org/releases/#{self.release}/htmlman/"
+    self.base_url = "https://v2.ocaml.org/releases/#{self.release}/htmlman/"
     self.links = {
       home: 'https://ocaml.org/',
       code: 'https://github.com/ocaml/ocaml'
@@ -27,8 +27,14 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://www.ocaml.org/releases/', opts)
-      doc.css('#main-contents li > a').first.content
+      get_latest_github_release('ocaml', 'ocaml', opts)
+    end
+
+    private
+
+    def parse(response) # Hook here because Nokogori removes whitespace from code fragments
+      response.body.gsub! %r{<div\ class="pre([^"]*)"[^>]*>([\W\w]+?)</div>}, '<pre class="\1">\2</pre>'
+      super
     end
 
   end

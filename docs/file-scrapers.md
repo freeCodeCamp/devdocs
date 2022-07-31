@@ -151,11 +151,11 @@ bsdtar --extract --file=- --directory=docs/numpy~$VERSION/
 ## OCaml
 
 Download from https://www.ocaml.org/docs/ the HTML reference:
-https://ocaml.org/releases/4.11/ocaml-4.11-refman-html.tar.gz
+https://v2.ocaml.org/releases/4.14/ocaml-4.14-refman-html.tar.gz
 and extract it as `/path/to/devdocs/docs/ocaml`:
 
 ```sh
-curl https://ocaml.org/releases/$VERSION/ocaml-$VERSION-refman-html.tar.gz | \
+curl https://v2.ocaml.org/releases/$VERSION/ocaml-$VERSION-refman-html.tar.gz | \
 tar xz --transform 's/htmlman/ocaml/' --directory docs/
 ```
 
