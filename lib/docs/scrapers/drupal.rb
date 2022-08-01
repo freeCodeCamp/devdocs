@@ -10,7 +10,7 @@ module Docs
     html_filters.push 'drupal/entries', 'drupal/clean_html', 'title'
 
     options[:decode_and_clean_paths] = true
-    options[:container] = '#page-inner'
+    options[:container] = '#page'
     options[:title] = false
     options[:root_title] = 'Drupal'
 

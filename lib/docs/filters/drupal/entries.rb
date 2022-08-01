@@ -20,7 +20,7 @@ module Docs
         elsif subpath =~ /core!themes/
           'themes'
         else
-          css('.breadcrumb > a')[1].content
+          css('.breadcrumb a')[1].content
         end
       end
 
