@@ -34,59 +34,64 @@ module Docs
       Licensed under the BSD License.
     HTML
 
+    version '4.1' do
+      self.release = '4.1'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
+    end
+
     version '4.0' do
       self.release = '4.0'
-      self.base_url = 'https://docs.djangoproject.com/en/4.0/'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
     end
 
     version '3.2' do
       self.release = '3.2'
-      self.base_url = 'https://docs.djangoproject.com/en/3.2/'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
     end
 
     version '3.1' do
       self.release = '3.1.4'
-      self.base_url = 'https://docs.djangoproject.com/en/3.1/'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
     end
 
     version '3.0' do
       self.release = '3.0.11'
-      self.base_url = 'https://docs.djangoproject.com/en/3.0/'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
     end
 
     version '2.2' do
       self.release = '2.2.17'
-      self.base_url = 'https://docs.djangoproject.com/en/2.2/'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
     end
 
     version '2.1' do
       self.release = '2.1.15'
-      self.base_url = 'https://docs.djangoproject.com/en/2.1/'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
     end
 
     version '2.0' do
       self.release = '2.0.13'
-      self.base_url = 'https://docs.djangoproject.com/en/2.0/'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
     end
 
     version '1.11' do
       self.release = '1.11.29'
-      self.base_url = 'https://docs.djangoproject.com/en/1.11/'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
     end
 
     version '1.10' do
       self.release = '1.10.8'
-      self.base_url = 'https://docs.djangoproject.com/en/1.10/'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
     end
 
     version '1.9' do
       self.release = '1.9.13'
-      self.base_url = 'https://docs.djangoproject.com/en/1.9/'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
     end
 
     version '1.8' do
       self.release = '1.8.18'
-      self.base_url = 'https://docs.djangoproject.com/en/1.8/'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
     end
 
     def get_latest_version(opts)
