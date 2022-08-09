@@ -139,7 +139,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport (~> 5.2)
-  better_errors
+  better_errors (>= 2.8.0)
   browser
   chunky_png
   coffee-script
