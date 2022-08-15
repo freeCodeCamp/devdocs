@@ -7,7 +7,7 @@ module Docs
     self.name = 'Support Tables'
     self.slug = 'browser_support_tables'
     self.type = 'support_tables'
-    self.release = '1.0.30001327'
+    self.release = '1.0.30001376'
 
     def build_pages
       url = 'https://github.com/Fyrd/caniuse/raw/main/data.json'
