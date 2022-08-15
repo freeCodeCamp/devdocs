@@ -9,6 +9,7 @@ module Docs
 
       def get_type
         return 'Type' if doc.inner_html == ''
+        return 'Tutorials' if at_css('a.crumb[href]:contains("Training & Tutorials")')
 
         link = at_css('#breadcrumbs > a:nth-child(4)')
         link.nil? ? at_css('#breadcrumbs > a:nth-child(3)').content : link.content

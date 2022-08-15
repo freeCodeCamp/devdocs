@@ -528,7 +528,7 @@ credits = [
     'http://www.gnu.org/copyleft/fdl.html'
   ], [
     'MariaDB',
-    '2019 MariaDB',
+    '2022 MariaDB',
     'CC BY-SA & GFDL',
     'https://mariadb.com/kb/en/library/documentation/+license/'
   ], [
