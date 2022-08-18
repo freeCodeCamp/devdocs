@@ -463,7 +463,7 @@ credits = [
     'https://raw.githubusercontent.com/jsdoc3/jsdoc3.github.com/master/LICENSE'
   ], [
     'Julia',
-    '2009-2021 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
+    '2009-2022 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/JuliaLang/julia/master/LICENSE.md'
   ], [
