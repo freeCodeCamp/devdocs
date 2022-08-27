@@ -4,7 +4,7 @@
   h4 { font-size: 1em; }
   > dl:not(.docutils) > dt { @extend %block-label, %label-blue; }
   dd > dl:not(.docutils) > dt { @extend %block-label; }
-  .class > dt { @extend %block-label, %label-blue; }
+  .class > dt, #main-interface .function > dt { @extend %block-label, %label-blue; }
   dt + dt { margin-top: -.5em; }
 
   .note, .admonition, div.versionadded, div.versionchanged, .deprecated-removed, .deprecated, .topic { @extend %note; }

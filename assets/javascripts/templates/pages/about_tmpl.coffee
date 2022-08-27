@@ -767,6 +767,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/reactjs/redux/master/LICENSE.md'
   ], [
+    'Requests',
+    '2011-2022 Kenneth Reitz and other contributors',
+    'Apache',
+    'https://raw.githubusercontent.com/psf/requests/main/LICENSE'
+  ], [
     'RequireJS',
     'jQuery Foundation and other contributors',
     'MIT',
