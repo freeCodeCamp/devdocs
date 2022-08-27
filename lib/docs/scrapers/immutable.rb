@@ -3,8 +3,8 @@ module Docs
     self.name = 'Immutable.js'
     self.slug = 'immutable'
     self.type = 'simple'
-    self.release = '4.0.0'
-    self.base_url = 'https://immutable-js.com/docs/v4.0.0/'
+    self.release = '4.1.0'
+    self.base_url = "https://immutable-js.com/docs/v#{release}/"
     self.links = {
       home: 'https://immutable-js.com/',
       code: 'https://github.com/facebook/immutable-js'
