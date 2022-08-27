@@ -15,7 +15,11 @@ module Docs
 
     options[:container] = '#css-main'
     options[:title] = "Sanctuary"
-    options[:attribution] = "Licensed under the MIT License."
+    options[:attribution] = <<-HTML
+      &copy; 2020 Sanctuary<br>
+      &copy; 2016 Plaid Technologies, Inc.<br>
+      Licensed under the MIT License.
+    HTML
 
     def get_latest_version(opts)
       get_npm_version("sanctuary", opts)

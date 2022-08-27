@@ -805,7 +805,7 @@ credits = [
     'Sanctuary',
     '2020 Sanctuary; 2016 Plaid Technologies, Inc.',
     'MIT',
-    'https://raw.githubusercontent.com/sanctuary-js/sanctuary/v3.1.0/LICENSE'
+    'https://raw.githubusercontent.com/sanctuary-js/sanctuary/master/LICENSE'
   ], [
     'Sass',
     '2006-2020 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
