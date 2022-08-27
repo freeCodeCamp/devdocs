@@ -107,6 +107,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/caolan/async/master/LICENSE'
   ], [
+    'Axios',
+    '2014-present Matt Zabriskie',
+    'MIT',
+    'https://raw.githubusercontent.com/axios/axios/main/LICENSE'
+  ], [
     'Babel',
     '2014-present Sebastian McKenzie',
     'MIT',
