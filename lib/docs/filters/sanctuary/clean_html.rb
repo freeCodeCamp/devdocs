@@ -1,11 +1,3 @@
-def repeat(n, s)
-  Array.new(n, s).join("")
-end
-
-def _(n)
-  repeat(n, " ")
-end
-
 module Docs
 
   class Sanctuary
@@ -44,23 +36,7 @@ module Docs
               node
                 .css("input")
                 .map { |node| "> " + node.attributes["value"].value }
-                .zip(node.css(".output").map { |node|
-                  if node.content.start_with?("! Invalid value")
-                    # XXX: Reinstate newlines and consecutive spaces.
-                    content = node.content.dup()
-                    content[ 15] = "\n\n"
-                    content[ 68] = "\n" + _("add :: FiniteNumber -> ".size)
-                    content[104] = "\n" + _("add :: FiniteNumber -> ".size + ("FiniteNumber".size - 1) / 2)
-                    content[134] = "\n\n"
-                    content[138] = _(2)
-                    content[155] = "\n\n"
-                    content[215] = "\n\n"
-                    content[337] = "\n"
-                    content
-                  else
-                    node.content
-                  end
-                })
+                .zip(node.css(".output").map { |node| node.content })
                 .map { |pair| pair.join("\n") }
                 .join("\n\n"),
               {"data-language" => "javascript"}

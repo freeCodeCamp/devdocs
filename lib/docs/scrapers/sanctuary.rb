@@ -20,6 +20,14 @@ module Docs
     def get_latest_version(opts)
       get_npm_version("sanctuary", opts)
     end
+
+    private
+
+    def parse(response) # Hook here because Nokogori removes whitespace from textareas
+      response.body.gsub! %r{<div class="output"[^>]*>([\W\w]+?)</div>}, '<pre class="output">\1</pre>'
+      super
+    end
+
   end
 
 end
