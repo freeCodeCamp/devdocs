@@ -8,7 +8,7 @@ module Docs
         end
 
         css('ul[id].simple li:first-child:last-child').each do |node|
-          heading = Nokogiri::XML::Node.new 'h3', doc
+          heading = Nokogiri::XML::Node.new 'h3', doc.document
           heading['id'] = node.parent['id']
           heading.children = node.children
           node.parent.before(heading).remove

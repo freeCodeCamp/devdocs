@@ -111,7 +111,7 @@ module Docs
 
         # temporary solution due lack of mathjax/mathml support
         css('.t-mfrac').each do |node|
-          fraction = Nokogiri::XML::Node.new('span', doc)
+          fraction = Nokogiri::XML::Node.new('span', doc.document)
 
           node.css('td').each do |node|
             fraction.add_child("<span>#{node.content}</span>")

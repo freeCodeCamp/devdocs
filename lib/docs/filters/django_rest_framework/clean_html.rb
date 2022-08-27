@@ -11,7 +11,7 @@ module Docs
         css('.promo a').remove_attribute('style')
 
         # Translate source files links to DevDocs links
-        links = Nokogiri::XML::Node.new('p', doc)
+        links = Nokogiri::XML::Node.new('p', doc.document)
         links['class'] = '_links'
 
         css('a.github').each do |node|

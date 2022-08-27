@@ -23,7 +23,7 @@ module Docs
     end
 
     def node(content)
-      node = Nokogiri::XML::Node.new 'h1', doc
+      node = Nokogiri::XML::Node.new 'h1', doc.document
       node.content = content
       node
     end

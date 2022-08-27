@@ -2,7 +2,7 @@ module Docs
   class Groovy
     class CleanHtmlFilter < Filter
       def new_node(content)
-        node = Nokogiri::XML::Node.new 'h1', doc
+        node = Nokogiri::XML::Node.new 'h1', doc.document
         node.content = content
         node
       end

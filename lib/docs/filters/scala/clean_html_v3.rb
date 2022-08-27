@@ -229,14 +229,14 @@ module Docs
       end
 
       def convert_dl_to_table(dl)
-        table = Nokogiri::XML::Node.new('table', doc)
+        table = Nokogiri::XML::Node.new('table', doc.document)
         table['class'] = 'attributes'
 
         dl.css('> dt').each do |dt|
           dd = dt.next_element
           has_dd = dd.name == 'dd' rescue false
 
-          tr = Nokogiri::XML::Node.new('tr', doc)
+          tr = Nokogiri::XML::Node.new('tr', doc.document)
           colspan = has_dd ? '' : ' colspan="2"' # handle <dt> without following <dt>
           tr.add_child("<th#{colspan}>#{dt.inner_html.sub(/:$/, '')}</th>")
 
