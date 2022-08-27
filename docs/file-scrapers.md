@@ -263,5 +263,5 @@ Download the docs from https://sqlite.org/download.html, unzip it, and rename
 it to `/path/to/devdocs/docs/sqlite`
 
 ```sh
-curl https://sqlite.org/2022/sqlite-doc-3380000.zip | bsdtar --extract --file - --directory=docs/sqlite/ --strip-components=1
+curl https://sqlite.org/2022/sqlite-doc-3390200.zip | bsdtar --extract --file - --directory=docs/sqlite/ --strip-components=1
 ```
