@@ -1,7 +1,7 @@
 module Docs
   class Nix < UrlScraper
     self.type = 'simple'
-    self.release = '2.8.0'
+    self.release = '2.10.3'
     self.base_url = 'https://nixos.org/manual/'
     self.root_path = 'nix/stable/expressions/builtins.html'
     self.initial_paths = %w(
