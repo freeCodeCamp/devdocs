@@ -2,7 +2,7 @@ module Docs
   class Homebrew < UrlScraper
     self.name = 'Homebrew'
     self.type = 'simple'
-    self.release = '3.3.11'
+    self.release = '3.5.10'
     self.base_url = 'https://docs.brew.sh/'
     self.links = {
       home: 'https://brew.sh',
@@ -13,7 +13,7 @@ module Docs
 
     options[:container] = ->(filter) { filter.root_page? ? '#home' : '#page' }
 
-    options[:skip_patterns] = [/maintainer/i, /core\-contributor/i, /kickstarter/i]
+    options[:skip_patterns] = [/maintainer/i, /core\-contributor/i, /kickstarter/i, /governance/i]
 
     options[:attribution] = <<-HTML
       &copy; 2009&ndash;present Homebrew contributors<br>
