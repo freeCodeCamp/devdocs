@@ -11,9 +11,9 @@ module Docs
       code: "https://github.com/sanctuary-js/sanctuary",
     }
 
-    html_filters.push("sanctuary/entries")
-    html_filters.push("sanctuary/clean_html")
+    html_filters.push "sanctuary/entries", "sanctuary/clean_html"
 
+    options[:container] = '#css-main'
     options[:title] = "Sanctuary"
     options[:attribution] = "Licensed under the MIT License."
 

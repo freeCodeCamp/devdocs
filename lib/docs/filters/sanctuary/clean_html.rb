@@ -3,14 +3,11 @@ module Docs
   class Sanctuary
     class CleanHtmlFilter < Filter
       def call
-        # Remove header containing GitHub, Gitter, and Stack Overflow links.
-        doc.at("#css-header").unlink()
-
         # Remove redundant section links from table of contents.
         doc.at("a[href='#section:api']").next_element.unlink()
 
-        # Swap headings and accompanying pilcrows to aid positioning via CSS.
-        doc.css(".pilcrow").each { |node| node.next_element.after(node) }
+        # Remove pilcrows.
+        doc.css(".pilcrow").remove()
 
         # Insert Fink link in place of logo.
         doc.at("[id='section:sponsors'] ~ ul > li > p").prepend_child(
