@@ -2,7 +2,7 @@ module Docs
   class Jest < UrlScraper
     include MultipleBaseUrls
     self.type = 'simple'
-    self.release = '28.0.3'
+    self.release = '29.0.1'
 
     self.base_urls = [
       'https://jestjs.io/docs/',
@@ -19,6 +19,7 @@ module Docs
 
     options[:skip_patterns] = [
       /^next/,
+      /upgrading-to-/,
       /\d+\.[x\d]/ # avoid deprecated versions
     ]
 
