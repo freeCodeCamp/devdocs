@@ -22,6 +22,10 @@ Unless you wish to contribute to the project, we recommend using the hosted vers
 
 DevDocs is made of two pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
+### Setup options
+
+#### From nothing
+
 DevDocs requires Ruby 2.7.4, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
 
 ```sh
@@ -38,6 +42,8 @@ The `thor docs:download` command is used to download pre-generated documentation
 
 **Note:** there is currently no update mechanism other than `git pull origin main` to update the code and `thor docs:download --installed` to download the latest version of the docs. To stay informed about new releases, be sure to [watch](https://github.com/freeCodeCamp/devdocs/subscription) this repository.
 
+#### Via Docker
+
 Alternatively, DevDocs may be started as a Docker container:
 
 ```sh
@@ -48,6 +54,27 @@ docker build -t thibaut/devdocs .
 # Finally, start a DevDocs container (access http://localhost:9292)
 docker run --name devdocs -d -p 9292:9292 thibaut/devdocs
 ```
+
+#### Via Nix
+
+Another option is to use [Nix](https://nixos.org/manual/nix/unstable/introduction.html). In case you don't have it:
+    * Use a [single-user installation](https://nixos.org/download.html)
+    * [Enable flakes](https://nixos.wiki/wiki/Flakes#Permanent)
+    * Enable [direnv](https://direnv.net/#basic-installation) (complete the `Basic installation`). This will update the deps and start the server every time you enter the repo.
+
+Now, run:
+
+```sh
+# First, enter the repo
+git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
+# For the first time
+direnv allow
+```
+
+Whenever you update your gems, run `nix develop .#make-gemset`
+
+Whenever you want to start the server, run `nix develop`
+
 
 ## Vision
 
