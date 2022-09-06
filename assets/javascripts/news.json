@@ -1,5 +1,9 @@
 [
   [
+    "2022-09-06",
+    "New documentation: <a href=\"/date_fns/\">date-fns</a>"
+  ],
+  [
     "2022-08-27",
     "New documentations: <a href=\"/sanctuary/\">Sanctuary</a>, <a href=\"/requests/\">Requests</a>, <a href=\"/axios/\">Axios</a>"
   ],

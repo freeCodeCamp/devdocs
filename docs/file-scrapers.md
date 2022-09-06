@@ -26,6 +26,18 @@ Or run the following commands in your terminal:
 curl https://storage.googleapis.com/dart-archive/channels/stable/release/$RELEASE/api-docs/dartdocs-gen-api-zip > dartApi.zip; \
 unzip dartApi.zip; mv gen-dartdocs docs/dart~$VERSION
 ```
+
+## date-fns
+
+```sh
+git clone https://github.com/date-fns/date-fns docs/date_fns
+cd docs/date_fns
+git checkout v2.29.2
+yarn install
+node scripts/build/docs.js
+ls tmp/docs.json
+```
+
 ## Django
 
 Go to https://docs.djangoproject.com/, select the version from the
