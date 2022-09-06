@@ -7,22 +7,7 @@ module Docs
       code: 'https://github.com/python/cpython'
     }
 
-    options[:only_patterns] = [
-      # /\Ac-api/,
-      /\Adistributing/,
-      # /\Adistutils/,
-      /\Aextending/,
-      /\Afaq/,
-      /\Ahowto/,
-      /\Aindex.html/,
-      # /\Ainstall/,
-      /\Ainstalling/,
-      /\Alibrary/,
-      /\Areference/,
-      /\Atutorial/,
-      /\Ausing/,
-    ]
-
+    options[:skip_patterns] = [/genindex/, /whatsnew/]
     options[:skip] = %w(
       library/2to3.html
       library/formatter.html
@@ -37,7 +22,7 @@ module Docs
     HTML
 
     version '3.10' do
-      self.release = '3.10.4'
+      self.release = '3.10.6'
       self.base_url = "https://docs.python.org/#{self.version}/"
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'

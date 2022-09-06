@@ -29,6 +29,8 @@ module Docs
         return 'Language Reference' if slug.start_with? 'reference'
         return 'Python/C API' if slug.start_with? 'c-api'
         return 'Tutorial' if slug.start_with? 'tutorial'
+        return 'Distributing' if slug.start_with? 'distributing'
+        return 'Distributing' if slug.start_with? 'distutils'
 
         return 'Basics' unless slug.start_with? 'library/'
         return 'Basics' if slug.start_with? 'library/index'
