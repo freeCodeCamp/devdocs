@@ -2,7 +2,8 @@ module Docs
   class Eslint
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.doc') if at_css('.doc')
+        @doc = at_css('#main') if at_css('#main')
+        @doc = at_css('.docs-main__content') if at_css('.docs-main__content')
 
         css('.eslint-ad').remove
         css('.glyphicon').remove
