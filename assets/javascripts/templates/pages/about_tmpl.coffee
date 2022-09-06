@@ -388,7 +388,7 @@ credits = [
     'https://raw.githubusercontent.com/wycats/handlebars.js/master/LICENSE'
   ], [
     'HAProxy',
-    '2021 Willy Tarreau, HAProxy contributors',
+    '2022 Willy Tarreau, HAProxy contributors',
     'GPLv2',
     'https://raw.githubusercontent.com/haproxy/haproxy/master/LICENSE'
   ], [
