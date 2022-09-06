@@ -12,6 +12,7 @@ module Docs
         '.button.section-edit',
         '.communitybox',
         '#Quick_Links',
+        'aside.metadata',
         'hr']
 
       BROWSER_UNNECESSARY_CLASS_REGEX = /\s*bc-browser[\w_-]+/

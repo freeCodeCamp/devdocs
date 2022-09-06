@@ -3,7 +3,7 @@ module Docs
     prepend FixInternalUrlsBehavior
     prepend FixRedirectionsBehavior
 
-    # release = '2022-04-20'
+    # release = '2022-09-06'
     self.name = 'SVG'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/SVG'
 
