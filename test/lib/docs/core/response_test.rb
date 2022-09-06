@@ -63,6 +63,17 @@ class DocsResponseTest < MiniTest::Spec
     end
   end
 
+  describe "#content_length" do
+    it "returns the content type" do
+      options.headers['Content-Length'] = '188420'
+      assert_equal 188420, response.content_length
+    end
+
+    it "defaults to 0" do
+      assert_equal 0, response.content_length
+    end
+  end
+
   describe "#mime_type" do
     it "returns the content type" do
       options.headers['Content-Type'] = 'type'
