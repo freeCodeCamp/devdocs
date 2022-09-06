@@ -2,7 +2,7 @@ module Docs
   class Mariadb < UrlScraper
     self.name = 'MariaDB'
     self.type = 'mariadb'
-    self.release = '10.8.3'
+    self.release = '10.9.2'
     self.base_url = 'https://mariadb.com/kb/en/'
     self.root_path = 'documentation/'
     self.links = {
