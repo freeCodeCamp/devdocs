@@ -1,7 +1,7 @@
 module Docs
   class Composer < UrlScraper
     self.type = 'simple'
-    self.release = '2.0.7'
+    self.release = '2.4.1'
     self.base_url = 'https://getcomposer.org/doc/'
     self.links = {
       home: 'https://getcomposer.org',
