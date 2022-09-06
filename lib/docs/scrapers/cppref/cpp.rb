@@ -3,6 +3,7 @@ module Docs
     self.name = 'C++'
     self.slug = 'cpp'
     self.base_url = 'https://en.cppreference.com/w/cpp/'
+    # release = '2022-09-06'
 
     html_filters.insert_before 'cppref/clean_html', 'cpp/entries'
 

@@ -3,6 +3,7 @@
   > h4 { @extend %block-label, %label-blue; }
   .fmbox { @extend %note; }
   code, .t-mark, .t-mark-rev { @extend %label; }
+  .t-cc { @extend %code; }
 
   .t-li1 { margin: 0 0 1em; }
 
