@@ -237,6 +237,11 @@ credits = [
     'CC BY-SA',
     'https://creativecommons.org/licenses/by-sa/4.0/'
   ], [
+    'date-fns',
+    '2021 Sasha Koss and Lesha Koss',
+    'MIT',
+    'https://raw.githubusercontent.com/date-fns/date-fns/main/LICENSE.md'
+  ], [
     'Deno',
     '2018–2022 the Deno authors',
     'MIT',

@@ -39,6 +39,7 @@ group :development do
 end
 
 group :docs do
+  gem 'redcarpet'
   gem 'progress_bar', require: false
   gem 'unix_utils', require: false
   gem 'tty-pager', require: false
