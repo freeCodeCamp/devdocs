@@ -2,7 +2,7 @@ module Docs
   class Html < Mdn
     prepend FixInternalUrlsBehavior
 
-    # release = '2022-04-27'
+    # release = '2022-09-06'
     self.name = 'HTML'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/HTML'
 
