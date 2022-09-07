@@ -17,7 +17,7 @@ module Docs
 
       def get_name
         name = at_css('h1').content
-        name.remove! %r{\A[\d\.]+ } # remove list number
+        name.remove! %r{\A[\d\.]+ } unless include_h2? # remove list number
         name.remove! "\u{00B6}" # remove pilcrow sign
         name.remove! %r{ [\u{2013}\u{2014}].+\z} # remove text after em/en dash
         name.remove! 'Built-in'
@@ -29,8 +29,8 @@ module Docs
         return 'Language Reference' if slug.start_with? 'reference'
         return 'Python/C API' if slug.start_with? 'c-api'
         return 'Tutorial' if slug.start_with? 'tutorial'
-        return 'Distributing' if slug.start_with? 'distributing'
-        return 'Distributing' if slug.start_with? 'distutils'
+        return 'Software Packaging & Distribution' if slug.start_with? 'distributing'
+        return 'Software Packaging & Distribution' if slug.start_with? 'distutils'
 
         return 'Basics' unless slug.start_with? 'library/'
         return 'Basics' if slug.start_with? 'library/index'
@@ -48,12 +48,16 @@ module Docs
           type = 'Internet Data Handling'
         end
 
-        type.remove! %r{\A\d+\.\s+} # remove list number
+        type.remove! %r{\A\d+\.\s+} unless include_h2? # remove list number
         type.remove! "\u{00b6}" # remove paragraph character
         type.sub! ' and ', ' & '
         [' Services', ' Modules', ' Specific', 'Python '].each { |str| type.remove!(str) }
 
         REPLACE_TYPES[type] || type
+      end
+
+      def include_h2?
+        return slug.start_with?('reference') || slug.start_with?('tutorial') || slug.start_with?('using')
       end
 
       def include_default_entry?
@@ -72,6 +76,13 @@ module Docs
 
         css('.function > dt[id]', '.method > dt[id]', '.staticmethod > dt[id]', '.classmethod > dt[id]').each do |node|
           entries << [node['id'] + '()', node['id']]
+        end
+
+        if include_h2?
+          css('section[id] > h2').each do |node|
+            name = node.content.remove("\u{00b6}")
+            entries << [name, node.parent['id']]
+          end
         end
 
         entries
