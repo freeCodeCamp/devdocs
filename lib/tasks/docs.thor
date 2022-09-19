@@ -180,7 +180,7 @@ class DocsCLI < Thor
         return
       end
 
-      unless File.exists?(File.join(Docs.store_path, "#{doc.path}.tar.gz"))
+      unless File.exist?(File.join(Docs.store_path, "#{doc.path}.tar.gz"))
         puts "ERROR: package for '#{doc.slug}' documentation not found. Run 'thor docs:package #{doc.slug}' to create it."
         return
       end
