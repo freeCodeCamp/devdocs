@@ -2,13 +2,13 @@ module Docs
   class Socketio < UrlScraper
     self.name = 'Socket.IO'
     self.slug = 'socketio'
-    self.type = 'socketio'
+    self.type = 'sphinx'
     self.links = {
-      home: 'http://socket.io/',
+      home: 'https://socket.io/',
       code: 'https://github.com/socketio/socket.io'
     }
 
-    html_filters.push 'socketio/clean_html', 'socketio/entries'
+    html_filters.push 'socketio/clean_html', 'socketio/entries', 'sphinx/clean_html'
 
     options[:trailing_slash] = false
     options[:skip] = %w(/faq /glossary)
@@ -19,7 +19,7 @@ module Docs
     HTML
 
     version '4' do
-      self.release = '4.1.2'
+      self.release = '4.5.2'
       self.base_url = "https://socket.io/docs/v#{version}"
     end
 
