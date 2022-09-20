@@ -17,7 +17,7 @@ module Docs
 
     options[:skip] = %w(team.html plugins/)
 
-    self.release = '3.0.4'
+    self.release = '3.1.3'
     self.base_url = 'https://vitejs.dev/'
     self.initial_paths = %w(guide/)
     html_filters.push 'vite/entries', 'vite/clean_html'
