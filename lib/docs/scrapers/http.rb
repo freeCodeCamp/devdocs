@@ -2,7 +2,7 @@ module Docs
   class Http < Mdn
     include MultipleBaseUrls
 
-    # release = '2021-10-22'
+    # release = '2022-09-20'
     self.name = 'HTTP'
     self.base_urls = [
       'https://developer.mozilla.org/en-US/docs/Web/HTTP',
