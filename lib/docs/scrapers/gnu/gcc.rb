@@ -47,7 +47,7 @@ module Docs
     }
 
     version '12' do
-      self.release = '12.1.0'
+      self.release = '12.2.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
