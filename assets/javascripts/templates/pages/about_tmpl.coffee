@@ -553,7 +553,7 @@ credits = [
     'https://daringfireball.net/projects/markdown/license'
   ], [
     'Matplotlib',
-    '2012-2021 Matplotlib Development Team. All rights reserved.',
+    '2012-2022 Matplotlib Development Team. All rights reserved.',
     'Custom',
     'https://raw.githubusercontent.com/matplotlib/matplotlib/master/LICENSE/LICENSE'
   ], [

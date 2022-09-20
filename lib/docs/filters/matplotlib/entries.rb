@@ -18,6 +18,7 @@ module Docs
         name.remove! 'mpl_toolkits.'
         name.remove! ' API'
         name.remove! %r{ \(.*\)}
+        name.remove! %r{#$} # headerlink
         name
       end
 
