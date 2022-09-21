@@ -44,76 +44,62 @@ module Docs
       end
 
       SECTIONS = {
-        'rfc2616' => [
-          [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15],
-          [14],
-          []
-        ],
         'rfc4918' => [
           [],
           [11],
+          [], []
+        ],
+        'rfc9110' => [
+          (3..18).to_a,
+          (3..17).to_a,
+          (7..15).to_a,
           []
         ],
-        'rfc7230' => [
-          (2..9).to_a,
+        'rfc9111' => [
+          (3..8).to_a,
+          (3..10).to_a,
           [],
-          []
+          [5]
         ],
-        'rfc7231' => [
-          [3, 8, 9],
-          [],
-          [4, 5, 6, 7]
+        'rfc9112' => [
+          (2..12).to_a,
+          (2..11).to_a,
+          [], []
         ],
-        'rfc7232' => [
-          [5, 6, 7, 8],
-          [2, 3, 4],
-          []
-        ],
-        'rfc7233' => [
-          [5, 6],
-          [2, 3, 4],
-          []
-        ],
-        'rfc7234' => [
-          [3, 6, 7, 8],
-          [4, 5],
-          []
-        ],
-        'rfc7235' => [
-          [2, 5, 6],
-          [3, 4],
-          []
-        ],
-        'rfc7540' => [
+        'rfc9113' => [
           (3..11).to_a,
-          [],
-          []
+          (3..10).to_a,
+          [], []
+        ],
+        'rfc9114' => [
+          (3..11).to_a,
+          (3..10).to_a,
+          [7], []
         ],
         'rfc5023' => [
-          [],
-          [],
-          []
+          [], [], [], []
         ]
       }
 
       LEVEL_1 = /\A(\d+)\z/
       LEVEL_2 = /\A(\d+)\.\d+\z/
       LEVEL_3 = /\A(\d+)\.\d+\.\d+\z/
+      LEVEL_4 = /\A(\d+)\.\d+\.\d+\.\d+\z/
 
       def additional_entries
         return [] unless current_url.host == 'datatracker.ietf.org'
         type = nil
 
-        css('a[href^="#section-"]').each_with_object([]) do |node, entries|
-          id = node['href'].remove('#')
+        css('*[id^="section-"]').each_with_object([]) do |node, entries|
+          id = node['id']
           break entries if entries.any? { |e| e[1] == id }
 
-          content = node.next.content.strip
+          content = node.content.strip
           content.remove! %r{\s*\.+\d*\z}
           content.remove! %r{\A[\.\s]+}
 
           name = "#{content} (#{rfc})"
-          number = node.content.strip
+          number = id.remove('section-')
 
           if number =~ LEVEL_1
             if SECTIONS[slug][0].include?($1.to_i)
@@ -131,7 +117,11 @@ module Docs
               type = self.name
             end
           elsif (number =~ LEVEL_2 && SECTIONS[slug][1].include?($1.to_i)) ||
-                (number =~ LEVEL_3 && SECTIONS[slug][2].include?($1.to_i))
+                (number =~ LEVEL_3 && SECTIONS[slug][2].include?($1.to_i)) ||
+                (number =~ LEVEL_4 && SECTIONS[slug][3].include?($1.to_i))
+            if type != self.name
+              name.remove! %r{\A(\d+\.)* }
+            end
             entries << [name, id, (name =~ /\A\d\d\d/ ? 'Status' : type )]
           end
         end

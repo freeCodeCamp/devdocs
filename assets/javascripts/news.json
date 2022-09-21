@@ -1,5 +1,9 @@
 [
   [
+    "2022-09-21",
+    "Added HTTP/3 to <a href=\"/http/\">HTTP</a>"
+  ],
+  [
     "2022-09-06",
     "New documentation: <a href=\"/date_fns/\">date-fns</a>"
   ],
