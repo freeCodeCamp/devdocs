@@ -22,7 +22,7 @@ module Docs
     private
 
     def assert_source_directory_exists
-      unless Dir.exists?(source_directory)
+      unless Dir.exist?(source_directory)
         raise SetupError, "The #{self.class.name} scraper requires the original documentation files to be stored in the \"#{source_directory}\" directory."
       end
     end
