@@ -175,7 +175,7 @@ class DocsCLI < Thor
 
     # Verify files are present
     docs.each do |doc|
-      unless Dir.exists?(File.join(Docs.store_path, doc.path))
+      unless Dir.exist?(File.join(Docs.store_path, doc.path))
         puts "ERROR: directory #{File.join(Docs.store_path, doc.path)} not found."
         return
       end
