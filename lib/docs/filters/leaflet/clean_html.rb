@@ -28,8 +28,10 @@ module Docs
             'css'
           elsif node['class'].include?('lang-js') || node['class'].include?('language-js') || node['class'].include?('lang-javascript')
             'javascript'
+          else
+            'javascript'
           end
-          node.parent['data-language'] = lang if lang
+          node.parent['data-language'] = lang
           node.before(node.children).remove
         end
 

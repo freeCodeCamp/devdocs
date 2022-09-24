@@ -19,9 +19,14 @@ module Docs
       Maps &copy; OpenStreetMap contributors.
     HTML
 
+    version '1.9' do
+      self.release = '1.9.1'
+      self.base_url = "https://leafletjs.com/reference.html"
+    end
+
     version '1.8' do
       self.release = '1.8.0'
-      self.base_url = "https://leafletjs.com/SlavaUkraini/reference.html"
+      self.base_url = "https://leafletjs.com/reference-#{release}.html"
     end
 
     version '1.7' do
