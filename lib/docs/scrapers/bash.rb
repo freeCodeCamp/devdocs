@@ -1,7 +1,7 @@
 module Docs
   class Bash < FileScraper
     self.type = 'bash'
-    self.release = '5.1'
+    self.release = '5.2'
     self.base_url = 'https://www.gnu.org/software/bash/manual/html_node'
     self.root_path = 'index.html'
     self.links = {

@@ -2,11 +2,14 @@ module Docs
   class Bash
     class CleanHtmlFilter < Filter
       def call
+        @doc = at_css('> div[id]') if at_css('> div[id]')
         # Remove the navigation header and footer and the lines underneath and above it
         at_css('.header + hr').remove
         line_above = at_xpath('//div[@class="header"]/preceding::hr[1]')
         line_above.remove unless line_above.nil?
         css('.header').remove
+
+        css('.copiable-anchor').remove
 
         # Remove chapter and section numbers from title
         title_node = at_css('h1, h2, h3, h4, h5, h6')
