@@ -16,8 +16,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      contents = get_github_file_contents('GoogleChrome', 'puppeteer', 'README.md', opts)
-      contents.scan(/\/v([0-9.]+)\/docs\/api\.md/)[0][0]
+      get_npm_version('puppeteer', opts)
     end
   end
 end
