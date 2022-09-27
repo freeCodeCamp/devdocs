@@ -70,9 +70,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://leafletjs.com/reference-versions.html', opts)
-      link = doc.at_css('.container > ul > li:last-child > a').content
-      link.sub(/[a-zA-Z\s]*/, '')
+      get_npm_version('leaflet', opts)
     end
   end
 end
