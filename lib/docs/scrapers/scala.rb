@@ -22,6 +22,22 @@ module Docs
     # 3. From the Dotty folder, run this command in the terminal:
     #    $ sbt scaladoc/generateScalaDocumentation
     # 4. Extract scaladoc/output/scala3/api/ into docs/scala~3.1
+    version '3.2' do
+      self.release = '3.2.0'
+      self.base_url = 'https://scala-lang.org/api/3.2.0/'
+      self.root_path = 'index.html'
+
+      options[:skip_patterns] = [
+        # Ignore class names with include “#”, which cause issues with the scraper
+        /%23/,
+
+        # Ignore local links to the Java documentation created by a Scaladoc bug
+        /java\/lang/,
+      ]
+
+      html_filters.push 'scala/entries_v3', 'scala/clean_html_v3'
+    end
+
     version '3.1' do
       self.release = '3.1.1'
       self.base_url = 'https://scala-lang.org/api/3.1.1/'
