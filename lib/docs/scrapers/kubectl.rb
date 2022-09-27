@@ -21,7 +21,7 @@ module Docs
 
     # latest version has a special URL that does not include the version identifier 
     version do
-      self.release = "1.23"
+      self.release = "1.25"
       self.base_url = "https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands"
     end
 
