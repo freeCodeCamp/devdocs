@@ -13,6 +13,12 @@ module Docs
           node['data-language'] = 'typescript'
           node.name = 'pre'
         end
+        css('.tw-8ej7ai').each do |node|
+          code = node.at_css('.font-mono')
+          next unless code
+          code.parent.name = 'blockquote'
+          code.name = 'code'
+        end
         css('*[class]').remove_attribute('class')
         xpath('//a[text()="[src]"]').remove
         
