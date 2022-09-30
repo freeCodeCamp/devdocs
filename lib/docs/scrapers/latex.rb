@@ -4,7 +4,7 @@ module Docs
     self.name = 'LaTeX'
     self.slug = 'latex'
     self.type = 'simple'
-    self.release = 'April 2021'
+    self.release = 'May 2022'
     self.links = {
         home: 'https://ctan.org/pkg/latex2e-help-texinfo/'
     }
