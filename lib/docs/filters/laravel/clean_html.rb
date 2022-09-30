@@ -56,7 +56,7 @@ module Docs
       end
 
       def other
-        @doc = at_css('.docs_body')
+        @doc = at_css('#main-content')
 
         # Clean up headings
         css('h2 > a').each do |node|
