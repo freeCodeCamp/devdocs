@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
   "name": "DevDocs",
   "short_name": "DevDocs",
   "description": "API Documentation Browser",
