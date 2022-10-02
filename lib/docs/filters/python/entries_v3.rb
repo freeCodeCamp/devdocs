@@ -57,7 +57,7 @@ module Docs
       end
 
       def include_h2?
-        return slug.start_with?('reference') || slug.start_with?('tutorial') || slug.start_with?('using')
+        return slug.start_with?('library') || slug.start_with?('reference') || slug.start_with?('tutorial') || slug.start_with?('using')
       end
 
       def include_default_entry?
@@ -81,6 +81,7 @@ module Docs
         if include_h2?
           css('section[id] > h2').each do |node|
             name = node.content.remove("\u{00b6}")
+            name.concat " (#{self.name})" if slug.start_with?('library')
             entries << [name, node.parent['id']]
           end
         end
