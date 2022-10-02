@@ -31,6 +31,7 @@ module Docs
         return 'Tutorial' if slug.start_with? 'tutorial'
         return 'Software Packaging & Distribution' if slug.start_with? 'distributing'
         return 'Software Packaging & Distribution' if slug.start_with? 'distutils'
+        return 'Glossary' if slug.start_with? 'glossary'
 
         return 'Basics' unless slug.start_with? 'library/'
         return 'Basics' if slug.start_with? 'library/index'
@@ -57,21 +58,27 @@ module Docs
       end
 
       def include_h2?
-        return slug.start_with?('reference') || slug.start_with?('tutorial') || slug.start_with?('using')
+        return slug.start_with?('library') || slug.start_with?('reference') || slug.start_with?('tutorial') || slug.start_with?('using')
       end
 
       def include_default_entry?
+        return false if slug.starts_with?('genindex')
         return true if slug == 'library/asyncio'
         !at_css('.body > .section:only-child > .toctree-wrapper:last-child') && !type.in?(%w(Superseded))
       end
 
       def additional_entries
+        return additional_entries_index if slug.starts_with?('genindex')
         return [] if root_page? || slug.start_with?('library/index') || !include_default_entry? || name == 'errno'
         clean_id_attributes
         entries = []
 
         css('.class > dt[id]', '.exception > dt[id]', '.attribute > dt[id]', '.data > dt[id]').each do |node|
           entries << [node['id'], node['id']]
+        end
+
+        css('.glossary > dt[id]').each do |node|
+          entries << [node.content, node['id']]
         end
 
         css('.function > dt[id]', '.method > dt[id]', '.staticmethod > dt[id]', '.classmethod > dt[id]').each do |node|
@@ -81,7 +88,10 @@ module Docs
         if include_h2?
           css('section[id] > h2').each do |node|
             name = node.content.remove("\u{00b6}")
+            name.concat " (#{self.name})" if slug.start_with?('library')
             entries << [name, node.parent['id']]
+            statement = name[/The (.+) statement/, 1]
+            entries << ["#{statement} (statement)", node.parent['id'], 'Statements'] if statement && slug.start_with?('reference')
           end
         end
 
@@ -94,6 +104,28 @@ module Docs
             dt['id'] ||= node['id'].remove(/\w+\-/)
           end
           node.remove
+        end
+      end
+
+      def additional_entries_index
+        css('.genindextable td > ul > li').each_with_object [] do |node, entries|
+          name = node.children.first
+          next unless name.text?
+          name = name.text.strip()
+          next if name[/^\w/] || name[/^-+\w/]
+          node.css('> ul > li > a').each do |inner_node|
+            inner_name = inner_node.text.strip()
+            next if inner_name[/\[\d+\]/]
+            type = case inner_name
+            when 'operator'
+              'Operators'
+            when 'in regular expressions'
+              'Regular Expression'
+            else
+              'Symbols'
+            end
+            entries << ["#{name} (#{inner_name})", inner_node['href'], type]
+          end
         end
       end
     end

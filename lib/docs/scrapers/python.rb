@@ -7,7 +7,7 @@ module Docs
       code: 'https://github.com/python/cpython'
     }
 
-    options[:skip_patterns] = [/genindex/, /whatsnew/]
+    options[:skip_patterns] = [/whatsnew/]
     options[:skip] = %w(
       library/2to3.html
       library/formatter.html
