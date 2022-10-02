@@ -31,6 +31,7 @@ module Docs
         return 'Tutorial' if slug.start_with? 'tutorial'
         return 'Software Packaging & Distribution' if slug.start_with? 'distributing'
         return 'Software Packaging & Distribution' if slug.start_with? 'distutils'
+        return 'Glossary' if slug.start_with? 'glossary'
 
         return 'Basics' unless slug.start_with? 'library/'
         return 'Basics' if slug.start_with? 'library/index'
@@ -74,6 +75,10 @@ module Docs
 
         css('.class > dt[id]', '.exception > dt[id]', '.attribute > dt[id]', '.data > dt[id]').each do |node|
           entries << [node['id'], node['id']]
+        end
+
+        css('.glossary > dt[id]').each do |node|
+          entries << [node.content, node['id']]
         end
 
         css('.function > dt[id]', '.method > dt[id]', '.staticmethod > dt[id]', '.classmethod > dt[id]').each do |node|
