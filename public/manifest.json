@@ -42,5 +42,10 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "url_handlers": [
+    {
+      "origin": "https://devdocs.io"
+    }
   ]
 }
