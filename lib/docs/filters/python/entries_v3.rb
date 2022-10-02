@@ -61,11 +61,13 @@ module Docs
       end
 
       def include_default_entry?
+        return false if slug.starts_with?('genindex')
         return true if slug == 'library/asyncio'
         !at_css('.body > .section:only-child > .toctree-wrapper:last-child') && !type.in?(%w(Superseded))
       end
 
       def additional_entries
+        return additional_entries_index if slug.starts_with?('genindex')
         return [] if root_page? || slug.start_with?('library/index') || !include_default_entry? || name == 'errno'
         clean_id_attributes
         entries = []
@@ -97,6 +99,28 @@ module Docs
             dt['id'] ||= node['id'].remove(/\w+\-/)
           end
           node.remove
+        end
+      end
+
+      def additional_entries_index
+        css('.genindextable td > ul > li').each_with_object [] do |node, entries|
+          name = node.children.first
+          next unless name.text?
+          name = name.text.strip()
+          next if name[/^\w/] || name[/^-+\w/]
+          node.css('> ul > li > a').each do |inner_node|
+            inner_name = inner_node.text.strip()
+            next if inner_name[/\[\d+\]/]
+            type = case inner_name
+            when 'operator'
+              'Operators'
+            when 'in regular expressions'
+              'Regular Expression'
+            else
+              'Symbols'
+            end
+            entries << ["#{name} (#{inner_name})", inner_node['href'], type]
+          end
         end
       end
     end
