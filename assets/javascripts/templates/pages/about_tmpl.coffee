@@ -872,6 +872,11 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/statsmodels/statsmodels/master/LICENSE.txt'
   ], [
+    'Svelte',
+    '2016–2022 Rich Harris and contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/sveltejs/svelte/master/LICENSE.md'
+  ], [
     'Symfony',
     '2004-2017 Fabien Potencier',
     'MIT',

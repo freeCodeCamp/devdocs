@@ -1,5 +1,9 @@
 [
   [
+    "2022-10-02",
+    "New documentation: <a href=\"/svelte/\">Svelte</a>"
+  ],
+  [
     "2022-09-21",
     "Added HTTP/3 to <a href=\"/http/\">HTTP</a>"
   ],
