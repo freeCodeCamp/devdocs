@@ -83,6 +83,8 @@ module Docs
             name = node.content.remove("\u{00b6}")
             name.concat " (#{self.name})" if slug.start_with?('library')
             entries << [name, node.parent['id']]
+            statement = name[/The (.+) statement/, 1]
+            entries << ["#{statement} (statement)", node.parent['id'], 'Statements'] if statement && slug.start_with?('reference')
           end
         end
 
