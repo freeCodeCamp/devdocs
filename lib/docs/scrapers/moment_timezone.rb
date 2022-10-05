@@ -8,7 +8,7 @@ module Docs
     self.root_path = '/docs/'
     self.initial_paths = %w(/docs/)
     self.links = {
-      home: 'http://momentjs.com/timezone/',
+      home: 'https://momentjs.com/timezone/',
       code: 'https://github.com/moment/moment-timezone/'
     }
 
