@@ -577,15 +577,10 @@ credits = [
     'MIT',
     'https://modernizr.com/license/'
   ], [
-    'Moment.js',
+    'Moment.js<br>Moment.js Timezone',
     'JS Foundation and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/moment/moment/master/LICENSE'
-  ], [
-    'Moment.js Timezone',
-    'JS Foundation and other contributors',
-    'MIT',
-    'https://raw.githubusercontent.com/moment/moment-timezone/master/LICENSE'
   ], [
     'Mongoose',
     '2010 LearnBoost',
