@@ -90,8 +90,6 @@ module Docs
             name = node.content.remove("\u{00b6}")
             name.concat " (#{self.name})" if slug.start_with?('library')
             entries << [name, node.parent['id']]
-            statement = name[/The (.+) statement/, 1]
-            entries << ["#{statement} (statement)", node.parent['id'], 'Statements'] if statement && slug.start_with?('reference')
           end
         end
 
@@ -112,19 +110,25 @@ module Docs
           name = node.children.first
           next unless name.text?
           name = name.text.strip()
-          next if name[/^\w/] || name[/^-+\w/]
+          next if name[/Python Enhancement Proposals/]
           node.css('> ul > li > a').each do |inner_node|
             inner_name = inner_node.text.strip()
             next if inner_name[/\[\d+\]/]
+            href = inner_node['href']
+            next if (name[/^\w/] || name[/^-+\w/]) && !href[/stmts/]
             type = case inner_name
+            when 'keyword'
+              'Keywords'
             when 'operator'
               'Operators'
             when 'in regular expressions'
               'Regular Expression'
+            when /statement/
+              'Statements'
             else
               'Symbols'
             end
-            entries << ["#{name} (#{inner_name})", inner_node['href'], type]
+            entries << ["#{name} (#{inner_name})", href, type]
           end
         end
       end
