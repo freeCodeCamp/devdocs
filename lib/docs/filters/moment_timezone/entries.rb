@@ -9,10 +9,8 @@ module Docs
         css('[id]').each do |node|
           if node.name == 'h2'
             type = node.content
-            name = "Intro"
-          else
-            name = node.content.strip
           end
+          name = node.content.strip
           entries << [name, node['id'], type]
         end
 
