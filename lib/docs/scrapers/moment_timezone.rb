@@ -2,7 +2,7 @@ module Docs
   class MomentTimezone < UrlScraper
     self.name = 'Moment.js Timezone'
     self.slug = 'moment_timezone'
-    self.type = 'moment_timezone'
+    self.type = 'moment'
     self.release = '0.5.37'
     self.base_url = 'https://momentjs.com/timezone'
     self.root_path = '/docs/'
@@ -12,7 +12,7 @@ module Docs
       code: 'https://github.com/moment/moment-timezone/'
     }
 
-    html_filters.push 'moment_timezone/clean_html', 'moment_timezone/entries', 'title'
+    html_filters.push 'moment/clean_html', 'moment_timezone/entries', 'title'
 
     options[:title] = 'Moment.js Timezone'
     options[:container] = '.docs-content'
