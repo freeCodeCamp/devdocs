@@ -327,6 +327,11 @@ credits = [
     'Apache',
     'https://raw.githubusercontent.com/falconry/falcon/master/LICENSE'
   ], [
+    'FastAPI',
+    '2018 Sebastián Ramírez',
+    'MIT',
+    'https://github.com/tiangolo/fastapi/blob/master/LICENSE'
+  ], [
     'Fish',
     '2005–2009 Axel Liljencrantz, 2009–2022 fish-shell contributors',
     'GPLv2',
