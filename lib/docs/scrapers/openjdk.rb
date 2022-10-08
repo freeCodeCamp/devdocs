@@ -37,6 +37,16 @@ module Docs
 
     NEWFILTERS = ['openjdk/entries_new', 'openjdk/clean_html_new']
 
+    version '19' do
+      self.release = '19'
+      self.root_path = 'index.html'
+      self.base_url = 'https://docs.oracle.com/en/java/javase/19/docs/api/'
+
+      html_filters.push NEWFILTERS
+
+      options[:container] = 'main'
+    end
+
     version '18' do
       self.release = '18'
       self.root_path = 'index.html'
