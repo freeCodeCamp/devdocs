@@ -627,6 +627,11 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
   ], [
+    'NuxtJS',
+    '2016-present Nuxt Team',
+    'MIT',
+    'https://raw.githubusercontent.com/nuxt/nuxt.js/dev/LICENSE'
+  ], [
     'OCaml',
     '1995-2022 INRIA',
     'CC BY-SA',
