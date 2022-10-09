@@ -1,6 +1,6 @@
 module Docs
   class Fastapi < UrlScraper
-    self.name = 'Fastapi'
+    self.name = 'FastAPI'
     self.type = 'fastapi'
     self.release = '0.85.0'
     self.base_url = 'https://fastapi.tiangolo.com/'
