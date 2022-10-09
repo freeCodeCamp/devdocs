@@ -2,6 +2,7 @@ module Docs
   class Vite
     class CleanHtmlFilter < Filter
       def call
+        return "<h1>Vitest</h1><p>A Vite-native unit test framework. It's fast!</p>" if root_page? && current_url.host == 'vitest.dev'
         return '<h1>Vite</h1>' if root_page?
         @doc = at_css('main h1').parent
 

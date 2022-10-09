@@ -937,6 +937,11 @@ credits = [
     'MIT',
     'https://github.com/vitejs/vite/blob/main/LICENSE'
   ], [
+    'Vitest',
+    '2021-Present Anthony Fu<br>2021-Present Matias Capeletto<br>',
+    'MIT',
+    'https://github.com/vitest-dev/vitest/blob/main/LICENSE'
+  ], [
     'Vue Router',
     '2013-present Evan You',
     'MIT',
