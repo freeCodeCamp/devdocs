@@ -3,8 +3,10 @@ module Docs
     class CleanHtmlFilter < Filter
 
       def call
-        doc.css('.headerlink').each do |node|
-          node.remove
+        doc.css('.headerlink').remove
+
+        if root_page?
+          doc.css('#sponsors ~ p', '#sponsors').remove
         end
 
         doc.css('.tabbed-set').each do |node|
