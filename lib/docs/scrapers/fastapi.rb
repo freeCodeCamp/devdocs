@@ -19,7 +19,8 @@ module Docs
     html_filters.push 'fastapi/container', 'fastapi/clean_html', 'fastapi/entries'
 
     options[:attribution] = <<-HTML
-      &copy; This project is licensed under the terms of the MIT license.
+      &copy; 2018 Sebastián Ramírez<br>
+      Licensed under the MIT License.
     HTML
 
     def get_latest_version(opts)
