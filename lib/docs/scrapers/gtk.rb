@@ -74,7 +74,7 @@ module Docs
 
     version '4.0' do
       self.release = '4.0.0'
-      self.base_url = "https://developer.gnome.org/gtk4/#{self.version}/"
+      self.base_url = "https://developer-old.gnome.org/gtk4/stable/"
 
       options[:root_title] = 'GTK 4 Reference Manual'
       options[:skip] = GTK4_SKIP
