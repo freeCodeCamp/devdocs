@@ -102,6 +102,11 @@ credits = [
     'Apache',
     'https://www.apache.org/licenses/LICENSE-2.0'
   ], [
+    'Astro',
+    '2022 withastro',
+    'MIT',
+    'https://github.com/withastro/docs/blob/main/LICENSE'
+  ], [
     'Async',
     '2010-2018 Caolan McMahon',
     'MIT',

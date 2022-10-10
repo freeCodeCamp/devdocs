@@ -1,5 +1,9 @@
 [
   [
+    "2022-10-10",
+    "New documentation: <a href=\"/astro/\">Astro</a>"
+  ],
+  [
     "2022-10-09",
     "New documentations: <a href=\"/fastapi/\">FastAPI</a>, <a href=\"/vitest/\">Vitest</a>"
   ],
