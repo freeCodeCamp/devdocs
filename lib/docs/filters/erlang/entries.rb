@@ -44,10 +44,9 @@ module Docs
         if subpath.start_with?('lib/')
           names = Set.new
           entry_nodes.each_with_object [] do |node, entries|
-            id = node['name']
+            id = node['id']
             name = id.remove %r{\-\d*\z}
             name << ' (type)' if name.sub!(/\Atype-/, '')
-            name.remove! 'Module:'
             name.prepend "#{self.name}:"
             entries << [name, id] if names.add?(name)
           end
@@ -67,9 +66,7 @@ module Docs
 
       def entry_nodes
         @entry_nodes ||= if subpath.start_with?('lib/')
-          css('p + div.REFBODY').each_with_object [] do |node, result|
-            result.concat(node.previous_element.css('a[name]').to_a)
-          end
+          css('article.func > h4', 'article.data-types-body > h4').entries
         elsif subpath.start_with?('erts')
           link = at_css(".flipMenu a[href='#{File.basename(subpath, '.html')}']")
           list = link.parent.parent
