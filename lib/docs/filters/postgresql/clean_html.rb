@@ -13,7 +13,7 @@ module Docs
       def other
         @doc = at_css('#docContent')
 
-        css('.navheader', 'hr', '.navfooter a[accesskey="H"]').remove
+        css('.navheader', 'hr', '.navfooter a[accesskey="H"]', '.navfooter').remove
 
         unless at_css('h1')
           at_css('.refnamediv h2, .titlepage h2').name = 'h1'
