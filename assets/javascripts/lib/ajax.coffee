@@ -6,18 +6,32 @@ MIME_TYPES =
   applyDefaults(options)
   serializeData(options)
 
-  xhr = new XMLHttpRequest()
-  xhr.open(options.type, options.url, options.async)
+  abortController = new AbortController()
 
-  applyCallbacks(xhr, options)
-  applyHeaders(xhr, options)
+  timer = setTimeout =>
+    abortController.abort()
+  , options.timeout * 1000
 
-  xhr.send(options.data)
-
-  if options.async
-    abort: abort.bind(undefined, xhr)
-  else
-    parseResponse(xhr, options)
+  fetch(
+    options.url,
+    headers: processHeaders(options)
+    method: options.type
+    contentType: options.dataType
+    signal: abortController.signal
+  ).then((response) ->
+    if options.dataType == 'json'
+      response.json()
+    else
+      response.text()
+  ).then((data) ->
+    if data?
+      onSuccess data, options
+    else
+      onError 'invalid', '', options
+  ).catch((error) ->
+    onError 'error', error, options
+  ).finally ->
+    clearTimeout timer
 
 ajax.defaults =
   async: true
@@ -51,19 +65,7 @@ serializeData = (options) ->
 serializeParams = (params) ->
   ("#{encodeURIComponent key}=#{encodeURIComponent value}" for key, value of params).join '&'
 
-applyCallbacks = (xhr, options) ->
-  return unless options.async
-
-  xhr.timer = setTimeout onTimeout.bind(undefined, xhr, options), options.timeout * 1000
-  xhr.onprogress = options.progress if options.progress
-  xhr.onreadystatechange = ->
-    if xhr.readyState is 4
-      clearTimeout(xhr.timer)
-      onComplete(xhr, options)
-    return
-  return
-
-applyHeaders = (xhr, options) ->
+processHeaders = (options) ->
   options.headers or= {}
 
   if options.contentType
@@ -74,45 +76,13 @@ applyHeaders = (xhr, options) ->
 
   if options.dataType
     options.headers['Accept'] = MIME_TYPES[options.dataType] or options.dataType
+  return options.headers
 
-  for key, value of options.headers
-    xhr.setRequestHeader(key, value)
+onSuccess = (data, options) ->
+  options.success?.call options.context, data, options
   return
 
-onComplete = (xhr, options) ->
-  if 200 <= xhr.status < 300
-    if (response = parseResponse(xhr, options))?
-      onSuccess response, xhr, options
-    else
-      onError 'invalid', xhr, options
-  else
-    onError 'error', xhr, options
+onError = (type, error, options) ->
+  options.error?.call options.context, type, error, options
   return
 
-onSuccess = (response, xhr, options) ->
-  options.success?.call options.context, response, xhr, options
-  return
-
-onError = (type, xhr, options) ->
-  options.error?.call options.context, type, xhr, options
-  return
-
-onTimeout = (xhr, options) ->
-  xhr.abort()
-  onError 'timeout', xhr, options
-  return
-
-abort = (xhr) ->
-  clearTimeout(xhr.timer)
-  xhr.onreadystatechange = null
-  xhr.abort()
-  return
-
-parseResponse = (xhr, options) ->
-  if options.dataType is 'json'
-    parseJSON(xhr.responseText)
-  else
-    xhr.responseText
-
-parseJSON = (json) ->
-  try JSON.parse(json) catch
