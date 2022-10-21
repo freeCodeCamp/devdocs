@@ -30,7 +30,7 @@ app.templates.aboutPage = -> """
 
   <h2 class="_block-heading" id="plugins">Plugins and Extensions</h2>
   <ul>
-    <li><a href="https://github.com/egoist/devdocs-app">Desktop app</a>
+    <li><a href="https://github.com/egoist/devdocs-app">Desktop app (Has been archived)</a>
     <li><a href="https://sublime.wbond.net/packages/DevDocs">Sublime Text package</a>
     <li><a href="https://atom.io/packages/devdocs">Atom package</a>
     <li><a href="https://marketplace.visualstudio.com/items?itemName=deibit.devdocs">Visual Studio Code extension</a>
