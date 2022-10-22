@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '~> 2.7.3'
+ruby '~> 3.1.2'
 
 gem 'rake'
 gem 'thor'
