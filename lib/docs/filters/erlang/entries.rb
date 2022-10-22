@@ -2,14 +2,14 @@ module Docs
   class Erlang
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('h1').content.strip
+        name = at_css('#content h1').content.strip
         name << " (#{type.remove('Guide: ')})" if name == '1 Introduction'
         name.sub! %r{\A(\d+)}, '\1.'
         name
       end
 
       def get_type
-        name = at_css('h1').content.strip
+        name = at_css('#content h1').content.strip
 
         if subpath.start_with?('lib/')
           type = subpath[/lib\/(.+?)[\-\/]/, 1]
@@ -44,7 +44,7 @@ module Docs
         if subpath.start_with?('lib/')
           names = Set.new
           entry_nodes.each_with_object [] do |node, entries|
-            id = node['id']
+            id = node['id'] || node['name']
             name = id.remove %r{\-\d*\z}
             name << ' (type)' if name.sub!(/\Atype-/, '')
             name.prepend "#{self.name}:"
@@ -66,7 +66,13 @@ module Docs
 
       def entry_nodes
         @entry_nodes ||= if subpath.start_with?('lib/')
-          css('article.func > h4', 'article.data-types-body > h4').entries
+          r18_funs = css('p + div.REFBODY').each_with_object [] do |node, result|
+            result.concat(node.previous_element.css('a[name]').to_a)
+          end
+          css('article.data-types-body > h4', 'article.func > h4',
+              'div.data-type-name a[name]', 'div.exports-body > a[name]',
+              'div.fun-type a[name]').entries +
+            r18_funs
         elsif subpath.start_with?('erts')
           link = at_css(".flipMenu a[href='#{File.basename(subpath, '.html')}']")
           list = link.parent.parent

@@ -12,8 +12,6 @@ module Docs
           node.before(node.children).remove
         end
 
-        css('> br').remove
-
         css('> font[size="+1"]:first-child').each do |node|
           node.name = 'h1'
         end
@@ -31,13 +29,9 @@ module Docs
         # others
 
         # Remove JS on-hover highlighting
-        css('h3.title-link', 'h4.data-type-name', 'h4.func-head').each do |node|
+        css('h3.title-link', 'h4.title-link', 'div.data-type-name', 'div.func-head').each do |node|
           node.remove_attribute('onmouseover')
           node.remove_attribute('onmouseout')
-        end
-
-        css('a[name]').each do |node|
-          node.before(node.children).remove
         end
 
         css('h3').each do |node|
@@ -49,12 +43,19 @@ module Docs
         css('h4.func-head + .fun-types > h3.func-types-title')
           .each { |node| node.name = 'h5' }
 
+        css('p > a[name]').each do |node|
+          parent = node.parent
+          parent.name = 'h4'
+          parent['id'] ||= node['name']
+          parent.css('> br:last-child').remove
+        end
+        css('a[name]:empty').each { |n| (n.next_element || n.parent)['id'] ||= n['name'] }
+
         css('h3', 'h4', 'h5').each do |node|
           node.name = node.name.sub(/\d/) { |i| i.to_i - 1 }
         end
 
-        # Convert <span/> code blocks to <code/> if inline otherwise
-        # <pre><code/></pre>.
+        # Convert <span/> code blocks to <code/> if inline otherwise <pre><code/></pre>
         css('span.bold_code', 'span.code', '.func-head > span.title-name').each do |node|
           node.remove_attribute('class')
           node.css('span.bold_code', 'span.code')
@@ -73,14 +74,6 @@ module Docs
         css('*:not(.REFTYPES) > pre').each do |node|
           node['data-language'] = 'erlang'
           node.inner_html = node.inner_html.strip_heredoc
-        end
-
-        css('.REFBODY').each do |node|
-          if node.element_children.length == 0
-            node.name = 'p'
-          else
-            node.before(node.children).remove
-          end
         end
 
         css('a[href^=javascript]').each { |n| n.before(n.children).remove }
