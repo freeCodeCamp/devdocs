@@ -19,7 +19,7 @@ module Docs
     HTML
 
     version '3' do
-      self.release = '3.2.31'
+      self.release = '3.2.41'
       self.base_url = 'https://vuejs.org/'
       self.initial_paths = %w(guide/introduction.html)
       html_filters.push 'vue/entries_v3', 'vue/clean_html'
