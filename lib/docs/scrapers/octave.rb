@@ -30,7 +30,7 @@ module Docs
     HTML
 
     version '7' do
-      self.release = '7.1.0'
+      self.release = '7.2.0'
       self.base_url = "https://docs.octave.org/v#{self.release}/"
     end
 
