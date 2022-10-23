@@ -833,9 +833,9 @@ credits = [
     'https://raw.githubusercontent.com/sanctuary-js/sanctuary/master/LICENSE'
   ], [
     'Sass',
-    '2006-2020 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein',
+    '2022 Google Inc.',
     'MIT',
-    'https://raw.githubusercontent.com/sass/sass/stable/MIT-LICENSE'
+    'https://raw.githubusercontent.com/sass/sass/main/LICENSE'
   ], [
     'Scala',
     '2002-2022 EPFL, with contributions from Lightbend',
