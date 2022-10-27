@@ -2,7 +2,7 @@ module Docs
   class Deno < UrlScraper
     self.name = 'Deno'
     self.type = 'simple'
-    self.release = '1.26.0'
+    self.release = '1.27.0'
     self.base_url = 'https://doc.deno.land/deno/stable/'
     self.links = {
       home: 'https://deno.land/',
