@@ -78,7 +78,8 @@ module Docs
         end
 
         css('.glossary > dt[id]').each do |node|
-          entries << [node.content, node['id']]
+          name = node.content.remove("\u{00b6}")
+          entries << [name, node['id']]
         end
 
         css('.function > dt[id]', '.method > dt[id]', '.staticmethod > dt[id]', '.classmethod > dt[id]').each do |node|
