@@ -1,17 +1,23 @@
 module Docs
   class Godot
-    class EntriesFilter < Docs::EntriesFilter
+    class EntriesV2Filter < Docs::EntriesFilter
       def get_name
         name = at_css('h1').content
         name.remove! "\u{00B6}" # Remove the pilcrow
         name
       end
 
+      TYPE_BY_LEARNING_PATH = {
+        'step_by_step' => 'Guides: Step by step',
+        'editor' => 'Guides: Editor',
+        'features' => 'Guides: Engine features',
+        'scripting' => 'Guides: Scripting',
+        'workflow' => 'Guides: Project workflow'
+      }
+
       def get_type
-        if slug.start_with?('getting_started')
-          # Getting started sections are different even between different minor
-          # versions from v3 so we're programmatically generating them instead.
-          "Getting started: " + slug.split('/')[1].tr_s('_', ' ').capitalize
+        if slug.start_with?('learning')
+          TYPE_BY_LEARNING_PATH[slug.split('/')[1]]
         else
           name
         end
@@ -30,7 +36,7 @@ module Docs
       end
 
       def include_default_entry?
-        return false if subpath.start_with?('getting_started') && subpath.end_with?('index.html')
+        return false if subpath.start_with?('learning') && subpath.end_with?('index.html')
         return false if subpath == 'classes/index.html'
         true
       end
