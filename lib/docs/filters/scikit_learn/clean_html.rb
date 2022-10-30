@@ -16,6 +16,10 @@ module Docs
           end
         end
 
+        # Most often comes with a link with the same text so we're removing
+        # these.
+        css('.sphx-glr-thumbnail-title').each do |node| node.remove end
+
         css('.sphx-glr-signature').remove
 
         doc
