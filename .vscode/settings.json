@@ -10,5 +10,8 @@
         ".",
         "-p",
         "*test*.py"
+    ],
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "main"
     ]
 }
