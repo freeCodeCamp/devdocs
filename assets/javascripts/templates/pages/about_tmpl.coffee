@@ -847,7 +847,7 @@ credits = [
     'https://scikit-image.org/docs/dev/license.html'
   ], [
     'scikit-learn',
-    '2007-2020 The scikit-learn developers',
+    '2007-2022 The scikit-learn developers',
     'BSD',
     'https://raw.githubusercontent.com/scikit-learn/scikit-learn/master/COPYING'
   ], [
