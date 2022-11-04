@@ -3,11 +3,13 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         css('#demo, #contributors ~ div, #contributors, #changelog ~ div, #changelog').remove
+        css('span.lang').remove
+        css('pre.vp-code-dark').remove
 
         css('.grid').each do |table|
           table.name = 'table'
           tr = nil
-          table.children.each do |td|
+          table.css('> div').each do |td|
             if td['opacity']
               table.add_child('<tr>')
               tr = table.last_element_child

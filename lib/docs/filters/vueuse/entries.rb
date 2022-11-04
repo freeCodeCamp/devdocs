@@ -10,7 +10,9 @@ module Docs
       def get_type
         return 'Guide' if slug == 'export-size'
         return 'Guide' if slug == 'functions'
-        link = at_css('aside .link.active')
+        return 'Guide' if slug == 'guidelines'
+        return 'Guide' if slug.start_with? 'guide'
+        link = at_css('.link.active')
         link.ancestors('section').at_css('.title').content
       end
     end

@@ -11,6 +11,8 @@ module Docs
     options[:skip] = %w(add-ons contributing ecosystem)
     options[:skip_patterns] = [/index$/]
     options[:fix_urls] = ->(url) do
+      url.sub! %r{/index$}, ''
+      url.sub! 'vueuse.org/on', 'vueuse.org/core/on'
       url.sub! 'vueuse.org/use', 'vueuse.org/core/use'
       url
     end
