@@ -956,6 +956,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/vuejs/vuejs.org/master/LICENSE'
   ], [
+    'Vueuse',
+    '2019-present Anthony Fu',
+    'MIT',
+    'https://raw.githubusercontent.com/vueuse/vueuse/main/LICENSE'
+  ], [
     'Vuex',
     '2015-present Evan You',
     'MIT',
