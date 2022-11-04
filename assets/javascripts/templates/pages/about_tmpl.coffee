@@ -374,8 +374,8 @@ credits = [
   ], [
     'Godot',
     '2014-2022 Juan Linietsky, Ariel Manzur, Godot Engine contributors',
-    'CC BY 3.0',
-    'https://creativecommons.org/licenses/by/3.0/'
+    'MIT',
+    'https://raw.githubusercontent.com/godotengine/godot/master/LICENSE.txt'
   ], [
     'Graphite',
     '2008-2012 Chris Davis<br>&copy; 2011-2016 The Graphite Project',
