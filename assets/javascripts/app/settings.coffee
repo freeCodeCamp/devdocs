@@ -12,6 +12,7 @@ class app.Settings
     'layout'
     'size'
     'tips'
+    'noAutofocus'
     'autoInstall'
     'spaceScroll'
     'spaceTimeout'
