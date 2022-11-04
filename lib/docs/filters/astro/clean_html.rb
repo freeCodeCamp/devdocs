@@ -5,6 +5,11 @@ module Docs
         @doc = at_css('article > section')
 
         css('.anchor-link').remove
+        css('.avatar-list').remove
+
+        css('header > h1').each do |node|
+          node.parent.before(node).remove
+        end
 
         css('pre').each do |node|
           node.content = node.css('.line').map(&:content).join("\n")

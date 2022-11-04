@@ -14,6 +14,8 @@ module Docs
       end
 
       def additional_entries
+        return if slug.start_with?('guides/deploy')
+        return if slug.start_with?('guides/integrations-guide')
         at_css('article').css('h2, h3').each_with_object [] do |node, entries|
           type = node.content.strip
           type.sub! %r{\s*#\s*}, ''
