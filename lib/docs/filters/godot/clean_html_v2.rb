@@ -1,10 +1,10 @@
 module Docs
   class Godot
-    class CleanHtmlFilter < Filter
+    class CleanHtmlV2Filter < Filter
       def call
         if root_page?
           at_css('h1').content = 'Godot Engine'
-          at_css('.admonition.note').remove
+          at_css('.admonition.tip').remove
         end
 
         css('ul[id].simple li:first-child:last-child').each do |node|
