@@ -992,7 +992,7 @@ credits = [
     'https://raw.githubusercontent.com/yiisoft/yii/master/LICENSE'
   ], [
     'Zig',
-    '2015–2021, Zig contributors',
+    '2015–2022, Zig contributors',
     'MIT',
     'https://raw.githubusercontent.com/ziglang/zig/master/LICENSE'
   ]
