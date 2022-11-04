@@ -30,18 +30,18 @@ module Docs
     HTML
 
     version '7' do
-      self.release = '7.1.0'
-      self.base_url = "https://octave.org/doc/v#{self.release}/"
+      self.release = '7.2.0'
+      self.base_url = "https://docs.octave.org/v#{self.release}/"
     end
 
     version '6' do
       self.release = '6.4.0'
-      self.base_url = "https://octave.org/doc/v#{self.release}/"
+      self.base_url = "https://docs.octave.org/v#{self.release}/"
     end
 
     version '5' do
       self.release = '5.2.0'
-      self.base_url = "https://octave.org/doc/v#{self.release}/"
+      self.base_url = "https://docs.octave.org/v#{self.release}/"
     end
 
     def get_latest_version(opts)

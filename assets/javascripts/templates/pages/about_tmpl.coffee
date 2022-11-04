@@ -644,7 +644,7 @@ credits = [
     'Octave',
     '1996–2022 The Octave Project Developers',
     'Octave',
-    'https://octave.org/doc/v7.1.0/'
+    'https://docs.octave.org/v7.2.0/'
   ], [
     'OpenJDK',
     '1993, 2022, Oracle and/or its affiliates. All rights reserved.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses.<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.',
