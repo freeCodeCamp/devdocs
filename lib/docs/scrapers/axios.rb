@@ -5,7 +5,7 @@ module Docs
       home: 'hthttps://axios-http.com/',
       code: 'https://github.com/axios/axios'
     }
-    self.release = '0.27.2'
+    self.release = '1.1.3'
     self.base_url = "https://axios-http.com/docs/"
     self.initial_paths = %w(intro)
 
