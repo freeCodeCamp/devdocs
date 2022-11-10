@@ -17,7 +17,7 @@ module Docs
 
     options[:skip] = %w(team.html plugins/)
 
-    self.release = '3.50.1'
+    self.release = '3.53.0'
     self.base_url = 'https://svelte.dev/docs'
     html_filters.push 'svelte/entries', 'svelte/clean_html'
 
