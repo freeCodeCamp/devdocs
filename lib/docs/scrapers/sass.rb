@@ -1,7 +1,7 @@
 module Docs
   class Sass < UrlScraper
     self.type = 'yard'
-    self.release = '1.55.0'
+    self.release = '1.56.1'
     self.base_url = 'https://sass-lang.com/documentation'
     self.root_path = 'index.html'
     self.links = {

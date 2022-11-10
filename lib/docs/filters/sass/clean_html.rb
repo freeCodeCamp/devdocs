@@ -2,7 +2,7 @@ module Docs
   class Sass
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('#main-content')
+        @doc = at_css('#main-content .typedoc', '#main-content')
 
         css('.sl-c-alert').remove
 
