@@ -49,7 +49,7 @@ module Docs
         page = {
           path: feature_id,
           store_path: "#{feature_id}.html",
-          output: ERB.new(PAGE_ERB, trim_mode:">").result(binding),
+          output: ERB.new(PAGE_ERB, trim_mode:">").result(binding).split("\n").map(&:strip).join("\n"),
           entries: [Entry.new(name, feature_id, type)]
         }
 
