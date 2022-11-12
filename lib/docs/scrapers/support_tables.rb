@@ -29,7 +29,7 @@ module Docs
       index_page = {
         path: 'index',
         store_path: 'index.html',
-        output: ERB.new(INDEX_PAGE_ERB).result(binding),
+        output: ERB.new(INDEX_PAGE_ERB, trim_mode:">").result(binding),
         entries: [Entry.new(nil, 'index', nil)]
       }
 
@@ -49,7 +49,7 @@ module Docs
         page = {
           path: feature_id,
           store_path: "#{feature_id}.html",
-          output: ERB.new(PAGE_ERB).result(binding),
+          output: ERB.new(PAGE_ERB, trim_mode:">").result(binding),
           entries: [Entry.new(name, feature_id, type)]
         }
 
