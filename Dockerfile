@@ -1,5 +1,4 @@
-FROM ruby:2.7.6
-
+FROM ruby:3.1.2
 ENV LANG=C.UTF-8
 ENV ENABLE_SERVICE_WORKER=true
 
