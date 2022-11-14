@@ -1,5 +1,5 @@
-require 'test_helper'
-require 'docs'
+require_relative '../../../test_helper'
+require_relative '../../../../lib/docs'
 
 class DocsDocTest < MiniTest::Spec
   let :doc do
@@ -197,7 +197,7 @@ class DocsDocTest < MiniTest::Spec
         it "opens the .path directory before storing the file" do
           stub(doc).path { 'path' }
           stub(store).write { assert false }
-          mock(store).open('path') do |_, block|
+          mock(store).open('path') do |_, &block|
             stub(store).write
             block.call
           end
@@ -258,7 +258,7 @@ class DocsDocTest < MiniTest::Spec
 
       before do
         any_instance_of(doc) do |instance|
-          stub(instance).build_pages { |block| pages.each(&block) }
+          stub(instance).build_pages { |&block| pages.each(&block) }
         end
       end
 
@@ -313,7 +313,7 @@ class DocsDocTest < MiniTest::Spec
         it "replaces the .path directory before storing the files" do
           stub(doc).path { 'path' }
           stub(store).write { assert false }
-          mock(store).replace('path') do |_, block|
+          mock(store).replace('path') do |_, &block|
             stub(store).write
             block.call
           end

@@ -1,5 +1,5 @@
-require 'test_helper'
-require 'docs'
+require_relative '../../../test_helper'
+require_relative '../../../../lib/docs'
 
 class DocsScraperTest < MiniTest::Spec
   class Scraper < Docs::Scraper
@@ -223,7 +223,7 @@ class DocsScraperTest < MiniTest::Spec
 
     context "when the response is processable" do
       before do
-        stub(scraper).request_all do |urls, block|
+        stub(scraper).request_all do |urls, &block|
           urls.each { |url| @next_urls ||= block.call(response) }
         end
         stub(scraper).handle_response(response) { processed_response }
