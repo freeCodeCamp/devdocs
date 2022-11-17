@@ -83,7 +83,13 @@ module Docs
     end
 
     version do
-      self.release = '14.2.0'
+      self.release = '15.0.0'
+      self.base_url = 'https://angular.io/'
+      include Docs::Angular::Since12
+    end
+
+    version '14' do
+      self.release = '14.2.11'
       self.base_url = 'https://angular.io/'
       include Docs::Angular::Since12
     end
