@@ -126,7 +126,6 @@ The following people (used to) maintain DevDocs:
 - [Jed Fox](https://github.com/j-f1)
 - [Mrugesh Mohapatra](https://github.com/raisedadead)
 - [Oliver Eyton-Williams](https://github.com/ojeytonwilliams)
-- [Paul Sernatinger](https://github.com/oscillot)
 - [Simon Legner](https://github.com/simon04)
 - [Thibaut Courouble](https://github.com/thibaut)
 
