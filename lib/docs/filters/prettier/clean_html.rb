@@ -21,6 +21,8 @@ module Docs
           node.parent['id'] ||= node['name'] || node['id']
         end
 
+        css('a[href*="youtube.com"]').remove
+
         css('.highlight').each do |node|
           node.name = 'pre'
           node.css('.gutter').remove
