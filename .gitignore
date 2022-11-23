@@ -12,3 +12,6 @@ docs/**/*
 *.tar.bz2
 *.tar.gz
 *.zip
+.direnv
+.local
+result
