@@ -65,7 +65,7 @@ Go to https://www.erlang.org/downloads and download the HTML documentation file.
 
 ```ah
 mkdir --parent docs/erlang\~$VERSION/; \
-curl http://erlang.org/download/otp_doc_html_$RELEASE.tar.gz | \
+curl -L https://github.com/erlang/otp/releases/download/OTP-$RELEASE/otp_doc_html_$RELEASE.tar.gz | \
 bsdtar --extract --file - --directory=docs/erlang\~$VERSION/
 ```
 
