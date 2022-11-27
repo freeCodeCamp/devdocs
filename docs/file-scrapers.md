@@ -23,7 +23,7 @@ and put it in `/path/to/devdocs/docs/`
 Or run the following commands in your terminal:
 
 ```sh
-curl https://storage.googleapis.com/dart-archive/channels/stable/release/$RELEASE/api-docs/dartdocs-gen-api-zip > dartApi.zip; \
+curl https://storage.googleapis.com/dart-archive/channels/stable/release/$RELEASE/api-docs/dartdocs-gen-api.zip > dartApi.zip; \
 unzip dartApi.zip; mv gen-dartdocs docs/dart~$VERSION
 ```
 
