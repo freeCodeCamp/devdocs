@@ -47,6 +47,11 @@
   span.descclassname, span.descname { font-family: var(--monoFont) }
 }
 
+nav[aria-label="Page navigation"]{
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
 ._sphinx {
   @extend %sphinx;
 }
