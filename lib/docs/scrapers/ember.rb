@@ -42,18 +42,27 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2020 Yehuda Katz, Tom Dale and Ember.js contributors<br>
+      &copy; 2022 Yehuda Katz, Tom Dale and Ember.js contributors<br>
       Licensed under the MIT License.
     HTML
 
     options[:decode_and_clean_paths] = true # handle paths like @ember/application
 
-    version '3' do
-      self.release = '3.25.0'
+    version '4' do
+      self.release = '4.4.0'
       self.base_urls = %w[
-        https://guides.emberjs.com/v3.25.0/
-        https://api.emberjs.com/ember/3.25/
-        https://api.emberjs.com/ember-data/3.25/
+        https://guides.emberjs.com/v4.4.0/
+        https://api.emberjs.com/ember/4.4/
+        https://api.emberjs.com/ember-data/4.4/
+      ]
+    end
+
+    version '3' do
+      self.release = '3.28.0'
+      self.base_urls = %w[
+        https://guides.emberjs.com/v3.28.0/
+        https://api.emberjs.com/ember/3.28/
+        https://api.emberjs.com/ember-data/3.28/
       ]
     end
 
