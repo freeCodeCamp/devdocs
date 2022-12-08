@@ -55,7 +55,7 @@ GEM
       net-ssh (>= 5.0.0, < 6.0.0)
     net-ssh (5.2.0)
     newrelic_rpm (6.7.0.359)
-    nokogiri (1.13.9)
+    nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     options (2.3.2)
@@ -66,7 +66,7 @@ GEM
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    racc (1.6.0)
+    racc (1.6.1)
     rack (2.2.4)
     rack-protection (2.0.7)
       rack
