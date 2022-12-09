@@ -10,7 +10,7 @@ COPY . /devdocs
 RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev libcurl && \
     gem install bundler && \
     bundle install --system --without test && \
-    thor docs:download --all && \
+    thor docs:download css html http javascript \
     thor assets:compile && \
     apk del gzip build-base git zlib-dev && \
     rm -rf /var/cache/apk/* /tmp ~/.gem /root/.bundle/cache \

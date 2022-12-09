@@ -17,7 +17,7 @@ RUN bundle install --system && \
 
 COPY . /devdocs
 
-RUN thor docs:download --all && \
+RUN thor docs:download css html http javascript && \
     thor assets:compile && \
     rm -rf /tmp
 
