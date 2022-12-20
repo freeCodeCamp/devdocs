@@ -17,10 +17,18 @@ module Docs
 
     options[:skip] = %w(team.html plugins/)
 
-    self.release = '3.2.2'
-    self.base_url = 'https://vitejs.dev/'
     self.initial_paths = %w(guide/)
     html_filters.push 'vite/entries', 'vite/clean_html'
+
+    version do
+      self.release = '4.0.2'
+      self.base_url = 'https://vitejs.dev/'
+    end
+
+    version '3' do
+      self.release = '3.2.5'
+      self.base_url = 'https://v3.vitejs.dev/'
+    end
 
     def get_latest_version(opts)
       get_npm_version('vite', opts)
