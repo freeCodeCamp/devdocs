@@ -20,6 +20,11 @@ module Docs
       Licensed under the GNU General Public License version 2.
     HTML
 
+    version '2.7' do
+      self.release = '2.7.0'
+      self.base_url = "https://docs.haproxy.org/#{self.version}/"
+    end
+
     version '2.6' do
       self.release = '2.6.5'
       self.base_url = "https://docs.haproxy.org/#{self.version}/"
