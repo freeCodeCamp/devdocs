@@ -970,7 +970,12 @@ credits = [
     '2014-2017 Khronos Group Inc.<br>Vulkan and the Vulkan logo are registered trademarks of the Khronos Group Inc.',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
-  ], [
+  ],[
+    'wagtail',
+    '2014-present Torchbox Ltd and individual contributors',
+    'BSD',
+    'https://github.com/wagtail/wagtail/blob/main/LICENSE'
+  ],[
     'webpack',
     'JS Foundation and other contributors',
     'CC BY',
