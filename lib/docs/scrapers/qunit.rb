@@ -27,6 +27,13 @@ module Docs
       /^extension$/,
     ]
 
-    options[:attribution] = 'Copyright OpenJS Foundation and contributors.'
+    options[:attribution] = <<-HTML
+      &copy; OpenJS Foundation and contributors.<br>
+      Licensed under the MIT license.
+    HTML
+
+    def get_latest_version(opts)
+      get_npm_version('qunit', opts)
+    end
   end
 end

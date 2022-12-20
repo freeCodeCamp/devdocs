@@ -746,6 +746,11 @@ credits = [
     'GFDL',
     'https://doc.qt.io/qt-5/licensing.html'
   ], [
+    'QUnit',
+    'OpenJS Foundation and other contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/qunitjs/qunit/main/LICENSE.txt'
+  ], [
     'R',
     '1999–2012 R Foundation for Statistical Computing',
     'GPL',
