@@ -49,11 +49,11 @@ module Docs
     options[:decode_and_clean_paths] = true # handle paths like @ember/application
 
     version '4' do
-      self.release = '4.4.0'
+      self.release = '4.9.0'
       self.base_urls = %w[
-        https://guides.emberjs.com/v4.4.0/
-        https://api.emberjs.com/ember/4.4/
-        https://api.emberjs.com/ember-data/4.4/
+        https://guides.emberjs.com/v4.9.0/
+        https://api.emberjs.com/ember/4.9/
+        https://api.emberjs.com/ember-data/4.9/
       ]
     end
 
