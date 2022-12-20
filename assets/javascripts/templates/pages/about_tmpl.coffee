@@ -238,8 +238,8 @@ credits = [
   ], [
     'Dart',
     '2012 the Dart project authors',
-    'CC BY-SA',
-    'https://creativecommons.org/licenses/by-sa/4.0/'
+    'BSD 3-Clause "New" or "Revised" License',
+    'https://raw.githubusercontent.com/dart-lang/sdk/main/LICENSE'
   ], [
     'date-fns',
     '2021 Sasha Koss and Lesha Koss',
