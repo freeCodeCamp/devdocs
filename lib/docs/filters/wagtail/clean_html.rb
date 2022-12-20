@@ -2,6 +2,8 @@ module Docs
   class Wagtail
     class CleanHtmlFilter < Filter
       def call
+        @doc = at_css('main > section', 'main')
+
         # footer contains links like about,contact us etc which
         # are not needed in documentation so removed
         doc.search('footer').each do |footer|

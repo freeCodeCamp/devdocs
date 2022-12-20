@@ -25,74 +25,19 @@ module Docs
     ]
 
     # updating release and base_url for different versions
-    version 'stable' do
-      self.release = 'stable'
+    version do
+      self.release = '4.1.1'
       self.base_url = 'https://docs.wagtail.org/en/stable/'
     end
 
-    version 'latest' do
-      self.release = 'latest'
-      self.base_url = 'https://docs.wagtail.org/en/latest/'
-    end
-
-    version '4.0.4' do
-      self.release = '4.0.4'
-      self.base_url = "https://docs.wagtail.org/en/v#{version}/"
-    end
-
-    version '4.0' do
-      self.release = '4.0'
-      self.base_url = "https://docs.wagtail.org/en/v#{version}/"
-    end
-
-    version '3.0.3' do
+    version '3' do
       self.release = '3.0.3'
-      self.base_url = "https://docs.wagtail.org/en/v#{version}/"
+      self.base_url = "https://docs.wagtail.org/en/v#{release}/"
     end
 
-    version '2.16.3' do
+    version '2' do
       self.release = '2.16.3'
-      self.base_url = "https://docs.wagtail.org/en/v#{version}/"
-    end
-
-    version '2.15.6' do
-      self.release = '2.15.6'
-      self.base_url = "https://docs.wagtail.org/en/v#{version}/"
-    end
-
-    version '2.10.2' do
-      self.release = '2.10.2'
-      self.base_url = "https://docs.wagtail.org/en/v#{version}/"
-    end
-
-    version '2.5.2' do
-      self.release = '2.5.2'
-      self.base_url = "https://docs.wagtail.org/en/v#{version}/"
-    end
-
-    version '2.4' do
-      self.release = '2.4'
-      self.base_url = "https://docs.wagtail.org/en/v#{version}/"
-    end
-
-    version '2.3' do
-      self.release = '2.3'
-      self.base_url = "https://docs.wagtail.org/en/v#{version}/"
-    end
-
-    version '2.0.2' do
-      self.release = '2.0.2'
-      self.base_url = "https://docs.wagtail.org/en/v#{version}/"
-    end
-
-    version '1.2' do
-      self.release = '1.2'
-      self.base_url = "https://docs.wagtail.org/en/v#{version}/"
-    end
-
-    version '1.1' do
-      self.release = '1.1'
-      self.base_url = "https://docs.wagtail.org/en/v#{version}/"
+      self.base_url = "https://docs.wagtail.org/en/v#{release}/"
     end
 
     # this method will fetch the latest version of wagtail
