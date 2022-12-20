@@ -6,6 +6,10 @@ module Docs
       def call
         @doc = at_css('.content[role="main"]')
         css('.sidebar').remove
+        css('pre').each do |node|
+          node['data-language'] = 'javascript'
+          node.content = node.content
+        end
         doc
       end
     end
