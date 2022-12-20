@@ -297,7 +297,7 @@ credits = [
     'https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE'
   ], [
     'Ember.js',
-    '2020 Yehuda Katz, Tom Dale and Ember.js contributors',
+    '2022 Yehuda Katz, Tom Dale and Ember.js contributors',
     'MIT',
     'https://raw.githubusercontent.com/emberjs/ember.js/master/LICENSE'
   ], [
