@@ -3,8 +3,6 @@ module Docs
     self.name = 'OCaml'
     self.type = 'ocaml'
     self.root_path = 'index.html'
-    self.release = '4.14'
-    self.base_url = "https://v2.ocaml.org/releases/#{self.release}/htmlman/"
     self.links = {
       home: 'https://ocaml.org/',
       code: 'https://github.com/ocaml/ocaml'
@@ -25,6 +23,16 @@ module Docs
     options[:attribution] = <<-HTML
       &copy; 1995-2022 INRIA.
     HTML
+
+    version '' do
+      self.release = '5.0'
+      self.base_url = "https://v2.ocaml.org/releases/#{self.release}/htmlman/"
+    end
+
+    version '4.14' do
+      self.release = '4.14'
+      self.base_url = "https://v2.ocaml.org/releases/#{self.release}/htmlman/"
+    end
 
     def get_latest_version(opts)
       get_latest_github_release('ocaml', 'ocaml', opts)
