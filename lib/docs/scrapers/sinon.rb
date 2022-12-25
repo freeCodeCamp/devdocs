@@ -14,7 +14,7 @@ module Docs
     options[:container] = '.content .container'
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2021 Christian Johansen<br>
+      &copy; 2010&ndash;2022 Christian Johansen<br>
       Licensed under the BSD License.
     HTML
 
@@ -27,59 +27,29 @@ module Docs
       url
     end
 
-    version '11' do
-      self.release = '11.1.2'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
+    RELEASE_MAPPINGS = {
+      '15' => '15.0.1',
+      '14' => '14.0.2',
+      '13' => '13.0.1',
+      '12' => '12.0.1',
+      '11' => '11.1.2',
+      '10' => '10.0.1',
+      '9'  => '9.2.2.',
+      '8'  => '8.1.1',
+      '7'  => '7.5.0',
+      '6'  => '6.3.5',
+      '5'  => '5.1.0',
+      '4'  => '4.5.0',
+      '3'  => '3.3.0',
+      '2'  => '2.4.1',
+      '1'  => '1.17.7'
+    }
 
-    version '10' do
-      self.release = '10.0.1'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '9' do
-      self.release = '9.2.2'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '8' do
-      self.release = '8.1.1'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '7' do
-      self.release = '7.5.0'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '6' do
-      self.release = '6.3.5'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '5' do
-      self.release = '5.1.0'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '4' do
-      self.release = '4.5.0'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '3' do
-      self.release = '3.3.0'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '2' do
-      self.release = '2.4.1'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '1' do
-      self.release = '1.17.7'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
+    RELEASE_MAPPINGS.each do |ver, release|
+      version ver do
+        self.release = release
+        self.base_url = "https://sinonjs.org/releases/v#{ver}/"
+      end
     end
 
     def get_latest_version(opts)
