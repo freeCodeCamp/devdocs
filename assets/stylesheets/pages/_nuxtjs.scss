@@ -1,0 +1,7 @@
+._nuxtjs {
+  > h2 { @extend %block-heading; }
+  > h3 { @extend %block-label, %label-blue; }
+
+  .alert { @extend %note; }
+  code, .filename { @extend %label; }
+}
