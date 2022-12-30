@@ -10,7 +10,7 @@ module Docs
     self.slug = 'minitest'
     self.release = '5.16.3'
     self.links = {
-      code: 'https://github.com/seattlerb/minitest'
+      code: 'https://github.com/minitest/minitest'
     }
 
     html_filters.replace 'rdoc/entries', 'minitest/entries'
