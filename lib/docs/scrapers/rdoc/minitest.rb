@@ -8,7 +8,7 @@ module Docs
 
     self.name = 'Ruby / Minitest'
     self.slug = 'minitest'
-    self.release = '5.11.3'
+    self.release = '5.16.3'
     self.links = {
       code: 'https://github.com/seattlerb/minitest'
     }
