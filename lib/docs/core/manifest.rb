@@ -16,7 +16,7 @@ module Docs
     def as_json
       @docs.each_with_object [] do |doc, result|
         next unless @store.exist?(doc.meta_path)
-        result << JSON.parse(@store.read(doc.meta_path))
+        result << doc.as_json_extra(@store)
       end
     end
 

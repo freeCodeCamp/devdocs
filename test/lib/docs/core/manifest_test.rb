@@ -56,14 +56,14 @@ class ManifestTest < MiniTest::Spec
 
     context "when the doc has a meta file" do
       before do
+        stub(store).exist?("testdoc/db.json") { false }
         stub(store).exist?(meta_path) { true }
-        stub(store).read(meta_path) { '{"name":"Test"}' }
       end
 
       it "includes the doc's meta representation" do
         json = manifest.as_json
         assert_equal 1, json.length
-        assert_equal 'Test', json[0]['name']
+        assert_equal "{:name=>\"TestDoc\", :slug=>\"testdoc\", :type=>nil, :mtime=>0}", json[0].to_s
       end
     end
 
