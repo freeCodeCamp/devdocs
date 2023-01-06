@@ -70,9 +70,9 @@ app.templates.aboutPage = ->
         <th>Source code
       #{(
         "<tr>
-        <td><a href=\"#{doc.links.home}\">#{doc.name}</a></td>
+        <td><a href=\"#{doc.links?.home}\">#{doc.name}</a></td>
         <td>#{doc.attribution}</td>
-        <td><a href=\"#{doc.links.code}\">Source code</a></td>
+        <td><a href=\"#{doc.links?.code}\">Source code</a></td>
         </tr>" for doc in docs
       ).join('')}
     </table>
