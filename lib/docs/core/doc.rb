@@ -88,7 +88,9 @@ module Docs
 
       def as_json_extra(store)
         json = self.as_json
-        json[:attribution] = options[:attribution].strip
+        if options[:attribution].is_a?(String)
+          json[:attribution] = options[:attribution].strip
+        end
         json[:db_size] = store.size(self.db_path) if store.exist?(self.db_path)
         json[:mtime] = store.mtime(self.meta_path).to_i if store.exist?(self.meta_path)
         json
