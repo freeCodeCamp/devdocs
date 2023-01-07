@@ -3,8 +3,9 @@ require 'docs'
 
 class ManifestTest < MiniTest::Spec
   let :doc do
-    doc = Class.new Docs::Doc
+    doc = Class.new Docs::Scraper
     doc.name = 'TestDoc'
+    doc.options[:attribution] = 'foo'
     doc
   end
 
@@ -63,7 +64,7 @@ class ManifestTest < MiniTest::Spec
       it "includes the doc's meta representation" do
         json = manifest.as_json
         assert_equal 1, json.length
-        assert_equal "{:name=>\"TestDoc\", :slug=>\"testdoc\", :type=>nil, :mtime=>0}", json[0].to_s
+        assert_equal "{:name=>\"TestDoc\", :slug=>\"testdoc\", :type=>nil, :attribution=>\"foo\", :mtime=>0}", json[0].to_s
       end
     end
 
