@@ -238,7 +238,7 @@ class DocsCLI < Thor
           dir = File.join(Docs.store_path, doc.path)
           FileUtils.mkpath(dir)
 
-          ['index.json', 'meta.json'].each do |filename|
+          ['index.json', 'meta.json', 'db.json'].each do |filename|
             json = "https://documents.devdocs.io/#{doc.path}/#{filename}?#{time}"
             begin
               open(json) do |file|
