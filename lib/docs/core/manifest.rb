@@ -16,7 +16,11 @@ module Docs
     def as_json
       @docs.each_with_object [] do |doc, result|
         next unless @store.exist?(doc.meta_path)
-        result << doc.as_json_extra(@store)
+        json = JSON.parse(@store.read(doc.meta_path))
+        if doc.options[:attribution].is_a?(String)
+          json[:attribution] = doc.options[:attribution].strip
+        end
+        result << json
       end
     end
 
