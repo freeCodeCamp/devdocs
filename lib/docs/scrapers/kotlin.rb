@@ -27,9 +27,14 @@ module Docs
     end
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2022 JetBrains s.r.o. and Kotlin Programming Language contributors<br>
+      &copy; 2010&ndash;2023 JetBrains s.r.o. and Kotlin Programming Language contributors<br>
       Licensed under the Apache License, Version 2.0.
     HTML
+
+    version '1.8' do
+      self.release = '1.8.0'
+      self.headers = { 'User-Agent' => 'devdocs.io' , 'Cookie' => 'x-ab-test-spring-boot-learning-path=0; userToken=r33dgpe8x3q5vswekg16a'  }
+    end
 
     version '1.7' do
       self.release = '1.7.20'
