@@ -1,6 +1,54 @@
 [
   [
-    "2021-01-12",
+    "2022-12-20",
+    "New documentations: <a href=\"/qunit/\">QUnit</a>, <a href=\"/wagtail/\">Wagtail</a>"
+  ],
+  [
+    "2022-11-04",
+    "New documentation: <a href=\"/vueuse/\">VueUse</a>"
+  ],
+  [
+    "2022-10-10",
+    "New documentation: <a href=\"/astro/\">Astro</a>"
+  ],
+  [
+    "2022-10-09",
+    "New documentations: <a href=\"/fastapi/\">FastAPI</a>, <a href=\"/vitest/\">Vitest</a>"
+  ],
+  [
+    "2022-10-02",
+    "New documentation: <a href=\"/svelte/\">Svelte</a>"
+  ],
+  [
+    "2022-09-21",
+    "Added HTTP/3 to <a href=\"/http/\">HTTP</a>"
+  ],
+  [
+    "2022-09-06",
+    "New documentation: <a href=\"/date_fns/\">date-fns</a>"
+  ],
+  [
+    "2022-08-27",
+    "New documentations: <a href=\"/sanctuary/\">Sanctuary</a>, <a href=\"/requests/\">Requests</a>, <a href=\"/axios/\">Axios</a>"
+  ],
+  [
+    "2022-05-03",
+    "New documentations: <a href=\"/kubernetes/\">Kubernetes</a>, <a href=\"/kubectl/\">Kubectl</a>"
+  ],
+  [
+    "2022-04-25",
+    "New documentation: <a href=\"/nix/\">Nix</a>"
+  ],
+  [
+    "2022-03-31",
+    "New documentation: <a href=\"/eigen3/\">Eigen3</a>"
+  ],
+  [
+    "2022-02-21",
+    "New documentation: <a href=\"/tailwindcss/\">Tailwind CSS</a>"
+  ],
+  [
+    "2022-01-12",
     "New documentation: <a href=\"/react_router/\">React Router</a>"
   ],
   [

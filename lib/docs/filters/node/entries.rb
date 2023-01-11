@@ -14,18 +14,20 @@ module Docs
         entries = []
 
         css('h3 > code, h4 > code, h5 > code').each do |node|
+          name = node.content.gsub(/\(.*\)/, '()')
+          id = node.parent['id']
 
           case node.parent.child.content
           when /Class/
-            entries << ["Class #{node.parent['id']}", node.parent['id'], type]
+            entries << ["Class #{name}", id, type]
           when /Event/
-            entries << ["Event #{node.parent['id']}", node.parent['id'], type]
+            entries << ["Event #{name}", id, type]
           end
 
           if node.parent.child.is_a?(Nokogiri::XML::Text)
             next
           else
-            entries << [node.parent['id'], node.parent['id'], type]
+            entries << [name, id, type]
           end
 
         end

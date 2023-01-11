@@ -90,6 +90,8 @@ module Docs
             node.remove_attribute('fill')
           elsif node['style'] == 'fill:none;stroke-width:2.16;stroke:rgb(0,0,0);'
             node.add_class('stroke')
+          elsif node['style'] == 'fill:none;stroke-width:2.16;stroke-linejoin:round;stroke:rgb(0,0,0);'
+            node.add_class('stroke')
           elsif node['style'] == 'fill:none;stroke-width:3.24;stroke:rgb(211,211,211);'
             node.add_class('stroke')
           elsif node['style']

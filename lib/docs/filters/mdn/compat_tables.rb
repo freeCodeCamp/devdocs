@@ -107,7 +107,7 @@ module Docs
       end
 
       def generate_basic_html_table
-        table = Nokogiri::XML::Node.new('table', doc)
+        table = Nokogiri::XML::Node.new('table', doc.document)
 
         table.add_child('<thead><tr id=bct-browser-type><tr id=bct-browsers><tbody>')
 

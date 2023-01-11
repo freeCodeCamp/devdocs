@@ -2,7 +2,7 @@ module Docs
   class Python
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css '.body'
+        @doc = at_css('.body > section[id]') || at_css('.body')
 
         root_page? ? root : other
 

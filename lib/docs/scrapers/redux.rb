@@ -14,12 +14,12 @@ module Docs
     options[:container] = '.markdown'
 
     options[:attribution] = <<-HTML
-      &copy; 2015&ndash;2021 Dan Abramov<br>
+      &copy; 2015&ndash;2022 Dan Abramov<br>
       Licensed under the MIT License.
     HTML
 
     version do
-      self.release = '4.1.2'
+      self.release = '4.2.0'
     end
 
     version '3' do

@@ -14,6 +14,7 @@ class app.views.SettingsPage extends app.View
     settings.theme = app.settings.get('theme')
     settings.smoothScroll = !app.settings.get('fastScroll')
     settings.arrowScroll = app.settings.get('arrowScroll')
+    settings.noAutofocus = app.settings.get('noAutofocus')
     settings.autoInstall = app.settings.get('autoInstall')
     settings.analyticsConsent = app.settings.get('analyticsConsent')
     settings.spaceScroll = app.settings.get('spaceScroll')

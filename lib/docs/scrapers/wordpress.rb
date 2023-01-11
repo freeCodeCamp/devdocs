@@ -2,7 +2,7 @@ module Docs
   class Wordpress < UrlScraper
     self.name = 'WordPress'
     self.type = 'wordpress'
-    self.release = '5.8'
+    self.release = '6.1'
     self.base_url = 'https://developer.wordpress.org/reference/'
     self.initial_paths = %w(
       functions/
@@ -32,13 +32,13 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2003&ndash;2021 WordPress Foundation<br>
+      &copy; 2003&ndash;2022 WordPress Foundation<br>
       Licensed under the GNU GPLv2+ License.
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://wordpress.org/download/releases/', opts)
-      doc.at_css('.releases.latest td').content
+      tags = get_github_tags('WordPress', 'wordpress-develop', opts)
+      tags[0]['name']
     end
   end
 end

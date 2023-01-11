@@ -22,9 +22,9 @@ module Docs
 
       def additional_entries
         if slug.start_with?('configuration')
-          css('h2[id]').each_with_object [] do |node, entries|
+          css('h2 > [id]').each_with_object [] do |node, entries|
             next if version.to_f < 5 && node.previous.try(:content).present?
-            entries << [node.content, node['id']]
+            entries << [node.parent.content, node['id']]
           end
         elsif slug.start_with?('api') && slug != 'api/parser'
           css('.header[id] code').each_with_object [] do |node, entries|

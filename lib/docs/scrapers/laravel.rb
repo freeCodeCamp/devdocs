@@ -10,7 +10,7 @@ module Docs
     html_filters.push 'laravel/entries', 'laravel/clean_html'
 
     options[:container] = ->(filter) {
-      filter.subpath.start_with?('/api') ? '#content' : '.page_contain'
+      filter.subpath.start_with?('/api') ? '#content' : '#docsScreen'
     }
 
     options[:skip_patterns] = [
@@ -28,6 +28,20 @@ module Docs
       Licensed under the MIT License.<br>
       Laravel is a trademark of Taylor Otwell.
     HTML
+
+    version '9' do
+      self.release = '9.3.8'
+      self.root_path = '/api/9.x/index.html'
+      self.initial_paths = %w(/docs/9.x/installation /api/9.x/classes.html)
+
+      options[:only_patterns] = [%r{\A/api/9\.x/}, %r{\A/docs/9\.x/}]
+
+      options[:fix_urls] = ->(url) do
+        url.sub! %r{9.x/+}, "9.x/"
+        url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/9.x/"
+        url
+      end
+    end
 
     version '8' do
       self.release = '8.4.1'

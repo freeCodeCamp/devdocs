@@ -2,7 +2,7 @@ module Docs
   class Prettier < UrlScraper
     self.name = 'Prettier'
     self.type = 'simple'
-    self.release = '2.5.1'
+    self.release = '2.8.0'
     self.base_url = 'https://prettier.io/docs/en/'
     self.links = {
       home: 'https://prettier.io/',
@@ -10,7 +10,7 @@ module Docs
     }
 
     # Docusaurus like react_native
-    html_filters.push 'prettier/entries', 'react_native/clean_html'
+    html_filters.push 'prettier/entries', 'prettier/clean_html'
 
     options[:container] = '.docMainWrapper'
 

@@ -3,7 +3,7 @@ module Docs
     self.name = 'React Native'
     self.slug = 'react_native'
     self.type = 'react_native'
-    self.release = '0.66'
+    self.release = '0.69'
     self.base_url = 'https://reactnative.dev/docs/'
     self.root_path = 'getting-started.html'
     self.links = {

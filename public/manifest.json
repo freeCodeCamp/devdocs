@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
   "name": "DevDocs",
   "short_name": "DevDocs",
   "description": "API Documentation Browser",
@@ -40,6 +41,11 @@
       "src": "/images/webapp-icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
+    }
+  ],
+  "url_handlers": [
+    {
+      "origin": "https://devdocs.io"
     }
   ]
 }

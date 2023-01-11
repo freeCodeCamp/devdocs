@@ -3,11 +3,6 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = at_css('h1').content.strip
-
-        if subpath.start_with?('rules/') && subpath != 'rules/'
-          name = name[/\(([\w\-]+?)\)\z/, 1] || name[/\A([\w\-]+?):/, 1]
-        end
-
         name
       end
 

@@ -46,6 +46,13 @@ module Docs
               next
             end
 
+            size = response.content_length
+
+            if size > (context[:max_image_size] || DEFAULT_MAX_SIZE)
+              instrument 'too_big.image', url: url, size: size
+              next
+            end
+
             image = response.body
 
             unless context[:optimize_images] == false

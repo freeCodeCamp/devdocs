@@ -1,7 +1,7 @@
 module Docs
   class Dom < Mdn
 
-    # release = '2021-12-07'
+    # release = '2023-01-06'
     self.name = 'Web APIs'
     self.slug = 'dom'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/API'

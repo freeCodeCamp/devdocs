@@ -59,8 +59,8 @@ module Docs
     end
 
     version '9' do
-      self.release = '9.2.1'
-      self.base_url = "https://downloads.haskell.org/~ghc/#{release}/docs/html/"
+      self.release = '9.4.2'
+      self.base_url = "https://downloads.haskell.org/~ghc/#{release}/docs/"
       options[:container] = ->(filter) {filter.subpath.start_with?('users_guide') ? '.document' : '#content'}
     end
 
@@ -78,9 +78,9 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://downloads.haskell.org/~ghc/latest/docs/html/', opts)
+      doc = fetch_doc('https://www.haskell.org/ghc/download.html', opts)
       links = doc.css('a').to_a
-      versions = links.map {|link| link['href'].scan(/ghc-([0-9.]+)/)}
+      versions = links.map {|link| link.content.scan(/\A([0-9.]+)\Z/)}
       versions.find {|version| !version.empty?}[0][0]
     end
 

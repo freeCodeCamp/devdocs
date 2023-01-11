@@ -9,9 +9,9 @@ module Docs
         else
           name = at_css('h1').content
           name = _fix_name(name)
-          subtype = at_css('.sidebar-heading.open, .sidebar-heading.active, .sidebar-link.active')
-          index = css('.sidebar-link').to_a.index(at_css('.sidebar-link.active'))
-          name.prepend "#{index + 1}. " if index && !slug.start_with?('api')
+          subtype = at_css('.title-text.active')
+          index = css('aside nav .link').to_a.index(at_css('aside nav .link.active'))
+          name.prepend "#{index + 1}. " if index && !slug.start_with?('api') && !slug.start_with?('style-guide')
           name.concat " (#{subtype.content.strip})" if subtype && slug.start_with?('guide')
           name
         end
@@ -26,12 +26,12 @@ module Docs
       def get_type
         if slug.start_with?('guide/migration')
           'Migration'
-       elsif slug.start_with?('guide')
+       elsif slug.start_with?('guide') or root_page?
           'Guide'
-        elsif slug == 'style-guide/'
+        elsif slug.start_with?('style-guide')
           'Style Guide'
         else
-          title = at_css('.sidebar-heading.open, .sidebar-heading.active, .sidebar-link.active').content.strip
+          title = at_css('.title-text.active').content.strip
           title = _fix_name(title)
           "API: #{title}"
         end
@@ -41,7 +41,7 @@ module Docs
         return [] if slug.start_with?('guide')
         type = nil
 
-        css('h2, h3').each_with_object [] do |node, entries|
+        at_css('main').css('h2, h3').each_with_object [] do |node, entries|
           if node.name == 'h2'
             type = node.content.strip
             type = _fix_name(type)

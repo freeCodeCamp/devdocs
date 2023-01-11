@@ -1,6 +1,8 @@
 module Docs
   class Cpp
     class EntriesFilter < Docs::EntriesFilter
+      @@duplicate_names = []
+
       REPLACE_NAMES = {
         'Error directive' => '#error directive',
         'Filename and line information' => '#line directive',
@@ -11,7 +13,8 @@ module Docs
       def get_name
         name = at_css('#firstHeading').content.strip
         name = format_name(name)
-        name.split(',').first
+        name = name.split(',').first
+        name
       end
 
       def get_type
@@ -61,6 +64,21 @@ module Docs
 
         REPLACE_NAMES[name] || name
       end
+
+      # Avoid duplicate pages, these duplicate page are the same page for
+      # multiple functions that are organized in the same page because provide
+      # similar behavior but have different name.
+      def entries
+        entries = []
+
+        if !(@@duplicate_names.include?(name))
+          @@duplicate_names.push(name)
+          entries << default_entry if root_page? || include_default_entry?
+          entries.concat(additional_entries)
+          build_entries(entries)
+        end
+      end
+
     end
   end
 end

@@ -2,6 +2,7 @@
   @extend %simple;
 
   h4 { @extend %block-label; }
+  .code-header { @extend %code; }
   .docblock { margin-left: 1em; }
   div.information, div.important-traits {
     @extend %note;

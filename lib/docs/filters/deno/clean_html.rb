@@ -9,10 +9,17 @@ module Docs
         end
 
         css('*[aria-label="Anchor"]').remove
-        css('*[class]').remove_attribute('class')
-        css('pre').each do |node|
+        css('pre', '.tw-1nkr705').each do |node|
           node['data-language'] = 'typescript'
+          node.name = 'pre'
         end
+        css('.tw-8ej7ai').each do |node|
+          code = node.at_css('.font-mono')
+          next unless code
+          code.parent.name = 'blockquote'
+          code.name = 'code'
+        end
+        css('*[class]').remove_attribute('class')
         xpath('//a[text()="[src]"]').remove
         
         doc

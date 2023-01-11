@@ -2,6 +2,7 @@ module Docs
   class Sass
     class CleanHtmlFilter < Filter
       def call
+        @doc = at_css('#main-content .typedoc', '#main-content')
 
         css('.sl-c-alert').remove
 
@@ -10,6 +11,8 @@ module Docs
         css('.sl-r-banner').remove
 
         css('.site-footer').remove
+
+        css('.tsd-breadcrumb').remove
 
         # Add id to code blocks
         css('pre.signature').each do |node|
@@ -41,10 +44,12 @@ module Docs
         ### Syntax Highlight ###
         css('.highlight.scss', '.highlight.sass').each do |node|
           node['data-language'] = 'scss'
+          node.content = node.content.strip
         end
 
         css('.highlight.css').each do |node|
           node['data-language'] = 'css'
+          node.content = node.content.strip
         end
 
         doc

@@ -7,22 +7,7 @@ module Docs
       code: 'https://github.com/python/cpython'
     }
 
-    options[:only_patterns] = [
-      # /\Ac-api/,
-      /\Adistributing/,
-      # /\Adistutils/,
-      /\Aextending/,
-      /\Afaq/,
-      /\Ahowto/,
-      /\Aindex.html/,
-      # /\Ainstall/,
-      /\Ainstalling/,
-      /\Alibrary/,
-      /\Areference/,
-      /\Atutorial/,
-      /\Ausing/,
-    ]
-
+    options[:skip_patterns] = [/whatsnew/]
     options[:skip] = %w(
       library/2to3.html
       library/formatter.html
@@ -32,33 +17,40 @@ module Docs
       library/sunau.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2001&ndash;2021 Python Software Foundation<br>
+      &copy; 2001&ndash;2022 Python Software Foundation<br>
       Licensed under the PSF License.
     HTML
 
+    version '3.11' do
+      self.release = '3.11.0'
+      self.base_url = "https://docs.python.org/#{self.version}/"
+
+      html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
+    end
+
     version '3.10' do
-      self.release = '3.10.1'
+      self.release = '3.10.8'
       self.base_url = "https://docs.python.org/#{self.version}/"
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
     end
 
     version '3.9' do
-      self.release = '3.9.4'
+      self.release = '3.9.14'
       self.base_url = 'https://docs.python.org/3.9/'
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
     end
 
     version '3.8' do
-      self.release = '3.8.6'
+      self.release = '3.8.14'
       self.base_url = 'https://docs.python.org/3.8/'
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
     end
 
     version '3.7' do
-      self.release = '3.7.9'
+      self.release = '3.7.14'
       self.base_url = 'https://docs.python.org/3.7/'
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'

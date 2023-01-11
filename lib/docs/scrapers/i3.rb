@@ -3,7 +3,7 @@ module Docs
     self.name = 'i3'
     self.type = 'simple'
     self.slug = 'i3'
-    self.release = '4.20.1'
+    self.release = '4.22'
     self.base_url = 'https://i3wm.org/docs/userguide.html'
     self.links = {
       home: 'https://i3wm.org/',

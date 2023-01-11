@@ -17,11 +17,11 @@ module Docs
 
     options[:attribution] = <<-HTML
       &copy; 2012 the Dart project authors<br>
-      Licensed under the Creative Commons Attribution-ShareAlike License v4.0.
+      Licensed under the BSD 3-Clause "New" or "Revised" License.
     HTML
 
     version '2' do
-      self.release = '2.15.1'
+      self.release = '2.18.5'
       self.base_url = "https://api.dart.dev/stable/#{release}/"
     end
 

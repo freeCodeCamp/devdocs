@@ -132,7 +132,51 @@
     dd { margin: 0; }
   }
 
-  iframe.interactive {
-    width: 100%;
+  // based on https://github.com/mdn/yari/blob/63936bc42c/client/src/document/interactive-examples.scss
+  .interactive {
+      width: 100%;
+      height: 680px;
+      &.is-js-height {
+        height: 520px;
+      }
+      &.is-shorter-height {
+        height: 440px;
+      }
+      &.is-taller-height {
+        height: 730px;
+      }
+      &.is-tabbed-shorter-height {
+        height: 490px;
+      }
+      &.is-tabbed-standard-height {
+        height: 550px;
+      }
+      &.is-tabbed-taller-height {
+        height: 780px;
+      }
+    }
+  @media screen and (min-width: 993px) {
+    .interactive {
+      height: 380px;
+
+      &.is-js-height {
+        height: 450px;
+      }
+      &.is-shorter-height {
+        height: 370px;
+      }
+      &.is-taller-height {
+        height: 660px;
+      }
+      &.is-tabbed-shorter-height {
+        height: 360px;
+      }
+      &.is-tabbed-standard-height {
+        height: 430px;
+      }
+      &.is-tabbed-taller-height {
+        height: 640px;
+      }
+    }
   }
 }

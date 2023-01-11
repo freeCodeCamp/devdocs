@@ -3,7 +3,7 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
 
       def get_name
-        at_css('#main-content > h1').content
+        at_css('#main-content > h1, #main-content h1').content
       end
 
       def get_type
@@ -23,6 +23,8 @@ module Docs
           'Command line'
         when /modules/
           'Modules'
+        when /js-api/
+          'JavaScript API'
         else
           'Misc'
         end

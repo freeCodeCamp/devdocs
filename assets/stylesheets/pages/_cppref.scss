@@ -1,0 +1,66 @@
+._cppref {
+  > h2, > h3 { @extend %block-heading; }
+  > h4 { @extend %block-label, %label-blue; }
+  .fmbox { @extend %note; }
+  code, .t-mark, .t-mark-rev { @extend %label; }
+  .t-cc { @extend %code; }
+
+  .t-li1 { margin: 0 0 1em; }
+
+  .t-mark, .t-mark-rev {
+    white-space: nowrap;
+    @extend %label-green;
+  }
+
+  .t-dcl-begin pre {
+    margin: 0;
+    padding: 0;
+    line-height: inherit;
+    background: none;
+    border: 0;
+  }
+
+  .t-lines > span { display: block; } // numeric/fenv, string/byte, etc.
+
+  .t-spar { // language/switch, language/for, etc.
+    font-style: italic;
+    color: var(--textColorLight);
+  }
+  .t-sdsc-nopad dl, .t-sdsc-nopad dd { margin: 0; }
+
+  td {
+    > h3, > h5 {
+      margin: 0 0 .5em;
+      line-height: inherit;
+
+      &:only-child { margin: 0; }
+    }
+
+    > ul, > dl {
+      margin: .5em 0;
+
+      &:only-child { margin: 0; }
+    }
+
+    > .t-dsc-member-div > div { // utility/functional
+      float: left;
+
+      + div { margin-left: .5em; }
+    }
+
+    > table { margin: 0; }
+  }
+
+  .t-dcl-rev-aux > td:empty { padding: 0; }
+
+  .t-inheritance-diagram {
+    display: table;
+    margin: 1rem 0;
+    padding: .375rem;
+    font-size: .75rem;
+    border: 1px solid var(--boxBorder);
+    border-radius: 2px;
+  }
+
+  ul > ul { margin: 0 0 .5em; }
+}

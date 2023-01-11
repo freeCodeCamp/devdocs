@@ -1,7 +1,7 @@
 module Docs
   class Elisp < FileScraper
     self.type = 'elisp'
-    self.release = '27.2'
+    self.release = '28.2'
     self.base_url= 'https://www.gnu.org/software/emacs/manual/html_node/elisp/'
     self.root_path = 'index.html'
     self.links = {
@@ -57,7 +57,7 @@ module Docs
     end
 
     options[:attribution]= <<-HTML
-      Copyright &copy; 1990-1996, 1998-2021 Free Software Foundation, Inc. <br>
+      Copyright &copy; 1990-1996, 1998-2022 Free Software Foundation, Inc. <br>
       Licensed under the GNU GPL license.
     HTML
 

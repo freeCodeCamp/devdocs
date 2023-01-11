@@ -16,9 +16,29 @@ module Docs
     options[:skip_patterns] = [/\Agenerator/, /\Acpack_gen/, /\Ainclude/, /\Arelease/, /tutorial\/(\w*%20)+/]
 
     options[:attribution] = <<-HTML
-      &copy; 2000&ndash;2021 Kitware, Inc. and Contributors<br>
+      &copy; 2000&ndash;2022 Kitware, Inc. and Contributors<br>
       Licensed under the BSD 3-clause License.
     HTML
+
+    version '3.25' do
+      self.release = '3.25'
+      self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
+    end
+
+    version '3.24' do
+      self.release = '3.24'
+      self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
+    end
+
+    version '3.23' do
+      self.release = '3.23'
+      self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
+    end
+
+    version '3.22' do
+      self.release = '3.22'
+      self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
+    end
 
     version '3.21' do
       self.release = '3.21'
@@ -106,9 +126,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://cmake.org/documentation/', opts)
-      link = doc.at_css('.entry-content ul > li > strong > a > big')
-      link.content.scan(/([0-9.]+)/)[0][0]
+      tags = get_gitlab_tags('gitlab.kitware.com', 'cmake', 'cmake', opts)
+      tags[0]['name'][1..]
     end
   end
 end

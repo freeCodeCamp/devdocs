@@ -1,5 +1,7 @@
 module Docs
   class Sequelize < UrlScraper
+    include MultipleBaseUrls
+
     self.name = 'Sequelize'
     self.slug = 'sequelize'
     self.type = 'simple'
@@ -20,9 +22,20 @@ module Docs
       Licensed under the MIT License.
     HTML
 
+    def initial_urls
+      [
+        "https://sequelize.org/docs/v6/",
+        "https://sequelize.org/api/v6/identifiers.html",
+      ]
+    end
+
     version '6' do
-      self.release = '6.5.0'
-      self.base_url = "https://sequelize.org/master/"
+      self.release = '6.23.2'
+      self.base_url = "https://sequelize.org/docs/v6/"
+      self.base_urls = [
+        "https://sequelize.org/docs/v6/",
+        "https://sequelize.org/api/v6/",
+      ]
     end
 
     version '5' do

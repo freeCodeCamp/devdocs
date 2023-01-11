@@ -2,15 +2,15 @@ module Docs
   class Express < UrlScraper
     self.name = 'Express'
     self.type = 'express'
-    self.release = '4.17.1'
-    self.base_url = 'http://expressjs.com/en/'
+    self.release = '4.18.1'
+    self.base_url = 'https://expressjs.com/en/'
     self.root_path = '4x/api.html'
     self.initial_paths = %w(
       starter/installing.html
       guide/routing.html
       advanced/developing-template-engines.html )
     self.links = {
-      home: 'http://expressjs.com/',
+      home: 'https://expressjs.com/',
       code: 'https://github.com/strongloop/express/'
     }
 

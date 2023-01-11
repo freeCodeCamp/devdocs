@@ -17,6 +17,33 @@ module Docs
       We are not endorsed by or affiliated with CakePHP.
     HTML
 
+    version '4.4' do
+      self.release = '4.4.6'
+      self.base_url = "https://api.cakephp.org/#{self.version}/"
+
+      html_filters.push 'cakephp/clean_html_39_plus', 'cakephp/entries_39_plus'
+
+      options[:container] = '.page-container'
+    end
+
+    version '4.3' do
+      self.release = '4.3.10'
+      self.base_url = "https://api.cakephp.org/#{self.version}/"
+
+      html_filters.push 'cakephp/clean_html_39_plus', 'cakephp/entries_39_plus'
+
+      options[:container] = '.page-container'
+    end
+
+    version '4.2' do
+      self.release = '4.2.10'
+      self.base_url = "https://api.cakephp.org/#{self.version}/"
+
+      html_filters.push 'cakephp/clean_html_39_plus', 'cakephp/entries_39_plus'
+
+      options[:container] = '.page-container'
+    end
+
     version '4.1' do
       self.release = '4.1.6'
       self.base_url = "https://api.cakephp.org/#{self.version}/"
@@ -153,8 +180,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://cakephp.org', opts)
-      doc.at_css('.title-home h1').content.scan(/\d\.\d*\.*\d*\.*\d*\.*/)[0]
+      get_latest_github_release('cakephp', 'cakephp', opts)
     end
 
     private

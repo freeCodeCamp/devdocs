@@ -25,6 +25,8 @@ module Docs
       end
 
       def ietf
+        raise "#{slug} is obsolete!" if at_css('.meta-info *:contains("Obsoleted by")')
+        @doc = at_css('.draftcontent')
         doc.child.remove while doc.child.name != 'pre'
 
         css('span.grey', '.invisible', '.noprint', 'a[href^="#page-"]').remove

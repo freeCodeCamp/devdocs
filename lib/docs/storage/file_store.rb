@@ -30,7 +30,7 @@ module Docs
     end
 
     def file_exist?(path)
-      File.exists?(path)
+      File.exist?(path)
     end
 
     def file_mtime(path)
@@ -46,7 +46,7 @@ module Docs
         next if file == path
         Find.prune if File.basename(file)[0] == '.'
         yield file
-        Find.prune unless File.exists?(file)
+        Find.prune unless File.exist?(file)
       end
     end
   end

@@ -87,8 +87,15 @@ module Docs
       end
 
       def store_page(store, id)
+        index = EntryIndex.new
+        pages = PageDb.new
+
         store.open(path) do
           if page = new.build_page(id) and store_page?(page)
+            index.add page[:entries]
+            pages.add page[:path], page[:output]
+            store_index(store, INDEX_FILENAME, index, false)
+            store_index(store, DB_FILENAME, pages, false)
             store.write page[:store_path], page[:output]
             true
           else
@@ -137,11 +144,11 @@ module Docs
         page[:entries].present?
       end
 
-      def store_index(store, filename, index)
-        old_json = store.read(filename) || '{}'
+      def store_index(store, filename, index, read_write=true)
+        old_json = read_write && store.read(filename) || '{}'
         new_json = index.to_json
         instrument "#{filename.remove('.json')}.doc", before: old_json, after: new_json
-        store.write(filename, new_json)
+        read_write && store.write(filename, new_json)
       end
 
       def store_meta(store)
@@ -203,6 +210,8 @@ module Docs
       [0, 1].each do |i|
         break if i >= scraper_parts.length or i >= latest_parts.length
         return 'Outdated major version' if i == 0 and latest_parts[i] > scraper_parts[i]
+        return 'Outdated major version' if i == 1 and latest_parts[i] > scraper_parts[i] and latest_parts[0] == 0 and scraper_parts[0] == 0
+        return 'Outdated major version' if i == 1 and latest_parts[i] > scraper_parts[i] and latest_parts[0] == 1 and scraper_parts[0] == 1
         return 'Outdated minor version' if i == 1 and latest_parts[i] > scraper_parts[i]
         return 'Up-to-date' if latest_parts[i] < scraper_parts[i]
       end

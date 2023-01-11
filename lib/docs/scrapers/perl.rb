@@ -24,44 +24,49 @@ module Docs
       The Perl logo is a trademark of the Perl Foundation.
     HTML
 
+    version '5.36' do
+      self.release = '5.36.0'
+      self.base_url = "https://perldoc.perl.org/#{release}/"
+    end
+
     version '5.34' do
       self.release = '5.34.0'
-      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+      self.base_url = "https://perldoc.perl.org/#{release}/"
     end
 
     version '5.32' do
       self.release = '5.32.0'
-      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+      self.base_url = "https://perldoc.perl.org/#{release}/"
     end
 
     version '5.30' do
       self.release = '5.30.3'
-      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+      self.base_url = "https://perldoc.perl.org/#{release}/"
     end
 
     version '5.28' do
       self.release = '5.28.3'
-      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+      self.base_url = "https://perldoc.perl.org/#{release}/"
     end
 
     version '5.26' do
       self.release = '5.26.3'
-      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+      self.base_url = "https://perldoc.perl.org/#{release}/"
     end
 
     version '5.24' do
       self.release = '5.24.4'
-      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+      self.base_url = "https://perldoc.perl.org/#{release}/"
     end
 
     version '5.22' do
       self.release = '5.22.4'
-      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+      self.base_url = "https://perldoc.perl.org/#{release}/"
     end
 
     version '5.20' do
       self.release = '5.20.3'
-      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+      self.base_url = "https://perldoc.perl.org/#{release}/"
     end
 
     def get_latest_version(opts)

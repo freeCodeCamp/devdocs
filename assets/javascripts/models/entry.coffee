@@ -61,6 +61,7 @@ class app.models.Entry extends app.Model
     'julia': 'jl'
     'jquery': '$'
     'knockout.js': 'ko'
+    'kubernetes': 'k8s'
     'less': 'ls'
     'lodash': '_'
     'löve': 'love'

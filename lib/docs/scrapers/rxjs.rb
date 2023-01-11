@@ -4,7 +4,7 @@ module Docs
   class Rxjs < UrlScraper
     self.name = 'RxJS'
     self.type = 'rxjs'
-    self.release = '7.1.0'
+    self.release = '7.5.5'
     self.base_url = 'https://rxjs.dev/'
     self.root_path = 'guide/overview'
     self.links = {
@@ -27,7 +27,7 @@ module Docs
     options[:max_image_size] = 256_000
 
     options[:attribution] = <<-HTML
-      &copy; 2015&ndash;2021 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors.<br>
+      &copy; 2015&ndash;2022 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors.<br>
       Code licensed under an Apache-2.0 License. Documentation licensed under CC BY 4.0.
     HTML
 

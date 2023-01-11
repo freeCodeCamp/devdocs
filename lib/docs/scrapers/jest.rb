@@ -2,7 +2,7 @@ module Docs
   class Jest < UrlScraper
     include MultipleBaseUrls
     self.type = 'simple'
-    self.release = '27.4.3'
+    self.release = '29.0.1'
 
     self.base_urls = [
       'https://jestjs.io/docs/',
@@ -19,11 +19,12 @@ module Docs
 
     options[:skip_patterns] = [
       /^next/,
+      /upgrading-to-/,
       /\d+\.[x\d]/ # avoid deprecated versions
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2021 Facebook, Inc.<br>
+      &copy; 2022 Facebook, Inc.<br>
       Licensed under the MIT License.
     HTML
 

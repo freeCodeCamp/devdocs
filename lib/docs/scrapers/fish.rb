@@ -12,9 +12,33 @@ module Docs
 
     # https://fishshell.com/docs/current/license.html
     options[:attribution] = <<-HTML
-      &copy; 2021 fish-shell developers<br>
+      &copy; 2005-2009 Axel Liljencrantz, 2009-2023 fish-shell contributors<br>
       Licensed under the GNU General Public License, version 2.
     HTML
+
+    version '3.6' do
+      self.release = '3.6.0'
+      self.base_url = "https://fishshell.com/docs/#{version}/"
+
+      options[:skip].concat %w(genindex.html relnotes.html)
+      html_filters.push 'sphinx/clean_html', 'fish/clean_html_sphinx', 'fish/entries_sphinx'
+    end
+
+    version '3.5' do
+      self.release = '3.5.0'
+      self.base_url = "https://fishshell.com/docs/#{version}/"
+
+      options[:skip].concat %w(genindex.html relnotes.html)
+      html_filters.push 'sphinx/clean_html', 'fish/clean_html_sphinx', 'fish/entries_sphinx'
+    end
+
+    version '3.4' do
+      self.release = '3.4.0'
+      self.base_url = "https://fishshell.com/docs/#{version}/"
+
+      options[:skip].concat %w(genindex.html relnotes.html)
+      html_filters.push 'sphinx/clean_html', 'fish/clean_html_sphinx', 'fish/entries_sphinx'
+    end
 
     version '3.3' do
       self.release = '3.3.0'

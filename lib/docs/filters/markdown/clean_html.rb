@@ -7,6 +7,7 @@ module Docs
         css('#ProjectSubmenu', 'hr').remove
 
         css('pre > code').each do |node|
+          node.parent['data-language'] = 'markdown'
           node.before(node.children).remove
         end
 

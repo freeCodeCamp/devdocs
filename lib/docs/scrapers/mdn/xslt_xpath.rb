@@ -1,6 +1,6 @@
 module Docs
   class XsltXpath < Mdn
-    # release = '2021-10-22'
+    # release = '2022-09-06'
     self.name = 'XSLT & XPath'
     self.slug = 'xslt_xpath'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web'

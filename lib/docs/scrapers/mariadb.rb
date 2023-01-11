@@ -2,7 +2,7 @@ module Docs
   class Mariadb < UrlScraper
     self.name = 'MariaDB'
     self.type = 'mariadb'
-    self.release = '10.6.4'
+    self.release = '10.9.2'
     self.base_url = 'https://mariadb.com/kb/en/'
     self.root_path = 'documentation/'
     self.links = {
@@ -24,7 +24,7 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2021 MariaDB<br>
+      &copy; 2022 MariaDB<br>
       Licensed under the Creative Commons Attribution 3.0 Unported License and the GNU Free Documentation License.
     HTML
 

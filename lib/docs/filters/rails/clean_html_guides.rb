@@ -7,7 +7,7 @@ module Docs
         at_css('#mainCol').prepend_child at_css('#feature .wrapper').children
         @doc = at_css('#mainCol')
 
-        container = Nokogiri::XML::Node.new 'div', doc
+        container = Nokogiri::XML::Node.new 'div', doc.document
         container['class'] = '_simple'
         container.children = doc.children
         doc << container

@@ -5,9 +5,9 @@ module Docs
         if dt = at_css('dt')
           name = dt_to_name(dt)
         else
-          name = at_css('h1').content.strip
+          name = at_xpath('//h1/text()').text.strip
         end
-        name.remove! "\u{00B6}"
+        name.remove! %r{#\Z}
         name
       end
 
@@ -18,8 +18,12 @@ module Docs
           elsif slug.start_with?('dev')
             return 'Development'
           end
-          li_a = css('nav li.active > a')
-          return li_a.last.content if li_a && li_a.last
+          if css('nav li.toctree-l2.active .toctree-l3').length > 7
+            li_a = css('nav li.toctree-l2.active > a')
+          else
+            li_a = css('nav li.toctree-l1.active > a')
+          end
+          return li_a.last.xpath('./text()').text.remove('(  )').strip if li_a && li_a.last
         end
 
         nav_items = css('.nav.nav-pills.pull-left > li')
@@ -29,8 +33,8 @@ module Docs
         elsif nav_items[4] && nav_items[4].content !~ /Manual|Reference/
           type = nav_items[4].content
         else
-          type = at_css('h1').content.strip
-          type.remove! "\u{00B6}"
+          type = at_xpath('//h1/text()').text.strip
+          type.remove! %r{#\Z}
 
           # Handle some edge cases that aren't properly categorized in the docs
           if type.start_with?('numpy.polynomial.') || type.start_with?('numpy.poly1d.')
@@ -90,7 +94,7 @@ module Docs
         name.remove! %r{[\=\[].*}
         name.remove! %r{\A(class(method)?|exception) }
         name.remove! %r{\s—.*}
-        name.remove! '¶'
+        name.remove! %r{#\Z}
       end
     end
   end

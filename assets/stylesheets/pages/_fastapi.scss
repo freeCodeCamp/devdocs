@@ -1,0 +1,22 @@
+._fastapi {
+  > h2 { @extend %block-heading; }
+  > h3 { @extend %block-label, %label-blue; }
+
+  code { @extend %label; }
+
+  .tabbed-block {
+    border: 1px dashed black;
+    padding: 0.5rem 1rem 0;
+    margin-bottom: 1rem;
+  }
+  .tabbed-block label {
+    font-weight: var(--bolderFontWeight);
+  }
+
+  .admonition { @extend %note; }
+  .admonition.tip { @extend %note-green; }
+  .admonition.note { @extend %note-blue; }
+  .admonition-title {
+    font-weight: var(--bolderFontWeight);
+  }
+}
