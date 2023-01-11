@@ -22,7 +22,7 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    self.release = '9.8.2'
+    self.release = '9.10.0'
     self.base_url = 'https://vueuse.org/'
     self.initial_paths = %w(functions.html)
     html_filters.push 'vueuse/entries', 'vite/clean_html', 'vueuse/clean_html'

@@ -1,13 +1,20 @@
 require 'yajl/json_gem'
 
 module Docs
-  class SupportTables < Doc
+  class SupportTables < Scraper
     include Instrumentable
 
     self.name = 'Support Tables'
     self.slug = 'browser_support_tables'
     self.type = 'support_tables'
-    self.release = '1.0.30001431'
+    self.release = '1.0.30001442'
+    self.base_url = 'https://github.com/Fyrd/caniuse/raw/main/'
+
+    # https://github.com/Fyrd/caniuse/blob/main/LICENSE
+    options[:attribution] = <<-HTML
+      &copy; 2020 Alexis Deveria<br>
+      Licensed under the Creative Commons Attribution 4.0 International License.
+    HTML
 
     def build_pages
       url = 'https://github.com/Fyrd/caniuse/raw/main/data.json'

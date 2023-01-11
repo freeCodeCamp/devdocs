@@ -3,8 +3,9 @@ require 'docs'
 
 class ManifestTest < MiniTest::Spec
   let :doc do
-    doc = Class.new Docs::Doc
+    doc = Class.new Docs::Scraper
     doc.name = 'TestDoc'
+    doc.options[:attribution] = 'foo'
     doc
   end
 
@@ -57,13 +58,13 @@ class ManifestTest < MiniTest::Spec
     context "when the doc has a meta file" do
       before do
         stub(store).exist?(meta_path) { true }
-        stub(store).read(meta_path) { '{"name":"Test"}' }
+        stub(store).read(meta_path) { '{"name":"Test", "db_size": 776533}' }
       end
 
       it "includes the doc's meta representation" do
         json = manifest.as_json
         assert_equal 1, json.length
-        assert_equal 'Test', json[0]['name']
+        assert_equal "{\"name\"=>\"Test\", \"db_size\"=>776533, :attribution=>\"foo\"}", json[0].to_s
       end
     end
 
