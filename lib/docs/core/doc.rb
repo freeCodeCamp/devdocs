@@ -86,16 +86,6 @@ module Docs
         json
       end
 
-      def as_json_extra(store)
-        json = self.as_json
-        if options[:attribution].is_a?(String)
-          json[:attribution] = options[:attribution].strip
-        end
-        json[:db_size] = store.size(self.db_path) if store.exist?(self.db_path)
-        json[:mtime] = store.mtime(self.meta_path).to_i if store.exist?(self.meta_path)
-        json
-      end
-
       def store_page(store, id)
         index = EntryIndex.new
         pages = PageDb.new
