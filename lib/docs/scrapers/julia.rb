@@ -12,8 +12,8 @@ module Docs
     HTML
 
     version '1.8' do
-      self.release = '1.8.0'
-      self.base_url = "https://docs.julialang.org/en/v#{release}/"
+      self.release = '1.8.5'
+      self.base_url = "https://docs.julialang.org/en/v#{version}/"
       self.type = 'julia'
 
       html_filters.push 'julia/entries', 'julia/clean_html'
