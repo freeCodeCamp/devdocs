@@ -67,7 +67,7 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     racc (1.6.1)
-    rack (2.2.4)
+    rack (2.2.6.2)
     rack-protection (2.0.7)
       rack
     rack-ssl-enforcer (0.2.9)
