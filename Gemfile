@@ -4,7 +4,7 @@ ruby '~> 2.7.3'
 gem 'rake'
 gem 'thor'
 gem 'pry', '~> 0.14.0'
-gem 'activesupport', '~> 5.2', require: false
+gem 'activesupport', '~> 6.0', require: false
 gem 'yajl-ruby', require: false
 gem 'html-pipeline'
 gem 'typhoeus'
