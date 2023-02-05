@@ -2,11 +2,12 @@ module Docs
   class Erlang
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('#content .innertube', '#content')
+        @doc = at_css('#content .innertube:only-child', '#content')
 
         # frontpage
 
         css('center:last-child').remove # copyright
+        css('.footer').remove # copyright
 
         css('center', '.example').each do |node|
           node.before(node.children).remove
