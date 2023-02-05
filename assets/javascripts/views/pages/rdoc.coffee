@@ -8,7 +8,7 @@ class app.views.RdocPage extends app.views.BasePage
     return unless event.target.classList.contains 'method-click-advice'
     $.stopEvent(event)
 
-    source = $ '.method-source-code', event.target.parentNode.parentNode
+    source = $ '.method-source-code', event.target.closest('.method-detail')
     isShown = source.style.display is 'block'
 
     source.style.display = if isShown then 'none' else 'block'
