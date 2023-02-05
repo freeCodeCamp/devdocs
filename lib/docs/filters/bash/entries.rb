@@ -40,21 +40,7 @@ module Docs
 
         css('table[class^=index-] td[valign=top] > a').each_slice(2) do |entry_node, section_node|
           entry_name = entry_node.content
-
-          page = section_node['href'].split('#')[0]
-          hash = entry_name
-
-          # The Special Parameters page has multiple additional entries which should link to the same paragraph
-          # Example: the documentation for "$!" is equal to the documentation for "!"
-          if page == 'special-parameters'
-            if hash.size > 1 && hash[0] == '$'
-              hash = hash[1..-1]
-            end
-          end
-
-          # Construct path to the page which the index links to
-          entry_path = page + '#' + hash
-
+          entry_path = entry_node['href']
           entries << [entry_name, entry_path, entry_type]
         end
 
