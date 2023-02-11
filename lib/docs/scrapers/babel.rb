@@ -30,11 +30,11 @@ module Docs
     HTML
 
     version '7' do
-      self.release = '7.16.4'
+      self.release = '7.20.15'
     end
 
     version '6' do
-      self.release = '6.26.1'
+      self.release = '6.26.3'
     end
 
     def get_latest_version(opts)
