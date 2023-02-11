@@ -15,7 +15,7 @@ module Docs
     options[:max_image_size] = 256_000
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2022 Google, Inc.<br>
+      &copy; 2010&ndash;2023 Google, Inc.<br>
       Licensed under the Creative Commons Attribution License 4.0.
     HTML
 
@@ -83,25 +83,25 @@ module Docs
     end
 
     version do
-      self.release = '15.0.0'
+      self.release = '15.1.4'
       self.base_url = 'https://angular.io/'
       include Docs::Angular::Since12
     end
 
     version '14' do
-      self.release = '14.2.11'
-      self.base_url = 'https://angular.io/'
+      self.release = '14.2.12'
+      self.base_url = 'https://v14.angular.io/'
       include Docs::Angular::Since12
     end
 
     version '13' do
-      self.release = '13.3.8'
+      self.release = '13.3.12'
       self.base_url = 'https://v13.angular.io/'
       include Docs::Angular::Since12
     end
 
     version '12' do
-      self.release = '12.2.13'
+      self.release = '12.2.17'
       self.base_url = 'https://v12.angular.io/'
       include Docs::Angular::Since12
     end
@@ -113,13 +113,13 @@ module Docs
     end
 
     version '10' do
-      self.release = '10.2.3'
+      self.release = '10.2.5'
       self.base_url = 'https://v10.angular.io/'
       include Docs::Angular::Common
     end
 
     version '9' do
-      self.release = '9.1.12'
+      self.release = '9.1.13'
       self.base_url = 'https://v9.angular.io/'
       include Docs::Angular::Common
     end
@@ -131,7 +131,7 @@ module Docs
     end
 
     version '7' do
-      self.release = '7.2.15'
+      self.release = '7.2.16'
       self.base_url = 'https://v7.angular.io/'
       include Docs::Angular::Common
     end
@@ -149,7 +149,7 @@ module Docs
     end
 
     version '4' do
-      self.release = '4.4.6'
+      self.release = '4.4.7'
       self.base_url = 'https://v4.angular.io/'
       include Docs::Angular::Common
     end
