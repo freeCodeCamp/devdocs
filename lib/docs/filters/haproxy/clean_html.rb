@@ -29,8 +29,9 @@ module Docs
           node['id'] = node.at_css('.anchor')['name']
         end
 
-        css('.keyword > b').each do |node|
+        css('.keyword > b', '.keyword > span').each do |node|
           node.content = node.content
+          node.remove_attribute('style')
         end
 
         css('.dropdown').each do |node|

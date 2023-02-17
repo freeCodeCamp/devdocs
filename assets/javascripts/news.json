@@ -1,5 +1,9 @@
 [
   [
+    "2022-12-20",
+    "New documentations: <a href=\"/qunit/\">QUnit</a>, <a href=\"/wagtail/\">Wagtail</a>"
+  ],
+  [
     "2022-11-04",
     "New documentation: <a href=\"/vueuse/\">VueUse</a>"
   ],

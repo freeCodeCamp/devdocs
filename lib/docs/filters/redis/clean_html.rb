@@ -3,14 +3,20 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         if root_page?
-          at_css('ul')['class'] = 'commands'
+          if root_page?
+            slug_types = {}
+            css('article[data-group]').each do |node|
+              slug_types[node.at_css('a')['href']] = node['data-group']
+            end
+            # binding.pry
+          end
         else
           title = at_css('h1')
           title.after("<pre>#{title.content.strip}</pre>")
           title.content = title.content.split(' ').first
         end
 
-        css('nav', 'aside', 'form', '.anchor-link').remove
+        css('nav', 'aside', '.page-feedback', '.anchor-link').remove
 
         css('> article', '.article-main', 'pre > code', '.container').each do |node|
           node.before(node.children).remove

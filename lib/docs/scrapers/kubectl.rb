@@ -7,7 +7,6 @@ module Docs
       home: 'https://kubernetes.io/docs/reference/kubectl/',
       code: 'https://github.com/kubernetes/kubernetes'
     }
-    self.release = "1.23"
     self.base_url = "https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands"
 
     html_filters.push 'kubectl/entries', 'kubectl/clean_html'
@@ -21,7 +20,7 @@ module Docs
 
     # latest version has a special URL that does not include the version identifier 
     version do
-      self.release = "1.25"
+      self.release = "1.26"
       self.base_url = "https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands"
     end
 

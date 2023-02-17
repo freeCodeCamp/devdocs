@@ -5,13 +5,11 @@ module Docs
       home: 'hthttps://axios-http.com/',
       code: 'https://github.com/axios/axios'
     }
-    self.release = '1.1.3'
+    self.release = '1.2.1'
     self.base_url = "https://axios-http.com/docs/"
-    self.initial_paths = %w(intro)
+    self.initial_paths = %w(index intro)
 
     html_filters.push 'axios/entries', 'axios/clean_html'
-
-    options[:container] = 'main > .body'
 
     # https://github.com/axios/axios-docs/blob/master/LICENSE
     options[:attribution] = <<-HTML
@@ -21,6 +19,12 @@ module Docs
 
     def get_latest_version(opts)
       get_latest_github_release('axios', 'axios', opts)
+    end
+
+    private
+
+    def process_response?(response)
+      true
     end
   end
 end
