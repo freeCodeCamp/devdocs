@@ -55,7 +55,7 @@ GEM
       net-ssh (>= 5.0.0, < 8.0.0)
     net-ssh (7.0.1)
     newrelic_rpm (8.12.0)
-    nokogiri (1.13.10)
+    nokogiri (1.14.2)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     options (2.3.2)
@@ -179,7 +179,7 @@ DEPENDENCIES
   yajl-ruby
 
 RUBY VERSION
-   ruby 3.1.2p20
+   ruby 3.2.1p31
 
 BUNDLED WITH
-   2.3.11
+   2.4.6
