@@ -4,9 +4,9 @@ module Docs
 
     attr_reader :request_options
 
-    def self.run(urls, **options, &block)
+    def self.run(urls, options = {}, &block)
       urls = urls.dup
-      requester = new(**options)
+      requester = new(options)
       requester.on_response(&block) if block_given?
       requester.on_response do # cheap hack to ensure root page is processed first
         if urls
@@ -19,16 +19,16 @@ module Docs
       requester
     end
 
-    def initialize(**options)
+    def initialize(options = {})
       @request_options = options.extract!(:request_options)[:request_options].try(:dup) || {}
       options[:max_concurrency] ||= 20
       options[:pipelining] = 0
       super
     end
 
-    def request(urls, **options, &block)
+    def request(urls, options = {}, &block)
       requests = [urls].flatten.map do |url|
-        build_and_queue_request(url, **options, &block)
+        build_and_queue_request(url, options, &block)
       end
       requests.length == 1 ? requests.first : requests
     end
@@ -46,7 +46,7 @@ module Docs
 
     private
 
-    def build_and_queue_request(url, **options, &block)
+    def build_and_queue_request(url, options = {}, &block)
       request = Request.new(url, **request_options.merge(options))
       request.on_complete(&block) if block
       queue(request)
