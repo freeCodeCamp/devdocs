@@ -238,7 +238,22 @@ class App < Sinatra::Application
     end
 
     def supports_js_redirection?
-      browser.modern? && !memoized_cookies.empty?
+      modern_browser?(browser) && !memoized_cookies.empty?
+    end
+
+    # https://github.com/fnando/browser#detecting-modern-browsers
+    # https://github.com/fnando/browser/blob/v2.6.1/lib/browser/browser.rb
+    # This restores the old browser gem `#modern?` functionality as it was in 2.6.1
+    # It's possible this isn't even really needed any longer, these versions are quite old now
+    def modern_browser?(browser)
+      [
+        browser.webkit?,
+        browser.firefox? && browser.version.to_i >= 17,
+        browser.ie? && browser.version.to_i >= 9 && !browser.compatibility_view?,
+        browser.edge? && !browser.compatibility_view?,
+        browser.opera? && browser.version.to_i >= 12,
+        browser.firefox? && browser.device.tablet? && browser.platform.android? && b.version.to_i >= 14
+      ].any?
     end
   end
 

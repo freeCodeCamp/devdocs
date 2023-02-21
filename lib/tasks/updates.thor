@@ -259,7 +259,7 @@ Maintainers can close this issue when all documentations are up-to-date. The iss
   # HTTP utilities
   #
 
-  def github_get(endpoint, params = {})
+  def github_get(endpoint, **params)
     github_request(endpoint, {method: :get, params: params})
   end
 

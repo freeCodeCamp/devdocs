@@ -13,7 +13,7 @@ module Docs
       request.run
     end
 
-    def initialize(url, options = {})
+    def initialize(url, **options)
       super url.to_s, DEFAULT_OPTIONS.merge(options)
     end
 

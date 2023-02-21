@@ -1,13 +1,13 @@
-require 'test_helper'
-require 'docs'
+require_relative '../../../test_helper'
+require_relative '../../../../lib/docs'
 
 class DocsRequestTest < MiniTest::Spec
   let :url do
     'http://example.com'
   end
 
-  def request(url = self.url, options = {})
-    Docs::Request.new(url, options).tap do |request|
+  def request(url = self.url, **options)
+    Docs::Request.new(url, **options).tap do |request|
       request.extend FakeInstrumentation
     end
   end

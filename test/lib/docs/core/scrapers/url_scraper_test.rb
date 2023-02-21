@@ -1,5 +1,5 @@
-require 'test_helper'
-require 'docs'
+require_relative '../../../../test_helper'
+require_relative '../../../../../lib/docs'
 
 class DocsUrlScraperTest < MiniTest::Spec
   class Scraper < Docs::UrlScraper
@@ -54,29 +54,29 @@ class DocsUrlScraperTest < MiniTest::Spec
     end
 
     it "runs a Requester with the given urls" do
-      mock(Docs::Requester).run 'urls', anything
+      mock(Docs::Requester).run('urls', request_options: {params: {}, headers: {"User-Agent" => "DevDocs"}})
       result
     end
 
     it "runs a Requester with .headers as :request_options" do
       stub(Scraper).headers { { testheader: true } }
-      mock(Docs::Requester).run anything, satisfy { |options| options[:request_options][:headers][:testheader] }
+      mock(Docs::Requester).run('urls', request_options: {params: {}, headers: {testheader: true}})
       result
     end
 
     it "runs a Requester with default .headers as :request_options" do
-      mock(Docs::Requester).run anything, satisfy { |options| options[:request_options][:headers]["User-Agent"] }
+      mock(Docs::Requester).run('urls', request_options: {params: {}, headers: {"User-Agent" => "DevDocs"}})
       result
     end
 
     it "runs a Requester with .params as :request_options" do
       stub(Scraper).params { { test: true } }
-      mock(Docs::Requester).run anything, satisfy { |options| options[:request_options][:params][:test] }
+      mock(Docs::Requester).run('urls', request_options: {params: {test: true}, headers: {"User-Agent" => "DevDocs"}})
       result
     end
 
     it "runs a Requester with the given block" do
-      stub(Docs::Requester).run { |*args| @block = args.last }
+      stub(Docs::Requester).run { |*_args, **_kwargs, &block| @block = block }
       result
       assert_equal block, @block
     end

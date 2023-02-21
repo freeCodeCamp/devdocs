@@ -1,5 +1,5 @@
-require 'test_helper'
-require 'docs'
+require_relative '../../../test_helper'
+require_relative '../../../../lib/docs'
 
 class DocsRequesterTest < MiniTest::Spec
   def stub_request(url)
@@ -7,7 +7,7 @@ class DocsRequesterTest < MiniTest::Spec
   end
 
   let :requester do
-    Docs::Requester.new(options)
+    Docs::Requester.new(**options)
   end
 
   let :url do
@@ -81,7 +81,7 @@ class DocsRequesterTest < MiniTest::Spec
       end
 
       it "returns an array of requests" do
-        result = requester.request(urls, { params: 'test' }, &block)
+        result = requester.request(urls, params: 'test', &block)
         assert_instance_of Array, result
         assert_equal urls.length, result.length
         assert result.all? { |obj| obj.instance_of? Docs::Request }

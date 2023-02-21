@@ -1,37 +1,38 @@
 source 'https://rubygems.org'
-ruby '~> 2.7.3'
+ruby '3.2.1'
 
-gem 'rake'
-gem 'thor'
-gem 'pry', '~> 0.14.0'
-gem 'activesupport', '~> 5.2', require: false
-gem 'yajl-ruby', require: false
+gem 'activesupport', require: false
 gem 'html-pipeline'
-gem 'typhoeus'
 gem 'nokogiri'
+gem 'pry-byebug'
+gem 'rake'
 gem 'terminal-table'
+gem 'thor'
+gem 'typhoeus'
+gem 'yajl-ruby', require: false
 
 group :app do
-  gem 'rack'
-  gem 'sinatra'
-  gem 'sinatra-contrib'
-  gem 'rack-ssl-enforcer'
-  gem 'thin'
-  gem 'sprockets'
-  gem 'sprockets-helpers'
-  gem 'erubi'
   gem 'browser'
-  gem 'sass'
-  gem 'coffee-script'
   gem 'chunky_png'
-  gem 'sprockets-sass'
-  gem 'image_optim'
+  gem 'coffee-script'
+  gem 'erubi'
   gem 'image_optim_pack', platforms: :ruby
+  gem 'image_optim'
+  gem 'rack-ssl-enforcer'
+  gem 'rack'
+  gem 'rss'
+  gem 'sass'
+  gem 'sinatra-contrib'
+  gem 'sinatra'
+  gem 'sprockets-helpers'
+  gem 'sprockets-sass'
+  gem 'sprockets'
+  gem 'thin'
 end
 
 group :production do
-  gem 'uglifier'
   gem 'newrelic_rpm'
+  gem 'uglifier'
 end
 
 group :development do
@@ -39,17 +40,17 @@ group :development do
 end
 
 group :docs do
-  gem 'redcarpet'
+  gem 'net-sftp', require: false
   gem 'progress_bar', require: false
-  gem 'unix_utils', require: false
+  gem 'redcarpet'
   gem 'tty-pager', require: false
-  gem 'net-sftp', '>= 2.1.3.rc2', require: false
+  gem 'unix_utils', require: false
 end
 
 group :test do
   gem 'minitest'
-  gem 'rr', require: false
   gem 'rack-test', require: false
+  gem 'rr', require: false
 end
 
 if ENV['SELENIUM'] == '1'
