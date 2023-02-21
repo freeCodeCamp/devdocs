@@ -1,7 +1,7 @@
 module Docs
   class Babel < UrlScraper
     self.type = 'simple'
-    self.base_url = 'https://babeljs.io/docs/en/'
+    self.base_url = 'https://babeljs.io/docs/'
     self.links = {
       home: 'https://babeljs.io/',
       code: 'https://github.com/babel/babel'
@@ -30,7 +30,7 @@ module Docs
     HTML
 
     version '7' do
-      self.release = '7.16.4'
+      self.release = '7.21.1'
     end
 
     version '6' do

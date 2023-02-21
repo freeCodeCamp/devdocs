@@ -3,6 +3,8 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
 
+        @doc = at_css('.theme-doc-markdown')
+
         css('.fixedHeaderContainer').remove
 
         css('.toc').remove
@@ -15,13 +17,16 @@ module Docs
 
         css('.docs-prevnext').remove
 
-        css('pre > code.hljs').each do |node|
-          node.parent['data-language'] = node['class'][/language-(\w+)/, 1]
+        css('pre').each do |node|
+          node.content = node.css('.token-line').map(&:content).join("\n")
+          node['data-language'] = node['class'][/language-(\w+)/, 1]
         end
 
-        css('pre').each do |node|
-          node.content = node.content
-        end
+        css('.codeBlockTitle_x_ju').remove
+
+        css('*').remove_attr('class')
+
+        css('*').remove_attr('style')
 
         doc
 
