@@ -4,7 +4,7 @@ module Docs
     self.type = 'sphinx_simple'
     self.links = {
       home: 'https://cmake.org/',
-      code: 'https://cmake.org/gitweb?p=cmake.git;a=summary'
+      code: 'https://gitlab.kitware.com/cmake/cmake/'
     }
 
     html_filters.push 'cmake/clean_html', 'sphinx/clean_html', 'cmake/entries', 'title'
@@ -16,9 +16,14 @@ module Docs
     options[:skip_patterns] = [/\Agenerator/, /\Acpack_gen/, /\Ainclude/, /\Arelease/, /tutorial\/(\w*%20)+/]
 
     options[:attribution] = <<-HTML
-      &copy; 2000&ndash;2022 Kitware, Inc. and Contributors<br>
+      &copy; 2000&ndash;2023 Kitware, Inc. and Contributors<br>
       Licensed under the BSD 3-clause License.
     HTML
+
+    version '3.26' do
+      self.release = '3.26'
+      self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
+    end
 
     version '3.25' do
       self.release = '3.25'
