@@ -51,7 +51,7 @@ module Docs
     end
 
     def initialize_stubs
-      self.class.stubs.each do |path, block|
+      self.class.stubs.each do |path, &block|
         Typhoeus.stub(url_for(path)).and_return do
           Typhoeus::Response.new \
             effective_url: url_for(path),

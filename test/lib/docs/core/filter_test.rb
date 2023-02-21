@@ -1,5 +1,5 @@
-require 'test_helper'
-require 'docs'
+require_relative '../../../test_helper'
+require_relative '../../../../lib/docs'
 
 class DocsFilterTest < MiniTest::Spec
   include FilterTestHelper
@@ -19,7 +19,7 @@ class DocsFilterTest < MiniTest::Spec
 
   describe "#subpath_to" do
     it "returns the subpath from the #base_url to the url, ignoring case" do
-      stub(filter.base_url).subpath_to('url', hash_including(ignore_case: true)) { 'subpath' }
+      stub(filter.base_url).subpath_to('url', ignore_case: true) { 'subpath' }
       assert_equal 'subpath', filter.subpath_to('url')
     end
   end
