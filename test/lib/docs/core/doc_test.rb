@@ -398,7 +398,7 @@ class DocsDocTest < MiniTest::Spec
       assert_equal 'Up-to-date', instance.outdated_state('1.2.2', '1.2.3')
       assert_equal "Outdated major version", instance.outdated_state('1', '2')
       assert_equal "Up-to-date", instance.outdated_state('1.0.2', '1.0.3')
-      assert_equal "Outdated major version", instance.outdated_state('1.2', '1.3')
+      assert_equal "Outdated minor version", instance.outdated_state('1.2', '1.3')
       assert_equal "Outdated minor version", instance.outdated_state('2.2', '2.3')
       assert_equal "Outdated major version", instance.outdated_state('9', '10')
       assert_equal "Outdated major version", instance.outdated_state('99', '101')
