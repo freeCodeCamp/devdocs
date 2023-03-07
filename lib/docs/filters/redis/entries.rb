@@ -489,7 +489,7 @@ module Docs
         "scripting" => "Core: Scripting and Functions",
         "server" => "Core: Server managment",
         "set" => "Core: Set",
-        "sorted-set:" => "Core: Sorted Set",
+        "sorted-set" => "Core: Sorted Set",
         "stream" => "Core: Stream",
         "string" => "Core: String",
         "transactions" => "Core: Transactions",
