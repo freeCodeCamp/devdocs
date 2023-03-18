@@ -70,7 +70,7 @@ GEM
       byebug (~> 11.0)
       pry (>= 0.13, < 0.15)
     racc (1.6.1)
-    rack (2.2.6.3)
+    rack (2.2.6.4)
     rack-protection (3.0.3)
       rack
     rack-ssl-enforcer (0.2.9)
