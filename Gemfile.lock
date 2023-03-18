@@ -20,7 +20,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.10)
     daemons (1.4.1)
-    erubi (1.11.0)
+    erubi (1.12.0)
     ethon (0.16.0)
       ffi (>= 1.15.0)
     eventmachine (1.2.7)
