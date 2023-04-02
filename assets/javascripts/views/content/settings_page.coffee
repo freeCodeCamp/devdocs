@@ -19,6 +19,7 @@ class app.views.SettingsPage extends app.View
     settings.analyticsConsent = app.settings.get('analyticsConsent')
     settings.spaceScroll = app.settings.get('spaceScroll')
     settings.spaceTimeout = app.settings.get('spaceTimeout')
+    settings.font = app.settings.get('font')
     settings.autoSupported = app.settings.autoSupported
     settings[layout] = app.settings.hasLayout(layout) for layout in app.settings.LAYOUTS
     settings
@@ -28,6 +29,10 @@ class app.views.SettingsPage extends app.View
 
   setTheme: (value) ->
     app.settings.set('theme', value)
+    return
+
+  setFont: (value) ->
+    app.settings.set('font', value)
     return
 
   toggleLayout: (layout, enable) ->
@@ -87,6 +92,8 @@ class app.views.SettingsPage extends app.View
     switch input.name
       when 'theme'
         @setTheme input.value
+      when 'font'
+        @setFont input.value
       when 'layout'
         @toggleLayout input.value, input.checked
       when 'smoothScroll'

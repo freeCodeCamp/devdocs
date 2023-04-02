@@ -16,6 +16,7 @@ class app.Settings
     'autoInstall'
     'spaceScroll'
     'spaceTimeout'
+    'font'
   ]
 
   INTERNAL_KEYS = [
@@ -65,6 +66,7 @@ class app.Settings
     @store.set(key, value)
     delete @cache[key]
     @setTheme(value) if key == 'theme'
+    @setFont(value) if key == 'font'
     return
 
   del: (key) ->
@@ -150,6 +152,11 @@ class app.Settings
     classList.remove('_theme-default', '_theme-dark')
     classList.add('_theme-' + theme)
     @updateColorMeta()
+    return
+
+  setFont: (font) ->
+    chosenFont = @get('font')
+    document.documentElement.style.setProperty('--selectedFont', chosenFont)
     return
 
   updateColorMeta: ->
