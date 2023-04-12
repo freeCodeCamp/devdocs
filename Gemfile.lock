@@ -55,7 +55,7 @@ GEM
       net-ssh (>= 5.0.0, < 8.0.0)
     net-ssh (7.0.1)
     newrelic_rpm (8.16.0)
-    nokogiri (1.14.2)
+    nokogiri (1.14.3)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     options (2.3.2)
