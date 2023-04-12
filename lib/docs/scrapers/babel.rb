@@ -24,13 +24,17 @@ module Docs
       /roadmap/
     ]
 
+    options[:skip_link] = ->(link) {
+       link['href'].include?('https://babeljs.io/docs/en/')
+    }
+
     options[:attribution] = <<-HTML
       &copy; 2014-present Sebastian McKenzie<br>
       Licensed under the MIT License.
     HTML
 
     version '7' do
-      self.release = '7.21.1'
+      self.release = '7.21.4'
     end
 
     version '6' do
