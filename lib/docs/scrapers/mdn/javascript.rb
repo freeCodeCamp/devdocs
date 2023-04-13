@@ -11,13 +11,6 @@ module Docs
 
     options[:root_title] = 'JavaScript'
 
-    # Don't want
-    options[:skip] = %w(
-      /Methods_Index
-      /Properties_Index
-      /Operators/Legacy_generator_function
-      /Statements/Legacy_generator_function)
-
     # Duplicates
     options[:skip].concat %w(
       /Global_Objects
