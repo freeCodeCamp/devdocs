@@ -12,7 +12,7 @@ module Docs
     options[:root_title] = 'JavaScript'
 
     # Duplicates
-    options[:skip].concat %w(
+    options[:skip] = %w(
       /Global_Objects
       /Operators
       /Statements)
