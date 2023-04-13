@@ -6,6 +6,10 @@ module Docs
     # release = '2023-01-06'
     self.name = 'JavaScript'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference'
+    self.links = {
+      home: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript',
+      code: 'https://github.com/mdn/content/tree/main/files/en-us/web/javascript'
+    }
 
     html_filters.push 'javascript/clean_html', 'javascript/entries'
 
