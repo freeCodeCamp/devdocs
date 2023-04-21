@@ -3,11 +3,11 @@ module Docs
     self.name = 'React Router'
     self.slug = 'react_router'
     self.type = 'simple'
-    self.release = '6.4.1'
-    self.base_url = 'https://reactrouterdotcom.fly.dev/docs/en/v6'
+    self.release = '6.10.0'
+    self.base_url = 'https://reactrouter.com/en/6.10.0/start/overview'
 
     self.links = {
-      home: 'https://reactrouterdotcom.fly.dev/',
+      home: 'https://reactrouter.com/',
       code: 'https://github.com/remix-run/react-router'
     }
 
