@@ -25,8 +25,6 @@ module Docs
       end
     end
 
-    options[:skip] = %w(/Compatibility_sources /FAQ)
-
     options[:fix_urls] = ->(url) do
       url.sub! 'https://developer.mozilla.org/en-US/Web/SVG', Svg.base_url
       url.sub! 'https://developer.mozilla.org/en-US/docs/SVG', Svg.base_url

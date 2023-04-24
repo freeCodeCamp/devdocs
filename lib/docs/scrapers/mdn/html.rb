@@ -14,12 +14,6 @@ module Docs
 
     options[:root_title] = 'HTML'
 
-    options[:skip] = %w(
-      /index
-      /Element/shadow
-      /Element/webkit-meter-optimum-value
-    )
-
     options[:replace_paths] = {
       '/Element/h1' => '/Element/Heading_Elements',
       '/Element/h2' => '/Element/Heading_Elements',
