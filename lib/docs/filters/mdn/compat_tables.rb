@@ -71,27 +71,14 @@ module Docs
       end
 
       def request_bcd_uris
-        url = current_url.to_s + '/index.json'
-        response = Request.run url
-        index_json = JSON.load response.body
-
-        uris = []
-
-        index_json['doc']['body'].each do |element|
-          uris.push(element['value']['dataURL']) if element['type'] == 'browser_compatibility' and element['value']['dataURL']
-        end
-
-        uris.map! do |uri|
-          tmp_uri = URI.parse(base_url.to_s)
-          tmp_uri.path = uri
-          uri = tmp_uri.to_s
-        end
-
-        return uris
+        hydration = JSON.load at_css('#hydration').text
+        files = hydration['doc']['browserCompat'] || []
+        files.map { |file| "https://bcd.developer.mozilla.org/bcd/api/v0/current/#{file}.json" }
       end
 
       def generate_compatibility_table_wrapper(url)
         response = Request.run url
+        return "" unless response.success?
         @json_data = JSON.load(response.body)['data']
 
         html_table = generate_basic_html_table()
@@ -202,31 +189,29 @@ module Docs
 
           if version_removed[0]
             format_string = "<td class=bc-supports-no>"
+          elsif version_added[0] == 'No'
+            format_string = "<td class=bc-supports-no>"
+          elsif version_added[0] == '?'
+            format_string = "<td class=bc-supports-unknown>"
           else
-            if version_added[0] == 'No'
-              format_string = "<td class=bc-supports-no>"
-            elsif version_added[0] == '?'
-              format_string = "<td class=bc-supports-unknown>"
-            else
-              format_string = "<td class=bc-supports-yes>"
-            end
+            format_string = "<td class=bc-supports-yes>"
           end
 
           for value in (0..version_added.length-1) do
             if version_removed[value]
-              format_string += "<div>#{version_added[value]}-#{version_removed[value]}</div>"
+              version_string = "#{version_added[value]}–#{version_removed[value]}"
             else
-              if version_added[value] == 'No'
-                format_string += "<div>#{version_added[value]}</div>"
-              else
-                format_string += "<div>#{version_added[value]}</div>"
-              end
+              version_string = version_added[value]
             end
 
             if notes[value]
-              format_string += "<div>#{notes[value]}</div>"
+              format_string += "<details><summary>#{version_string}</summary>#{notes[value]}</details>"
+            else
+              format_string += "<div>#{version_string}</div>"
             end
           end
+
+          format_string += "</td>"
 
         else
           format_string = "<td class=bc-supports-unknown><div>?</div></td>"
