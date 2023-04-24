@@ -8,6 +8,15 @@ module Docs
       'https://developer.mozilla.org/en-US/docs/Web/HTTP',
       'https://datatracker.ietf.org/doc/html/',
     ]
+    self.links = {
+      home: 'https://developer.mozilla.org/en-US/docs/Web/HTTP',
+      code: 'https://github.com/mdn/content/tree/main/files/en-us/web/http'
+    }
+
+    options[:attribution] = <<-HTML
+      &copy; 2005&ndash;2023 MDN contributors.<br>
+      Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.
+    HTML
 
     html_filters.push 'http/clean_html', 'http/entries', 'title'
 

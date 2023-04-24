@@ -6,6 +6,10 @@ module Docs
     # release = '2022-09-06'
     self.name = 'SVG'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/SVG'
+    self.links = {
+      home: 'https://developer.mozilla.org/en-US/docs/Web/SVG',
+      code: 'https://github.com/mdn/content/tree/main/files/en-us/web/svg'
+    }
 
     html_filters.push 'svg/clean_html', 'svg/entries'
 
