@@ -7,7 +7,8 @@ module Docs
       code: 'https://github.com/mdn/content'
     }
 
-    html_filters.push 'mdn/clean_html', 'mdn/compat_tables'
+    html_filters.insert_before 'container', 'mdn/compat_tables' # needs access to <script type="application/json" id="hydration">
+    html_filters.push 'mdn/clean_html'
 
     options[:container] = '#content > .main-page-content'
     options[:trailing_slash] = false
