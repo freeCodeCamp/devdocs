@@ -12,8 +12,8 @@ module Docs
         return 'Guide' if slug == 'functions'
         return 'Guide' if slug == 'guidelines'
         return 'Guide' if slug.start_with? 'guide'
-        link = at_css('.link.active')
-        link.ancestors('section').at_css('.title').content
+        link = at_css('.is-link.is-active')
+        link.ancestors('section').at_css('h2.text').content
       end
     end
   end
