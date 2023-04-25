@@ -3,6 +3,10 @@ module Docs
     # release = '2022-11-17'
     self.name = 'HTTP'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/HTTP'
+    self.links = {
+      home: 'https://developer.mozilla.org/en-US/docs/Web/HTTP',
+      code: 'https://github.com/mdn/content/tree/main/files/en-us/web/http'
+    }
 
     html_filters.push 'http/clean_html', 'http/entries'
 
