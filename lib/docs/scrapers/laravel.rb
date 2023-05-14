@@ -65,6 +65,7 @@ module Docs
       options[:only_patterns] = [%r{\A/api/8\.x/}, %r{\A/docs/8\.x/}]
 
       options[:fix_urls] = ->(url) do
+        url.sub! %r{8.x/+}, "8.x/"
         url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/8.x/"
         url
       end
@@ -78,6 +79,7 @@ module Docs
       options[:only_patterns] = [%r{\A/api/7\.x/}, %r{\A/docs/7\.x/}]
 
       options[:fix_urls] = ->(url) do
+        url.sub! %r{7.x/+}, "7.x/"
         url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/7.x/"
         url
       end
@@ -91,6 +93,7 @@ module Docs
       options[:only_patterns] = [%r{\A/api/6\.x/}, %r{\A/docs/6\.x/}]
 
       options[:fix_urls] = ->(url) do
+        url.sub! %r{6.x/+}, "6.x/"
         url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/6.x/"
         url
       end
