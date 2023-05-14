@@ -44,7 +44,7 @@ module Docs
     end
 
     version '9' do
-      self.release = '9.3.8'
+      self.release = '9.52.7'
       self.root_path = '/api/9.x/index.html'
       self.initial_paths = %w(/docs/9.x/installation /api/9.x/classes.html)
 
@@ -58,7 +58,7 @@ module Docs
     end
 
     version '8' do
-      self.release = '8.4.1'
+      self.release = '8.83.27'
       self.root_path = '/api/8.x/index.html'
       self.initial_paths = %w(/docs/8.x/installation /api/8.x/classes.html)
 
@@ -71,7 +71,7 @@ module Docs
     end
 
     version '7' do
-      self.release = '7.30.1'
+      self.release = '7.30.6'
       self.root_path = '/api/7.x/index.html'
       self.initial_paths = %w(/docs/7.x/installation /api/7.x/classes.html)
 
@@ -84,7 +84,7 @@ module Docs
     end
 
     version '6' do
-      self.release = '6.20.0'
+      self.release = '6.20.44'
       self.root_path = '/api/6.x/index.html'
       self.initial_paths = %w(/docs/6.x/installation /api/6.x/classes.html)
 
