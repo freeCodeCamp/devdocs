@@ -14,20 +14,34 @@ module Docs
     }
 
     options[:skip_patterns] = [
-      %r{\A/api/\d\.[0-9x]/\.html},
-      %r{\A/api/\d\.[0-9x]/panel\.html},
-      %r{\A/api/\d\.[0-9x]/namespaces\.html},
-      %r{\A/api/\d\.[0-9x]/interfaces\.html},
-      %r{\A/api/\d\.[0-9x]/traits\.html},
-      %r{\A/api/\d\.[0-9x]/doc-index\.html},
-      %r{\A/api/\d\.[0-9x]/Illuminate\.html},
-      %r{\A/api/\d\.[0-9x]/search\.html} ]
+      %r{\A/api/[1-9]?\d\.[0-9x]/\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/panel\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/namespaces\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/interfaces\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/traits\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/doc-index\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/Illuminate\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/search\.html} ]
 
     options[:attribution] = <<-HTML
       &copy; Taylor Otwell<br>
       Licensed under the MIT License.<br>
       Laravel is a trademark of Taylor Otwell.
     HTML
+
+    version '10' do
+      self.release = '10.10.0'
+      self.root_path = '/api/10.x/index.html'
+      self.initial_paths = %w(/docs/10.x/installation /api/10.x/classes.html)
+
+      options[:only_patterns] = [%r{\A/api/10\.x/}, %r{\A/docs/10\.x/}]
+
+      options[:fix_urls] = ->(url) do
+        url.sub! %r{10.x/+}, "10.x/"
+        url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?![1-9]?\d)}, "#{Laravel.base_url}/docs/10.x/"
+        url
+      end
+    end
 
     version '9' do
       self.release = '9.3.8'

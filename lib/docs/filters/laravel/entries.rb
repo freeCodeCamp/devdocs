@@ -18,7 +18,7 @@ module Docs
           return heading ? "Guides: #{heading.content.strip}" : 'Guides'
         end
 
-        type = slug.remove(%r{api/\d.[0-9x]/}).remove('Illuminate/').remove(/\/\w+?\z/).gsub('/', '\\')
+        type = slug.remove(%r{api/[1-9]?\d.[0-9x]/}).remove('Illuminate/').remove(/\/\w+?\z/).gsub('/', '\\')
 
         if type.end_with?('Console')
           type.split('\\').first
