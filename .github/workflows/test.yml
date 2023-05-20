@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
     - name: Set up Ruby
-      uses: ruby/setup-ruby@7d546f4868fb108ed378764d873683f920672ae2 # v1.149.0
+      uses: ruby/setup-ruby@8a45918450651f5e4784b6031db26f4b9f76b251 # v1.150.0
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run tests
