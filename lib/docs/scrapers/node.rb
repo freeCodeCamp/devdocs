@@ -22,10 +22,15 @@ module Docs
       Node.js is a trademark of Joyent, Inc. and is used with its permission.<br>
       We are not endorsed by or affiliated with Joyent.
     HTML
-
+    
     version do
-      self.release = '19.0.1'
+      self.release = '20.2.0'
       self.base_url = 'https://nodejs.org/api/'
+    end
+
+    version '19 LTS' do
+      self.release = '19.9.0'
+      self.base_url = 'https://nodejs.org/dist/latest-v19.x/docs/api/'
     end
 
     version '18 LTS' do
