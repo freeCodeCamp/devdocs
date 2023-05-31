@@ -2,8 +2,13 @@ module Docs
   class Mdn < UrlScraper
     self.abstract = true
     self.type = 'mdn'
+    self.links = {
+      home: 'https://developer.mozilla.org',
+      code: 'https://github.com/mdn/content'
+    }
 
-    html_filters.push 'mdn/clean_html', 'mdn/compat_tables'
+    html_filters.insert_before 'container', 'mdn/compat_tables' # needs access to <script type="application/json" id="hydration">
+    html_filters.push 'mdn/clean_html'
 
     options[:container] = '#content > .main-page-content'
     options[:trailing_slash] = false

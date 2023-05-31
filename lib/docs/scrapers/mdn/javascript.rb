@@ -3,23 +3,20 @@ module Docs
     prepend FixInternalUrlsBehavior
     prepend FixRedirectionsBehavior
 
-    # release = '2023-01-06'
+    # release = '2023-04-24'
     self.name = 'JavaScript'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference'
+    self.links = {
+      home: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript',
+      code: 'https://github.com/mdn/content/tree/main/files/en-us/web/javascript'
+    }
 
     html_filters.push 'javascript/clean_html', 'javascript/entries'
 
     options[:root_title] = 'JavaScript'
 
-    # Don't want
-    options[:skip] = %w(
-      /Methods_Index
-      /Properties_Index
-      /Operators/Legacy_generator_function
-      /Statements/Legacy_generator_function)
-
     # Duplicates
-    options[:skip].concat %w(
+    options[:skip] = %w(
       /Global_Objects
       /Operators
       /Statements)

@@ -3,9 +3,13 @@ module Docs
     prepend FixInternalUrlsBehavior
     prepend FixRedirectionsBehavior
 
-    # release = '2022-09-06'
+    # release = '2023-04-24'
     self.name = 'SVG'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/SVG'
+    self.links = {
+      home: 'https://developer.mozilla.org/en-US/docs/Web/SVG',
+      code: 'https://github.com/mdn/content/tree/main/files/en-us/web/svg'
+    }
 
     html_filters.push 'svg/clean_html', 'svg/entries'
 
@@ -20,8 +24,6 @@ module Docs
         false
       end
     end
-
-    options[:skip] = %w(/Compatibility_sources /FAQ)
 
     options[:fix_urls] = ->(url) do
       url.sub! 'https://developer.mozilla.org/en-US/Web/SVG', Svg.base_url

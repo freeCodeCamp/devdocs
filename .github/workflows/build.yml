@@ -13,13 +13,13 @@ jobs:
     steps:
     - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
     - name: Set up Ruby
-      uses: ruby/setup-ruby@904f3fef85a9c80a3750cbe7d5159268fd5caa9f # v1.145.0
+      uses: ruby/setup-ruby@8a45918450651f5e4784b6031db26f4b9f76b251 # v1.150.0
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run tests
       run: bundle exec rake
     - name: Deploy to Heroku
-      uses: akhileshns/heroku-deploy@5ef17ff17a3fb8e9ad822ae6a61648a3ef9e0c3d # v3.12.13
+      uses: akhileshns/heroku-deploy@9fd0f9faae4aa93a38d6f5e25b9128589f1371b0 # v3.12.14
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "devdocs"
