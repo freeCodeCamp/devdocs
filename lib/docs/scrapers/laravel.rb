@@ -30,7 +30,7 @@ module Docs
     HTML
 
     version '10' do
-      self.release = '10.10.0'
+      self.release = '10.13.0'
       self.root_path = '/api/10.x/index.html'
       self.initial_paths = %w(/docs/10.x/installation /api/10.x/classes.html)
 
@@ -44,7 +44,7 @@ module Docs
     end
 
     version '9' do
-      self.release = '9.52.7'
+      self.release = '9.52.8'
       self.root_path = '/api/9.x/index.html'
       self.initial_paths = %w(/docs/9.x/installation /api/9.x/classes.html)
 
