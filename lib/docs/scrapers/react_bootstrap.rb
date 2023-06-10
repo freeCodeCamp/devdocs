@@ -3,7 +3,7 @@ module Docs
     self.name = 'React Bootstrap'
     self.slug = 'react_bootstrap'
     self.type = 'simple'
-    self.release = '2.7.2'
+    self.release = '2.7.4'
     self.base_url = 'https://react-bootstrap.github.io/'
 
     self.links = {
