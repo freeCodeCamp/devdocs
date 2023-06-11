@@ -40,8 +40,12 @@ module Docs
       Licensed under the Apache License, Version 2.0.
     HTML
 
+    version '26' do
+      self.release = '26.0.1'
+    end
+
     version '25' do
-      self.release = '25.2.2'
+      self.release = '25.3.2.2'
     end
 
     version '24' do
