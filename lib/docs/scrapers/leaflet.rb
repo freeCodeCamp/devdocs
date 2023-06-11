@@ -20,7 +20,7 @@ module Docs
     HTML
 
     version '1.9' do
-      self.release = '1.9.1'
+      self.release = '1.9.4'
       self.base_url = "https://leafletjs.com/reference.html"
     end
 
