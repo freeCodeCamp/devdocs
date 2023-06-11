@@ -22,7 +22,7 @@ module Docs
       end
 
       def other
-        css('> :not(.section), table.toc.docutils, .tooltip-content').remove
+        css('table.toc.docutils, .tooltip-content').remove
 
         # Remove code tag from function, class, method, module, etc.
         css('dl > dt').each do |node|

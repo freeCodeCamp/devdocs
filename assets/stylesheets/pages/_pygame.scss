@@ -9,4 +9,6 @@
   .line-block > .line:first-child { margin-bottom: 1em; }
   .line-block > .line:only-child { margin-bottom: 0em; }
   span.signature { font-family: monospace; }
+
+  .warning { @extend %note, %note-red }
 }
