@@ -20,6 +20,7 @@ module Docs
       def _fix_name(name)
         name.sub! %r{#\s*}, ''
         name.sub! %r{\s*3\.\d\+$}, ''
+        name.sub! %r{\u200B\s*}, ''
         name
       end
 
