@@ -9,9 +9,16 @@ module Docs
         end
 
         # Remove code highlighting
-        css('pre').each do |node|
-          node.content = node.content
-          node['data-language'] = 'php'
+        css('pre > code').each do |node|
+          if node['data-lang'].eql?('nothing')
+            # Ignore 'nothing' language
+          else
+            node.parent['data-language'] = node['data-lang']
+          end
+          # Prism uses `\n` to determine lines. Otherwise the lines will be
+          # compacted.
+          node.parent.content = node.css('.line').map(&:content).join("\n")
+          node.remove
         end
 
         doc
