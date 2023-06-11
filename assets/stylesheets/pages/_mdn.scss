@@ -1,4 +1,6 @@
 ._mdn {
+  container-type: inline-size;
+
   .index { // HTML, CSS
     -webkit-columns: 16em;
        -moz-columns: 16em;
@@ -155,7 +157,7 @@
         height: 780px;
       }
     }
-  @media screen and (min-width: 993px) {
+  @container (min-width: 594px) {
     .interactive {
       height: 380px;
 
