@@ -14,14 +14,14 @@ module Docs
     }
 
     options[:skip_patterns] = [
-      %r{\A/api/\d\.[0-9x]/\.html},
-      %r{\A/api/\d\.[0-9x]/panel\.html},
-      %r{\A/api/\d\.[0-9x]/namespaces\.html},
-      %r{\A/api/\d\.[0-9x]/interfaces\.html},
-      %r{\A/api/\d\.[0-9x]/traits\.html},
-      %r{\A/api/\d\.[0-9x]/doc-index\.html},
-      %r{\A/api/\d\.[0-9x]/Illuminate\.html},
-      %r{\A/api/\d\.[0-9x]/search\.html} ]
+      %r{\A/api/[1-9]?\d\.[0-9x]/\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/panel\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/namespaces\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/interfaces\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/traits\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/doc-index\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/Illuminate\.html},
+      %r{\A/api/[1-9]?\d\.[0-9x]/search\.html} ]
 
     options[:attribution] = <<-HTML
       &copy; Taylor Otwell<br>
@@ -29,8 +29,22 @@ module Docs
       Laravel is a trademark of Taylor Otwell.
     HTML
 
+    version '10' do
+      self.release = '10.13.0'
+      self.root_path = '/api/10.x/index.html'
+      self.initial_paths = %w(/docs/10.x/installation /api/10.x/classes.html)
+
+      options[:only_patterns] = [%r{\A/api/10\.x/}, %r{\A/docs/10\.x/}]
+
+      options[:fix_urls] = ->(url) do
+        url.sub! %r{10.x/+}, "10.x/"
+        url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?![1-9]?\d)}, "#{Laravel.base_url}/docs/10.x/"
+        url
+      end
+    end
+
     version '9' do
-      self.release = '9.3.8'
+      self.release = '9.52.8'
       self.root_path = '/api/9.x/index.html'
       self.initial_paths = %w(/docs/9.x/installation /api/9.x/classes.html)
 
@@ -44,39 +58,42 @@ module Docs
     end
 
     version '8' do
-      self.release = '8.4.1'
+      self.release = '8.83.27'
       self.root_path = '/api/8.x/index.html'
       self.initial_paths = %w(/docs/8.x/installation /api/8.x/classes.html)
 
       options[:only_patterns] = [%r{\A/api/8\.x/}, %r{\A/docs/8\.x/}]
 
       options[:fix_urls] = ->(url) do
+        url.sub! %r{8.x/+}, "8.x/"
         url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/8.x/"
         url
       end
     end
 
     version '7' do
-      self.release = '7.30.1'
+      self.release = '7.30.6'
       self.root_path = '/api/7.x/index.html'
       self.initial_paths = %w(/docs/7.x/installation /api/7.x/classes.html)
 
       options[:only_patterns] = [%r{\A/api/7\.x/}, %r{\A/docs/7\.x/}]
 
       options[:fix_urls] = ->(url) do
+        url.sub! %r{7.x/+}, "7.x/"
         url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/7.x/"
         url
       end
     end
 
     version '6' do
-      self.release = '6.20.0'
+      self.release = '6.20.44'
       self.root_path = '/api/6.x/index.html'
       self.initial_paths = %w(/docs/6.x/installation /api/6.x/classes.html)
 
       options[:only_patterns] = [%r{\A/api/6\.x/}, %r{\A/docs/6\.x/}]
 
       options[:fix_urls] = ->(url) do
+        url.sub! %r{6.x/+}, "6.x/"
         url.sub! %r{#{Regexp.escape(Laravel.base_url)}/docs\/(?!\d)}, "#{Laravel.base_url}/docs/6.x/"
         url
       end

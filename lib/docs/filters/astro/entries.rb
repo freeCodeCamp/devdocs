@@ -2,7 +2,7 @@ module Docs
   class Astro
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('h1').content
+        name = at_css('article h1').content
         name.sub! %r{\s*#\s*}, ''
         name
       end
@@ -16,7 +16,7 @@ module Docs
       def additional_entries
         return if slug.start_with?('guides/deploy')
         return if slug.start_with?('guides/integrations-guide')
-        at_css('article').css('h2, h3').each_with_object [] do |node, entries|
+        at_css('article').css('h2[id], h3[id]').each_with_object [] do |node, entries|
           type = node.content.strip
           type.sub! %r{\s*#\s*}, ''
           entries << ["#{name}: #{type}", node['id']]

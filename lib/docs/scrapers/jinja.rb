@@ -17,6 +17,11 @@ module Docs
       Licensed under the BSD 3-clause License.
     HTML
 
+    version '3.1' do
+      self.release = '3.1.x'
+      self.base_url = "https://jinja.palletsprojects.com/en/#{self.release}/"
+    end
+
     version '3.0' do
       self.release = '3.0.x'
       self.base_url = "https://jinja.palletsprojects.com/en/#{self.release}/"

@@ -26,6 +26,10 @@ module Docs
           node.before(node.children).remove
         end
 
+        css('.cms-nav').remove
+
+        css('.copy-button-wrapper, .copy-button-tooltip').remove
+
         doc
       end
     end

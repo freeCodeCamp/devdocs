@@ -2,7 +2,7 @@ module Docs
   class Erlang
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('#content .innertube:only-child', '#content')
+        @doc = at_css('#content')
 
         # frontpage
 
