@@ -16,7 +16,7 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    self.release = '0.30.1'
+    self.release = '0.32.4'
     self.base_url = 'https://vitest.dev/'
     self.initial_paths = %w(guide/)
     html_filters.push 'vitest/entries', 'vite/clean_html'
