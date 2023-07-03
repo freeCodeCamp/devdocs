@@ -19,10 +19,15 @@ module Docs
     options[:skip_patterns] = [/\Afunctions/, /\Avariables/, /\.pdf/, /delta/]
 
     options[:attribution] = <<-HTML
-      &copy; 1993&ndash;2021 Larry Wall and others<br>
+      &copy; 1993&ndash;2023 Larry Wall and others<br>
       Licensed under the GNU General Public License version 1 or later, or the Artistic License.<br>
       The Perl logo is a trademark of the Perl Foundation.
     HTML
+
+    version '5.38' do
+      self.release = '5.38.0'
+      self.base_url = "https://perldoc.perl.org/#{release}/"
+    end
 
     version '5.36' do
       self.release = '5.36.0'
