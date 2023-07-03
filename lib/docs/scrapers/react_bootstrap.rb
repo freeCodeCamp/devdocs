@@ -3,7 +3,7 @@ module Docs
     self.name = 'React Bootstrap'
     self.slug = 'react_bootstrap'
     self.type = 'simple'
-    self.release = '2.7.4'
+    self.release = '2.8.0'
     self.base_url = 'https://react-bootstrap.github.io/'
 
     self.links = {
@@ -23,13 +23,8 @@ module Docs
     options[:trailing_slash] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2014&ndash;present Stephen J. Collings, Matthew Honnibal, Pieter Vanderwerff<br>
+      &copy; 2023 React Bootstrap.<br>
       Licensed under the MIT License (MIT).
     HTML
-
-    def get_latest_version(opts)
-      doc = fetch_doc('https://react-bootstrap.github.io/', opts)
-      doc.at_css('#t-version>a').content.split()[0].strip[1..-1]
-    end
   end
 end
