@@ -23,7 +23,7 @@ module Docs
 
     # Check if the 'headers' page has changed
     def get_latest_version(opts)
-      doc = fetch_doc(self.base_url + self.root_path, opts)
+      doc = fetch_doc((self.base_url + self.root_path).to_s, opts)
       date = doc.at_css('#footer-info-lastmod').content
       date = date.match(/[[:digit:]]{1,2} .* [[:digit:]]{4}/).to_s
       date = DateTime.strptime(date, '%e %B %Y').to_time.to_i

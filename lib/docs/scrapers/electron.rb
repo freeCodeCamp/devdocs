@@ -27,7 +27,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://www.electronjs.org/releases/stable', opts)
-      doc.at_css(".tag").content.gsub!(/[a-zA-Z]/, '')
+      doc.at_css('.release-card__metadata>a')['href'].gsub!(/[a-zA-Z\/:]/, '')[1..-1]
     end
   end
 end
