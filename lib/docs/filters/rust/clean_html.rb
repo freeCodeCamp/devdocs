@@ -16,12 +16,9 @@ module Docs
           @doc = at_css('#main, #main-content')
 
           css('.toggle-wrapper').remove
+          css('.anchor').remove
 
-          css('h1.fqn').each do |node|
-            node.content = node.at_css('.in-band').content
-          end
-
-          css('.main-heading > h1.fqn').each do |node|
+          css('.main-heading > h1').each do |node|
             node.parent.name = 'h1'
             node.parent.content = node.content
           end
@@ -105,6 +102,12 @@ module Docs
           end
           node.inner_html = node.inner_html.gsub('<br>', "\n")
           node.content = node.content
+        end
+
+        css('.rightside').each do |node|
+          node.children.each do |child|
+            child.remove if child.text?() and child.text() == " · "
+          end
         end
 
         css('.since + .srclink').each do |node|
