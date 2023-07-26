@@ -2,8 +2,8 @@
 
 module Docs
   class Koa < Github
-    self.base_url = 'https://github.com/koajs/koa/blob/master/docs/'
-    self.release = '2.13.0'
+    self.base_url = 'https://github.com/koajs/koa/tree/master/docs'
+    self.release = '2.14.2'
 
     self.root_path = 'api/index.md'
     self.initial_paths = %w[
