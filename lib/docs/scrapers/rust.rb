@@ -53,5 +53,10 @@ module Docs
     def process_response?(response)
       !(response.body =~ REDIRECT_RGX || response.body =~ NOT_FOUND_RGX || response.body.blank?)
     end
+
+    def parse(response) # Hook here because Nokogori removes whitespace from headings
+      response.body.gsub! %r{<h[1-6] class="code-header">}, '<pre class="code-header">'
+      super
+    end
   end
 end

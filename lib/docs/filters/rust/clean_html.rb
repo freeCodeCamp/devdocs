@@ -88,8 +88,12 @@ module Docs
         end
 
         css('pre').each do |node|
+          node.css('.where.fmt-newline').each do |node|
+            node.before("\n")
+          end
           node.content = node.content
           node['data-language'] = 'rust' if node['class'] && node['class'].include?('rust')
+          node['data-language'] = 'rust' if node.classes.include?('code-header')
         end
 
         doc.first_element_child.name = 'h1' if doc.first_element_child.name = 'h2'
