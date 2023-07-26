@@ -31,6 +31,11 @@ module Docs
       Licensed under the Apache License, Version 2.0.
     HTML
 
+    version '1.9' do
+      self.release = '1.9.0'
+      self.headers = { 'User-Agent' => 'devdocs.io' , 'Cookie' => 'x-ab-test-spring-boot-learning-path=0; userToken=r33dgpe8x3q5vswekg16a'  }
+    end
+
     version '1.8' do
       self.release = '1.8.0'
       self.headers = { 'User-Agent' => 'devdocs.io' , 'Cookie' => 'x-ab-test-spring-boot-learning-path=0; userToken=r33dgpe8x3q5vswekg16a'  }
