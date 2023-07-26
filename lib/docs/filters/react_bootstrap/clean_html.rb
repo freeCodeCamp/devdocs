@@ -5,8 +5,10 @@ module Docs
         @doc = doc.at_css('main')
 
         css('.flex-column.d-flex').remove
-        css('header').remove
         css('.bs-example').remove
+        css('nav').remove
+        css('.clean-btn').remove
+        css('.tableOfContents_bqdL').remove
 
         css('.position-relative pre').each do |node|
           node.content = node.children.map(&:content).join("\n")
