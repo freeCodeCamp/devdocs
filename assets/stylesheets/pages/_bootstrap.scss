@@ -8,6 +8,8 @@
     float: right;
   }
 
+  .h5 { font-size: 1.25rem; }
+
   .bs-callout { @extend %note; }
   .bs-callout-info { @extend %note-blue; }
   .bs-callout-danger { @extend %note-red; }
@@ -36,6 +38,7 @@
   }
 
   .col { margin-bottom: 1.5em; }
+  .d-block { display: block; }
 
   @media (min-width: 800px) {
     .row {
@@ -50,5 +53,6 @@
       -moz-box-sizing: border-box;
            box-sizing: border-box;
     }
+    .col-md-6 { width: 50%; }
   }
 }

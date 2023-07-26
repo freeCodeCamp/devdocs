@@ -10,8 +10,7 @@ module Docs
 
     # https://github.com/twbs/bootstrap/blob/master/LICENSE
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2022 Twitter, Inc.<br>
-      &copy; 2011&ndash;2022 The Bootstrap Authors<br>
+      &copy; 2011&ndash;2023 The Bootstrap Authors<br>
       Code licensed under the MIT License.<br>
       Documentation licensed under the Creative Commons Attribution License v3.0.
     HTML
@@ -23,9 +22,8 @@ module Docs
 
       html_filters.push 'bootstrap/entries_v5', 'bootstrap/clean_html_v5'
 
-      options[:only_patterns] = [
-        /\Agetting-started\//, /\Alayout\//, /\Acontent\//,
-        /\Acomponents\//, /\Autilities\/.+/, /\Ahelpers\//
+      options[:skip_patterns] = [
+        /\Aabout\//
       ]
 
       options[:replace_paths] = {
