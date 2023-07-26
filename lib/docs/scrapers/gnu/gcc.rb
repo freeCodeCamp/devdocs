@@ -46,6 +46,16 @@ module Docs
       'Wtrigraphs.html' => 'Invocation.html'
     }
 
+    version '13' do
+      self.release = '13.1.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
+    end
+
+    version '13 CPP' do
+      self.release = '13.1.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
+    end
+
     version '12' do
       self.release = '12.2.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
@@ -57,98 +67,98 @@ module Docs
     end
 
     version '11' do
-      self.release = '11.1.0'
+      self.release = '11.4.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '11 CPP' do
-      self.release = '11.1.0'
+      self.release = '11.4.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
     end
 
     version '10' do
-      self.release = '10.2.0'
+      self.release = '10.5.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '10 CPP' do
-      self.release = '10.2.0'
+      self.release = '10.5.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
     end
 
     version '9' do
-      self.release = '9.3.0'
+      self.release = '9.5.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '9 CPP' do
-      self.release = '9.3.0'
+      self.release = '9.5.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
     end
 
     version '8' do
-      self.release = '8.3.0'
+      self.release = '8.5.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '8 CPP' do
-      self.release = '8.3.0'
+      self.release = '8.5.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
     end
 
     version '7' do
-      self.release = '7.4.0'
+      self.release = '7.5.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '7 CPP' do
-      self.release = '7.4.0'
+      self.release = '7.5.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
     end
 
     version '6' do
-      self.release = '6.4.0'
+      self.release = '6.5.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
 
       options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
     end
 
     version '6 CPP' do
-      self.release = '6.4.0'
+      self.release = '6.5.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
     end
 
     version '5' do
-      self.release = '5.4.0'
+      self.release = '5.5.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
 
       options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
     end
 
     version '5 CPP' do
-      self.release = '5.4.0'
+      self.release = '5.5.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
     end
 
     version '4' do
-      self.release = '4.9.3'
+      self.release = '4.9.4'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
 
       options[:root_title] = 'Using the GNU Compiler Collection (GCC)'
     end
 
     version '4 CPP' do
-      self.release = '4.9.3'
+      self.release = '4.9.4'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
 
       options[:replace_paths] = CPP_PATHS
