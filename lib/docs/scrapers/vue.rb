@@ -29,6 +29,7 @@ module Docs
       self.release = '2.7.14'
       self.base_url = 'https://v2.vuejs.org/v2/'
       self.initial_paths = %w(api/)
+      self.root_path = 'guide/'
       html_filters.push 'vue/entries', 'vue/clean_html'
     end
 
