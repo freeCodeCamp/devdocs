@@ -56,10 +56,14 @@ module Docs
             else
               node.next_element['id'] = node['name']
             end
+            node.remove
+          elsif node.parent.name == 'p'
+            node['id'] = node['name']
+            node.parent.after(node.remove)
           else
             node.parent['id'] ||= node['name']
+            node.remove
           end
-          node.remove
         end
 
         unless at_css('h2')
