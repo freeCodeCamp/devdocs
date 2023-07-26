@@ -106,7 +106,7 @@ module Docs
         end
 
         css('img').each do |node|
-          node['src'] = node['src'].sub! %r{http://en.cppreference.com/common/([^"']+?)\.svg}, 'http://upload.cppreference.com/mwiki/\1.svg'
+          node['src'] = node['src'].sub! %r{https://upload.cppreference.com/mwiki/(images/[^"']+?)}, 'http://upload.cppreference.com/mwiki/\1'
         end
 
         # temporary solution due lack of mathjax/mathml support
