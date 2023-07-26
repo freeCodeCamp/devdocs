@@ -150,7 +150,7 @@ module Docs
       if path.empty? || path == '/'
         root_url.to_s
       else
-        File.join(base_url.to_s, path)
+        File.join(base_url.to_s, path.to_s)
       end
     end
 

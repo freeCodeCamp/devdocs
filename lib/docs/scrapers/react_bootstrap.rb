@@ -29,7 +29,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://react-bootstrap.github.io/', opts)
-      doc.at_css('#t-version>a').content.split()[0].strip[1..-1]
+      doc.at_css('.my-2').content.split()[-1].strip[0..-1]
     end
   end
 end
