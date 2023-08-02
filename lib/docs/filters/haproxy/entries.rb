@@ -34,7 +34,7 @@ module Docs
             node.css('.keyword').each do |n|
               name = n.at_css('b').content
               id = n['id']
-              entries << [name, URI.escape(id), REPLACE_TYPE[type] || type]
+              entries << [name, id, REPLACE_TYPE[type] || type]
             end
           end
         end
