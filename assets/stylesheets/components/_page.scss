@@ -8,8 +8,8 @@
 
   &._page-error { position: static; }
 
-  > h1 { @extend ._lined-heading; }
-  > h1:first-child { margin-top: 0; }
+  > h1, > section > h1 { @extend ._lined-heading; }
+  > h1:first-child, > section:first-of-type > h1 { margin-top: 0; }
 
   a[href^="http:"], a[href^="https:"] { @extend %external-link; }
 
