@@ -2,7 +2,7 @@ module Docs
   class Fastapi < UrlScraper
     self.name = 'FastAPI'
     self.type = 'fastapi'
-    self.release = '0.95.0'
+    self.release = '0.100.1'
     self.base_url = 'https://fastapi.tiangolo.com/'
     self.root_path = '/'
     self.links = {
