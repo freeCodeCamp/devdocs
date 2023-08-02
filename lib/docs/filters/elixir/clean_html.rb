@@ -54,7 +54,7 @@ module Docs
             node.name = 'h3'
             node['id'] = id
 
-            source_href = node.at_css('.view-source').attr('href')
+            source_href = node.at_css('a.icon-action[title="View Source"]').attr('href')
 
             node.content = node.at_css('.signature').inner_text
             node << %(<a href="#{source_href}" class="source">Source</a>)
@@ -69,6 +69,8 @@ module Docs
           node['data-language'] = 'elixir'
           node.content = node.content
         end
+
+        css('.icon-action').remove
       end
     end
   end
