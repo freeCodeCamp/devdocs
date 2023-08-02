@@ -4,16 +4,6 @@ This lists the docs that use `FileScraper` and instructions for building some of
 
 If you open a PR to update one of these docs, please add/fix the instructions.
 
-## C
-
-Download the HTML book from https://en.cppreference.com/w/Cppreference:Archives
-and copy `reference/en/c` from the ZIP file into `/path/to/devdocs/docs/c`.
-
-## C++
-
-Download the HTML book from https://en.cppreference.com/w/Cppreference:Archives
-and copy `reference/en/cpp` from the ZIP file into `/path/to/devdocs/docs/cpp`.
-
 ## Dart
 
 Click the “API docs” link under the “Stable channel” header on
