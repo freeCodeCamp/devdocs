@@ -21,7 +21,7 @@ module Docs
     html_filters.push 'vite/entries', 'vite/clean_html'
 
     version do
-      self.release = '4.3.9'
+      self.release = '4.4.8'
       self.base_url = 'https://vitejs.dev/'
     end
 
