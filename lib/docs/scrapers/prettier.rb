@@ -2,7 +2,7 @@ module Docs
   class Prettier < UrlScraper
     self.name = 'Prettier'
     self.type = 'simple'
-    self.release = '2.8.0'
+    self.release = '3.0.0'
     self.base_url = 'https://prettier.io/docs/en/'
     self.links = {
       home: 'https://prettier.io/',
