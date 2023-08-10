@@ -9,7 +9,8 @@ COPY . /devdocs
 
 RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev libcurl && \
     gem install bundler && \
-    bundle install --system --without test && \
+    bundle config set system 'true'  && \
+    bundle install --without test && \
     thor docs:download --all && \
     thor assets:compile && \
     apk del gzip build-base git zlib-dev && \
