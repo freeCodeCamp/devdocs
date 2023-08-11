@@ -174,6 +174,7 @@ Made something cool? Feel free to open a PR to add a new row to this table! You 
 | [mdh34/quickDocs](https://github.com/mdh34/quickDocs)                                       | Vala/Python based viewer             | ![Latest GitHub commit](https://img.shields.io/github/last-commit/mdh34/quickDocs?logo=github&label)                 | ![GitHub stars](https://img.shields.io/github/stars/mdh34/quickDocs?logo=github&label)                 |
 | [romainl/vim-devdocs](https://github.com/romainl/vim-devdocs)                               | Vim plugin                           | ![Latest GitHub commit](https://img.shields.io/github/last-commit/romainl/vim-devdocs?logo=github&label)             | ![GitHub stars](https://img.shields.io/github/stars/romainl/vim-devdocs?logo=github&label)             |
 | [waiting-for-dev/vim-www](https://github.com/waiting-for-dev/vim-www)                       | Vim plugin                           | ![Latest GitHub commit](https://img.shields.io/github/last-commit/waiting-for-dev/vim-www?logo=github&label)         | ![GitHub stars](https://img.shields.io/github/stars/waiting-for-dev/vim-www?logo=github&label)         |
+| [luckasRanarison/nvim-devdocs](https://github.com/luckasRanarison/nvim-devdocs)             | Neovim plugin                        | ![Latest GitHub commit](https://img.shields.io/github/last-commit/luckasRanarison/nvim-devdocs?logo=github&label)    | ![GitHub stars](https://img.shields.io/github/stars/luckasRanarison/nvim-devdocs?logo=github&label)    |
 
 ## Copyright / License
 
