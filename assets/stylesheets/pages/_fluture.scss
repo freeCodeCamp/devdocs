@@ -1,0 +1,7 @@
+._fluture {
+  @extend %simple;
+
+  pre > code {
+    font-size: inherit;
+  }
+}
