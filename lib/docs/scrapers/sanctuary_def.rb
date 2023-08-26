@@ -11,7 +11,6 @@ module Docs
       code: "https://github.com/sanctuary-js/sanctuary-def",
     }
 
-    # html_filters.push "sanctuary_def/entries"
     html_filters.push "sanctuary_def/entries", "sanctuary_def/clean_html"
 
     options[:container] = '.markdown-body'
