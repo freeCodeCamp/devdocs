@@ -343,6 +343,7 @@ class DocsCLI < Thor
       file.close
       tar = UnixUtils.gunzip(file.path)
       dir = UnixUtils.untar(tar)
+      FileUtils.rm(tar)
       FileUtils.rm_rf(target_path)
       FileUtils.mv(dir, target_path)
       FileUtils.rm(file.path)
