@@ -18,7 +18,7 @@ module Docs
     Copyright &copy; 2002–2022 Pivotal, Inc. All Rights Reserved.
     HTML
 
-    self.release = '2.7.0'
+    self.release = '3.1.3'
     self.base_url = "https://docs.spring.io/spring-boot/docs/#{release}/reference/html/"
 
     def get_latest_version(opts)
