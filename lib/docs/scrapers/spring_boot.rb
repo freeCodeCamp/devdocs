@@ -15,7 +15,8 @@ module Docs
 
     # https://github.com/spring-projects/spring-boot/blob/main/buildSrc/src/main/resources/NOTICE.txt
     options[:attribution] = <<-HTML
-    Copyright &copy; 2002–2022 Pivotal, Inc. All Rights Reserved.
+    Copyright &copy; 2012-2023 VMware, Inc.<br>
+    Licensed under the Apache License, Version 2.0.
     HTML
 
     self.release = '3.1.3'
