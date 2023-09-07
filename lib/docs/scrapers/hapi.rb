@@ -16,8 +16,6 @@ module Docs
     options[:container] = '.markdown-wrapper'
     options[:title] = "Hapi"
     options[:attribution] = <<-HTML
-      &copy; 2020 Sanctuary<br>
-      &copy; 2016 Plaid Technologies, Inc.<br>
       Copyright &copy; 2011-2022, Project contributors Copyright &copy; 2011-2020, Sideway Inc Copyright &copy; 2011-2014, Walmart
       Copyright &copy; 2011, Yahoo Inc.
       All rights reserved.
