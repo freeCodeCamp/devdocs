@@ -14,7 +14,7 @@ module Docs
 
     html_filters.push "nushell/clean_html", "nushell/entries", "nushell/fix_links"
 
-    options[:container] = '.theme-default-content'
+    options[:container] = '.theme-container'
     options[:follow_links] = true
     options[:title] = "Nushell"
     options[:attribution] = <<-HTML
@@ -26,7 +26,7 @@ module Docs
     version do
       self.release = "0.84.0"
       self.base_urls = [
-        # "https://www.nushell.sh/book/",
+        "https://www.nushell.sh/book/",
         "https://www.nushell.sh/commands/"
       ]
     end
