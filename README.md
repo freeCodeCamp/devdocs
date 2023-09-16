@@ -175,6 +175,7 @@ Made something cool? Feel free to open a PR to add a new row to this table! You 
 | [romainl/vim-devdocs](https://github.com/romainl/vim-devdocs)                               | Vim plugin                           | ![Latest GitHub commit](https://img.shields.io/github/last-commit/romainl/vim-devdocs?logo=github&label)             | ![GitHub stars](https://img.shields.io/github/stars/romainl/vim-devdocs?logo=github&label)             |
 | [waiting-for-dev/vim-www](https://github.com/waiting-for-dev/vim-www)                       | Vim plugin                           | ![Latest GitHub commit](https://img.shields.io/github/last-commit/waiting-for-dev/vim-www?logo=github&label)         | ![GitHub stars](https://img.shields.io/github/stars/waiting-for-dev/vim-www?logo=github&label)         |
 | [luckasRanarison/nvim-devdocs](https://github.com/luckasRanarison/nvim-devdocs)             | Neovim plugin                        | ![Latest GitHub commit](https://img.shields.io/github/last-commit/luckasRanarison/nvim-devdocs?logo=github&label)    | ![GitHub stars](https://img.shields.io/github/stars/luckasRanarison/nvim-devdocs?logo=github&label)    |
+| [toiletbril/dedoc](https://github.com/toiletbril/dedoc)                                     | Terminal based viewer                | ![Latest GitHub commit](https://img.shields.io/github/last-commit/toiletbril/dedoc?logo=github&label)                | ![GitHub stars](https://img.shields.io/github/stars/toiletbril/dedoc?logo=github&label)                |
 
 ## Copyright / License
 
