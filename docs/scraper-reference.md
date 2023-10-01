@@ -22,7 +22,7 @@ To be processed, a response must meet the following requirements:
 
 * 200 status code
 * HTML content type
-* effective URL (after redirection) contained in the base URL (explained below)
+* Effective URL (after redirection) contained in the base URL (explained below)
 
 (`FileScraper` only checks if the file exists and is not empty.)
 
