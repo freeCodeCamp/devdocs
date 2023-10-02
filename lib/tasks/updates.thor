@@ -174,7 +174,7 @@ class UpdatesCLI < Thor
       order: 'desc'
     }
 
-    matching_issues = github_get('/search/issues', search_params)
+    matching_issues = github_get('/search/issues', **search_params)
     previous_issue = matching_issues['items'].find {|item| item['number'] != created_issue['number']}
 
     if previous_issue.nil?
