@@ -21,15 +21,22 @@ module Docs
       Licensed under the PSF License.
     HTML
 
+    version '3.12' do
+      self.release = '3.12.0'
+      self.base_url = "https://docs.python.org/#{self.version}/"
+
+      html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
+    end
+
     version '3.11' do
-      self.release = '3.11.1'
+      self.release = '3.11.5'
       self.base_url = "https://docs.python.org/#{self.version}/"
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
     end
 
     version '3.10' do
-      self.release = '3.10.9'
+      self.release = '3.10.13'
       self.base_url = "https://docs.python.org/#{self.version}/"
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
