@@ -1,5 +1,9 @@
 [
   [
+    "2023-10-09",
+    "New documentations: <a href=\"/hapi/\">hapi</a>, <a href=\"/joi/\">joi</a>, <a href=\"/nushell/\">Nushell</a>, <a href=\"/varnish/\">Varnish</a>"
+  ],
+  [
     "2023-08-24",
     "New documentation: <a href=\"/fluture/\">Fluture</a>"
   ],
