@@ -13,7 +13,7 @@ module Docs
       def additional_entries
         entries = []
 
-        css('h3 > code, h4 > code, h5 > code').each do |node|
+        css('h3 > code, h4 > code, h5 > code, h6 > code').each do |node|
           name = node.content.gsub(/\(.*\)/, '()')
           id = node.parent['id']
 
