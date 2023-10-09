@@ -3,15 +3,16 @@ module Docs
     self.name = 'jq'
     self.slug = 'jq'
     self.type = 'jq'
-    self.release = '1.6'
+    self.release = '1.7'
     self.links = {
-      home: 'https://stedolan.github.io/jq/'
+      home: 'https://jqlang.github.io/jq/'
     }
 
-    self.base_url = "https://stedolan.github.io/jq/manual/v#{self.release}/index.html"
+    self.base_url = "https://jqlang.github.io/jq/manual/v#{self.release}/index.html"
 
     html_filters.push 'jq/entries', 'jq/clean_html'
 
+    options[:container] = 'main'
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML

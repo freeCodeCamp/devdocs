@@ -2,8 +2,6 @@ module Docs
   class Jq
     class CleanHtmlFilter < Filter
       def call
-        content = at_css('div#manualcontent')
-
         css('.manual-example').each do |node|
           container = node.parent
           example_header = doc.document.create_element('h4')
@@ -13,8 +11,7 @@ module Docs
           node.remove_class('collapse')
           container.replace(node)
         end
-
-        content
+        doc
       end
     end
   end
