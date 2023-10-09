@@ -55,11 +55,6 @@ module Docs
       Licensed under the PostgreSQL License.
     HTML
 
-    version 'Latest' do
-      self.release = '16.0'
-      self.base_url = "https://www.postgresql.org/docs/latest/"
-    end
-    
     version '16' do
       self.release = '16.0'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
@@ -71,46 +66,46 @@ module Docs
     end
 
     version '14' do
-      self.release = '14.9'
+      self.release = '14.5'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
     version '13' do
-      self.release = '13.12'
+      self.release = '13.4'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
     version '12' do
-      self.release = '12.16'
+      self.release = '12.1'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
     version '11' do
-      self.release = '11.21'
+      self.release = '11.6'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
     version '10' do
-      self.release = '10.23 (EOL)'
+      self.release = '10.11'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
     version '9.6' do
-      self.release = '9.6.24 (EOL)'
+      self.release = '9.6.16'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
 
       html_filters.insert_before 'postgresql/extract_metadata', 'postgresql/normalize_class_names'
     end
 
     version '9.5' do
-      self.release = '9.5.25 (EOL)'
+      self.release = '9.5.20'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
 
       html_filters.insert_before 'postgresql/extract_metadata', 'postgresql/normalize_class_names'
     end
 
     version '9.4' do
-      self.release = '9.4.26 (EOL)'
+      self.release = '9.4.25'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
 
       html_filters.insert_before 'postgresql/extract_metadata', 'postgresql/normalize_class_names'
