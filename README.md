@@ -22,7 +22,6 @@ Unless you wish to contribute to the project, we recommend using the hosted vers
 
 DevDocs is made of two pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
-
 DevDocs requires Ruby 3.2.2 (defined in [`Gemfile`](./Gemfile)), libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
 
 ```sh
@@ -54,12 +53,12 @@ docker run --name devdocs -d -p 9292:9292 thibaut/devdocs
 
 DevDocs aims to make reading and searching reference documentation fast, easy and enjoyable.
 
-The app's main goals are to: 
+The app's main goals are to:
 
 * Keep load times as short as possible
 * Improve the quality, speed, and order of search results
 * Maximize the use of caching and other performance optimizations
-* Maintain a clean and readable user interface 
+* Maintain a clean and readable user interface
 * Be fully functional offline
 * Support full keyboard navigation
 * Reduce “context switch” by using a consistent typography and design across all documentations
@@ -127,7 +126,7 @@ thor docs:clean     # Delete documentation packages
 thor console        # Start a REPL
 thor console:docs   # Start a REPL in the "Docs" module
 
-# Tests can be run quickly from within the console using the "test" command. 
+# Tests can be run quickly from within the console using the "test" command.
 # Run "help test" for usage instructions.
 thor test:all       # Run all tests
 thor test:docs      # Run "Docs" tests
