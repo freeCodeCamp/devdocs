@@ -6,7 +6,7 @@ module Docs
     self.name = "Nushell"
     self.slug = "nushell"
     self.type = "nushell"
-    self.release = "0.84.0"
+    self.release = "0.85.0"
     self.links = {
       home: "https://www.nushell.sh/",
       code: "https://github.com/nushell/nushell",
@@ -18,13 +18,12 @@ module Docs
     options[:follow_links] = true
     options[:title] = "Nushell"
     options[:attribution] = <<-HTML
-      Copyright &copy; 2019 - 2023 The Nushell Project Developers
+      Copyright &copy; 2019–2023 The Nushell Project Developers
       Licensed under the MIT License.
     HTML
 
     # latest version has a special URL that does not include the version identifier
     version do
-      self.release = "0.84.0"
       self.base_urls = [
         "https://www.nushell.sh/book/",
         "https://www.nushell.sh/commands/"
