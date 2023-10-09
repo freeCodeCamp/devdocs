@@ -9,16 +9,11 @@ module Docs
       code: 'https://github.com/varnishcache/varnish-cache'
     }
 
-
     html_filters.push 'varnish/entries', 'sphinx/clean_html'
 
     options[:container] = '.body > section'
-
-
     options[:skip] = %w(genindex.html search.html)
-
     options[:skip_patterns] = [/phk/, /glossary/, /whats-new/]
-
 
     options[:attribution] = <<-HTML
       Copyright &copy; 2006 Verdens Gang AS<br>
@@ -27,8 +22,8 @@ module Docs
     HTML
 
     version do
-      self.release = '7.3.0'
-      self.base_url = 'https://varnish-cache.org/docs/7.3/'
+      self.release = '7.4'
+      self.base_url = "https://varnish-cache.org/docs/#{release}/"
     end
 
     def get_latest_version(opts)
