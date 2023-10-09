@@ -2,7 +2,7 @@ module Docs
   class Zig < UrlScraper
     self.name = 'Zig'
     self.type = 'simple'
-    self.release = '0.10.0'
+    self.release = '0.11.0'
     self.base_url = "https://ziglang.org/documentation/#{self.release}/"
     self.links = {
       home: 'https://ziglang.org/',
@@ -13,7 +13,8 @@ module Docs
 
     options[:follow_links] = false
     options[:attribution] = <<-HTML
-      &copy; 2015–2022, Zig contributors
+      &copy; 2015–2023, Zig contributors<br>
+      Licensed under the MIT License.
     HTML
 
     def get_latest_version(opts)
