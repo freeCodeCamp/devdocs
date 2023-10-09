@@ -2,15 +2,18 @@ module Docs
   class Svelte
     class EntriesFilter < Docs::EntriesFilter
       def get_type
-        'Svelte'
+        at_css('ul.sidebar > li:has(.active) > span.section').content
       end
 
       def additional_entries
-        type = 'Svelte'
         subtype = nil
+        css('aside').remove
+        css('.category').remove
+        css('.controls').remove
+        css('.edit').remove
+        css('.permalink').remove
         css('h2, h3, h4').each_with_object [] do |node, entries|
           if node.name == 'h2'
-            type = node.content.strip
             subtype = nil
           elsif node.name == 'h3'
             subtype = node.content.strip
@@ -19,7 +22,8 @@ module Docs
           next if type == 'Before we begin'
           name = node.content.strip
           name.concat " (#{subtype})" if subtype && node.name == 'h4'
-          entries << [name, node['id'], subtype || type]
+          next if name.starts_with?('Example')
+          entries << [name, node['id'], get_type]
         end
       end
     end
