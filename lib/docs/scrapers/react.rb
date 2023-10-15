@@ -3,7 +3,7 @@ module Docs
     self.name = 'React'
     self.type = 'simple'
     self.release = '18.2.0'
-    self.base_url = 'https://react.dev/'
+    self.base_url = 'https://react.dev/reference/react/'
     self.root_path = 'hello-world.html'
     self.links = {
       home: 'https://reactjs.org/',
