@@ -82,7 +82,6 @@ module Docs
             node << node.next
           end
           node.inner_html = node.inner_html.strip
-          node << '.' if node.content =~ /[a-zA-Z0-9\)]\z/
           node.remove if node.content.blank? && !node.at_css('img')
         end
 
