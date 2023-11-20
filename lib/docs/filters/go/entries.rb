@@ -28,7 +28,7 @@ module Docs
           case node.content
           when /type\ (\w+)/
             name = "#{package}.#{$1}"
-          when /func\ (?:\(.+\)\ )?(\w+)\(/
+          when /func\ (?:\(.+\)\ )?(\w+)[\(\[]/
             name = "#{$1}()"
             name.prepend "#{$1}." if node['href'] =~ /#(\w+)\.#{$1}/
             name.prepend "#{package}."
