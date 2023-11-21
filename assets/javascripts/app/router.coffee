@@ -92,6 +92,13 @@ class app.Router
   settings: (context) ->
     return "/#/#{context.path}" if app.isSingleDoc()
     @triggerRoute 'settings'
+
+    # Allows check all the checkboxes in /settings.
+    # This event needs to be added runtime since the button is
+    # added to the sidebar when the page is loaded, not like
+    # other elements that are hidden and are shown when the page
+    # loads
+    app.document.settings.setCheckboxesEvent()
     return
 
   offline: (context)->

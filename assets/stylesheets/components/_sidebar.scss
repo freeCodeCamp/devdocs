@@ -367,3 +367,20 @@
   &:after { visibility: hidden; }
   &:hover:after { visibility: visible; }
 }
+
+._centered-list-picker-head {
+    cursor: pointer;
+    text-aling: center;
+    color: var(--textColor);
+    @extend %border-box;
+
+    & div{
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &:active {
+        box-shadow: inset 0 1px 1px rgba(black, .05), inset 0 1px 4px var(--boxBorder);
+    }
+
+}

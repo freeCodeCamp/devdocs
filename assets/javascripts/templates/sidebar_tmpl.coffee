@@ -60,7 +60,10 @@ templates.sidebarDisabledList = (html) ->
 templates.sidebarDisabledVersionedDoc = (doc, versions) ->
   """<a class="_list-item _list-dir _icon-#{doc.icon} _list-disabled" data-slug="#{doc.slug_without_version}" tabindex="-1">#{arrow}#{doc.name}</a><div class="_list _list-sub">#{versions}</div>"""
 
-templates.docPickerHeader = """<div class="_list-picker-head"><span>Documentation</span> <span>Enable</span></div>"""
+templates.docPickerHeader = """
+<div class="_list-picker-head"><span>Documentation</span> <span>Enable</span></div>
+<div class="_list-picker-head _centered-list-picker-head" id="enable-all"><div>Enable all</div></div>
+"""
 
 templates.docPickerNote = """
   <div class="_list-note">Tip: for faster and better search results, select only the docs you need.</div>
