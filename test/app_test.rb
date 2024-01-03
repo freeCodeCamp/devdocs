@@ -2,7 +2,7 @@ require 'test_helper'
 require 'rack/test'
 require 'app'
 
-class AppTest < MiniTest::Spec
+class AppTest < Minitest::Spec
   include Rack::Test::Methods
 
   MODERN_BROWSER = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:39.0) Gecko/20100101 Firefox/39.0'

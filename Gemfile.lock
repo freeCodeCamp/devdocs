@@ -47,7 +47,7 @@ GEM
     in_threads (1.6.0)
     method_source (1.0.0)
     mini_portile2 (2.8.4)
-    minitest (5.18.1)
+    minitest (5.20.0)
     multi_json (1.15.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)

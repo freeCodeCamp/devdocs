@@ -1,7 +1,7 @@
 require_relative '../../../test_helper'
 require_relative '../../../../lib/docs'
 
-class DocsParserTest < MiniTest::Spec
+class DocsParserTest < Minitest::Spec
   def parser(content)
     Docs::Parser.new(content)
   end

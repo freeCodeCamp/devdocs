@@ -1,7 +1,7 @@
 require_relative '../../../../test_helper'
 require_relative '../../../../../lib/docs'
 
-class NormalizeUrlsFilterTest < MiniTest::Spec
+class NormalizeUrlsFilterTest < Minitest::Spec
   include FilterTestHelper
   self.filter_class = Docs::NormalizeUrlsFilter
 

@@ -1,7 +1,7 @@
 require_relative '../../../test_helper'
 require_relative '../../../../lib/docs'
 
-class DocsRequestTest < MiniTest::Spec
+class DocsRequestTest < Minitest::Spec
   let :url do
     'http://example.com'
   end
