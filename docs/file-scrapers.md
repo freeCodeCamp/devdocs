@@ -166,11 +166,11 @@ Search 'Openjdk' in https://www.debian.org/distrib/packages, find the `openjdk-$
 download it, extract it with `dpkg -x $PACKAGE ./` and move `./usr/share/doc/openjdk-16-jre-headless/api/`
 to `path/to/devdocs/docs/openjdk~$VERSION`
 
-```
-curl http://ftp.at.debian.org/debian/pool/main/o/openjdk-19/openjdk-19-doc_19+36-2_all.deb &&
-tar xf openjdk-19-doc_19+36-2_all.deb
+```sh
+curl -O http://ftp.at.debian.org/debian/pool/main/o/openjdk-21/openjdk-21-doc_21.0.1+12-3_all.deb
+tar xf openjdk-21-doc_21.0.1+12-3_all.deb
 tar xf data.tar.xz
-mv ./usr/share/doc/openjdk-19-jre-headless/api/ path/to/devdocs/docs/openjdk~$VERSION
+mv ./usr/share/doc/openjdk-21-jre-headless/api/ docs/openjdk~$VERSION
 ```
 
 If you use or have access to a Debian-based GNU/Linux distribution you can run the following command:
@@ -178,7 +178,7 @@ If you use or have access to a Debian-based GNU/Linux distribution you can run t
 apt download openjdk-$VERSION-doc
 dpkg -x $PACKAGE ./
 # previous command makes a directory called 'usr' in the current directory
-mv ./usr/share/doc/openjdk-16-jre-headless/api/ path/to/devdocs/docs/openjdk~$VERSION
+mv ./usr/share/doc/openjdk-16-jre-headless/api/ docs/openjdk~$VERSION
 ```
 
 ## Pandas
