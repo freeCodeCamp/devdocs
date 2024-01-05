@@ -52,7 +52,7 @@ module Docs
         name.remove! %r{\s\(.+\)}
 
         name.sub! %r{\AStandard library header <(.+)>\z}, '\1'
-        name.sub! %r{(<[^>]+>)}, ''
+        name.sub! %r{(<[^>]+>::)}, '::'
 
         if name.include?('operator') && name.include?(',')
           name.sub!(%r{operator.+([\( ])}, 'operators (') || name.sub!(%r{operator.+}, 'operators')
