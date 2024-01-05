@@ -7,7 +7,6 @@ themeOption = ({ label, value }, settings) -> """
 
 app.templates.settingsPage = (settings) -> """
   <h1 class="_lined-heading">Preferences</h1>
-
   <div class="_settings-fieldset">
     <h2 class="_settings-legend">Theme:</h2>
     <div class="_settings-inputs">
@@ -17,6 +16,21 @@ app.templates.settingsPage = (settings) -> """
           ""}
       #{themeOption label: "Light", value: "default", settings}
       #{themeOption label: "Dark", value: "dark", settings}
+    </div>
+  </div>
+
+  <div class="_settings-fieldset">
+    <h2 class="_settings-legend">Font:</h2>
+    <div class="_settings-inputs">
+      <label class="_settings-label _setting-font-family">
+        <select name="font" id="_setting-font-family">
+          <option value="arial" #{if (settings.font == 'Arial' or not settings.font) then ' selected' else ''}>Arial (default)</option>
+          <option value="cascadia" #{if settings.font == 'Cascadia' then ' selected' else ''}>Cascadia</option>
+          <option value="fira-code" #{if settings.font == 'Fira Code' then ' selected' else ''}>Fira Code</option>
+          <option value="proxima-nova" #{if settings.font == 'Proxima Nova' then ' selected' else ''}>Proxima Nova</option>
+          <option value="verdana" #{if settings.font == 'Verdana' then ' selected' else ''}>Verdana</option>
+        </select>
+      </label>
     </div>
   </div>
 
