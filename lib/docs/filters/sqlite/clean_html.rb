@@ -88,6 +88,7 @@ module Docs
         end
 
         css('svg *[style], svg *[fill]').each do |node|
+          next if slug == 'geopoly'
           # transform style in SVG diagrams, e.g. on https://sqlite.org/lang_insert.html
           if node['style'] == 'fill:rgb(0,0,0)' or node['fill'] == 'rgb(0,0,0)'
             node.add_class('fill')

@@ -2,7 +2,7 @@ module Docs
   class Sqlite < UrlScraper
     self.name = 'SQLite'
     self.type = 'sqlite'
-    self.release = '3.43.0'
+    self.release = '3.44.2'
     self.base_url = 'https://sqlite.org/'
     self.root_path = 'docs.html'
     self.initial_paths = %w(keyword_index.html)
