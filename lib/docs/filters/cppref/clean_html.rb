@@ -58,7 +58,7 @@ module Docs
           node.content = ' ' if node.content.empty?
         end
 
-        css('tt', 'span > span.source-cpp', 'span.t-c', 'span.t-lc', 'span.t-dsc-see-tt').each do |node|
+        css('tt', 'span > span.source-cpp', 'span.t-c', 'span.t-lc', 'span.t-dsc-see-tt', 'div.t-li1 > span.source-cpp', 'div.t-li2 > span.source-cpp', 'div.t-li3 > span.source-cpp').each do |node|
           node.name = 'code'
           node.remove_attribute('class')
           node.content = node.content unless node.at_css('a')
