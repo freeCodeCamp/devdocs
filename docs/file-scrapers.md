@@ -193,8 +193,7 @@ Click the link under the "Many HTML files" column on https://www.php.net/downloa
 Or run the following commands in your terminal:
 
 ```sh
-curl https://www.php.net/distributions/manual/php_manual_en.tar.gz > php.tar; \
-tar -xf php.tar; mv php-chunked-xhtml/ docs/php/
+curl https://www.php.net/distributions/manual/php_manual_en.tar.gz | tar xz; mv php-chunked-xhtml/ docs/php/
 ```
 ## Python 3.6+
 
