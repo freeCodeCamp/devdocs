@@ -242,11 +242,12 @@ done
 ### Ruby / Minitest
 ### Ruby on Rails
 * Download a release at https://github.com/rails/rails/releases or clone https://github.com/rails/rails.git (checkout to the branch of the rails' version that is going to be scraped)
-* Open "railties/lib/rails/api/task.rb" and comment out any code related to sdoc ("configure_sdoc")
-* Run "bundle install --without db && bundle exec rake rdoc" (in the Rails directory)
-* Run "cd guides && bundle exec rake guides:generate:html"
-* Copy the "guides/output" directory to "html/guides"
-* Copy the "html" directory to "docs/rails~[version]"
+* Open `railties/lib/rails/api/task.rb` and comment out any code related to sdoc (`configure_sdoc`)
+* Run `bundle config set --local without 'db job'` (in the Rails directory)
+* Run `bundle install && bundle exec rake rdoc` (in the Rails directory)
+* Run `cd guides && bundle exec rake guides:generate:html`
+* Copy the `guides/output` directory to `html/guides`
+* Copy the `html` directory to `docs/rails~[version]`
 
 ### Ruby
 Download the tarball of Ruby from https://www.ruby-lang.org/en/downloads/, extract it, run

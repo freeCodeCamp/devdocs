@@ -69,16 +69,20 @@ module Docs
       Licensed under their own licenses.
     HTML
 
-    version '3.2' do
-      self.release = '3.2.0'
+    version '3.3' do
+      self.release = '3.3.0'
     end
-    
+
+    version '3.2' do
+      self.release = '3.2.2'
+    end
+
     version '3.1' do
-      self.release = '3.1.3'
+      self.release = '3.1.4'
     end
 
     version '3' do
-      self.release = '3.0.0'
+      self.release = '3.0.6'
     end
 
     version '2.7' do

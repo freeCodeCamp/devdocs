@@ -40,7 +40,7 @@ module Docs
 
       def get_name
         if slug.start_with?('guides')
-          name = at_css('#feature h2').content.strip
+          name = at_css('#mainCol h2').content.strip
           name.remove! %r{\s\(.+\)\z}
           return name
         end
