@@ -19,8 +19,9 @@ module Docs
           node.before(node.children).remove
         end
 
-        css('div > ul').each do |node|
-          node.parent.before(node.parent.children).remove
+        parents = css('div > ul').map(&:parent).uniq
+        parents.each do |parent|
+          parent.before(parent.children).remove
         end
 
         css('dl > dd:first-child:last-child > ul:first-child:last-child').each do |node|
