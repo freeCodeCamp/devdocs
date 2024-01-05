@@ -1,7 +1,7 @@
 require_relative '../../../../test_helper'
 require_relative '../../../../../lib/docs'
 
-class DocsTypeTest < MiniTest::Spec
+class DocsTypeTest < Minitest::Spec
   Type = Docs::Type
 
   describe ".new" do

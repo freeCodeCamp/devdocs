@@ -1,7 +1,7 @@
 require_relative '../../../test_helper'
 require_relative '../../../../lib/docs'
 
-class DocsAbstractStoreTest < MiniTest::Spec
+class DocsAbstractStoreTest < Minitest::Spec
   InvalidPathError = Docs::AbstractStore::InvalidPathError
   LockError = Docs::AbstractStore::LockError
 

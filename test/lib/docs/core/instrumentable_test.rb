@@ -1,7 +1,7 @@
 require_relative '../../../test_helper'
 require_relative '../../../../lib/docs'
 
-class DocsInstrumentableTest < MiniTest::Spec
+class DocsInstrumentableTest < Minitest::Spec
   let :extended_class do
     Class.new.tap { |klass| klass.send :extend, Docs::Instrumentable }
   end

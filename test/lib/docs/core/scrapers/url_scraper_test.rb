@@ -1,7 +1,7 @@
 require_relative '../../../../test_helper'
 require_relative '../../../../../lib/docs'
 
-class DocsUrlScraperTest < MiniTest::Spec
+class DocsUrlScraperTest < Minitest::Spec
   class Scraper < Docs::UrlScraper
     self.base_url = 'http://example.com'
     self.html_filters = Docs::FilterStack.new
