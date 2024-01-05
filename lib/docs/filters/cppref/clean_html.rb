@@ -109,6 +109,16 @@ module Docs
           node['src'] = node['src'].sub! %r{https://upload.cppreference.com/mwiki/(images/[^"']+?)}, 'http://upload.cppreference.com/mwiki/\1'
         end
 
+        css('.t-su.t-su-b').each do |node|
+          node.inner_html = node.inner_html.gsub('<br>', '')
+          node.name = 'sub'
+        end
+
+        css('.t-su:not(.t-su-b)').each do |node|
+          node.inner_html = node.inner_html.gsub('<br>', '')
+          node.name = 'sup'
+        end
+
         # temporary solution due lack of mathjax/mathml support
         css('.t-mfrac').each do |node|
           fraction = Nokogiri::XML::Node.new('span', doc.document)
