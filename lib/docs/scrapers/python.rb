@@ -7,6 +7,12 @@ module Docs
       code: 'https://github.com/python/cpython'
     }
 
+    # bypass the clean_text filter as it removes empty span with ids
+    options[:clean_text] = false
+
+    # bypass sphinx modifying empty ids
+    options[:sphinx_keep_empty_ids] = true
+
     options[:skip_patterns] = [/whatsnew/]
     options[:skip] = %w(
       library/2to3.html
@@ -22,14 +28,14 @@ module Docs
     HTML
 
     version '3.12' do
-      self.release = '3.12.0'
+      self.release = '3.12.1'
       self.base_url = "https://docs.python.org/#{self.version}/"
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
     end
 
     version '3.11' do
-      self.release = '3.11.5'
+      self.release = '3.11.7'
       self.base_url = "https://docs.python.org/#{self.version}/"
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'

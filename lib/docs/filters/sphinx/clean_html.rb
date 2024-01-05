@@ -36,9 +36,11 @@ module Docs
           node.replace(pre)
         end
 
-        css('span[id]:empty').each do |node|
-          (node.next_element || node.previous_element)['id'] ||= node['id'] if node.next_element || node.previous_element
-          node.remove
+        unless context[:sphinx_keep_empty_ids]
+          css('span[id]:empty').each do |node|
+            (node.next_element || node.previous_element)['id'] ||= node['id'] if node.next_element || node.previous_element
+            node.remove
+          end
         end
 
         css('.section').each do |node|
