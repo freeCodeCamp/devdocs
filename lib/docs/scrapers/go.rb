@@ -1,7 +1,7 @@
 module Docs
   class Go < UrlScraper
     self.type = 'go'
-    self.release = '1.21.0'
+    self.release = '1.21.5'
     self.base_url = 'https://golang.org/pkg/'
     self.links = {
       home: 'https://golang.org/',
@@ -10,10 +10,10 @@ module Docs
 
     # Run godoc locally, since https://golang.org/pkg/ redirects to https://pkg.go.dev/std with rate limiting / scraping protection.
 
-    # docker run --expose=6060 --rm -it docker.io/golang:1.18.0
-    #docker# go install golang.org/x/tools/cmd/godoc@latest
-    #docker# rm -r /usr/local/go/test/
-    #docker# godoc -http 0.0.0.0:6060 -v
+    # podman run --net host --rm -it docker.io/golang:1.21.5
+    #podman# go install golang.org/x/tools/cmd/godoc@latest
+    #podman# rm -r /usr/local/go/test/
+    #podman# godoc -http 0.0.0.0:6060 -v
     self.base_url = 'http://localhost:6060/pkg/'
 
     html_filters.push 'clean_local_urls'
