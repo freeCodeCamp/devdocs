@@ -123,7 +123,7 @@ class UpdatesCLI < Thor
     headings = ['Documentation', 'Scraper version', 'Latest version']
     rows = results.map {|result| [result[:name], result[:scraper_version], result[:latest_version]]}
 
-    table = Terminal::Table.new :title => title, :headings => headings, :rows => rows
+    table = ::Terminal::Table.new :title => title, :headings => headings, :rows => rows
     puts table
   end
 
@@ -132,7 +132,7 @@ class UpdatesCLI < Thor
     headings = %w(Documentation Reason)
     rows = results.map {|result| [result[:name], result[:error]]}
 
-    table = Terminal::Table.new :title => title, :headings => headings, :rows => rows
+    table = ::Terminal::Table.new :title => title, :headings => headings, :rows => rows
     puts table
   end
 
