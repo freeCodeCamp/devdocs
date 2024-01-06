@@ -9,7 +9,7 @@
  * DS208: Avoid top-level this
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-this.Events = {
+class Events {
   on(event, callback) {
     if (event.indexOf(" ") >= 0) {
       for (var name of Array.from(event.split(" "))) {
@@ -26,7 +26,7 @@ this.Events = {
       ).push(callback);
     }
     return this;
-  },
+  }
 
   off(event, callback) {
     let callbacks, index;
@@ -45,7 +45,7 @@ this.Events = {
       }
     }
     return this;
-  },
+  }
 
   trigger(event, ...args) {
     let callbacks;
@@ -64,7 +64,7 @@ this.Events = {
       this.trigger("all", event, ...Array.from(args));
     }
     return this;
-  },
+  }
 
   removeEvent(event) {
     if (this._callbacks != null) {
@@ -73,5 +73,5 @@ this.Events = {
       }
     }
     return this;
-  },
-};
+  }
+}
