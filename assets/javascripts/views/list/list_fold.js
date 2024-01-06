@@ -1,25 +1,14 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.ListFold = class ListFold extends app.View {
-  static initClass() {
-    this.targetClass = "_list-dir";
-    this.handleClass = "_list-arrow";
-    this.activeClass = "open";
+  static targetClass = "_list-dir";
+  static handleClass = "_list-arrow";
+  static activeClass = "open";
 
-    this.events = { click: "onClick" };
+  static events = { click: "onClick" };
 
-    this.shortcuts = {
-      left: "onLeft",
-      right: "onRight",
-    };
-  }
+  static shortcuts = {
+    left: "onLeft",
+    right: "onRight",
+  };
 
   open(el) {
     if (el && !el.classList.contains(this.constructor.activeClass)) {
@@ -59,11 +48,7 @@ app.views.ListFold = class ListFold extends app.View {
 
   onLeft() {
     const cursor = this.getCursor();
-    if (
-      cursor != null
-        ? cursor.classList.contains(this.constructor.activeClass)
-        : undefined
-    ) {
+    if (cursor?.classList?.contains(this.constructor.activeClass)) {
       this.close(cursor);
     }
   }
@@ -109,4 +94,3 @@ app.views.ListFold = class ListFold extends app.View {
     }
   }
 };
-app.views.ListFold.initClass();
