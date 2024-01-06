@@ -1,16 +1,9 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.UpdateChecker = class UpdateChecker {
   constructor() {
     this.lastCheck = Date.now();
 
     $.on(window, "focus", () => this.onFocus());
-    if (app.serviceWorker != null) {
+    if (app.serviceWorker) {
       app.serviceWorker.on("updateready", () => this.onUpdateReady());
     }
 
