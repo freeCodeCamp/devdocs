@@ -1,3 +1,5 @@
+// TODO: This file was created by bulk-decaffeinate.
+// Sanity-check the conversion and remove this comment.
 /*
  * Copyright 2013-2023 Thibaut Courouble and other contributors
  *
