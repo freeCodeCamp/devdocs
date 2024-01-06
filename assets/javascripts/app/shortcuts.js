@@ -5,15 +5,11 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
  * DS205: Consider reworking code to avoid use of IIFEs
- * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-app.Shortcuts = class Shortcuts {
-  static initClass() {
-    $.extend(this.prototype, Events);
-  }
-
+app.Shortcuts = class Shortcuts extends Events {
   constructor() {
+    super();
     this.onKeydown = this.onKeydown.bind(this);
     this.onKeypress = this.onKeypress.bind(this);
     this.isMac = $.isMac();
@@ -306,7 +302,6 @@ app.Shortcuts = class Shortcuts {
     }
   }
 };
-app.Shortcuts.initClass();
 
 function __guard__(value, transform) {
   return typeof value !== "undefined" && value !== null
