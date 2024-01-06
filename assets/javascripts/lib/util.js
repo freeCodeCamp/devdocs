@@ -1,16 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
- * DS104: Avoid inline assignments
- * DS204: Change includes calls to have a more natural evaluation order
- * DS207: Consider shorter variations of null checks
- * DS208: Avoid top-level this
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 //
 // Traversing
 //
@@ -75,7 +62,7 @@ $.on = function (el, event, callback, useCapture) {
     useCapture = false;
   }
   if (event.indexOf(" ") >= 0) {
-    for (var name of Array.from(event.split(" "))) {
+    for (var name of event.split(" ")) {
       $.on(el, name, callback);
     }
   } else {
@@ -88,7 +75,7 @@ $.off = function (el, event, callback, useCapture) {
     useCapture = false;
   }
   if (event.indexOf(" ") >= 0) {
-    for (var name of Array.from(event.split(" "))) {
+    for (var name of event.split(" ")) {
       $.off(el, name, callback);
     }
   } else {
@@ -146,7 +133,7 @@ const buildFragment = function (value) {
   const fragment = document.createDocumentFragment();
 
   if ($.isCollection(value)) {
-    for (var child of Array.from($.makeArray(value))) {
+    for (var child of $.makeArray(value)) {
       fragment.appendChild(child);
     }
   } else {
@@ -202,7 +189,7 @@ $.after = function (el, value) {
 
 $.remove = function (value) {
   if ($.isCollection(value)) {
-    for (var el of Array.from($.makeArray(value))) {
+    for (var el of $.makeArray(value)) {
       if (el.parentNode != null) {
         el.parentNode.removeChild(el);
       }
@@ -263,14 +250,10 @@ $.offset = function (el, container) {
 
 $.scrollParent = function (el) {
   while ((el = el.parentNode) && el.nodeType === 1) {
-    var needle;
     if (el.scrollTop > 0) {
       break;
     }
-    if (
-      ((needle = __guard__(getComputedStyle(el), (x) => x.overflowY)),
-      ["auto", "scroll"].includes(needle))
-    ) {
+    if (["auto", "scroll"].includes(getComputedStyle(el)?.overflowY ?? "")) {
       break;
     }
   }
@@ -306,8 +289,7 @@ $.scrollTo = function (el, parent, position, options) {
 
   switch (position) {
     case "top":
-      parent.scrollTop =
-        top - offsetTop - (options.margin != null ? options.margin : 0);
+      parent.scrollTop = top - offsetTop - (options.margin || 0);
       break;
     case "center":
       parent.scrollTop =
@@ -351,18 +333,18 @@ $.scrollToWithImageLock = function (el, parent, ...args) {
     return;
   }
 
-  $.scrollTo(el, parent, ...Array.from(args));
+  $.scrollTo(el, parent, ...args);
 
   // Lock the scroll position on the target element for up to 3 seconds while
   // nearby images are loaded and rendered.
-  for (var image of Array.from(parent.getElementsByTagName("img"))) {
+  for (var image of parent.getElementsByTagName("img")) {
     if (!image.complete) {
       (function () {
         let timeout;
         const onLoad = function (event) {
           clearTimeout(timeout);
           unbind(event.target);
-          return $.scrollTo(el, parent, ...Array.from(args));
+          return $.scrollTo(el, parent, ...args);
         };
 
         var unbind = (target) => $.off(target, "load", onLoad);
@@ -440,7 +422,7 @@ $.smoothScroll = function (el, end) {
 //
 
 $.extend = function (target, ...objects) {
-  for (var object of Array.from(objects)) {
+  for (var object of objects) {
     if (object) {
       for (var key in object) {
         var value = object[key];
@@ -505,8 +487,7 @@ $.classify = function (string) {
 
 $.framify = function (fn, obj) {
   if (window.requestAnimationFrame) {
-    return (...args) =>
-      requestAnimationFrame(fn.bind(obj, ...Array.from(args)));
+    return (...args) => requestAnimationFrame(fn.bind(obj, ...args));
   } else {
     return fn;
   }
@@ -636,9 +617,3 @@ $.copyToClipboard = function (string) {
   }
   return result;
 };
-
-function __guard__(value, transform) {
-  return typeof value !== "undefined" && value !== null
-    ? transform(value)
-    : undefined;
-}
