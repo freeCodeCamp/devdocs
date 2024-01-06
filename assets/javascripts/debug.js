@@ -9,14 +9,6 @@
  * DS209: Avoid top-level return
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-if (
-  !(typeof console !== "undefined" && console !== null
-    ? console.time
-    : undefined) ||
-  !console.groupCollapsed
-) {
-  return;
-}
 
 //
 // App
@@ -118,7 +110,7 @@ this.viewTree = function (view, level, visited) {
     `%c ${Array(level + 1).join("  ")}${
       view.constructor.name
     }: ${!!view.activated}`,
-    "color:" + ((view.activated && "green") || "red"),
+    "color:" + ((view.activated && "green") || "red")
   );
 
   for (var key of Object.keys(view || {})) {
