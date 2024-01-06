@@ -7,7 +7,7 @@ module Docs
     self.name = 'Support Tables'
     self.slug = 'browser_support_tables'
     self.type = 'support_tables'
-    self.release = '1.0.30001442'
+    self.release = '1.0.30001574'
     self.base_url = 'https://github.com/Fyrd/caniuse/raw/main/'
 
     # https://github.com/Fyrd/caniuse/blob/main/LICENSE
@@ -30,7 +30,7 @@ module Docs
       data['agents']['and_ff']['browser'] = 'Android Firefox'
       data['agents']['and_uc']['browser'] = 'Android UC Browser'
       data['desktop_agents'] = data['agents'].select { |_, agent| agent['type'] == 'desktop' }
-      data['mobile_agents']  = data['agents'].select { |–, agent| agent['type'] == 'mobile' }
+      data['mobile_agents']  = data['agents'].select { |_, agent| agent['type'] == 'mobile' }
       data['total_versions'] = data['agents']['firefox']['versions'].length
 
       index_page = {
