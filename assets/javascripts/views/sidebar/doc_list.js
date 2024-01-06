@@ -1,30 +1,19 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.DocList = class DocList extends app.View {
-  static initClass() {
-    this.className = "_list";
-    this.attributes = { role: "navigation" };
+  static className = "_list";
+  static attributes = { role: "navigation" };
 
-    this.events = {
-      open: "onOpen",
-      close: "onClose",
-      click: "onClick",
-    };
+  static events = {
+    open: "onOpen",
+    close: "onClose",
+    click: "onClick",
+  };
 
-    this.routes = { after: "afterRoute" };
+  static routes = { after: "afterRoute" };
 
-    this.elements = {
-      disabledTitle: "._list-title",
-      disabledList: "._disabled-list",
-    };
-  }
+  static elements = {
+    disabledTitle: "._list-title",
+    disabledList: "._disabled-list",
+  };
 
   init() {
     this.lists = {};
@@ -57,7 +46,7 @@ app.views.DocList = class DocList extends app.View {
 
   render() {
     let html = "";
-    for (var doc of Array.from(app.docs.all())) {
+    for (var doc of app.docs.all()) {
       html += this.tmpl("sidebarDoc", doc, {
         fullName: app.docs.countAllBy("name", doc.name) > 1,
       });
@@ -87,7 +76,7 @@ app.views.DocList = class DocList extends app.View {
   appendDisabledList() {
     let doc;
     let html = "";
-    const docs = [].concat(...Array.from(app.disabledDocs.all() || []));
+    const docs = [].concat(...(app.disabledDocs.all() || []));
 
     while ((doc = docs.shift())) {
       if (doc.version != null) {
@@ -258,4 +247,3 @@ app.views.DocList = class DocList extends app.View {
     }
   }
 };
-app.views.DocList.initClass();
