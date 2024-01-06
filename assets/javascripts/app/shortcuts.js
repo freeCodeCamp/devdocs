@@ -1,12 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
- * DS205: Consider reworking code to avoid use of IIFEs
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.Shortcuts = class Shortcuts extends Events {
   constructor() {
     super();
@@ -215,13 +206,13 @@ app.Shortcuts = class Shortcuts extends Events {
         this.trigger("pageUp");
         return false;
       case 38:
-        if (!__guard__(getSelection(), (x) => x.toString())) {
+        if (!getSelection()?.toString()) {
           this.trigger("altUp");
           return false;
         }
         break;
       case 40:
-        if (!__guard__(getSelection(), (x1) => x1.toString())) {
+        if (!getSelection()?.toString()) {
           this.trigger("altDown");
           return false;
         }
@@ -302,9 +293,3 @@ app.Shortcuts = class Shortcuts extends Events {
     }
   }
 };
-
-function __guard__(value, transform) {
-  return typeof value !== "undefined" && value !== null
-    ? transform(value)
-    : undefined;
-}
