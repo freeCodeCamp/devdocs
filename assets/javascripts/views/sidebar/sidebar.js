@@ -1,30 +1,18 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.Sidebar = class Sidebar extends app.View {
-  static initClass() {
-    this.el = "._sidebar";
+  static el = "._sidebar";
 
-    this.events = {
-      focus: "onFocus",
-      select: "onSelect",
-      click: "onClick",
-    };
+  static events = {
+    focus: "onFocus",
+    select: "onSelect",
+    click: "onClick",
+  };
 
-    this.routes = { after: "afterRoute" };
+  static routes = { after: "afterRoute" };
 
-    this.shortcuts = {
-      altR: "onAltR",
-      escape: "onEscape",
-    };
-  }
+  static shortcuts = {
+    altR: "onAltR",
+    escape: "onEscape",
+  };
 
   init() {
     if (!app.isMobile()) {
@@ -179,11 +167,7 @@ app.views.Sidebar = class Sidebar extends app.View {
     if (event.which !== 1) {
       return;
     }
-    if (
-      __guardMethod__($.eventTarget(event), "hasAttribute", (o) =>
-        o.hasAttribute("data-reset-list"),
-      )
-    ) {
+    if ($.eventTarget(event).hasAttribute?.("data-reset-list")) {
       $.stopEvent(event);
       this.onAltR();
     }
@@ -225,16 +209,3 @@ app.views.Sidebar = class Sidebar extends app.View {
     this.resetDisplay();
   }
 };
-app.views.Sidebar.initClass();
-
-function __guardMethod__(obj, methodName, transform) {
-  if (
-    typeof obj !== "undefined" &&
-    obj !== null &&
-    typeof obj[methodName] === "function"
-  ) {
-    return transform(obj, methodName);
-  } else {
-    return undefined;
-  }
-}
