@@ -1,23 +1,11 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
- * DS206: Consider reworking classes to avoid initClass
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.TypeList = class TypeList extends app.View {
-  static initClass() {
-    this.tagName = "div";
-    this.className = "_list _list-sub";
+  static tagName = "div";
+  static className = "_list _list-sub";
 
-    this.events = {
-      open: "onOpen",
-      close: "onClose",
-    };
-  }
+  static events = {
+    open: "onOpen",
+    close: "onClose",
+  };
 
   constructor(doc) {
     super();
@@ -52,7 +40,7 @@ app.views.TypeList = class TypeList extends app.View {
 
   render() {
     let html = "";
-    for (var group of Array.from(this.doc.types.groups())) {
+    for (var group of this.doc.types.groups()) {
       html += this.tmpl("sidebarType", group);
     }
     return this.html(html);
@@ -86,14 +74,7 @@ app.views.TypeList = class TypeList extends app.View {
 
   paginateTo(model) {
     if (model.type) {
-      __guard__(this.lists[model.getType().slug], (x) => x.paginateTo(model));
+      this.lists[model.getType().slug]?.paginateTo(model);
     }
   }
 };
-app.views.TypeList.initClass();
-
-function __guard__(value, transform) {
-  return typeof value !== "undefined" && value !== null
-    ? transform(value)
-    : undefined;
-}
