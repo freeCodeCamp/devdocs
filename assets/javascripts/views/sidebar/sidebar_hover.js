@@ -1,28 +1,16 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.SidebarHover = class SidebarHover extends app.View {
-  static initClass() {
-    this.itemClass = "_list-hover";
+  static itemClass = "_list-hover";
 
-    this.events = {
-      focus: "onFocus",
-      blur: "onBlur",
-      mouseover: "onMouseover",
-      mouseout: "onMouseout",
-      scroll: "onScroll",
-      click: "onClick",
-    };
+  static events = {
+    focus: "onFocus",
+    blur: "onBlur",
+    mouseover: "onMouseover",
+    mouseout: "onMouseout",
+    scroll: "onScroll",
+    click: "onClick",
+  };
 
-    this.routes = { after: "onRoute" };
-  }
+  static routes = { after: "onRoute" };
 
   constructor(el) {
     super(el);
@@ -72,9 +60,7 @@ app.views.SidebarHover = class SidebarHover extends app.View {
   }
 
   isTarget(el) {
-    return __guard__(el != null ? el.classList : undefined, (x) =>
-      x.contains(this.constructor.itemClass),
-    );
+    return el.classList?.contains(this.constructor.itemClass);
   }
 
   isSelected(el) {
@@ -129,16 +115,9 @@ app.views.SidebarHover = class SidebarHover extends app.View {
     this.hide();
   }
 };
-app.views.SidebarHover.initClass();
 
 var isPointerEventsSupported = function () {
   const el = document.createElement("div");
   el.style.cssText = "pointer-events: auto";
   return el.style.pointerEvents === "auto";
 };
-
-function __guard__(value, transform) {
-  return typeof value !== "undefined" && value !== null
-    ? transform(value)
-    : undefined;
-}
