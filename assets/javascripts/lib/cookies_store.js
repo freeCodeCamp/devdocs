@@ -1,13 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 // Intentionally called CookiesStore instead of CookieStore
 // Calling it CookieStore causes issues when the Experimental Web Platform features flag is enabled in Chrome
 // Related issue: https://github.com/freeCodeCamp/devdocs/issues/932
@@ -53,7 +43,7 @@ class CookiesStore {
 
   reset() {
     try {
-      for (var cookie of Array.from(document.cookie.split(/;\s?/))) {
+      for (var cookie of document.cookie.split(/;\s?/)) {
         Cookies.expire(cookie.split("=")[0]);
       }
       return;
@@ -62,7 +52,7 @@ class CookiesStore {
 
   dump() {
     const result = {};
-    for (var cookie of Array.from(document.cookie.split(/;\s?/))) {
+    for (var cookie of document.cookie.split(/;\s?/)) {
       if (cookie[0] !== "_") {
         cookie = cookie.split("=");
         result[cookie[0]] = cookie[1];
