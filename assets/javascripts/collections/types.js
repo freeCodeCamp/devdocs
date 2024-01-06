@@ -1,10 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS104: Avoid inline assignments
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.collections.Types = class Types extends app.Collection {
   static model = "Type";
   static GUIDES_RGX =
@@ -14,8 +7,9 @@ app.collections.Types = class Types extends app.Collection {
   groups() {
     const result = [];
     for (var type of this.models) {
-      var name;
-      (result[(name = this._groupFor(type))] || (result[name] = [])).push(type);
+      const name = this._groupFor(type);
+      result[name] ||= [];
+      result[name].push(type);
     }
     return result.filter((e) => e.length > 0);
   }
