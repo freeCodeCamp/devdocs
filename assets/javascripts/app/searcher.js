@@ -172,10 +172,8 @@ function scoreFuzzyMatch() {
   let EMPTY_STRING = undefined;
   let ELLIPSIS = undefined;
   let STRING = undefined;
-  app.Searcher = class Searcher {
+  app.Searcher = class Searcher extends Events {
     static initClass() {
-      $.extend(this.prototype, Events);
-
       CHUNK_SIZE = 20000;
 
       DEFAULTS = {
@@ -215,6 +213,7 @@ function scoreFuzzyMatch() {
     }
 
     constructor(options) {
+      super();
       this.options = $.extend({}, DEFAULTS, options || {});
     }
 
@@ -397,11 +396,11 @@ function scoreFuzzyMatch() {
         var char = chars[i];
         chars[i] = $.escapeRegexp(char);
       }
-      return new RegExp(chars.join(".*?"));
+      return new RegExp(chars.join(".*?")); // abc -> /a.*?b.*?c.*?/
     }
   };
   app.Searcher.initClass();
-  return app.Searcher; // abc -> /a.*?b.*?c.*?/
+  return app.Searcher;
 })();
 
 app.SynchronousSearcher = class SynchronousSearcher extends app.Searcher {
