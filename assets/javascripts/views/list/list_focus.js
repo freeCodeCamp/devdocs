@@ -25,8 +25,7 @@ app.views.ListFocus = class ListFocus extends app.View {
   }
 
   constructor(el) {
-    super(...arguments);
-    this.el = el;
+    super(el);
     this.focusOnNextFrame = $.framify(this.focus, this);
   }
 

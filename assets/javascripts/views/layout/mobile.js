@@ -54,8 +54,7 @@ app.views.Mobile = class Mobile extends app.View {
   }
 
   constructor() {
-    super(...arguments);
-    this.el = document.documentElement;
+    super(document.documentElement);
   }
 
   init() {

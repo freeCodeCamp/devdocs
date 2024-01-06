@@ -18,9 +18,11 @@ app.views.Results = class Results extends app.View {
   }
 
   constructor(sidebar, search) {
-    super(...arguments);
+    super();
     this.sidebar = sidebar;
     this.search = search;
+    this.init0();
+    this.refreshElements();
   }
 
   deactivate() {
@@ -29,7 +31,7 @@ app.views.Results = class Results extends app.View {
     }
   }
 
-  init() {
+  init0() {
     this.addSubview((this.listFocus = new app.views.ListFocus(this.el)));
     this.addSubview((this.listSelect = new app.views.ListSelect(this.el)));
 

@@ -19,7 +19,7 @@ app.views.Notif = class Notif extends app.View {
   }
 
   constructor(type, options) {
-    super(...arguments);
+    super();
     this.type = type;
     this.options = $.extend({}, this.constructor.defaultOptions, options || {});
   }

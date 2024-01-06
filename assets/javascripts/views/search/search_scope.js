@@ -32,11 +32,6 @@
       HASH_RGX = new RegExp(`^#${SEARCH_PARAM}=(.+?) .`);
     }
 
-    constructor(el) {
-      super(...arguments);
-      this.el = el;
-    }
-
     init() {
       this.placeholder = this.input.getAttribute("placeholder");
 

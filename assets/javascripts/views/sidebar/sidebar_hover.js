@@ -26,8 +26,7 @@ app.views.SidebarHover = class SidebarHover extends app.View {
   }
 
   constructor(el) {
-    super(...arguments);
-    this.el = el;
+    super(el);
     if (!isPointerEventsSupported()) {
       delete this.constructor.events.mouseover;
     }

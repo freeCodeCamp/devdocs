@@ -21,7 +21,7 @@ app.views.TypeList = class TypeList extends app.View {
   }
 
   constructor(doc) {
-    super(...arguments);
+    super();
     this.doc = doc;
   }
 

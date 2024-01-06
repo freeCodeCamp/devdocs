@@ -18,16 +18,13 @@
     }
 
     constructor(data) {
-      let base;
+      super();
       this.onClick = this.onClick.bind(this);
+      let base = this.constructor.events || (this.constructor.events = {});
       this.data = data;
-      if (
-        (base = this.constructor.events || (this.constructor.events = {}))
-          .click == null
-      ) {
+      if (base.click == null) {
         base.click = "onClick";
       }
-      super(...arguments);
     }
 
     renderPaginated() {

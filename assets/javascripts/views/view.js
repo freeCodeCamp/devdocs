@@ -13,7 +13,10 @@ app.View = class View {
     $.extend(this.prototype, Events);
   }
 
-  constructor() {
+  constructor(el) {
+    if (el instanceof HTMLElement) {
+      this.el = el;
+    }
     this.setupElement();
     if (this.el.className) {
       this.originalClassName = this.el.className;

@@ -14,9 +14,9 @@ app.views.Notice = class Notice extends app.View {
   }
 
   constructor(type, ...rest) {
+    super();
     this.type = type;
     [...this.args] = Array.from(rest);
-    super(...arguments);
   }
 
   init() {

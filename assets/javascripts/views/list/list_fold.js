@@ -22,11 +22,6 @@ app.views.ListFold = class ListFold extends app.View {
     };
   }
 
-  constructor(el) {
-    super(...arguments);
-    this.el = el;
-  }
-
   open(el) {
     if (el && !el.classList.contains(this.constructor.activeClass)) {
       el.classList.add(this.constructor.activeClass);
