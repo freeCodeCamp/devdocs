@@ -1,15 +1,5 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS206: Consider reworking classes to avoid initClass
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.TypePage = class TypePage extends app.View {
-  static initClass() {
-    this.className = "_page";
-  }
+  static className = "_page";
 
   deactivate() {
     if (super.deactivate(...arguments)) {
@@ -32,4 +22,3 @@ app.views.TypePage = class TypePage extends app.View {
     this.render(context.type);
   }
 };
-app.views.TypePage.initClass();
