@@ -72,7 +72,7 @@ app.views.Settings = class Settings extends app.View {
           return result;
         })(),
       );
-      disabledDocs.uninstall(function () {
+      disabledDocs.uninstall(() => {
         app.db.migrate();
         return app.reload();
       });

@@ -265,7 +265,7 @@ app.DB = class DB {
   }
 
   version(doc, fn) {
-    let version = this.cachedVersion(doc);
+    const version = this.cachedVersion(doc);
     if (version != null) {
       fn(version);
       return;
@@ -302,7 +302,7 @@ app.DB = class DB {
   }
 
   versions(docs, fn) {
-    let versions = this.cachedVersions(docs);
+    const versions = this.cachedVersions(docs);
     if (versions) {
       fn(versions);
       return;
@@ -324,7 +324,7 @@ app.DB = class DB {
       const store = txn.objectStore("docs");
       var result = {};
 
-      docs.forEach(function (doc) {
+      docs.forEach((doc) => {
         const req = store.get(doc.slug);
         req.onsuccess = function () {
           result[doc.slug] = req.result;

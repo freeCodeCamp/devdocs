@@ -207,7 +207,7 @@ app.views.Search = class Search extends app.View {
   }
 
   extractHashValue() {
-    let value = this.getHashValue();
+    const value = this.getHashValue();
     if (value != null) {
       app.router.replaceHash();
       return value;

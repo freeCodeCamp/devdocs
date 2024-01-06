@@ -58,7 +58,7 @@ app.views.Document = class Document extends app.View {
     if (this.el.visibilityState !== "visible") {
       return;
     }
-    this.delay(function () {
+    this.delay(() => {
       if (app.isMobile() !== app.views.Mobile.detect()) {
         location.reload();
       }

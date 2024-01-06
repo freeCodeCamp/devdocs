@@ -34,7 +34,7 @@ class Events {
     this.eventInProgress = { name: event, args };
     const callbacks = this._callbacks?.[event];
     if (callbacks) {
-      for (let callback of callbacks.slice(0)) {
+      for (const callback of callbacks.slice(0)) {
         if (typeof callback === "function") {
           callback(...args);
         }

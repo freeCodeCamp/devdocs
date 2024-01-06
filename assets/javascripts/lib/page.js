@@ -215,7 +215,7 @@ var pathToRegexp = function (path, keys) {
     .replace(/\/\(/g, "(?:/")
     .replace(
       /(\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?/g,
-      function (_, slash, format, key, capture, optional) {
+      (_, slash, format, key, capture, optional) => {
         if (slash == null) {
           slash = "";
         }

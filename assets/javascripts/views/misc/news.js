@@ -18,7 +18,7 @@ app.views.News = class News extends app.views.Notif {
   }
 
   getUnreadNews() {
-    let time = this.getLastReadTime();
+    const time = this.getLastReadTime();
     if (!time) {
       return [];
     }

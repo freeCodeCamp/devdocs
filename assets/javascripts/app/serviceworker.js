@@ -21,7 +21,7 @@ app.ServiceWorker = class ServiceWorker extends Events {
       return;
     }
     this.notifyUpdate = true;
-    return this.registration.update().catch(function () {});
+    return this.registration.update().catch(() => {});
   }
 
   updateInBackground() {
@@ -29,7 +29,7 @@ app.ServiceWorker = class ServiceWorker extends Events {
       return;
     }
     this.notifyUpdate = false;
-    return this.registration.update().catch(function () {});
+    return this.registration.update().catch(() => {});
   }
 
   reload() {

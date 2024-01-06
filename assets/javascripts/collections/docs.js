@@ -13,7 +13,7 @@ app.collections.Docs = class Docs extends app.Collection {
     );
   }
   sort() {
-    return this.models.sort(function (a, b) {
+    return this.models.sort((a, b) => {
       if (a.name === b.name) {
         if (
           !a.version ||
@@ -81,7 +81,7 @@ app.collections.Docs = class Docs extends app.Collection {
   }
 
   getInstallStatuses(callback) {
-    app.db.versions(this.models, function (statuses) {
+    app.db.versions(this.models, (statuses) => {
       if (statuses) {
         for (var key in statuses) {
           var value = statuses[key];
