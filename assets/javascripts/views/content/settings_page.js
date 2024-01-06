@@ -1,22 +1,10 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS205: Consider reworking code to avoid use of IIFEs
- * DS206: Consider reworking classes to avoid initClass
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.SettingsPage = class SettingsPage extends app.View {
-  static initClass() {
-    this.className = "_static";
+  static className = "_static";
 
-    this.events = {
-      click: "onClick",
-      change: "onChange",
-    };
-  }
+  static events = {
+    click: "onClick",
+    change: "onChange",
+  };
 
   render() {
     this.html(this.tmpl("settingsPage", this.currentSettings()));
@@ -33,7 +21,7 @@ app.views.SettingsPage = class SettingsPage extends app.View {
     settings.spaceScroll = app.settings.get("spaceScroll");
     settings.spaceTimeout = app.settings.get("spaceTimeout");
     settings.autoSupported = app.settings.autoSupported;
-    for (var layout of Array.from(app.settings.LAYOUTS)) {
+    for (var layout of app.settings.LAYOUTS) {
       settings[layout] = app.settings.hasLayout(layout);
     }
     return settings;
@@ -153,4 +141,3 @@ app.views.SettingsPage = class SettingsPage extends app.View {
     this.render();
   }
 };
-app.views.SettingsPage.initClass();
