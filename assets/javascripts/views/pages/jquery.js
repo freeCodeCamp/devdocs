@@ -1,22 +1,11 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS206: Consider reworking classes to avoid initClass
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 //= require views/pages/base
 
 app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
-  static initClass() {
-    this.demoClassName = "_jquery-demo";
-  }
+  static demoClassName = "_jquery-demo";
 
   afterRender() {
     // Prevent jQuery Mobile's demo iframes from scrolling the page
-    for (var iframe of Array.from(this.findAllByTag("iframe"))) {
+    for (var iframe of this.findAllByTag("iframe")) {
       iframe.style.display = "none";
       this.onIframeLoaded = this.onIframeLoaded.bind(this);
       $.on(iframe, "load", this.onIframeLoaded);
@@ -31,7 +20,7 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
   }
 
   runExamples() {
-    for (var el of Array.from(this.findAllByClass("entry-example"))) {
+    for (var el of this.findAllByClass("entry-example")) {
       try {
         this.runExample(el);
       } catch (error) {}
@@ -45,11 +34,9 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
       return;
     }
 
-    if (
-      !(iframe = el.getElementsByClassName(this.constructor.demoClassName)[0])
-    ) {
+    if (!(iframe = el.getElementsByClassName(JqueryPage.demoClassName)[0])) {
       iframe = document.createElement("iframe");
-      iframe.className = this.constructor.demoClassName;
+      iframe.className = JqueryPage.demoClassName;
       iframe.width = "100%";
       iframe.height = 200;
       el.appendChild(iframe);
@@ -86,4 +73,3 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
     return source.replace(/<script>/gi, '<script nonce="devdocs">');
   }
 };
-app.views.JqueryPage.initClass();
