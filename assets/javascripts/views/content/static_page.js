@@ -7,16 +7,14 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 app.views.StaticPage = class StaticPage extends app.View {
-  static initClass() {
-    this.className = "_static";
+  static className = "_static";
 
-    this.titles = {
-      about: "About",
-      news: "News",
-      help: "User Guide",
-      notFound: "404",
-    };
-  }
+  static titles = {
+    about: "About",
+    news: "News",
+    help: "User Guide",
+    notFound: "404",
+  };
 
   deactivate() {
     if (super.deactivate(...arguments)) {
@@ -38,4 +36,3 @@ app.views.StaticPage = class StaticPage extends app.View {
     this.render(context.page || "notFound");
   }
 };
-app.views.StaticPage.initClass();
