@@ -1,26 +1,12 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS205: Consider reworking code to avoid use of IIFEs
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.templates.helpPage = function () {
-  let key, value;
   const ctrlKey = $.isMac() ? "cmd" : "ctrl";
   const navKey = $.isMac() ? "cmd" : "alt";
   const arrowScroll = app.settings.get("arrowScroll");
 
-  const aliases_one = {};
-  const aliases_two = {};
-  const keys = Object.keys(app.models.Entry.ALIASES);
-  const middle = Math.ceil(keys.length / 2) - 1;
-  for (let i = 0; i < keys.length; i++) {
-    key = keys[i];
-    (i > middle ? aliases_two : aliases_one)[key] =
-      app.models.Entry.ALIASES[key];
-  }
+  const aliases = Object.entries(app.models.Entry.ALIASES);
+  const middle = Math.ceil(aliases.length / 2);
+  const aliases_one = aliases.slice(0, middle);
+  const aliases_two = aliases.slice(middle);
 
   return `\
 <nav class="_toc" role="directory">
@@ -169,31 +155,23 @@ app.templates.helpPage = function () {
     <tr>
       <th>Word
       <th>Alias
-    ${(() => {
-      const result = [];
-      for (key in aliases_one) {
-        value = aliases_one[key];
-        result.push(
+    ${aliases_one
+      .map(
+        ([key, value]) =>
           `<tr><td class=\"_code\">${key}<td class=\"_code\">${value}`,
-        );
-      }
-      return result;
-    })().join("")}
+      )
+      .join("")}
   </table>
   <table>
     <tr>
       <th>Word
       <th>Alias
-    ${(() => {
-      const result1 = [];
-      for (key in aliases_two) {
-        value = aliases_two[key];
-        result1.push(
-          `<tr><td class=\"_code\">${key}<td class=\"_code\">${value}`,
-        );
-      }
-      return result1;
-    })().join("")}
+      ${aliases_two
+        .map(
+          ([key, value]) =>
+            `<tr><td class=\"_code\">${key}<td class=\"_code\">${value}`,
+        )
+        .join("")}
   </table>
 </div>
 <p>Feel free to suggest new aliases on <a href="https://github.com/freeCodeCamp/devdocs/issues/new">GitHub</a>.\
