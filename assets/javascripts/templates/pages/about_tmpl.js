@@ -1,21 +1,9 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS205: Consider reworking code to avoid use of IIFEs
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.templates.aboutPage = function () {
   let doc;
-  const all_docs = app.docs
-    .all()
-    .concat(...Array.from(app.disabledDocs.all() || []));
+  const all_docs = app.docs.all().concat(...(app.disabledDocs.all() || []));
   // de-duplicate docs by doc.name
   const docs = [];
-  for (doc of Array.from(all_docs)) {
+  for (doc of all_docs) {
     if (!docs.find((d) => d.name === doc.name)) {
       docs.push(doc);
     }
@@ -85,23 +73,12 @@ app.templates.aboutPage = function () {
       <th>Documentation
       <th>Copyright/License
       <th>Source code
-    ${(() => {
-      const result = [];
-
-      for (doc of Array.from(docs)) {
-        result.push(`<tr> \
-<td><a href=\"${doc.links != null ? doc.links.home : undefined}\">${
-          doc.name
-        }</a></td> \
-<td>${doc.attribution}</td> \
-<td><a href=\"${
-          doc.links != null ? doc.links.code : undefined
-        }\">Source code</a></td> \
-</tr>`);
-      }
-
-      return result;
-    })().join("")}
+    ${docs
+      .map(
+        (doc) =>
+          `<tr><td><a href="${doc.links?.home}">${doc.name}</a></td><td>${doc.attribution}</td><td><a href="${doc.links?.code}">Source code</a></td></tr>`,
+      )
+      .join("")}
   </table>
 </div>
 
