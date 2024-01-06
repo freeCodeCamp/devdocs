@@ -1,19 +1,9 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS205: Consider reworking code to avoid use of IIFEs
- * DS207: Consider shorter variations of null checks
- * DS208: Avoid top-level this
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 const MIME_TYPES = {
   json: "application/json",
   html: "text/html",
 };
 
-this.ajax = function (options) {
+function ajax(options) {
   applyDefaults(options);
   serializeData(options);
 
@@ -30,7 +20,7 @@ this.ajax = function (options) {
   } else {
     return parseResponse(xhr, options);
   }
-};
+}
 
 ajax.defaults = {
   async: true,
