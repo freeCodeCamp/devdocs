@@ -1,21 +1,10 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS206: Consider reworking classes to avoid initClass
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.OfflinePage = class OfflinePage extends app.View {
-  static initClass() {
-    this.className = "_static";
+  static className = "_static";
 
-    this.events = {
-      click: "onClick",
-      change: "onChange",
-    };
-  }
+  static events = {
+    click: "onClick",
+    change: "onChange",
+  };
 
   deactivate() {
     if (super.deactivate(...arguments)) {
@@ -37,7 +26,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
         this.html(this.tmpl("offlineError", app.db.reason, app.db.error));
       } else {
         let html = "";
-        for (var doc of Array.from(app.docs.all())) {
+        for (var doc of app.docs.all()) {
           html += this.renderDoc(doc, statuses[doc.slug]);
         }
         this.html(this.tmpl("offlinePage", html));
@@ -154,4 +143,3 @@ app.views.OfflinePage = class OfflinePage extends app.View {
     }
   }
 };
-app.views.OfflinePage.initClass();
