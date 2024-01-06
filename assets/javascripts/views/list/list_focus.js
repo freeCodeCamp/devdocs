@@ -1,27 +1,16 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.ListFocus = class ListFocus extends app.View {
-  static initClass() {
-    this.activeClass = "focus";
+  static activeClass = "focus";
 
-    this.events = { click: "onClick" };
+  static events = { click: "onClick" };
 
-    this.shortcuts = {
-      up: "onUp",
-      down: "onDown",
-      left: "onLeft",
-      enter: "onEnter",
-      superEnter: "onSuperEnter",
-      escape: "blur",
-    };
-  }
+  static shortcuts = {
+    up: "onUp",
+    down: "onDown",
+    left: "onLeft",
+    enter: "onEnter",
+    superEnter: "onSuperEnter",
+    escape: "blur",
+  };
 
   constructor(el) {
     super(el);
@@ -194,4 +183,3 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 };
-app.views.ListFocus.initClass();
