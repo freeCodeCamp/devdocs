@@ -87,7 +87,8 @@ class App extends Events {
           },
           dataCallback(data) {
             try {
-              $.extend(data.user || (data.user = {}), app.settings.dump());
+              data.user ||= {};
+              Object.assign(data.user, app.settings.dump());
               if (data.user.docs) {
                 data.user.docs = data.user.docs.split("/");
               }

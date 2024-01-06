@@ -421,18 +421,6 @@ $.smoothScroll = function (el, end) {
 // Utilities
 //
 
-$.extend = function (target, ...objects) {
-  for (var object of objects) {
-    if (object) {
-      for (var key in object) {
-        var value = object[key];
-        target[key] = value;
-      }
-    }
-  }
-  return target;
-};
-
 $.makeArray = function (object) {
   if (Array.isArray(object)) {
     return object;
@@ -573,10 +561,7 @@ const HIGHLIGHT_DEFAULTS = {
 };
 
 $.highlight = function (el, options) {
-  if (options == null) {
-    options = {};
-  }
-  options = $.extend({}, HIGHLIGHT_DEFAULTS, options);
+  options = { ...HIGHLIGHT_DEFAULTS, ...(options || {}) };
   el.classList.add(options.className);
   setTimeout(() => el.classList.remove(options.className), options.delay);
 };

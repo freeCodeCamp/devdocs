@@ -185,7 +185,7 @@ app.Searcher = class Searcher extends Events {
 
   constructor(options) {
     super();
-    this.options = $.extend({}, Searcher.DEFAULTS, options || {});
+    this.options = { ...Searcher.DEFAULTS, ...(options || {}) };
   }
 
   find(data, attr, q) {
@@ -332,7 +332,7 @@ app.Searcher = class Searcher extends Events {
     for (let j = this.scoreMap.length - 1; j >= 0; j--) {
       var objects = this.scoreMap[j];
       if (objects) {
-        results.push.apply(results, objects);
+        results.push(...objects);
       }
     }
     return results.slice(0, this.options.max_results);
@@ -369,7 +369,7 @@ app.SynchronousSearcher = class SynchronousSearcher extends app.Searcher {
       if (!this.allResults) {
         this.allResults = [];
       }
-      this.allResults.push.apply(this.allResults, this.getResults());
+      this.allResults.push(...this.getResults());
     }
     return super.match(...arguments);
   }
