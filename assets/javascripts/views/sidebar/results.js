@@ -1,20 +1,9 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.Results = class Results extends app.View {
-  static initClass() {
-    this.className = "_list";
+  static className = "_list";
 
-    this.events = { click: "onClick" };
+  static events = { click: "onClick" };
 
-    this.routes = { after: "afterRoute" };
-  }
+  static routes = { after: "afterRoute" };
 
   constructor(sidebar, search) {
     super();
@@ -42,9 +31,7 @@ app.views.Results = class Results extends app.View {
 
   onResults(entries, flags) {
     if (flags.initialResults) {
-      if (this.listFocus != null) {
-        this.listFocus.blur();
-      }
+      this.listFocus?.blur();
     }
     if (flags.initialResults) {
       this.empty();
@@ -70,16 +57,12 @@ app.views.Results = class Results extends app.View {
 
   focusFirst() {
     if (!app.isMobile()) {
-      if (this.listFocus != null) {
-        this.listFocus.focusOnNextFrame(this.el.firstElementChild);
-      }
+      this.listFocus?.focusOnNextFrame(this.el.firstElementChild);
     }
   }
 
   openFirst() {
-    if (this.el.firstElementChild != null) {
-      this.el.firstElementChild.click();
-    }
+    this.el.firstElementChild?.click();
   }
 
   onDocEnabled(doc) {
@@ -109,4 +92,3 @@ app.views.Results = class Results extends app.View {
     }
   }
 };
-app.views.Results.initClass();
