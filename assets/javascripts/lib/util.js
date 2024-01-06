@@ -453,8 +453,7 @@ $.arrayDelete = function (array, object) {
 
 // Returns true if the object is an array or a collection of DOM elements.
 $.isCollection = (object) =>
-  Array.isArray(object) ||
-  typeof (object != null ? object.item : undefined) === "function";
+  Array.isArray(object) || typeof object?.item === "function";
 
 const ESCAPE_HTML_MAP = {
   "&": "&amp;",

@@ -312,10 +312,7 @@ app.Searcher = class Searcher extends Events {
   }
 
   scoredEnough() {
-    return (
-      (this.scoreMap[100] != null ? this.scoreMap[100].length : undefined) >=
-      this.options.max_results
-    );
+    return this.scoreMap[100]?.length >= this.options.max_results;
   }
 
   foundEnough() {
@@ -388,7 +385,7 @@ app.SynchronousSearcher = class SynchronousSearcher extends app.Searcher {
   }
 
   sendResults(end) {
-    if (end && (this.allResults != null ? this.allResults.length : undefined)) {
+    if (end && this.allResults?.length) {
       return this.triggerResults(this.allResults);
     }
   }

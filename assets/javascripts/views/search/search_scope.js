@@ -35,7 +35,7 @@ app.views.SearchScope = class SearchScope extends app.View {
   }
 
   name() {
-    return this.doc != null ? this.doc.name : undefined;
+    return this.doc?.name;
   }
 
   search(value, searchDisabled) {

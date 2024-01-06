@@ -198,10 +198,7 @@ app.Settings = class Settings {
   toggleLayout(layout, enable) {
     const { classList } = document.body;
     // sidebar is always shown for settings; its state is updated in app.views.Settings
-    if (
-      layout !== "_sidebar-hidden" ||
-      !(app.router != null ? app.router.isSettings : undefined)
-    ) {
+    if (layout !== "_sidebar-hidden" || !app.router?.isSettings) {
       classList.toggle(layout, enable);
     }
     classList.toggle("_overlay-scrollbars", $.overlayScrollbarsEnabled());

@@ -144,9 +144,7 @@ app.views.EntryPage = class EntryPage extends app.View {
   }
 
   onRoute(context) {
-    const isSameFile =
-      context.entry.filePath() ===
-      (this.entry != null ? this.entry.filePath() : undefined);
+    const isSameFile = context.entry.filePath() === this.entry?.filePath?.();
     this.entry = context.entry;
     if (!isSameFile) {
       this.restore() || this.load();

@@ -43,7 +43,7 @@ page.stop = function () {
 
 page.show = function (path, state) {
   let res;
-  if (path === (currentState != null ? currentState.path : undefined)) {
+  if (path === currentState?.path) {
     return;
   }
   const context = new Context(path, state);

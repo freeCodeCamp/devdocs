@@ -66,8 +66,7 @@ app.Router = class Router extends Events {
 
   type(context, next) {
     const doc = app.docs.findBySlug(context.params.doc);
-    const type =
-      doc != null ? doc.types.findBy("slug", context.params.type) : undefined;
+    const type = doc?.types?.findBy("slug", context.params.type);
 
     if (type) {
       context.doc = doc;

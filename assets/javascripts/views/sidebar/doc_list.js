@@ -83,7 +83,7 @@ app.views.DocList = class DocList extends app.View {
         var versions = "";
         while (true) {
           versions += this.tmpl("sidebarDoc", doc, { disabled: true });
-          if ((docs[0] != null ? docs[0].name : undefined) !== doc.name) {
+          if (docs[0]?.name !== doc.name) {
             break;
           }
           doc = docs.shift();
@@ -144,7 +144,7 @@ app.views.DocList = class DocList extends app.View {
   }
 
   select(model) {
-    this.listSelect.selectByHref(model != null ? model.fullPath() : undefined);
+    this.listSelect.selectByHref(model?.fullPath());
   }
 
   reveal(model) {

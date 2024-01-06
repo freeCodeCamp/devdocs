@@ -79,7 +79,7 @@ app.views.DocPicker = class DocPicker extends app.View {
 
   getSelectedDocs() {
     return this.findAllByTag("input")
-      .filter((input) => (input != null ? input.checked : undefined))
+      .filter((input) => input?.checked)
       .map((input) => input.name);
   }
 
