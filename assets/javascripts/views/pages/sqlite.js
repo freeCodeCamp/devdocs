@@ -1,16 +1,7 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS206: Consider reworking classes to avoid initClass
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 //= require views/pages/base
 
 app.views.SqlitePage = class SqlitePage extends app.views.BasePage {
-  static initClass() {
-    this.events = { click: "onClick" };
-  }
+  static events = { click: "onClick" };
 
   onClick(event) {
     let el, id;
@@ -30,4 +21,3 @@ app.views.SqlitePage = class SqlitePage extends app.views.BasePage {
     }
   }
 };
-app.views.SqlitePage.initClass();
