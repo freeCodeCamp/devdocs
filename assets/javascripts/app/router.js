@@ -9,10 +9,8 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-app.Router = class Router {
+app.Router = class Router extends Events {
   static initClass() {
-    $.extend(this.prototype, Events);
-
     this.routes = [
       ["*", "before"],
       ["/", "root"],
@@ -29,6 +27,7 @@ app.Router = class Router {
   }
 
   constructor() {
+    super();
     for (var [path, method] of Array.from(this.constructor.routes)) {
       page(path, this[method].bind(this));
     }
