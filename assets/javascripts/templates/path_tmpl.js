@@ -5,9 +5,9 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const arrow = '<svg class="_path-arrow"><use xlink:href="#icon-dir"/></svg>';
 
 app.templates.path = function (doc, type, entry) {
+  const arrow = '<svg class="_path-arrow"><use xlink:href="#icon-dir"/></svg>';
   let html = `<a href="${doc.fullPath()}" class="_path-item _icon-${
     doc.icon
   }">${doc.fullName}</a>`;
