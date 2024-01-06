@@ -12,13 +12,6 @@ app.views.SidebarHover = class SidebarHover extends app.View {
 
   static routes = { after: "onRoute" };
 
-  constructor(el) {
-    super(el);
-    if (!isPointerEventsSupported()) {
-      delete this.constructor.events.mouseover;
-    }
-  }
-
   show(el) {
     if (el !== this.cursor) {
       this.hide();
@@ -114,10 +107,4 @@ app.views.SidebarHover = class SidebarHover extends app.View {
   onRoute() {
     this.hide();
   }
-};
-
-var isPointerEventsSupported = function () {
-  const el = document.createElement("div");
-  el.style.cssText = "pointer-events: auto";
-  return el.style.pointerEvents === "auto";
 };
