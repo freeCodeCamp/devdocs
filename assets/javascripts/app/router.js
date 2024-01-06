@@ -1,34 +1,21 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.Router = class Router extends Events {
-  static initClass() {
-    this.routes = [
-      ["*", "before"],
-      ["/", "root"],
-      ["/settings", "settings"],
-      ["/offline", "offline"],
-      ["/about", "about"],
-      ["/news", "news"],
-      ["/help", "help"],
-      ["/:doc-:type/", "type"],
-      ["/:doc/", "doc"],
-      ["/:doc/:path(*)", "entry"],
-      ["*", "notFound"],
-    ];
-  }
+  static routes = [
+    ["*", "before"],
+    ["/", "root"],
+    ["/settings", "settings"],
+    ["/offline", "offline"],
+    ["/about", "about"],
+    ["/news", "news"],
+    ["/help", "help"],
+    ["/:doc-:type/", "type"],
+    ["/:doc/", "doc"],
+    ["/:doc/:path(*)", "entry"],
+    ["*", "notFound"],
+  ];
 
   constructor() {
     super();
-    for (var [path, method] of Array.from(this.constructor.routes)) {
+    for (var [path, method] of this.constructor.routes) {
       page(path, this[method].bind(this));
     }
     this.setInitialPath();
@@ -78,13 +65,11 @@ app.Router = class Router extends Events {
   }
 
   type(context, next) {
-    let type;
     const doc = app.docs.findBySlug(context.params.doc);
+    const type =
+      doc != null ? doc.types.findBy("slug", context.params.type) : undefined;
 
-    if (
-      (type =
-        doc != null ? doc.types.findBy("slug", context.params.type) : undefined)
-    ) {
+    if (type) {
       context.doc = doc;
       context.type = type;
       this.triggerRoute("type");
@@ -174,18 +159,13 @@ app.Router = class Router extends Events {
 
   isIndex() {
     return (
-      (this.context != null ? this.context.path : undefined) === "/" ||
-      (app.isSingleDoc() &&
-        __guard__(this.context != null ? this.context.entry : undefined, (x) =>
-          x.isIndex(),
-        ))
+      this.context?.path === "/" ||
+      (app.isSingleDoc() && this.context?.entry?.isIndex())
     );
   }
 
   isSettings() {
-    return (
-      (this.context != null ? this.context.path : undefined) === "/settings"
-    );
+    return this.context?.path === "/settings";
   }
 
   setInitialPath() {
@@ -208,10 +188,7 @@ app.Router = class Router extends Events {
 
   getInitialPathFromHash() {
     try {
-      return __guard__(
-        new RegExp("#/(.+)").exec(decodeURIComponent(location.hash)),
-        (x) => x[1],
-      );
+      return new RegExp("#/(.+)").exec(decodeURIComponent(location.hash))?.[1];
     } catch (error) {}
   }
 
@@ -231,10 +208,3 @@ app.Router = class Router extends Events {
     );
   }
 };
-app.Router.initClass();
-
-function __guard__(value, transform) {
-  return typeof value !== "undefined" && value !== null
-    ? transform(value)
-    : undefined;
-}
