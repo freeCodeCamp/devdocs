@@ -94,6 +94,11 @@ module Docs
           node.before(node.children).remove
         end
 
+        css('details.overloads > summary').each do |node|
+          node.css('.actions').remove
+          node.content = node.content
+        end
+
         doc
       end
     end
