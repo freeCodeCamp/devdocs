@@ -75,7 +75,7 @@ this.viewTree = function (view, level, visited) {
   if (visited == null) {
     visited = [];
   }
-  if (visited.indexOf(view) >= 0) {
+  if (visited.includes(view)) {
     return;
   }
   visited.push(view);

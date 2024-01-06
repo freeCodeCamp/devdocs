@@ -106,7 +106,7 @@ function scoreExactMatch() {
 }
 
 function fuzzyMatch() {
-  if (valueLength <= queryLength || value.indexOf(query) >= 0) {
+  if (valueLength <= queryLength || value.includes(query)) {
     return;
   }
   if (!(match = fuzzyRegexp.exec(value))) {

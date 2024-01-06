@@ -109,7 +109,7 @@ app.Settings = class Settings {
     $.arrayDelete(layout, "");
 
     if (enable) {
-      if (layout.indexOf(name) === -1) {
+      if (!layout.includes(name)) {
         layout.push(name);
       }
     } else {
@@ -125,7 +125,7 @@ app.Settings = class Settings {
 
   hasLayout(name) {
     const layout = (this.store.get("layout") || "").split(" ");
-    return layout.indexOf(name) !== -1;
+    return layout.includes(name);
   }
 
   setSize(value) {
@@ -155,7 +155,7 @@ app.Settings = class Settings {
     }
     for (key in data) {
       value = data[key];
-      if (Settings.PREFERENCE_KEYS.indexOf(key) !== -1) {
+      if (Settings.PREFERENCE_KEYS.includes(key)) {
         this.set(key, value);
       }
     }

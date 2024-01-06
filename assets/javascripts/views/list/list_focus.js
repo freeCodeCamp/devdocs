@@ -56,7 +56,7 @@ app.views.ListFocus = class ListFocus extends app.View {
         return this.findNext(cursor);
       } else if (next.tagName === "DIV") {
         // sub-list
-        if (cursor.className.indexOf(" open") >= 0) {
+        if (cursor.className.includes(" open")) {
           return this.findFirst(next) || this.findNext(next);
         } else {
           return this.findNext(next);
@@ -96,7 +96,7 @@ app.views.ListFocus = class ListFocus extends app.View {
         return this.findPrev(cursor);
       } else if (prev.tagName === "DIV") {
         // sub-list
-        if (prev.previousSibling.className.indexOf("open") >= 0) {
+        if (prev.previousSibling.className.includes("open")) {
           return this.findLast(prev) || this.findPrev(prev);
         } else {
           return this.findPrev(prev);

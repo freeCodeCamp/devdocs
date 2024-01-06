@@ -24,9 +24,9 @@ app.views.Mobile = class Mobile extends app.View {
           .matches ||
         // Need to sniff the user agent because some Android and Windows Phone devices don't take
         // resolution (dpi) into account when reporting device width/height.
-        (navigator.userAgent.indexOf("Android") !== -1 &&
-          navigator.userAgent.indexOf("Mobile") !== -1) ||
-        navigator.userAgent.indexOf("IEMobile") !== -1
+        (navigator.userAgent.includes("Android") &&
+          navigator.userAgent.includes("Mobile")) ||
+        navigator.userAgent.includes("IEMobile")
       );
     } catch (error) {
       return false;

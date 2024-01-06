@@ -65,7 +65,7 @@ app.views.Settings = class Settings extends app.View {
         (() => {
           const result = [];
           for (var doc of app.docs.all()) {
-            if (docs.indexOf(doc.slug) === -1) {
+            if (!docs.includes(doc.slug)) {
               result.push(doc);
             }
           }

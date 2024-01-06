@@ -61,7 +61,7 @@ $.on = function (el, event, callback, useCapture) {
   if (useCapture == null) {
     useCapture = false;
   }
-  if (event.indexOf(" ") >= 0) {
+  if (event.includes(" ")) {
     for (var name of event.split(" ")) {
       $.on(el, name, callback);
     }
@@ -74,7 +74,7 @@ $.off = function (el, event, callback, useCapture) {
   if (useCapture == null) {
     useCapture = false;
   }
-  if (event.indexOf(" ") >= 0) {
+  if (event.includes(" ")) {
     for (var name of event.split(" ")) {
       $.off(el, name, callback);
     }
@@ -520,55 +520,37 @@ $.popup = function (value) {
 
 let isMac = null;
 $.isMac = () =>
-  isMac != null
-    ? isMac
-    : (isMac =
-        (navigator.userAgent != null
-          ? navigator.userAgent.indexOf("Mac")
-          : undefined) >= 0);
+  isMac != null ? isMac : (isMac = navigator.userAgent.includes("Mac"));
 
 let isIE = null;
 $.isIE = () =>
   isIE != null
     ? isIE
     : (isIE =
-        (navigator.userAgent != null
-          ? navigator.userAgent.indexOf("MSIE")
-          : undefined) >= 0 ||
-        (navigator.userAgent != null
-          ? navigator.userAgent.indexOf("rv:11.0")
-          : undefined) >= 0);
+        navigator.userAgent.includes("MSIE") ||
+        navigator.userAgent.includes("rv:11.0"));
 
 let isChromeForAndroid = null;
 $.isChromeForAndroid = () =>
   isChromeForAndroid != null
     ? isChromeForAndroid
     : (isChromeForAndroid =
-        (navigator.userAgent != null
-          ? navigator.userAgent.indexOf("Android")
-          : undefined) >= 0 &&
+        navigator.userAgent.includes("Android") &&
         /Chrome\/([.0-9])+ Mobile/.test(navigator.userAgent));
 
 let isAndroid = null;
 $.isAndroid = () =>
   isAndroid != null
     ? isAndroid
-    : (isAndroid =
-        (navigator.userAgent != null
-          ? navigator.userAgent.indexOf("Android")
-          : undefined) >= 0);
+    : (isAndroid = navigator.userAgent.includes("Android"));
 
 let isIOS = null;
 $.isIOS = () =>
   isIOS != null
     ? isIOS
     : (isIOS =
-        (navigator.userAgent != null
-          ? navigator.userAgent.indexOf("iPhone")
-          : undefined) >= 0 ||
-        (navigator.userAgent != null
-          ? navigator.userAgent.indexOf("iPad")
-          : undefined) >= 0);
+        navigator.userAgent.includes("iPhone") ||
+        navigator.userAgent.includes("iPad"));
 
 $.overlayScrollbarsEnabled = function () {
   if (!$.isMac()) {

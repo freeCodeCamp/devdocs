@@ -284,7 +284,7 @@ var onclick = function (event) {
 };
 
 var isSameOrigin = (url) =>
-  url.indexOf(`${location.protocol}//${location.hostname}`) === 0;
+  url.startsWith(`${location.protocol}//${location.hostname}`);
 
 var updateCanonicalLink = function () {
   if (!this.canonicalLink) {

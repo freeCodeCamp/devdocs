@@ -119,7 +119,7 @@ class App extends Events {
   bootAll() {
     const docs = this.settings.getDocs();
     for (var doc of this.DOCS) {
-      (docs.indexOf(doc.slug) >= 0 ? this.docs : this.disabledDocs).add(doc);
+      (docs.includes(doc.slug) ? this.docs : this.disabledDocs).add(doc);
     }
     this.migrateDocs();
     this.docs.load(this.start.bind(this), this.onBootError.bind(this), {
@@ -267,7 +267,7 @@ class App extends Events {
       return;
     }
     const tips = this.settings.getTips();
-    if (tips.indexOf(tip) === -1) {
+    if (!tips.includes(tip)) {
       tips.push(tip);
       this.settings.setTips(tips);
       new app.views.Tip(tip);
@@ -358,11 +358,7 @@ Please check your browser extensions/addons. `);
 
   isAppError(error, file) {
     // Ignore errors from external scripts.
-    return (
-      file &&
-      file.indexOf("devdocs") !== -1 &&
-      file.indexOf(".js") === file.length - 3
-    );
+    return file && file.includes("devdocs") && file.endsWith(".js");
   }
 
   isSupportedBrowser() {
@@ -414,7 +410,7 @@ Please check your browser extensions/addons. `);
   isInvalidLocation() {
     return (
       this.config.env === "production" &&
-      location.host.indexOf(app.config.production_host) !== 0
+      !location.host.startsWith(app.config.production_host)
     );
   }
 }

@@ -1,6 +1,6 @@
 class Events {
   on(event, callback) {
-    if (event.indexOf(" ") >= 0) {
+    if (event.includes(" ")) {
       for (var name of event.split(" ")) {
         this.on(name, callback);
       }
@@ -14,7 +14,7 @@ class Events {
 
   off(event, callback) {
     let callbacks, index;
-    if (event.indexOf(" ") >= 0) {
+    if (event.includes(" ")) {
       for (var name of event.split(" ")) {
         this.off(name, callback);
       }
