@@ -14,7 +14,6 @@ gem 'yajl-ruby', require: false
 group :app do
   gem 'browser'
   gem 'chunky_png'
-  gem 'coffee-script'
   gem 'erubi'
   gem 'image_optim_pack', platforms: :ruby
   gem 'image_optim'
