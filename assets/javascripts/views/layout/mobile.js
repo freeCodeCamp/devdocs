@@ -1,27 +1,16 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.Mobile = class Mobile extends app.View {
-  static initClass() {
-    this.className = "_mobile";
+  static className = "_mobile";
 
-    this.elements = {
-      body: "body",
-      content: "._container",
-      sidebar: "._sidebar",
-      docPicker: "._settings ._sidebar",
-    };
+  static elements = {
+    body: "body",
+    content: "._container",
+    sidebar: "._sidebar",
+    docPicker: "._settings ._sidebar",
+  };
 
-    this.shortcuts = { escape: "onEscape" };
+  static shortcuts = { escape: "onEscape" };
 
-    this.routes = { after: "afterRoute" };
-  }
+  static routes = { after: "afterRoute" };
 
   static detect() {
     if (Cookies.get("override-mobile-detect") != null) {
@@ -198,4 +187,3 @@ app.views.Mobile = class Mobile extends app.View {
     }
   }
 };
-app.views.Mobile.initClass();
