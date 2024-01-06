@@ -94,7 +94,7 @@ class App < Sinatra::Application
         ['/manifest.json',  { 'Cache-Control' => 'public, max-age=86400'  }]
       ]
 
-    sprockets.js_compressor = :terser
+    sprockets.js_compressor = Terser.new
     sprockets.css_compressor = :sass
 
     Sprockets::Helpers.configure do |config|
