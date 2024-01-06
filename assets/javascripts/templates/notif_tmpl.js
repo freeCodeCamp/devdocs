@@ -1,11 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 const notif = function (title, html) {
   html = html.replace(/<a /g, '<a class="_notif-link" ');
   return ` <h5 class="_notif-title">${title}</h5>
@@ -70,7 +62,7 @@ app.templates.notifUpdates = function (docs, disabledDocs) {
   if (docs.length > 0) {
     html += '<div class="_news-row">';
     html += '<ul class="_notif-list">';
-    for (doc of Array.from(docs)) {
+    for (doc of docs) {
       html += `<li>${doc.name}`;
       if (doc.release) {
         html += ` <code>&rarr;</code> ${doc.release}`;
@@ -82,7 +74,7 @@ app.templates.notifUpdates = function (docs, disabledDocs) {
   if (disabledDocs.length > 0) {
     html += '<div class="_news-row"><p class="_news-title">Disabled:';
     html += '<ul class="_notif-list">';
-    for (doc of Array.from(disabledDocs)) {
+    for (doc of disabledDocs) {
       html += `<li>${doc.name}`;
       if (doc.release) {
         html += ` <code>&rarr;</code> ${doc.release}`;

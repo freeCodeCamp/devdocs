@@ -1,11 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
-
 app.templates.path = function (doc, type, entry) {
   const arrow = '<svg class="_path-arrow"><use xlink:href="#icon-dir"/></svg>';
   let html = `<a href="${doc.fullPath()}" class="_path-item _icon-${
