@@ -34,43 +34,33 @@ app.start = function () {
 // Searcher
 //
 
-const _super = app.Searcher;
-const _proto = app.Searcher.prototype;
-
-app.Searcher = function () {
-  _super.apply(this, arguments);
-
-  const _setup = this.setup.bind(this);
-  this.setup = function () {
+app.Searcher = class TimingSearcher extends app.Searcher {
+  setup() {
     console.groupCollapsed(`Search: ${this.query}`);
     console.time("Total");
-    return _setup();
-  };
+    return super.setup();
+  }
 
-  const _match = this.match.bind(this);
-  this.match = () => {
+  match() {
     if (this.matcher) {
       console.timeEnd(this.matcher.name);
     }
-    return _match();
-  };
+    return super.match();
+  }
 
-  const _setupMatcher = this.setupMatcher.bind(this);
-  this.setupMatcher = function () {
+  setupMatcher() {
     console.time(this.matcher.name);
-    return _setupMatcher();
-  };
+    return super.setupMatcher();
+  }
 
-  const _end = this.end.bind(this);
-  this.end = function () {
+  end() {
     console.log(`Results: ${this.totalResults}`);
     console.timeEnd("Total");
     console.groupEnd();
-    return _end();
-  };
+    return super.end();
+  }
 
-  const _kill = this.kill.bind(this);
-  this.kill = function () {
+  kill() {
     if (this.timeout) {
       if (this.matcher) {
         console.timeEnd(this.matcher.name);
@@ -79,13 +69,9 @@ app.Searcher = function () {
       console.timeEnd("Total");
       console.warn("Killed");
     }
-    return _kill();
-  };
+    return super.kill();
+  }
 };
-
-$.extend(app.Searcher, _super);
-_proto.constructor = app.Searcher;
-app.Searcher.prototype = _proto;
 
 //
 // View tree
