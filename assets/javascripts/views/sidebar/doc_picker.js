@@ -11,13 +11,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 app.views.DocPicker = class DocPicker extends app.View {
-  constructor(...args) {
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onMouseUp = this.onMouseUp.bind(this);
-    this.onDOMFocus = this.onDOMFocus.bind(this);
-    super(...args);
-  }
-
   static initClass() {
     this.className = "_list _list-picker";
 
@@ -34,6 +27,7 @@ app.views.DocPicker = class DocPicker extends app.View {
   activate() {
     if (super.activate(...arguments)) {
       this.render();
+      this.onDOMFocus = this.onDOMFocus.bind(this);
       $.on(this.el, "focus", this.onDOMFocus, true);
     }
   }

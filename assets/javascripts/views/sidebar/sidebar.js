@@ -10,23 +10,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 app.views.Sidebar = class Sidebar extends app.View {
-  constructor(...args) {
-    this.resetHoverOnMouseMove = this.resetHoverOnMouseMove.bind(this);
-    this.resetHover = this.resetHover.bind(this);
-    this.showResults = this.showResults.bind(this);
-    this.onReady = this.onReady.bind(this);
-    this.onScopeChange = this.onScopeChange.bind(this);
-    this.onSearching = this.onSearching.bind(this);
-    this.onSearchClear = this.onSearchClear.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onSelect = this.onSelect.bind(this);
-    this.onClick = this.onClick.bind(this);
-    this.onAltR = this.onAltR.bind(this);
-    this.onEscape = this.onEscape.bind(this);
-    this.afterRoute = this.afterRoute.bind(this);
-    super(...args);
-  }
-
   static initClass() {
     this.el = "._sidebar";
 
@@ -51,14 +34,16 @@ app.views.Sidebar = class Sidebar extends app.View {
     this.addSubview((this.search = new app.views.Search()));
 
     this.search
-      .on("searching", this.onSearching)
-      .on("clear", this.onSearchClear)
-      .scope.on("change", this.onScopeChange);
+      .on("searching", () => this.onSearching())
+      .on("clear", () => this.onSearchClear())
+      .scope.on("change", (newDoc, previousDoc) =>
+        this.onScopeChange((newDoc, previousDoc)),
+      );
 
     this.results = new app.views.Results(this, this.search);
     this.docList = new app.views.DocList();
 
-    app.on("ready", this.onReady);
+    app.on("ready", () => this.onReady());
 
     $.on(document.documentElement, "mouseleave", () => this.hide());
     $.on(document.documentElement, "mouseenter", () =>
@@ -85,13 +70,14 @@ app.views.Sidebar = class Sidebar extends app.View {
 
     if (options.forceNoHover !== false && !this.hasClass("no-hover")) {
       this.addClass("no-hover");
+      this.resetHoverOnMouseMove = this.resetHoverOnMouseMove.bind(this);
       $.on(window, "mousemove", this.resetHoverOnMouseMove);
     }
   }
 
   resetHoverOnMouseMove() {
     $.off(window, "mousemove", this.resetHoverOnMouseMove);
-    return $.requestAnimationFrame(this.resetHover);
+    return $.requestAnimationFrame(() => this.resetHover());
   }
 
   resetHover() {

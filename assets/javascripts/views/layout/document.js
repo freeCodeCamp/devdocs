@@ -9,12 +9,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 app.views.Document = class Document extends app.View {
-  constructor(...args) {
-    this.afterRoute = this.afterRoute.bind(this);
-    this.onVisibilityChange = this.onVisibilityChange.bind(this);
-    super(...args);
-  }
-
   static initClass() {
     this.el = document;
 

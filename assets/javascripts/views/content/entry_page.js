@@ -13,16 +13,6 @@
 (function () {
   let LINKS = undefined;
   app.views.EntryPage = class EntryPage extends app.View {
-    constructor(...args) {
-      this.beforeRoute = this.beforeRoute.bind(this);
-      this.onSuccess = this.onSuccess.bind(this);
-      this.onError = this.onError.bind(this);
-      this.onClick = this.onClick.bind(this);
-      this.onAltC = this.onAltC.bind(this);
-      this.onAltO = this.onAltO.bind(this);
-      super(...args);
-    }
-
     static initClass() {
       this.className = "_page";
       this.errorClass = "_page-error";
@@ -182,7 +172,10 @@
 
     load() {
       this.loading();
-      this.xhr = this.entry.loadFile(this.onSuccess, this.onError);
+      this.xhr = this.entry.loadFile(
+        (response) => this.onSuccess(response),
+        () => this.onError(),
+      );
     }
 
     abort() {

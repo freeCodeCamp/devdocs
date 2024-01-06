@@ -12,10 +12,9 @@ app.views.HiddenPage = class HiddenPage extends app.View {
   }
 
   constructor(el, entry) {
-    this.onClick = this.onClick.bind(this);
+    super(...arguments);
     this.el = el;
     this.entry = entry;
-    super(...arguments);
   }
 
   init() {

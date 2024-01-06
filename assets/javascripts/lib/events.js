@@ -48,14 +48,12 @@ class Events {
   }
 
   trigger(event, ...args) {
-    let callbacks;
     this.eventInProgress = { name: event, args };
-    if (
-      (callbacks = this._callbacks != null ? this._callbacks[event] : undefined)
-    ) {
-      for (var callback of Array.from(callbacks.slice(0))) {
+    const callbacks = this._callbacks?.[event];
+    if (callbacks) {
+      for (let callback of Array.from(callbacks.slice(0))) {
         if (typeof callback === "function") {
-          callback(...Array.from(args || []));
+          callback(...args);
         }
       }
     }

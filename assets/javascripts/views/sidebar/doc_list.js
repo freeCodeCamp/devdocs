@@ -9,16 +9,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 app.views.DocList = class DocList extends app.View {
-  constructor(...args) {
-    this.render = this.render.bind(this);
-    this.onOpen = this.onOpen.bind(this);
-    this.onClose = this.onClose.bind(this);
-    this.onClick = this.onClick.bind(this);
-    this.onEnabled = this.onEnabled.bind(this);
-    this.afterRoute = this.afterRoute.bind(this);
-    super(...args);
-  }
-
   static initClass() {
     this.className = "_list";
     this.attributes = { role: "navigation" };
@@ -44,7 +34,7 @@ app.views.DocList = class DocList extends app.View {
     this.addSubview((this.listFold = new app.views.ListFold(this.el)));
     this.addSubview((this.listSelect = new app.views.ListSelect(this.el)));
 
-    app.on("ready", this.render);
+    app.on("ready", () => this.render());
   }
 
   activate() {
@@ -248,6 +238,7 @@ app.views.DocList = class DocList extends app.View {
       $.stopEvent(event);
       const doc = app.disabledDocs.findBy("slug", slug);
       if (doc) {
+        this.onEnabled = this.onEnabled.bind(this);
         app.enableDoc(doc, this.onEnabled, this.onEnabled);
       }
     }

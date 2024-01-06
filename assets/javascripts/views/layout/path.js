@@ -8,12 +8,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 app.views.Path = class Path extends app.View {
-  constructor(...args) {
-    this.onClick = this.onClick.bind(this);
-    this.afterRoute = this.afterRoute.bind(this);
-    super(...args);
-  }
-
   static initClass() {
     this.className = "_path";
     this.attributes = { role: "complementary" };

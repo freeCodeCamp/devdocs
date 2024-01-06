@@ -11,13 +11,6 @@
   let MIN = undefined;
   let MAX = undefined;
   app.views.Resizer = class Resizer extends app.View {
-    constructor(...args) {
-      this.onDragStart = this.onDragStart.bind(this);
-      this.onDrag = this.onDrag.bind(this);
-      this.onDragEnd = this.onDragEnd.bind(this);
-      super(...args);
-    }
-
     static initClass() {
       this.className = "_resizer";
 

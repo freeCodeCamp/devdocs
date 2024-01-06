@@ -33,15 +33,8 @@
     }
 
     constructor(el) {
-      this.onResults = this.onResults.bind(this);
-      this.reset = this.reset.bind(this);
-      this.doScopeSearch = this.doScopeSearch.bind(this);
-      this.onClick = this.onClick.bind(this);
-      this.onKeydown = this.onKeydown.bind(this);
-      this.onTextInput = this.onTextInput.bind(this);
-      this.afterRoute = this.afterRoute.bind(this);
-      this.el = el;
       super(...arguments);
+      this.el = el;
     }
 
     init() {
@@ -51,7 +44,7 @@
         fuzzy_min_length: 2,
         max_results: 1,
       });
-      this.searcher.on("results", this.onResults);
+      this.searcher.on("results", (results) => this.onResults(results));
     }
 
     getScope() {

@@ -13,24 +13,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 app.views.Content = class Content extends app.View {
-  constructor(...args) {
-    this.scrollToTop = this.scrollToTop.bind(this);
-    this.scrollToBottom = this.scrollToBottom.bind(this);
-    this.scrollStepUp = this.scrollStepUp.bind(this);
-    this.scrollStepDown = this.scrollStepDown.bind(this);
-    this.scrollPageUp = this.scrollPageUp.bind(this);
-    this.scrollPageDown = this.scrollPageDown.bind(this);
-    this.onReady = this.onReady.bind(this);
-    this.onBootError = this.onBootError.bind(this);
-    this.onEntryLoading = this.onEntryLoading.bind(this);
-    this.onEntryLoaded = this.onEntryLoaded.bind(this);
-    this.beforeRoute = this.beforeRoute.bind(this);
-    this.afterRoute = this.afterRoute.bind(this);
-    this.onClick = this.onClick.bind(this);
-    this.onAltF = this.onAltF.bind(this);
-    super(...args);
-  }
-
   static initClass() {
     this.el = "._content";
     this.loadingClass = "_content-loading";
@@ -68,10 +50,12 @@ app.views.Content = class Content extends app.View {
     this.entryPage = new app.views.EntryPage();
 
     this.entryPage
-      .on("loading", this.onEntryLoading)
-      .on("loaded", this.onEntryLoaded);
+      .on("loading", () => this.onEntryLoading())
+      .on("loaded", () => this.onEntryLoaded());
 
-    app.on("ready", this.onReady).on("bootError", this.onBootError);
+    app
+      .on("ready", () => this.onReady())
+      .on("bootError", () => this.onBootError());
   }
 
   show(view) {

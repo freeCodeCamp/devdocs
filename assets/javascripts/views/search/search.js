@@ -13,24 +13,6 @@
   let SEARCH_PARAM = undefined;
   let HASH_RGX = undefined;
   app.views.Search = class Search extends app.View {
-    constructor(...args) {
-      this.focus = this.focus.bind(this);
-      this.autoFocus = this.autoFocus.bind(this);
-      this.onWindowFocus = this.onWindowFocus.bind(this);
-      this.onReady = this.onReady.bind(this);
-      this.onInput = this.onInput.bind(this);
-      this.searchUrl = this.searchUrl.bind(this);
-      this.google = this.google.bind(this);
-      this.stackoverflow = this.stackoverflow.bind(this);
-      this.duckduckgo = this.duckduckgo.bind(this);
-      this.onResults = this.onResults.bind(this);
-      this.onEnd = this.onEnd.bind(this);
-      this.onClick = this.onClick.bind(this);
-      this.onScopeChange = this.onScopeChange.bind(this);
-      this.afterRoute = this.afterRoute.bind(this);
-      super(...args);
-    }
-
     static initClass() {
       SEARCH_PARAM = app.config.search_param;
 
@@ -64,13 +46,15 @@
       this.addSubview((this.scope = new app.views.SearchScope(this.el)));
 
       this.searcher = new app.Searcher();
-      this.searcher.on("results", this.onResults).on("end", this.onEnd);
+      this.searcher
+        .on("results", (results) => this.onResults(results))
+        .on("end", () => this.onEnd());
 
-      this.scope.on("change", this.onScopeChange);
+      this.scope.on("change", () => this.onScopeChange());
 
-      app.on("ready", this.onReady);
-      $.on(window, "hashchange", this.searchUrl);
-      $.on(window, "focus", this.onWindowFocus);
+      app.on("ready", () => this.onReady());
+      $.on(window, "hashchange", () => this.searchUrl());
+      $.on(window, "focus", (event) => this.onWindowFocus(event));
     }
 
     focus() {
@@ -247,7 +231,7 @@
       if (context.hash) {
         this.delay(this.searchUrl);
       }
-      $.requestAnimationFrame(this.autoFocus);
+      $.requestAnimationFrame(() => this.autoFocus());
     }
 
     extractHashValue() {

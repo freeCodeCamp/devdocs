@@ -7,16 +7,14 @@
  */
 app.UpdateChecker = class UpdateChecker {
   constructor() {
-    this.checkDocs = this.checkDocs.bind(this);
-    this.onFocus = this.onFocus.bind(this);
     this.lastCheck = Date.now();
 
-    $.on(window, "focus", this.onFocus);
+    $.on(window, "focus", () => this.onFocus());
     if (app.serviceWorker != null) {
-      app.serviceWorker.on("updateready", this.onUpdateReady);
+      app.serviceWorker.on("updateready", () => this.onUpdateReady());
     }
 
-    setTimeout(this.checkDocs, 0);
+    setTimeout(() => this.checkDocs(), 0);
   }
 
   check() {

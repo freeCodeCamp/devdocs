@@ -10,12 +10,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 app.views.SettingsPage = class SettingsPage extends app.View {
-  constructor(...args) {
-    this.onChange = this.onChange.bind(this);
-    this.onClick = this.onClick.bind(this);
-    super(...args);
-  }
-
   static initClass() {
     this.className = "_static";
 

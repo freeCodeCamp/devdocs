@@ -23,11 +23,8 @@ app.views.ListFold = class ListFold extends app.View {
   }
 
   constructor(el) {
-    this.onLeft = this.onLeft.bind(this);
-    this.onRight = this.onRight.bind(this);
-    this.onClick = this.onClick.bind(this);
-    this.el = el;
     super(...arguments);
+    this.el = el;
   }
 
   open(el) {

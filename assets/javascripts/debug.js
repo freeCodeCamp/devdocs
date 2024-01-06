@@ -110,7 +110,7 @@ this.viewTree = function (view, level, visited) {
     `%c ${Array(level + 1).join("  ")}${
       view.constructor.name
     }: ${!!view.activated}`,
-    "color:" + ((view.activated && "green") || "red")
+    "color:" + ((view.activated && "green") || "red"),
   );
 
   for (var key of Object.keys(view || {})) {

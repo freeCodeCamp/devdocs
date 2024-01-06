@@ -13,15 +13,6 @@
 (function () {
   let SIDEBAR_HIDDEN_LAYOUT = undefined;
   app.views.Settings = class Settings extends app.View {
-    constructor(...args) {
-      this.onChange = this.onChange.bind(this);
-      this.onEnter = this.onEnter.bind(this);
-      this.onSubmit = this.onSubmit.bind(this);
-      this.onImport = this.onImport.bind(this);
-      this.onClick = this.onClick.bind(this);
-      super(...args);
-    }
-
     static initClass() {
       SIDEBAR_HIDDEN_LAYOUT = "_sidebar-hidden";
 

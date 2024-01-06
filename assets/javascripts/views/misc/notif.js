@@ -13,20 +13,15 @@ app.views.Notif = class Notif extends app.View {
     this.activeClass = "_in";
     this.attributes = { role: "alert" };
 
-    this.defautOptions = { autoHide: 15000 };
+    this.defaultOptions = { autoHide: 15000 };
 
     this.events = { click: "onClick" };
   }
 
   constructor(type, options) {
-    this.onClick = this.onClick.bind(this);
-    this.type = type;
-    if (options == null) {
-      options = {};
-    }
-    this.options = options;
-    this.options = $.extend({}, this.constructor.defautOptions, this.options);
     super(...arguments);
+    this.type = type;
+    this.options = $.extend({}, this.constructor.defaultOptions, options || {});
   }
 
   init() {

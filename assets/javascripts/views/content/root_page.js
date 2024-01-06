@@ -8,11 +8,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 app.views.RootPage = class RootPage extends app.View {
-  constructor(...args) {
-    this.onClick = this.onClick.bind(this);
-    super(...args);
-  }
-
   static initClass() {
     this.events = { click: "onClick" };
   }

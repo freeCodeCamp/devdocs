@@ -11,11 +11,6 @@
 //= require views/pages/base
 
 app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
-  constructor(...args) {
-    this.onIframeLoaded = this.onIframeLoaded.bind(this);
-    super(...args);
-  }
-
   static initClass() {
     this.demoClassName = "_jquery-demo";
   }
@@ -24,6 +19,7 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
     // Prevent jQuery Mobile's demo iframes from scrolling the page
     for (var iframe of Array.from(this.findAllByTag("iframe"))) {
       iframe.style.display = "none";
+      this.onIframeLoaded = this.onIframeLoaded.bind(this);
       $.on(iframe, "load", this.onIframeLoaded);
     }
 

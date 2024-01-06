@@ -18,14 +18,9 @@ app.views.Results = class Results extends app.View {
   }
 
   constructor(sidebar, search) {
-    this.onResults = this.onResults.bind(this);
-    this.onNoResults = this.onNoResults.bind(this);
-    this.onClear = this.onClear.bind(this);
-    this.afterRoute = this.afterRoute.bind(this);
-    this.onClick = this.onClick.bind(this);
+    super(...arguments);
     this.sidebar = sidebar;
     this.search = search;
-    super(...arguments);
   }
 
   deactivate() {
@@ -39,9 +34,9 @@ app.views.Results = class Results extends app.View {
     this.addSubview((this.listSelect = new app.views.ListSelect(this.el)));
 
     this.search
-      .on("results", this.onResults)
-      .on("noresults", this.onNoResults)
-      .on("clear", this.onClear);
+      .on("results", (entries, flags) => this.onResults(entries, flags))
+      .on("noresults", () => this.onNoResults())
+      .on("clear", () => this.onClear());
   }
 
   onResults(entries, flags) {

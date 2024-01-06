@@ -9,11 +9,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 app.views.OfflinePage = class OfflinePage extends app.View {
-  constructor(...args) {
-    this.onClick = this.onClick.bind(this);
-    super(...args);
-  }
-
   static initClass() {
     this.className = "_static";
 

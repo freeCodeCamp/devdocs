@@ -215,12 +215,7 @@ function scoreFuzzyMatch() {
     }
 
     constructor(options) {
-      this.match = this.match.bind(this);
-      this.matchChunks = this.matchChunks.bind(this);
-      if (options == null) {
-        options = {};
-      }
-      this.options = $.extend({}, DEFAULTS, options);
+      this.options = $.extend({}, DEFAULTS, options || {});
     }
 
     find(data, attr, q) {
@@ -307,10 +302,10 @@ function scoreFuzzyMatch() {
       this.matchChunk();
 
       if (this.cursor === this.dataLength || this.scoredEnough()) {
-        this.delay(this.match);
+        this.delay(() => this.match());
         this.sendResults();
       } else {
-        this.delay(this.matchChunks);
+        this.delay(() => this.matchChunks());
       }
     }
 
@@ -410,11 +405,6 @@ function scoreFuzzyMatch() {
 })();
 
 app.SynchronousSearcher = class SynchronousSearcher extends app.Searcher {
-  constructor(...args) {
-    this.match = this.match.bind(this);
-    super(...args);
-  }
-
   match() {
     if (this.matcher) {
       if (!this.allResults) {

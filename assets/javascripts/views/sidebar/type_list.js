@@ -21,10 +21,8 @@ app.views.TypeList = class TypeList extends app.View {
   }
 
   constructor(doc) {
-    this.onOpen = this.onOpen.bind(this);
-    this.onClose = this.onClose.bind(this);
-    this.doc = doc;
     super(...arguments);
+    this.doc = doc;
   }
 
   init() {

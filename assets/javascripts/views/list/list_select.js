@@ -16,9 +16,8 @@ app.views.ListSelect = class ListSelect extends app.View {
   }
 
   constructor(el) {
-    this.onClick = this.onClick.bind(this);
-    this.el = el;
     super(...arguments);
+    this.el = el;
   }
 
   deactivate() {

@@ -174,6 +174,7 @@ app.View = class View {
     if (this.constructor.events) {
       for (name in this.constructor.events) {
         method = this.constructor.events[name];
+        this[method] = this[method].bind(this);
         this.onDOM(name, this[method]);
       }
     }
@@ -181,6 +182,7 @@ app.View = class View {
     if (this.constructor.routes) {
       for (name in this.constructor.routes) {
         method = this.constructor.routes[name];
+        this[method] = this[method].bind(this);
         app.router.on(name, this[method]);
       }
     }
@@ -188,6 +190,7 @@ app.View = class View {
     if (this.constructor.shortcuts) {
       for (name in this.constructor.shortcuts) {
         method = this.constructor.shortcuts[name];
+        this[method] = this[method].bind(this);
         app.shortcuts.on(name, this[method]);
       }
     }

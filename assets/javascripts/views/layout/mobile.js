@@ -54,44 +54,36 @@ app.views.Mobile = class Mobile extends app.View {
   }
 
   constructor() {
-    this.showSidebar = this.showSidebar.bind(this);
-    this.hideSidebar = this.hideSidebar.bind(this);
-    this.onClickBack = this.onClickBack.bind(this);
-    this.onClickForward = this.onClickForward.bind(this);
-    this.onClickToggleSidebar = this.onClickToggleSidebar.bind(this);
-    this.onClickDocPickerTab = this.onClickDocPickerTab.bind(this);
-    this.onClickSettingsTab = this.onClickSettingsTab.bind(this);
-    this.onTapSearch = this.onTapSearch.bind(this);
-    this.onEscape = this.onEscape.bind(this);
-    this.afterRoute = this.afterRoute.bind(this);
-    this.el = document.documentElement;
     super(...arguments);
+    this.el = document.documentElement;
   }
 
   init() {
-    $.on($("._search"), "touchend", this.onTapSearch);
+    $.on($("._search"), "touchend", () => this.onTapSearch());
 
     this.toggleSidebar = $("button[data-toggle-sidebar]");
     this.toggleSidebar.removeAttribute("hidden");
-    $.on(this.toggleSidebar, "click", this.onClickToggleSidebar);
+    $.on(this.toggleSidebar, "click", () => this.onClickToggleSidebar());
 
     this.back = $("button[data-back]");
     this.back.removeAttribute("hidden");
-    $.on(this.back, "click", this.onClickBack);
+    $.on(this.back, "click", () => this.onClickBack());
 
     this.forward = $("button[data-forward]");
     this.forward.removeAttribute("hidden");
-    $.on(this.forward, "click", this.onClickForward);
+    $.on(this.forward, "click", () => this.onClickForward());
 
     this.docPickerTab = $('button[data-tab="doc-picker"]');
     this.docPickerTab.removeAttribute("hidden");
-    $.on(this.docPickerTab, "click", this.onClickDocPickerTab);
+    $.on(this.docPickerTab, "click", (event) =>
+      this.onClickDocPickerTab(event),
+    );
 
     this.settingsTab = $('button[data-tab="settings"]');
     this.settingsTab.removeAttribute("hidden");
-    $.on(this.settingsTab, "click", this.onClickSettingsTab);
+    $.on(this.settingsTab, "click", (event) => this.onClickSettingsTab(event));
 
-    app.document.sidebar.search.on("searching", this.showSidebar);
+    app.document.sidebar.search.on("searching", () => this.showSidebar());
 
     this.activate();
   }

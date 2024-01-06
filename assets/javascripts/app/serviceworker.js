@@ -16,7 +16,6 @@ app.ServiceWorker = class ServiceWorker {
   }
 
   constructor() {
-    this.onUpdateFound = this.onUpdateFound.bind(this);
     this.onStateChange = this.onStateChange.bind(this);
     this.registration = null;
     this.notifyUpdate = true;
@@ -51,12 +50,12 @@ app.ServiceWorker = class ServiceWorker {
 
   updateRegistration(registration) {
     this.registration = registration;
-    $.on(this.registration, "updatefound", this.onUpdateFound);
+    $.on(this.registration, "updatefound", () => this.onUpdateFound());
   }
 
   onUpdateFound() {
     if (this.installingRegistration) {
-      $.off(this.installingRegistration, "statechange", this.onStateChange());
+      $.off(this.installingRegistration, "statechange", this.onStateChange);
     }
     this.installingRegistration = this.registration.installing;
     $.on(this.installingRegistration, "statechange", this.onStateChange);

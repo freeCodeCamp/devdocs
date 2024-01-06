@@ -9,11 +9,6 @@
 //= require views/pages/base
 
 app.views.SqlitePage = class SqlitePage extends app.views.BasePage {
-  constructor(...args) {
-    this.onClick = this.onClick.bind(this);
-    super(...args);
-  }
-
   static initClass() {
     this.events = { click: "onClick" };
   }

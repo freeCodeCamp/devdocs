@@ -19,10 +19,6 @@
     }
 
     constructor() {
-      this.onOpenSuccess = this.onOpenSuccess.bind(this);
-      this.onOpenError = this.onOpenError.bind(this);
-      this.checkForCorruptedDocs = this.checkForCorruptedDocs.bind(this);
-      this.deleteCorruptedDocs = this.deleteCorruptedDocs.bind(this);
       this.versionMultipler = $.isIE() ? 1e5 : 1e9;
       this.useIndexedDB = this.useIndexedDB();
       this.callbacks = [];
@@ -45,9 +41,9 @@
           NAME,
           VERSION * this.versionMultipler + this.userVersion(),
         );
-        req.onsuccess = this.onOpenSuccess;
-        req.onerror = this.onOpenError;
-        req.onupgradeneeded = this.onUpgradeNeeded;
+        req.onsuccess = (event) => this.onOpenSuccess(event);
+        req.onerror = (event) => this.onOpenError(event);
+        req.onupgradeneeded = (event) => this.onUpgradeNeeded(event);
       } catch (error) {
         this.fail("exception", error);
       }
@@ -378,8 +374,7 @@
 
     load(entry, onSuccess, onError) {
       if (this.shouldLoadWithIDB(entry)) {
-        onError = this.loadWithXHR.bind(this, entry, onSuccess, onError);
-        return this.loadWithIDB(entry, onSuccess, onError);
+        return this.loadWithIDB(entry, onSuccess, () => this.loadWithXHR(entry, onSuccess, onError));
       } else {
         return this.loadWithXHR(entry, onSuccess, onError);
       }
@@ -440,7 +435,7 @@
         mode: "readonly",
       });
       txn.oncomplete = () => {
-        setTimeout(this.checkForCorruptedDocs, 50);
+        setTimeout(() => this.checkForCorruptedDocs(), 50);
       };
 
       const req = txn.objectStore("docs").openCursor();
@@ -486,7 +481,7 @@
         }
 
         if (docs.length === 0) {
-          setTimeout(this.deleteCorruptedDocs, 0);
+          setTimeout(() => this.deleteCorruptedDocs(), 0);
           return;
         }
 
@@ -497,7 +492,7 @@
         });
         txn.oncomplete = () => {
           if (this.corruptedDocs.length > 0) {
-            setTimeout(this.deleteCorruptedDocs, 0);
+            setTimeout(() => this.deleteCorruptedDocs(), 0);
           }
         };
 

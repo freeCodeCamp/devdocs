@@ -10,10 +10,9 @@
  */
 app.views.BasePage = class BasePage extends app.View {
   constructor(el, entry) {
-    this.paintCode = this.paintCode.bind(this);
+    super(...arguments);
     this.el = el;
     this.entry = entry;
-    super(...arguments);
   }
 
   deactivate() {
@@ -40,7 +39,9 @@ app.views.BasePage = class BasePage extends app.View {
       this.delay(this.afterRender);
     }
     if (this.highlightNodes.length > 0) {
-      $.requestAnimationFrame(() => $.requestAnimationFrame(this.paintCode));
+      $.requestAnimationFrame(() =>
+        $.requestAnimationFrame(() => this.paintCode()),
+      );
     }
   }
 
@@ -80,7 +81,7 @@ app.views.BasePage = class BasePage extends app.View {
     }
 
     if (this.highlightNodes.length > 0) {
-      $.requestAnimationFrame(this.paintCode);
+      $.requestAnimationFrame(() => this.paintCode());
     }
     this.previousTiming = timing;
   }
