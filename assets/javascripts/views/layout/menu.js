@@ -1,17 +1,8 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS206: Consider reworking classes to avoid initClass
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.Menu = class Menu extends app.View {
-  static initClass() {
-    this.el = "._menu";
-    this.activeClass = "active";
+  static el = "._menu";
+  static activeClass = "active";
 
-    this.events = { click: "onClick" };
-  }
+  static events = { click: "onClick" };
 
   init() {
     $.on(document.body, "click", (event) => this.onGlobalClick(event));
@@ -39,4 +30,3 @@ app.views.Menu = class Menu extends app.View {
     }
   }
 };
-app.views.Menu.initClass();
