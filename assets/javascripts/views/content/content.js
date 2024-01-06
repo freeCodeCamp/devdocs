@@ -12,27 +12,25 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
 app.views.Content = class Content extends app.View {
-  static initClass() {
-    this.el = "._content";
-    this.loadingClass = "_content-loading";
+  static el = "._content";
+  static loadingClass = "_content-loading";
 
-    this.events = { click: "onClick" };
+  static events = { click: "onClick" };
 
-    this.shortcuts = {
-      altUp: "scrollStepUp",
-      altDown: "scrollStepDown",
-      pageUp: "scrollPageUp",
-      pageDown: "scrollPageDown",
-      pageTop: "scrollToTop",
-      pageBottom: "scrollToBottom",
-      altF: "onAltF",
-    };
+  static shortcuts = {
+    altUp: "scrollStepUp",
+    altDown: "scrollStepDown",
+    pageUp: "scrollPageUp",
+    pageDown: "scrollPageDown",
+    pageTop: "scrollToTop",
+    pageBottom: "scrollToBottom",
+    altF: "onAltF",
+  };
 
-    this.routes = {
-      before: "beforeRoute",
-      after: "afterRoute",
-    };
-  }
+  static routes = {
+    before: "beforeRoute",
+    after: "afterRoute",
+  };
 
   init() {
     this.scrollEl = app.isMobile()
@@ -260,7 +258,6 @@ app.views.Content = class Content extends app.View {
     );
   }
 };
-app.views.Content.initClass();
 
 function __guard__(value, transform) {
   return typeof value !== "undefined" && value !== null
