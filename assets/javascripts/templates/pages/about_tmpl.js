@@ -8,12 +8,18 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-app.templates.aboutPage = function() {
+app.templates.aboutPage = function () {
   let doc;
-  const all_docs = app.docs.all().concat(...Array.from(app.disabledDocs.all() || []));
+  const all_docs = app.docs
+    .all()
+    .concat(...Array.from(app.disabledDocs.all() || []));
   // de-duplicate docs by doc.name
   const docs = [];
-  for (doc of Array.from(all_docs)) { if (!(docs.find(d => d.name === doc.name))) { docs.push(doc); } }
+  for (doc of Array.from(all_docs)) {
+    if (!docs.find((d) => d.name === doc.name)) {
+      docs.push(doc);
+    }
+  }
   return `\
 <nav class="_toc" role="directory">
   <h3 class="_toc-title">Table of Contents</h3>
@@ -79,18 +85,23 @@ app.templates.aboutPage = function() {
       <th>Documentation
       <th>Copyright/License
       <th>Source code
-    ${((() => {
-        const result = [];
-        
-        for (doc of Array.from(docs)) {           result.push(`<tr> \
-<td><a href=\"${(doc.links != null ? doc.links.home : undefined)}\">${doc.name}</a></td> \
+    ${(() => {
+      const result = [];
+
+      for (doc of Array.from(docs)) {
+        result.push(`<tr> \
+<td><a href=\"${doc.links != null ? doc.links.home : undefined}\">${
+          doc.name
+        }</a></td> \
 <td>${doc.attribution}</td> \
-<td><a href=\"${(doc.links != null ? doc.links.code : undefined)}\">Source code</a></td> \
+<td><a href=\"${
+          doc.links != null ? doc.links.code : undefined
+        }\">Source code</a></td> \
 </tr>`);
-        }
-      
-        return result;
-      })()).join('')}
+      }
+
+      return result;
+    })().join("")}
   </table>
 </div>
 

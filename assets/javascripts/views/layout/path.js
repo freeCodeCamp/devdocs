@@ -15,33 +15,36 @@ const Cls = (app.views.Path = class Path extends app.View {
   }
 
   static initClass() {
-    this.className = '_path';
-    this.attributes =
-      {role: 'complementary'};
-  
-    this.events =
-      {click: 'onClick'};
-  
-    this.routes =
-      {after: 'afterRoute'};
+    this.className = "_path";
+    this.attributes = { role: "complementary" };
+
+    this.events = { click: "onClick" };
+
+    this.routes = { after: "afterRoute" };
   }
 
   render(...args) {
-    this.html(this.tmpl('path', ...Array.from(args)));
+    this.html(this.tmpl("path", ...Array.from(args)));
     this.show();
   }
 
   show() {
-    if (!this.el.parentNode) { this.prependTo(app.el); }
+    if (!this.el.parentNode) {
+      this.prependTo(app.el);
+    }
   }
 
   hide() {
-    if (this.el.parentNode) { $.remove(this.el); }
+    if (this.el.parentNode) {
+      $.remove(this.el);
+    }
   }
 
   onClick(event) {
     let link;
-    if (link = $.closestLink(event.target, this.el)) { this.clicked = true; }
+    if ((link = $.closestLink(event.target, this.el))) {
+      this.clicked = true;
+    }
   }
 
   afterRoute(route, context) {

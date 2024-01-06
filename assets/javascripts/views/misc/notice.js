@@ -9,23 +9,30 @@
  */
 const Cls = (app.views.Notice = class Notice extends app.View {
   static initClass() {
-    this.className = '_notice';
-    this.attributes =
-      {role: 'alert'};
+    this.className = "_notice";
+    this.attributes = { role: "alert" };
   }
 
-  constructor(type, ...rest) { this.type = type; [...this.args] = Array.from(rest); super(...arguments); }
+  constructor(type, ...rest) {
+    this.type = type;
+    [...this.args] = Array.from(rest);
+    super(...arguments);
+  }
 
   init() {
     this.activate();
   }
 
   activate() {
-    if (super.activate(...arguments)) { this.show(); }
+    if (super.activate(...arguments)) {
+      this.show();
+    }
   }
 
   deactivate() {
-    if (super.deactivate(...arguments)) { this.hide(); }
+    if (super.deactivate(...arguments)) {
+      this.hide();
+    }
   }
 
   show() {

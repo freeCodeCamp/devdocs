@@ -10,16 +10,23 @@
  */
 const Cls = (app.views.Results = class Results extends app.View {
   static initClass() {
-    this.className = '_list';
-  
-    this.events =
-      {click: 'onClick'};
-  
-    this.routes =
-      {after: 'afterRoute'};
+    this.className = "_list";
+
+    this.events = { click: "onClick" };
+
+    this.routes = { after: "afterRoute" };
   }
 
-  constructor(sidebar, search) { this.onResults = this.onResults.bind(this);   this.onNoResults = this.onNoResults.bind(this);   this.onClear = this.onClear.bind(this);   this.afterRoute = this.afterRoute.bind(this);   this.onClick = this.onClick.bind(this);   this.sidebar = sidebar; this.search = search; super(...arguments); }
+  constructor(sidebar, search) {
+    this.onResults = this.onResults.bind(this);
+    this.onNoResults = this.onNoResults.bind(this);
+    this.onClear = this.onClear.bind(this);
+    this.afterRoute = this.afterRoute.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.sidebar = sidebar;
+    this.search = search;
+    super(...arguments);
+  }
 
   deactivate() {
     if (super.deactivate(...arguments)) {
@@ -28,29 +35,37 @@ const Cls = (app.views.Results = class Results extends app.View {
   }
 
   init() {
-    this.addSubview(this.listFocus  = new app.views.ListFocus(this.el));
-    this.addSubview(this.listSelect = new app.views.ListSelect(this.el));
+    this.addSubview((this.listFocus = new app.views.ListFocus(this.el)));
+    this.addSubview((this.listSelect = new app.views.ListSelect(this.el)));
 
     this.search
-      .on('results', this.onResults)
-      .on('noresults', this.onNoResults)
-      .on('clear', this.onClear);
+      .on("results", this.onResults)
+      .on("noresults", this.onNoResults)
+      .on("clear", this.onClear);
   }
 
   onResults(entries, flags) {
-    if (flags.initialResults) { if (this.listFocus != null) {
-      this.listFocus.blur();
-    } }
-    if (flags.initialResults) { this.empty(); }
-    this.append(this.tmpl('sidebarResult', entries));
+    if (flags.initialResults) {
+      if (this.listFocus != null) {
+        this.listFocus.blur();
+      }
+    }
+    if (flags.initialResults) {
+      this.empty();
+    }
+    this.append(this.tmpl("sidebarResult", entries));
 
     if (flags.initialResults) {
-      if (flags.urlSearch) { this.openFirst(); } else { this.focusFirst(); }
+      if (flags.urlSearch) {
+        this.openFirst();
+      } else {
+        this.focusFirst();
+      }
     }
   }
 
   onNoResults() {
-    this.html(this.tmpl('sidebarNoResults'));
+    this.html(this.tmpl("sidebarNoResults"));
   }
 
   onClear() {
@@ -58,9 +73,11 @@ const Cls = (app.views.Results = class Results extends app.View {
   }
 
   focusFirst() {
-    if (!app.isMobile()) { if (this.listFocus != null) {
-      this.listFocus.focusOnNextFrame(this.el.firstElementChild);
-    } }
+    if (!app.isMobile()) {
+      if (this.listFocus != null) {
+        this.listFocus.focusOnNextFrame(this.el.firstElementChild);
+      }
+    }
   }
 
   openFirst() {
@@ -75,7 +92,7 @@ const Cls = (app.views.Results = class Results extends app.View {
   }
 
   afterRoute(route, context) {
-    if (route === 'entry') {
+    if (route === "entry") {
       this.listSelect.selectByHref(context.entry.fullPath());
     } else {
       this.listSelect.deselect();
@@ -84,11 +101,15 @@ const Cls = (app.views.Results = class Results extends app.View {
 
   onClick(event) {
     let slug;
-    if (event.which !== 1) { return; }
-    if (slug = $.eventTarget(event).getAttribute('data-enable')) {
+    if (event.which !== 1) {
+      return;
+    }
+    if ((slug = $.eventTarget(event).getAttribute("data-enable"))) {
       $.stopEvent(event);
-      const doc = app.disabledDocs.findBy('slug', slug);
-      if (doc) { return app.enableDoc(doc, this.onDocEnabled.bind(this, doc), $.noop); }
+      const doc = app.disabledDocs.findBy("slug", slug);
+      if (doc) {
+        return app.enableDoc(doc, this.onDocEnabled.bind(this, doc), $.noop);
+      }
     }
   }
 });

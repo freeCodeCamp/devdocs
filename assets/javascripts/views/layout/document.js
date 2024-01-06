@@ -17,41 +17,49 @@ const Cls = (app.views.Document = class Document extends app.View {
 
   static initClass() {
     this.el = document;
-  
-    this.events =
-      {visibilitychange: 'onVisibilityChange'};
-  
+
+    this.events = { visibilitychange: "onVisibilityChange" };
+
     this.shortcuts = {
-      help:        'onHelp',
-      preferences: 'onPreferences',
-      escape:      'onEscape',
-      superLeft:   'onBack',
-      superRight:  'onForward'
+      help: "onHelp",
+      preferences: "onPreferences",
+      escape: "onEscape",
+      superLeft: "onBack",
+      superRight: "onForward",
     };
-  
-    this.routes =
-      {after: 'afterRoute'};
+
+    this.routes = { after: "afterRoute" };
   }
 
   init() {
-    this.addSubview((this.menu    = new app.views.Menu),
-    this.addSubview(this.sidebar = new app.views.Sidebar));
-    if (app.views.Resizer.isSupported()) { this.addSubview(this.resizer = new app.views.Resizer); }
-    this.addSubview(this.content = new app.views.Content);
-    if (!app.isSingleDoc() && !app.isMobile()) { this.addSubview(this.path    = new app.views.Path); }
-    if (!app.isSingleDoc()) { this.settings = new app.views.Settings; }
+    this.addSubview(
+      (this.menu = new app.views.Menu()),
+      this.addSubview((this.sidebar = new app.views.Sidebar())),
+    );
+    if (app.views.Resizer.isSupported()) {
+      this.addSubview((this.resizer = new app.views.Resizer()));
+    }
+    this.addSubview((this.content = new app.views.Content()));
+    if (!app.isSingleDoc() && !app.isMobile()) {
+      this.addSubview((this.path = new app.views.Path()));
+    }
+    if (!app.isSingleDoc()) {
+      this.settings = new app.views.Settings();
+    }
 
-    $.on(document.body, 'click', this.onClick);
+    $.on(document.body, "click", this.onClick);
 
     this.activate();
   }
 
   setTitle(title) {
-    return this.el.title = title ? `${title} — DevDocs` : 'DevDocs API Documentation';
+    return (this.el.title = title
+      ? `${title} — DevDocs`
+      : "DevDocs API Documentation");
   }
 
   afterRoute(route) {
-    if (route === 'settings') {
+    if (route === "settings") {
       if (this.settings != null) {
         this.settings.activate();
       }
@@ -63,26 +71,29 @@ const Cls = (app.views.Document = class Document extends app.View {
   }
 
   onVisibilityChange() {
-    if (this.el.visibilityState !== 'visible') { return; }
-    this.delay(function() {
-      if (app.isMobile() !== app.views.Mobile.detect()) { location.reload(); }
+    if (this.el.visibilityState !== "visible") {
+      return;
     }
-    , 300);
+    this.delay(function () {
+      if (app.isMobile() !== app.views.Mobile.detect()) {
+        location.reload();
+      }
+    }, 300);
   }
 
   onHelp() {
-    app.router.show('/help#shortcuts');
+    app.router.show("/help#shortcuts");
   }
 
   onPreferences() {
-    app.router.show('/settings');
+    app.router.show("/settings");
   }
 
   onEscape() {
-    const path = !app.isSingleDoc() || (location.pathname === app.doc.fullPath()) ?
-      '/'
-    :
-      app.doc.fullPath();
+    const path =
+      !app.isSingleDoc() || location.pathname === app.doc.fullPath()
+        ? "/"
+        : app.doc.fullPath();
 
     app.router.show(path);
   }
@@ -97,16 +108,34 @@ const Cls = (app.views.Document = class Document extends app.View {
 
   onClick(event) {
     const target = $.eventTarget(event);
-    if (!target.hasAttribute('data-behavior')) { return; }
+    if (!target.hasAttribute("data-behavior")) {
+      return;
+    }
     $.stopEvent(event);
-    switch (target.getAttribute('data-behavior')) {
-      case 'back':               history.back(); break;
-      case 'reload':             window.location.reload(); break;
-      case 'reboot':             app.reboot(); break;
-      case 'hard-reload':        app.reload(); break;
-      case 'reset':              if (confirm('Are you sure you want to reset DevDocs?')) { app.reset(); } break;
-      case 'accept-analytics':   Cookies.set('analyticsConsent', '1', {expires: 1e8}) && app.reboot(); break;
-      case 'decline-analytics':  Cookies.set('analyticsConsent', '0', {expires: 1e8}) && app.reboot(); break;
+    switch (target.getAttribute("data-behavior")) {
+      case "back":
+        history.back();
+        break;
+      case "reload":
+        window.location.reload();
+        break;
+      case "reboot":
+        app.reboot();
+        break;
+      case "hard-reload":
+        app.reload();
+        break;
+      case "reset":
+        if (confirm("Are you sure you want to reset DevDocs?")) {
+          app.reset();
+        }
+        break;
+      case "accept-analytics":
+        Cookies.set("analyticsConsent", "1", { expires: 1e8 }) && app.reboot();
+        break;
+      case "decline-analytics":
+        Cookies.set("analyticsConsent", "0", { expires: 1e8 }) && app.reboot();
+        break;
     }
   }
 });

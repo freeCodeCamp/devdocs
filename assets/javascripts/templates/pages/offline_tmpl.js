@@ -5,12 +5,14 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-app.templates.offlinePage = docs => `\
+app.templates.offlinePage = (docs) => `\
 <h1 class="_lined-heading">Offline Documentation</h1>
 
 <div class="_docs-tools">
   <label>
-    <input type="checkbox" name="autoUpdate" value="1" ${app.settings.get('manualUpdate') ? '' : 'checked'}>Install updates automatically
+    <input type="checkbox" name="autoUpdate" value="1" ${
+      app.settings.get("manualUpdate") ? "" : "checked"
+    }>Install updates automatically
   </label>
   <div class="_docs-links">
     <button type="button" class="_btn-link" data-action-all="install">Install all</button><button type="button" class="_btn-link" data-action-all="update"><strong>Update all</strong></button><button type="button" class="_btn-link" data-action-all="uninstall">Uninstall all</button>
@@ -47,14 +49,15 @@ app.templates.offlinePage = docs => `\
 </dl>\
 `;
 
-var canICloseTheTab = function() {
+var canICloseTheTab = function () {
   if (app.ServiceWorker.isEnabled()) {
-    return " Yes! Even offline, you can open a new tab, go to <a href=\"//devdocs.io\">devdocs.io</a>, and everything will work as if you were online (provided you installed all the documentations you want to use beforehand). ";
+    return ' Yes! Even offline, you can open a new tab, go to <a href="//devdocs.io">devdocs.io</a>, and everything will work as if you were online (provided you installed all the documentations you want to use beforehand). ';
   } else {
     let reason = "aren't available in your browser (or are disabled)";
 
-    if (app.config.env !== 'production') {
-      reason = "are disabled in your development instance of DevDocs (enable them by setting the <code>ENABLE_SERVICE_WORKER</code> environment variable to <code>true</code>)";
+    if (app.config.env !== "production") {
+      reason =
+        "are disabled in your development instance of DevDocs (enable them by setting the <code>ENABLE_SERVICE_WORKER</code> environment variable to <code>true</code>)";
     }
 
     return ` No. Service Workers ${reason}, so loading <a href="//devdocs.io">devdocs.io</a> offline won't work.<br>
@@ -62,30 +65,31 @@ The current tab will continue to function even when you go offline (provided you
   }
 };
 
-app.templates.offlineDoc = function(doc, status) {
+app.templates.offlineDoc = function (doc, status) {
   const outdated = doc.isOutdated(status);
 
   let html = `\
-<tr data-slug="${doc.slug}"${outdated ? ' class="_highlight"' : ''}>
+<tr data-slug="${doc.slug}"${outdated ? ' class="_highlight"' : ""}>
   <td class="_docs-name _icon-${doc.icon}">${doc.fullName}</td>
-  <td class="_docs-size">${Math.ceil(doc.db_size / 100000) / 10}&nbsp;<small>MB</small></td>\
+  <td class="_docs-size">${
+    Math.ceil(doc.db_size / 100000) / 10
+  }&nbsp;<small>MB</small></td>\
 `;
 
-  html += !(status && status.installed) ?
-    `\
+  html += !(status && status.installed)
+    ? `\
 <td>-</td>
 <td><button type="button" class="_btn-link" data-action="install">Install</button></td>\
 `
-  : outdated ?
-    `\
+    : outdated
+      ? `\
 <td><strong>Outdated</strong></td>
 <td><button type="button" class="_btn-link _bold" data-action="update">Update</button> - <button type="button" class="_btn-link" data-action="uninstall">Uninstall</button></td>\
 `
-  :
-    `\
+      : `\
 <td>Up&#8209;to&#8209;date</td>
 <td><button type="button" class="_btn-link" data-action="uninstall">Uninstall</button></td>\
 `;
 
-  return html + '</tr>';
+  return html + "</tr>";
 };

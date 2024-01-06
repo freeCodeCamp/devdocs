@@ -6,11 +6,11 @@
  * DS205: Consider reworking code to avoid use of IIFEs
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-app.templates.helpPage = function() {
+app.templates.helpPage = function () {
   let key, value;
-  const ctrlKey = $.isMac() ? 'cmd' : 'ctrl';
-  const navKey = $.isMac() ? 'cmd' : 'alt';
-  const arrowScroll = app.settings.get('arrowScroll');
+  const ctrlKey = $.isMac() ? "cmd" : "ctrl";
+  const navKey = $.isMac() ? "cmd" : "alt";
+  const arrowScroll = app.settings.get("arrowScroll");
 
   const aliases_one = {};
   const aliases_two = {};
@@ -18,7 +18,8 @@ app.templates.helpPage = function() {
   const middle = Math.ceil(keys.length / 2) - 1;
   for (let i = 0; i < keys.length; i++) {
     key = keys[i];
-    (i > middle ? aliases_two : aliases_one)[key] = app.models.Entry.ALIASES[key];
+    (i > middle ? aliases_two : aliases_one)[key] =
+      app.models.Entry.ALIASES[key];
   }
 
   return `\
@@ -79,12 +80,12 @@ app.templates.helpPage = function() {
 <h3 class="_shortcuts-title">Sidebar</h3>
 <dl class="_shortcuts-dl">
   <dt class="_shortcuts-dt">
-    ${arrowScroll ? '<code class="_shortcut-code">shift</code> + ' : ''}
+    ${arrowScroll ? '<code class="_shortcut-code">shift</code> + ' : ""}
     <code class="_shortcut-code">&darr;</code>
     <code class="_shortcut-code">&uarr;</code>
   <dd class="_shortcuts-dd">Move selection
   <dt class="_shortcuts-dt">
-    ${arrowScroll ? '<code class="_shortcut-code">shift</code> + ' : ''}
+    ${arrowScroll ? '<code class="_shortcut-code">shift</code> + ' : ""}
     <code class="_shortcut-code">&rarr;</code>
     <code class="_shortcut-code">&larr;</code>
   <dd class="_shortcuts-dd">Show/hide sub-list
@@ -105,15 +106,16 @@ app.templates.helpPage = function() {
     <code class="_shortcut-code">${navKey} + &rarr;</code>
   <dd class="_shortcuts-dd">Go back/forward
   <dt class="_shortcuts-dt">
-    ${arrowScroll ?
-          '<code class="_shortcut-code">&darr;</code> ' +
+    ${
+      arrowScroll
+        ? '<code class="_shortcut-code">&darr;</code> ' +
           '<code class="_shortcut-code">&uarr;</code>'
-        :
-          '<code class="_shortcut-code">alt + &darr;</code> ' +
+        : '<code class="_shortcut-code">alt + &darr;</code> ' +
           '<code class="_shortcut-code">alt + &uarr;</code>' +
-          '<br>' +
+          "<br>" +
           '<code class="_shortcut-code">shift + &darr;</code> ' +
-          '<code class="_shortcut-code">shift + &uarr;</code>'}
+          '<code class="_shortcut-code">shift + &uarr;</code>'
+    }
   <dd class="_shortcuts-dd">Scroll step by step<br><br>
   <dt class="_shortcuts-dt">
     <code class="_shortcut-code">space</code>
@@ -167,27 +169,31 @@ app.templates.helpPage = function() {
     <tr>
       <th>Word
       <th>Alias
-    ${((() => {
-        const result = [];
-        for (key in aliases_one) {
-          value = aliases_one[key];
-          result.push(`<tr><td class=\"_code\">${key}<td class=\"_code\">${value}`);
-        }
-        return result;
-      })()).join('')}
+    ${(() => {
+      const result = [];
+      for (key in aliases_one) {
+        value = aliases_one[key];
+        result.push(
+          `<tr><td class=\"_code\">${key}<td class=\"_code\">${value}`,
+        );
+      }
+      return result;
+    })().join("")}
   </table>
   <table>
     <tr>
       <th>Word
       <th>Alias
-    ${((() => {
-        const result1 = [];
-        for (key in aliases_two) {
-          value = aliases_two[key];
-          result1.push(`<tr><td class=\"_code\">${key}<td class=\"_code\">${value}`);
-        }
-        return result1;
-      })()).join('')}
+    ${(() => {
+      const result1 = [];
+      for (key in aliases_two) {
+        value = aliases_two[key];
+        result1.push(
+          `<tr><td class=\"_code\">${key}<td class=\"_code\">${value}`,
+        );
+      }
+      return result1;
+    })().join("")}
   </table>
 </div>
 <p>Feel free to suggest new aliases on <a href="https://github.com/freeCodeCamp/devdocs/issues/new">GitHub</a>.\

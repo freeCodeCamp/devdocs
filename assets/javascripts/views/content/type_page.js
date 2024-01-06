@@ -8,7 +8,7 @@
  */
 const Cls = (app.views.TypePage = class TypePage extends app.View {
   static initClass() {
-    this.className = '_page';
+    this.className = "_page";
   }
 
   deactivate() {
@@ -20,7 +20,7 @@ const Cls = (app.views.TypePage = class TypePage extends app.View {
 
   render(type) {
     this.type = type;
-    this.html(this.tmpl('typePage', this.type));
+    this.html(this.tmpl("typePage", this.type));
     setFaviconForDoc(this.type.doc);
   }
 

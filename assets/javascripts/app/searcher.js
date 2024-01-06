@@ -16,116 +16,150 @@
 // Match functions
 //
 
-let fuzzyRegexp, i, index, lastIndex, match, matcher, matchIndex, matchLength, queryLength, score, separators, value, valueLength;
-const SEPARATOR = '.';
+let fuzzyRegexp,
+  i,
+  index,
+  lastIndex,
+  match,
+  matcher,
+  matchIndex,
+  matchLength,
+  queryLength,
+  score,
+  separators,
+  value,
+  valueLength;
+const SEPARATOR = ".";
 
 let query =
-(queryLength =
-(value =
-(valueLength =
-(matcher =     // current match function
-(fuzzyRegexp = // query fuzzy regexp
-(index =       // position of the query in the string being matched
-(lastIndex =   // last position of the query in the string being matched
-(match =       // regexp match data
-(matchIndex =
-(matchLength =
-(score =       // score for the current match
-(separators =  // counter
-(i = null)))))))))))));      // cursor
+  (queryLength =
+  value =
+  valueLength =
+  matcher = // current match function
+  fuzzyRegexp = // query fuzzy regexp
+  index = // position of the query in the string being matched
+  lastIndex = // last position of the query in the string being matched
+  match = // regexp match data
+  matchIndex =
+  matchLength =
+  score = // score for the current match
+  separators = // counter
+  i =
+    null); // cursor
 
 function exactMatch() {
-index = value.indexOf(query);
-if (!(index >= 0)) { return; }
+  index = value.indexOf(query);
+  if (!(index >= 0)) {
+    return;
+  }
 
-lastIndex = value.lastIndexOf(query);
+  lastIndex = value.lastIndexOf(query);
 
-if (index !== lastIndex) {
-  return Math.max(scoreExactMatch(), ((index = lastIndex) && scoreExactMatch()) || 0);
-} else {
-  return scoreExactMatch();
-}
+  if (index !== lastIndex) {
+    return Math.max(
+      scoreExactMatch(),
+      ((index = lastIndex) && scoreExactMatch()) || 0,
+    );
+  } else {
+    return scoreExactMatch();
+  }
 }
 
 function scoreExactMatch() {
-// Remove one point for each unmatched character.
-score = 100 - (valueLength - queryLength);
+  // Remove one point for each unmatched character.
+  score = 100 - (valueLength - queryLength);
 
-if (index > 0) {
-  // If the character preceding the query is a dot, assign the same score
-  // as if the query was found at the beginning of the string, minus one.
-  if (value.charAt(index - 1) === SEPARATOR) {
-    score += index - 1;
-  // Don't match a single-character query unless it's found at the beginning
-  // of the string or is preceded by a dot.
-  } else if (queryLength === 1) {
-    return;
-  // (1) Remove one point for each unmatched character up to the nearest
-  //     preceding dot or the beginning of the string.
-  // (2) Remove one point for each unmatched character following the query.
-  } else {
+  if (index > 0) {
+    // If the character preceding the query is a dot, assign the same score
+    // as if the query was found at the beginning of the string, minus one.
+    if (value.charAt(index - 1) === SEPARATOR) {
+      score += index - 1;
+      // Don't match a single-character query unless it's found at the beginning
+      // of the string or is preceded by a dot.
+    } else if (queryLength === 1) {
+      return;
+      // (1) Remove one point for each unmatched character up to the nearest
+      //     preceding dot or the beginning of the string.
+      // (2) Remove one point for each unmatched character following the query.
+    } else {
+      i = index - 2;
+      while (i >= 0 && value.charAt(i) !== SEPARATOR) {
+        i--;
+      }
+      score -=
+        index -
+        i + // (1)
+        (valueLength - queryLength - index); // (2)
+    }
+
+    // Remove one point for each dot preceding the query, except for the one
+    // immediately before the query.
+    separators = 0;
     i = index - 2;
-    while ((i >= 0) && (value.charAt(i) !== SEPARATOR)) { i--; }
-    score -= (index - i) +                       // (1)
-             (valueLength - queryLength - index); // (2)
+    while (i >= 0) {
+      if (value.charAt(i) === SEPARATOR) {
+        separators++;
+      }
+      i--;
+    }
+    score -= separators;
   }
 
-  // Remove one point for each dot preceding the query, except for the one
-  // immediately before the query.
+  // Remove five points for each dot following the query.
   separators = 0;
-  i = index - 2;
+  i = valueLength - queryLength - index - 1;
   while (i >= 0) {
-    if (value.charAt(i) === SEPARATOR) { separators++; }
+    if (value.charAt(index + queryLength + i) === SEPARATOR) {
+      separators++;
+    }
     i--;
   }
-  score -= separators;
-}
+  score -= separators * 5;
 
-// Remove five points for each dot following the query.
-separators = 0;
-i = valueLength - queryLength - index - 1;
-while (i >= 0) {
-  if (value.charAt(index + queryLength + i) === SEPARATOR) { separators++; }
-  i--;
-}
-score -= separators * 5;
-
-return Math.max(1, score);
+  return Math.max(1, score);
 }
 
 function fuzzyMatch() {
-if ((valueLength <= queryLength) || (value.indexOf(query) >= 0)) { return; }
-if (!(match = fuzzyRegexp.exec(value))) { return; }
-matchIndex = match.index;
-matchLength = match[0].length;
-score = scoreFuzzyMatch();
-if (match = fuzzyRegexp.exec(value.slice(i = value.lastIndexOf(SEPARATOR) + 1))) {
-  matchIndex = i + match.index;
+  if (valueLength <= queryLength || value.indexOf(query) >= 0) {
+    return;
+  }
+  if (!(match = fuzzyRegexp.exec(value))) {
+    return;
+  }
+  matchIndex = match.index;
   matchLength = match[0].length;
-  return Math.max(score, scoreFuzzyMatch());
-} else {
-  return score;
-}
+  score = scoreFuzzyMatch();
+  if (
+    (match = fuzzyRegexp.exec(
+      value.slice((i = value.lastIndexOf(SEPARATOR) + 1)),
+    ))
+  ) {
+    matchIndex = i + match.index;
+    matchLength = match[0].length;
+    return Math.max(score, scoreFuzzyMatch());
+  } else {
+    return score;
+  }
 }
 
 function scoreFuzzyMatch() {
-// When the match is at the beginning of the string or preceded by a dot.
-if ((matchIndex === 0) || (value.charAt(matchIndex - 1) === SEPARATOR)) {
-  return Math.max(66, 100 - matchLength);
-// When the match is at the end of the string.
-} else if ((matchIndex + matchLength) === valueLength) {
-  return Math.max(33, 67 - matchLength);
-// When the match is in the middle of the string.
-} else {
-  return Math.max(1, 34 - matchLength);
-}
+  // When the match is at the beginning of the string or preceded by a dot.
+  if (matchIndex === 0 || value.charAt(matchIndex - 1) === SEPARATOR) {
+    return Math.max(66, 100 - matchLength);
+    // When the match is at the end of the string.
+  } else if (matchIndex + matchLength === valueLength) {
+    return Math.max(33, 67 - matchLength);
+    // When the match is in the middle of the string.
+  } else {
+    return Math.max(1, 34 - matchLength);
+  }
 }
 
 //
 // Searchers
 //
 
-(function() {
+(function () {
   let CHUNK_SIZE = undefined;
   let DEFAULTS = undefined;
   let SEPARATORS_REGEXP = undefined;
@@ -141,25 +175,26 @@ if ((matchIndex === 0) || (value.charAt(matchIndex - 1) === SEPARATOR)) {
   const Cls = (app.Searcher = class Searcher {
     static initClass() {
       $.extend(this.prototype, Events);
-  
+
       CHUNK_SIZE = 20000;
-  
+
       DEFAULTS = {
         max_results: app.config.max_results,
-        fuzzy_min_length: 3
+        fuzzy_min_length: 3,
       };
-  
-      SEPARATORS_REGEXP = /#|::|:-|->|\$(?=\w)|\-(?=\w)|\:(?=\w)|\ [\/\-&]\ |:\ |\ /g;
+
+      SEPARATORS_REGEXP =
+        /#|::|:-|->|\$(?=\w)|\-(?=\w)|\:(?=\w)|\ [\/\-&]\ |:\ |\ /g;
       EOS_SEPARATORS_REGEXP = /(\w)[\-:]$/;
       INFO_PARANTHESES_REGEXP = /\ \(\w+?\)$/;
       EMPTY_PARANTHESES_REGEXP = /\(\)/;
       EVENT_REGEXP = /\ event$/;
       DOT_REGEXP = /\.+/g;
       WHITESPACE_REGEXP = /\s/g;
-  
-      EMPTY_STRING = '';
-      ELLIPSIS = '...';
-      STRING = 'string';
+
+      EMPTY_STRING = "";
+      ELLIPSIS = "...";
+      STRING = "string";
     }
 
     static normalizeString(string) {
@@ -176,13 +211,15 @@ if ((matchIndex === 0) || (value.charAt(matchIndex - 1) === SEPARATOR)) {
 
     static normalizeQuery(string) {
       string = this.normalizeString(string);
-      return string.replace(EOS_SEPARATORS_REGEXP, '$1.');
+      return string.replace(EOS_SEPARATORS_REGEXP, "$1.");
     }
 
     constructor(options) {
       this.match = this.match.bind(this);
       this.matchChunks = this.matchChunks.bind(this);
-      if (options == null) { options = {}; }
+      if (options == null) {
+        options = {};
+      }
       this.options = $.extend({}, DEFAULTS, options);
     }
 
@@ -194,11 +231,15 @@ if ((matchIndex === 0) || (value.charAt(matchIndex - 1) === SEPARATOR)) {
       this.query = q;
       this.setup();
 
-      if (this.isValid()) { this.match(); } else { this.end(); }
+      if (this.isValid()) {
+        this.match();
+      } else {
+        this.end();
+      }
     }
 
     setup() {
-      query = (this.query = this.constructor.normalizeQuery(this.query));
+      query = this.query = this.constructor.normalizeQuery(this.query);
       queryLength = query.length;
       this.dataLength = this.data.length;
       this.matchers = [exactMatch];
@@ -216,12 +257,14 @@ if ((matchIndex === 0) || (value.charAt(matchIndex - 1) === SEPARATOR)) {
     }
 
     isValid() {
-      return (queryLength > 0) && (query !== SEPARATOR);
+      return queryLength > 0 && query !== SEPARATOR;
     }
 
     end() {
-      if (!this.totalResults) { this.triggerResults([]); }
-      this.trigger('end');
+      if (!this.totalResults) {
+        this.triggerResults([]);
+      }
+      this.trigger("end");
       this.free();
     }
 
@@ -233,8 +276,17 @@ if ((matchIndex === 0) || (value.charAt(matchIndex - 1) === SEPARATOR)) {
     }
 
     free() {
-      this.data = (this.attr = (this.dataLength = (this.matchers = (this.matcher = (this.query =
-      (this.totalResults = (this.scoreMap = (this.cursor = (this.timeout = null)))))))));
+      this.data =
+        this.attr =
+        this.dataLength =
+        this.matchers =
+        this.matcher =
+        this.query =
+        this.totalResults =
+        this.scoreMap =
+        this.cursor =
+        this.timeout =
+          null;
     }
 
     match() {
@@ -254,7 +306,7 @@ if ((matchIndex === 0) || (value.charAt(matchIndex - 1) === SEPARATOR)) {
     matchChunks() {
       this.matchChunk();
 
-      if ((this.cursor === this.dataLength) || this.scoredEnough()) {
+      if (this.cursor === this.dataLength || this.scoredEnough()) {
         this.delay(this.match);
         this.sendResults();
       } else {
@@ -263,28 +315,36 @@ if ((matchIndex === 0) || (value.charAt(matchIndex - 1) === SEPARATOR)) {
     }
 
     matchChunk() {
-      ({
-        matcher
-      } = this);
-      for (let j = 0, end = this.chunkSize(), asc = 0 <= end; asc ? j < end : j > end; asc ? j++ : j--) {
+      ({ matcher } = this);
+      for (
+        let j = 0, end = this.chunkSize(), asc = 0 <= end;
+        asc ? j < end : j > end;
+        asc ? j++ : j--
+      ) {
         value = this.data[this.cursor][this.attr];
-        if (value.split) { // string
+        if (value.split) {
+          // string
           valueLength = value.length;
-          if (score = matcher()) { this.addResult(this.data[this.cursor], score); }
-        } else { // array
+          if ((score = matcher())) {
+            this.addResult(this.data[this.cursor], score);
+          }
+        } else {
+          // array
           score = 0;
           for (value of Array.from(this.data[this.cursor][this.attr])) {
             valueLength = value.length;
             score = Math.max(score, matcher() || 0);
           }
-          if (score > 0) { this.addResult(this.data[this.cursor], score); }
+          if (score > 0) {
+            this.addResult(this.data[this.cursor], score);
+          }
         }
         this.cursor++;
       }
     }
 
     chunkSize() {
-      if ((this.cursor + CHUNK_SIZE) > this.dataLength) {
+      if (this.cursor + CHUNK_SIZE > this.dataLength) {
         return this.dataLength % CHUNK_SIZE;
       } else {
         return CHUNK_SIZE;
@@ -292,8 +352,11 @@ if ((matchIndex === 0) || (value.charAt(matchIndex - 1) === SEPARATOR)) {
     }
 
     scoredEnough() {
-       return (this.scoreMap[100] != null ? this.scoreMap[100].length : undefined) >= this.options.max_results;
-     }
+      return (
+        (this.scoreMap[100] != null ? this.scoreMap[100].length : undefined) >=
+        this.options.max_results
+      );
+    }
 
     foundEnough() {
       return this.totalResults >= this.options.max_results;
@@ -301,7 +364,9 @@ if ((matchIndex === 0) || (value.charAt(matchIndex - 1) === SEPARATOR)) {
 
     addResult(object, score) {
       let name;
-      (this.scoreMap[name = Math.round(score)] || (this.scoreMap[name] = [])).push(object);
+      (
+        this.scoreMap[(name = Math.round(score))] || (this.scoreMap[name] = [])
+      ).push(object);
       this.totalResults++;
     }
 
@@ -318,21 +383,26 @@ if ((matchIndex === 0) || (value.charAt(matchIndex - 1) === SEPARATOR)) {
 
     sendResults() {
       const results = this.getResults();
-      if (results.length) { this.triggerResults(results); }
+      if (results.length) {
+        this.triggerResults(results);
+      }
     }
 
     triggerResults(results) {
-      this.trigger('results', results);
+      this.trigger("results", results);
     }
 
     delay(fn) {
-      return this.timeout = setTimeout(fn, 1);
+      return (this.timeout = setTimeout(fn, 1));
     }
 
     queryToFuzzyRegexp(string) {
-      const chars = string.split('');
-      for (i = 0; i < chars.length; i++) { var char = chars[i]; chars[i] = $.escapeRegexp(char); }
-      return new RegExp(chars.join('.*?'));
+      const chars = string.split("");
+      for (i = 0; i < chars.length; i++) {
+        var char = chars[i];
+        chars[i] = $.escapeRegexp(char);
+      }
+      return new RegExp(chars.join(".*?"));
     }
   });
   Cls.initClass();
@@ -347,7 +417,9 @@ app.SynchronousSearcher = class SynchronousSearcher extends app.Searcher {
 
   match() {
     if (this.matcher) {
-      if (!this.allResults) { this.allResults = []; }
+      if (!this.allResults) {
+        this.allResults = [];
+      }
       this.allResults.push.apply(this.allResults, this.getResults());
     }
     return super.match(...arguments);

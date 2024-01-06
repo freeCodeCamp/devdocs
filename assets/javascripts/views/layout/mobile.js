@@ -10,34 +10,36 @@
  */
 const Cls = (app.views.Mobile = class Mobile extends app.View {
   static initClass() {
-    this.className = '_mobile';
-  
+    this.className = "_mobile";
+
     this.elements = {
-      body:      'body',
-      content:   '._container',
-      sidebar:   '._sidebar',
-      docPicker: '._settings ._sidebar'
+      body: "body",
+      content: "._container",
+      sidebar: "._sidebar",
+      docPicker: "._settings ._sidebar",
     };
-  
-    this.shortcuts =
-      {escape: 'onEscape'};
-  
-    this.routes =
-      {after: 'afterRoute'};
+
+    this.shortcuts = { escape: "onEscape" };
+
+    this.routes = { after: "afterRoute" };
   }
 
   static detect() {
-    if (Cookies.get('override-mobile-detect') != null) {
-      return JSON.parse(Cookies.get('override-mobile-detect'));
+    if (Cookies.get("override-mobile-detect") != null) {
+      return JSON.parse(Cookies.get("override-mobile-detect"));
     }
     try {
-      return (window.matchMedia('(max-width: 480px)').matches) ||
-      (window.matchMedia('(max-width: 767px)').matches) ||
-      (window.matchMedia('(max-height: 767px) and (max-width: 1024px)').matches) ||
-      // Need to sniff the user agent because some Android and Windows Phone devices don't take
-      // resolution (dpi) into account when reporting device width/height.
-      ((navigator.userAgent.indexOf('Android') !== -1) && (navigator.userAgent.indexOf('Mobile') !== -1)) ||
-      (navigator.userAgent.indexOf('IEMobile') !== -1);
+      return (
+        window.matchMedia("(max-width: 480px)").matches ||
+        window.matchMedia("(max-width: 767px)").matches ||
+        window.matchMedia("(max-height: 767px) and (max-width: 1024px)")
+          .matches ||
+        // Need to sniff the user agent because some Android and Windows Phone devices don't take
+        // resolution (dpi) into account when reporting device width/height.
+        (navigator.userAgent.indexOf("Android") !== -1 &&
+          navigator.userAgent.indexOf("Mobile") !== -1) ||
+        navigator.userAgent.indexOf("IEMobile") !== -1
+      );
     } catch (error) {
       return false;
     }
@@ -67,30 +69,29 @@ const Cls = (app.views.Mobile = class Mobile extends app.View {
   }
 
   init() {
-    $.on($('._search'), 'touchend', this.onTapSearch);
+    $.on($("._search"), "touchend", this.onTapSearch);
 
-    this.toggleSidebar = $('button[data-toggle-sidebar]');
-    this.toggleSidebar.removeAttribute('hidden');
-    $.on(this.toggleSidebar, 'click', this.onClickToggleSidebar);
+    this.toggleSidebar = $("button[data-toggle-sidebar]");
+    this.toggleSidebar.removeAttribute("hidden");
+    $.on(this.toggleSidebar, "click", this.onClickToggleSidebar);
 
-    this.back = $('button[data-back]');
-    this.back.removeAttribute('hidden');
-    $.on(this.back, 'click', this.onClickBack);
+    this.back = $("button[data-back]");
+    this.back.removeAttribute("hidden");
+    $.on(this.back, "click", this.onClickBack);
 
-    this.forward = $('button[data-forward]');
-    this.forward.removeAttribute('hidden');
-    $.on(this.forward, 'click', this.onClickForward);
+    this.forward = $("button[data-forward]");
+    this.forward.removeAttribute("hidden");
+    $.on(this.forward, "click", this.onClickForward);
 
     this.docPickerTab = $('button[data-tab="doc-picker"]');
-    this.docPickerTab.removeAttribute('hidden');
-    $.on(this.docPickerTab, 'click', this.onClickDocPickerTab);
+    this.docPickerTab.removeAttribute("hidden");
+    $.on(this.docPickerTab, "click", this.onClickDocPickerTab);
 
     this.settingsTab = $('button[data-tab="settings"]');
-    this.settingsTab.removeAttribute('hidden');
-    $.on(this.settingsTab, 'click', this.onClickSettingsTab);
+    this.settingsTab.removeAttribute("hidden");
+    $.on(this.settingsTab, "click", this.onClickSettingsTab);
 
-    app.document.sidebar.search
-      .on('searching', this.showSidebar);
+    app.document.sidebar.search.on("searching", this.showSidebar);
 
     this.activate();
   }
@@ -103,27 +104,36 @@ const Cls = (app.views.Mobile = class Mobile extends app.View {
     }
 
     this.contentTop = window.scrollY;
-    this.content.style.display = 'none';
-    this.sidebar.style.display = 'block';
+    this.content.style.display = "none";
+    this.sidebar.style.display = "block";
 
-    if (selection = this.findByClass(app.views.ListSelect.activeClass)) {
-      const scrollContainer = window.scrollY === this.body.scrollTop ? this.body : document.documentElement;
-      $.scrollTo(selection, scrollContainer, 'center');
+    if ((selection = this.findByClass(app.views.ListSelect.activeClass))) {
+      const scrollContainer =
+        window.scrollY === this.body.scrollTop
+          ? this.body
+          : document.documentElement;
+      $.scrollTo(selection, scrollContainer, "center");
     } else {
-      window.scrollTo(0, (this.findByClass(app.views.ListFold.activeClass) && this.sidebarTop) || 0);
+      window.scrollTo(
+        0,
+        (this.findByClass(app.views.ListFold.activeClass) && this.sidebarTop) ||
+          0,
+      );
     }
   }
 
   hideSidebar() {
-    if (!this.isSidebarShown()) { return; }
+    if (!this.isSidebarShown()) {
+      return;
+    }
     this.sidebarTop = window.scrollY;
-    this.sidebar.style.display = 'none';
-    this.content.style.display = 'block';
+    this.sidebar.style.display = "none";
+    this.content.style.display = "block";
     window.scrollTo(0, this.contentTop || 0);
   }
 
   isSidebarShown() {
-    return this.sidebar.style.display !== 'none';
+    return this.sidebar.style.display !== "none";
   }
 
   onClickBack() {
@@ -135,7 +145,11 @@ const Cls = (app.views.Mobile = class Mobile extends app.View {
   }
 
   onClickToggleSidebar() {
-    if (this.isSidebarShown()) { this.hideSidebar(); } else { this.showSidebar(); }
+    if (this.isSidebarShown()) {
+      this.hideSidebar();
+    } else {
+      this.showSidebar();
+    }
   }
 
   onClickDocPickerTab(event) {
@@ -150,18 +164,18 @@ const Cls = (app.views.Mobile = class Mobile extends app.View {
 
   showDocPicker() {
     window.scrollTo(0, 0);
-    this.docPickerTab.classList.add('active');
-    this.settingsTab.classList.remove('active');
-    this.docPicker.style.display = 'block';
-    this.content.style.display = 'none';
+    this.docPickerTab.classList.add("active");
+    this.settingsTab.classList.remove("active");
+    this.docPicker.style.display = "block";
+    this.content.style.display = "none";
   }
 
   showSettings() {
     window.scrollTo(0, 0);
-    this.docPickerTab.classList.remove('active');
-    this.settingsTab.classList.add('active');
-    this.docPicker.style.display = 'none';
-    this.content.style.display = 'block';
+    this.docPickerTab.classList.remove("active");
+    this.settingsTab.classList.add("active");
+    this.docPicker.style.display = "none";
+    this.content.style.display = "block";
   }
 
   onTapSearch() {
@@ -175,22 +189,22 @@ const Cls = (app.views.Mobile = class Mobile extends app.View {
   afterRoute(route) {
     this.hideSidebar();
 
-    if (route === 'settings') {
+    if (route === "settings") {
       this.showDocPicker();
     } else {
-      this.content.style.display = 'block';
+      this.content.style.display = "block";
     }
 
     if (page.canGoBack()) {
-      this.back.removeAttribute('disabled');
+      this.back.removeAttribute("disabled");
     } else {
-      this.back.setAttribute('disabled', 'disabled');
+      this.back.setAttribute("disabled", "disabled");
     }
 
     if (page.canGoForward()) {
-      this.forward.removeAttribute('disabled');
+      this.forward.removeAttribute("disabled");
     } else {
-      this.forward.setAttribute('disabled', 'disabled');
+      this.forward.setAttribute("disabled", "disabled");
     }
   }
 });

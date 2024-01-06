@@ -32,51 +32,46 @@ const Cls = (app.views.Content = class Content extends app.View {
   }
 
   static initClass() {
-    this.el = '._content';
-    this.loadingClass = '_content-loading';
-  
-    this.events =
-      {click: 'onClick'};
-  
+    this.el = "._content";
+    this.loadingClass = "_content-loading";
+
+    this.events = { click: "onClick" };
+
     this.shortcuts = {
-      altUp:      'scrollStepUp',
-      altDown:    'scrollStepDown',
-      pageUp:     'scrollPageUp',
-      pageDown:   'scrollPageDown',
-      pageTop:    'scrollToTop',
-      pageBottom: 'scrollToBottom',
-      altF:       'onAltF'
+      altUp: "scrollStepUp",
+      altDown: "scrollStepDown",
+      pageUp: "scrollPageUp",
+      pageDown: "scrollPageDown",
+      pageTop: "scrollToTop",
+      pageBottom: "scrollToBottom",
+      altF: "onAltF",
     };
-  
+
     this.routes = {
-      before: 'beforeRoute',
-      after:  'afterRoute'
+      before: "beforeRoute",
+      after: "afterRoute",
     };
   }
 
   init() {
-    this.scrollEl = app.isMobile() ?
-      (document.scrollingElement || document.body)
-    :
-      this.el;
+    this.scrollEl = app.isMobile()
+      ? document.scrollingElement || document.body
+      : this.el;
     this.scrollMap = {};
     this.scrollStack = [];
 
-    this.rootPage     = new app.views.RootPage;
-    this.staticPage   = new app.views.StaticPage;
-    this.settingsPage = new app.views.SettingsPage;
-    this.offlinePage  = new app.views.OfflinePage;
-    this.typePage     = new app.views.TypePage;
-    this.entryPage    = new app.views.EntryPage;
+    this.rootPage = new app.views.RootPage();
+    this.staticPage = new app.views.StaticPage();
+    this.settingsPage = new app.views.SettingsPage();
+    this.offlinePage = new app.views.OfflinePage();
+    this.typePage = new app.views.TypePage();
+    this.entryPage = new app.views.EntryPage();
 
     this.entryPage
-      .on('loading', this.onEntryLoading)
-      .on('loaded', this.onEntryLoaded);
+      .on("loading", this.onEntryLoading)
+      .on("loaded", this.onEntryLoaded);
 
-    app
-      .on('ready', this.onReady)
-      .on('bootError', this.onBootError);
-
+    app.on("ready", this.onReady).on("bootError", this.onBootError);
   }
 
   show(view) {
@@ -85,7 +80,7 @@ const Cls = (app.views.Content = class Content extends app.View {
       if (this.view != null) {
         this.view.deactivate();
       }
-      this.html(this.view = view);
+      this.html((this.view = view));
       this.view.activate();
     }
   }
@@ -107,7 +102,7 @@ const Cls = (app.views.Content = class Content extends app.View {
   }
 
   smoothScrollTo(value) {
-    if (app.settings.get('fastScroll')) {
+    if (app.settings.get("fastScroll")) {
       this.scrollTo(value);
     } else {
       $.smoothScroll(this.scrollEl, value || 0);
@@ -144,10 +139,14 @@ const Cls = (app.views.Content = class Content extends app.View {
 
   scrollToTarget() {
     let el;
-    if (this.routeCtx.hash && (el = this.findTargetByHash(this.routeCtx.hash))) {
-      $.scrollToWithImageLock(el, this.scrollEl, 'top',
-        {margin: this.scrollEl === this.el ? 0 : $.offset(this.el).top});
-      $.highlight(el, {className: '_highlight'});
+    if (
+      this.routeCtx.hash &&
+      (el = this.findTargetByHash(this.routeCtx.hash))
+    ) {
+      $.scrollToWithImageLock(el, this.scrollEl, "top", {
+        margin: this.scrollEl === this.el ? 0 : $.offset(this.el).top,
+      });
+      $.highlight(el, { className: "_highlight" });
     } else {
       this.scrollTo(this.scrollMap[this.routeCtx.state.id]);
     }
@@ -159,7 +158,7 @@ const Cls = (app.views.Content = class Content extends app.View {
 
   onBootError() {
     this.hideLoading();
-    this.html(this.tmpl('bootError'));
+    this.html(this.tmpl("bootError"));
   }
 
   onEntryLoading() {
@@ -186,8 +185,12 @@ const Cls = (app.views.Content = class Content extends app.View {
   }
 
   cacheScrollPosition() {
-    if (!this.routeCtx || this.routeCtx.hash) { return; }
-    if (this.routeCtx.path === '/') { return; }
+    if (!this.routeCtx || this.routeCtx.hash) {
+      return;
+    }
+    if (this.routeCtx.path === "/") {
+      return;
+    }
 
     if (this.scrollMap[this.routeCtx.state.id] == null) {
       this.scrollStack.push(this.routeCtx.state.id);
@@ -200,24 +203,24 @@ const Cls = (app.views.Content = class Content extends app.View {
   }
 
   afterRoute(route, context) {
-    if ((route !== 'entry') && (route !== 'type')) {
+    if (route !== "entry" && route !== "type") {
       resetFavicon();
     }
 
     switch (route) {
-      case 'root':
+      case "root":
         this.show(this.rootPage);
         break;
-      case 'entry':
+      case "entry":
         this.show(this.entryPage);
         break;
-      case 'type':
+      case "type":
         this.show(this.typePage);
         break;
-      case 'settings':
+      case "settings":
         this.show(this.settingsPage);
         break;
-      case 'offline':
+      case "offline":
         this.show(this.offlinePage);
         break;
       default:
@@ -225,37 +228,59 @@ const Cls = (app.views.Content = class Content extends app.View {
     }
 
     this.view.onRoute(context);
-    app.document.setTitle(typeof this.view.getTitle === 'function' ? this.view.getTitle() : undefined);
+    app.document.setTitle(
+      typeof this.view.getTitle === "function"
+        ? this.view.getTitle()
+        : undefined,
+    );
   }
 
   onClick(event) {
     const link = $.closestLink($.eventTarget(event), this.el);
-    if (link && this.isExternalUrl(link.getAttribute('href'))) {
+    if (link && this.isExternalUrl(link.getAttribute("href"))) {
       $.stopEvent(event);
       $.popup(link);
     }
   }
 
   onAltF(event) {
-    if (!document.activeElement || !$.hasChild(this.el, document.activeElement)) {
-      __guard__(this.find('a:not(:empty)'), x => x.focus());
+    if (
+      !document.activeElement ||
+      !$.hasChild(this.el, document.activeElement)
+    ) {
+      __guard__(this.find("a:not(:empty)"), (x) => x.focus());
       return $.stopEvent(event);
     }
   }
 
   findTargetByHash(hash) {
-    let el = (() => { try { return $.id(decodeURIComponent(hash)); } catch (error) {} })();
-    if (!el) { el = (() => { try { return $.id(hash); } catch (error1) {} })(); }
+    let el = (() => {
+      try {
+        return $.id(decodeURIComponent(hash));
+      } catch (error) {}
+    })();
+    if (!el) {
+      el = (() => {
+        try {
+          return $.id(hash);
+        } catch (error1) {}
+      })();
+    }
     return el;
   }
 
   isExternalUrl(url) {
     let needle;
-    return (needle = __guard__(url, x => x.slice(0, 6)), ['http:/', 'https:'].includes(needle));
+    return (
+      (needle = __guard__(url, (x) => x.slice(0, 6))),
+      ["http:/", "https:"].includes(needle)
+    );
   }
 });
 Cls.initClass();
 
 function __guard__(value, transform) {
-  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+  return typeof value !== "undefined" && value !== null
+    ? transform(value)
+    : undefined;
 }

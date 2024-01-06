@@ -7,7 +7,7 @@
  */
 const Cls = (app.collections.Entries = class Entries extends app.Collection {
   static initClass() {
-    this.model = 'Entry';
+    this.model = "Entry";
   }
 });
 Cls.initClass();

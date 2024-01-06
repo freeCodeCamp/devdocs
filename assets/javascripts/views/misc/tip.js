@@ -9,10 +9,9 @@
 
 const Cls = (app.views.Tip = class Tip extends app.views.Notif {
   static initClass() {
-    this.className = '_notif _notif-tip';
-  
-    this.defautOptions =
-      {autoHide: false};
+    this.className = "_notif _notif-tip";
+
+    this.defautOptions = { autoHide: false };
   }
 
   render() {

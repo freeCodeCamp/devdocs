@@ -13,14 +13,14 @@ app.models.Type = class Type extends app.Model {
   }
 
   entries() {
-    return this.doc.entries.findAllBy('type', this.name);
+    return this.doc.entries.findAllBy("type", this.name);
   }
 
   toEntry() {
     return new app.models.Entry({
       doc: this.doc,
       name: `${this.doc.name} / ${this.name}`,
-      path: '..' + this.fullPath()
+      path: ".." + this.fullPath(),
     });
   }
 };

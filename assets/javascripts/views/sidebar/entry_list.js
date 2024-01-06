@@ -9,13 +9,18 @@
  */
 //= require views/list/paginated_list
 
-const Cls = (app.views.EntryList = class EntryList extends app.views.PaginatedList {
+const Cls = (app.views.EntryList = class EntryList extends (
+  app.views.PaginatedList
+) {
   static initClass() {
-    this.tagName = 'div';
-    this.className = '_list _list-sub';
+    this.tagName = "div";
+    this.className = "_list _list-sub";
   }
 
-  constructor(entries) { this.entries = entries; super(...arguments); }
+  constructor(entries) {
+    this.entries = entries;
+    super(...arguments);
+  }
 
   init() {
     this.renderPaginated();
@@ -23,7 +28,7 @@ const Cls = (app.views.EntryList = class EntryList extends app.views.PaginatedLi
   }
 
   render(entries) {
-    return this.tmpl('sidebarEntry', entries);
+    return this.tmpl("sidebarEntry", entries);
   }
 });
 Cls.initClass();

@@ -27,8 +27,8 @@
 
 //= require tracking
 
-var init = function() {
-  document.removeEventListener('DOMContentLoaded', init, false);
+var init = function () {
+  document.removeEventListener("DOMContentLoaded", init, false);
 
   if (document.body) {
     return app.init();
@@ -37,4 +37,4 @@ var init = function() {
   }
 };
 
-document.addEventListener('DOMContentLoaded', init, false);
+document.addEventListener("DOMContentLoaded", init, false);

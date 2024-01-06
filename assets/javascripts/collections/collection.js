@@ -9,7 +9,9 @@
  */
 app.Collection = class Collection {
   constructor(objects) {
-    if (objects == null) { objects = []; }
+    if (objects == null) {
+      objects = [];
+    }
     this.reset(objects);
   }
 
@@ -18,16 +20,22 @@ app.Collection = class Collection {
   }
 
   reset(objects) {
-    if (objects == null) { objects = []; }
+    if (objects == null) {
+      objects = [];
+    }
     this.models = [];
-    for (var object of Array.from(objects)) { this.add(object); }
+    for (var object of Array.from(objects)) {
+      this.add(object);
+    }
   }
 
   add(object) {
     if (object instanceof app.Model) {
       this.models.push(object);
     } else if (object instanceof Array) {
-      for (var obj of Array.from(object)) { this.add(obj); }
+      for (var obj of Array.from(object)) {
+        this.add(obj);
+      }
     } else if (object instanceof app.Collection) {
       this.models.push(...Array.from(object.all() || []));
     } else {
@@ -48,7 +56,9 @@ app.Collection = class Collection {
   }
 
   each(fn) {
-    for (var model of Array.from(this.models)) { fn(model); }
+    for (var model of Array.from(this.models)) {
+      fn(model);
+    }
   }
 
   all() {
@@ -61,7 +71,9 @@ app.Collection = class Collection {
 
   findBy(attr, value) {
     for (var model of Array.from(this.models)) {
-      if (model[attr] === value) { return model; }
+      if (model[attr] === value) {
+        return model;
+      }
     }
   }
 
@@ -71,7 +83,11 @@ app.Collection = class Collection {
 
   countAllBy(attr, value) {
     let i = 0;
-    for (var model of Array.from(this.models)) { if (model[attr] === value) { i += 1; } }
+    for (var model of Array.from(this.models)) {
+      if (model[attr] === value) {
+        i += 1;
+      }
+    }
     return i;
   }
 };

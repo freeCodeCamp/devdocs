@@ -8,13 +8,13 @@
  */
 const Cls = (app.views.StaticPage = class StaticPage extends app.View {
   static initClass() {
-    this.className = '_static';
-  
+    this.className = "_static";
+
     this.titles = {
-      about:    'About',
-      news:     'News',
-      help:     'User Guide',
-      notFound: '404'
+      about: "About",
+      news: "News",
+      help: "User Guide",
+      notFound: "404",
     };
   }
 
@@ -35,7 +35,7 @@ const Cls = (app.views.StaticPage = class StaticPage extends app.View {
   }
 
   onRoute(context) {
-    this.render(context.page || 'notFound');
+    this.render(context.page || "notFound");
   }
 });
 Cls.initClass();

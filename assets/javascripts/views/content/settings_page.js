@@ -17,39 +17,41 @@ const Cls = (app.views.SettingsPage = class SettingsPage extends app.View {
   }
 
   static initClass() {
-    this.className = '_static';
-  
+    this.className = "_static";
+
     this.events = {
-      click: 'onClick',
-      change: 'onChange'
+      click: "onClick",
+      change: "onChange",
     };
   }
 
   render() {
-    this.html(this.tmpl('settingsPage', this.currentSettings()));
+    this.html(this.tmpl("settingsPage", this.currentSettings()));
   }
 
   currentSettings() {
     const settings = {};
-    settings.theme = app.settings.get('theme');
-    settings.smoothScroll = !app.settings.get('fastScroll');
-    settings.arrowScroll = app.settings.get('arrowScroll');
-    settings.noAutofocus = app.settings.get('noAutofocus');
-    settings.autoInstall = app.settings.get('autoInstall');
-    settings.analyticsConsent = app.settings.get('analyticsConsent');
-    settings.spaceScroll = app.settings.get('spaceScroll');
-    settings.spaceTimeout = app.settings.get('spaceTimeout');
+    settings.theme = app.settings.get("theme");
+    settings.smoothScroll = !app.settings.get("fastScroll");
+    settings.arrowScroll = app.settings.get("arrowScroll");
+    settings.noAutofocus = app.settings.get("noAutofocus");
+    settings.autoInstall = app.settings.get("autoInstall");
+    settings.analyticsConsent = app.settings.get("analyticsConsent");
+    settings.spaceScroll = app.settings.get("spaceScroll");
+    settings.spaceTimeout = app.settings.get("spaceTimeout");
     settings.autoSupported = app.settings.autoSupported;
-    for (var layout of Array.from(app.settings.LAYOUTS)) { settings[layout] = app.settings.hasLayout(layout); }
+    for (var layout of Array.from(app.settings.LAYOUTS)) {
+      settings[layout] = app.settings.hasLayout(layout);
+    }
     return settings;
   }
 
   getTitle() {
-    return 'Preferences';
+    return "Preferences";
   }
 
   setTheme(value) {
-    app.settings.set('theme', value);
+    app.settings.set("theme", value);
   }
 
   toggleLayout(layout, enable) {
@@ -57,20 +59,22 @@ const Cls = (app.views.SettingsPage = class SettingsPage extends app.View {
   }
 
   toggleSmoothScroll(enable) {
-    app.settings.set('fastScroll', !enable);
+    app.settings.set("fastScroll", !enable);
   }
 
   toggleAnalyticsConsent(enable) {
-    app.settings.set('analyticsConsent', enable ? '1' : '0');
-    if (!enable) { resetAnalytics(); }
+    app.settings.set("analyticsConsent", enable ? "1" : "0");
+    if (!enable) {
+      resetAnalytics();
+    }
   }
 
   toggleSpaceScroll(enable) {
-    app.settings.set('spaceScroll', enable ? 1 : 0);
+    app.settings.set("spaceScroll", enable ? 1 : 0);
   }
 
   setScrollTimeout(value) {
-    return app.settings.set('spaceTimeout', value);
+    return app.settings.set("spaceTimeout", value);
   }
 
   toggle(name, enable) {
@@ -78,31 +82,37 @@ const Cls = (app.views.SettingsPage = class SettingsPage extends app.View {
   }
 
   export() {
-    const data = new Blob([JSON.stringify(app.settings.export())], {type: 'application/json'});
-    const link = document.createElement('a');
+    const data = new Blob([JSON.stringify(app.settings.export())], {
+      type: "application/json",
+    });
+    const link = document.createElement("a");
     link.href = URL.createObjectURL(data);
-    link.download = 'devdocs.json';
-    link.style.display = 'none';
+    link.download = "devdocs.json";
+    link.style.display = "none";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   }
 
   import(file, input) {
-    if (!file || (file.type !== 'application/json')) {
-      new app.views.Notif('ImportInvalid', {autoHide: false});
+    if (!file || file.type !== "application/json") {
+      new app.views.Notif("ImportInvalid", { autoHide: false });
       return;
     }
 
     const reader = new FileReader();
-    reader.onloadend = function() {
-      const data = (() => { try { return JSON.parse(reader.result); } catch (error) {} })();
-      if (!data || (data.constructor !== Object)) {
-        new app.views.Notif('ImportInvalid', {autoHide: false});
+    reader.onloadend = function () {
+      const data = (() => {
+        try {
+          return JSON.parse(reader.result);
+        } catch (error) {}
+      })();
+      if (!data || data.constructor !== Object) {
+        new app.views.Notif("ImportInvalid", { autoHide: false });
         return;
       }
       app.settings.import(data);
-      $.trigger(input.form, 'import');
+      $.trigger(input.form, "import");
     };
     reader.readAsText(file);
   }
@@ -110,25 +120,25 @@ const Cls = (app.views.SettingsPage = class SettingsPage extends app.View {
   onChange(event) {
     const input = event.target;
     switch (input.name) {
-      case 'theme':
+      case "theme":
         this.setTheme(input.value);
         break;
-      case 'layout':
+      case "layout":
         this.toggleLayout(input.value, input.checked);
         break;
-      case 'smoothScroll':
+      case "smoothScroll":
         this.toggleSmoothScroll(input.checked);
         break;
-      case 'import':
+      case "import":
         this.import(input.files[0], input);
         break;
-      case 'analyticsConsent':
+      case "analyticsConsent":
         this.toggleAnalyticsConsent(input.checked);
         break;
-      case 'spaceScroll':
+      case "spaceScroll":
         this.toggleSpaceScroll(input.checked);
         break;
-      case 'spaceTimeout':
+      case "spaceTimeout":
         this.setScrollTimeout(input.value);
         break;
       default:
@@ -138,8 +148,8 @@ const Cls = (app.views.SettingsPage = class SettingsPage extends app.View {
 
   onClick(event) {
     const target = $.eventTarget(event);
-    switch (target.getAttribute('data-action')) {
-      case 'export':
+    switch (target.getAttribute("data-action")) {
+      case "export":
         $.stopEvent(event);
         this.export();
         break;

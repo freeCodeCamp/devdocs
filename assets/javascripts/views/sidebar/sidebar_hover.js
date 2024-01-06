@@ -11,19 +11,18 @@
  */
 const Cls = (app.views.SidebarHover = class SidebarHover extends app.View {
   static initClass() {
-    this.itemClass = '_list-hover';
-  
+    this.itemClass = "_list-hover";
+
     this.events = {
-      focus:     'onFocus',
-      blur:      'onBlur',
-      mouseover: 'onMouseover',
-      mouseout:  'onMouseout',
-      scroll:    'onScroll',
-      click:     'onClick'
+      focus: "onFocus",
+      blur: "onBlur",
+      mouseover: "onMouseover",
+      mouseout: "onMouseout",
+      scroll: "onScroll",
+      click: "onClick",
     };
-  
-    this.routes =
-      {after: 'onRoute'};
+
+    this.routes = { after: "onRoute" };
   }
 
   constructor(el) {
@@ -49,7 +48,9 @@ const Cls = (app.views.SidebarHover = class SidebarHover extends app.View {
         this.cursor = el;
         this.clone = this.makeClone(this.cursor);
         $.append(document.body, this.clone);
-        if (this.offsetTop == null) { this.offsetTop = this.el.offsetTop; }
+        if (this.offsetTop == null) {
+          this.offsetTop = this.el.offsetTop;
+        }
         this.position();
       }
     }
@@ -58,7 +59,7 @@ const Cls = (app.views.SidebarHover = class SidebarHover extends app.View {
   hide() {
     if (this.cursor) {
       $.remove(this.clone);
-      this.cursor = (this.clone = null);
+      this.cursor = this.clone = null;
     }
   }
 
@@ -66,8 +67,8 @@ const Cls = (app.views.SidebarHover = class SidebarHover extends app.View {
     if (this.cursor) {
       const rect = $.rect(this.cursor);
       if (rect.top >= this.offsetTop) {
-        this.clone.style.top = rect.top + 'px';
-        this.clone.style.left = rect.left + 'px';
+        this.clone.style.top = rect.top + "px";
+        this.clone.style.left = rect.left + "px";
       } else {
         this.hide();
       }
@@ -76,16 +77,18 @@ const Cls = (app.views.SidebarHover = class SidebarHover extends app.View {
 
   makeClone(el) {
     const clone = el.cloneNode(true);
-    clone.classList.add('clone');
+    clone.classList.add("clone");
     return clone;
   }
 
   isTarget(el) {
-    return __guard__(el != null ? el.classList : undefined, x => x.contains(this.constructor.itemClass));
+    return __guard__(el != null ? el.classList : undefined, (x) =>
+      x.contains(this.constructor.itemClass),
+    );
   }
 
   isSelected(el) {
-    return el.classList.contains('active');
+    return el.classList.contains("active");
   }
 
   isTruncated(el) {
@@ -102,7 +105,11 @@ const Cls = (app.views.SidebarHover = class SidebarHover extends app.View {
   }
 
   onMouseover(event) {
-    if (this.isTarget(event.target) && !this.isSelected(event.target) && this.mouseActivated()) {
+    if (
+      this.isTarget(event.target) &&
+      !this.isSelected(event.target) &&
+      this.mouseActivated()
+    ) {
       this.show(event.target);
     }
   }
@@ -115,7 +122,7 @@ const Cls = (app.views.SidebarHover = class SidebarHover extends app.View {
 
   mouseActivated() {
     // Skip mouse events caused by focus events scrolling the sidebar.
-    return !this.focusTime || ((Date.now() - this.focusTime) > 500);
+    return !this.focusTime || Date.now() - this.focusTime > 500;
   }
 
   onScroll() {
@@ -134,12 +141,14 @@ const Cls = (app.views.SidebarHover = class SidebarHover extends app.View {
 });
 Cls.initClass();
 
-var isPointerEventsSupported = function() {
-  const el = document.createElement('div');
-  el.style.cssText = 'pointer-events: auto';
-  return el.style.pointerEvents === 'auto';
+var isPointerEventsSupported = function () {
+  const el = document.createElement("div");
+  el.style.cssText = "pointer-events: auto";
+  return el.style.pointerEvents === "auto";
 };
 
 function __guard__(value, transform) {
-  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+  return typeof value !== "undefined" && value !== null
+    ? transform(value)
+    : undefined;
 }

@@ -13,50 +13,54 @@
  * Based on github.com/visionmedia/page.js
  * Licensed under the MIT license
  * Copyright 2012 TJ Holowaychuk <tj@vision-media.ca>
-*/
+ */
 
 let running = false;
 let currentState = null;
 const callbacks = [];
 
-this.page = function(value, fn) {
-  if (typeof value === 'function') {
-    page('*', value);
-  } else if (typeof fn === 'function') {
+this.page = function (value, fn) {
+  if (typeof value === "function") {
+    page("*", value);
+  } else if (typeof fn === "function") {
     const route = new Route(value);
     callbacks.push(route.middleware(fn));
-  } else if (typeof value === 'string') {
+  } else if (typeof value === "string") {
     page.show(value, fn);
   } else {
     page.start(value);
   }
 };
 
-page.start = function(options) {
-  if (options == null) { options = {}; }
+page.start = function (options) {
+  if (options == null) {
+    options = {};
+  }
   if (!running) {
     running = true;
-    addEventListener('popstate', onpopstate);
-    addEventListener('click', onclick);
+    addEventListener("popstate", onpopstate);
+    addEventListener("click", onclick);
     page.replace(currentPath(), null, null, true);
   }
 };
 
-page.stop = function() {
+page.stop = function () {
   if (running) {
     running = false;
-    removeEventListener('click', onclick);
-    removeEventListener('popstate', onpopstate);
+    removeEventListener("click", onclick);
+    removeEventListener("popstate", onpopstate);
   }
 };
 
-page.show = function(path, state) {
+page.show = function (path, state) {
   let res;
-  if (path === (currentState != null ? currentState.path : undefined)) { return; }
+  if (path === (currentState != null ? currentState.path : undefined)) {
+    return;
+  }
   const context = new Context(path, state);
   const previousState = currentState;
   currentState = context.state;
-  if (res = page.dispatch(context)) {
+  if ((res = page.dispatch(context))) {
     currentState = previousState;
     location.assign(res);
   } else {
@@ -67,12 +71,14 @@ page.show = function(path, state) {
   return context;
 };
 
-page.replace = function(path, state, skipDispatch, init) {
+page.replace = function (path, state, skipDispatch, init) {
   let result;
   let context = new Context(path, state || currentState);
   context.init = init;
   currentState = context.state;
-  if (!skipDispatch) { result = page.dispatch(context); }
+  if (!skipDispatch) {
+    result = page.dispatch(context);
+  }
   if (result) {
     context = new Context(result);
     context.init = init;
@@ -81,15 +87,19 @@ page.replace = function(path, state, skipDispatch, init) {
   }
   context.replaceState();
   updateCanonicalLink();
-  if (!skipDispatch) { track(); }
+  if (!skipDispatch) {
+    track();
+  }
   return context;
 };
 
-page.dispatch = function(context) {
+page.dispatch = function (context) {
   let i = 0;
-  var next = function() {
+  var next = function () {
     let fn, res;
-    if (fn = callbacks[i++]) { res = fn(context, next); }
+    if ((fn = callbacks[i++])) {
+      res = fn(context, next);
+    }
     return res;
   };
   return next();
@@ -113,11 +123,11 @@ class Context {
   }
 
   static isLastState(state) {
-    return state.id === (this.stateId - 1);
+    return state.id === this.stateId - 1;
   }
 
   static isInitialPopState(state) {
-    return (state.path === this.initialPath) && (this.stateId === 1);
+    return state.path === this.initialPath && this.stateId === 1;
   }
 
   static isSameSession(state) {
@@ -125,27 +135,40 @@ class Context {
   }
 
   constructor(path, state) {
-    if (path == null) { path = '/'; }
+    if (path == null) {
+      path = "/";
+    }
     this.path = path;
-    if (state == null) { state = {}; }
+    if (state == null) {
+      state = {};
+    }
     this.state = state;
-    this.pathname = this.path.replace(/(?:\?([^#]*))?(?:#(.*))?$/, (_, query, hash) => {
-      this.query = query;
-      this.hash = hash;
-      return '';
-    });
+    this.pathname = this.path.replace(
+      /(?:\?([^#]*))?(?:#(.*))?$/,
+      (_, query, hash) => {
+        this.query = query;
+        this.hash = hash;
+        return "";
+      },
+    );
 
-    if (this.state.id == null) { this.state.id = this.constructor.stateId++; }
-    if (this.state.sessionId == null) { this.state.sessionId = this.constructor.sessionId; }
+    if (this.state.id == null) {
+      this.state.id = this.constructor.stateId++;
+    }
+    if (this.state.sessionId == null) {
+      this.state.sessionId = this.constructor.sessionId;
+    }
     this.state.path = this.path;
   }
 
   pushState() {
-    history.pushState(this.state, '', this.path);
+    history.pushState(this.state, "", this.path);
   }
 
   replaceState() {
-    try { history.replaceState(this.state, '', this.path); } catch (error) {} // NS_ERROR_FAILURE in Firefox
+    try {
+      history.replaceState(this.state, "", this.path);
+    } catch (error) {} // NS_ERROR_FAILURE in Firefox
   }
 }
 Context.initClass();
@@ -153,7 +176,9 @@ Context.initClass();
 class Route {
   constructor(path, options) {
     this.path = path;
-    if (options == null) { options = {}; }
+    if (options == null) {
+      options = {};
+    }
     this.keys = [];
     this.regexp = pathtoRegexp(this.path, this.keys);
   }
@@ -172,13 +197,17 @@ class Route {
 
   match(path, params) {
     let matchData;
-    if (!(matchData = this.regexp.exec(path))) { return; }
+    if (!(matchData = this.regexp.exec(path))) {
+      return;
+    }
 
     const iterable = matchData.slice(1);
     for (let i = 0; i < iterable.length; i++) {
       var key;
       var value = iterable[i];
-      if (typeof value === 'string') { value = decodeURIComponent(value); }
+      if (typeof value === "string") {
+        value = decodeURIComponent(value);
+      }
       if ((key = this.keys[i])) {
         params[key.name] = value;
       } else {
@@ -189,32 +218,50 @@ class Route {
   }
 }
 
-var pathtoRegexp = function(path, keys) {
-  if (path instanceof RegExp) { return path; }
+var pathtoRegexp = function (path, keys) {
+  if (path instanceof RegExp) {
+    return path;
+  }
 
-  if (path instanceof Array) { path = `(${path.join('|')})`; }
+  if (path instanceof Array) {
+    path = `(${path.join("|")})`;
+  }
   path = path
-    .replace(/\/\(/g, '(?:/')
-    .replace(/(\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?/g, function(_, slash, format, key, capture, optional) {
-      if (slash == null) { slash = ''; }
-      if (format == null) { format = ''; }
-      keys.push({name: key, optional: !!optional});
-      let str = optional ? '' : slash;
-      str += '(?:';
-      if (optional) { str += slash; }
-      str += format;
-      str += capture || (format ? '([^/.]+?)' : '([^/]+?)');
-      str += ')';
-      if (optional) { str += optional; }
-      return str;
-  }).replace(/([\/.])/g, '\\$1')
-    .replace(/\*/g, '(.*)');
+    .replace(/\/\(/g, "(?:/")
+    .replace(
+      /(\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?/g,
+      function (_, slash, format, key, capture, optional) {
+        if (slash == null) {
+          slash = "";
+        }
+        if (format == null) {
+          format = "";
+        }
+        keys.push({ name: key, optional: !!optional });
+        let str = optional ? "" : slash;
+        str += "(?:";
+        if (optional) {
+          str += slash;
+        }
+        str += format;
+        str += capture || (format ? "([^/.]+?)" : "([^/]+?)");
+        str += ")";
+        if (optional) {
+          str += optional;
+        }
+        return str;
+      },
+    )
+    .replace(/([\/.])/g, "\\$1")
+    .replace(/\*/g, "(.*)");
 
   return new RegExp(`^${path}$`);
 };
 
-var onpopstate = function(event) {
-  if (!event.state || Context.isInitialPopState(event.state)) { return; }
+var onpopstate = function (event) {
+  if (!event.state || Context.isInitialPopState(event.state)) {
+    return;
+  }
 
   if (Context.isSameSession(event.state)) {
     page.replace(event.state.path, event.state);
@@ -223,59 +270,83 @@ var onpopstate = function(event) {
   }
 };
 
-var onclick = function(event) {
+var onclick = function (event) {
   try {
-    if ((event.which !== 1) || event.metaKey || event.ctrlKey || event.shiftKey || event.defaultPrevented) { return; }
+    if (
+      event.which !== 1 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.defaultPrevented
+    ) {
+      return;
+    }
   } catch (error) {
     return;
   }
 
   let link = $.eventTarget(event);
-  while (link && (link.tagName !== 'A')) { link = link.parentNode; }
+  while (link && link.tagName !== "A") {
+    link = link.parentNode;
+  }
 
   if (link && !link.target && isSameOrigin(link.href)) {
     event.preventDefault();
     let path = link.pathname + link.search + link.hash;
-    path = path.replace(/^\/\/+/, '/'); // IE11 bug
+    path = path.replace(/^\/\/+/, "/"); // IE11 bug
     page.show(path);
   }
 };
 
-var isSameOrigin = url => url.indexOf(`${location.protocol}//${location.hostname}`) === 0;
+var isSameOrigin = (url) =>
+  url.indexOf(`${location.protocol}//${location.hostname}`) === 0;
 
-var updateCanonicalLink = function() {
-  if (!this.canonicalLink) { this.canonicalLink = document.head.querySelector('link[rel="canonical"]'); }
-  return this.canonicalLink.setAttribute('href', `https://${location.host}${location.pathname}`);
+var updateCanonicalLink = function () {
+  if (!this.canonicalLink) {
+    this.canonicalLink = document.head.querySelector('link[rel="canonical"]');
+  }
+  return this.canonicalLink.setAttribute(
+    "href",
+    `https://${location.host}${location.pathname}`,
+  );
 };
 
 const trackers = [];
 
-page.track = function(fn) {
+page.track = function (fn) {
   trackers.push(fn);
 };
 
-var track = function() {
-  if (app.config.env !== 'production') { return; }
-  if (navigator.doNotTrack === '1') { return; }
-  if (navigator.globalPrivacyControl) { return; }
+var track = function () {
+  if (app.config.env !== "production") {
+    return;
+  }
+  if (navigator.doNotTrack === "1") {
+    return;
+  }
+  if (navigator.globalPrivacyControl) {
+    return;
+  }
 
-  const consentGiven = Cookies.get('analyticsConsent');
-  const consentAsked = Cookies.get('analyticsConsentAsked');
+  const consentGiven = Cookies.get("analyticsConsent");
+  const consentAsked = Cookies.get("analyticsConsentAsked");
 
-  if (consentGiven === '1') {
-    for (var tracker of Array.from(trackers)) { tracker.call(); }
-  } else if ((consentGiven === undefined) && (consentAsked === undefined)) {
+  if (consentGiven === "1") {
+    for (var tracker of Array.from(trackers)) {
+      tracker.call();
+    }
+  } else if (consentGiven === undefined && consentAsked === undefined) {
     // Only ask for consent once per browser session
-    Cookies.set('analyticsConsentAsked', '1');
+    Cookies.set("analyticsConsentAsked", "1");
 
-    new app.views.Notif('AnalyticsConsent', {autoHide: null});
+    new app.views.Notif("AnalyticsConsent", { autoHide: null });
   }
 };
 
-this.resetAnalytics = function() {
+this.resetAnalytics = function () {
   for (var cookie of Array.from(document.cookie.split(/;\s?/))) {
-    var name = cookie.split('=')[0];
-    if ((name[0] === '_') && (name[1] !== '_')) {
+    var name = cookie.split("=")[0];
+    if (name[0] === "_" && name[1] !== "_") {
       Cookies.expire(name);
     }
   }

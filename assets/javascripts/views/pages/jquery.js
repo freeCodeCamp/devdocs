@@ -10,46 +10,54 @@
  */
 //= require views/pages/base
 
-const Cls = (app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
+const Cls = (app.views.JqueryPage = class JqueryPage extends (
+  app.views.BasePage
+) {
   constructor(...args) {
     this.onIframeLoaded = this.onIframeLoaded.bind(this);
     super(...args);
   }
 
   static initClass() {
-    this.demoClassName = '_jquery-demo';
+    this.demoClassName = "_jquery-demo";
   }
 
   afterRender() {
     // Prevent jQuery Mobile's demo iframes from scrolling the page
-    for (var iframe of Array.from(this.findAllByTag('iframe'))) {
-      iframe.style.display = 'none';
-      $.on(iframe, 'load', this.onIframeLoaded);
+    for (var iframe of Array.from(this.findAllByTag("iframe"))) {
+      iframe.style.display = "none";
+      $.on(iframe, "load", this.onIframeLoaded);
     }
 
     return this.runExamples();
   }
 
   onIframeLoaded(event) {
-    event.target.style.display = '';
-    $.off(event.target, 'load', this.onIframeLoaded);
+    event.target.style.display = "";
+    $.off(event.target, "load", this.onIframeLoaded);
   }
 
   runExamples() {
-    for (var el of Array.from(this.findAllByClass('entry-example'))) {
-      try { this.runExample(el); } catch (error) {}
+    for (var el of Array.from(this.findAllByClass("entry-example"))) {
+      try {
+        this.runExample(el);
+      } catch (error) {}
     }
   }
 
   runExample(el) {
     let iframe;
-    const source = el.getElementsByClassName('syntaxhighlighter')[0];
-    if (!source || (source.innerHTML.indexOf('!doctype') === -1)) { return; }
+    const source = el.getElementsByClassName("syntaxhighlighter")[0];
+    if (!source || source.innerHTML.indexOf("!doctype") === -1) {
+      return;
+    }
 
-    if (!(iframe = el.getElementsByClassName(this.constructor.demoClassName)[0])) {
-      iframe = document.createElement('iframe');
+    if (
+      !(iframe = el.getElementsByClassName(this.constructor.demoClassName)[0])
+    ) {
+      iframe = document.createElement("iframe");
       iframe.className = this.constructor.demoClassName;
-      iframe.width = '100%';
+      iframe.width = "100%";
       iframe.height = 200;
       el.appendChild(iframe);
     }
@@ -60,8 +68,13 @@ const Cls = (app.views.JqueryPage = class JqueryPage extends app.views.BasePage 
   }
 
   fixIframeSource(source) {
-    source = source.replace('"/resources/', '"https://api.jquery.com/resources/'); // attr(), keydown()
-    source = source.replace('</head>', `\
+    source = source.replace(
+      '"/resources/',
+      '"https://api.jquery.com/resources/',
+    ); // attr(), keydown()
+    source = source.replace(
+      "</head>",
+      `\
 <style>
   html, body { border: 0; margin: 0; padding: 0; }
   body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
@@ -75,7 +88,7 @@ const Cls = (app.views.JqueryPage = class JqueryPage extends app.views.BasePage 
   });
 </script>
 </head>\
-`
+`,
     );
     return source.replace(/<script>/gi, '<script nonce="devdocs">');
   }

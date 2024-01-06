@@ -7,19 +7,24 @@
  */
 //= require views/pages/base
 
-const Cls = (app.views.SupportTablesPage = class SupportTablesPage extends app.views.BasePage {
+const Cls = (app.views.SupportTablesPage = class SupportTablesPage extends (
+  app.views.BasePage
+) {
   static initClass() {
-    this.events =
-      {click: 'onClick'};
+    this.events = { click: "onClick" };
   }
 
   onClick(event) {
-    if (!event.target.classList.contains('show-all')) { return; }
+    if (!event.target.classList.contains("show-all")) {
+      return;
+    }
     $.stopEvent(event);
 
     let el = event.target;
-    while (el.tagName !== 'TABLE') { el = el.parentNode; }
-    el.classList.add('show-all');
+    while (el.tagName !== "TABLE") {
+      el = el.parentNode;
+    }
+    el.classList.add("show-all");
   }
 });
 Cls.initClass();

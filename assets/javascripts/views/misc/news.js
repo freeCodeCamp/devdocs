@@ -12,15 +12,16 @@
 
 const Cls = (app.views.News = class News extends app.views.Notif {
   static initClass() {
-    this.className += ' _notif-news';
-  
-    this.defautOptions =
-      {autoHide: 30000};
+    this.className += " _notif-news";
+
+    this.defautOptions = { autoHide: 30000 };
   }
 
   init() {
     this.unreadNews = this.getUnreadNews();
-    if (this.unreadNews.length) { this.show(); }
+    if (this.unreadNews.length) {
+      this.show();
+    }
     this.markAllAsRead();
   }
 
@@ -30,12 +31,16 @@ const Cls = (app.views.News = class News extends app.views.Notif {
 
   getUnreadNews() {
     let time;
-    if (!(time = this.getLastReadTime())) { return []; }
+    if (!(time = this.getLastReadTime())) {
+      return [];
+    }
 
     return (() => {
       const result = [];
       for (var news of Array.from(app.news)) {
-        if (new Date(news[0]).getTime() <= time) { break; }
+        if (new Date(news[0]).getTime() <= time) {
+          break;
+        }
         result.push(news);
       }
       return result;
@@ -47,11 +52,11 @@ const Cls = (app.views.News = class News extends app.views.Notif {
   }
 
   getLastReadTime() {
-    return app.settings.get('news');
+    return app.settings.get("news");
   }
 
   markAllAsRead() {
-    app.settings.set('news', this.getLastNewsTime());
+    app.settings.set("news", this.getLastNewsTime());
   }
 });
 Cls.initClass();

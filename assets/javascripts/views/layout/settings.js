@@ -10,7 +10,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-(function() {
+(function () {
   let SIDEBAR_HIDDEN_LAYOUT = undefined;
   const Cls = (app.views.Settings = class Settings extends app.View {
     constructor(...args) {
@@ -23,29 +23,28 @@
     }
 
     static initClass() {
-      SIDEBAR_HIDDEN_LAYOUT = '_sidebar-hidden';
-  
-      this.el = '._settings';
-  
+      SIDEBAR_HIDDEN_LAYOUT = "_sidebar-hidden";
+
+      this.el = "._settings";
+
       this.elements = {
-        sidebar: '._sidebar',
+        sidebar: "._sidebar",
         saveBtn: 'button[type="submit"]',
-        backBtn: 'button[data-back]'
+        backBtn: "button[data-back]",
       };
-  
+
       this.events = {
-        import: 'onImport',
-        change: 'onChange',
-        submit: 'onSubmit',
-        click: 'onClick'
+        import: "onImport",
+        change: "onChange",
+        submit: "onSubmit",
+        click: "onClick",
       };
-  
-      this.shortcuts =
-        {enter: 'onEnter'};
+
+      this.shortcuts = { enter: "onEnter" };
     }
 
     init() {
-      this.addSubview(this.docPicker = new app.views.DocPicker);
+      this.addSubview((this.docPicker = new app.views.DocPicker()));
     }
 
     activate() {
@@ -59,18 +58,22 @@
       if (super.deactivate(...arguments)) {
         this.resetClass();
         this.docPicker.detach();
-        if (app.settings.hasLayout(SIDEBAR_HIDDEN_LAYOUT)) { document.body.classList.add(SIDEBAR_HIDDEN_LAYOUT); }
+        if (app.settings.hasLayout(SIDEBAR_HIDDEN_LAYOUT)) {
+          document.body.classList.add(SIDEBAR_HIDDEN_LAYOUT);
+        }
       }
     }
 
     render() {
       this.docPicker.appendTo(this.sidebar);
       this.refreshElements();
-      this.addClass('_in');
+      this.addClass("_in");
     }
 
     save(options) {
-      if (options == null) { options = {}; }
+      if (options == null) {
+        options = {};
+      }
       if (!this.saving) {
         let docs;
         this.saving = true;
@@ -82,16 +85,19 @@
           app.settings.setDocs(docs);
         }
 
-        this.saveBtn.textContent = 'Saving\u2026';
-        const disabledDocs = new app.collections.Docs((() => {
-          const result = [];
-          for (var doc of Array.from(app.docs.all())) {             if (docs.indexOf(doc.slug) === -1) {
-              result.push(doc);
+        this.saveBtn.textContent = "Saving\u2026";
+        const disabledDocs = new app.collections.Docs(
+          (() => {
+            const result = [];
+            for (var doc of Array.from(app.docs.all())) {
+              if (docs.indexOf(doc.slug) === -1) {
+                result.push(doc);
+              }
             }
-          }
-          return result;
-        })());
-        disabledDocs.uninstall(function() {
+            return result;
+          })(),
+        );
+        disabledDocs.uninstall(function () {
           app.db.migrate();
           return app.reload();
         });
@@ -99,7 +105,7 @@
     }
 
     onChange() {
-      this.addClass('_dirty');
+      this.addClass("_dirty");
     }
 
     onEnter() {
@@ -112,15 +118,17 @@
     }
 
     onImport() {
-      this.addClass('_dirty');
-      this.save({import: true});
+      this.addClass("_dirty");
+      this.save({ import: true });
     }
 
     onClick(event) {
-      if (event.which !== 1) { return; }
+      if (event.which !== 1) {
+        return;
+      }
       if (event.target === this.backBtn) {
         $.stopEvent(event);
-        app.router.show('/');
+        app.router.show("/");
       }
     }
   });

@@ -9,7 +9,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-(function() {
+(function () {
   let SEARCH_PARAM = undefined;
   let HASH_RGX = undefined;
   const Cls = (app.views.Search = class Search extends app.View {
@@ -33,86 +33,106 @@
 
     static initClass() {
       SEARCH_PARAM = app.config.search_param;
-  
-      this.el = '._search';
-      this.activeClass = '_search-active';
-  
+
+      this.el = "._search";
+      this.activeClass = "_search-active";
+
       this.elements = {
-        input:     '._search-input',
-        resetLink: '._search-clear'
+        input: "._search-input",
+        resetLink: "._search-clear",
       };
-  
+
       this.events = {
-        input:  'onInput',
-        click:  'onClick',
-        submit: 'onSubmit'
+        input: "onInput",
+        click: "onClick",
+        submit: "onSubmit",
       };
-  
+
       this.shortcuts = {
-        typing: 'focus',
-        altG: 'google',
-        altS: 'stackoverflow',
-        altD: 'duckduckgo'
+        typing: "focus",
+        altG: "google",
+        altS: "stackoverflow",
+        altD: "duckduckgo",
       };
-  
-      this.routes =
-        {after: 'afterRoute'};
-  
+
+      this.routes = { after: "afterRoute" };
+
       HASH_RGX = new RegExp(`^#${SEARCH_PARAM}=(.*)`);
     }
 
     init() {
-      this.addSubview(this.scope = new app.views.SearchScope(this.el));
+      this.addSubview((this.scope = new app.views.SearchScope(this.el)));
 
-      this.searcher = new app.Searcher;
-      this.searcher
-        .on('results', this.onResults)
-        .on('end', this.onEnd);
+      this.searcher = new app.Searcher();
+      this.searcher.on("results", this.onResults).on("end", this.onEnd);
 
-      this.scope
-        .on('change', this.onScopeChange);
+      this.scope.on("change", this.onScopeChange);
 
-      app.on('ready', this.onReady);
-      $.on(window, 'hashchange', this.searchUrl);
-      $.on(window, 'focus', this.onWindowFocus);
+      app.on("ready", this.onReady);
+      $.on(window, "hashchange", this.searchUrl);
+      $.on(window, "focus", this.onWindowFocus);
     }
 
     focus() {
-      if (document.activeElement === this.input) { return; }
-      if (app.settings.get('noAutofocus')) { return; }
-      this.input.focus(); 
+      if (document.activeElement === this.input) {
+        return;
+      }
+      if (app.settings.get("noAutofocus")) {
+        return;
+      }
+      this.input.focus();
     }
 
     autoFocus() {
-      if (app.isMobile() || $.isAndroid() || $.isIOS()) { return; }
-      if ((document.activeElement != null ? document.activeElement.tagName : undefined) === 'INPUT') { return; }
-      if (app.settings.get('noAutofocus')) { return; }
+      if (app.isMobile() || $.isAndroid() || $.isIOS()) {
+        return;
+      }
+      if (
+        (document.activeElement != null
+          ? document.activeElement.tagName
+          : undefined) === "INPUT"
+      ) {
+        return;
+      }
+      if (app.settings.get("noAutofocus")) {
+        return;
+      }
       this.input.focus();
     }
 
     onWindowFocus(event) {
-      if (event.target === window) { return this.autoFocus(); }
+      if (event.target === window) {
+        return this.autoFocus();
+      }
     }
 
     getScopeDoc() {
-      if (this.scope.isActive()) { return this.scope.getScope(); }
+      if (this.scope.isActive()) {
+        return this.scope.getScope();
+      }
     }
 
     reset(force) {
-      if (force || !this.input.value) { this.scope.reset(); }
+      if (force || !this.input.value) {
+        this.scope.reset();
+      }
       this.el.reset();
       this.onInput();
       this.autoFocus();
     }
 
     onReady() {
-      this.value = '';
+      this.value = "";
       this.delay(this.onInput);
     }
 
     onInput() {
-      if ((this.value == null) || // ignore events pre-"ready"
-                (this.value === this.input.value)) { return; }
+      if (
+        this.value == null || // ignore events pre-"ready"
+        this.value === this.input.value
+      ) {
+        return;
+      }
       this.value = this.input.value;
 
       if (this.value.length) {
@@ -123,25 +143,33 @@
     }
 
     search(url) {
-      if (url == null) { url = false; }
+      if (url == null) {
+        url = false;
+      }
       this.addClass(this.constructor.activeClass);
-      this.trigger('searching');
+      this.trigger("searching");
 
       this.hasResults = null;
-      this.flags = {urlSearch: url, initialResults: true};
-      this.searcher.find(this.scope.getScope().entries.all(), 'text', this.value);
+      this.flags = { urlSearch: url, initialResults: true };
+      this.searcher.find(
+        this.scope.getScope().entries.all(),
+        "text",
+        this.value,
+      );
     }
 
     searchUrl() {
       let value;
-      if (location.pathname === '/') {
+      if (location.pathname === "/") {
         this.scope.searchUrl();
       } else if (!app.router.isIndex()) {
         return;
       }
 
-      if (!(value = this.extractHashValue())) { return; }
-      this.input.value = (this.value = value);
+      if (!(value = this.extractHashValue())) {
+        return;
+      }
+      this.input.value = this.value = value;
       this.input.setSelectionRange(value.length, value.length);
       this.search(true);
       return true;
@@ -149,13 +177,15 @@
 
     clear() {
       this.removeClass(this.constructor.activeClass);
-      this.trigger('clear');
+      this.trigger("clear");
     }
 
     externalSearch(url) {
       let value;
-      if (value = this.value) {
-        if (this.scope.name()) { value = `${this.scope.name()} ${value}`; }
+      if ((value = this.value)) {
+        if (this.scope.name()) {
+          value = `${this.scope.name()} ${value}`;
+        }
         $.popup(`${url}${encodeURIComponent(value)}`);
         this.reset();
       }
@@ -174,13 +204,17 @@
     }
 
     onResults(results) {
-      if (results.length) { this.hasResults = true; }
-      this.trigger('results', results, this.flags);
+      if (results.length) {
+        this.hasResults = true;
+      }
+      this.trigger("results", results, this.flags);
       this.flags.initialResults = false;
     }
 
     onEnd() {
-      if (!this.hasResults) { this.trigger('noresults'); }
+      if (!this.hasResults) {
+        this.trigger("noresults");
+      }
     }
 
     onClick(event) {
@@ -195,14 +229,24 @@
     }
 
     onScopeChange() {
-      this.value = '';
+      this.value = "";
       this.onInput();
     }
 
     afterRoute(name, context) {
-      if ((app.shortcuts.eventInProgress != null ? app.shortcuts.eventInProgress.name : undefined) === 'escape') { return; }
-      if (!context.init && app.router.isIndex()) { this.reset(true); }
-      if (context.hash) { this.delay(this.searchUrl); }
+      if (
+        (app.shortcuts.eventInProgress != null
+          ? app.shortcuts.eventInProgress.name
+          : undefined) === "escape"
+      ) {
+        return;
+      }
+      if (!context.init && app.router.isIndex()) {
+        this.reset(true);
+      }
+      if (context.hash) {
+        this.delay(this.searchUrl);
+      }
       $.requestAnimationFrame(this.autoFocus);
     }
 
@@ -215,7 +259,12 @@
     }
 
     getHashValue() {
-      try { return __guard__(HASH_RGX.exec($.urlDecode(location.hash)), x => x[1]); } catch (error) {}
+      try {
+        return __guard__(
+          HASH_RGX.exec($.urlDecode(location.hash)),
+          (x) => x[1],
+        );
+      } catch (error) {}
     }
   });
   Cls.initClass();
@@ -223,5 +272,7 @@
 })();
 
 function __guard__(value, transform) {
-  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+  return typeof value !== "undefined" && value !== null
+    ? transform(value)
+    : undefined;
 }

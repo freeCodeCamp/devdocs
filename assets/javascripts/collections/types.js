@@ -8,14 +8,15 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-(function() {
+(function () {
   let GUIDES_RGX = undefined;
   let APPENDIX_RGX = undefined;
   const Cls = (app.collections.Types = class Types extends app.Collection {
     static initClass() {
-      this.model = 'Type';
-  
-      GUIDES_RGX = /(^|\()(guides?|tutorials?|reference|book|getting\ started|manual|examples)($|[\):])/i;
+      this.model = "Type";
+
+      GUIDES_RGX =
+        /(^|\()(guides?|tutorials?|reference|book|getting\ started|manual|examples)($|[\):])/i;
       APPENDIX_RGX = /appendix/i;
     }
 
@@ -23,9 +24,11 @@
       const result = [];
       for (var type of Array.from(this.models)) {
         var name;
-        (result[name = this._groupFor(type)] || (result[name] = [])).push(type);
+        (result[(name = this._groupFor(type))] || (result[name] = [])).push(
+          type,
+        );
       }
-      return result.filter(e => e.length > 0);
+      return result.filter((e) => e.length > 0);
     }
 
     _groupFor(type) {
