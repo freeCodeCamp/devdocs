@@ -94,7 +94,7 @@ class App < Sinatra::Application
         ['/manifest.json',  { 'Cache-Control' => 'public, max-age=86400'  }]
       ]
 
-    sprockets.js_compressor = Uglifier.new output: { :harmony => true, beautify: true, indent_level: 0 }
+    sprockets.js_compressor = :terser
     sprockets.css_compressor = :sass
 
     Sprockets::Helpers.configure do |config|

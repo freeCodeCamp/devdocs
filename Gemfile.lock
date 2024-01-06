@@ -113,6 +113,8 @@ GEM
     strings-ansi (0.2.0)
     terminal-table (3.0.2)
       unicode-display_width (>= 1.1.1, < 3)
+    terser (1.1.20)
+      execjs (>= 0.3.0, < 3)
     thin (1.8.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -127,8 +129,6 @@ GEM
       ethon (>= 0.9.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     unicode-display_width (2.3.0)
     unicode_utils (1.4.0)
     unix_utils (0.0.15)
@@ -166,11 +166,11 @@ DEPENDENCIES
   sprockets-helpers
   sprockets-sass
   terminal-table
+  terser
   thin
   thor
   tty-pager
   typhoeus
-  uglifier
   unix_utils
   yajl-ruby
 
