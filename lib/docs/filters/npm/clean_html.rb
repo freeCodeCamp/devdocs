@@ -2,18 +2,13 @@ module Docs
   class Npm
     class CleanHtmlFilter < Filter
       def call
-
-        at_css('#___gatsby').before(at_css('h1'))
+        @doc = at_css('main')
 
         css('details').remove
-
-        css('.dZYhXG', '.fONtKn').remove
-
-        css('.kSYjyK').remove
-
-        css('.cDvIaH').remove
-
-        css('.jRndWL').remove_attribute('style')
+        css('nav[aria-label="Breadcrumbs"]').remove
+        css('.gtWOdv').remove  # Select CLI Version
+        css('.ezMiXD').remove  # Navbox
+        css('.gOhcvK').remove  # Edit this page on GitHub
 
         css('pre').each do |node|
           node.content = node.css('.token-line').map(&:content).join("\n")
@@ -21,7 +16,6 @@ module Docs
         end
 
         doc
-
       end
     end
   end

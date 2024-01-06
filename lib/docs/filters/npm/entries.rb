@@ -7,7 +7,7 @@ module Docs
       end
 
       def get_type
-        at_css('.active').content
+        at_css('nav[aria-label="Breadcrumbs"] li').content
       end
 
       def additional_entries
@@ -21,6 +21,7 @@ module Docs
 
         if name == 'package.json'
           css('h3').each do |node|
+            next unless node['id']
             entries << [node['id'],  slug + '#' + node['id'], 'Package.json Settings']
           end
         end
