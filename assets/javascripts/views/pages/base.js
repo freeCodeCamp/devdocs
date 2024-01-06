@@ -28,9 +28,7 @@ app.views.BasePage = class BasePage extends app.View {
       this.delay(this.afterRender);
     }
     if (this.highlightNodes.length > 0) {
-      $.requestAnimationFrame(() =>
-        $.requestAnimationFrame(() => this.paintCode()),
-      );
+      requestAnimationFrame(() => this.paintCode());
     }
   }
 
@@ -68,7 +66,7 @@ app.views.BasePage = class BasePage extends app.View {
     }
 
     if (this.highlightNodes.length > 0) {
-      $.requestAnimationFrame(() => this.paintCode());
+      requestAnimationFrame(() => this.paintCode());
     }
     this.previousTiming = timing;
   }

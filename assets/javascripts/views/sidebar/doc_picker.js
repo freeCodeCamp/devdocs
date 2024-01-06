@@ -50,7 +50,7 @@ app.views.DocPicker = class DocPicker extends app.View {
 
     this.html(html + this.tmpl("docPickerNote"));
 
-    $.requestAnimationFrame(() => this.findByTag("input")?.focus());
+    requestAnimationFrame(() => this.findByTag("input")?.focus());
   }
 
   renderVersions(docs) {

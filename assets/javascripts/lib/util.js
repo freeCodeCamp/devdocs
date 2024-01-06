@@ -379,11 +379,6 @@ let smoothScroll =
     null);
 
 $.smoothScroll = function (el, end) {
-  if (!window.requestAnimationFrame) {
-    el.scrollTop = end;
-    return;
-  }
-
   smoothEnd = end;
 
   if (smoothScroll) {
@@ -470,22 +465,6 @@ $.classify = function (string) {
     string[i] = substr[0].toUpperCase() + substr.slice(1);
   }
   return string.join("");
-};
-
-$.framify = function (fn, obj) {
-  if (window.requestAnimationFrame) {
-    return (...args) => requestAnimationFrame(fn.bind(obj, ...args));
-  } else {
-    return fn;
-  }
-};
-
-$.requestAnimationFrame = function (fn) {
-  if (window.requestAnimationFrame) {
-    requestAnimationFrame(fn);
-  } else {
-    setTimeout(fn, 0);
-  }
 };
 
 //

@@ -203,7 +203,7 @@ app.views.Search = class Search extends app.View {
     if (context.hash) {
       this.delay(this.searchUrl);
     }
-    $.requestAnimationFrame(() => this.autoFocus());
+    requestAnimationFrame(() => this.autoFocus());
   }
 
   extractHashValue() {

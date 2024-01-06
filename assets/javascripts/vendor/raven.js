@@ -1290,7 +1290,7 @@
 
                 fill(_window, "setTimeout", wrapTimeFn, wrappedBuiltIns);
                 fill(_window, "setInterval", wrapTimeFn, wrappedBuiltIns);
-                if (_window.requestAnimationFrame) {
+                if (_requestAnimationFrame) {
                   fill(
                     _window,
                     "requestAnimationFrame",

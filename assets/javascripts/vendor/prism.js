@@ -1255,8 +1255,8 @@ var Prism = (function (_self) {
         highlightAutomaticallyCallback,
       );
     } else {
-      if (window.requestAnimationFrame) {
-        window.requestAnimationFrame(highlightAutomaticallyCallback);
+      if (requestAnimationFrame) {
+        requestAnimationFrame(highlightAutomaticallyCallback);
       } else {
         window.setTimeout(highlightAutomaticallyCallback, 16);
       }

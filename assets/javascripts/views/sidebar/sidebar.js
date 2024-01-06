@@ -64,7 +64,7 @@ app.views.Sidebar = class Sidebar extends app.View {
 
   resetHoverOnMouseMove() {
     $.off(window, "mousemove", this.resetHoverOnMouseMove);
-    return $.requestAnimationFrame(() => this.resetHover());
+    return requestAnimationFrame(() => this.resetHover());
   }
 
   resetHover() {
