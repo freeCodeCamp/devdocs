@@ -84,36 +84,18 @@ $.off = function (el, event, callback, useCapture) {
 };
 
 $.trigger = function (el, type, canBubble, cancelable) {
-  if (canBubble == null) {
-    canBubble = true;
-  }
-  if (cancelable == null) {
-    cancelable = true;
-  }
-  const event = document.createEvent("Event");
-  event.initEvent(type, canBubble, cancelable);
+  const event = new Event(type, {
+    bubbles: canBubble ?? true,
+    cancelable: cancelable ?? true,
+  });
   el.dispatchEvent(event);
 };
 
 $.click = function (el) {
-  const event = document.createEvent("MouseEvent");
-  event.initMouseEvent(
-    "click",
-    true,
-    true,
-    window,
-    null,
-    0,
-    0,
-    0,
-    0,
-    false,
-    false,
-    false,
-    false,
-    0,
-    null,
-  );
+  const event = new MouseEvent("click", {
+    bubbles: true,
+    cancelable: true,
+  });
   el.dispatchEvent(event);
 };
 
