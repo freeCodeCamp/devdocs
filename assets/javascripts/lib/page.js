@@ -1,14 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * DS208: Avoid top-level this
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 /*
  * Based on github.com/visionmedia/page.js
  * Licensed under the MIT license
@@ -109,15 +98,9 @@ page.canGoBack = () => !Context.isIntialState(currentState);
 
 page.canGoForward = () => !Context.isLastState(currentState);
 
-var currentPath = () => location.pathname + location.search + location.hash;
+const currentPath = () => location.pathname + location.search + location.hash;
 
 class Context {
-  static initClass() {
-    this.initialPath = currentPath();
-    this.sessionId = Date.now();
-    this.stateId = 0;
-  }
-
   static isIntialState(state) {
     return state.id === 0;
   }
@@ -135,6 +118,9 @@ class Context {
   }
 
   constructor(path, state) {
+    this.initialPath = currentPath();
+    this.sessionId = Date.now();
+    this.stateId = 0;
     if (path == null) {
       path = "/";
     }
@@ -171,7 +157,6 @@ class Context {
     } catch (error) {} // NS_ERROR_FAILURE in Firefox
   }
 }
-Context.initClass();
 
 class Route {
   constructor(path, options) {
@@ -180,7 +165,7 @@ class Route {
       options = {};
     }
     this.keys = [];
-    this.regexp = pathtoRegexp(this.path, this.keys);
+    this.regexp = pathToRegexp(this.path, this.keys);
   }
 
   middleware(fn) {
@@ -218,7 +203,7 @@ class Route {
   }
 }
 
-var pathtoRegexp = function (path, keys) {
+var pathToRegexp = function (path, keys) {
   if (path instanceof RegExp) {
     return path;
   }
@@ -332,7 +317,7 @@ var track = function () {
   const consentAsked = Cookies.get("analyticsConsentAsked");
 
   if (consentGiven === "1") {
-    for (var tracker of Array.from(trackers)) {
+    for (var tracker of trackers) {
       tracker.call();
     }
   } else if (consentGiven === undefined && consentAsked === undefined) {
@@ -344,7 +329,7 @@ var track = function () {
 };
 
 this.resetAnalytics = function () {
-  for (var cookie of Array.from(document.cookie.split(/;\s?/))) {
+  for (var cookie of document.cookie.split(/;\s?/)) {
     var name = cookie.split("=")[0];
     if (name[0] === "_" && name[1] !== "_") {
       Cookies.expire(name);
