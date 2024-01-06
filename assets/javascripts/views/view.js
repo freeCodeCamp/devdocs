@@ -4,16 +4,12 @@
  * decaffeinate suggestions:
  * DS101: Remove unnecessary use of Array.from
  * DS102: Remove unnecessary code created because of implicit returns
- * DS206: Consider reworking classes to avoid initClass
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-app.View = class View {
-  static initClass() {
-    $.extend(this.prototype, Events);
-  }
-
+app.View = class View extends Events {
   constructor(el) {
+    super();
     if (el instanceof HTMLElement) {
       this.el = el;
     }
@@ -27,8 +23,8 @@ app.View = class View {
     this.refreshElements();
     if (typeof this.init === "function") {
       this.init();
+      this.refreshElements();
     }
-    this.refreshElements();
   }
 
   setupElement() {
@@ -260,4 +256,3 @@ app.View = class View {
     $.remove(this.el);
   }
 };
-app.View.initClass();
