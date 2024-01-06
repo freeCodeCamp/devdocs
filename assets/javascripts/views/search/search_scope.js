@@ -12,7 +12,7 @@
 (function () {
   let SEARCH_PARAM = undefined;
   let HASH_RGX = undefined;
-  const Cls = (app.views.SearchScope = class SearchScope extends app.View {
+  app.views.SearchScope = class SearchScope extends app.View {
     static initClass() {
       SEARCH_PARAM = app.config.search_param;
 
@@ -208,9 +208,9 @@
         this.selectDoc(context.doc);
       }
     }
-  });
-  Cls.initClass();
-  return Cls;
+  };
+  app.views.SearchScope.initClass();
+  return app.views.SearchScope;
 })();
 
 function __guard__(value, transform) {

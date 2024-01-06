@@ -9,7 +9,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.Sidebar = class Sidebar extends app.View {
+app.views.Sidebar = class Sidebar extends app.View {
   constructor(...args) {
     this.resetHoverOnMouseMove = this.resetHoverOnMouseMove.bind(this);
     this.resetHover = this.resetHover.bind(this);
@@ -239,8 +239,8 @@ const Cls = (app.views.Sidebar = class Sidebar extends app.View {
     }
     this.resetDisplay();
   }
-});
-Cls.initClass();
+};
+app.views.Sidebar.initClass();
 
 function __guardMethod__(obj, methodName, transform) {
   if (

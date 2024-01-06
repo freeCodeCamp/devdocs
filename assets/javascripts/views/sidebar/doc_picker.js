@@ -10,7 +10,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.DocPicker = class DocPicker extends app.View {
+app.views.DocPicker = class DocPicker extends app.View {
   constructor(...args) {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
@@ -152,8 +152,8 @@ const Cls = (app.views.DocPicker = class DocPicker extends app.View {
     }
     this.focusEl = target;
   }
-});
-Cls.initClass();
+};
+app.views.DocPicker.initClass();
 
 function __guard__(value, transform) {
   return typeof value !== "undefined" && value !== null

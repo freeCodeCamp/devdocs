@@ -10,7 +10,7 @@
 (function () {
   let MIN = undefined;
   let MAX = undefined;
-  const Cls = (app.views.Resizer = class Resizer extends app.View {
+  app.views.Resizer = class Resizer extends app.View {
     constructor(...args) {
       this.onDragStart = this.onDragStart.bind(this);
       this.onDrag = this.onDrag.bind(this);
@@ -83,7 +83,7 @@
       }
       this.resize(value, true);
     }
-  });
-  Cls.initClass();
-  return Cls;
+  };
+  app.views.Resizer.initClass();
+  return app.views.Resizer;
 })();

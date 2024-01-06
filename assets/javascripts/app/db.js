@@ -12,7 +12,7 @@
 (function () {
   let NAME = undefined;
   let VERSION = undefined;
-  const Cls = (app.DB = class DB {
+  app.DB = class DB {
     static initClass() {
       NAME = "docs";
       VERSION = 15;
@@ -586,7 +586,7 @@
     userVersion() {
       return app.settings.get("schema");
     }
-  });
-  Cls.initClass();
-  return Cls;
+  };
+  app.DB.initClass();
+  return app.DB;
 })();

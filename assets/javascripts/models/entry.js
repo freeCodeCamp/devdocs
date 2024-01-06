@@ -10,7 +10,7 @@
 
 (function () {
   let applyAliases = undefined;
-  const Cls = (app.models.Entry = class Entry extends app.Model {
+  app.models.Entry = class Entry extends app.Model {
     static initClass() {
       let ALIASES;
       applyAliases = function (string) {
@@ -115,7 +115,7 @@
     loadFile(onSuccess, onError) {
       return app.db.load(this, onSuccess, onError);
     }
-  });
-  Cls.initClass();
-  return Cls;
+  };
+  app.models.Entry.initClass();
+  return app.models.Entry;
 })();

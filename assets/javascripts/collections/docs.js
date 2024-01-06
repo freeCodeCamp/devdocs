@@ -12,7 +12,7 @@
   let NORMALIZE_VERSION_RGX = undefined;
   let NORMALIZE_VERSION_SUB = undefined;
   let CONCURRENCY = undefined;
-  const Cls = (app.collections.Docs = class Docs extends app.Collection {
+  app.collections.Docs = class Docs extends app.Collection {
     static initClass() {
       this.model = "Doc";
 
@@ -136,7 +136,7 @@
         }
       });
     }
-  });
-  Cls.initClass();
-  return Cls;
+  };
+  app.collections.Docs.initClass();
+  return app.collections.Docs;
 })();

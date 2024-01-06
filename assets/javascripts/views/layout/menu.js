@@ -6,7 +6,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.Menu = class Menu extends app.View {
+app.views.Menu = class Menu extends app.View {
   constructor(...args) {
     this.onGlobalClick = this.onGlobalClick.bind(this);
     super(...args);
@@ -44,5 +44,5 @@ const Cls = (app.views.Menu = class Menu extends app.View {
       this.removeClass(this.constructor.activeClass);
     }
   }
-});
-Cls.initClass();
+};
+app.views.Menu.initClass();

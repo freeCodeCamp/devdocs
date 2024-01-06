@@ -12,7 +12,7 @@
  */
 (function () {
   let LINKS = undefined;
-  const Cls = (app.views.EntryPage = class EntryPage extends app.View {
+  app.views.EntryPage = class EntryPage extends app.View {
     constructor(...args) {
       this.beforeRoute = this.beforeRoute.bind(this);
       this.onSuccess = this.onSuccess.bind(this);
@@ -268,7 +268,7 @@
       }
       this.delay(() => $.popup(link.href + location.hash));
     }
-  });
-  Cls.initClass();
-  return Cls;
+  };
+  app.views.EntryPage.initClass();
+  return app.views.EntryPage;
 })();

@@ -8,7 +8,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.Shortcuts = class Shortcuts {
+app.Shortcuts = class Shortcuts {
   static initClass() {
     $.extend(this.prototype, Events);
   }
@@ -305,8 +305,8 @@ const Cls = (app.Shortcuts = class Shortcuts {
       return true;
     }
   }
-});
-Cls.initClass();
+};
+app.Shortcuts.initClass();
 
 function __guard__(value, transform) {
   return typeof value !== "undefined" && value !== null

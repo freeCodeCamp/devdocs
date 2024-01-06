@@ -8,7 +8,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.Document = class Document extends app.View {
+app.views.Document = class Document extends app.View {
   constructor(...args) {
     this.afterRoute = this.afterRoute.bind(this);
     this.onVisibilityChange = this.onVisibilityChange.bind(this);
@@ -138,5 +138,5 @@ const Cls = (app.views.Document = class Document extends app.View {
         break;
     }
   }
-});
-Cls.initClass();
+};
+app.views.Document.initClass();

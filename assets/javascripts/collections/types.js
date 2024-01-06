@@ -11,7 +11,7 @@
 (function () {
   let GUIDES_RGX = undefined;
   let APPENDIX_RGX = undefined;
-  const Cls = (app.collections.Types = class Types extends app.Collection {
+  app.collections.Types = class Types extends app.Collection {
     static initClass() {
       this.model = "Type";
 
@@ -40,7 +40,7 @@
         return 1;
       }
     }
-  });
-  Cls.initClass();
-  return Cls;
+  };
+  app.collections.Types.initClass();
+  return app.collections.Types;
 })();

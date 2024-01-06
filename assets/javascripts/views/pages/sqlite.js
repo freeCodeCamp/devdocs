@@ -8,9 +8,7 @@
  */
 //= require views/pages/base
 
-const Cls = (app.views.SqlitePage = class SqlitePage extends (
-  app.views.BasePage
-) {
+app.views.SqlitePage = class SqlitePage extends app.views.BasePage {
   constructor(...args) {
     this.onClick = this.onClick.bind(this);
     super(...args);
@@ -37,5 +35,5 @@ const Cls = (app.views.SqlitePage = class SqlitePage extends (
       event.target.textContent = "show";
     }
   }
-});
-Cls.initClass();
+};
+app.views.SqlitePage.initClass();

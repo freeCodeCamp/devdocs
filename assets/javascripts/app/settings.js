@@ -13,7 +13,7 @@
 (function () {
   let PREFERENCE_KEYS = undefined;
   let INTERNAL_KEYS = undefined;
-  const Cls = (app.Settings = class Settings {
+  app.Settings = class Settings {
     static initClass() {
       PREFERENCE_KEYS = [
         "hideDisabled",
@@ -240,9 +240,9 @@
         );
       }
     }
-  });
-  Cls.initClass();
-  return Cls;
+  };
+  app.Settings.initClass();
+  return app.Settings;
 })();
 
 function __guard__(value, transform) {

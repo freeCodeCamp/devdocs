@@ -6,7 +6,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.HiddenPage = class HiddenPage extends app.View {
+app.views.HiddenPage = class HiddenPage extends app.View {
   static initClass() {
     this.events = { click: "onClick" };
   }
@@ -30,5 +30,5 @@ const Cls = (app.views.HiddenPage = class HiddenPage extends app.View {
       $.popup(link);
     }
   }
-});
-Cls.initClass();
+};
+app.views.HiddenPage.initClass();

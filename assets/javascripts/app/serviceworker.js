@@ -6,7 +6,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.ServiceWorker = class ServiceWorker {
+app.ServiceWorker = class ServiceWorker {
   static initClass() {
     $.extend(this.prototype, Events);
   }
@@ -78,5 +78,5 @@ const Cls = (app.ServiceWorker = class ServiceWorker {
       this.trigger("updateready");
     }
   }
-});
-Cls.initClass();
+};
+app.ServiceWorker.initClass();

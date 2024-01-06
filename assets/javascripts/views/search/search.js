@@ -12,7 +12,7 @@
 (function () {
   let SEARCH_PARAM = undefined;
   let HASH_RGX = undefined;
-  const Cls = (app.views.Search = class Search extends app.View {
+  app.views.Search = class Search extends app.View {
     constructor(...args) {
       this.focus = this.focus.bind(this);
       this.autoFocus = this.autoFocus.bind(this);
@@ -266,9 +266,9 @@
         );
       } catch (error) {}
     }
-  });
-  Cls.initClass();
-  return Cls;
+  };
+  app.views.Search.initClass();
+  return app.views.Search;
 })();
 
 function __guard__(value, transform) {

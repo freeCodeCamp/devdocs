@@ -7,7 +7,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.RootPage = class RootPage extends app.View {
+app.views.RootPage = class RootPage extends app.View {
   constructor(...args) {
     this.onClick = this.onClick.bind(this);
     super(...args);
@@ -59,5 +59,5 @@ const Cls = (app.views.RootPage = class RootPage extends app.View {
       this.hideIntro();
     }
   }
-});
-Cls.initClass();
+};
+app.views.RootPage.initClass();

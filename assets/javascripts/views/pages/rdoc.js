@@ -8,7 +8,7 @@
  */
 //= require views/pages/base
 
-const Cls = (app.views.RdocPage = class RdocPage extends app.views.BasePage {
+app.views.RdocPage = class RdocPage extends app.views.BasePage {
   static initClass() {
     this.events = { click: "onClick" };
   }
@@ -28,5 +28,5 @@ const Cls = (app.views.RdocPage = class RdocPage extends app.views.BasePage {
     source.style.display = isShown ? "none" : "block";
     return (event.target.textContent = isShown ? "Show source" : "Hide source");
   }
-});
-Cls.initClass();
+};
+app.views.RdocPage.initClass();

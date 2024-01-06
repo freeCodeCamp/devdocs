@@ -10,7 +10,7 @@
  */
 //= require views/misc/notif
 
-const Cls = (app.views.Updates = class Updates extends app.views.Notif {
+app.views.Updates = class Updates extends app.views.Notif {
   static initClass() {
     this.className += " _notif-news";
 
@@ -72,5 +72,5 @@ const Cls = (app.views.Updates = class Updates extends app.views.Notif {
         : Math.floor(Date.now() / 1000),
     );
   }
-});
-Cls.initClass();
+};
+app.views.Updates.initClass();

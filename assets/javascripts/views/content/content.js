@@ -12,7 +12,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.Content = class Content extends app.View {
+app.views.Content = class Content extends app.View {
   constructor(...args) {
     this.scrollToTop = this.scrollToTop.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
@@ -276,8 +276,8 @@ const Cls = (app.views.Content = class Content extends app.View {
       ["http:/", "https:"].includes(needle)
     );
   }
-});
-Cls.initClass();
+};
+app.views.Content.initClass();
 
 function __guard__(value, transform) {
   return typeof value !== "undefined" && value !== null

@@ -8,7 +8,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.ListFold = class ListFold extends app.View {
+app.views.ListFold = class ListFold extends app.View {
   static initClass() {
     this.targetClass = "_list-dir";
     this.handleClass = "_list-arrow";
@@ -117,5 +117,5 @@ const Cls = (app.views.ListFold = class ListFold extends app.View {
       }
     }
   }
-});
-Cls.initClass();
+};
+app.views.ListFold.initClass();

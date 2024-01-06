@@ -8,7 +8,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.View = class View {
+app.View = class View {
   static initClass() {
     $.extend(this.prototype, Events);
   }
@@ -253,5 +253,5 @@ const Cls = (app.View = class View {
     this.deactivate();
     $.remove(this.el);
   }
-});
-Cls.initClass();
+};
+app.View.initClass();

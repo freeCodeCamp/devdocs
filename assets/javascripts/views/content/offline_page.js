@@ -8,7 +8,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.OfflinePage = class OfflinePage extends app.View {
+app.views.OfflinePage = class OfflinePage extends app.View {
   constructor(...args) {
     this.onClick = this.onClick.bind(this);
     super(...args);
@@ -159,5 +159,5 @@ const Cls = (app.views.OfflinePage = class OfflinePage extends app.View {
       app.settings.set("manualUpdate", !event.target.checked);
     }
   }
-});
-Cls.initClass();
+};
+app.views.OfflinePage.initClass();

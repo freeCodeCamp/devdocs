@@ -7,7 +7,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.Notice = class Notice extends app.View {
+app.views.Notice = class Notice extends app.View {
   static initClass() {
     this.className = "_notice";
     this.attributes = { role: "alert" };
@@ -43,5 +43,5 @@ const Cls = (app.views.Notice = class Notice extends app.View {
   hide() {
     $.remove(this.el);
   }
-});
-Cls.initClass();
+};
+app.views.Notice.initClass();

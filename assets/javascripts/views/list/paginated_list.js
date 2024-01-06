@@ -12,7 +12,7 @@
  */
 (function () {
   let PER_PAGE = undefined;
-  const Cls = (app.views.PaginatedList = class PaginatedList extends app.View {
+  app.views.PaginatedList = class PaginatedList extends app.View {
     static initClass() {
       PER_PAGE = app.config.max_results;
     }
@@ -152,7 +152,7 @@
         this.paginate(target);
       }
     }
-  });
-  Cls.initClass();
-  return Cls;
+  };
+  app.views.PaginatedList.initClass();
+  return app.views.PaginatedList;
 })();

@@ -12,7 +12,7 @@
  */
 (function () {
   let SIDEBAR_HIDDEN_LAYOUT = undefined;
-  const Cls = (app.views.Settings = class Settings extends app.View {
+  app.views.Settings = class Settings extends app.View {
     constructor(...args) {
       this.onChange = this.onChange.bind(this);
       this.onEnter = this.onEnter.bind(this);
@@ -131,7 +131,7 @@
         app.router.show("/");
       }
     }
-  });
-  Cls.initClass();
-  return Cls;
+  };
+  app.views.Settings.initClass();
+  return app.views.Settings;
 })();

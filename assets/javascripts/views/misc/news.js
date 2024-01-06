@@ -10,7 +10,7 @@
  */
 //= require views/misc/notif
 
-const Cls = (app.views.News = class News extends app.views.Notif {
+app.views.News = class News extends app.views.Notif {
   static initClass() {
     this.className += " _notif-news";
 
@@ -58,5 +58,5 @@ const Cls = (app.views.News = class News extends app.views.Notif {
   markAllAsRead() {
     app.settings.set("news", this.getLastNewsTime());
   }
-});
-Cls.initClass();
+};
+app.views.News.initClass();

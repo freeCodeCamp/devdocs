@@ -7,7 +7,7 @@
  */
 //= require views/misc/notif
 
-const Cls = (app.views.Tip = class Tip extends app.views.Notif {
+app.views.Tip = class Tip extends app.views.Notif {
   static initClass() {
     this.className = "_notif _notif-tip";
 
@@ -17,5 +17,5 @@ const Cls = (app.views.Tip = class Tip extends app.views.Notif {
   render() {
     this.html(this.tmpl(`tip${this.type}`));
   }
-});
-Cls.initClass();
+};
+app.views.Tip.initClass();

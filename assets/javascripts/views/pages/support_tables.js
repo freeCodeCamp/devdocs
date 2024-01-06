@@ -7,7 +7,7 @@
  */
 //= require views/pages/base
 
-const Cls = (app.views.SupportTablesPage = class SupportTablesPage extends (
+app.views.SupportTablesPage = class SupportTablesPage extends (
   app.views.BasePage
 ) {
   static initClass() {
@@ -26,5 +26,5 @@ const Cls = (app.views.SupportTablesPage = class SupportTablesPage extends (
     }
     el.classList.add("show-all");
   }
-});
-Cls.initClass();
+};
+app.views.SupportTablesPage.initClass();

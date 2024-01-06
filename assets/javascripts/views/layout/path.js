@@ -7,7 +7,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.Path = class Path extends app.View {
+app.views.Path = class Path extends app.View {
   constructor(...args) {
     this.onClick = this.onClick.bind(this);
     this.afterRoute = this.afterRoute.bind(this);
@@ -65,5 +65,5 @@ const Cls = (app.views.Path = class Path extends app.View {
       app.document.sidebar.reset();
     }
   }
-});
-Cls.initClass();
+};
+app.views.Path.initClass();

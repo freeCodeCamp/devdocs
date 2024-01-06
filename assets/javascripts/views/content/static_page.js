@@ -6,7 +6,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.StaticPage = class StaticPage extends app.View {
+app.views.StaticPage = class StaticPage extends app.View {
   static initClass() {
     this.className = "_static";
 
@@ -37,5 +37,5 @@ const Cls = (app.views.StaticPage = class StaticPage extends app.View {
   onRoute(context) {
     this.render(context.page || "notFound");
   }
-});
-Cls.initClass();
+};
+app.views.StaticPage.initClass();

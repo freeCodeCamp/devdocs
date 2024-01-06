@@ -10,9 +10,7 @@
  */
 //= require views/pages/base
 
-const Cls = (app.views.JqueryPage = class JqueryPage extends (
-  app.views.BasePage
-) {
+app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
   constructor(...args) {
     this.onIframeLoaded = this.onIframeLoaded.bind(this);
     super(...args);
@@ -92,5 +90,5 @@ const Cls = (app.views.JqueryPage = class JqueryPage extends (
     );
     return source.replace(/<script>/gi, '<script nonce="devdocs">');
   }
-});
-Cls.initClass();
+};
+app.views.JqueryPage.initClass();

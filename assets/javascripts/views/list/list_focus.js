@@ -8,7 +8,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.ListFocus = class ListFocus extends app.View {
+app.views.ListFocus = class ListFocus extends app.View {
   static initClass() {
     this.activeClass = "focus";
 
@@ -202,5 +202,5 @@ const Cls = (app.views.ListFocus = class ListFocus extends app.View {
       this.focus(target, { silent: true });
     }
   }
-});
-Cls.initClass();
+};
+app.views.ListFocus.initClass();

@@ -9,7 +9,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.TypeList = class TypeList extends app.View {
+app.views.TypeList = class TypeList extends app.View {
   static initClass() {
     this.tagName = "div";
     this.className = "_list _list-sub";
@@ -90,8 +90,8 @@ const Cls = (app.views.TypeList = class TypeList extends app.View {
       __guard__(this.lists[model.getType().slug], (x) => x.paginateTo(model));
     }
   }
-});
-Cls.initClass();
+};
+app.views.TypeList.initClass();
 
 function __guard__(value, transform) {
   return typeof value !== "undefined" && value !== null

@@ -8,7 +8,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.ListSelect = class ListSelect extends app.View {
+app.views.ListSelect = class ListSelect extends app.View {
   static initClass() {
     this.activeClass = "active";
 
@@ -68,8 +68,8 @@ const Cls = (app.views.ListSelect = class ListSelect extends app.View {
       this.select(target);
     }
   }
-});
-Cls.initClass();
+};
+app.views.ListSelect.initClass();
 
 function __guard__(value, transform) {
   return typeof value !== "undefined" && value !== null

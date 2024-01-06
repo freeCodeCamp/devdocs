@@ -8,7 +8,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.Mobile = class Mobile extends app.View {
+app.views.Mobile = class Mobile extends app.View {
   static initClass() {
     this.className = "_mobile";
 
@@ -207,5 +207,5 @@ const Cls = (app.views.Mobile = class Mobile extends app.View {
       this.forward.setAttribute("disabled", "disabled");
     }
   }
-});
-Cls.initClass();
+};
+app.views.Mobile.initClass();

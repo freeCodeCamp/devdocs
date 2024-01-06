@@ -9,7 +9,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.SidebarHover = class SidebarHover extends app.View {
+app.views.SidebarHover = class SidebarHover extends app.View {
   static initClass() {
     this.itemClass = "_list-hover";
 
@@ -138,8 +138,8 @@ const Cls = (app.views.SidebarHover = class SidebarHover extends app.View {
   onRoute() {
     this.hide();
   }
-});
-Cls.initClass();
+};
+app.views.SidebarHover.initClass();
 
 var isPointerEventsSupported = function () {
   const el = document.createElement("div");

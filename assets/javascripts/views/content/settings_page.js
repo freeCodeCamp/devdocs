@@ -9,7 +9,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.views.SettingsPage = class SettingsPage extends app.View {
+app.views.SettingsPage = class SettingsPage extends app.View {
   constructor(...args) {
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -159,5 +159,5 @@ const Cls = (app.views.SettingsPage = class SettingsPage extends app.View {
   onRoute(context) {
     this.render();
   }
-});
-Cls.initClass();
+};
+app.views.SettingsPage.initClass();

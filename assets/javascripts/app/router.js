@@ -9,7 +9,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-const Cls = (app.Router = class Router {
+app.Router = class Router {
   static initClass() {
     $.extend(this.prototype, Events);
 
@@ -231,8 +231,8 @@ const Cls = (app.Router = class Router {
       true,
     );
   }
-});
-Cls.initClass();
+};
+app.Router.initClass();
 
 function __guard__(value, transform) {
   return typeof value !== "undefined" && value !== null
