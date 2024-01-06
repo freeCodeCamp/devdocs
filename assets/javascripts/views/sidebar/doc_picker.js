@@ -1,23 +1,10 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.DocPicker = class DocPicker extends app.View {
-  static initClass() {
-    this.className = "_list _list-picker";
+  static className = "_list _list-picker";
 
-    this.events = {
-      mousedown: "onMouseDown",
-      mouseup: "onMouseUp",
-    };
-  }
+  static events = {
+    mousedown: "onMouseDown",
+    mouseup: "onMouseUp",
+  };
 
   init() {
     this.addSubview((this.listFold = new app.views.ListFold(this.el)));
@@ -42,14 +29,12 @@ app.views.DocPicker = class DocPicker extends app.View {
   render() {
     let doc;
     let html = this.tmpl("docPickerHeader");
-    let docs = app.docs
-      .all()
-      .concat(...Array.from(app.disabledDocs.all() || []));
+    let docs = app.docs.all().concat(...(app.disabledDocs.all() || []));
 
     while ((doc = docs.shift())) {
       if (doc.version != null) {
         var versions;
-        [docs, versions] = Array.from(this.extractVersions(docs, doc));
+        [docs, versions] = this.extractVersions(docs, doc);
         html += this.tmpl(
           "sidebarVersionedDoc",
           doc,
@@ -65,14 +50,12 @@ app.views.DocPicker = class DocPicker extends app.View {
 
     this.html(html + this.tmpl("docPickerNote"));
 
-    $.requestAnimationFrame(() =>
-      __guard__(this.findByTag("input"), (x) => x.focus()),
-    );
+    $.requestAnimationFrame(() => this.findByTag("input")?.focus());
   }
 
   renderVersions(docs) {
     let html = "";
-    for (var doc of Array.from(docs)) {
+    for (var doc of docs) {
       html += this.tmpl("sidebarLabel", doc, {
         checked: app.docs.contains(doc),
       });
@@ -83,7 +66,7 @@ app.views.DocPicker = class DocPicker extends app.View {
   extractVersions(originalDocs, version) {
     const docs = [];
     const versions = [version];
-    for (var doc of Array.from(originalDocs)) {
+    for (var doc of originalDocs) {
       (doc.name === version.name ? versions : docs).push(doc);
     }
     return [docs, versions];
@@ -95,7 +78,7 @@ app.views.DocPicker = class DocPicker extends app.View {
   }
 
   getSelectedDocs() {
-    return Array.from(this.findAllByTag("input"))
+    return this.findAllByTag("input")
       .filter((input) => (input != null ? input.checked : undefined))
       .map((input) => input.name);
   }
@@ -146,10 +129,3 @@ app.views.DocPicker = class DocPicker extends app.View {
     this.focusEl = target;
   }
 };
-app.views.DocPicker.initClass();
-
-function __guard__(value, transform) {
-  return typeof value !== "undefined" && value !== null
-    ? transform(value)
-    : undefined;
-}
