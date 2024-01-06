@@ -6,17 +6,16 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
  * DS207: Consider shorter variations of null checks
- * DS208: Avoid top-level this
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
-this.app = {
-  _$: $,
-  _$$: $$,
-  _page: page,
-  collections: {},
-  models: {},
-  templates: {},
-  views: {},
+class App extends Events {
+  _$ = $;
+  _$$ = $$;
+  _page = page;
+  collections = {};
+  models = {};
+  templates = {};
+  views = {};
 
   init() {
     try {
@@ -55,7 +54,7 @@ this.app = {
     } else {
       this.onBootError();
     }
-  },
+  }
 
   browserCheck() {
     if (this.isSupportedBrowser()) {
@@ -64,7 +63,7 @@ this.app = {
     document.body.innerHTML = app.templates.unsupportedBrowser;
     this.hideLoadingScreen();
     return false;
-  },
+  }
 
   initErrorTracking() {
     // Show a warning message and don't track errors when the app is loaded
@@ -118,7 +117,7 @@ this.app = {
       window.onerror = this.onWindowError.bind(this);
       CookiesStore.onBlocked = this.onCookieBlocked;
     }
-  },
+  }
 
   bootOne() {
     this.doc = new app.models.Doc(this.DOC);
@@ -128,7 +127,7 @@ this.app = {
     });
     new app.views.Notice("singleDoc", this.doc);
     delete this.DOC;
-  },
+  }
 
   bootAll() {
     const docs = this.settings.getDocs();
@@ -141,7 +140,7 @@ this.app = {
       writeCache: true,
     });
     delete this.DOCS;
-  },
+  }
 
   start() {
     let doc;
@@ -163,14 +162,14 @@ this.app = {
       }
       return this.removeEvent("ready bootError");
     }, 50);
-  },
+  }
 
   initDoc(doc) {
     for (var type of Array.from(doc.types.all())) {
       doc.entries.add(type.toEntry());
     }
     this.entries.add(doc.entries.all());
-  },
+  }
 
   migrateDocs() {
     let needsSaving;
@@ -201,7 +200,7 @@ this.app = {
     if (needsSaving) {
       this.saveDocs();
     }
-  },
+  }
 
   enableDoc(doc, _onSuccess, onError) {
     if (this.docs.contains(doc)) {
@@ -225,7 +224,7 @@ this.app = {
     };
 
     doc.load(onSuccess, onError, { writeCache: true });
-  },
+  }
 
   saveDocs() {
     this.settings.setDocs(Array.from(this.docs.all()).map((doc) => doc.slug));
@@ -233,7 +232,7 @@ this.app = {
     return this.serviceWorker != null
       ? this.serviceWorker.updateInBackground()
       : undefined;
-  },
+  }
 
   welcomeBack() {
     let visitCount = this.settings.get("count");
@@ -244,7 +243,7 @@ this.app = {
     new app.views.News();
     new app.views.Updates();
     return (this.updateChecker = new app.UpdateChecker());
-  },
+  }
 
   reboot() {
     if (location.pathname !== "/" && location.pathname !== "/settings") {
@@ -252,7 +251,7 @@ this.app = {
     } else {
       window.location = "/";
     }
-  },
+  }
 
   reload() {
     this.docs.clearCache();
@@ -262,7 +261,7 @@ this.app = {
     } else {
       this.reboot();
     }
-  },
+  }
 
   reset() {
     this.localStorage.reset();
@@ -274,7 +273,7 @@ this.app = {
       this.serviceWorker.update();
     }
     window.location = "/";
-  },
+  }
 
   showTip(tip) {
     if (this.isSingleDoc()) {
@@ -286,14 +285,14 @@ this.app = {
       this.settings.setTips(tips);
       new app.views.Tip(tip);
     }
-  },
+  }
 
   hideLoadingScreen() {
     if ($.overlayScrollbarsEnabled()) {
       document.body.classList.add("_overlay-scrollbars");
     }
     document.documentElement.classList.remove("_booting");
-  },
+  }
 
   indexHost() {
     // Can't load the index files from the host/CDN when service worker is
@@ -303,12 +302,12 @@ this.app = {
         ? "index_path"
         : "docs_origin"
     ];
-  },
+  }
 
   onBootError(...args) {
     this.trigger("bootError");
     this.hideLoadingScreen();
-  },
+  }
 
   onQuotaExceeded() {
     if (this.quotaExceeded) {
@@ -316,7 +315,7 @@ this.app = {
     }
     this.quotaExceeded = true;
     new app.views.Notif("QuotaExceeded", { autoHide: null });
-  },
+  }
 
   onCookieBlocked(key, value, actual) {
     if (this.cookieBlocked) {
@@ -328,7 +327,7 @@ this.app = {
       level: "warning",
       extra: { value, actual },
     });
-  },
+  }
 
   onWindowError(...args) {
     if (this.cookieBlocked) {
@@ -346,7 +345,7 @@ this.app = {
       }
       this.errorNotif.show();
     }
-  },
+  }
 
   onInjectionError() {
     if (!this.injectionError) {
@@ -356,7 +355,7 @@ JavaScript code has been injected in the page which prevents DevDocs from runnin
 Please check your browser extensions/addons. `);
       Raven.captureMessage("injection error", { level: "info" });
     }
-  },
+  }
 
   isInjectionError() {
     // Some browser extensions expect the entire web to use jQuery.
@@ -368,7 +367,7 @@ Please check your browser extensions/addons. `);
       typeof $.empty !== "function" ||
       typeof page.show !== "function"
     );
-  },
+  }
 
   isAppError(error, file) {
     // Ignore errors from external scripts.
@@ -377,7 +376,7 @@ Please check your browser extensions/addons. `);
       file.indexOf("devdocs") !== -1 &&
       file.indexOf(".js") === file.length - 3
     );
-  },
+  }
 
   isSupportedBrowser() {
     try {
@@ -409,33 +408,31 @@ Please check your browser extensions/addons. `);
       });
       return false;
     }
-  },
+  }
 
   isSingleDoc() {
     return document.body.hasAttribute("data-doc");
-  },
+  }
 
   isMobile() {
     return this._isMobile != null
       ? this._isMobile
       : (this._isMobile = app.views.Mobile.detect());
-  },
+  }
 
   isAndroidWebview() {
     return this._isAndroidWebview != null
       ? this._isAndroidWebview
       : (this._isAndroidWebview = app.views.Mobile.detectAndroidWebview());
-  },
+  }
 
   isInvalidLocation() {
     return (
       this.config.env === "production" &&
       location.host.indexOf(app.config.production_host) !== 0
     );
-  },
-};
-
-$.extend(app, Events);
+  }
+}
 
 function __guard__(value, transform) {
   return typeof value !== "undefined" && value !== null
@@ -453,3 +450,5 @@ function __guardMethod__(obj, methodName, transform) {
     return undefined;
   }
 }
+
+this.app = new App();
