@@ -1,12 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.BasePage = class BasePage extends app.View {
   constructor(el, entry) {
     super(el);
@@ -44,7 +35,7 @@ app.views.BasePage = class BasePage extends app.View {
   }
 
   highlightCode() {
-    for (var el of Array.from(this.findAll("pre[data-language]"))) {
+    for (var el of this.findAll("pre[data-language]")) {
       var language = el.getAttribute("data-language");
       el.classList.add(`language-${language}`);
       this.highlightNodes.push(el);
@@ -65,9 +56,7 @@ app.views.BasePage = class BasePage extends app.View {
       this.nodesPerFrame = 10;
     }
 
-    for (var el of Array.from(
-      this.highlightNodes.splice(0, this.nodesPerFrame),
-    )) {
+    for (var el of this.highlightNodes.splice(0, this.nodesPerFrame)) {
       var clipEl;
       if ((clipEl = el.lastElementChild)) {
         $.remove(clipEl);
