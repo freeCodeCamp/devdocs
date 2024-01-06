@@ -1,29 +1,21 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.Notif = class Notif extends app.View {
-  static initClass() {
-    this.className = "_notif";
-    this.activeClass = "_in";
-    this.attributes = { role: "alert" };
+  static className = "_notif";
+  static activeClass = "_in";
+  static attributes = { role: "alert" };
 
-    this.defaultOptions = { autoHide: 15000 };
+  static defaultOptions = { autoHide: 15000 };
 
-    this.events = { click: "onClick" };
-  }
+  static events = { click: "onClick" };
 
   constructor(type, options) {
     super();
     this.type = type;
     this.options = $.extend({}, this.constructor.defaultOptions, options || {});
+    this.init0(); // needs this.options
+    this.refreshElements();
   }
 
-  init() {
+  init0() {
     this.show();
   }
 
@@ -55,7 +47,7 @@ app.views.Notif = class Notif extends app.View {
   }
 
   position() {
-    const notifications = $$(`.${app.views.Notif.className}`);
+    const notifications = $$(`.${Notif.className}`);
     if (notifications.length) {
       const lastNotif = notifications[notifications.length - 1];
       this.el.style.top =
@@ -77,4 +69,3 @@ app.views.Notif = class Notif extends app.View {
     }
   }
 };
-app.views.Notif.initClass();

@@ -1,15 +1,6 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS206: Consider reworking classes to avoid initClass
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.Notice = class Notice extends app.View {
-  static initClass() {
-    this.className = "_notice";
-    this.attributes = { role: "alert" };
-  }
+  static className = "_notice";
+  static attributes = { role: "alert" };
 
   constructor(type, ...args) {
     super();
@@ -44,4 +35,3 @@ app.views.Notice = class Notice extends app.View {
     $.remove(this.el);
   }
 };
-app.views.Notice.initClass();

@@ -1,23 +1,11 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS205: Consider reworking code to avoid use of IIFEs
- * DS206: Consider reworking classes to avoid initClass
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 //= require views/misc/notif
 
 app.views.Updates = class Updates extends app.views.Notif {
-  static initClass() {
-    this.className += " _notif-news";
+  static className = "_notif _notif-news";
 
-    this.defautOptions = { autoHide: 30000 };
-  }
+  static defautOptions = { autoHide: 30000 };
 
-  init() {
+  init0() {
     this.lastUpdateTime = this.getLastUpdateTime();
     this.updatedDocs = this.getUpdatedDocs();
     this.updatedDisabledDocs = this.getUpdatedDisabledDocs();
@@ -46,18 +34,16 @@ app.views.Updates = class Updates extends app.views.Notif {
     if (!this.lastUpdateTime) {
       return [];
     }
-    return (() => {
-      const result = [];
-      for (var doc of Array.from(app.disabledDocs.all())) {
-        if (
-          doc.mtime > this.lastUpdateTime &&
-          app.docs.findBy("slug_without_version", doc.slug_without_version)
-        ) {
-          result.push(doc);
-        }
+    const result = [];
+    for (var doc of Array.from(app.disabledDocs.all())) {
+      if (
+        doc.mtime > this.lastUpdateTime &&
+        app.docs.findBy("slug_without_version", doc.slug_without_version)
+      ) {
+        result.push(doc);
       }
-      return result;
-    })();
+    }
+    return result;
   }
 
   getLastUpdateTime() {
@@ -73,4 +59,3 @@ app.views.Updates = class Updates extends app.views.Notif {
     );
   }
 };
-app.views.Updates.initClass();
