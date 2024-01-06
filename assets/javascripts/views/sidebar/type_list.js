@@ -1,53 +1,77 @@
-class app.views.TypeList extends app.View
-  @tagName: 'div'
-  @className: '_list _list-sub'
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS101: Remove unnecessary use of Array.from
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
+ * DS206: Consider reworking classes to avoid initClass
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.views.TypeList = class TypeList extends app.View {
+  static initClass() {
+    this.tagName = 'div';
+    this.className = '_list _list-sub';
+  
+    this.events = {
+      open:  'onOpen',
+      close: 'onClose'
+    };
+  }
 
-  @events:
-    open:  'onOpen'
-    close: 'onClose'
+  constructor(doc) { this.onOpen = this.onOpen.bind(this);   this.onClose = this.onClose.bind(this);   this.doc = doc; super(...arguments); }
 
-  constructor: (@doc) -> super
+  init() {
+    this.lists = {};
+    this.render();
+    this.activate();
+  }
 
-  init: ->
-    @lists = {}
-    @render()
-    @activate()
-    return
+  activate() {
+    if (super.activate(...arguments)) {
+      for (var slug in this.lists) { var list = this.lists[slug]; list.activate(); }
+    }
+  }
 
-  activate: ->
-    if super
-      list.activate() for slug, list of @lists
-    return
+  deactivate() {
+    if (super.deactivate(...arguments)) {
+      for (var slug in this.lists) { var list = this.lists[slug]; list.deactivate(); }
+    }
+  }
 
-  deactivate: ->
-    if super
-      list.deactivate() for slug, list of @lists
-    return
+  render() {
+    let html = '';
+    for (var group of Array.from(this.doc.types.groups())) { html += this.tmpl('sidebarType', group); }
+    return this.html(html);
+  }
 
-  render: ->
-    html = ''
-    html += @tmpl('sidebarType', group) for group in @doc.types.groups()
-    @html(html)
+  onOpen(event) {
+    $.stopEvent(event);
+    const type = this.doc.types.findBy('slug', event.target.getAttribute('data-slug'));
 
-  onOpen: (event) =>
-    $.stopEvent(event)
-    type = @doc.types.findBy 'slug', event.target.getAttribute('data-slug')
+    if (type && !this.lists[type.slug]) {
+      this.lists[type.slug] = new app.views.EntryList(type.entries());
+      $.after(event.target, this.lists[type.slug].el);
+    }
+  }
 
-    if type and not @lists[type.slug]
-      @lists[type.slug] = new app.views.EntryList(type.entries())
-      $.after event.target, @lists[type.slug].el
-    return
+  onClose(event) {
+    $.stopEvent(event);
+    const type = this.doc.types.findBy('slug', event.target.getAttribute('data-slug'));
 
-  onClose: (event) =>
-    $.stopEvent(event)
-    type = @doc.types.findBy 'slug', event.target.getAttribute('data-slug')
+    if (type && this.lists[type.slug]) {
+      this.lists[type.slug].detach();
+      delete this.lists[type.slug];
+    }
+  }
 
-    if type and @lists[type.slug]
-      @lists[type.slug].detach()
-      delete @lists[type.slug]
-    return
+  paginateTo(model) {
+    if (model.type) {
+      __guard__(this.lists[model.getType().slug], x => x.paginateTo(model));
+    }
+  }
+});
+Cls.initClass();
 
-  paginateTo: (model) ->
-    if model.type
-      @lists[model.getType().slug]?.paginateTo(model)
-    return
+function __guard__(value, transform) {
+  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+}

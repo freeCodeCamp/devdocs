@@ -1,193 +1,259 @@
-class app.Shortcuts
-  $.extend @prototype, Events
+/*
+ * decaffeinate suggestions:
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
+ * DS205: Consider reworking code to avoid use of IIFEs
+ * DS206: Consider reworking classes to avoid initClass
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.Shortcuts = class Shortcuts {
+  static initClass() {
+    $.extend(this.prototype, Events);
+  }
 
-  constructor: ->
-    @isMac = $.isMac()
-    @start()
+  constructor() {
+    this.onKeydown = this.onKeydown.bind(this);
+    this.onKeypress = this.onKeypress.bind(this);
+    this.isMac = $.isMac();
+    this.start();
+  }
 
-  start: ->
-    $.on document, 'keydown', @onKeydown
-    $.on document, 'keypress', @onKeypress
-    return
+  start() {
+    $.on(document, 'keydown', this.onKeydown);
+    $.on(document, 'keypress', this.onKeypress);
+  }
 
-  stop: ->
-    $.off document, 'keydown', @onKeydown
-    $.off document, 'keypress', @onKeypress
-    return
+  stop() {
+    $.off(document, 'keydown', this.onKeydown);
+    $.off(document, 'keypress', this.onKeypress);
+  }
 
-  swapArrowKeysBehavior: ->
-    app.settings.get('arrowScroll')
+  swapArrowKeysBehavior() {
+    return app.settings.get('arrowScroll');
+  }
 
-  spaceScroll: ->
-    app.settings.get('spaceScroll')
+  spaceScroll() {
+    return app.settings.get('spaceScroll');
+  }
 
-  showTip: ->
-    app.showTip('KeyNav')
-    @showTip = null
+  showTip() {
+    app.showTip('KeyNav');
+    return this.showTip = null;
+  }
 
-  spaceTimeout: ->
-    app.settings.get('spaceTimeout')
+  spaceTimeout() {
+    return app.settings.get('spaceTimeout');
+  }
 
-  onKeydown: (event) =>
-    return if @buggyEvent(event)
-    result = if event.ctrlKey or event.metaKey
-      @handleKeydownSuperEvent event unless event.altKey or event.shiftKey
-    else if event.shiftKey
-      @handleKeydownShiftEvent event unless event.altKey
-    else if event.altKey
-      @handleKeydownAltEvent event
-    else
-      @handleKeydownEvent event
+  onKeydown(event) {
+    if (this.buggyEvent(event)) { return; }
+    const result = (() => {
+      if (event.ctrlKey || event.metaKey) {
+      if (!event.altKey && !event.shiftKey) { return this.handleKeydownSuperEvent(event); }
+    } else if (event.shiftKey) {
+      if (!event.altKey) { return this.handleKeydownShiftEvent(event); }
+    } else if (event.altKey) {
+      return this.handleKeydownAltEvent(event);
+    } else {
+      return this.handleKeydownEvent(event);
+    }
+    })();
 
-    event.preventDefault() if result is false
-    return
+    if (result === false) { event.preventDefault(); }
+  }
 
-  onKeypress: (event) =>
-    return if @buggyEvent(event) or (event.charCode == 63 and document.activeElement.tagName == 'INPUT')
-    unless event.ctrlKey or event.metaKey
-      result = @handleKeypressEvent event
-      event.preventDefault() if result is false
-    return
+  onKeypress(event) {
+    if (this.buggyEvent(event) || ((event.charCode === 63) && (document.activeElement.tagName === 'INPUT'))) { return; }
+    if (!event.ctrlKey && !event.metaKey) {
+      const result = this.handleKeypressEvent(event);
+      if (result === false) { event.preventDefault(); }
+    }
+  }
 
-  handleKeydownEvent: (event, _force) ->
-    return @handleKeydownAltEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+  handleKeydownEvent(event, _force) {
+    if (!_force && [37, 38, 39, 40].includes(event.which) && this.swapArrowKeysBehavior()) { return this.handleKeydownAltEvent(event, true); }
 
-    if not event.target.form and (48 <= event.which <= 57 or 65 <= event.which <= 90)
-      @trigger 'typing'
-      return
+    if (!event.target.form && ((48 <= event.which && event.which <= 57) || (65 <= event.which && event.which <= 90))) {
+      this.trigger('typing');
+      return;
+    }
 
-    switch event.which
-      when 8
-        @trigger 'typing' unless event.target.form
-      when 13
-        @trigger 'enter'
-      when 27
-        @trigger 'escape'
-        false
-      when 32
-        if event.target.type is 'search' and @spaceScroll() and (not @lastKeypress or @lastKeypress < Date.now() - (@spaceTimeout() * 1000))
-          @trigger 'pageDown'
-          false
-      when 33
-        @trigger 'pageUp'
-      when 34
-        @trigger 'pageDown'
-      when 35
-        @trigger 'pageBottom' unless event.target.form
-      when 36
-        @trigger 'pageTop' unless event.target.form
-      when 37
-        @trigger 'left' unless event.target.value
-      when 38
-        @trigger 'up'
-        @showTip?()
-        false
-      when 39
-        @trigger 'right' unless event.target.value
-      when 40
-        @trigger 'down'
-        @showTip?()
-        false
-      when 191
-        unless event.target.form
-          @trigger 'typing'
-          false
+    switch (event.which) {
+      case 8:
+        if (!event.target.form) { return this.trigger('typing'); }
+        break;
+      case 13:
+        return this.trigger('enter');
+      case 27:
+        this.trigger('escape');
+        return false;
+      case 32:
+        if ((event.target.type === 'search') && this.spaceScroll() && (!this.lastKeypress || (this.lastKeypress < (Date.now() - (this.spaceTimeout() * 1000))))) {
+          this.trigger('pageDown');
+          return false;
+        }
+        break;
+      case 33:
+        return this.trigger('pageUp');
+      case 34:
+        return this.trigger('pageDown');
+      case 35:
+        if (!event.target.form) { return this.trigger('pageBottom'); }
+        break;
+      case 36:
+        if (!event.target.form) { return this.trigger('pageTop'); }
+        break;
+      case 37:
+        if (!event.target.value) { return this.trigger('left'); }
+        break;
+      case 38:
+        this.trigger('up');
+        if (typeof this.showTip === 'function') {
+          this.showTip();
+        }
+        return false;
+      case 39:
+        if (!event.target.value) { return this.trigger('right'); }
+        break;
+      case 40:
+        this.trigger('down');
+        if (typeof this.showTip === 'function') {
+          this.showTip();
+        }
+        return false;
+      case 191:
+        if (!event.target.form) {
+          this.trigger('typing');
+          return false;
+        }
+        break;
+    }
+  }
 
-  handleKeydownSuperEvent: (event) ->
-    switch event.which
-      when 13
-        @trigger 'superEnter'
-      when 37
-        if @isMac
-          @trigger 'superLeft'
-          false
-      when 38
-        @trigger 'pageTop'
-        false
-      when 39
-        if @isMac
-          @trigger 'superRight'
-          false
-      when 40
-        @trigger 'pageBottom'
-        false
-      when 188
-        @trigger 'preferences'
-        false
+  handleKeydownSuperEvent(event) {
+    switch (event.which) {
+      case 13:
+        return this.trigger('superEnter');
+      case 37:
+        if (this.isMac) {
+          this.trigger('superLeft');
+          return false;
+        }
+        break;
+      case 38:
+        this.trigger('pageTop');
+        return false;
+      case 39:
+        if (this.isMac) {
+          this.trigger('superRight');
+          return false;
+        }
+        break;
+      case 40:
+        this.trigger('pageBottom');
+        return false;
+      case 188:
+        this.trigger('preferences');
+        return false;
+    }
+  }
 
-  handleKeydownShiftEvent: (event, _force) ->
-    return @handleKeydownEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+  handleKeydownShiftEvent(event, _force) {
+    if (!_force && [37, 38, 39, 40].includes(event.which) && this.swapArrowKeysBehavior()) { return this.handleKeydownEvent(event, true); }
 
-    if not event.target.form and 65 <= event.which <= 90
-      @trigger 'typing'
-      return
+    if (!event.target.form && (65 <= event.which && event.which <= 90)) {
+      this.trigger('typing');
+      return;
+    }
 
-    switch event.which
-      when 32
-        @trigger 'pageUp'
-        false
-      when 38
-        unless getSelection()?.toString()
-          @trigger 'altUp'
-          false
-      when 40
-        unless getSelection()?.toString()
-          @trigger 'altDown'
-          false
+    switch (event.which) {
+      case 32:
+        this.trigger('pageUp');
+        return false;
+      case 38:
+        if (!__guard__(getSelection(), x => x.toString())) {
+          this.trigger('altUp');
+          return false;
+        }
+        break;
+      case 40:
+        if (!__guard__(getSelection(), x1 => x1.toString())) {
+          this.trigger('altDown');
+          return false;
+        }
+        break;
+    }
+  }
 
-  handleKeydownAltEvent: (event, _force) ->
-    return @handleKeydownEvent(event, true) if not _force and event.which in [37, 38, 39, 40] and @swapArrowKeysBehavior()
+  handleKeydownAltEvent(event, _force) {
+    if (!_force && [37, 38, 39, 40].includes(event.which) && this.swapArrowKeysBehavior()) { return this.handleKeydownEvent(event, true); }
 
-    switch event.which
-      when 9
-        @trigger 'altRight', event
-      when 37
-        unless @isMac
-          @trigger 'superLeft'
-          false
-      when 38
-        @trigger 'altUp'
-        false
-      when 39
-        unless @isMac
-          @trigger 'superRight'
-          false
-      when 40
-        @trigger 'altDown'
-        false
-      when 67
-        @trigger 'altC'
-        false
-      when 68
-        @trigger 'altD'
-        false
-      when 70
-        @trigger 'altF', event
-      when 71
-        @trigger 'altG'
-        false
-      when 79
-        @trigger 'altO'
-        false
-      when 82
-        @trigger 'altR'
-        false
-      when 83
-        @trigger 'altS'
-        false
+    switch (event.which) {
+      case 9:
+        return this.trigger('altRight', event);
+      case 37:
+        if (!this.isMac) {
+          this.trigger('superLeft');
+          return false;
+        }
+        break;
+      case 38:
+        this.trigger('altUp');
+        return false;
+      case 39:
+        if (!this.isMac) {
+          this.trigger('superRight');
+          return false;
+        }
+        break;
+      case 40:
+        this.trigger('altDown');
+        return false;
+      case 67:
+        this.trigger('altC');
+        return false;
+      case 68:
+        this.trigger('altD');
+        return false;
+      case 70:
+        return this.trigger('altF', event);
+      case 71:
+        this.trigger('altG');
+        return false;
+      case 79:
+        this.trigger('altO');
+        return false;
+      case 82:
+        this.trigger('altR');
+        return false;
+      case 83:
+        this.trigger('altS');
+        return false;
+    }
+  }
 
-  handleKeypressEvent: (event) ->
-    if event.which is 63 and not event.target.value
-      @trigger 'help'
-      false
-    else
-      @lastKeypress = Date.now()
+  handleKeypressEvent(event) {
+    if ((event.which === 63) && !event.target.value) {
+      this.trigger('help');
+      return false;
+    } else {
+      return this.lastKeypress = Date.now();
+    }
+  }
 
-  buggyEvent: (event) ->
-    try
-      event.target
-      event.ctrlKey
-      event.which
-      return false
-    catch
-      return true
+  buggyEvent(event) {
+    try {
+      event.target;
+      event.ctrlKey;
+      event.which;
+      return false;
+    } catch (error) {
+      return true;
+    }
+  }
+});
+Cls.initClass();
+
+function __guard__(value, transform) {
+  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+}

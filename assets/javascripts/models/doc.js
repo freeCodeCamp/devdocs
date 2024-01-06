@@ -1,147 +1,174 @@
-class app.models.Doc extends app.Model
-  # Attributes: name, slug, type, version, release, db_size, mtime, links
+/*
+ * decaffeinate suggestions:
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+app.models.Doc = class Doc extends app.Model {
+  // Attributes: name, slug, type, version, release, db_size, mtime, links
 
-  constructor: ->
-    super
-    @reset @
-    @slug_without_version = @slug.split('~')[0]
-    @fullName = "#{@name}" + if @version then " #{@version}" else ''
-    @icon = @slug_without_version
-    @short_version = @version.split(' ')[0] if @version
-    @text = @toEntry().text
+  constructor() {
+    super(...arguments);
+    this.reset(this);
+    this.slug_without_version = this.slug.split('~')[0];
+    this.fullName = `${this.name}` + (this.version ? ` ${this.version}` : '');
+    this.icon = this.slug_without_version;
+    if (this.version) { this.short_version = this.version.split(' ')[0]; }
+    this.text = this.toEntry().text;
+  }
 
-  reset: (data) ->
-    @resetEntries data.entries
-    @resetTypes data.types
-    return
+  reset(data) {
+    this.resetEntries(data.entries);
+    this.resetTypes(data.types);
+  }
 
-  resetEntries: (entries) ->
-    @entries = new app.collections.Entries(entries)
-    @entries.each (entry) => entry.doc = @
-    return
+  resetEntries(entries) {
+    this.entries = new app.collections.Entries(entries);
+    this.entries.each(entry => { return entry.doc = this; });
+  }
 
-  resetTypes: (types) ->
-    @types = new app.collections.Types(types)
-    @types.each (type) => type.doc = @
-    return
+  resetTypes(types) {
+    this.types = new app.collections.Types(types);
+    this.types.each(type => { return type.doc = this; });
+  }
 
-  fullPath: (path = '') ->
-    path = "/#{path}" unless path[0] is '/'
-    "/#{@slug}#{path}"
+  fullPath(path) {
+    if (path == null) { path = ''; }
+    if (path[0] !== '/') { path = `/${path}`; }
+    return `/${this.slug}${path}`;
+  }
 
-  fileUrl: (path) ->
-    "#{app.config.docs_origin}#{@fullPath(path)}?#{@mtime}"
+  fileUrl(path) {
+    return `${app.config.docs_origin}${this.fullPath(path)}?${this.mtime}`;
+  }
 
-  dbUrl: ->
-    "#{app.config.docs_origin}/#{@slug}/#{app.config.db_filename}?#{@mtime}"
+  dbUrl() {
+    return `${app.config.docs_origin}/${this.slug}/${app.config.db_filename}?${this.mtime}`;
+  }
 
-  indexUrl: ->
-    "#{app.indexHost()}/#{@slug}/#{app.config.index_filename}?#{@mtime}"
+  indexUrl() {
+    return `${app.indexHost()}/${this.slug}/${app.config.index_filename}?${this.mtime}`;
+  }
 
-  toEntry: ->
-    return @entry if @entry
-    @entry = new app.models.Entry
-      doc: @
-      name: @fullName
+  toEntry() {
+    if (this.entry) { return this.entry; }
+    this.entry = new app.models.Entry({
+      doc: this,
+      name: this.fullName,
       path: 'index'
-    @entry.addAlias(@name) if @version
-    @entry
+    });
+    if (this.version) { this.entry.addAlias(this.name); }
+    return this.entry;
+  }
 
-  findEntryByPathAndHash: (path, hash) ->
-    if hash and entry = @entries.findBy 'path', "#{path}##{hash}"
-      entry
-    else if path is 'index'
-      @toEntry()
-    else
-      @entries.findBy 'path', path
+  findEntryByPathAndHash(path, hash) {
+    let entry;
+    if (hash && (entry = this.entries.findBy('path', `${path}#${hash}`))) {
+      return entry;
+    } else if (path === 'index') {
+      return this.toEntry();
+    } else {
+      return this.entries.findBy('path', path);
+    }
+  }
 
-  load: (onSuccess, onError, options = {}) ->
-    return if options.readCache and @_loadFromCache(onSuccess)
+  load(onSuccess, onError, options) {
+    if (options == null) { options = {}; }
+    if (options.readCache && this._loadFromCache(onSuccess)) { return; }
 
-    callback = (data) =>
-      @reset data
-      onSuccess()
-      @_setCache data if options.writeCache
-      return
+    const callback = data => {
+      this.reset(data);
+      onSuccess();
+      if (options.writeCache) { this._setCache(data); }
+    };
 
-    ajax
-      url: @indexUrl()
-      success: callback
+    return ajax({
+      url: this.indexUrl(),
+      success: callback,
       error: onError
+    });
+  }
 
-  clearCache: ->
-    app.localStorage.del @slug
-    return
+  clearCache() {
+    app.localStorage.del(this.slug);
+  }
 
-  _loadFromCache: (onSuccess) ->
-    return unless data = @_getCache()
+  _loadFromCache(onSuccess) {
+    let data;
+    if (!(data = this._getCache())) { return; }
 
-    callback = =>
-      @reset data
-      onSuccess()
-      return
+    const callback = () => {
+      this.reset(data);
+      onSuccess();
+    };
 
-    setTimeout callback, 0
-    true
+    setTimeout(callback, 0);
+    return true;
+  }
 
-  _getCache: ->
-    return unless data = app.localStorage.get @slug
+  _getCache() {
+    let data;
+    if (!(data = app.localStorage.get(this.slug))) { return; }
 
-    if data[0] is @mtime
-      return data[1]
-    else
-      @clearCache()
-      return
+    if (data[0] === this.mtime) {
+      return data[1];
+    } else {
+      this.clearCache();
+      return;
+    }
+  }
 
-  _setCache: (data) ->
-    app.localStorage.set @slug, [@mtime, data]
-    return
+  _setCache(data) {
+    app.localStorage.set(this.slug, [this.mtime, data]);
+  }
 
-  install: (onSuccess, onError, onProgress) ->
-    return if @installing
-    @installing = true
+  install(onSuccess, onError, onProgress) {
+    if (this.installing) { return; }
+    this.installing = true;
 
-    error = =>
-      @installing = null
-      onError()
-      return
+    const error = () => {
+      this.installing = null;
+      onError();
+    };
 
-    success = (data) =>
-      @installing = null
-      app.db.store @, data, onSuccess, error
-      return
+    const success = data => {
+      this.installing = null;
+      app.db.store(this, data, onSuccess, error);
+    };
 
-    ajax
-      url: @dbUrl()
-      success: success
-      error: error
-      progress: onProgress
+    ajax({
+      url: this.dbUrl(),
+      success,
+      error,
+      progress: onProgress,
       timeout: 3600
-    return
+    });
+  }
 
-  uninstall: (onSuccess, onError) ->
-    return if @installing
-    @installing = true
+  uninstall(onSuccess, onError) {
+    if (this.installing) { return; }
+    this.installing = true;
 
-    success = =>
-      @installing = null
-      onSuccess()
-      return
+    const success = () => {
+      this.installing = null;
+      onSuccess();
+    };
 
-    error = =>
-      @installing = null
-      onError()
-      return
+    const error = () => {
+      this.installing = null;
+      onError();
+    };
 
-    app.db.unstore @, success, error
-    return
+    app.db.unstore(this, success, error);
+  }
 
-  getInstallStatus: (callback) ->
-    app.db.version @, (value) ->
-      callback installed: !!value, mtime: value
-    return
+  getInstallStatus(callback) {
+    app.db.version(this, value => callback({installed: !!value, mtime: value}));
+  }
 
-  isOutdated: (status) ->
-    return false if not status
-    isInstalled = status.installed or app.settings.get('autoInstall')
-    isInstalled and @mtime isnt status.mtime
+  isOutdated(status) {
+    if (!status) { return false; }
+    const isInstalled = status.installed || app.settings.get('autoInstall');
+    return isInstalled && (this.mtime !== status.mtime);
+  }
+};

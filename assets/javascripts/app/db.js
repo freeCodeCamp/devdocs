@@ -1,382 +1,486 @@
-class app.DB
-  NAME = 'docs'
-  VERSION = 15
+/*
+ * decaffeinate suggestions:
+ * DS101: Remove unnecessary use of Array.from
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS205: Consider reworking code to avoid use of IIFEs
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+(function() {
+  let NAME = undefined;
+  let VERSION = undefined;
+  const Cls = (app.DB = class DB {
+    static initClass() {
+      NAME = 'docs';
+      VERSION = 15;
+    }
 
-  constructor: ->
-    @versionMultipler = if $.isIE() then 1e5 else 1e9
-    @useIndexedDB = @useIndexedDB()
-    @callbacks = []
+    constructor() {
+      this.onOpenSuccess = this.onOpenSuccess.bind(this);
+      this.onOpenError = this.onOpenError.bind(this);
+      this.checkForCorruptedDocs = this.checkForCorruptedDocs.bind(this);
+      this.deleteCorruptedDocs = this.deleteCorruptedDocs.bind(this);
+      this.versionMultipler = $.isIE() ? 1e5 : 1e9;
+      this.useIndexedDB = this.useIndexedDB();
+      this.callbacks = [];
+    }
 
-  db: (fn) ->
-    return fn() unless @useIndexedDB
-    @callbacks.push(fn) if fn
-    return if @open
+    db(fn) {
+      if (!this.useIndexedDB) { return fn(); }
+      if (fn) { this.callbacks.push(fn); }
+      if (this.open) { return; }
 
-    try
-      @open = true
-      req = indexedDB.open(NAME, VERSION * @versionMultipler + @userVersion())
-      req.onsuccess = @onOpenSuccess
-      req.onerror = @onOpenError
-      req.onupgradeneeded = @onUpgradeNeeded
-    catch error
-      @fail 'exception', error
-    return
+      try {
+        this.open = true;
+        const req = indexedDB.open(NAME, (VERSION * this.versionMultipler) + this.userVersion());
+        req.onsuccess = this.onOpenSuccess;
+        req.onerror = this.onOpenError;
+        req.onupgradeneeded = this.onUpgradeNeeded;
+      } catch (error) {
+        this.fail('exception', error);
+      }
+    }
 
-  onOpenSuccess: (event) =>
-    db = event.target.result
+    onOpenSuccess(event) {
+      let error;
+      const db = event.target.result;
 
-    if db.objectStoreNames.length is 0
-      try db.close()
-      @open = false
-      @fail 'empty'
-    else if error = @buggyIDB(db)
-      try db.close()
-      @open = false
-      @fail 'buggy', error
-    else
-      @runCallbacks(db)
-      @open = false
-      db.close()
-    return
+      if (db.objectStoreNames.length === 0) {
+        try { db.close(); } catch (error1) {}
+        this.open = false;
+        this.fail('empty');
+      } else if (error = this.buggyIDB(db)) {
+        try { db.close(); } catch (error2) {}
+        this.open = false;
+        this.fail('buggy', error);
+      } else {
+        this.runCallbacks(db);
+        this.open = false;
+        db.close();
+      }
+    }
 
-  onOpenError: (event) =>
-    event.preventDefault()
-    @open = false
-    error = event.target.error
+    onOpenError(event) {
+      event.preventDefault();
+      this.open = false;
+      const {
+        error
+      } = event.target;
 
-    switch error.name
-      when 'QuotaExceededError'
-        @onQuotaExceededError()
-      when 'VersionError'
-        @onVersionError()
-      when 'InvalidStateError'
-        @fail 'private_mode'
-      else
-        @fail 'cant_open', error
-    return
+      switch (error.name) {
+        case 'QuotaExceededError':
+          this.onQuotaExceededError();
+          break;
+        case 'VersionError':
+          this.onVersionError();
+          break;
+        case 'InvalidStateError':
+          this.fail('private_mode');
+          break;
+        default:
+          this.fail('cant_open', error);
+      }
+    }
 
-  fail: (reason, error) ->
-    @cachedDocs = null
-    @useIndexedDB = false
-    @reason or= reason
-    @error or= error
-    console.error? 'IDB error', error if error
-    @runCallbacks()
-    if error and reason is 'cant_open'
-      Raven.captureMessage "#{error.name}: #{error.message}", level: 'warning', fingerprint: [error.name]
-    return
+    fail(reason, error) {
+      this.cachedDocs = null;
+      this.useIndexedDB = false;
+      if (!this.reason) { this.reason = reason; }
+      if (!this.error) { this.error = error; }
+      if (error) { if (typeof console.error === 'function') {
+        console.error('IDB error', error);
+      } }
+      this.runCallbacks();
+      if (error && (reason === 'cant_open')) {
+        Raven.captureMessage(`${error.name}: ${error.message}`, {level: 'warning', fingerprint: [error.name]});
+      }
+    }
 
-  onQuotaExceededError: ->
-    @reset()
-    @db()
-    app.onQuotaExceeded()
-    Raven.captureMessage 'QuotaExceededError', level: 'warning'
-    return
+    onQuotaExceededError() {
+      this.reset();
+      this.db();
+      app.onQuotaExceeded();
+      Raven.captureMessage('QuotaExceededError', {level: 'warning'});
+    }
 
-  onVersionError: ->
-    req = indexedDB.open(NAME)
-    req.onsuccess = (event) =>
-      @handleVersionMismatch event.target.result.version
-    req.onerror = (event) ->
-      event.preventDefault()
-      @fail 'cant_open', error
-    return
+    onVersionError() {
+      const req = indexedDB.open(NAME);
+      req.onsuccess = event => {
+        return this.handleVersionMismatch(event.target.result.version);
+      };
+      req.onerror = function(event) {
+        event.preventDefault();
+        return this.fail('cant_open', error);
+      };
+    }
 
-  handleVersionMismatch: (actualVersion) ->
-    if Math.floor(actualVersion / @versionMultipler) isnt VERSION
-      @fail 'version'
-    else
-      @setUserVersion actualVersion - VERSION * @versionMultipler
-      @db()
-    return
+    handleVersionMismatch(actualVersion) {
+      if (Math.floor(actualVersion / this.versionMultipler) !== VERSION) {
+        this.fail('version');
+      } else {
+        this.setUserVersion(actualVersion - (VERSION * this.versionMultipler));
+        this.db();
+      }
+    }
 
-  buggyIDB: (db) ->
-    return if @checkedBuggyIDB
-    @checkedBuggyIDB = true
-    try
-      @idbTransaction(db, stores: $.makeArray(db.objectStoreNames)[0..1], mode: 'readwrite').abort() # https://bugs.webkit.org/show_bug.cgi?id=136937
-      return
-    catch error
-      return error
+    buggyIDB(db) {
+      if (this.checkedBuggyIDB) { return; }
+      this.checkedBuggyIDB = true;
+      try {
+        this.idbTransaction(db, {stores: $.makeArray(db.objectStoreNames).slice(0, 2), mode: 'readwrite'}).abort(); // https://bugs.webkit.org/show_bug.cgi?id=136937
+        return;
+      } catch (error) {
+        return error;
+      }
+    }
 
-  runCallbacks: (db) ->
-    fn(db) while fn = @callbacks.shift()
-    return
+    runCallbacks(db) {
+      let fn;
+      while ((fn = this.callbacks.shift())) { fn(db); }
+    }
 
-  onUpgradeNeeded: (event) ->
-    return unless db = event.target.result
+    onUpgradeNeeded(event) {
+      let db;
+      if (!(db = event.target.result)) { return; }
 
-    objectStoreNames = $.makeArray(db.objectStoreNames)
+      const objectStoreNames = $.makeArray(db.objectStoreNames);
 
-    unless $.arrayDelete(objectStoreNames, 'docs')
-      try db.createObjectStore('docs')
+      if (!$.arrayDelete(objectStoreNames, 'docs')) {
+        try { db.createObjectStore('docs'); } catch (error) {}
+      }
 
-    for doc in app.docs.all() when not $.arrayDelete(objectStoreNames, doc.slug)
-      try db.createObjectStore(doc.slug)
+      for (var doc of Array.from(app.docs.all())) {
+        if (!$.arrayDelete(objectStoreNames, doc.slug)) {
+          try { db.createObjectStore(doc.slug); } catch (error1) {}
+        }
+      }
 
-    for name in objectStoreNames
-      try db.deleteObjectStore(name)
-    return
+      for (var name of Array.from(objectStoreNames)) {
+        try { db.deleteObjectStore(name); } catch (error2) {}
+      }
+    }
 
-  store: (doc, data, onSuccess, onError, _retry = true) ->
-    @db (db) =>
-      unless db
-        onError()
-        return
+    store(doc, data, onSuccess, onError, _retry) {
+      if (_retry == null) { _retry = true; }
+      this.db(db => {
+        if (!db) {
+          onError();
+          return;
+        }
 
-      txn = @idbTransaction db, stores: ['docs', doc.slug], mode: 'readwrite', ignoreError: false
-      txn.oncomplete = =>
-        @cachedDocs?[doc.slug] = doc.mtime
-        onSuccess()
-        return
-      txn.onerror = (event) =>
-        event.preventDefault()
-        if txn.error?.name is 'NotFoundError' and _retry
-          @migrate()
-          setTimeout =>
-            @store(doc, data, onSuccess, onError, false)
-          , 0
-        else
-          onError(event)
-        return
+        const txn = this.idbTransaction(db, {stores: ['docs', doc.slug], mode: 'readwrite', ignoreError: false});
+        txn.oncomplete = () => {
+          if (this.cachedDocs != null) {
+            this.cachedDocs[doc.slug] = doc.mtime;
+          }
+          onSuccess();
+        };
+        txn.onerror = event => {
+          event.preventDefault();
+          if (((txn.error != null ? txn.error.name : undefined) === 'NotFoundError') && _retry) {
+            this.migrate();
+            setTimeout(() => {
+              return this.store(doc, data, onSuccess, onError, false);
+            }
+            , 0);
+          } else {
+            onError(event);
+          }
+        };
 
-      store = txn.objectStore(doc.slug)
-      store.clear()
-      store.add(content, path) for path, content of data
+        let store = txn.objectStore(doc.slug);
+        store.clear();
+        for (var path in data) { var content = data[path]; store.add(content, path); }
 
-      store = txn.objectStore('docs')
-      store.put(doc.mtime, doc.slug)
-      return
-    return
+        store = txn.objectStore('docs');
+        store.put(doc.mtime, doc.slug);
+      });
+    }
 
-  unstore: (doc, onSuccess, onError, _retry = true) ->
-    @db (db) =>
-      unless db
-        onError()
-        return
+    unstore(doc, onSuccess, onError, _retry) {
+      if (_retry == null) { _retry = true; }
+      this.db(db => {
+        if (!db) {
+          onError();
+          return;
+        }
 
-      txn = @idbTransaction db, stores: ['docs', doc.slug], mode: 'readwrite', ignoreError: false
-      txn.oncomplete = =>
-        delete @cachedDocs?[doc.slug]
-        onSuccess()
-        return
-      txn.onerror = (event) ->
-        event.preventDefault()
-        if txn.error?.name is 'NotFoundError' and _retry
-          @migrate()
-          setTimeout =>
-            @unstore(doc, onSuccess, onError, false)
-          , 0
-        else
-          onError(event)
-        return
+        const txn = this.idbTransaction(db, {stores: ['docs', doc.slug], mode: 'readwrite', ignoreError: false});
+        txn.oncomplete = () => {
+          if (this.cachedDocs != null) {
+            delete this.cachedDocs[doc.slug];
+          }
+          onSuccess();
+        };
+        txn.onerror = function(event) {
+          event.preventDefault();
+          if (((txn.error != null ? txn.error.name : undefined) === 'NotFoundError') && _retry) {
+            this.migrate();
+            setTimeout(() => {
+              return this.unstore(doc, onSuccess, onError, false);
+            }
+            , 0);
+          } else {
+            onError(event);
+          }
+        };
 
-      store = txn.objectStore('docs')
-      store.delete(doc.slug)
+        let store = txn.objectStore('docs');
+        store.delete(doc.slug);
 
-      store = txn.objectStore(doc.slug)
-      store.clear()
-      return
-    return
+        store = txn.objectStore(doc.slug);
+        store.clear();
+      });
+    }
 
-  version: (doc, fn) ->
-    if (version = @cachedVersion(doc))?
-      fn(version)
-      return
+    version(doc, fn) {
+      let version;
+      if ((version = this.cachedVersion(doc)) != null) {
+        fn(version);
+        return;
+      }
 
-    @db (db) =>
-      unless db
-        fn(false)
-        return
+      this.db(db => {
+        if (!db) {
+          fn(false);
+          return;
+        }
 
-      txn = @idbTransaction db, stores: ['docs'], mode: 'readonly'
-      store = txn.objectStore('docs')
+        const txn = this.idbTransaction(db, {stores: ['docs'], mode: 'readonly'});
+        const store = txn.objectStore('docs');
 
-      req = store.get(doc.slug)
-      req.onsuccess = ->
-        fn(req.result)
-        return
-      req.onerror = (event) ->
-        event.preventDefault()
-        fn(false)
-        return
-      return
-    return
+        const req = store.get(doc.slug);
+        req.onsuccess = function() {
+          fn(req.result);
+        };
+        req.onerror = function(event) {
+          event.preventDefault();
+          fn(false);
+        };
+      });
+    }
 
-  cachedVersion: (doc) ->
-    return unless @cachedDocs
-    @cachedDocs[doc.slug] or false
+    cachedVersion(doc) {
+      if (!this.cachedDocs) { return; }
+      return this.cachedDocs[doc.slug] || false;
+    }
 
-  versions: (docs, fn) ->
-    if versions = @cachedVersions(docs)
-      fn(versions)
-      return
+    versions(docs, fn) {
+      let versions;
+      if (versions = this.cachedVersions(docs)) {
+        fn(versions);
+        return;
+      }
 
-    @db (db) =>
-      unless db
-        fn(false)
-        return
+      return this.db(db => {
+        if (!db) {
+          fn(false);
+          return;
+        }
 
-      txn = @idbTransaction db, stores: ['docs'], mode: 'readonly'
-      txn.oncomplete = ->
-        fn(result)
-        return
-      store = txn.objectStore('docs')
-      result = {}
+        const txn = this.idbTransaction(db, {stores: ['docs'], mode: 'readonly'});
+        txn.oncomplete = function() {
+          fn(result);
+        };
+        const store = txn.objectStore('docs');
+        var result = {};
 
-      docs.forEach (doc) ->
-        req = store.get(doc.slug)
-        req.onsuccess = ->
-          result[doc.slug] = req.result
-          return
-        req.onerror = (event) ->
-          event.preventDefault()
-          result[doc.slug] = false
-          return
-        return
-      return
+        docs.forEach(function(doc) {
+          const req = store.get(doc.slug);
+          req.onsuccess = function() {
+            result[doc.slug] = req.result;
+          };
+          req.onerror = function(event) {
+            event.preventDefault();
+            result[doc.slug] = false;
+          };
+        });
+      });
+    }
 
-  cachedVersions: (docs) ->
-    return unless @cachedDocs
-    result = {}
-    result[doc.slug] = @cachedVersion(doc) for doc in docs
-    result
+    cachedVersions(docs) {
+      if (!this.cachedDocs) { return; }
+      const result = {};
+      for (var doc of Array.from(docs)) { result[doc.slug] = this.cachedVersion(doc); }
+      return result;
+    }
 
-  load: (entry, onSuccess, onError) ->
-    if @shouldLoadWithIDB(entry)
-      onError = @loadWithXHR.bind(@, entry, onSuccess, onError)
-      @loadWithIDB entry, onSuccess, onError
-    else
-      @loadWithXHR entry, onSuccess, onError
+    load(entry, onSuccess, onError) {
+      if (this.shouldLoadWithIDB(entry)) {
+        onError = this.loadWithXHR.bind(this, entry, onSuccess, onError);
+        return this.loadWithIDB(entry, onSuccess, onError);
+      } else {
+        return this.loadWithXHR(entry, onSuccess, onError);
+      }
+    }
 
-  loadWithXHR: (entry, onSuccess, onError) ->
-    ajax
-      url: entry.fileUrl()
-      dataType: 'html'
-      success: onSuccess
-      error: onError
+    loadWithXHR(entry, onSuccess, onError) {
+      return ajax({
+        url: entry.fileUrl(),
+        dataType: 'html',
+        success: onSuccess,
+        error: onError
+      });
+    }
 
-  loadWithIDB: (entry, onSuccess, onError) ->
-    @db (db) =>
-      unless db
-        onError()
-        return
+    loadWithIDB(entry, onSuccess, onError) {
+      return this.db(db => {
+        if (!db) {
+          onError();
+          return;
+        }
 
-      unless db.objectStoreNames.contains(entry.doc.slug)
-        onError()
-        @loadDocsCache(db)
-        return
+        if (!db.objectStoreNames.contains(entry.doc.slug)) {
+          onError();
+          this.loadDocsCache(db);
+          return;
+        }
 
-      txn = @idbTransaction db, stores: [entry.doc.slug], mode: 'readonly'
-      store = txn.objectStore(entry.doc.slug)
+        const txn = this.idbTransaction(db, {stores: [entry.doc.slug], mode: 'readonly'});
+        const store = txn.objectStore(entry.doc.slug);
 
-      req = store.get(entry.dbPath())
-      req.onsuccess = ->
-        if req.result then onSuccess(req.result) else onError()
-        return
-      req.onerror = (event) ->
-        event.preventDefault()
-        onError()
-        return
-      @loadDocsCache(db)
-      return
+        const req = store.get(entry.dbPath());
+        req.onsuccess = function() {
+          if (req.result) { onSuccess(req.result); } else { onError(); }
+        };
+        req.onerror = function(event) {
+          event.preventDefault();
+          onError();
+        };
+        this.loadDocsCache(db);
+      });
+    }
 
-  loadDocsCache: (db) ->
-    return if @cachedDocs
-    @cachedDocs = {}
+    loadDocsCache(db) {
+      if (this.cachedDocs) { return; }
+      this.cachedDocs = {};
 
-    txn = @idbTransaction db, stores: ['docs'], mode: 'readonly'
-    txn.oncomplete = =>
-      setTimeout(@checkForCorruptedDocs, 50)
-      return
+      const txn = this.idbTransaction(db, {stores: ['docs'], mode: 'readonly'});
+      txn.oncomplete = () => {
+        setTimeout(this.checkForCorruptedDocs, 50);
+      };
 
-    req = txn.objectStore('docs').openCursor()
-    req.onsuccess = (event) =>
-      return unless cursor = event.target.result
-      @cachedDocs[cursor.key] = cursor.value
-      cursor.continue()
-      return
-    req.onerror = (event) ->
-      event.preventDefault()
-      return
-    return
+      const req = txn.objectStore('docs').openCursor();
+      req.onsuccess = event => {
+        let cursor;
+        if (!(cursor = event.target.result)) { return; }
+        this.cachedDocs[cursor.key] = cursor.value;
+        cursor.continue();
+      };
+      req.onerror = function(event) {
+        event.preventDefault();
+      };
+    }
 
-  checkForCorruptedDocs: =>
-    @db (db) =>
-      @corruptedDocs = []
-      docs = (key for key, value of @cachedDocs when value)
-      return if docs.length is 0
+    checkForCorruptedDocs() {
+      this.db(db => {
+        let slug;
+        this.corruptedDocs = [];
+        const docs = ((() => {
+          const result = [];
+          for (var key in this.cachedDocs) {
+            var value = this.cachedDocs[key];
+            if (value) {
+              result.push(key);
+            }
+          }
+          return result;
+        })());
+        if (docs.length === 0) { return; }
 
-      for slug in docs when not app.docs.findBy('slug', slug)
-        @corruptedDocs.push(slug)
+        for (slug of Array.from(docs)) {
+          if (!app.docs.findBy('slug', slug)) {
+            this.corruptedDocs.push(slug);
+          }
+        }
 
-      for slug in @corruptedDocs
-        $.arrayDelete(docs, slug)
+        for (slug of Array.from(this.corruptedDocs)) {
+          $.arrayDelete(docs, slug);
+        }
 
-      if docs.length is 0
-        setTimeout(@deleteCorruptedDocs, 0)
-        return
+        if (docs.length === 0) {
+          setTimeout(this.deleteCorruptedDocs, 0);
+          return;
+        }
 
-      txn = @idbTransaction(db, stores: docs, mode: 'readonly', ignoreError: false)
-      txn.oncomplete = =>
-        setTimeout(@deleteCorruptedDocs, 0) if @corruptedDocs.length > 0
-        return
+        const txn = this.idbTransaction(db, {stores: docs, mode: 'readonly', ignoreError: false});
+        txn.oncomplete = () => {
+          if (this.corruptedDocs.length > 0) { setTimeout(this.deleteCorruptedDocs, 0); }
+        };
 
-      for doc in docs
-        txn.objectStore(doc).get('index').onsuccess = (event) =>
-          @corruptedDocs.push(event.target.source.name) unless event.target.result
-          return
-      return
-    return
+        for (var doc of Array.from(docs)) {
+          txn.objectStore(doc).get('index').onsuccess = event => {
+            if (!event.target.result) { this.corruptedDocs.push(event.target.source.name); }
+          };
+        }
+      });
+    }
 
-  deleteCorruptedDocs: =>
-    @db (db) =>
-      txn = @idbTransaction(db, stores: ['docs'], mode: 'readwrite', ignoreError: false)
-      store = txn.objectStore('docs')
-      while doc = @corruptedDocs.pop()
-        @cachedDocs[doc] = false
-        store.delete(doc)
-      return
-    Raven.captureMessage 'corruptedDocs', level: 'info', extra: { docs: @corruptedDocs.join(',') }
-    return
+    deleteCorruptedDocs() {
+      this.db(db => {
+        let doc;
+        const txn = this.idbTransaction(db, {stores: ['docs'], mode: 'readwrite', ignoreError: false});
+        const store = txn.objectStore('docs');
+        while ((doc = this.corruptedDocs.pop())) {
+          this.cachedDocs[doc] = false;
+          store.delete(doc);
+        }
+      });
+      Raven.captureMessage('corruptedDocs', {level: 'info', extra: { docs: this.corruptedDocs.join(',') }});
+    }
 
-  shouldLoadWithIDB: (entry) ->
-    @useIndexedDB and (not @cachedDocs or @cachedDocs[entry.doc.slug])
+    shouldLoadWithIDB(entry) {
+      return this.useIndexedDB && (!this.cachedDocs || this.cachedDocs[entry.doc.slug]);
+    }
 
-  idbTransaction: (db, options) ->
-    app.lastIDBTransaction = [options.stores, options.mode]
-    txn = db.transaction(options.stores, options.mode)
-    unless options.ignoreError is false
-      txn.onerror = (event) ->
-        event.preventDefault()
-        return
-    unless options.ignoreAbort is false
-      txn.onabort = (event) ->
-        event.preventDefault()
-        return
-    txn
+    idbTransaction(db, options) {
+      app.lastIDBTransaction = [options.stores, options.mode];
+      const txn = db.transaction(options.stores, options.mode);
+      if (options.ignoreError !== false) {
+        txn.onerror = function(event) {
+          event.preventDefault();
+        };
+      }
+      if (options.ignoreAbort !== false) {
+        txn.onabort = function(event) {
+          event.preventDefault();
+        };
+      }
+      return txn;
+    }
 
-  reset: ->
-    try indexedDB?.deleteDatabase(NAME) catch
-    return
+    reset() {
+      try { if (typeof indexedDB !== 'undefined' && indexedDB !== null) {
+        indexedDB.deleteDatabase(NAME);
+      } } catch (error) {}
+    }
 
-  useIndexedDB: ->
-    try
-      if !app.isSingleDoc() and window.indexedDB
-        true
-      else
-        @reason = 'not_supported'
-        false
-    catch
-      false
+    useIndexedDB() {
+      try {
+        if (!app.isSingleDoc() && window.indexedDB) {
+          return true;
+        } else {
+          this.reason = 'not_supported';
+          return false;
+        }
+      } catch (error) {
+        return false;
+      }
+    }
 
-  migrate: ->
-    app.settings.set('schema', @userVersion() + 1)
-    return
+    migrate() {
+      app.settings.set('schema', this.userVersion() + 1);
+    }
 
-  setUserVersion: (version) ->
-    app.settings.set('schema', version)
-    return
+    setUserVersion(version) {
+      app.settings.set('schema', version);
+    }
 
-  userVersion: ->
-    app.settings.get('schema')
+    userVersion() {
+      return app.settings.get('schema');
+    }
+  });
+  Cls.initClass();
+  return Cls;
+})();

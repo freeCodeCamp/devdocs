@@ -1,42 +1,66 @@
-class @CookiesStore
-  # Intentionally called CookiesStore instead of CookieStore
-  # Calling it CookieStore causes issues when the Experimental Web Platform features flag is enabled in Chrome
-  # Related issue: https://github.com/freeCodeCamp/devdocs/issues/932
+/*
+ * decaffeinate suggestions:
+ * DS101: Remove unnecessary use of Array.from
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+(function() {
+  let INT = undefined;
+  const Cls = (this.CookiesStore = class CookiesStore {
+    static initClass() {
+      // Intentionally called CookiesStore instead of CookieStore
+      // Calling it CookieStore causes issues when the Experimental Web Platform features flag is enabled in Chrome
+      // Related issue: https://github.com/freeCodeCamp/devdocs/issues/932
+  
+      INT = /^\d+$/;
+    }
 
-  INT = /^\d+$/
+    static onBlocked() {}
 
-  @onBlocked: ->
+    get(key) {
+      let value = Cookies.get(key);
+      if ((value != null) && INT.test(value)) { value = parseInt(value, 10); }
+      return value;
+    }
 
-  get: (key) ->
-    value = Cookies.get(key)
-    value = parseInt(value, 10) if value? and INT.test(value)
-    value
+    set(key, value) {
+      if (value === false) {
+        this.del(key);
+        return;
+      }
 
-  set: (key, value) ->
-    if value == false
-      @del(key)
-      return
+      if (value === true) { value = 1; }
+      if (value && (typeof INT.test === 'function' ? INT.test(value) : undefined)) { value = parseInt(value, 10); }
+      Cookies.set(key, '' + value, {path: '/', expires: 1e8});
+      if (this.get(key) !== value) { this.constructor.onBlocked(key, value, this.get(key)); }
+    }
 
-    value = 1 if value == true
-    value = parseInt(value, 10) if value and INT.test?(value)
-    Cookies.set(key, '' + value, path: '/', expires: 1e8)
-    @constructor.onBlocked(key, value, @get(key)) if @get(key) != value
-    return
+    del(key) {
+      Cookies.expire(key);
+    }
 
-  del: (key) ->
-    Cookies.expire(key)
-    return
+    reset() {
+      try {
+        for (var cookie of Array.from(document.cookie.split(/;\s?/))) {
+          Cookies.expire(cookie.split('=')[0]);
+        }
+        return;
+      } catch (error) {}
+    }
 
-  reset: ->
-    try
-      for cookie in document.cookie.split(/;\s?/)
-        Cookies.expire(cookie.split('=')[0])
-      return
-    catch
-
-  dump: ->
-    result = {}
-    for cookie in document.cookie.split(/;\s?/) when cookie[0] isnt '_'
-      cookie = cookie.split('=')
-      result[cookie[0]] = cookie[1]
-    result
+    dump() {
+      const result = {};
+      for (var cookie of Array.from(document.cookie.split(/;\s?/))) {
+        if (cookie[0] !== '_') {
+          cookie = cookie.split('=');
+          result[cookie[0]] = cookie[1];
+        }
+      }
+      return result;
+    }
+  });
+  Cls.initClass();
+  return Cls;
+})();

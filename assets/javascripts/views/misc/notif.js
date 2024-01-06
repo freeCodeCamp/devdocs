@@ -1,59 +1,78 @@
-class app.views.Notif extends app.View
-  @className: '_notif'
-  @activeClass: '_in'
-  @attributes:
-    role: 'alert'
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.views.Notif = class Notif extends app.View {
+  static initClass() {
+    this.className = '_notif';
+    this.activeClass = '_in';
+    this.attributes =
+      {role: 'alert'};
+  
+    this.defautOptions =
+      {autoHide: 15000};
+  
+    this.events =
+      {click: 'onClick'};
+  }
 
-  @defautOptions:
-    autoHide: 15000
+  constructor(type, options) {
+    this.onClick = this.onClick.bind(this);
+    this.type = type;
+    if (options == null) { options = {}; }
+    this.options = options;
+    this.options = $.extend({}, this.constructor.defautOptions, this.options);
+    super(...arguments);
+  }
 
-  @events:
-    click: 'onClick'
+  init() {
+    this.show();
+  }
 
-  constructor: (@type, @options = {}) ->
-    @options = $.extend {}, @constructor.defautOptions, @options
-    super
+  show() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = this.delay(this.hide, this.options.autoHide);
+    } else {
+      this.render();
+      this.position();
+      this.activate();
+      this.appendTo(document.body);
+      this.el.offsetWidth; // force reflow
+      this.addClass(this.constructor.activeClass);
+      if (this.options.autoHide) { this.timeout = this.delay(this.hide, this.options.autoHide); }
+    }
+  }
 
-  init: ->
-    @show()
-    return
+  hide() {
+    clearTimeout(this.timeout);
+    this.timeout = null;
+    this.detach();
+  }
 
-  show: ->
-    if @timeout
-      clearTimeout @timeout
-      @timeout = @delay @hide, @options.autoHide
-    else
-      @render()
-      @position()
-      @activate()
-      @appendTo document.body
-      @el.offsetWidth # force reflow
-      @addClass @constructor.activeClass
-      @timeout = @delay @hide, @options.autoHide if @options.autoHide
-    return
+  render() {
+    this.html(this.tmpl(`notif${this.type}`));
+  }
 
-  hide: ->
-    clearTimeout @timeout
-    @timeout = null
-    @detach()
-    return
+  position() {
+    const notifications = $$(`.${app.views.Notif.className}`);
+    if (notifications.length) {
+      const lastNotif = notifications[notifications.length - 1];
+      this.el.style.top = lastNotif.offsetTop + lastNotif.offsetHeight + 16 + 'px';
+    }
+  }
 
-  render: ->
-    @html @tmpl("notif#{@type}")
-    return
-
-  position: ->
-    notifications = $$ ".#{app.views.Notif.className}"
-    if notifications.length
-      lastNotif = notifications[notifications.length - 1]
-      @el.style.top = lastNotif.offsetTop + lastNotif.offsetHeight + 16 + 'px'
-    return
-
-  onClick: (event) =>
-    return if event.which isnt 1
-    target = $.eventTarget(event)
-    return if target.hasAttribute('data-behavior')
-    if target.tagName isnt 'A' or target.classList.contains('_notif-close')
-      $.stopEvent(event)
-      @hide()
-    return
+  onClick(event) {
+    if (event.which !== 1) { return; }
+    const target = $.eventTarget(event);
+    if (target.hasAttribute('data-behavior')) { return; }
+    if ((target.tagName !== 'A') || target.classList.contains('_notif-close')) {
+      $.stopEvent(event);
+      this.hide();
+    }
+  }
+});
+Cls.initClass();

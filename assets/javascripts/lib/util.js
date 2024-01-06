@@ -1,399 +1,491 @@
-#
-# Traversing
-#
+/*
+ * decaffeinate suggestions:
+ * DS101: Remove unnecessary use of Array.from
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
+ * DS104: Avoid inline assignments
+ * DS204: Change includes calls to have a more natural evaluation order
+ * DS207: Consider shorter variations of null checks
+ * DS208: Avoid top-level this
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+//
+// Traversing
+//
 
-@$ = (selector, el = document) ->
-  try el.querySelector(selector) catch
+let smoothDistance, smoothDuration, smoothEnd, smoothStart;
+this.$ = function(selector, el) {
+  if (el == null) { el = document; }
+  try { return el.querySelector(selector); } catch (error) {}
+};
 
-@$$ = (selector, el = document) ->
-  try el.querySelectorAll(selector) catch
+this.$$ = function(selector, el) {
+  if (el == null) { el = document; }
+  try { return el.querySelectorAll(selector); } catch (error) {}
+};
 
-$.id = (id) ->
-  document.getElementById(id)
+$.id = id => document.getElementById(id);
 
-$.hasChild = (parent, el) ->
-  return unless parent
-  while el
-    return true if el is parent
-    return if el is document.body
-    el = el.parentNode
+$.hasChild = function(parent, el) {
+  if (!parent) { return; }
+  while (el) {
+    if (el === parent) { return true; }
+    if (el === document.body) { return; }
+    el = el.parentNode;
+  }
+};
 
-$.closestLink = (el, parent = document.body) ->
-  while el
-    return el if el.tagName is 'A'
-    return if el is parent
-    el = el.parentNode
+$.closestLink = function(el, parent) {
+  if (parent == null) { parent = document.body; }
+  while (el) {
+    if (el.tagName === 'A') { return el; }
+    if (el === parent) { return; }
+    el = el.parentNode;
+  }
+};
 
-#
-# Events
-#
+//
+// Events
+//
 
-$.on = (el, event, callback, useCapture = false) ->
-  if event.indexOf(' ') >= 0
-    $.on el, name, callback for name in event.split(' ')
-  else
-    el.addEventListener(event, callback, useCapture)
-  return
+$.on = function(el, event, callback, useCapture) {
+  if (useCapture == null) { useCapture = false; }
+  if (event.indexOf(' ') >= 0) {
+    for (var name of Array.from(event.split(' '))) { $.on(el, name, callback); }
+  } else {
+    el.addEventListener(event, callback, useCapture);
+  }
+};
 
-$.off = (el, event, callback, useCapture = false) ->
-  if event.indexOf(' ') >= 0
-    $.off el, name, callback for name in event.split(' ')
-  else
-    el.removeEventListener(event, callback, useCapture)
-  return
+$.off = function(el, event, callback, useCapture) {
+  if (useCapture == null) { useCapture = false; }
+  if (event.indexOf(' ') >= 0) {
+    for (var name of Array.from(event.split(' '))) { $.off(el, name, callback); }
+  } else {
+    el.removeEventListener(event, callback, useCapture);
+  }
+};
 
-$.trigger = (el, type, canBubble = true, cancelable = true) ->
-  event = document.createEvent 'Event'
-  event.initEvent(type, canBubble, cancelable)
-  el.dispatchEvent(event)
-  return
+$.trigger = function(el, type, canBubble, cancelable) {
+  if (canBubble == null) { canBubble = true; }
+  if (cancelable == null) { cancelable = true; }
+  const event = document.createEvent('Event');
+  event.initEvent(type, canBubble, cancelable);
+  el.dispatchEvent(event);
+};
 
-$.click = (el) ->
-  event = document.createEvent 'MouseEvent'
-  event.initMouseEvent 'click', true, true, window, null, 0, 0, 0, 0, false, false, false, false, 0, null
-  el.dispatchEvent(event)
-  return
+$.click = function(el) {
+  const event = document.createEvent('MouseEvent');
+  event.initMouseEvent('click', true, true, window, null, 0, 0, 0, 0, false, false, false, false, 0, null);
+  el.dispatchEvent(event);
+};
 
-$.stopEvent = (event) ->
-  event.preventDefault()
-  event.stopPropagation()
-  event.stopImmediatePropagation()
-  return
+$.stopEvent = function(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
+};
 
-$.eventTarget = (event) ->
-  event.target.correspondingUseElement || event.target
+$.eventTarget = event => event.target.correspondingUseElement || event.target;
 
-#
-# Manipulation
-#
+//
+// Manipulation
+//
 
-buildFragment = (value) ->
-  fragment = document.createDocumentFragment()
+const buildFragment = function(value) {
+  const fragment = document.createDocumentFragment();
 
-  if $.isCollection(value)
-    fragment.appendChild(child) for child in $.makeArray(value)
-  else
-    fragment.innerHTML = value
+  if ($.isCollection(value)) {
+    for (var child of Array.from($.makeArray(value))) { fragment.appendChild(child); }
+  } else {
+    fragment.innerHTML = value;
+  }
 
-  fragment
+  return fragment;
+};
 
-$.append = (el, value) ->
-  if typeof value is 'string'
-    el.insertAdjacentHTML 'beforeend', value
-  else
-    value = buildFragment(value) if $.isCollection(value)
-    el.appendChild(value)
-  return
+$.append = function(el, value) {
+  if (typeof value === 'string') {
+    el.insertAdjacentHTML('beforeend', value);
+  } else {
+    if ($.isCollection(value)) { value = buildFragment(value); }
+    el.appendChild(value);
+  }
+};
 
-$.prepend = (el, value) ->
-  if not el.firstChild
-    $.append(value)
-  else if typeof value is 'string'
-    el.insertAdjacentHTML 'afterbegin', value
-  else
-    value = buildFragment(value) if $.isCollection(value)
-    el.insertBefore(value, el.firstChild)
-  return
+$.prepend = function(el, value) {
+  if (!el.firstChild) {
+    $.append(value);
+  } else if (typeof value === 'string') {
+    el.insertAdjacentHTML('afterbegin', value);
+  } else {
+    if ($.isCollection(value)) { value = buildFragment(value); }
+    el.insertBefore(value, el.firstChild);
+  }
+};
 
-$.before = (el, value) ->
-  if typeof value is 'string' or $.isCollection(value)
-    value = buildFragment(value)
+$.before = function(el, value) {
+  if ((typeof value === 'string') || $.isCollection(value)) {
+    value = buildFragment(value);
+  }
 
-  el.parentNode.insertBefore(value, el)
-  return
+  el.parentNode.insertBefore(value, el);
+};
 
-$.after = (el, value) ->
-  if typeof value is 'string' or $.isCollection(value)
-    value = buildFragment(value)
+$.after = function(el, value) {
+  if ((typeof value === 'string') || $.isCollection(value)) {
+    value = buildFragment(value);
+  }
 
-  if el.nextSibling
-    el.parentNode.insertBefore(value, el.nextSibling)
-  else
-    el.parentNode.appendChild(value)
-  return
+  if (el.nextSibling) {
+    el.parentNode.insertBefore(value, el.nextSibling);
+  } else {
+    el.parentNode.appendChild(value);
+  }
+};
 
-$.remove = (value) ->
-  if $.isCollection(value)
-    el.parentNode?.removeChild(el) for el in $.makeArray(value)
-  else
-    value.parentNode?.removeChild(value)
-  return
+$.remove = function(value) {
+  if ($.isCollection(value)) {
+    for (var el of Array.from($.makeArray(value))) { if (el.parentNode != null) {
+      el.parentNode.removeChild(el);
+    } }
+  } else {
+    if (value.parentNode != null) {
+      value.parentNode.removeChild(value);
+    }
+  }
+};
 
-$.empty = (el) ->
-  el.removeChild(el.firstChild) while el.firstChild
-  return
+$.empty = function(el) {
+  while (el.firstChild) { el.removeChild(el.firstChild); }
+};
 
-# Calls the function while the element is off the DOM to avoid triggering
-# unnecessary reflows and repaints.
-$.batchUpdate = (el, fn) ->
-  parent = el.parentNode
-  sibling = el.nextSibling
-  parent.removeChild(el)
+// Calls the function while the element is off the DOM to avoid triggering
+// unnecessary reflows and repaints.
+$.batchUpdate = function(el, fn) {
+  const parent = el.parentNode;
+  const sibling = el.nextSibling;
+  parent.removeChild(el);
 
-  fn(el)
+  fn(el);
 
-  if (sibling)
-    parent.insertBefore(el, sibling)
-  else
-    parent.appendChild(el)
-  return
+  if (sibling) {
+    parent.insertBefore(el, sibling);
+  } else {
+    parent.appendChild(el);
+  }
+};
 
-#
-# Offset
-#
+//
+// Offset
+//
 
-$.rect = (el) ->
-  el.getBoundingClientRect()
+$.rect = el => el.getBoundingClientRect();
 
-$.offset = (el, container = document.body) ->
-  top = 0
-  left = 0
+$.offset = function(el, container) {
+  if (container == null) { container = document.body; }
+  let top = 0;
+  let left = 0;
 
-  while el and el isnt container
-    top += el.offsetTop
-    left += el.offsetLeft
-    el = el.offsetParent
+  while (el && (el !== container)) {
+    top += el.offsetTop;
+    left += el.offsetLeft;
+    el = el.offsetParent;
+  }
 
-  top: top
-  left: left
+  return {
+    top,
+    left
+  };
+};
 
-$.scrollParent = (el) ->
-  while (el = el.parentNode) and el.nodeType is 1
-    break if el.scrollTop > 0
-    break if getComputedStyle(el)?.overflowY in ['auto', 'scroll']
-  el
+$.scrollParent = function(el) {
+  while ((el = el.parentNode) && (el.nodeType === 1)) {
+    var needle;
+    if (el.scrollTop > 0) { break; }
+    if ((needle = __guard__(getComputedStyle(el), x => x.overflowY), ['auto', 'scroll'].includes(needle))) { break; }
+  }
+  return el;
+};
 
-$.scrollTo = (el, parent, position = 'center', options = {}) ->
-  return unless el
+$.scrollTo = function(el, parent, position, options) {
+  if (position == null) { position = 'center'; }
+  if (options == null) { options = {}; }
+  if (!el) { return; }
 
-  parent ?= $.scrollParent(el)
-  return unless parent
+  if (parent == null) { parent = $.scrollParent(el); }
+  if (!parent) { return; }
 
-  parentHeight = parent.clientHeight
-  parentScrollHeight = parent.scrollHeight
-  return unless parentScrollHeight > parentHeight
+  const parentHeight = parent.clientHeight;
+  const parentScrollHeight = parent.scrollHeight;
+  if (!(parentScrollHeight > parentHeight)) { return; }
 
-  top = $.offset(el, parent).top
-  offsetTop = parent.firstElementChild.offsetTop
+  const {
+    top
+  } = $.offset(el, parent);
+  const {
+    offsetTop
+  } = parent.firstElementChild;
 
-  switch position
-    when 'top'
-      parent.scrollTop = top - offsetTop - (if options.margin? then options.margin else 0)
-    when 'center'
-      parent.scrollTop = top - Math.round(parentHeight / 2 - el.offsetHeight / 2)
-    when 'continuous'
-      scrollTop = parent.scrollTop
-      height = el.offsetHeight
+  switch (position) {
+    case 'top':
+      parent.scrollTop = top - offsetTop - ((options.margin != null) ? options.margin : 0);
+      break;
+    case 'center':
+      parent.scrollTop = top - Math.round((parentHeight / 2) - (el.offsetHeight / 2));
+      break;
+    case 'continuous':
+      var {
+        scrollTop
+      } = parent;
+      var height = el.offsetHeight;
 
-      lastElementOffset = parent.lastElementChild.offsetTop + parent.lastElementChild.offsetHeight
-      offsetBottom = if lastElementOffset > 0 then parentScrollHeight - lastElementOffset else 0
+      var lastElementOffset = parent.lastElementChild.offsetTop + parent.lastElementChild.offsetHeight;
+      var offsetBottom = lastElementOffset > 0 ? parentScrollHeight - lastElementOffset : 0;
 
-      # If the target element is above the visible portion of its scrollable
-      # ancestor, move it near the top with a gap = options.topGap * target's height.
-      if top - offsetTop <= scrollTop + height * (options.topGap or 1)
-        parent.scrollTop = top - offsetTop - height * (options.topGap or 1)
-      # If the target element is below the visible portion of its scrollable
-      # ancestor, move it near the bottom with a gap = options.bottomGap * target's height.
-      else if top + offsetBottom >= scrollTop + parentHeight - height * ((options.bottomGap or 1) + 1)
-        parent.scrollTop = top + offsetBottom - parentHeight + height * ((options.bottomGap or 1) + 1)
-  return
+      // If the target element is above the visible portion of its scrollable
+      // ancestor, move it near the top with a gap = options.topGap * target's height.
+      if ((top - offsetTop) <= (scrollTop + (height * (options.topGap || 1)))) {
+        parent.scrollTop = top - offsetTop - (height * (options.topGap || 1));
+      // If the target element is below the visible portion of its scrollable
+      // ancestor, move it near the bottom with a gap = options.bottomGap * target's height.
+      } else if ((top + offsetBottom) >= ((scrollTop + parentHeight) - (height * ((options.bottomGap || 1) + 1)))) {
+        parent.scrollTop = ((top + offsetBottom) - parentHeight) + (height * ((options.bottomGap || 1) + 1));
+      }
+      break;
+  }
+};
 
-$.scrollToWithImageLock = (el, parent, args...) ->
-  parent ?= $.scrollParent(el)
-  return unless parent
+$.scrollToWithImageLock = function(el, parent, ...args) {
+  if (parent == null) { parent = $.scrollParent(el); }
+  if (!parent) { return; }
 
-  $.scrollTo el, parent, args...
+  $.scrollTo(el, parent, ...Array.from(args));
 
-  # Lock the scroll position on the target element for up to 3 seconds while
-  # nearby images are loaded and rendered.
-  for image in parent.getElementsByTagName('img') when not image.complete
-    do ->
-      onLoad = (event) ->
-        clearTimeout(timeout)
-        unbind(event.target)
-        $.scrollTo el, parent, args...
+  // Lock the scroll position on the target element for up to 3 seconds while
+  // nearby images are loaded and rendered.
+  for (var image of Array.from(parent.getElementsByTagName('img'))) {
+    if (!image.complete) {
+      (function() {
+        let timeout;
+        const onLoad = function(event) {
+          clearTimeout(timeout);
+          unbind(event.target);
+          return $.scrollTo(el, parent, ...Array.from(args));
+        };
 
-      unbind = (target) ->
-        $.off target, 'load', onLoad
+        var unbind = target => $.off(target, 'load', onLoad);
 
-      $.on image, 'load', onLoad
-      timeout = setTimeout unbind.bind(null, image), 3000
-  return
+        $.on(image, 'load', onLoad);
+        return timeout = setTimeout(unbind.bind(null, image), 3000);
+      })();
+    }
+  }
+};
 
-# Calls the function while locking the element's position relative to the window.
-$.lockScroll = (el, fn) ->
-  if parent = $.scrollParent(el)
-    top = $.rect(el).top
-    top -= $.rect(parent).top unless parent in [document.body, document.documentElement]
-    fn()
-    parent.scrollTop = $.offset(el, parent).top - top
-  else
-    fn()
-  return
+// Calls the function while locking the element's position relative to the window.
+$.lockScroll = function(el, fn) {
+  let parent;
+  if (parent = $.scrollParent(el)) {
+    let {
+      top
+    } = $.rect(el);
+    if (![document.body, document.documentElement].includes(parent)) { top -= $.rect(parent).top; }
+    fn();
+    parent.scrollTop = $.offset(el, parent).top - top;
+  } else {
+    fn();
+  }
+};
 
-smoothScroll =  smoothStart = smoothEnd = smoothDistance = smoothDuration = null
+let smoothScroll =  (smoothStart = (smoothEnd = (smoothDistance = (smoothDuration = null))));
 
-$.smoothScroll = (el, end) ->
-  unless window.requestAnimationFrame
-    el.scrollTop = end
-    return
+$.smoothScroll = function(el, end) {
+  if (!window.requestAnimationFrame) {
+    el.scrollTop = end;
+    return;
+  }
 
-  smoothEnd = end
+  smoothEnd = end;
 
-  if smoothScroll
-    newDistance = smoothEnd - smoothStart
-    smoothDuration += Math.min 300, Math.abs(smoothDistance - newDistance)
-    smoothDistance = newDistance
-    return
+  if (smoothScroll) {
+    const newDistance = smoothEnd - smoothStart;
+    smoothDuration += Math.min(300, Math.abs(smoothDistance - newDistance));
+    smoothDistance = newDistance;
+    return;
+  }
 
-  smoothStart = el.scrollTop
-  smoothDistance = smoothEnd - smoothStart
-  smoothDuration = Math.min 300, Math.abs(smoothDistance)
-  startTime = Date.now()
+  smoothStart = el.scrollTop;
+  smoothDistance = smoothEnd - smoothStart;
+  smoothDuration = Math.min(300, Math.abs(smoothDistance));
+  const startTime = Date.now();
 
-  smoothScroll = ->
-    p = Math.min 1, (Date.now() - startTime) / smoothDuration
-    y = Math.max 0, Math.floor(smoothStart + smoothDistance * (if p < 0.5 then 2 * p * p else p * (4 - p * 2) - 1))
-    el.scrollTop = y
-    if p is 1
-      smoothScroll = null
-    else
-      requestAnimationFrame(smoothScroll)
-  requestAnimationFrame(smoothScroll)
+  smoothScroll = function() {
+    const p = Math.min(1, (Date.now() - startTime) / smoothDuration);
+    const y = Math.max(0, Math.floor(smoothStart + (smoothDistance * (p < 0.5 ? 2 * p * p : (p * (4 - (p * 2))) - 1))));
+    el.scrollTop = y;
+    if (p === 1) {
+      return smoothScroll = null;
+    } else {
+      return requestAnimationFrame(smoothScroll);
+    }
+  };
+  return requestAnimationFrame(smoothScroll);
+};
 
-#
-# Utilities
-#
+//
+// Utilities
+//
 
-$.extend = (target, objects...) ->
-  for object in objects when object
-    for key, value of object
-      target[key] = value
-  target
+$.extend = function(target, ...objects) {
+  for (var object of Array.from(objects)) {
+    if (object) {
+      for (var key in object) {
+        var value = object[key];
+        target[key] = value;
+      }
+    }
+  }
+  return target;
+};
 
-$.makeArray = (object) ->
-  if Array.isArray(object)
-    object
-  else
-    Array::slice.apply(object)
+$.makeArray = function(object) {
+  if (Array.isArray(object)) {
+    return object;
+  } else {
+    return Array.prototype.slice.apply(object);
+  }
+};
 
-$.arrayDelete = (array, object) ->
-  index = array.indexOf(object)
-  if index >= 0
-    array.splice(index, 1)
-    true
-  else
-    false
+$.arrayDelete = function(array, object) {
+  const index = array.indexOf(object);
+  if (index >= 0) {
+    array.splice(index, 1);
+    return true;
+  } else {
+    return false;
+  }
+};
 
-# Returns true if the object is an array or a collection of DOM elements.
-$.isCollection = (object) ->
-  Array.isArray(object) or typeof object?.item is 'function'
+// Returns true if the object is an array or a collection of DOM elements.
+$.isCollection = object => Array.isArray(object) || (typeof (object != null ? object.item : undefined) === 'function');
 
-ESCAPE_HTML_MAP =
-  '&': '&amp;'
-  '<': '&lt;'
-  '>': '&gt;'
-  '"': '&quot;'
-  "'": '&#x27;'
+const ESCAPE_HTML_MAP = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#x27;',
   '/': '&#x2F;'
+};
 
-ESCAPE_HTML_REGEXP = /[&<>"'\/]/g
+const ESCAPE_HTML_REGEXP = /[&<>"'\/]/g;
 
-$.escape = (string) ->
-  string.replace ESCAPE_HTML_REGEXP, (match) -> ESCAPE_HTML_MAP[match]
+$.escape = string => string.replace(ESCAPE_HTML_REGEXP, match => ESCAPE_HTML_MAP[match]);
 
-ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g
+const ESCAPE_REGEXP = /([.*+?^=!:${}()|\[\]\/\\])/g;
 
-$.escapeRegexp = (string) ->
-  string.replace ESCAPE_REGEXP, "\\$1"
+$.escapeRegexp = string => string.replace(ESCAPE_REGEXP, "\\$1");
 
-$.urlDecode = (string) ->
-  decodeURIComponent string.replace(/\+/g, '%20')
+$.urlDecode = string => decodeURIComponent(string.replace(/\+/g, '%20'));
 
-$.classify = (string) ->
-  string = string.split('_')
-  for substr, i in string
-    string[i] = substr[0].toUpperCase() + substr[1..]
-  string.join('')
+$.classify = function(string) {
+  string = string.split('_');
+  for (let i = 0; i < string.length; i++) {
+    var substr = string[i];
+    string[i] = substr[0].toUpperCase() + substr.slice(1);
+  }
+  return string.join('');
+};
 
-$.framify = (fn, obj) ->
-  if window.requestAnimationFrame
-    (args...) -> requestAnimationFrame(fn.bind(obj, args...))
-  else
-    fn
+$.framify = function(fn, obj) {
+  if (window.requestAnimationFrame) {
+    return (...args) => requestAnimationFrame(fn.bind(obj, ...Array.from(args)));
+  } else {
+    return fn;
+  }
+};
 
-$.requestAnimationFrame = (fn) ->
-  if window.requestAnimationFrame
-    requestAnimationFrame(fn)
-  else
-    setTimeout(fn, 0)
-  return
+$.requestAnimationFrame = function(fn) {
+  if (window.requestAnimationFrame) {
+    requestAnimationFrame(fn);
+  } else {
+    setTimeout(fn, 0);
+  }
+};
 
-#
-# Miscellaneous
-#
+//
+// Miscellaneous
+//
 
-$.noop = ->
+$.noop = function() {};
 
-$.popup = (value) ->
-  try
-    win = window.open()
-    win.opener = null if win.opener
-    win.location = value.href or value
-  catch
-    window.open value.href or value, '_blank'
-  return
+$.popup = function(value) {
+  try {
+    const win = window.open();
+    if (win.opener) { win.opener = null; }
+    win.location = value.href || value;
+  } catch (error) {
+    window.open(value.href || value, '_blank');
+  }
+};
 
-isMac = null
-$.isMac = ->
-  isMac ?= navigator.userAgent?.indexOf('Mac') >= 0
+let isMac = null;
+$.isMac = () => isMac != null ? isMac : (isMac = (navigator.userAgent != null ? navigator.userAgent.indexOf('Mac') : undefined) >= 0);
 
-isIE = null
-$.isIE = ->
-  isIE ?= navigator.userAgent?.indexOf('MSIE') >= 0 || navigator.userAgent?.indexOf('rv:11.0') >= 0
+let isIE = null;
+$.isIE = () => isIE != null ? isIE : (isIE = ((navigator.userAgent != null ? navigator.userAgent.indexOf('MSIE') : undefined) >= 0) || ((navigator.userAgent != null ? navigator.userAgent.indexOf('rv:11.0') : undefined) >= 0));
 
-isChromeForAndroid = null
-$.isChromeForAndroid = ->
-  isChromeForAndroid ?= navigator.userAgent?.indexOf('Android') >= 0 && /Chrome\/([.0-9])+ Mobile/.test(navigator.userAgent)
+let isChromeForAndroid = null;
+$.isChromeForAndroid = () => isChromeForAndroid != null ? isChromeForAndroid : (isChromeForAndroid = ((navigator.userAgent != null ? navigator.userAgent.indexOf('Android') : undefined) >= 0) && /Chrome\/([.0-9])+ Mobile/.test(navigator.userAgent));
 
-isAndroid = null
-$.isAndroid = ->
-  isAndroid ?= navigator.userAgent?.indexOf('Android') >= 0
+let isAndroid = null;
+$.isAndroid = () => isAndroid != null ? isAndroid : (isAndroid = (navigator.userAgent != null ? navigator.userAgent.indexOf('Android') : undefined) >= 0);
 
-isIOS = null
-$.isIOS = ->
-  isIOS ?= navigator.userAgent?.indexOf('iPhone') >= 0 || navigator.userAgent?.indexOf('iPad') >= 0
+let isIOS = null;
+$.isIOS = () => isIOS != null ? isIOS : (isIOS = ((navigator.userAgent != null ? navigator.userAgent.indexOf('iPhone') : undefined) >= 0) || ((navigator.userAgent != null ? navigator.userAgent.indexOf('iPad') : undefined) >= 0));
 
-$.overlayScrollbarsEnabled = ->
-  return false unless $.isMac()
-  div = document.createElement('div')
-  div.setAttribute('style', 'width: 100px; height: 100px; overflow: scroll; position: absolute')
-  document.body.appendChild(div)
-  result = div.offsetWidth is div.clientWidth
-  document.body.removeChild(div)
-  result
+$.overlayScrollbarsEnabled = function() {
+  if (!$.isMac()) { return false; }
+  const div = document.createElement('div');
+  div.setAttribute('style', 'width: 100px; height: 100px; overflow: scroll; position: absolute');
+  document.body.appendChild(div);
+  const result = div.offsetWidth === div.clientWidth;
+  document.body.removeChild(div);
+  return result;
+};
 
-HIGHLIGHT_DEFAULTS =
-  className: 'highlight'
+const HIGHLIGHT_DEFAULTS = {
+  className: 'highlight',
   delay: 1000
+};
 
-$.highlight = (el, options = {}) ->
-  options = $.extend {}, HIGHLIGHT_DEFAULTS, options
-  el.classList.add(options.className)
-  setTimeout (-> el.classList.remove(options.className)), options.delay
-  return
+$.highlight = function(el, options) {
+  if (options == null) { options = {}; }
+  options = $.extend({}, HIGHLIGHT_DEFAULTS, options);
+  el.classList.add(options.className);
+  setTimeout((() => el.classList.remove(options.className)), options.delay);
+};
 
-$.copyToClipboard = (string) ->
-  textarea = document.createElement('textarea')
-  textarea.style.position = 'fixed'
-  textarea.style.opacity = 0
-  textarea.value = string
-  document.body.appendChild(textarea)
-  try
-    textarea.select()
-    result = !!document.execCommand('copy')
-  catch
-    result = false
-  finally
-    document.body.removeChild(textarea)
-  result
+$.copyToClipboard = function(string) {
+  let result;
+  const textarea = document.createElement('textarea');
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = 0;
+  textarea.value = string;
+  document.body.appendChild(textarea);
+  try {
+    textarea.select();
+    result = !!document.execCommand('copy');
+  } catch (error) {
+    result = false;
+  }
+  finally {
+    document.body.removeChild(textarea);
+  }
+  return result;
+};
+
+function __guard__(value, transform) {
+  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+}

@@ -1,187 +1,234 @@
-class app.views.DocList extends app.View
-  @className: '_list'
-  @attributes:
-    role: 'navigation'
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS101: Remove unnecessary use of Array.from
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.views.DocList = class DocList extends app.View {
+  constructor(...args) {
+    this.render = this.render.bind(this);
+    this.onOpen = this.onOpen.bind(this);
+    this.onClose = this.onClose.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onEnabled = this.onEnabled.bind(this);
+    this.afterRoute = this.afterRoute.bind(this);
+    super(...args);
+  }
 
-  @events:
-    open:  'onOpen'
-    close: 'onClose'
-    click: 'onClick'
+  static initClass() {
+    this.className = '_list';
+    this.attributes =
+      {role: 'navigation'};
+  
+    this.events = {
+      open:  'onOpen',
+      close: 'onClose',
+      click: 'onClick'
+    };
+  
+    this.routes =
+      {after: 'afterRoute'};
+  
+    this.elements = {
+      disabledTitle: '._list-title',
+      disabledList: '._disabled-list'
+    };
+  }
 
-  @routes:
-    after: 'afterRoute'
+  init() {
+    this.lists = {};
 
-  @elements:
-    disabledTitle: '._list-title'
-    disabledList: '._disabled-list'
+    this.addSubview(this.listFocus  = new app.views.ListFocus(this.el));
+    this.addSubview(this.listFold   = new app.views.ListFold(this.el));
+    this.addSubview(this.listSelect = new app.views.ListSelect(this.el));
 
-  init: ->
-    @lists = {}
+    app.on('ready', this.render);
+  }
 
-    @addSubview @listFocus  = new app.views.ListFocus @el
-    @addSubview @listFold   = new app.views.ListFold @el
-    @addSubview @listSelect = new app.views.ListSelect @el
+  activate() {
+    if (super.activate(...arguments)) {
+      for (var slug in this.lists) { var list = this.lists[slug]; list.activate(); }
+      this.listSelect.selectCurrent();
+    }
+  }
 
-    app.on 'ready', @render
-    return
+  deactivate() {
+    if (super.deactivate(...arguments)) {
+      for (var slug in this.lists) { var list = this.lists[slug]; list.deactivate(); }
+    }
+  }
 
-  activate: ->
-    if super
-      list.activate() for slug, list of @lists
-      @listSelect.selectCurrent()
-    return
+  render() {
+    let html = '';
+    for (var doc of Array.from(app.docs.all())) {
+      html += this.tmpl('sidebarDoc', doc, {fullName: app.docs.countAllBy('name', doc.name) > 1});
+    }
+    this.html(html);
+    if (!app.isSingleDoc() && (app.disabledDocs.size() !== 0)) { this.renderDisabled(); }
+  }
 
-  deactivate: ->
-    if super
-      list.deactivate() for slug, list of @lists
-    return
+  renderDisabled() {
+    this.append(this.tmpl('sidebarDisabled', {count: app.disabledDocs.size()}));
+    this.refreshElements();
+    this.renderDisabledList();
+  }
 
-  render: =>
-    html = ''
-    for doc in app.docs.all()
-      html += @tmpl('sidebarDoc', doc, fullName: app.docs.countAllBy('name', doc.name) > 1)
-    @html html
-    @renderDisabled() unless app.isSingleDoc() or app.disabledDocs.size() is 0
-    return
+  renderDisabledList() {
+    if (app.settings.get('hideDisabled')) {
+      this.removeDisabledList();
+    } else {
+      this.appendDisabledList();
+    }
+  }
 
-  renderDisabled: ->
-    @append @tmpl('sidebarDisabled', count: app.disabledDocs.size())
-    @refreshElements()
-    @renderDisabledList()
-    return
+  appendDisabledList() {
+    let doc;
+    let html = '';
+    const docs = [].concat(...Array.from(app.disabledDocs.all() || []));
 
-  renderDisabledList: ->
-    if app.settings.get('hideDisabled')
-      @removeDisabledList()
-    else
-      @appendDisabledList()
-    return
+    while ((doc = docs.shift())) {
+      if (doc.version != null) {
+        var versions = '';
+        while (true) {
+          versions += this.tmpl('sidebarDoc', doc, {disabled: true});
+          if ((docs[0] != null ? docs[0].name : undefined) !== doc.name) { break; }
+          doc = docs.shift();
+        }
+        html += this.tmpl('sidebarDisabledVersionedDoc', doc, versions);
+      } else {
+        html += this.tmpl('sidebarDoc', doc, {disabled: true});
+      }
+    }
 
-  appendDisabledList: ->
-    html = ''
-    docs = [].concat(app.disabledDocs.all()...)
+    this.append(this.tmpl('sidebarDisabledList', html));
+    this.disabledTitle.classList.add('open-title');
+    this.refreshElements();
+  }
 
-    while doc = docs.shift()
-      if doc.version?
-        versions = ''
-        loop
-          versions += @tmpl('sidebarDoc', doc, disabled: true)
-          break if docs[0]?.name isnt doc.name
-          doc = docs.shift()
-        html += @tmpl('sidebarDisabledVersionedDoc', doc, versions)
-      else
-        html += @tmpl('sidebarDoc', doc, disabled: true)
+  removeDisabledList() {
+    if (this.disabledList) { $.remove(this.disabledList); }
+    this.disabledTitle.classList.remove('open-title');
+    this.refreshElements();
+  }
 
-    @append @tmpl('sidebarDisabledList', html)
-    @disabledTitle.classList.add('open-title')
-    @refreshElements()
-    return
+  reset(options) {
+    if (options == null) { options = {}; }
+    this.listSelect.deselect();
+    if (this.listFocus != null) {
+      this.listFocus.blur();
+    }
+    this.listFold.reset();
+    if (options.revealCurrent || app.isSingleDoc()) { this.revealCurrent(); }
+  }
 
-  removeDisabledList: ->
-    $.remove @disabledList if @disabledList
-    @disabledTitle.classList.remove('open-title')
-    @refreshElements()
-    return
+  onOpen(event) {
+    $.stopEvent(event);
+    const doc = app.docs.findBy('slug', event.target.getAttribute('data-slug'));
 
-  reset: (options = {}) ->
-    @listSelect.deselect()
-    @listFocus?.blur()
-    @listFold.reset()
-    @revealCurrent() if options.revealCurrent || app.isSingleDoc()
-    return
+    if (doc && !this.lists[doc.slug]) {
+      this.lists[doc.slug] = doc.types.isEmpty() ?
+        new app.views.EntryList(doc.entries.all())
+      :
+        new app.views.TypeList(doc);
+      $.after(event.target, this.lists[doc.slug].el);
+    }
+  }
 
-  onOpen: (event) =>
-    $.stopEvent(event)
-    doc = app.docs.findBy 'slug', event.target.getAttribute('data-slug')
+  onClose(event) {
+    $.stopEvent(event);
+    const doc = app.docs.findBy('slug', event.target.getAttribute('data-slug'));
 
-    if doc and not @lists[doc.slug]
-      @lists[doc.slug] = if doc.types.isEmpty()
-        new app.views.EntryList doc.entries.all()
-      else
-        new app.views.TypeList doc
-      $.after event.target, @lists[doc.slug].el
-    return
+    if (doc && this.lists[doc.slug]) {
+      this.lists[doc.slug].detach();
+      delete this.lists[doc.slug];
+    }
+  }
 
-  onClose: (event) =>
-    $.stopEvent(event)
-    doc = app.docs.findBy 'slug', event.target.getAttribute('data-slug')
+  select(model) {
+    this.listSelect.selectByHref(model != null ? model.fullPath() : undefined);
+  }
 
-    if doc and @lists[doc.slug]
-      @lists[doc.slug].detach()
-      delete @lists[doc.slug]
-    return
+  reveal(model) {
+    this.openDoc(model.doc);
+    if (model.type) { this.openType(model.getType()); }
+    this.focus(model);
+    this.paginateTo(model);
+    this.scrollTo(model);
+  }
 
-  select: (model) ->
-    @listSelect.selectByHref model?.fullPath()
-    return
+  focus(model) {
+    if (this.listFocus != null) {
+      this.listFocus.focus(this.find(`a[href='${model.fullPath()}']`));
+    }
+  }
 
-  reveal: (model) ->
-    @openDoc model.doc
-    @openType model.getType() if model.type
-    @focus model
-    @paginateTo model
-    @scrollTo model
-    return
+  revealCurrent() {
+    let model;
+    if (model = app.router.context.type || app.router.context.entry) {
+      this.reveal(model);
+      this.select(model);
+    }
+  }
 
-  focus: (model) ->
-    @listFocus?.focus @find("a[href='#{model.fullPath()}']")
-    return
+  openDoc(doc) {
+    if (app.disabledDocs.contains(doc) && doc.version) { this.listFold.open(this.find(`[data-slug='${doc.slug_without_version}']`)); }
+    this.listFold.open(this.find(`[data-slug='${doc.slug}']`));
+  }
 
-  revealCurrent: ->
-    if model = app.router.context.type or app.router.context.entry
-      @reveal model
-      @select model
-    return
+  closeDoc(doc) {
+    this.listFold.close(this.find(`[data-slug='${doc.slug}']`));
+  }
 
-  openDoc: (doc) ->
-    @listFold.open @find("[data-slug='#{doc.slug_without_version}']") if app.disabledDocs.contains(doc) and doc.version
-    @listFold.open @find("[data-slug='#{doc.slug}']")
-    return
+  openType(type) {
+    this.listFold.open(this.lists[type.doc.slug].find(`[data-slug='${type.slug}']`));
+  }
 
-  closeDoc: (doc) ->
-    @listFold.close @find("[data-slug='#{doc.slug}']")
-    return
+  paginateTo(model) {
+    if (this.lists[model.doc.slug] != null) {
+      this.lists[model.doc.slug].paginateTo(model);
+    }
+  }
 
-  openType: (type) ->
-    @listFold.open @lists[type.doc.slug].find("[data-slug='#{type.slug}']")
-    return
+  scrollTo(model) {
+    $.scrollTo(this.find(`a[href='${model.fullPath()}']`), null, 'top', {margin: app.isMobile() ? 48 : 0});
+  }
 
-  paginateTo: (model) ->
-    @lists[model.doc.slug]?.paginateTo(model)
-    return
+  toggleDisabled() {
+    if (this.disabledTitle.classList.contains('open-title')) {
+      this.removeDisabledList();
+      app.settings.set('hideDisabled', true);
+    } else {
+      this.appendDisabledList();
+      app.settings.set('hideDisabled', false);
+    }
+  }
 
-  scrollTo: (model) ->
-    $.scrollTo @find("a[href='#{model.fullPath()}']"), null, 'top', margin: if app.isMobile() then 48 else 0
-    return
+  onClick(event) {
+    let slug;
+    const target = $.eventTarget(event);
+    if (this.disabledTitle && $.hasChild(this.disabledTitle, target) && (target.tagName !== 'A')) {
+      $.stopEvent(event);
+      this.toggleDisabled();
+    } else if (slug = target.getAttribute('data-enable')) {
+      $.stopEvent(event);
+      const doc = app.disabledDocs.findBy('slug', slug);
+      if (doc) { app.enableDoc(doc, this.onEnabled, this.onEnabled); }
+    }
+  }
 
-  toggleDisabled: ->
-    if @disabledTitle.classList.contains('open-title')
-      @removeDisabledList()
-      app.settings.set 'hideDisabled', true
-    else
-      @appendDisabledList()
-      app.settings.set 'hideDisabled', false
-    return
+  onEnabled() {
+    this.reset();
+    this.render();
+  }
 
-  onClick: (event) =>
-    target = $.eventTarget(event)
-    if @disabledTitle and $.hasChild(@disabledTitle, target) and target.tagName isnt 'A'
-      $.stopEvent(event)
-      @toggleDisabled()
-    else if slug = target.getAttribute('data-enable')
-      $.stopEvent(event)
-      doc = app.disabledDocs.findBy('slug', slug)
-      app.enableDoc(doc, @onEnabled, @onEnabled) if doc
-    return
-
-  onEnabled: =>
-    @reset()
-    @render()
-    return
-
-  afterRoute: (route, context) =>
-    if context.init
-      @reset revealCurrent: true if @activated
-    else
-      @select context.type or context.entry
-    return
+  afterRoute(route, context) {
+    if (context.init) {
+      if (this.activated) { this.reset({revealCurrent: true}); }
+    } else {
+      this.select(context.type || context.entry);
+    }
+  }
+});
+Cls.initClass();

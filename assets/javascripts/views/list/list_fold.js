@@ -1,71 +1,95 @@
-class app.views.ListFold extends app.View
-  @targetClass: '_list-dir'
-  @handleClass: '_list-arrow'
-  @activeClass: 'open'
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.views.ListFold = class ListFold extends app.View {
+  static initClass() {
+    this.targetClass = '_list-dir';
+    this.handleClass = '_list-arrow';
+    this.activeClass = 'open';
+  
+    this.events =
+      {click: 'onClick'};
+  
+    this.shortcuts = {
+      left:   'onLeft',
+      right:  'onRight'
+    };
+  }
 
-  @events:
-    click: 'onClick'
+  constructor(el) { this.onLeft = this.onLeft.bind(this);   this.onRight = this.onRight.bind(this);   this.onClick = this.onClick.bind(this);   this.el = el; super(...arguments); }
 
-  @shortcuts:
-    left:   'onLeft'
-    right:  'onRight'
+  open(el) {
+    if (el && !el.classList.contains(this.constructor.activeClass)) {
+      el.classList.add(this.constructor.activeClass);
+      $.trigger(el, 'open');
+    }
+  }
 
-  constructor: (@el) -> super
+  close(el) {
+    if (el && el.classList.contains(this.constructor.activeClass)) {
+      el.classList.remove(this.constructor.activeClass);
+      $.trigger(el, 'close');
+    }
+  }
 
-  open: (el) ->
-    if el and not el.classList.contains @constructor.activeClass
-      el.classList.add @constructor.activeClass
-      $.trigger el, 'open'
-    return
+  toggle(el) {
+    if (el.classList.contains(this.constructor.activeClass)) {
+      this.close(el);
+    } else {
+      this.open(el);
+    }
+  }
 
-  close: (el) ->
-    if el and el.classList.contains @constructor.activeClass
-      el.classList.remove @constructor.activeClass
-      $.trigger el, 'close'
-    return
+  reset() {
+    let el;
+    while ((el = this.findByClass(this.constructor.activeClass))) {
+      this.close(el);
+    }
+  }
 
-  toggle: (el) ->
-    if el.classList.contains @constructor.activeClass
-      @close el
-    else
-      @open el
-    return
+  getCursor() {
+    return this.findByClass(app.views.ListFocus.activeClass) || this.findByClass(app.views.ListSelect.activeClass);
+  }
 
-  reset: ->
-    while el = @findByClass @constructor.activeClass
-      @close el
-    return
+  onLeft() {
+    const cursor = this.getCursor();
+    if (cursor != null ? cursor.classList.contains(this.constructor.activeClass) : undefined) {
+      this.close(cursor);
+    }
+  }
 
-  getCursor: ->
-    @findByClass(app.views.ListFocus.activeClass) or @findByClass(app.views.ListSelect.activeClass)
+  onRight() {
+    const cursor = this.getCursor();
+    if (cursor != null ? cursor.classList.contains(this.constructor.targetClass) : undefined) {
+      this.open(cursor);
+    }
+  }
 
-  onLeft: =>
-    cursor = @getCursor()
-    if cursor?.classList.contains @constructor.activeClass
-      @close cursor
-    return
+  onClick(event) {
+    if ((event.which !== 1) || event.metaKey || event.ctrlKey) { return; }
+    if (!event.pageY) { return; } // ignore fabricated clicks
+    let el = $.eventTarget(event);
+    if (el.parentNode.tagName.toUpperCase() === 'SVG') { el = el.parentNode; }
 
-  onRight: =>
-    cursor = @getCursor()
-    if cursor?.classList.contains @constructor.targetClass
-      @open cursor
-    return
-
-  onClick: (event) =>
-    return if event.which isnt 1 or event.metaKey or event.ctrlKey
-    return unless event.pageY # ignore fabricated clicks
-    el = $.eventTarget(event)
-    el = el.parentNode if el.parentNode.tagName.toUpperCase() is 'SVG'
-
-    if el.classList.contains @constructor.handleClass
-      $.stopEvent(event)
-      @toggle el.parentNode
-    else if el.classList.contains @constructor.targetClass
-      if el.hasAttribute('href')
-        if el.classList.contains(@constructor.activeClass)
-          @close(el) if el.classList.contains(app.views.ListSelect.activeClass)
-        else
-          @open(el)
-      else
-        @toggle(el)
-    return
+    if (el.classList.contains(this.constructor.handleClass)) {
+      $.stopEvent(event);
+      this.toggle(el.parentNode);
+    } else if (el.classList.contains(this.constructor.targetClass)) {
+      if (el.hasAttribute('href')) {
+        if (el.classList.contains(this.constructor.activeClass)) {
+          if (el.classList.contains(app.views.ListSelect.activeClass)) { this.close(el); }
+        } else {
+          this.open(el);
+        }
+      } else {
+        this.toggle(el);
+      }
+    }
+  }
+});
+Cls.initClass();

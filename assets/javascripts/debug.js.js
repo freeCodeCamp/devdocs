@@ -1,85 +1,110 @@
-return unless console?.time and console.groupCollapsed
+/*
+ * decaffeinate suggestions:
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS203: Remove `|| {}` from converted for-own loops
+ * DS207: Consider shorter variations of null checks
+ * DS208: Avoid top-level this
+ * DS209: Avoid top-level return
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+if (!(typeof console !== 'undefined' && console !== null ? console.time : undefined) || !console.groupCollapsed) { return; }
 
-#
-# App
-#
+//
+// App
+//
 
-_init = app.init
-app.init = ->
-  console.time 'Init'
-  _init.call(app)
-  console.timeEnd 'Init'
-  console.time 'Load'
+const _init = app.init;
+app.init = function() {
+  console.time('Init');
+  _init.call(app);
+  console.timeEnd('Init');
+  return console.time('Load');
+};
 
-_start = app.start
-app.start = ->
-  console.timeEnd 'Load'
-  console.time 'Start'
-  _start.call(app, arguments...)
-  console.timeEnd 'Start'
+const _start = app.start;
+app.start = function() {
+  console.timeEnd('Load');
+  console.time('Start');
+  _start.call(app, ...arguments);
+  return console.timeEnd('Start');
+};
 
-#
-# Searcher
-#
+//
+// Searcher
+//
 
-_super = app.Searcher
-_proto = app.Searcher.prototype
+const _super = app.Searcher;
+const _proto = app.Searcher.prototype;
 
-app.Searcher = ->
-  _super.apply @, arguments
+app.Searcher = function() {
+  _super.apply(this, arguments);
 
-  _setup = @setup.bind(@)
-  @setup = ->
-    console.groupCollapsed "Search: #{@query}"
-    console.time 'Total'
-    _setup()
+  const _setup = this.setup.bind(this);
+  this.setup = function() {
+    console.groupCollapsed(`Search: ${this.query}`);
+    console.time('Total');
+    return _setup();
+  };
 
-  _match = @match.bind(@)
-  @match = =>
-    console.timeEnd @matcher.name if @matcher
-    _match()
+  const _match = this.match.bind(this);
+  this.match = () => {
+    if (this.matcher) { console.timeEnd(this.matcher.name); }
+    return _match();
+  };
 
-  _setupMatcher = @setupMatcher.bind(@)
-  @setupMatcher = ->
-    console.time @matcher.name
-    _setupMatcher()
+  const _setupMatcher = this.setupMatcher.bind(this);
+  this.setupMatcher = function() {
+    console.time(this.matcher.name);
+    return _setupMatcher();
+  };
 
-  _end = @end.bind(@)
-  @end = ->
-    console.log "Results: #{@totalResults}"
-    console.timeEnd 'Total'
-    console.groupEnd()
-    _end()
+  const _end = this.end.bind(this);
+  this.end = function() {
+    console.log(`Results: ${this.totalResults}`);
+    console.timeEnd('Total');
+    console.groupEnd();
+    return _end();
+  };
 
-  _kill = @kill.bind(@)
-  @kill = ->
-    if @timeout
-      console.timeEnd @matcher.name if @matcher
-      console.groupEnd()
-      console.timeEnd 'Total'
-      console.warn 'Killed'
-    _kill()
+  const _kill = this.kill.bind(this);
+  this.kill = function() {
+    if (this.timeout) {
+      if (this.matcher) { console.timeEnd(this.matcher.name); }
+      console.groupEnd();
+      console.timeEnd('Total');
+      console.warn('Killed');
+    }
+    return _kill();
+  };
 
-  return
+};
 
-$.extend(app.Searcher, _super)
-_proto.constructor = app.Searcher
-app.Searcher.prototype = _proto
+$.extend(app.Searcher, _super);
+_proto.constructor = app.Searcher;
+app.Searcher.prototype = _proto;
 
-#
-# View tree
-#
+//
+// View tree
+//
 
-@viewTree = (view = app.document, level = 0, visited = []) ->
-  return if visited.indexOf(view) >= 0
-  visited.push(view)
+this.viewTree = function(view, level, visited) {
+  if (view == null) { view = app.document; }
+  if (level == null) { level = 0; }
+  if (visited == null) { visited = []; }
+  if (visited.indexOf(view) >= 0) { return; }
+  visited.push(view);
 
-  console.log "%c #{Array(level + 1).join('  ')}#{view.constructor.name}: #{!!view.activated}",
-              'color:' + (view.activated and 'green' or 'red')
+  console.log(`%c ${Array(level + 1).join('  ')}${view.constructor.name}: ${!!view.activated}`,
+              'color:' + ((view.activated && 'green') || 'red'));
 
-  for own key, value of view when key isnt 'view' and value
-    if typeof value is 'object' and value.setupElement
-      @viewTree(value, level + 1, visited)
-    else if value.constructor.toString().match(/Object\(\)/)
-      @viewTree(v, level + 1, visited) for own k, v of value when v and typeof v is 'object' and v.setupElement
-  return
+  for (var key of Object.keys(view || {})) {
+    var value = view[key];
+    if ((key !== 'view') && value) {
+      if ((typeof value === 'object') && value.setupElement) {
+        this.viewTree(value, level + 1, visited);
+      } else if (value.constructor.toString().match(/Object\(\)/)) {
+        for (var k of Object.keys(value || {})) { var v = value[k]; if (v && (typeof v === 'object') && v.setupElement) { this.viewTree(v, level + 1, visited); } }
+      }
+    }
+  }
+};

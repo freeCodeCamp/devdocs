@@ -1,3 +1,5 @@
-class app.Model
-  constructor: (attributes) ->
-    @[key] = value for key, value of attributes
+app.Model = class Model {
+  constructor(attributes) {
+    for (var key in attributes) { var value = attributes[key]; this[key] = value; }
+  }
+};

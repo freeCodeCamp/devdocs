@@ -1,118 +1,154 @@
-MIME_TYPES =
-  json: 'application/json'
+/*
+ * decaffeinate suggestions:
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS205: Consider reworking code to avoid use of IIFEs
+ * DS207: Consider shorter variations of null checks
+ * DS208: Avoid top-level this
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const MIME_TYPES = {
+  json: 'application/json',
   html: 'text/html'
+};
 
-@ajax = (options) ->
-  applyDefaults(options)
-  serializeData(options)
+this.ajax = function(options) {
+  applyDefaults(options);
+  serializeData(options);
 
-  xhr = new XMLHttpRequest()
-  xhr.open(options.type, options.url, options.async)
+  const xhr = new XMLHttpRequest();
+  xhr.open(options.type, options.url, options.async);
 
-  applyCallbacks(xhr, options)
-  applyHeaders(xhr, options)
+  applyCallbacks(xhr, options);
+  applyHeaders(xhr, options);
 
-  xhr.send(options.data)
+  xhr.send(options.data);
 
-  if options.async
-    abort: abort.bind(undefined, xhr)
-  else
-    parseResponse(xhr, options)
+  if (options.async) {
+    return {abort: abort.bind(undefined, xhr)};
+  } else {
+    return parseResponse(xhr, options);
+  }
+};
 
-ajax.defaults =
-  async: true
-  dataType: 'json'
-  timeout: 30
+ajax.defaults = {
+  async: true,
+  dataType: 'json',
+  timeout: 30,
   type: 'GET'
-  # contentType
-  # context
-  # data
-  # error
-  # headers
-  # progress
-  # success
-  # url
+};
+  // contentType
+  // context
+  // data
+  // error
+  // headers
+  // progress
+  // success
+  // url
 
-applyDefaults = (options) ->
-  for key of ajax.defaults
-    options[key] ?= ajax.defaults[key]
-  return
+var applyDefaults = function(options) {
+  for (var key in ajax.defaults) {
+    if (options[key] == null) { options[key] = ajax.defaults[key]; }
+  }
+};
 
-serializeData = (options) ->
-  return unless options.data
+var serializeData = function(options) {
+  if (!options.data) { return; }
 
-  if options.type is 'GET'
-    options.url += '?' + serializeParams(options.data)
-    options.data = null
-  else
-    options.data = serializeParams(options.data)
-  return
+  if (options.type === 'GET') {
+    options.url += '?' + serializeParams(options.data);
+    options.data = null;
+  } else {
+    options.data = serializeParams(options.data);
+  }
+};
 
-serializeParams = (params) ->
-  ("#{encodeURIComponent key}=#{encodeURIComponent value}" for key, value of params).join '&'
+var serializeParams = params => ((() => {
+  const result = [];
+  for (var key in params) {
+    var value = params[key];
+    result.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+  }
+  return result;
+})()).join('&');
 
-applyCallbacks = (xhr, options) ->
-  return unless options.async
+var applyCallbacks = function(xhr, options) {
+  if (!options.async) { return; }
 
-  xhr.timer = setTimeout onTimeout.bind(undefined, xhr, options), options.timeout * 1000
-  xhr.onprogress = options.progress if options.progress
-  xhr.onreadystatechange = ->
-    if xhr.readyState is 4
-      clearTimeout(xhr.timer)
-      onComplete(xhr, options)
-    return
-  return
+  xhr.timer = setTimeout(onTimeout.bind(undefined, xhr, options), options.timeout * 1000);
+  if (options.progress) { xhr.onprogress = options.progress; }
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      clearTimeout(xhr.timer);
+      onComplete(xhr, options);
+    }
+  };
+};
 
-applyHeaders = (xhr, options) ->
-  options.headers or= {}
+var applyHeaders = function(xhr, options) {
+  if (!options.headers) { options.headers = {}; }
 
-  if options.contentType
-    options.headers['Content-Type'] = options.contentType
+  if (options.contentType) {
+    options.headers['Content-Type'] = options.contentType;
+  }
 
-  if not options.headers['Content-Type'] and options.data and options.type isnt 'GET'
-    options.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+  if (!options.headers['Content-Type'] && options.data && (options.type !== 'GET')) {
+    options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+  }
 
-  if options.dataType
-    options.headers['Accept'] = MIME_TYPES[options.dataType] or options.dataType
+  if (options.dataType) {
+    options.headers['Accept'] = MIME_TYPES[options.dataType] || options.dataType;
+  }
 
-  for key, value of options.headers
-    xhr.setRequestHeader(key, value)
-  return
+  for (var key in options.headers) {
+    var value = options.headers[key];
+    xhr.setRequestHeader(key, value);
+  }
+};
 
-onComplete = (xhr, options) ->
-  if 200 <= xhr.status < 300
-    if (response = parseResponse(xhr, options))?
-      onSuccess response, xhr, options
-    else
-      onError 'invalid', xhr, options
-  else
-    onError 'error', xhr, options
-  return
+var onComplete = function(xhr, options) {
+  if (200 <= xhr.status && xhr.status < 300) {
+    let response;
+    if ((response = parseResponse(xhr, options)) != null) {
+      onSuccess(response, xhr, options);
+    } else {
+      onError('invalid', xhr, options);
+    }
+  } else {
+    onError('error', xhr, options);
+  }
+};
 
-onSuccess = (response, xhr, options) ->
-  options.success?.call options.context, response, xhr, options
-  return
+var onSuccess = function(response, xhr, options) {
+  if (options.success != null) {
+    options.success.call(options.context, response, xhr, options);
+  }
+};
 
-onError = (type, xhr, options) ->
-  options.error?.call options.context, type, xhr, options
-  return
+var onError = function(type, xhr, options) {
+  if (options.error != null) {
+    options.error.call(options.context, type, xhr, options);
+  }
+};
 
-onTimeout = (xhr, options) ->
-  xhr.abort()
-  onError 'timeout', xhr, options
-  return
+var onTimeout = function(xhr, options) {
+  xhr.abort();
+  onError('timeout', xhr, options);
+};
 
-abort = (xhr) ->
-  clearTimeout(xhr.timer)
-  xhr.onreadystatechange = null
-  xhr.abort()
-  return
+var abort = function(xhr) {
+  clearTimeout(xhr.timer);
+  xhr.onreadystatechange = null;
+  xhr.abort();
+};
 
-parseResponse = (xhr, options) ->
-  if options.dataType is 'json'
-    parseJSON(xhr.responseText)
-  else
-    xhr.responseText
+var parseResponse = function(xhr, options) {
+  if (options.dataType === 'json') {
+    return parseJSON(xhr.responseText);
+  } else {
+    return xhr.responseText;
+  }
+};
 
-parseJSON = (json) ->
-  try JSON.parse(json) catch
+var parseJSON = function(json) {
+  try { return JSON.parse(json); } catch (error) {}
+};

@@ -1,83 +1,127 @@
-class app.views.Settings extends app.View
-  SIDEBAR_HIDDEN_LAYOUT = '_sidebar-hidden'
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS101: Remove unnecessary use of Array.from
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS205: Consider reworking code to avoid use of IIFEs
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+(function() {
+  let SIDEBAR_HIDDEN_LAYOUT = undefined;
+  const Cls = (app.views.Settings = class Settings extends app.View {
+    constructor(...args) {
+      this.onChange = this.onChange.bind(this);
+      this.onEnter = this.onEnter.bind(this);
+      this.onSubmit = this.onSubmit.bind(this);
+      this.onImport = this.onImport.bind(this);
+      this.onClick = this.onClick.bind(this);
+      super(...args);
+    }
 
-  @el: '._settings'
+    static initClass() {
+      SIDEBAR_HIDDEN_LAYOUT = '_sidebar-hidden';
+  
+      this.el = '._settings';
+  
+      this.elements = {
+        sidebar: '._sidebar',
+        saveBtn: 'button[type="submit"]',
+        backBtn: 'button[data-back]'
+      };
+  
+      this.events = {
+        import: 'onImport',
+        change: 'onChange',
+        submit: 'onSubmit',
+        click: 'onClick'
+      };
+  
+      this.shortcuts =
+        {enter: 'onEnter'};
+    }
 
-  @elements:
-    sidebar: '._sidebar'
-    saveBtn: 'button[type="submit"]'
-    backBtn: 'button[data-back]'
+    init() {
+      this.addSubview(this.docPicker = new app.views.DocPicker);
+    }
 
-  @events:
-    import: 'onImport'
-    change: 'onChange'
-    submit: 'onSubmit'
-    click: 'onClick'
+    activate() {
+      if (super.activate(...arguments)) {
+        this.render();
+        document.body.classList.remove(SIDEBAR_HIDDEN_LAYOUT);
+      }
+    }
 
-  @shortcuts:
-    enter: 'onEnter'
+    deactivate() {
+      if (super.deactivate(...arguments)) {
+        this.resetClass();
+        this.docPicker.detach();
+        if (app.settings.hasLayout(SIDEBAR_HIDDEN_LAYOUT)) { document.body.classList.add(SIDEBAR_HIDDEN_LAYOUT); }
+      }
+    }
 
-  init: ->
-    @addSubview @docPicker = new app.views.DocPicker
-    return
+    render() {
+      this.docPicker.appendTo(this.sidebar);
+      this.refreshElements();
+      this.addClass('_in');
+    }
 
-  activate: ->
-    if super
-      @render()
-      document.body.classList.remove(SIDEBAR_HIDDEN_LAYOUT)
-    return
+    save(options) {
+      if (options == null) { options = {}; }
+      if (!this.saving) {
+        let docs;
+        this.saving = true;
 
-  deactivate: ->
-    if super
-      @resetClass()
-      @docPicker.detach()
-      document.body.classList.add(SIDEBAR_HIDDEN_LAYOUT) if app.settings.hasLayout(SIDEBAR_HIDDEN_LAYOUT)
-    return
+        if (options.import) {
+          docs = app.settings.getDocs();
+        } else {
+          docs = this.docPicker.getSelectedDocs();
+          app.settings.setDocs(docs);
+        }
 
-  render: ->
-    @docPicker.appendTo @sidebar
-    @refreshElements()
-    @addClass '_in'
-    return
+        this.saveBtn.textContent = 'Saving\u2026';
+        const disabledDocs = new app.collections.Docs((() => {
+          const result = [];
+          for (var doc of Array.from(app.docs.all())) {             if (docs.indexOf(doc.slug) === -1) {
+              result.push(doc);
+            }
+          }
+          return result;
+        })());
+        disabledDocs.uninstall(function() {
+          app.db.migrate();
+          return app.reload();
+        });
+      }
+    }
 
-  save: (options = {}) ->
-    unless @saving
-      @saving = true
+    onChange() {
+      this.addClass('_dirty');
+    }
 
-      if options.import
-        docs = app.settings.getDocs()
-      else
-        docs = @docPicker.getSelectedDocs()
-        app.settings.setDocs(docs)
+    onEnter() {
+      this.save();
+    }
 
-      @saveBtn.textContent = 'Saving\u2026'
-      disabledDocs = new app.collections.Docs(doc for doc in app.docs.all() when docs.indexOf(doc.slug) is -1)
-      disabledDocs.uninstall ->
-        app.db.migrate()
-        app.reload()
-    return
+    onSubmit(event) {
+      event.preventDefault();
+      this.save();
+    }
 
-  onChange: =>
-    @addClass('_dirty')
-    return
+    onImport() {
+      this.addClass('_dirty');
+      this.save({import: true});
+    }
 
-  onEnter: =>
-    @save()
-    return
-
-  onSubmit: (event) =>
-    event.preventDefault()
-    @save()
-    return
-
-  onImport: =>
-    @addClass('_dirty')
-    @save(import: true)
-    return
-
-  onClick: (event) =>
-    return if event.which isnt 1
-    if event.target is @backBtn
-      $.stopEvent(event)
-      app.router.show '/'
-    return
+    onClick(event) {
+      if (event.which !== 1) { return; }
+      if (event.target === this.backBtn) {
+        $.stopEvent(event);
+        app.router.show('/');
+      }
+    }
+  });
+  Cls.initClass();
+  return Cls;
+})();

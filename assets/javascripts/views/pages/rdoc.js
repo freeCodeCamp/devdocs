@@ -1,15 +1,26 @@
-#= require views/pages/base
+/*
+ * decaffeinate suggestions:
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS206: Consider reworking classes to avoid initClass
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+//= require views/pages/base
 
-class app.views.RdocPage extends app.views.BasePage
-  @events:
-    click: 'onClick'
+const Cls = (app.views.RdocPage = class RdocPage extends app.views.BasePage {
+  static initClass() {
+    this.events =
+      {click: 'onClick'};
+  }
 
-  onClick: (event) ->
-    return unless event.target.classList.contains 'method-click-advice'
-    $.stopEvent(event)
+  onClick(event) {
+    if (!event.target.classList.contains('method-click-advice')) { return; }
+    $.stopEvent(event);
 
-    source = $ '.method-source-code', event.target.closest('.method-detail')
-    isShown = source.style.display is 'block'
+    const source = $('.method-source-code', event.target.closest('.method-detail'));
+    const isShown = source.style.display === 'block';
 
-    source.style.display = if isShown then 'none' else 'block'
-    event.target.textContent = if isShown then 'Show source' else 'Hide source'
+    source.style.display = isShown ? 'none' : 'block';
+    return event.target.textContent = isShown ? 'Show source' : 'Hide source';
+  }
+});
+Cls.initClass();

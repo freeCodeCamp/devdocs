@@ -1,168 +1,225 @@
-class app.views.Search extends app.View
-  SEARCH_PARAM = app.config.search_param
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+(function() {
+  let SEARCH_PARAM = undefined;
+  let HASH_RGX = undefined;
+  const Cls = (app.views.Search = class Search extends app.View {
+    constructor(...args) {
+      this.focus = this.focus.bind(this);
+      this.autoFocus = this.autoFocus.bind(this);
+      this.onWindowFocus = this.onWindowFocus.bind(this);
+      this.onReady = this.onReady.bind(this);
+      this.onInput = this.onInput.bind(this);
+      this.searchUrl = this.searchUrl.bind(this);
+      this.google = this.google.bind(this);
+      this.stackoverflow = this.stackoverflow.bind(this);
+      this.duckduckgo = this.duckduckgo.bind(this);
+      this.onResults = this.onResults.bind(this);
+      this.onEnd = this.onEnd.bind(this);
+      this.onClick = this.onClick.bind(this);
+      this.onScopeChange = this.onScopeChange.bind(this);
+      this.afterRoute = this.afterRoute.bind(this);
+      super(...args);
+    }
 
-  @el: '._search'
-  @activeClass: '_search-active'
+    static initClass() {
+      SEARCH_PARAM = app.config.search_param;
+  
+      this.el = '._search';
+      this.activeClass = '_search-active';
+  
+      this.elements = {
+        input:     '._search-input',
+        resetLink: '._search-clear'
+      };
+  
+      this.events = {
+        input:  'onInput',
+        click:  'onClick',
+        submit: 'onSubmit'
+      };
+  
+      this.shortcuts = {
+        typing: 'focus',
+        altG: 'google',
+        altS: 'stackoverflow',
+        altD: 'duckduckgo'
+      };
+  
+      this.routes =
+        {after: 'afterRoute'};
+  
+      HASH_RGX = new RegExp(`^#${SEARCH_PARAM}=(.*)`);
+    }
 
-  @elements:
-    input:     '._search-input'
-    resetLink: '._search-clear'
+    init() {
+      this.addSubview(this.scope = new app.views.SearchScope(this.el));
 
-  @events:
-    input:  'onInput'
-    click:  'onClick'
-    submit: 'onSubmit'
+      this.searcher = new app.Searcher;
+      this.searcher
+        .on('results', this.onResults)
+        .on('end', this.onEnd);
 
-  @shortcuts:
-    typing: 'focus'
-    altG: 'google'
-    altS: 'stackoverflow'
-    altD: 'duckduckgo'
+      this.scope
+        .on('change', this.onScopeChange);
 
-  @routes:
-    after: 'afterRoute'
+      app.on('ready', this.onReady);
+      $.on(window, 'hashchange', this.searchUrl);
+      $.on(window, 'focus', this.onWindowFocus);
+    }
 
-  init: ->
-    @addSubview @scope = new app.views.SearchScope @el
+    focus() {
+      if (document.activeElement === this.input) { return; }
+      if (app.settings.get('noAutofocus')) { return; }
+      this.input.focus(); 
+    }
 
-    @searcher = new app.Searcher
-    @searcher
-      .on 'results', @onResults
-      .on 'end', @onEnd
+    autoFocus() {
+      if (app.isMobile() || $.isAndroid() || $.isIOS()) { return; }
+      if ((document.activeElement != null ? document.activeElement.tagName : undefined) === 'INPUT') { return; }
+      if (app.settings.get('noAutofocus')) { return; }
+      this.input.focus();
+    }
 
-    @scope
-      .on 'change', @onScopeChange
+    onWindowFocus(event) {
+      if (event.target === window) { return this.autoFocus(); }
+    }
 
-    app.on 'ready', @onReady
-    $.on window, 'hashchange', @searchUrl
-    $.on window, 'focus', @onWindowFocus
-    return
+    getScopeDoc() {
+      if (this.scope.isActive()) { return this.scope.getScope(); }
+    }
 
-  focus: =>
-    return if document.activeElement is @input
-    return if app.settings.get('noAutofocus')
-    @input.focus() 
-    return
+    reset(force) {
+      if (force || !this.input.value) { this.scope.reset(); }
+      this.el.reset();
+      this.onInput();
+      this.autoFocus();
+    }
 
-  autoFocus: =>
-    return if app.isMobile() or $.isAndroid() or $.isIOS()
-    return if document.activeElement?.tagName is 'INPUT'
-    return if app.settings.get('noAutofocus')
-    @input.focus()
-    return
+    onReady() {
+      this.value = '';
+      this.delay(this.onInput);
+    }
 
-  onWindowFocus: (event) =>
-    @autoFocus() if event.target is window
+    onInput() {
+      if ((this.value == null) || // ignore events pre-"ready"
+                (this.value === this.input.value)) { return; }
+      this.value = this.input.value;
 
-  getScopeDoc: ->
-    @scope.getScope() if @scope.isActive()
+      if (this.value.length) {
+        this.search();
+      } else {
+        this.clear();
+      }
+    }
 
-  reset: (force) ->
-    @scope.reset() if force or not @input.value
-    @el.reset()
-    @onInput()
-    @autoFocus()
-    return
+    search(url) {
+      if (url == null) { url = false; }
+      this.addClass(this.constructor.activeClass);
+      this.trigger('searching');
 
-  onReady: =>
-    @value = ''
-    @delay @onInput
-    return
+      this.hasResults = null;
+      this.flags = {urlSearch: url, initialResults: true};
+      this.searcher.find(this.scope.getScope().entries.all(), 'text', this.value);
+    }
 
-  onInput: =>
-    return if not @value? or # ignore events pre-"ready"
-              @value is @input.value
-    @value = @input.value
+    searchUrl() {
+      let value;
+      if (location.pathname === '/') {
+        this.scope.searchUrl();
+      } else if (!app.router.isIndex()) {
+        return;
+      }
 
-    if @value.length
-      @search()
-    else
-      @clear()
-    return
+      if (!(value = this.extractHashValue())) { return; }
+      this.input.value = (this.value = value);
+      this.input.setSelectionRange(value.length, value.length);
+      this.search(true);
+      return true;
+    }
 
-  search: (url = false) ->
-    @addClass @constructor.activeClass
-    @trigger 'searching'
+    clear() {
+      this.removeClass(this.constructor.activeClass);
+      this.trigger('clear');
+    }
 
-    @hasResults = null
-    @flags = urlSearch: url, initialResults: true
-    @searcher.find @scope.getScope().entries.all(), 'text', @value
-    return
+    externalSearch(url) {
+      let value;
+      if (value = this.value) {
+        if (this.scope.name()) { value = `${this.scope.name()} ${value}`; }
+        $.popup(`${url}${encodeURIComponent(value)}`);
+        this.reset();
+      }
+    }
 
-  searchUrl: =>
-    if location.pathname is '/'
-      @scope.searchUrl()
-    else if not app.router.isIndex()
-      return
+    google() {
+      this.externalSearch("https://www.google.com/search?q=");
+    }
 
-    return unless value = @extractHashValue()
-    @input.value = @value = value
-    @input.setSelectionRange(value.length, value.length)
-    @search true
-    true
+    stackoverflow() {
+      this.externalSearch("https://stackoverflow.com/search?q=");
+    }
 
-  clear: ->
-    @removeClass @constructor.activeClass
-    @trigger 'clear'
-    return
+    duckduckgo() {
+      this.externalSearch("https://duckduckgo.com/?t=devdocs&q=");
+    }
 
-  externalSearch: (url) ->
-    if value = @value
-      value = "#{@scope.name()} #{value}" if @scope.name()
-      $.popup "#{url}#{encodeURIComponent value}"
-      @reset()
-    return
+    onResults(results) {
+      if (results.length) { this.hasResults = true; }
+      this.trigger('results', results, this.flags);
+      this.flags.initialResults = false;
+    }
 
-  google: =>
-    @externalSearch "https://www.google.com/search?q="
-    return
+    onEnd() {
+      if (!this.hasResults) { this.trigger('noresults'); }
+    }
 
-  stackoverflow: =>
-    @externalSearch "https://stackoverflow.com/search?q="
-    return
+    onClick(event) {
+      if (event.target === this.resetLink) {
+        $.stopEvent(event);
+        this.reset();
+      }
+    }
 
-  duckduckgo: =>
-    @externalSearch "https://duckduckgo.com/?t=devdocs&q="
-    return
+    onSubmit(event) {
+      $.stopEvent(event);
+    }
 
-  onResults: (results) =>
-    @hasResults = true if results.length
-    @trigger 'results', results, @flags
-    @flags.initialResults = false
-    return
+    onScopeChange() {
+      this.value = '';
+      this.onInput();
+    }
 
-  onEnd: =>
-    @trigger 'noresults' unless @hasResults
-    return
+    afterRoute(name, context) {
+      if ((app.shortcuts.eventInProgress != null ? app.shortcuts.eventInProgress.name : undefined) === 'escape') { return; }
+      if (!context.init && app.router.isIndex()) { this.reset(true); }
+      if (context.hash) { this.delay(this.searchUrl); }
+      $.requestAnimationFrame(this.autoFocus);
+    }
 
-  onClick: (event) =>
-    if event.target is @resetLink
-      $.stopEvent(event)
-      @reset()
-    return
+    extractHashValue() {
+      let value;
+      if ((value = this.getHashValue()) != null) {
+        app.router.replaceHash();
+        return value;
+      }
+    }
 
-  onSubmit: (event) ->
-    $.stopEvent(event)
-    return
+    getHashValue() {
+      try { return __guard__(HASH_RGX.exec($.urlDecode(location.hash)), x => x[1]); } catch (error) {}
+    }
+  });
+  Cls.initClass();
+  return Cls;
+})();
 
-  onScopeChange: =>
-    @value = ''
-    @onInput()
-    return
-
-  afterRoute: (name, context) =>
-    return if app.shortcuts.eventInProgress?.name is 'escape'
-    @reset(true) if not context.init and app.router.isIndex()
-    @delay @searchUrl if context.hash
-    $.requestAnimationFrame @autoFocus
-    return
-
-  extractHashValue: ->
-    if (value = @getHashValue())?
-      app.router.replaceHash()
-      value
-
-  HASH_RGX = new RegExp "^##{SEARCH_PARAM}=(.*)"
-
-  getHashValue: ->
-    try HASH_RGX.exec($.urlDecode location.hash)?[1] catch
+function __guard__(value, transform) {
+  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+}

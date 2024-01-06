@@ -1,164 +1,217 @@
-class app.views.Sidebar extends app.View
-  @el: '._sidebar'
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.views.Sidebar = class Sidebar extends app.View {
+  constructor(...args) {
+    this.resetHoverOnMouseMove = this.resetHoverOnMouseMove.bind(this);
+    this.resetHover = this.resetHover.bind(this);
+    this.showResults = this.showResults.bind(this);
+    this.onReady = this.onReady.bind(this);
+    this.onScopeChange = this.onScopeChange.bind(this);
+    this.onSearching = this.onSearching.bind(this);
+    this.onSearchClear = this.onSearchClear.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onSelect = this.onSelect.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onAltR = this.onAltR.bind(this);
+    this.onEscape = this.onEscape.bind(this);
+    this.afterRoute = this.afterRoute.bind(this);
+    super(...args);
+  }
 
-  @events:
-    focus: 'onFocus'
-    select: 'onSelect'
-    click: 'onClick'
+  static initClass() {
+    this.el = '._sidebar';
+  
+    this.events = {
+      focus: 'onFocus',
+      select: 'onSelect',
+      click: 'onClick'
+    };
+  
+    this.routes =
+      {after: 'afterRoute'};
+  
+    this.shortcuts = {
+      altR: 'onAltR',
+      escape: 'onEscape'
+    };
+  }
 
-  @routes:
-    after: 'afterRoute'
+  init() {
+    if (!app.isMobile()) { this.addSubview(this.hover  = new app.views.SidebarHover(this.el)); }
+    this.addSubview(this.search = new app.views.Search);
 
-  @shortcuts:
-    altR: 'onAltR'
-    escape: 'onEscape'
-
-  init: ->
-    @addSubview @hover  = new app.views.SidebarHover @el unless app.isMobile()
-    @addSubview @search = new app.views.Search
-
-    @search
-      .on 'searching', @onSearching
-      .on 'clear', @onSearchClear
+    this.search
+      .on('searching', this.onSearching)
+      .on('clear', this.onSearchClear)
     .scope
-      .on 'change', @onScopeChange
+      .on('change', this.onScopeChange);
 
-    @results = new app.views.Results @, @search
-    @docList = new app.views.DocList
+    this.results = new app.views.Results(this, this.search);
+    this.docList = new app.views.DocList;
 
-    app.on 'ready', @onReady
+    app.on('ready', this.onReady);
 
-    $.on document.documentElement, 'mouseleave', => @hide()
-    $.on document.documentElement, 'mouseenter', => @resetDisplay(forceNoHover: false)
-    return
+    $.on(document.documentElement, 'mouseleave', () => this.hide());
+    $.on(document.documentElement, 'mouseenter', () => this.resetDisplay({forceNoHover: false}));
+  }
 
-  hide: ->
-    @removeClass 'show'
-    return
+  hide() {
+    this.removeClass('show');
+  }
 
-  display: ->
-    @addClass 'show'
-    return
+  display() {
+    this.addClass('show');
+  }
 
-  resetDisplay: (options = {}) ->
-    return unless @hasClass 'show'
-    @removeClass 'show'
+  resetDisplay(options) {
+    if (options == null) { options = {}; }
+    if (!this.hasClass('show')) { return; }
+    this.removeClass('show');
 
-    unless options.forceNoHover is false or @hasClass 'no-hover'
-      @addClass 'no-hover'
-      $.on window, 'mousemove', @resetHoverOnMouseMove
-    return
+    if ((options.forceNoHover !== false) && !this.hasClass('no-hover')) {
+      this.addClass('no-hover');
+      $.on(window, 'mousemove', this.resetHoverOnMouseMove);
+    }
+  }
 
-  resetHoverOnMouseMove: =>
-    $.off window, 'mousemove', @resetHoverOnMouseMove
-    $.requestAnimationFrame @resetHover
+  resetHoverOnMouseMove() {
+    $.off(window, 'mousemove', this.resetHoverOnMouseMove);
+    return $.requestAnimationFrame(this.resetHover);
+  }
 
-  resetHover: =>
-    @removeClass 'no-hover'
+  resetHover() {
+    return this.removeClass('no-hover');
+  }
 
-  showView: (view) ->
-    unless @view is view
-      @hover?.hide()
-      @saveScrollPosition()
-      @view?.deactivate()
-      @view = view
-      @render()
-      @view.activate()
-      @restoreScrollPosition()
-    return
+  showView(view) {
+    if (this.view !== view) {
+      if (this.hover != null) {
+        this.hover.hide();
+      }
+      this.saveScrollPosition();
+      if (this.view != null) {
+        this.view.deactivate();
+      }
+      this.view = view;
+      this.render();
+      this.view.activate();
+      this.restoreScrollPosition();
+    }
+  }
 
-  render: ->
-    @html @view
-    return
+  render() {
+    this.html(this.view);
+  }
 
-  showDocList: ->
-    @showView @docList
-    return
+  showDocList() {
+    this.showView(this.docList);
+  }
 
-  showResults: =>
-    @display()
-    @showView @results
-    return
+  showResults() {
+    this.display();
+    this.showView(this.results);
+  }
 
-  reset: ->
-    @display()
-    @showDocList()
-    @docList.reset()
-    @search.reset()
-    return
+  reset() {
+    this.display();
+    this.showDocList();
+    this.docList.reset();
+    this.search.reset();
+  }
 
-  onReady: =>
-    @view = @docList
-    @render()
-    @view.activate()
-    return
+  onReady() {
+    this.view = this.docList;
+    this.render();
+    this.view.activate();
+  }
 
-  onScopeChange: (newDoc, previousDoc) =>
-    @docList.closeDoc(previousDoc) if previousDoc
-    if newDoc then @docList.reveal(newDoc.toEntry()) else @scrollToTop()
-    return
+  onScopeChange(newDoc, previousDoc) {
+    if (previousDoc) { this.docList.closeDoc(previousDoc); }
+    if (newDoc) { this.docList.reveal(newDoc.toEntry()); } else { this.scrollToTop(); }
+  }
 
-  saveScrollPosition: ->
-    if @view is @docList
-      @scrollTop = @el.scrollTop
-    return
+  saveScrollPosition() {
+    if (this.view === this.docList) {
+      this.scrollTop = this.el.scrollTop;
+    }
+  }
 
-  restoreScrollPosition: ->
-    if @view is @docList and @scrollTop
-      @el.scrollTop = @scrollTop
-      @scrollTop = null
-    else
-      @scrollToTop()
-    return
+  restoreScrollPosition() {
+    if ((this.view === this.docList) && this.scrollTop) {
+      this.el.scrollTop = this.scrollTop;
+      this.scrollTop = null;
+    } else {
+      this.scrollToTop();
+    }
+  }
 
-  scrollToTop: ->
-    @el.scrollTop = 0
-    return
+  scrollToTop() {
+    this.el.scrollTop = 0;
+  }
 
-  onSearching: =>
-    @showResults()
-    return
+  onSearching() {
+    this.showResults();
+  }
 
-  onSearchClear: =>
-    @resetDisplay()
-    @showDocList()
-    return
+  onSearchClear() {
+    this.resetDisplay();
+    this.showDocList();
+  }
 
-  onFocus: (event) =>
-    @display()
-    $.scrollTo event.target, @el, 'continuous', bottomGap: 2 unless event.target is @el
-    return
+  onFocus(event) {
+    this.display();
+    if (event.target !== this.el) { $.scrollTo(event.target, this.el, 'continuous', {bottomGap: 2}); }
+  }
 
-  onSelect: =>
-    @resetDisplay()
-    return
+  onSelect() {
+    this.resetDisplay();
+  }
 
-  onClick: (event) =>
-    return if event.which isnt 1
-    if $.eventTarget(event).hasAttribute? 'data-reset-list'
-      $.stopEvent(event)
-      @onAltR()
-    return
+  onClick(event) {
+    if (event.which !== 1) { return; }
+    if (__guardMethod__($.eventTarget(event), 'hasAttribute', o => o.hasAttribute('data-reset-list'))) {
+      $.stopEvent(event);
+      this.onAltR();
+    }
+  }
 
-  onAltR: =>
-    @reset()
-    @docList.reset(revealCurrent: true)
-    @display()
-    return
+  onAltR() {
+    this.reset();
+    this.docList.reset({revealCurrent: true});
+    this.display();
+  }
 
-  onEscape: =>
-    @reset()
-    @resetDisplay()
-    if doc = @search.getScopeDoc() then @docList.reveal(doc.toEntry()) else @scrollToTop()
-    return
+  onEscape() {
+    let doc;
+    this.reset();
+    this.resetDisplay();
+    if ((doc = this.search.getScopeDoc())) { this.docList.reveal(doc.toEntry()); } else { this.scrollToTop(); }
+  }
 
-  onDocEnabled: ->
-    @docList.onEnabled()
-    @reset()
-    return
+  onDocEnabled() {
+    this.docList.onEnabled();
+    this.reset();
+  }
 
-  afterRoute: (name, context) =>
-    return if app.shortcuts.eventInProgress?.name is 'escape'
-    @reset() if not context.init and app.router.isIndex()
-    @resetDisplay()
-    return
+  afterRoute(name, context) {
+    if ((app.shortcuts.eventInProgress != null ? app.shortcuts.eventInProgress.name : undefined) === 'escape') { return; }
+    if (!context.init && app.router.isIndex()) { this.reset(); }
+    this.resetDisplay();
+  }
+});
+Cls.initClass();
+
+function __guardMethod__(obj, methodName, transform) {
+  if (typeof obj !== 'undefined' && obj !== null && typeof obj[methodName] === 'function') {
+    return transform(obj, methodName);
+  } else {
+    return undefined;
+  }
+}

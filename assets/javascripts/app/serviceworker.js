@@ -1,49 +1,66 @@
-class app.ServiceWorker
-  $.extend @prototype, Events
+/*
+ * decaffeinate suggestions:
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS206: Consider reworking classes to avoid initClass
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.ServiceWorker = class ServiceWorker {
+  static initClass() {
+    $.extend(this.prototype, Events);
+  }
 
-  @isEnabled: ->
-    !!navigator.serviceWorker and app.config.service_worker_enabled
+  static isEnabled() {
+    return !!navigator.serviceWorker && app.config.service_worker_enabled;
+  }
 
-  constructor: ->
-    @registration = null
-    @notifyUpdate = true
+  constructor() {
+    this.onUpdateFound = this.onUpdateFound.bind(this);
+    this.onStateChange = this.onStateChange.bind(this);
+    this.registration = null;
+    this.notifyUpdate = true;
 
     navigator.serviceWorker.register(app.config.service_worker_path, {scope: '/'})
       .then(
-        (registration) => @updateRegistration(registration),
-        (error) -> console.error('Could not register service worker:', error)
-      )
+        registration => this.updateRegistration(registration),
+        error => console.error('Could not register service worker:', error));
+  }
 
-  update: ->
-    return unless @registration
-    @notifyUpdate = true
-    return @registration.update().catch(->)
+  update() {
+    if (!this.registration) { return; }
+    this.notifyUpdate = true;
+    return this.registration.update().catch(function() {});
+  }
 
-  updateInBackground: ->
-    return unless @registration
-    @notifyUpdate = false
-    return @registration.update().catch(->)
+  updateInBackground() {
+    if (!this.registration) { return; }
+    this.notifyUpdate = false;
+    return this.registration.update().catch(function() {});
+  }
 
-  reload: ->
-    return @updateInBackground().then(() -> app.reboot())
+  reload() {
+    return this.updateInBackground().then(() => app.reboot());
+  }
 
-  updateRegistration: (registration) ->
-    @registration = registration
-    $.on @registration, 'updatefound', @onUpdateFound
-    return
+  updateRegistration(registration) {
+    this.registration = registration;
+    $.on(this.registration, 'updatefound', this.onUpdateFound);
+  }
 
-  onUpdateFound: =>
-    $.off @installingRegistration, 'statechange', @onStateChange() if @installingRegistration
-    @installingRegistration = @registration.installing
-    $.on @installingRegistration, 'statechange', @onStateChange
-    return
+  onUpdateFound() {
+    if (this.installingRegistration) { $.off(this.installingRegistration, 'statechange', this.onStateChange()); }
+    this.installingRegistration = this.registration.installing;
+    $.on(this.installingRegistration, 'statechange', this.onStateChange);
+  }
 
-  onStateChange: =>
-    if @installingRegistration and @installingRegistration.state == 'installed' and navigator.serviceWorker.controller
-      @installingRegistration = null
-      @onUpdateReady()
-    return
+  onStateChange() {
+    if (this.installingRegistration && (this.installingRegistration.state === 'installed') && navigator.serviceWorker.controller) {
+      this.installingRegistration = null;
+      this.onUpdateReady();
+    }
+  }
 
-  onUpdateReady: ->
-    @trigger 'updateready' if @notifyUpdate
-    return
+  onUpdateReady() {
+    if (this.notifyUpdate) { this.trigger('updateready'); }
+  }
+});
+Cls.initClass();

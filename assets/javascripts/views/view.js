@@ -1,172 +1,214 @@
-class app.View
-  $.extend @prototype, Events
+/*
+ * decaffeinate suggestions:
+ * DS101: Remove unnecessary use of Array.from
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.View = class View {
+  static initClass() {
+    $.extend(this.prototype, Events);
+  }
 
-  constructor: ->
-    @setupElement()
-    @originalClassName = @el.className if @el.className
-    @resetClass() if @constructor.className
-    @refreshElements()
-    @init?()
-    @refreshElements()
+  constructor() {
+    this.setupElement();
+    if (this.el.className) { this.originalClassName = this.el.className; }
+    if (this.constructor.className) { this.resetClass(); }
+    this.refreshElements();
+    if (typeof this.init === 'function') {
+      this.init();
+    }
+    this.refreshElements();
+  }
 
-  setupElement: ->
-    @el ?= if typeof @constructor.el is 'string'
-      $ @constructor.el
-    else if @constructor.el
-      @constructor.el
-    else
-      document.createElement @constructor.tagName or 'div'
+  setupElement() {
+    if (this.el == null) { this.el = typeof this.constructor.el === 'string' ?
+      $(this.constructor.el)
+    : this.constructor.el ?
+      this.constructor.el
+    :
+      document.createElement(this.constructor.tagName || 'div'); }
 
-    if @constructor.attributes
-      for key, value of @constructor.attributes
-        @el.setAttribute(key, value)
-    return
+    if (this.constructor.attributes) {
+      for (var key in this.constructor.attributes) {
+        var value = this.constructor.attributes[key];
+        this.el.setAttribute(key, value);
+      }
+    }
+  }
 
-  refreshElements: ->
-    if @constructor.elements
-      @[name] = @find selector for name, selector of @constructor.elements
-    return
+  refreshElements() {
+    if (this.constructor.elements) {
+      for (var name in this.constructor.elements) { var selector = this.constructor.elements[name]; this[name] = this.find(selector); }
+    }
+  }
 
-  addClass: (name) ->
-    @el.classList.add(name)
-    return
+  addClass(name) {
+    this.el.classList.add(name);
+  }
 
-  removeClass: (name) ->
-    @el.classList.remove(name)
-    return
+  removeClass(name) {
+    this.el.classList.remove(name);
+  }
 
-  toggleClass: (name) ->
-    @el.classList.toggle(name)
-    return
+  toggleClass(name) {
+    this.el.classList.toggle(name);
+  }
 
-  hasClass: (name) ->
-    @el.classList.contains(name)
+  hasClass(name) {
+    return this.el.classList.contains(name);
+  }
 
-  resetClass: ->
-    @el.className = @originalClassName or ''
-    if @constructor.className
-      @addClass name for name in @constructor.className.split ' '
-    return
+  resetClass() {
+    this.el.className = this.originalClassName || '';
+    if (this.constructor.className) {
+      for (var name of Array.from(this.constructor.className.split(' '))) { this.addClass(name); }
+    }
+  }
 
-  find: (selector) ->
-    $ selector, @el
+  find(selector) {
+    return $(selector, this.el);
+  }
 
-  findAll: (selector) ->
-    $$ selector, @el
+  findAll(selector) {
+    return $$(selector, this.el);
+  }
 
-  findByClass: (name) ->
-    @findAllByClass(name)[0]
+  findByClass(name) {
+    return this.findAllByClass(name)[0];
+  }
 
-  findLastByClass: (name) ->
-    all = @findAllByClass(name)[0]
-    all[all.length - 1]
+  findLastByClass(name) {
+    const all = this.findAllByClass(name)[0];
+    return all[all.length - 1];
+  }
 
-  findAllByClass: (name) ->
-    @el.getElementsByClassName(name)
+  findAllByClass(name) {
+    return this.el.getElementsByClassName(name);
+  }
 
-  findByTag: (tag) ->
-    @findAllByTag(tag)[0]
+  findByTag(tag) {
+    return this.findAllByTag(tag)[0];
+  }
 
-  findLastByTag: (tag) ->
-    all = @findAllByTag(tag)
-    all[all.length - 1]
+  findLastByTag(tag) {
+    const all = this.findAllByTag(tag);
+    return all[all.length - 1];
+  }
 
-  findAllByTag: (tag) ->
-    @el.getElementsByTagName(tag)
+  findAllByTag(tag) {
+    return this.el.getElementsByTagName(tag);
+  }
 
-  append: (value) ->
-    $.append @el, value.el or value
-    return
+  append(value) {
+    $.append(this.el, value.el || value);
+  }
 
-  appendTo: (value) ->
-    $.append value.el or value, @el
-    return
+  appendTo(value) {
+    $.append(value.el || value, this.el);
+  }
 
-  prepend: (value) ->
-    $.prepend @el, value.el or value
-    return
+  prepend(value) {
+    $.prepend(this.el, value.el || value);
+  }
 
-  prependTo: (value) ->
-    $.prepend value.el or value, @el
-    return
+  prependTo(value) {
+    $.prepend(value.el || value, this.el);
+  }
 
-  before: (value) ->
-    $.before @el, value.el or value
-    return
+  before(value) {
+    $.before(this.el, value.el || value);
+  }
 
-  after: (value) ->
-    $.after @el, value.el or value
-    return
+  after(value) {
+    $.after(this.el, value.el || value);
+  }
 
-  remove: (value) ->
-    $.remove value.el or value
-    return
+  remove(value) {
+    $.remove(value.el || value);
+  }
 
-  empty: ->
-    $.empty @el
-    @refreshElements()
-    return
+  empty() {
+    $.empty(this.el);
+    this.refreshElements();
+  }
 
-  html: (value) ->
-    @empty()
-    @append value
-    return
+  html(value) {
+    this.empty();
+    this.append(value);
+  }
 
-  tmpl: (args...) ->
-    app.templates.render(args...)
+  tmpl(...args) {
+    return app.templates.render(...Array.from(args || []));
+  }
 
-  delay: (fn, args...) ->
-    delay = if typeof args[args.length - 1] is 'number' then args.pop() else 0
-    setTimeout fn.bind(@, args...), delay
+  delay(fn, ...args) {
+    const delay = typeof args[args.length - 1] === 'number' ? args.pop() : 0;
+    return setTimeout(fn.bind(this, ...Array.from(args)), delay);
+  }
 
-  onDOM: (event, callback) ->
-    $.on @el, event, callback
-    return
+  onDOM(event, callback) {
+    $.on(this.el, event, callback);
+  }
 
-  offDOM: (event, callback) ->
-    $.off @el, event, callback
-    return
+  offDOM(event, callback) {
+    $.off(this.el, event, callback);
+  }
 
-  bindEvents: ->
-    if @constructor.events
-      @onDOM name, @[method] for name, method of @constructor.events
+  bindEvents() {
+    let method, name;
+    if (this.constructor.events) {
+      for (name in this.constructor.events) { method = this.constructor.events[name]; this.onDOM(name, this[method]); }
+    }
 
-    if @constructor.routes
-      app.router.on name, @[method] for name, method of @constructor.routes
+    if (this.constructor.routes) {
+      for (name in this.constructor.routes) { method = this.constructor.routes[name]; app.router.on(name, this[method]); }
+    }
 
-    if @constructor.shortcuts
-      app.shortcuts.on name, @[method] for name, method of @constructor.shortcuts
-    return
+    if (this.constructor.shortcuts) {
+      for (name in this.constructor.shortcuts) { method = this.constructor.shortcuts[name]; app.shortcuts.on(name, this[method]); }
+    }
+  }
 
-  unbindEvents: ->
-    if @constructor.events
-      @offDOM name, @[method] for name, method of @constructor.events
+  unbindEvents() {
+    let method, name;
+    if (this.constructor.events) {
+      for (name in this.constructor.events) { method = this.constructor.events[name]; this.offDOM(name, this[method]); }
+    }
 
-    if @constructor.routes
-      app.router.off name, @[method] for name, method of @constructor.routes
+    if (this.constructor.routes) {
+      for (name in this.constructor.routes) { method = this.constructor.routes[name]; app.router.off(name, this[method]); }
+    }
 
-    if @constructor.shortcuts
-      app.shortcuts.off name, @[method] for name, method of @constructor.shortcuts
-    return
+    if (this.constructor.shortcuts) {
+      for (name in this.constructor.shortcuts) { method = this.constructor.shortcuts[name]; app.shortcuts.off(name, this[method]); }
+    }
+  }
 
-  addSubview: (view) ->
-    (@subviews or= []).push(view)
+  addSubview(view) {
+    return (this.subviews || (this.subviews = [])).push(view);
+  }
 
-  activate: ->
-    return if @activated
-    @bindEvents()
-    view.activate() for view in @subviews if @subviews
-    @activated = true
-    true
+  activate() {
+    if (this.activated) { return; }
+    this.bindEvents();
+    if (this.subviews) { for (var view of Array.from(this.subviews)) { view.activate(); } }
+    this.activated = true;
+    return true;
+  }
 
-  deactivate: ->
-    return unless @activated
-    @unbindEvents()
-    view.deactivate() for view in @subviews if @subviews
-    @activated = false
-    true
+  deactivate() {
+    if (!this.activated) { return; }
+    this.unbindEvents();
+    if (this.subviews) { for (var view of Array.from(this.subviews)) { view.deactivate(); } }
+    this.activated = false;
+    return true;
+  }
 
-  detach: ->
-    @deactivate()
-    $.remove @el
-    return
+  detach() {
+    this.deactivate();
+    $.remove(this.el);
+  }
+});
+Cls.initClass();

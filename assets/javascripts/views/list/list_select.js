@@ -1,43 +1,65 @@
-class app.views.ListSelect extends app.View
-  @activeClass: 'active'
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
+ * DS206: Consider reworking classes to avoid initClass
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.views.ListSelect = class ListSelect extends app.View {
+  static initClass() {
+    this.activeClass = 'active';
+  
+    this.events =
+      {click: 'onClick'};
+  }
 
-  @events:
-    click: 'onClick'
+  constructor(el) { this.onClick = this.onClick.bind(this);   this.el = el; super(...arguments); }
 
-  constructor: (@el) -> super
+  deactivate() {
+    if (super.deactivate(...arguments)) { this.deselect(); }
+  }
 
-  deactivate: ->
-    @deselect() if super
-    return
+  select(el) {
+    this.deselect();
+    if (el) {
+      el.classList.add(this.constructor.activeClass);
+      $.trigger(el, 'select');
+    }
+  }
 
-  select: (el) ->
-    @deselect()
-    if el
-      el.classList.add @constructor.activeClass
-      $.trigger el, 'select'
-    return
+  deselect() {
+    let selection;
+    if (selection = this.getSelection()) {
+      selection.classList.remove(this.constructor.activeClass);
+      $.trigger(selection, 'deselect');
+    }
+  }
 
-  deselect: ->
-    if selection = @getSelection()
-      selection.classList.remove @constructor.activeClass
-      $.trigger selection, 'deselect'
-    return
+  selectByHref(href) {
+    if (__guard__(this.getSelection(), x => x.getAttribute('href')) !== href) {
+      this.select(this.find(`a[href='${href}']`));
+    }
+  }
 
-  selectByHref: (href) ->
-    unless @getSelection()?.getAttribute('href') is href
-      @select @find("a[href='#{href}']")
-    return
+  selectCurrent() {
+    this.selectByHref(location.pathname + location.hash);
+  }
 
-  selectCurrent: ->
-    @selectByHref location.pathname + location.hash
-    return
+  getSelection() {
+    return this.findByClass(this.constructor.activeClass);
+  }
 
-  getSelection: ->
-    @findByClass @constructor.activeClass
+  onClick(event) {
+    if ((event.which !== 1) || event.metaKey || event.ctrlKey) { return; }
+    const target = $.eventTarget(event);
+    if (target.tagName === 'A') {
+      this.select(target);
+    }
+  }
+});
+Cls.initClass();
 
-  onClick: (event) =>
-    return if event.which isnt 1 or event.metaKey or event.ctrlKey
-    target = $.eventTarget(event)
-    if target.tagName is 'A'
-      @select target
-    return
+function __guard__(value, transform) {
+  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+}

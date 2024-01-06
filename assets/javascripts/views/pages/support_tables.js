@@ -1,14 +1,23 @@
-#= require views/pages/base
+/*
+ * decaffeinate suggestions:
+ * DS206: Consider reworking classes to avoid initClass
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+//= require views/pages/base
 
-class app.views.SupportTablesPage extends app.views.BasePage
-  @events:
-    click: 'onClick'
+const Cls = (app.views.SupportTablesPage = class SupportTablesPage extends app.views.BasePage {
+  static initClass() {
+    this.events =
+      {click: 'onClick'};
+  }
 
-  onClick: (event) ->
-    return unless event.target.classList.contains 'show-all'
-    $.stopEvent(event)
+  onClick(event) {
+    if (!event.target.classList.contains('show-all')) { return; }
+    $.stopEvent(event);
 
-    el = event.target
-    el = el.parentNode until el.tagName is 'TABLE'
-    el.classList.add 'show-all'
-    return
+    let el = event.target;
+    while (el.tagName !== 'TABLE') { el = el.parentNode; }
+    el.classList.add('show-all');
+  }
+});
+Cls.initClass();

@@ -1,14 +1,24 @@
-class app.models.Type extends app.Model
-  # Attributes: name, slug, count
+/*
+ * decaffeinate suggestions:
+ * DS102: Remove unnecessary code created because of implicit returns
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+app.models.Type = class Type extends app.Model {
+  // Attributes: name, slug, count
 
-  fullPath: ->
-    "/#{@doc.slug}-#{@slug}/"
+  fullPath() {
+    return `/${this.doc.slug}-${this.slug}/`;
+  }
 
-  entries: ->
-    @doc.entries.findAllBy 'type', @name
+  entries() {
+    return this.doc.entries.findAllBy('type', this.name);
+  }
 
-  toEntry: ->
-    new app.models.Entry
-      doc: @doc
-      name: "#{@doc.name} / #{@name}"
-      path: '..' + @fullPath()
+  toEntry() {
+    return new app.models.Entry({
+      doc: this.doc,
+      name: `${this.doc.name} / ${this.name}`,
+      path: '..' + this.fullPath()
+    });
+  }
+};

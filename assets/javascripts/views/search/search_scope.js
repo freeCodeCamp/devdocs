@@ -1,135 +1,180 @@
-class app.views.SearchScope extends app.View
-  SEARCH_PARAM = app.config.search_param
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+(function() {
+  let SEARCH_PARAM = undefined;
+  let HASH_RGX = undefined;
+  const Cls = (app.views.SearchScope = class SearchScope extends app.View {
+    static initClass() {
+      SEARCH_PARAM = app.config.search_param;
+  
+      this.elements = {
+        input: '._search-input',
+        tag:   '._search-tag'
+      };
+  
+      this.events = {
+        click: 'onClick',
+        keydown: 'onKeydown',
+        textInput: 'onTextInput'
+      };
+  
+      this.routes =
+        {after: 'afterRoute'};
+  
+      HASH_RGX = new RegExp(`^#${SEARCH_PARAM}=(.+?) .`);
+    }
 
-  @elements:
-    input: '._search-input'
-    tag:   '._search-tag'
+    constructor(el) { this.onResults = this.onResults.bind(this);     this.reset = this.reset.bind(this);     this.doScopeSearch = this.doScopeSearch.bind(this);     this.onClick = this.onClick.bind(this);     this.onKeydown = this.onKeydown.bind(this);     this.onTextInput = this.onTextInput.bind(this);     this.afterRoute = this.afterRoute.bind(this);     this.el = el; super(...arguments); }
 
-  @events:
-    click: 'onClick'
-    keydown: 'onKeydown'
-    textInput: 'onTextInput'
+    init() {
+      this.placeholder = this.input.getAttribute('placeholder');
 
-  @routes:
-    after: 'afterRoute'
+      this.searcher = new app.SynchronousSearcher({
+        fuzzy_min_length: 2,
+        max_results: 1
+      });
+      this.searcher.on('results', this.onResults);
 
-  constructor: (@el) -> super
+    }
 
-  init: ->
-    @placeholder = @input.getAttribute 'placeholder'
+    getScope() {
+      return this.doc || app;
+    }
 
-    @searcher = new app.SynchronousSearcher
-      fuzzy_min_length: 2
-      max_results: 1
-    @searcher.on 'results', @onResults
+    isActive() {
+      return !!this.doc;
+    }
 
-    return
+    name() {
+      return (this.doc != null ? this.doc.name : undefined);
+    }
 
-  getScope: ->
-    @doc or app
+    search(value, searchDisabled) {
+      if (searchDisabled == null) { searchDisabled = false; }
+      if (this.doc) { return; }
+      this.searcher.find(app.docs.all(), 'text', value);
+      if (!this.doc && searchDisabled) { this.searcher.find(app.disabledDocs.all(), 'text', value); }
+    }
 
-  isActive: ->
-    !!@doc
+    searchUrl() {
+      let value;
+      if (value = this.extractHashValue()) {
+        this.search(value, true);
+      }
+    }
 
-  name: ->
-    @doc?.name
+    onResults(results) {
+      let doc;
+      if (!(doc = results[0])) { return; }
+      if (app.docs.contains(doc)) {
+        this.selectDoc(doc);
+      } else {
+        this.redirectToDoc(doc);
+      }
+    }
 
-  search: (value, searchDisabled = false) ->
-    return if @doc
-    @searcher.find app.docs.all(), 'text', value
-    @searcher.find app.disabledDocs.all(), 'text', value if not @doc and searchDisabled
-    return
+    selectDoc(doc) {
+      const previousDoc = this.doc;
+      if (doc === previousDoc) { return; }
+      this.doc = doc;
 
-  searchUrl: ->
-    if value = @extractHashValue()
-      @search value, true
-    return
+      this.tag.textContent = doc.fullName;
+      this.tag.style.display = 'block';
 
-  onResults: (results) =>
-    return unless doc = results[0]
-    if app.docs.contains(doc)
-      @selectDoc(doc)
-    else
-      @redirectToDoc(doc)
-    return
+      this.input.removeAttribute('placeholder');
+      this.input.value = this.input.value.slice(this.input.selectionStart);
+      this.input.style.paddingLeft = this.tag.offsetWidth + 10 + 'px';
 
-  selectDoc: (doc) ->
-    previousDoc = @doc
-    return if doc is previousDoc
-    @doc = doc
+      $.trigger(this.input, 'input');
+      this.trigger('change', this.doc, previousDoc);
+    }
 
-    @tag.textContent = doc.fullName
-    @tag.style.display = 'block'
+    redirectToDoc(doc) {
+      const {
+        hash
+      } = location;
+      app.router.replaceHash('');
+      location.assign(doc.fullPath() + hash);
+    }
 
-    @input.removeAttribute 'placeholder'
-    @input.value = @input.value[@input.selectionStart..]
-    @input.style.paddingLeft = @tag.offsetWidth + 10 + 'px'
+    reset() {
+      if (!this.doc) { return; }
+      const previousDoc = this.doc;
+      this.doc = null;
 
-    $.trigger @input, 'input'
-    @trigger 'change', @doc, previousDoc
-    return
+      this.tag.textContent = '';
+      this.tag.style.display = 'none';
 
-  redirectToDoc: (doc) ->
-    hash = location.hash
-    app.router.replaceHash('')
-    location.assign doc.fullPath() + hash
-    return
+      this.input.setAttribute('placeholder', this.placeholder);
+      this.input.style.paddingLeft = '';
 
-  reset: =>
-    return unless @doc
-    previousDoc = @doc
-    @doc = null
+      this.trigger('change', null, previousDoc);
+    }
 
-    @tag.textContent = ''
-    @tag.style.display = 'none'
+    doScopeSearch(event) {
+      this.search(this.input.value.slice(0, this.input.selectionStart));
+      if (this.doc) { $.stopEvent(event); }
+    }
 
-    @input.setAttribute 'placeholder', @placeholder
-    @input.style.paddingLeft = ''
+    onClick(event) {
+      if (event.target === this.tag) {
+        this.reset();
+        $.stopEvent(event);
+      }
+    }
 
-    @trigger 'change', null, previousDoc
-    return
+    onKeydown(event) {
+      if (event.which === 8) { // backspace
+        if (this.doc && (this.input.selectionEnd === 0)) {
+          this.reset();
+          $.stopEvent(event);
+        }
+      } else if (!this.doc && this.input.value && !$.isChromeForAndroid()) {
+        if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) { return; }
+        if ((event.which === 9) || // tab
+           ((event.which === 32) && app.isMobile())) { // space
+          this.doScopeSearch(event);
+        }
+      }
+    }
 
-  doScopeSearch: (event) =>
-    @search @input.value[0...@input.selectionStart]
-    $.stopEvent(event) if @doc
-    return
+    onTextInput(event) {
+      if (!$.isChromeForAndroid()) { return; }
+      if (!this.doc && this.input.value && (event.data === ' ')) {
+        this.doScopeSearch(event);
+      }
+    }
 
-  onClick: (event) =>
-    if event.target is @tag
-      @reset()
-      $.stopEvent(event)
-    return
+    extractHashValue() {
+      let value;
+      if (value = this.getHashValue()) {
+        const newHash = $.urlDecode(location.hash).replace(`#${SEARCH_PARAM}=${value} `, `#${SEARCH_PARAM}=`);
+        app.router.replaceHash(newHash);
+        return value;
+      }
+    }
 
-  onKeydown: (event) =>
-    if event.which is 8 # backspace
-      if @doc and @input.selectionEnd is 0
-        @reset()
-        $.stopEvent(event)
-    else if not @doc and @input.value and not $.isChromeForAndroid()
-      return if event.ctrlKey or event.metaKey or event.altKey or event.shiftKey
-      if event.which is 9 or # tab
-         (event.which is 32 and app.isMobile()) # space
-        @doScopeSearch(event)
-    return
+    getHashValue() {
+      try { return __guard__(HASH_RGX.exec($.urlDecode(location.hash)), x => x[1]); } catch (error) {}
+    }
 
-  onTextInput: (event) =>
-    return unless $.isChromeForAndroid()
-    if not @doc and @input.value and event.data == ' '
-      @doScopeSearch(event)
-    return
+    afterRoute(name, context) {
+      if (!app.isSingleDoc() && context.init && context.doc) {
+        this.selectDoc(context.doc);
+      }
+    }
+  });
+  Cls.initClass();
+  return Cls;
+})();
 
-  extractHashValue: ->
-    if value = @getHashValue()
-      newHash = $.urlDecode(location.hash).replace "##{SEARCH_PARAM}=#{value} ", "##{SEARCH_PARAM}="
-      app.router.replaceHash(newHash)
-      value
-
-  HASH_RGX = new RegExp "^##{SEARCH_PARAM}=(.+?) ."
-
-  getHashValue: ->
-    try HASH_RGX.exec($.urlDecode location.hash)?[1] catch
-
-  afterRoute: (name, context) =>
-    if !app.isSingleDoc() and context.init and context.doc
-      @selectDoc(context.doc)
-    return
+function __guard__(value, transform) {
+  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+}

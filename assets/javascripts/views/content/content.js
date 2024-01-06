@@ -1,195 +1,259 @@
-class app.views.Content extends app.View
-  @el: '._content'
-  @loadingClass: '_content-loading'
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
+ * DS104: Avoid inline assignments
+ * DS204: Change includes calls to have a more natural evaluation order
+ * DS205: Consider reworking code to avoid use of IIFEs
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.views.Content = class Content extends app.View {
+  constructor(...args) {
+    this.scrollToTop = this.scrollToTop.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
+    this.scrollStepUp = this.scrollStepUp.bind(this);
+    this.scrollStepDown = this.scrollStepDown.bind(this);
+    this.scrollPageUp = this.scrollPageUp.bind(this);
+    this.scrollPageDown = this.scrollPageDown.bind(this);
+    this.onReady = this.onReady.bind(this);
+    this.onBootError = this.onBootError.bind(this);
+    this.onEntryLoading = this.onEntryLoading.bind(this);
+    this.onEntryLoaded = this.onEntryLoaded.bind(this);
+    this.beforeRoute = this.beforeRoute.bind(this);
+    this.afterRoute = this.afterRoute.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onAltF = this.onAltF.bind(this);
+    super(...args);
+  }
 
-  @events:
-    click: 'onClick'
+  static initClass() {
+    this.el = '._content';
+    this.loadingClass = '_content-loading';
+  
+    this.events =
+      {click: 'onClick'};
+  
+    this.shortcuts = {
+      altUp:      'scrollStepUp',
+      altDown:    'scrollStepDown',
+      pageUp:     'scrollPageUp',
+      pageDown:   'scrollPageDown',
+      pageTop:    'scrollToTop',
+      pageBottom: 'scrollToBottom',
+      altF:       'onAltF'
+    };
+  
+    this.routes = {
+      before: 'beforeRoute',
+      after:  'afterRoute'
+    };
+  }
 
-  @shortcuts:
-    altUp:      'scrollStepUp'
-    altDown:    'scrollStepDown'
-    pageUp:     'scrollPageUp'
-    pageDown:   'scrollPageDown'
-    pageTop:    'scrollToTop'
-    pageBottom: 'scrollToBottom'
-    altF:       'onAltF'
-
-  @routes:
-    before: 'beforeRoute'
-    after:  'afterRoute'
-
-  init: ->
-    @scrollEl = if app.isMobile()
+  init() {
+    this.scrollEl = app.isMobile() ?
       (document.scrollingElement || document.body)
-    else
-      @el
-    @scrollMap = {}
-    @scrollStack = []
+    :
+      this.el;
+    this.scrollMap = {};
+    this.scrollStack = [];
 
-    @rootPage     = new app.views.RootPage
-    @staticPage   = new app.views.StaticPage
-    @settingsPage = new app.views.SettingsPage
-    @offlinePage  = new app.views.OfflinePage
-    @typePage     = new app.views.TypePage
-    @entryPage    = new app.views.EntryPage
+    this.rootPage     = new app.views.RootPage;
+    this.staticPage   = new app.views.StaticPage;
+    this.settingsPage = new app.views.SettingsPage;
+    this.offlinePage  = new app.views.OfflinePage;
+    this.typePage     = new app.views.TypePage;
+    this.entryPage    = new app.views.EntryPage;
 
-    @entryPage
-      .on 'loading', @onEntryLoading
-      .on 'loaded', @onEntryLoaded
+    this.entryPage
+      .on('loading', this.onEntryLoading)
+      .on('loaded', this.onEntryLoaded);
 
     app
-      .on 'ready', @onReady
-      .on 'bootError', @onBootError
+      .on('ready', this.onReady)
+      .on('bootError', this.onBootError);
 
-    return
+  }
 
-  show: (view) ->
-    @hideLoading()
-    unless view is @view
-      @view?.deactivate()
-      @html @view = view
-      @view.activate()
-    return
+  show(view) {
+    this.hideLoading();
+    if (view !== this.view) {
+      if (this.view != null) {
+        this.view.deactivate();
+      }
+      this.html(this.view = view);
+      this.view.activate();
+    }
+  }
 
-  showLoading: ->
-    @addClass @constructor.loadingClass
-    return
+  showLoading() {
+    this.addClass(this.constructor.loadingClass);
+  }
 
-  isLoading: ->
-    @el.classList.contains @constructor.loadingClass
+  isLoading() {
+    return this.el.classList.contains(this.constructor.loadingClass);
+  }
 
-  hideLoading: ->
-    @removeClass @constructor.loadingClass
-    return
+  hideLoading() {
+    this.removeClass(this.constructor.loadingClass);
+  }
 
-  scrollTo: (value) ->
-    @scrollEl.scrollTop = value or 0
-    return
+  scrollTo(value) {
+    this.scrollEl.scrollTop = value || 0;
+  }
 
-  smoothScrollTo: (value) ->
-    if app.settings.get('fastScroll')
-      @scrollTo value
-    else
-      $.smoothScroll @scrollEl, value or 0
-    return
+  smoothScrollTo(value) {
+    if (app.settings.get('fastScroll')) {
+      this.scrollTo(value);
+    } else {
+      $.smoothScroll(this.scrollEl, value || 0);
+    }
+  }
 
-  scrollBy: (n) ->
-    @smoothScrollTo @scrollEl.scrollTop + n
-    return
+  scrollBy(n) {
+    this.smoothScrollTo(this.scrollEl.scrollTop + n);
+  }
 
-  scrollToTop: =>
-    @smoothScrollTo 0
-    return
+  scrollToTop() {
+    this.smoothScrollTo(0);
+  }
 
-  scrollToBottom: =>
-    @smoothScrollTo @scrollEl.scrollHeight
-    return
+  scrollToBottom() {
+    this.smoothScrollTo(this.scrollEl.scrollHeight);
+  }
 
-  scrollStepUp: =>
-    @scrollBy -80
-    return
+  scrollStepUp() {
+    this.scrollBy(-80);
+  }
 
-  scrollStepDown: =>
-    @scrollBy 80
-    return
+  scrollStepDown() {
+    this.scrollBy(80);
+  }
 
-  scrollPageUp: =>
-    @scrollBy 40 - @scrollEl.clientHeight
-    return
+  scrollPageUp() {
+    this.scrollBy(40 - this.scrollEl.clientHeight);
+  }
 
-  scrollPageDown: =>
-    @scrollBy @scrollEl.clientHeight - 40
-    return
+  scrollPageDown() {
+    this.scrollBy(this.scrollEl.clientHeight - 40);
+  }
 
-  scrollToTarget: ->
-    if @routeCtx.hash and el = @findTargetByHash @routeCtx.hash
-      $.scrollToWithImageLock el, @scrollEl, 'top',
-        margin: if @scrollEl is @el then 0 else $.offset(@el).top
-      $.highlight el, className: '_highlight'
-    else
-      @scrollTo @scrollMap[@routeCtx.state.id]
-    return
+  scrollToTarget() {
+    let el;
+    if (this.routeCtx.hash && (el = this.findTargetByHash(this.routeCtx.hash))) {
+      $.scrollToWithImageLock(el, this.scrollEl, 'top',
+        {margin: this.scrollEl === this.el ? 0 : $.offset(this.el).top});
+      $.highlight(el, {className: '_highlight'});
+    } else {
+      this.scrollTo(this.scrollMap[this.routeCtx.state.id]);
+    }
+  }
 
-  onReady: =>
-    @hideLoading()
-    return
+  onReady() {
+    this.hideLoading();
+  }
 
-  onBootError: =>
-    @hideLoading()
-    @html @tmpl('bootError')
-    return
+  onBootError() {
+    this.hideLoading();
+    this.html(this.tmpl('bootError'));
+  }
 
-  onEntryLoading: =>
-    @showLoading()
-    if @scrollToTargetTimeout
-      clearTimeout @scrollToTargetTimeout
-      @scrollToTargetTimeout = null
-    return
+  onEntryLoading() {
+    this.showLoading();
+    if (this.scrollToTargetTimeout) {
+      clearTimeout(this.scrollToTargetTimeout);
+      this.scrollToTargetTimeout = null;
+    }
+  }
 
-  onEntryLoaded: =>
-    @hideLoading()
-    if @scrollToTargetTimeout
-      clearTimeout @scrollToTargetTimeout
-      @scrollToTargetTimeout = null
-    @scrollToTarget()
-    return
+  onEntryLoaded() {
+    this.hideLoading();
+    if (this.scrollToTargetTimeout) {
+      clearTimeout(this.scrollToTargetTimeout);
+      this.scrollToTargetTimeout = null;
+    }
+    this.scrollToTarget();
+  }
 
-  beforeRoute: (context) =>
-    @cacheScrollPosition()
-    @routeCtx = context
-    @scrollToTargetTimeout = @delay @scrollToTarget
-    return
+  beforeRoute(context) {
+    this.cacheScrollPosition();
+    this.routeCtx = context;
+    this.scrollToTargetTimeout = this.delay(this.scrollToTarget);
+  }
 
-  cacheScrollPosition: ->
-    return if not @routeCtx or @routeCtx.hash
-    return if @routeCtx.path is '/'
+  cacheScrollPosition() {
+    if (!this.routeCtx || this.routeCtx.hash) { return; }
+    if (this.routeCtx.path === '/') { return; }
 
-    unless @scrollMap[@routeCtx.state.id]?
-      @scrollStack.push @routeCtx.state.id
-      while @scrollStack.length > app.config.history_cache_size
-        delete @scrollMap[@scrollStack.shift()]
+    if (this.scrollMap[this.routeCtx.state.id] == null) {
+      this.scrollStack.push(this.routeCtx.state.id);
+      while (this.scrollStack.length > app.config.history_cache_size) {
+        delete this.scrollMap[this.scrollStack.shift()];
+      }
+    }
 
-    @scrollMap[@routeCtx.state.id] = @scrollEl.scrollTop
-    return
+    this.scrollMap[this.routeCtx.state.id] = this.scrollEl.scrollTop;
+  }
 
-  afterRoute: (route, context) =>
-    if route != 'entry' and route != 'type'
-      resetFavicon()
+  afterRoute(route, context) {
+    if ((route !== 'entry') && (route !== 'type')) {
+      resetFavicon();
+    }
 
-    switch route
-      when 'root'
-        @show @rootPage
-      when 'entry'
-        @show @entryPage
-      when 'type'
-        @show @typePage
-      when 'settings'
-        @show @settingsPage
-      when 'offline'
-        @show @offlinePage
-      else
-        @show @staticPage
+    switch (route) {
+      case 'root':
+        this.show(this.rootPage);
+        break;
+      case 'entry':
+        this.show(this.entryPage);
+        break;
+      case 'type':
+        this.show(this.typePage);
+        break;
+      case 'settings':
+        this.show(this.settingsPage);
+        break;
+      case 'offline':
+        this.show(this.offlinePage);
+        break;
+      default:
+        this.show(this.staticPage);
+    }
 
-    @view.onRoute(context)
-    app.document.setTitle @view.getTitle?()
-    return
+    this.view.onRoute(context);
+    app.document.setTitle(typeof this.view.getTitle === 'function' ? this.view.getTitle() : undefined);
+  }
 
-  onClick: (event) =>
-    link = $.closestLink $.eventTarget(event), @el
-    if link and @isExternalUrl link.getAttribute('href')
-      $.stopEvent(event)
-      $.popup(link)
-    return
+  onClick(event) {
+    const link = $.closestLink($.eventTarget(event), this.el);
+    if (link && this.isExternalUrl(link.getAttribute('href'))) {
+      $.stopEvent(event);
+      $.popup(link);
+    }
+  }
 
-  onAltF: (event) =>
-    unless document.activeElement and $.hasChild @el, document.activeElement
-      @find('a:not(:empty)')?.focus()
-      $.stopEvent(event)
+  onAltF(event) {
+    if (!document.activeElement || !$.hasChild(this.el, document.activeElement)) {
+      __guard__(this.find('a:not(:empty)'), x => x.focus());
+      return $.stopEvent(event);
+    }
+  }
 
-  findTargetByHash: (hash) ->
-    el = try $.id decodeURIComponent(hash) catch
-    el or= try $.id(hash) catch
-    el
+  findTargetByHash(hash) {
+    let el = (() => { try { return $.id(decodeURIComponent(hash)); } catch (error) {} })();
+    if (!el) { el = (() => { try { return $.id(hash); } catch (error1) {} })(); }
+    return el;
+  }
 
-  isExternalUrl: (url) ->
-    url?[0..5] in ['http:/', 'https:']
+  isExternalUrl(url) {
+    let needle;
+    return (needle = __guard__(url, x => x.slice(0, 6)), ['http:/', 'https:'].includes(needle));
+  }
+});
+Cls.initClass();
+
+function __guard__(value, transform) {
+  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+}

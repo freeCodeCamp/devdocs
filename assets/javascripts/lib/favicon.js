@@ -1,76 +1,89 @@
-defaultUrl = null
-currentSlug = null
+/*
+ * decaffeinate suggestions:
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS208: Avoid top-level this
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+let defaultUrl = null;
+let currentSlug = null;
 
-imageCache = {}
-urlCache = {}
+const imageCache = {};
+const urlCache = {};
 
-withImage = (url, action) ->
-  if imageCache[url]
-    action(imageCache[url])
-  else
-    img = new Image()
-    img.crossOrigin = 'anonymous'
-    img.src = url
-    img.onload = () =>
-      imageCache[url] = img
-      action(img)
+const withImage = function(url, action) {
+  if (imageCache[url]) {
+    return action(imageCache[url]);
+  } else {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = url;
+    return img.onload = () => {
+      imageCache[url] = img;
+      return action(img);
+    };
+  }
+};
 
-@setFaviconForDoc = (doc) ->
-  return if currentSlug == doc.slug
+this.setFaviconForDoc = function(doc) {
+  if (currentSlug === doc.slug) { return; }
 
-  favicon = $('link[rel="icon"]')
+  const favicon = $('link[rel="icon"]');
 
-  if defaultUrl == null
-    defaultUrl = favicon.href
+  if (defaultUrl === null) {
+    defaultUrl = favicon.href;
+  }
 
-  if urlCache[doc.slug]
-    favicon.href = urlCache[doc.slug]
-    currentSlug = doc.slug
-    return
+  if (urlCache[doc.slug]) {
+    favicon.href = urlCache[doc.slug];
+    currentSlug = doc.slug;
+    return;
+  }
 
-  iconEl = $("._icon-#{doc.slug.split('~')[0]}")
-  return if iconEl == null
+  const iconEl = $(`._icon-${doc.slug.split('~')[0]}`);
+  if (iconEl === null) { return; }
 
-  styles = window.getComputedStyle(iconEl, ':before')
+  const styles = window.getComputedStyle(iconEl, ':before');
 
-  backgroundPositionX = styles['background-position-x']
-  backgroundPositionY = styles['background-position-y']
-  return if backgroundPositionX == undefined || backgroundPositionY == undefined
+  const backgroundPositionX = styles['background-position-x'];
+  const backgroundPositionY = styles['background-position-y'];
+  if ((backgroundPositionX === undefined) || (backgroundPositionY === undefined)) { return; }
 
-  bgUrl = app.config.favicon_spritesheet
-  sourceSize = 16
-  sourceX = Math.abs(parseInt(backgroundPositionX.slice(0, -2)))
-  sourceY = Math.abs(parseInt(backgroundPositionY.slice(0, -2)))
+  const bgUrl = app.config.favicon_spritesheet;
+  const sourceSize = 16;
+  const sourceX = Math.abs(parseInt(backgroundPositionX.slice(0, -2)));
+  const sourceY = Math.abs(parseInt(backgroundPositionY.slice(0, -2)));
 
-  withImage(bgUrl, (docImg) ->
-    withImage(defaultUrl, (defaultImg) ->
-      size = defaultImg.width
+  return withImage(bgUrl, docImg => withImage(defaultUrl, function(defaultImg) {
+    const size = defaultImg.width;
 
-      canvas = document.createElement('canvas')
-      ctx = canvas.getContext('2d')
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
 
-      canvas.width = size
-      canvas.height = size
-      ctx.drawImage(defaultImg, 0, 0)
+    canvas.width = size;
+    canvas.height = size;
+    ctx.drawImage(defaultImg, 0, 0);
 
-      docIconPercentage = 65
-      destinationCoords = size / 100 * (100 - docIconPercentage)
-      destinationSize = size / 100 * docIconPercentage
+    const docIconPercentage = 65;
+    const destinationCoords = (size / 100) * (100 - docIconPercentage);
+    const destinationSize = (size / 100) * docIconPercentage;
 
-      ctx.drawImage(docImg, sourceX, sourceY, sourceSize, sourceSize, destinationCoords, destinationCoords, destinationSize, destinationSize)
+    ctx.drawImage(docImg, sourceX, sourceY, sourceSize, sourceSize, destinationCoords, destinationCoords, destinationSize, destinationSize);
 
-      try
-        urlCache[doc.slug] = canvas.toDataURL()
-        favicon.href = urlCache[doc.slug]
+    try {
+      urlCache[doc.slug] = canvas.toDataURL();
+      favicon.href = urlCache[doc.slug];
 
-        currentSlug = doc.slug
-      catch error
-        Raven.captureException error, { level: 'info' }
-        @resetFavicon()
-    )
-  )
+      return currentSlug = doc.slug;
+    } catch (error) {
+      Raven.captureException(error, { level: 'info' });
+      return this.resetFavicon();
+    }
+  }));
+};
 
-@resetFavicon = () ->
-  if defaultUrl != null and currentSlug != null
-    $('link[rel="icon"]').href = defaultUrl
-    currentSlug = null
+this.resetFavicon = function() {
+  if ((defaultUrl !== null) && (currentSlug !== null)) {
+    $('link[rel="icon"]').href = defaultUrl;
+    return currentSlug = null;
+  }
+};

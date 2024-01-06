@@ -1,26 +1,39 @@
-class app.views.StaticPage extends app.View
-  @className: '_static'
+/*
+ * decaffeinate suggestions:
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS206: Consider reworking classes to avoid initClass
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.views.StaticPage = class StaticPage extends app.View {
+  static initClass() {
+    this.className = '_static';
+  
+    this.titles = {
+      about:    'About',
+      news:     'News',
+      help:     'User Guide',
+      notFound: '404'
+    };
+  }
 
-  @titles:
-    about:    'About'
-    news:     'News'
-    help:     'User Guide'
-    notFound: '404'
+  deactivate() {
+    if (super.deactivate(...arguments)) {
+      this.empty();
+      this.page = null;
+    }
+  }
 
-  deactivate: ->
-    if super
-      @empty()
-      @page = null
-    return
+  render(page) {
+    this.page = page;
+    this.html(this.tmpl(`${this.page}Page`));
+  }
 
-  render: (page) ->
-    @page = page
-    @html @tmpl("#{@page}Page")
-    return
+  getTitle() {
+    return this.constructor.titles[this.page];
+  }
 
-  getTitle: ->
-    @constructor.titles[@page]
-
-  onRoute: (context) ->
-    @render context.page or 'notFound'
-    return
+  onRoute(context) {
+    this.render(context.page || 'notFound');
+  }
+});
+Cls.initClass();

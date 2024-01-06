@@ -1,43 +1,61 @@
-class app.views.RootPage extends app.View
-  @events:
-    click: 'onClick'
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS206: Consider reworking classes to avoid initClass
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.views.RootPage = class RootPage extends app.View {
+  constructor(...args) {
+    this.onClick = this.onClick.bind(this);
+    super(...args);
+  }
 
-  init: ->
-    @setHidden false unless @isHidden() # reserve space in local storage
-    @render()
-    return
+  static initClass() {
+    this.events =
+      {click: 'onClick'};
+  }
 
-  render: ->
-    @empty()
+  init() {
+    if (!this.isHidden()) { this.setHidden(false); } // reserve space in local storage
+    this.render();
+  }
 
-    tmpl = if app.isAndroidWebview()
+  render() {
+    this.empty();
+
+    const tmpl = app.isAndroidWebview() ?
       'androidWarning'
-    else if @isHidden()
+    : this.isHidden() ?
       'splash'
-    else if app.isMobile()
+    : app.isMobile() ?
       'mobileIntro'
-    else
-      'intro'
+    :
+      'intro';
 
-    @append @tmpl(tmpl)
-    return
+    this.append(this.tmpl(tmpl));
+  }
 
-  hideIntro: ->
-    @setHidden true
-    @render()
-    return
+  hideIntro() {
+    this.setHidden(true);
+    this.render();
+  }
 
-  setHidden: (value) ->
-    app.settings.set 'hideIntro', value
-    return
+  setHidden(value) {
+    app.settings.set('hideIntro', value);
+  }
 
-  isHidden: ->
-    app.isSingleDoc() or app.settings.get 'hideIntro'
+  isHidden() {
+    return app.isSingleDoc() || app.settings.get('hideIntro');
+  }
 
-  onRoute: ->
+  onRoute() {}
 
-  onClick: (event) =>
-    if $.eventTarget(event).hasAttribute 'data-hide-intro'
-      $.stopEvent(event)
-      @hideIntro()
-    return
+  onClick(event) {
+    if ($.eventTarget(event).hasAttribute('data-hide-intro')) {
+      $.stopEvent(event);
+      this.hideIntro();
+    }
+  }
+});
+Cls.initClass();

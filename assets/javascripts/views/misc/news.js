@@ -1,34 +1,55 @@
-#= require views/misc/notif
+/*
+ * decaffeinate suggestions:
+ * DS101: Remove unnecessary use of Array.from
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS205: Consider reworking code to avoid use of IIFEs
+ * DS206: Consider reworking classes to avoid initClass
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+//= require views/misc/notif
 
-class app.views.News extends app.views.Notif
-  @className += ' _notif-news'
+const Cls = (app.views.News = class News extends app.views.Notif {
+  static initClass() {
+    this.className += ' _notif-news';
+  
+    this.defautOptions =
+      {autoHide: 30000};
+  }
 
-  @defautOptions:
-    autoHide: 30000
+  init() {
+    this.unreadNews = this.getUnreadNews();
+    if (this.unreadNews.length) { this.show(); }
+    this.markAllAsRead();
+  }
 
-  init: ->
-    @unreadNews = @getUnreadNews()
-    @show() if @unreadNews.length
-    @markAllAsRead()
-    return
+  render() {
+    this.html(app.templates.notifNews(this.unreadNews));
+  }
 
-  render: ->
-    @html app.templates.notifNews(@unreadNews)
-    return
+  getUnreadNews() {
+    let time;
+    if (!(time = this.getLastReadTime())) { return []; }
 
-  getUnreadNews: ->
-    return [] unless time = @getLastReadTime()
+    return (() => {
+      const result = [];
+      for (var news of Array.from(app.news)) {
+        if (new Date(news[0]).getTime() <= time) { break; }
+        result.push(news);
+      }
+      return result;
+    })();
+  }
 
-    for news in app.news
-      break if new Date(news[0]).getTime() <= time
-      news
+  getLastNewsTime() {
+    return new Date(app.news[0][0]).getTime();
+  }
 
-  getLastNewsTime: ->
-    new Date(app.news[0][0]).getTime()
+  getLastReadTime() {
+    return app.settings.get('news');
+  }
 
-  getLastReadTime: ->
-    app.settings.get 'news'
-
-  markAllAsRead: ->
-    app.settings.set 'news', @getLastNewsTime()
-    return
+  markAllAsRead() {
+    app.settings.set('news', this.getLastNewsTime());
+  }
+});
+Cls.initClass();

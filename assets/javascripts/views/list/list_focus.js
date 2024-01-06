@@ -1,124 +1,177 @@
-class app.views.ListFocus extends app.View
-  @activeClass: 'focus'
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS206: Consider reworking classes to avoid initClass
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.views.ListFocus = class ListFocus extends app.View {
+  static initClass() {
+    this.activeClass = 'focus';
+  
+    this.events =
+      {click: 'onClick'};
+  
+    this.shortcuts = {
+      up:         'onUp',
+      down:       'onDown',
+      left:       'onLeft',
+      enter:      'onEnter',
+      superEnter: 'onSuperEnter',
+      escape:     'blur'
+    };
+  }
 
-  @events:
-    click: 'onClick'
+  constructor(el) {
+    this.blur = this.blur.bind(this);
+    this.onDown = this.onDown.bind(this);
+    this.onUp = this.onUp.bind(this);
+    this.onLeft = this.onLeft.bind(this);
+    this.onEnter = this.onEnter.bind(this);
+    this.onSuperEnter = this.onSuperEnter.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.el = el;
+    super(...arguments);
+    this.focusOnNextFrame = $.framify(this.focus, this);
+  }
 
-  @shortcuts:
-    up:         'onUp'
-    down:       'onDown'
-    left:       'onLeft'
-    enter:      'onEnter'
-    superEnter: 'onSuperEnter'
-    escape:     'blur'
+  focus(el, options) {
+    if (options == null) { options = {}; }
+    if (el && !el.classList.contains(this.constructor.activeClass)) {
+      this.blur();
+      el.classList.add(this.constructor.activeClass);
+      if (options.silent !== true) { $.trigger(el, 'focus'); }
+    }
+  }
 
-  constructor: (@el) ->
-    super
-    @focusOnNextFrame = $.framify(@focus, @)
+  blur() {
+    let cursor;
+    if (cursor = this.getCursor()) {
+      cursor.classList.remove(this.constructor.activeClass);
+      $.trigger(cursor, 'blur');
+    }
+  }
 
-  focus: (el, options = {}) ->
-    if el and not el.classList.contains @constructor.activeClass
-      @blur()
-      el.classList.add @constructor.activeClass
-      $.trigger el, 'focus' unless options.silent is true
-    return
+  getCursor() {
+    return this.findByClass(this.constructor.activeClass) || this.findByClass(app.views.ListSelect.activeClass);
+  }
 
-  blur: =>
-    if cursor = @getCursor()
-      cursor.classList.remove @constructor.activeClass
-      $.trigger cursor, 'blur'
-    return
+  findNext(cursor) {
+    let next;
+    if (next = cursor.nextSibling) {
+      if (next.tagName === 'A') {
+        return next;
+      } else if (next.tagName === 'SPAN') { // pagination link
+        $.click(next);
+        return this.findNext(cursor);
+      } else if (next.tagName === 'DIV') { // sub-list
+        if (cursor.className.indexOf(' open') >= 0) {
+          return this.findFirst(next) || this.findNext(next);
+        } else {
+          return this.findNext(next);
+        }
+      } else if (next.tagName === 'H6') { // title
+        return this.findNext(next);
+      }
+    } else if (cursor.parentNode !== this.el) {
+      return this.findNext(cursor.parentNode);
+    }
+  }
 
-  getCursor: ->
-    @findByClass(@constructor.activeClass) or @findByClass(app.views.ListSelect.activeClass)
+  findFirst(cursor) {
+    let first;
+    if (!(first = cursor.firstChild)) { return; }
 
-  findNext: (cursor) ->
-    if next = cursor.nextSibling
-      if next.tagName is 'A'
-        next
-      else if next.tagName is 'SPAN' # pagination link
-        $.click(next)
-        @findNext cursor
-      else if next.tagName is 'DIV' # sub-list
-        if cursor.className.indexOf(' open') >= 0
-          @findFirst(next) or @findNext(next)
-        else
-          @findNext(next)
-      else if next.tagName is 'H6' # title
-        @findNext(next)
-    else if cursor.parentNode isnt @el
-      @findNext cursor.parentNode
+    if (first.tagName === 'A') {
+      return first;
+    } else if (first.tagName === 'SPAN') { // pagination link
+      $.click(first);
+      return this.findFirst(cursor);
+    }
+  }
 
-  findFirst: (cursor) ->
-    return unless first = cursor.firstChild
+  findPrev(cursor) {
+    let prev;
+    if (prev = cursor.previousSibling) {
+      if (prev.tagName === 'A') {
+        return prev;
+      } else if (prev.tagName === 'SPAN') { // pagination link
+        $.click(prev);
+        return this.findPrev(cursor);
+      } else if (prev.tagName === 'DIV') { // sub-list
+        if (prev.previousSibling.className.indexOf('open') >= 0) {
+          return this.findLast(prev) || this.findPrev(prev);
+        } else {
+          return this.findPrev(prev);
+        }
+      } else if (prev.tagName === 'H6') { // title
+        return this.findPrev(prev);
+      }
+    } else if (cursor.parentNode !== this.el) {
+      return this.findPrev(cursor.parentNode);
+    }
+  }
 
-    if first.tagName is 'A'
-      first
-    else if first.tagName is 'SPAN' # pagination link
-      $.click(first)
-      @findFirst cursor
+  findLast(cursor) {
+    let last;
+    if (!(last = cursor.lastChild)) { return; }
 
-  findPrev: (cursor) ->
-    if prev = cursor.previousSibling
-      if prev.tagName is 'A'
-        prev
-      else if prev.tagName is 'SPAN' # pagination link
-        $.click(prev)
-        @findPrev cursor
-      else if prev.tagName is 'DIV' # sub-list
-        if prev.previousSibling.className.indexOf('open') >= 0
-          @findLast(prev) or @findPrev(prev)
-        else
-          @findPrev(prev)
-      else if prev.tagName is 'H6' # title
-        @findPrev(prev)
-    else if cursor.parentNode isnt @el
-      @findPrev cursor.parentNode
+    if (last.tagName === 'A') {
+      return last;
+    } else if ((last.tagName === 'SPAN') || (last.tagName === 'H6')) { // pagination link or title
+      return this.findPrev(last);
+    } else if (last.tagName === 'DIV') { // sub-list
+      return this.findLast(last);
+    }
+  }
 
-  findLast: (cursor) ->
-    return unless last = cursor.lastChild
+  onDown() {
+    let cursor;
+    if ((cursor = this.getCursor())) {
+      this.focusOnNextFrame(this.findNext(cursor));
+    } else {
+      this.focusOnNextFrame(this.findByTag('a'));
+    }
+  }
 
-    if last.tagName is 'A'
-      last
-    else if last.tagName is 'SPAN' or last.tagName is 'H6' # pagination link or title
-      @findPrev last
-    else if last.tagName is 'DIV' # sub-list
-      @findLast last
+  onUp() {
+    let cursor;
+    if ((cursor = this.getCursor())) {
+      this.focusOnNextFrame(this.findPrev(cursor));
+    } else {
+      this.focusOnNextFrame(this.findLastByTag('a'));
+    }
+  }
 
-  onDown: =>
-    if cursor = @getCursor()
-      @focusOnNextFrame @findNext(cursor)
-    else
-      @focusOnNextFrame @findByTag('a')
-    return
+  onLeft() {
+    const cursor = this.getCursor();
+    if (cursor && !cursor.classList.contains(app.views.ListFold.activeClass) && (cursor.parentNode !== this.el)) {
+      const prev = cursor.parentNode.previousSibling;
+      if (prev && prev.classList.contains(app.views.ListFold.targetClass)) { this.focusOnNextFrame(cursor.parentNode.previousSibling); }
+    }
+  }
 
-  onUp: =>
-    if cursor = @getCursor()
-      @focusOnNextFrame @findPrev(cursor)
-    else
-      @focusOnNextFrame @findLastByTag('a')
-    return
+  onEnter() {
+    let cursor;
+    if (cursor = this.getCursor()) {
+      $.click(cursor);
+    }
+  }
 
-  onLeft: =>
-    cursor = @getCursor()
-    if cursor and not cursor.classList.contains(app.views.ListFold.activeClass) and cursor.parentNode isnt @el
-      prev = cursor.parentNode.previousSibling
-      @focusOnNextFrame cursor.parentNode.previousSibling if prev and prev.classList.contains(app.views.ListFold.targetClass)
-    return
+  onSuperEnter() {
+    let cursor;
+    if (cursor = this.getCursor()) {
+      $.popup(cursor);
+    }
+  }
 
-  onEnter: =>
-    if cursor = @getCursor()
-      $.click(cursor)
-    return
-
-  onSuperEnter: =>
-    if cursor = @getCursor()
-      $.popup(cursor)
-    return
-
-  onClick: (event) =>
-    return if event.which isnt 1 or event.metaKey or event.ctrlKey
-    target = $.eventTarget(event)
-    if target.tagName is 'A'
-      @focus target, silent: true
-    return
+  onClick(event) {
+    if ((event.which !== 1) || event.metaKey || event.ctrlKey) { return; }
+    const target = $.eventTarget(event);
+    if (target.tagName === 'A') {
+      this.focus(target, {silent: true});
+    }
+  }
+});
+Cls.initClass();

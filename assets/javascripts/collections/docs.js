@@ -1,85 +1,117 @@
-class app.collections.Docs extends app.Collection
-  @model: 'Doc'
+/*
+ * decaffeinate suggestions:
+ * DS101: Remove unnecessary use of Array.from
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS202: Simplify dynamic range loops
+ * DS206: Consider reworking classes to avoid initClass
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+(function() {
+  let NORMALIZE_VERSION_RGX = undefined;
+  let NORMALIZE_VERSION_SUB = undefined;
+  let CONCURRENCY = undefined;
+  const Cls = (app.collections.Docs = class Docs extends app.Collection {
+    static initClass() {
+      this.model = 'Doc';
+  
+      NORMALIZE_VERSION_RGX = /\.(\d)$/;
+      NORMALIZE_VERSION_SUB = '.0$1';
+  
+      // Load models concurrently.
+      // It's not pretty but I didn't want to import a promise library only for this.
+      CONCURRENCY = 3;
+    }
 
-  findBySlug: (slug) ->
-    @findBy('slug', slug) or @findBy('slug_without_version', slug)
+    findBySlug(slug) {
+      return this.findBy('slug', slug) || this.findBy('slug_without_version', slug);
+    }
+    sort() {
+      return this.models.sort(function(a, b) {
+        if (a.name === b.name) {
+          if (!a.version || (a.version.replace(NORMALIZE_VERSION_RGX, NORMALIZE_VERSION_SUB) > b.version.replace(NORMALIZE_VERSION_RGX, NORMALIZE_VERSION_SUB))) {
+            return -1;
+          } else {
+            return 1;
+          }
+        } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    }
+    load(onComplete, onError, options) {
+      let i = 0;
 
-  NORMALIZE_VERSION_RGX = /\.(\d)$/
-  NORMALIZE_VERSION_SUB = '.0$1'
-  sort: ->
-    @models.sort (a, b) ->
-      if a.name is b.name
-        if not a.version or a.version.replace(NORMALIZE_VERSION_RGX, NORMALIZE_VERSION_SUB) > b.version.replace(NORMALIZE_VERSION_RGX, NORMALIZE_VERSION_SUB)
-          -1
-        else
-          1
-      else if a.name.toLowerCase() > b.name.toLowerCase()
-        1
-      else
-        -1
+      var next = () => {
+        if (i < this.models.length) {
+          this.models[i].load(next, fail, options);
+        } else if (i === ((this.models.length + CONCURRENCY) - 1)) {
+          onComplete();
+        }
+        i++;
+      };
 
-  # Load models concurrently.
-  # It's not pretty but I didn't want to import a promise library only for this.
-  CONCURRENCY = 3
-  load: (onComplete, onError, options) ->
-    i = 0
+      var fail = function(...args) {
+        if (onError) {
+          onError(...Array.from(args || []));
+          onError = null;
+        }
+        next();
+      };
 
-    next = =>
-      if i < @models.length
-        @models[i].load(next, fail, options)
-      else if i is @models.length + CONCURRENCY - 1
-        onComplete()
-      i++
-      return
+      for (let j = 0, end = CONCURRENCY, asc = 0 <= end; asc ? j < end : j > end; asc ? j++ : j--) { next(); }
+    }
 
-    fail = (args...) ->
-      if onError
-        onError(args...)
-        onError = null
-      next()
-      return
+    clearCache() {
+      for (var doc of Array.from(this.models)) { doc.clearCache(); }
+    }
 
-    next() for [0...CONCURRENCY]
-    return
+    uninstall(callback) {
+      let i = 0;
+      var next = () => {
+        if (i < this.models.length) {
+          this.models[i++].uninstall(next, next);
+        } else {
+          callback();
+        }
+      };
+      next();
+    }
 
-  clearCache: ->
-    doc.clearCache() for doc in @models
-    return
+    getInstallStatuses(callback) {
+      app.db.versions(this.models, function(statuses) {
+        if (statuses) {
+          for (var key in statuses) {
+            var value = statuses[key];
+            statuses[key] = {installed: !!value, mtime: value};
+          }
+        }
+        callback(statuses);
+      });
+    }
 
-  uninstall: (callback) ->
-    i = 0
-    next = =>
-      if i < @models.length
-        @models[i++].uninstall(next, next)
-      else
-        callback()
-      return
-    next()
-    return
+    checkForUpdates(callback) {
+      this.getInstallStatuses(statuses => {
+        let i = 0;
+        if (statuses) {
+          for (var slug in statuses) { var status = statuses[slug]; if (this.findBy('slug', slug).isOutdated(status)) { i += 1; } }
+        }
+        callback(i);
+      });
+    }
 
-  getInstallStatuses: (callback) ->
-    app.db.versions @models, (statuses) ->
-      if statuses
-        for key, value of statuses
-          statuses[key] = installed: !!value, mtime: value
-      callback(statuses)
-      return
-    return
-
-  checkForUpdates: (callback) ->
-    @getInstallStatuses (statuses) =>
-      i = 0
-      if statuses
-        i += 1 for slug, status of statuses when @findBy('slug', slug).isOutdated(status)
-      callback(i)
-      return
-    return
-
-  updateInBackground: ->
-    @getInstallStatuses (statuses) =>
-      return unless statuses
-      for slug, status of statuses
-        doc = @findBy 'slug', slug
-        doc.install($.noop, $.noop) if doc.isOutdated(status)
-      return
-    return
+    updateInBackground() {
+      this.getInstallStatuses(statuses => {
+        if (!statuses) { return; }
+        for (var slug in statuses) {
+          var status = statuses[slug];
+          var doc = this.findBy('slug', slug);
+          if (doc.isOutdated(status)) { doc.install($.noop, $.noop); }
+        }
+      });
+    }
+  });
+  Cls.initClass();
+  return Cls;
+})();

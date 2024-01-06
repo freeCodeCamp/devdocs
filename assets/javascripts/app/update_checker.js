@@ -1,39 +1,54 @@
-class app.UpdateChecker
-  constructor: ->
-    @lastCheck = Date.now()
+/*
+ * decaffeinate suggestions:
+ * DS207: Consider shorter variations of null checks
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+app.UpdateChecker = class UpdateChecker {
+  constructor() {
+    this.checkDocs = this.checkDocs.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.lastCheck = Date.now();
 
-    $.on window, 'focus', @onFocus
-    app.serviceWorker?.on 'updateready', @onUpdateReady
+    $.on(window, 'focus', this.onFocus);
+    if (app.serviceWorker != null) {
+      app.serviceWorker.on('updateready', this.onUpdateReady);
+    }
 
-    setTimeout @checkDocs, 0
+    setTimeout(this.checkDocs, 0);
+  }
 
-  check: ->
-    if app.serviceWorker
-      app.serviceWorker.update()
-    else
-      ajax
-        url: $('script[src*="application"]').getAttribute('src')
-        dataType: 'application/javascript'
-        error: (_, xhr) => @onUpdateReady() if xhr.status is 404
-    return
+  check() {
+    if (app.serviceWorker) {
+      app.serviceWorker.update();
+    } else {
+      ajax({
+        url: $('script[src*="application"]').getAttribute('src'),
+        dataType: 'application/javascript',
+        error: (_, xhr) => { if (xhr.status === 404) { return this.onUpdateReady(); } }
+      });
+    }
+  }
 
-  onUpdateReady: ->
-    new app.views.Notif 'UpdateReady', autoHide: null
-    return
+  onUpdateReady() {
+    new app.views.Notif('UpdateReady', {autoHide: null});
+  }
 
-  checkDocs: =>
-    unless app.settings.get('manualUpdate')
-      app.docs.updateInBackground()
-    else
-      app.docs.checkForUpdates (i) => @onDocsUpdateReady() if i > 0
-    return
+  checkDocs() {
+    if (!app.settings.get('manualUpdate')) {
+      app.docs.updateInBackground();
+    } else {
+      app.docs.checkForUpdates(i => { if (i > 0) { return this.onDocsUpdateReady(); } });
+    }
+  }
 
-  onDocsUpdateReady: ->
-    new app.views.Notif 'UpdateDocs', autoHide: null
-    return
+  onDocsUpdateReady() {
+    new app.views.Notif('UpdateDocs', {autoHide: null});
+  }
 
-  onFocus: =>
-    if Date.now() - @lastCheck > 21600e3
-      @lastCheck = Date.now()
-      @check()
-    return
+  onFocus() {
+    if ((Date.now() - this.lastCheck) > 21600e3) {
+      this.lastCheck = Date.now();
+      this.check();
+    }
+  }
+};

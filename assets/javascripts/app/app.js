@@ -1,283 +1,352 @@
-@app =
-  _$: $
-  _$$: $$
-  _page: page
-  collections: {}
-  models:      {}
-  templates:   {}
-  views:       {}
+/*
+ * decaffeinate suggestions:
+ * DS101: Remove unnecessary use of Array.from
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
+ * DS207: Consider shorter variations of null checks
+ * DS208: Avoid top-level this
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+this.app = {
+  _$: $,
+  _$$: $$,
+  _page: page,
+  collections: {},
+  models:      {},
+  templates:   {},
+  views:       {},
 
-  init: ->
-    try @initErrorTracking() catch
-    return unless @browserCheck()
+  init() {
+    try { this.initErrorTracking(); } catch (error) {}
+    if (!this.browserCheck()) { return; }
 
-    @el = $('._app')
-    @localStorage = new LocalStorageStore
-    @serviceWorker = new app.ServiceWorker if app.ServiceWorker.isEnabled()
-    @settings = new app.Settings
-    @db = new app.DB()
+    this.el = $('._app');
+    this.localStorage = new LocalStorageStore;
+    if (app.ServiceWorker.isEnabled()) { this.serviceWorker = new app.ServiceWorker; }
+    this.settings = new app.Settings;
+    this.db = new app.DB();
 
-    @settings.initLayout()
+    this.settings.initLayout();
 
-    @docs = new app.collections.Docs
-    @disabledDocs = new app.collections.Docs
-    @entries = new app.collections.Entries
+    this.docs = new app.collections.Docs;
+    this.disabledDocs = new app.collections.Docs;
+    this.entries = new app.collections.Entries;
 
-    @router = new app.Router
-    @shortcuts = new app.Shortcuts
-    @document = new app.views.Document
-    @mobile = new app.views.Mobile if @isMobile()
+    this.router = new app.Router;
+    this.shortcuts = new app.Shortcuts;
+    this.document = new app.views.Document;
+    if (this.isMobile()) { this.mobile = new app.views.Mobile; }
 
-    if document.body.hasAttribute('data-doc')
-      @DOC = JSON.parse(document.body.getAttribute('data-doc'))
-      @bootOne()
-    else if @DOCS
-      @bootAll()
-    else
-      @onBootError()
-    return
+    if (document.body.hasAttribute('data-doc')) {
+      this.DOC = JSON.parse(document.body.getAttribute('data-doc'));
+      this.bootOne();
+    } else if (this.DOCS) {
+      this.bootAll();
+    } else {
+      this.onBootError();
+    }
+  },
 
-  browserCheck: ->
-    return true if @isSupportedBrowser()
-    document.body.innerHTML = app.templates.unsupportedBrowser
-    @hideLoadingScreen()
-    false
+  browserCheck() {
+    if (this.isSupportedBrowser()) { return true; }
+    document.body.innerHTML = app.templates.unsupportedBrowser;
+    this.hideLoadingScreen();
+    return false;
+  },
 
-  initErrorTracking: ->
-    # Show a warning message and don't track errors when the app is loaded
-    # from a domain other than our own, because things are likely to break.
-    # (e.g. cross-domain requests)
-    if @isInvalidLocation()
-      new app.views.Notif 'InvalidLocation'
-    else
-      if @config.sentry_dsn
-        Raven.config @config.sentry_dsn,
-          release: @config.release
-          whitelistUrls: [/devdocs/]
-          includePaths: [/devdocs/]
-          ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/, /EvalError/]
-          tags:
-            mode: if @isSingleDoc() then 'single' else 'full'
-            iframe: (window.top isnt window).toString()
-            electron: (!!window.process?.versions?.electron).toString()
-          shouldSendCallback: =>
-            try
-              if @isInjectionError()
-                @onInjectionError()
-                return false
-              if @isAndroidWebview()
-                return false
-            true
-          dataCallback: (data) ->
-            try
-              $.extend(data.user ||= {}, app.settings.dump())
-              data.user.docs = data.user.docs.split('/') if data.user.docs
-              data.user.lastIDBTransaction = app.lastIDBTransaction if app.lastIDBTransaction
-              data.tags.scriptCount = document.scripts.length
-            data
-        .install()
-      @previousErrorHandler = onerror
-      window.onerror = @onWindowError.bind(@)
-      CookiesStore.onBlocked = @onCookieBlocked
-    return
+  initErrorTracking() {
+    // Show a warning message and don't track errors when the app is loaded
+    // from a domain other than our own, because things are likely to break.
+    // (e.g. cross-domain requests)
+    if (this.isInvalidLocation()) {
+      new app.views.Notif('InvalidLocation');
+    } else {
+      if (this.config.sentry_dsn) {
+        Raven.config(this.config.sentry_dsn, {
+          release: this.config.release,
+          whitelistUrls: [/devdocs/],
+          includePaths: [/devdocs/],
+          ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/, /EvalError/],
+          tags: {
+            mode: this.isSingleDoc() ? 'single' : 'full',
+            iframe: (window.top !== window).toString(),
+            electron: (!!__guard__(window.process != null ? window.process.versions : undefined, x => x.electron)).toString()
+          },
+          shouldSendCallback: () => {
+            try {
+              if (this.isInjectionError()) {
+                this.onInjectionError();
+                return false;
+              }
+              if (this.isAndroidWebview()) {
+                return false;
+              }
+            } catch (error) {}
+            return true;
+          },
+          dataCallback(data) {
+            try {
+              $.extend(data.user || (data.user = {}), app.settings.dump());
+              if (data.user.docs) { data.user.docs = data.user.docs.split('/'); }
+              if (app.lastIDBTransaction) { data.user.lastIDBTransaction = app.lastIDBTransaction; }
+              data.tags.scriptCount = document.scripts.length;
+            } catch (error) {}
+            return data;
+          }
+        }).install();
+      }
+      this.previousErrorHandler = onerror;
+      window.onerror = this.onWindowError.bind(this);
+      CookiesStore.onBlocked = this.onCookieBlocked;
+    }
+  },
 
-  bootOne: ->
-    @doc = new app.models.Doc @DOC
-    @docs.reset [@doc]
-    @doc.load @start.bind(@), @onBootError.bind(@), readCache: true
-    new app.views.Notice 'singleDoc', @doc
-    delete @DOC
-    return
+  bootOne() {
+    this.doc = new app.models.Doc(this.DOC);
+    this.docs.reset([this.doc]);
+    this.doc.load(this.start.bind(this), this.onBootError.bind(this), {readCache: true});
+    new app.views.Notice('singleDoc', this.doc);
+    delete this.DOC;
+  },
 
-  bootAll: ->
-    docs = @settings.getDocs()
-    for doc in @DOCS
-      (if docs.indexOf(doc.slug) >= 0 then @docs else @disabledDocs).add(doc)
-    @migrateDocs()
-    @docs.load @start.bind(@), @onBootError.bind(@), readCache: true, writeCache: true
-    delete @DOCS
-    return
+  bootAll() {
+    const docs = this.settings.getDocs();
+    for (var doc of Array.from(this.DOCS)) {
+      (docs.indexOf(doc.slug) >= 0 ? this.docs : this.disabledDocs).add(doc);
+    }
+    this.migrateDocs();
+    this.docs.load(this.start.bind(this), this.onBootError.bind(this), {readCache: true, writeCache: true});
+    delete this.DOCS;
+  },
 
-  start: ->
-    @entries.add doc.toEntry() for doc in @docs.all()
-    @entries.add doc.toEntry() for doc in @disabledDocs.all()
-    @initDoc(doc) for doc in @docs.all()
-    @trigger 'ready'
-    @router.start()
-    @hideLoadingScreen()
-    setTimeout =>
-      @welcomeBack() unless @doc
-      @removeEvent 'ready bootError'
-    , 50
-    return
+  start() {
+    let doc;
+    for (doc of Array.from(this.docs.all())) { this.entries.add(doc.toEntry()); }
+    for (doc of Array.from(this.disabledDocs.all())) { this.entries.add(doc.toEntry()); }
+    for (doc of Array.from(this.docs.all())) { this.initDoc(doc); }
+    this.trigger('ready');
+    this.router.start();
+    this.hideLoadingScreen();
+    setTimeout(() => {
+      if (!this.doc) { this.welcomeBack(); }
+      return this.removeEvent('ready bootError');
+    }
+    , 50);
+  },
 
-  initDoc: (doc) ->
-    doc.entries.add type.toEntry() for type in doc.types.all()
-    @entries.add doc.entries.all()
-    return
+  initDoc(doc) {
+    for (var type of Array.from(doc.types.all())) { doc.entries.add(type.toEntry()); }
+    this.entries.add(doc.entries.all());
+  },
 
-  migrateDocs: ->
-    for slug in @settings.getDocs() when not @docs.findBy('slug', slug)
-      needsSaving = true
-      doc = @disabledDocs.findBy('slug', 'webpack') if slug == 'webpack~2'
-      doc = @disabledDocs.findBy('slug', 'angular') if slug == 'angular~4_typescript'
-      doc = @disabledDocs.findBy('slug', 'angular~2') if slug == 'angular~2_typescript'
-      doc ||= @disabledDocs.findBy('slug_without_version', slug)
-      if doc
-        @disabledDocs.remove(doc)
-        @docs.add(doc)
+  migrateDocs() {
+    let needsSaving;
+    for (var slug of Array.from(this.settings.getDocs())) {
+      if (!this.docs.findBy('slug', slug)) {var doc;
+      
+        needsSaving = true;
+        if (slug === 'webpack~2') { doc = this.disabledDocs.findBy('slug', 'webpack'); }
+        if (slug === 'angular~4_typescript') { doc = this.disabledDocs.findBy('slug', 'angular'); }
+        if (slug === 'angular~2_typescript') { doc = this.disabledDocs.findBy('slug', 'angular~2'); }
+        if (!doc) { doc = this.disabledDocs.findBy('slug_without_version', slug); }
+        if (doc) {
+          this.disabledDocs.remove(doc);
+          this.docs.add(doc);
+        }
+      }
+    }
 
-    @saveDocs() if needsSaving
-    return
+    if (needsSaving) { this.saveDocs(); }
+  },
 
-  enableDoc: (doc, _onSuccess, onError) ->
-    return if @docs.contains(doc)
+  enableDoc(doc, _onSuccess, onError) {
+    if (this.docs.contains(doc)) { return; }
 
-    onSuccess = =>
-      return if @docs.contains(doc)
-      @disabledDocs.remove(doc)
-      @docs.add(doc)
-      @docs.sort()
-      @initDoc(doc)
-      @saveDocs()
-      if app.settings.get('autoInstall')
-        doc.install(_onSuccess, onError)
-      else
-        _onSuccess()
-      return
+    const onSuccess = () => {
+      if (this.docs.contains(doc)) { return; }
+      this.disabledDocs.remove(doc);
+      this.docs.add(doc);
+      this.docs.sort();
+      this.initDoc(doc);
+      this.saveDocs();
+      if (app.settings.get('autoInstall')) {
+        doc.install(_onSuccess, onError);
+      } else {
+        _onSuccess();
+      }
+    };
 
-    doc.load onSuccess, onError, writeCache: true
-    return
+    doc.load(onSuccess, onError, {writeCache: true});
+  },
 
-  saveDocs: ->
-    @settings.setDocs(doc.slug for doc in @docs.all())
-    @db.migrate()
-    @serviceWorker?.updateInBackground()
+  saveDocs() {
+    this.settings.setDocs(Array.from(this.docs.all()).map((doc) => doc.slug));
+    this.db.migrate();
+    return (this.serviceWorker != null ? this.serviceWorker.updateInBackground() : undefined);
+  },
 
-  welcomeBack: ->
-    visitCount = @settings.get('count')
-    @settings.set 'count', ++visitCount
-    new app.views.Notif 'Share', autoHide: null if visitCount is 5
-    new app.views.News()
-    new app.views.Updates()
-    @updateChecker = new app.UpdateChecker()
+  welcomeBack() {
+    let visitCount = this.settings.get('count');
+    this.settings.set('count', ++visitCount);
+    if (visitCount === 5) { new app.views.Notif('Share', {autoHide: null}); }
+    new app.views.News();
+    new app.views.Updates();
+    return this.updateChecker = new app.UpdateChecker();
+  },
 
-  reboot: ->
-    if location.pathname isnt '/' and location.pathname isnt '/settings'
-      window.location = "/##{location.pathname}"
-    else
-      window.location = '/'
-    return
+  reboot() {
+    if ((location.pathname !== '/') && (location.pathname !== '/settings')) {
+      window.location = `/#${location.pathname}`;
+    } else {
+      window.location = '/';
+    }
+  },
 
-  reload: ->
-    @docs.clearCache()
-    @disabledDocs.clearCache()
-    if @serviceWorker then @serviceWorker.reload() else @reboot()
-    return
+  reload() {
+    this.docs.clearCache();
+    this.disabledDocs.clearCache();
+    if (this.serviceWorker) { this.serviceWorker.reload(); } else { this.reboot(); }
+  },
 
-  reset: ->
-    @localStorage.reset()
-    @settings.reset()
-    @db?.reset()
-    @serviceWorker?.update()
-    window.location = '/'
-    return
+  reset() {
+    this.localStorage.reset();
+    this.settings.reset();
+    if (this.db != null) {
+      this.db.reset();
+    }
+    if (this.serviceWorker != null) {
+      this.serviceWorker.update();
+    }
+    window.location = '/';
+  },
 
-  showTip: (tip) ->
-    return if @isSingleDoc()
-    tips = @settings.getTips()
-    if tips.indexOf(tip) is -1
-      tips.push(tip)
-      @settings.setTips(tips)
-      new app.views.Tip(tip)
-    return
+  showTip(tip) {
+    if (this.isSingleDoc()) { return; }
+    const tips = this.settings.getTips();
+    if (tips.indexOf(tip) === -1) {
+      tips.push(tip);
+      this.settings.setTips(tips);
+      new app.views.Tip(tip);
+    }
+  },
 
-  hideLoadingScreen: ->
-    document.body.classList.add '_overlay-scrollbars' if $.overlayScrollbarsEnabled()
-    document.documentElement.classList.remove '_booting'
-    return
+  hideLoadingScreen() {
+    if ($.overlayScrollbarsEnabled()) { document.body.classList.add('_overlay-scrollbars'); }
+    document.documentElement.classList.remove('_booting');
+  },
 
-  indexHost: ->
-    # Can't load the index files from the host/CDN when service worker is
-    # enabled because it doesn't support caching URLs that use CORS.
-    @config[if @serviceWorker and @settings.hasDocs() then 'index_path' else 'docs_origin']
+  indexHost() {
+    // Can't load the index files from the host/CDN when service worker is
+    // enabled because it doesn't support caching URLs that use CORS.
+    return this.config[this.serviceWorker && this.settings.hasDocs() ? 'index_path' : 'docs_origin'];
+  },
 
-  onBootError: (args...) ->
-    @trigger 'bootError'
-    @hideLoadingScreen()
-    return
+  onBootError(...args) {
+    this.trigger('bootError');
+    this.hideLoadingScreen();
+  },
 
-  onQuotaExceeded: ->
-    return if @quotaExceeded
-    @quotaExceeded = true
-    new app.views.Notif 'QuotaExceeded', autoHide: null
-    return
+  onQuotaExceeded() {
+    if (this.quotaExceeded) { return; }
+    this.quotaExceeded = true;
+    new app.views.Notif('QuotaExceeded', {autoHide: null});
+  },
 
-  onCookieBlocked: (key, value, actual) ->
-    return if @cookieBlocked
-    @cookieBlocked = true
-    new app.views.Notif 'CookieBlocked', autoHide: null
-    Raven.captureMessage "CookieBlocked/#{key}", level: 'warning', extra: {value, actual}
-    return
+  onCookieBlocked(key, value, actual) {
+    if (this.cookieBlocked) { return; }
+    this.cookieBlocked = true;
+    new app.views.Notif('CookieBlocked', {autoHide: null});
+    Raven.captureMessage(`CookieBlocked/${key}`, {level: 'warning', extra: {value, actual}});
+  },
 
-  onWindowError: (args...) ->
-    return if @cookieBlocked
-    if @isInjectionError args...
-      @onInjectionError()
-    else if @isAppError args...
-      @previousErrorHandler? args...
-      @hideLoadingScreen()
-      @errorNotif or= new app.views.Notif 'Error'
-      @errorNotif.show()
-    return
+  onWindowError(...args) {
+    if (this.cookieBlocked) { return; }
+    if (this.isInjectionError(...Array.from(args || []))) {
+      this.onInjectionError();
+    } else if (this.isAppError(...Array.from(args || []))) {
+      if (typeof this.previousErrorHandler === 'function') {
+        this.previousErrorHandler(...Array.from(args || []));
+      }
+      this.hideLoadingScreen();
+      if (!this.errorNotif) { this.errorNotif = new app.views.Notif('Error'); }
+      this.errorNotif.show();
+    }
+  },
 
-  onInjectionError: ->
-    unless @injectionError
-      @injectionError = true
-      alert """
-        JavaScript code has been injected in the page which prevents DevDocs from running correctly.
-        Please check your browser extensions/addons. """
-      Raven.captureMessage 'injection error', level: 'info'
-    return
+  onInjectionError() {
+    if (!this.injectionError) {
+      this.injectionError = true;
+      alert(`\
+JavaScript code has been injected in the page which prevents DevDocs from running correctly.
+Please check your browser extensions/addons. `
+      );
+      Raven.captureMessage('injection error', {level: 'info'});
+    }
+  },
 
-  isInjectionError: ->
-    # Some browser extensions expect the entire web to use jQuery.
-    # I gave up trying to fight back.
-    window.$ isnt app._$ or window.$$ isnt app._$$ or window.page isnt app._page or typeof $.empty isnt 'function' or typeof page.show isnt 'function'
+  isInjectionError() {
+    // Some browser extensions expect the entire web to use jQuery.
+    // I gave up trying to fight back.
+    return (window.$ !== app._$) || (window.$$ !== app._$$) || (window.page !== app._page) || (typeof $.empty !== 'function') || (typeof page.show !== 'function');
+  },
 
-  isAppError: (error, file) ->
-    # Ignore errors from external scripts.
-    file and file.indexOf('devdocs') isnt -1 and file.indexOf('.js') is file.length - 3
+  isAppError(error, file) {
+    // Ignore errors from external scripts.
+    return file && (file.indexOf('devdocs') !== -1) && (file.indexOf('.js') === (file.length - 3));
+  },
 
-  isSupportedBrowser: ->
-    try
-      features =
-        bind:               !!Function::bind
-        pushState:          !!history.pushState
-        matchMedia:         !!window.matchMedia
-        insertAdjacentHTML: !!document.body.insertAdjacentHTML
-        defaultPrevented:     document.createEvent('CustomEvent').defaultPrevented is false
-        cssVariables:       !!CSS?.supports?('(--t: 0)')
+  isSupportedBrowser() {
+    try {
+      const features = {
+        bind:               !!Function.prototype.bind,
+        pushState:          !!history.pushState,
+        matchMedia:         !!window.matchMedia,
+        insertAdjacentHTML: !!document.body.insertAdjacentHTML,
+        defaultPrevented:     document.createEvent('CustomEvent').defaultPrevented === false,
+        cssVariables:       !!__guardMethod__(CSS, 'supports', o => o.supports('(--t: 0)'))
+      };
 
-      for key, value of features when not value
-        Raven.captureMessage "unsupported/#{key}", level: 'info'
-        return false
+      for (var key in features) {
+        var value = features[key];
+        if (!value) {
+          Raven.captureMessage(`unsupported/${key}`, {level: 'info'});
+          return false;
+        }
+      }
 
-      true
-    catch error
-      Raven.captureMessage 'unsupported/exception', level: 'info', extra: { error: error }
-      false
+      return true;
+    } catch (error) {
+      Raven.captureMessage('unsupported/exception', {level: 'info', extra: { error }});
+      return false;
+    }
+  },
 
-  isSingleDoc: ->
-    document.body.hasAttribute('data-doc')
+  isSingleDoc() {
+    return document.body.hasAttribute('data-doc');
+  },
 
-  isMobile: ->
-    @_isMobile ?= app.views.Mobile.detect()
+  isMobile() {
+    return this._isMobile != null ? this._isMobile : (this._isMobile = app.views.Mobile.detect());
+  },
 
-  isAndroidWebview: ->
-    @_isAndroidWebview ?= app.views.Mobile.detectAndroidWebview()
+  isAndroidWebview() {
+    return this._isAndroidWebview != null ? this._isAndroidWebview : (this._isAndroidWebview = app.views.Mobile.detectAndroidWebview());
+  },
 
-  isInvalidLocation: ->
-    @config.env is 'production' and location.host.indexOf(app.config.production_host) isnt 0
+  isInvalidLocation() {
+    return (this.config.env === 'production') && (location.host.indexOf(app.config.production_host) !== 0);
+  }
+};
 
-$.extend app, Events
+$.extend(app, Events);
+
+function __guard__(value, transform) {
+  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+}
+function __guardMethod__(obj, methodName, transform) {
+  if (typeof obj !== 'undefined' && obj !== null && typeof obj[methodName] === 'function') {
+    return transform(obj, methodName);
+  } else {
+    return undefined;
+  }
+}

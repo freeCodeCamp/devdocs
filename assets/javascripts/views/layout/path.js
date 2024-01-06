@@ -1,43 +1,64 @@
-class app.views.Path extends app.View
-  @className: '_path'
-  @attributes:
-    role: 'complementary'
+/*
+ * decaffeinate suggestions:
+ * DS002: Fix invalid constructor
+ * DS101: Remove unnecessary use of Array.from
+ * DS206: Consider reworking classes to avoid initClass
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
+ */
+const Cls = (app.views.Path = class Path extends app.View {
+  constructor(...args) {
+    this.onClick = this.onClick.bind(this);
+    this.afterRoute = this.afterRoute.bind(this);
+    super(...args);
+  }
 
-  @events:
-    click: 'onClick'
+  static initClass() {
+    this.className = '_path';
+    this.attributes =
+      {role: 'complementary'};
+  
+    this.events =
+      {click: 'onClick'};
+  
+    this.routes =
+      {after: 'afterRoute'};
+  }
 
-  @routes:
-    after: 'afterRoute'
+  render(...args) {
+    this.html(this.tmpl('path', ...Array.from(args)));
+    this.show();
+  }
 
-  render: (args...) ->
-    @html @tmpl 'path', args...
-    @show()
-    return
+  show() {
+    if (!this.el.parentNode) { this.prependTo(app.el); }
+  }
 
-  show: ->
-    @prependTo app.el unless @el.parentNode
-    return
+  hide() {
+    if (this.el.parentNode) { $.remove(this.el); }
+  }
 
-  hide: ->
-    $.remove @el if @el.parentNode
-    return
+  onClick(event) {
+    let link;
+    if (link = $.closestLink(event.target, this.el)) { this.clicked = true; }
+  }
 
-  onClick: (event) =>
-    @clicked = true if link = $.closestLink event.target, @el
-    return
+  afterRoute(route, context) {
+    if (context.type) {
+      this.render(context.doc, context.type);
+    } else if (context.entry) {
+      if (context.entry.isIndex()) {
+        this.render(context.doc);
+      } else {
+        this.render(context.doc, context.entry.getType(), context.entry);
+      }
+    } else {
+      this.hide();
+    }
 
-  afterRoute: (route, context) =>
-    if context.type
-      @render context.doc, context.type
-    else if context.entry
-      if context.entry.isIndex()
-        @render context.doc
-      else
-        @render context.doc, context.entry.getType(), context.entry
-    else
-      @hide()
-
-    if @clicked
-      @clicked = null
-      app.document.sidebar.reset()
-    return
+    if (this.clicked) {
+      this.clicked = null;
+      app.document.sidebar.reset();
+    }
+  }
+});
+Cls.initClass();
