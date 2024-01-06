@@ -59,14 +59,12 @@ var serializeData = function (options) {
 };
 
 var serializeParams = (params) =>
-  (() => {
-    const result = [];
-    for (var key in params) {
-      var value = params[key];
-      result.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-    }
-    return result;
-  })().join("&");
+  Object.entries(params)
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+    )
+    .join("&");
 
 var applyCallbacks = function (xhr, options) {
   if (!options.async) {
