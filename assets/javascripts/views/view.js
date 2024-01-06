@@ -1,12 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.View = class View extends Events {
   constructor(el) {
     super();
@@ -152,12 +143,12 @@ app.View = class View extends Events {
   }
 
   tmpl(...args) {
-    return app.templates.render(...Array.from(args || []));
+    return app.templates.render(...args);
   }
 
   delay(fn, ...args) {
     const delay = typeof args[args.length - 1] === "number" ? args.pop() : 0;
-    return setTimeout(fn.bind(this, ...Array.from(args)), delay);
+    return setTimeout(fn.bind(this, ...args), delay);
   }
 
   onDOM(event, callback) {
