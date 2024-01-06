@@ -1,16 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
- * DS104: Avoid inline assignments
- * DS204: Change includes calls to have a more natural evaluation order
- * DS205: Consider reworking code to avoid use of IIFEs
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.Content = class Content extends app.View {
   static el = "._content";
   static loadingClass = "_content-loading";
@@ -229,7 +216,7 @@ app.views.Content = class Content extends app.View {
       !document.activeElement ||
       !$.hasChild(this.el, document.activeElement)
     ) {
-      __guard__(this.find("a:not(:empty)"), (x) => x.focus());
+      this.find("a:not(:empty)")?.focus();
       return $.stopEvent(event);
     }
   }
@@ -251,16 +238,6 @@ app.views.Content = class Content extends app.View {
   }
 
   isExternalUrl(url) {
-    let needle;
-    return (
-      (needle = __guard__(url, (x) => x.slice(0, 6))),
-      ["http:/", "https:"].includes(needle)
-    );
+    return url?.startsWith("http:") || url?.startsWith("https:");
   }
 };
-
-function __guard__(value, transform) {
-  return typeof value !== "undefined" && value !== null
-    ? transform(value)
-    : undefined;
-}
