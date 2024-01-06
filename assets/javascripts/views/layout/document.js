@@ -1,40 +1,31 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS206: Consider reworking classes to avoid initClass
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.Document = class Document extends app.View {
-  static initClass() {
-    this.el = document;
+  static el = document;
 
-    this.events = { visibilitychange: "onVisibilityChange" };
+  static events = { visibilitychange: "onVisibilityChange" };
 
-    this.shortcuts = {
-      help: "onHelp",
-      preferences: "onPreferences",
-      escape: "onEscape",
-      superLeft: "onBack",
-      superRight: "onForward",
-    };
+  static shortcuts = {
+    help: "onHelp",
+    preferences: "onPreferences",
+    escape: "onEscape",
+    superLeft: "onBack",
+    superRight: "onForward",
+  };
 
-    this.routes = { after: "afterRoute" };
-  }
+  static routes = { after: "afterRoute" };
 
   init() {
-    this.addSubview(
-      (this.menu = new app.views.Menu()),
-      this.addSubview((this.sidebar = new app.views.Sidebar())),
-    );
+    this.menu = new app.views.Menu();
+    this.sidebar = new app.views.Sidebar();
+    this.addSubview(this.menu, this.addSubview(this.sidebar));
     if (app.views.Resizer.isSupported()) {
-      this.addSubview((this.resizer = new app.views.Resizer()));
+      this.resizer = new app.views.Resizer();
+      this.addSubview(this.resizer);
     }
-    this.addSubview((this.content = new app.views.Content()));
+    this.content = new app.views.Content();
+    this.addSubview(this.content);
     if (!app.isSingleDoc() && !app.isMobile()) {
-      this.addSubview((this.path = new app.views.Path()));
+      this.path = new app.views.Path();
+      this.addSubview(this.path);
     }
     if (!app.isSingleDoc()) {
       this.settings = new app.views.Settings();
@@ -132,4 +123,3 @@ app.views.Document = class Document extends app.View {
     }
   }
 };
-app.views.Document.initClass();
