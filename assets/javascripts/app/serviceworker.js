@@ -1,16 +1,4 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS206: Consider reworking classes to avoid initClass
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
-app.ServiceWorker = class ServiceWorker {
-  static initClass() {
-    $.extend(this.prototype, Events);
-  }
-
+app.ServiceWorker = class ServiceWorker extends Events {
   static isEnabled() {
     return !!navigator.serviceWorker && app.config.service_worker_enabled;
   }
@@ -78,4 +66,3 @@ app.ServiceWorker = class ServiceWorker {
     }
   }
 };
-app.ServiceWorker.initClass();
