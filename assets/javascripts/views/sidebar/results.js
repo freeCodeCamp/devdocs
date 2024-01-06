@@ -21,7 +21,7 @@ app.views.Results = class Results extends app.View {
     super();
     this.sidebar = sidebar;
     this.search = search;
-    this.init0();
+    this.init0(); // needs this.search
     this.refreshElements();
   }
 

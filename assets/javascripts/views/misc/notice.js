@@ -3,7 +3,6 @@
 /*
  * decaffeinate suggestions:
  * DS002: Fix invalid constructor
- * DS101: Remove unnecessary use of Array.from
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
  */
@@ -13,13 +12,15 @@ app.views.Notice = class Notice extends app.View {
     this.attributes = { role: "alert" };
   }
 
-  constructor(type, ...rest) {
+  constructor(type, ...args) {
     super();
     this.type = type;
-    [...this.args] = Array.from(rest);
+    this.args = args || [];
+    this.init0(); // needs this.args
+    this.refreshElements();
   }
 
-  init() {
+  init0() {
     this.activate();
   }
 
@@ -36,7 +37,7 @@ app.views.Notice = class Notice extends app.View {
   }
 
   show() {
-    this.html(this.tmpl(`${this.type}Notice`, ...Array.from(this.args)));
+    this.html(this.tmpl(`${this.type}Notice`, ...this.args));
     this.prependTo(app.el);
   }
 

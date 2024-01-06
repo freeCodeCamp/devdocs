@@ -19,11 +19,10 @@
 
     constructor(data) {
       super();
-      this.onClick = this.onClick.bind(this);
-      let base = this.constructor.events || (this.constructor.events = {});
       this.data = data;
-      if (base.click == null) {
-        base.click = "onClick";
+      this.constructor.events = this.constructor.events || {};
+      if (this.constructor.events.click == null) {
+        this.constructor.events.click = "onClick";
       }
     }
 
