@@ -1,18 +1,7 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
- * DS206: Consider reworking classes to avoid initClass
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.ListSelect = class ListSelect extends app.View {
-  static initClass() {
-    this.activeClass = "active";
+  static activeClass = "active";
 
-    this.events = { click: "onClick" };
-  }
+  static events = { click: "onClick" };
 
   deactivate() {
     if (super.deactivate(...arguments)) {
@@ -37,9 +26,7 @@ app.views.ListSelect = class ListSelect extends app.View {
   }
 
   selectByHref(href) {
-    if (
-      __guard__(this.getSelection(), (x) => x.getAttribute("href")) !== href
-    ) {
+    if (this.getSelection()?.getAttribute("href") !== href) {
       this.select(this.find(`a[href='${href}']`));
     }
   }
@@ -62,10 +49,3 @@ app.views.ListSelect = class ListSelect extends app.View {
     }
   }
 };
-app.views.ListSelect.initClass();
-
-function __guard__(value, transform) {
-  return typeof value !== "undefined" && value !== null
-    ? transform(value)
-    : undefined;
-}
