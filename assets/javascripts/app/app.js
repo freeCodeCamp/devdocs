@@ -1,13 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS103: Rewrite code to no longer use __guard__, or convert again using --optional-chaining
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 class App extends Events {
   _$ = $;
   _$$ = $$;
@@ -81,10 +71,7 @@ class App extends Events {
           tags: {
             mode: this.isSingleDoc() ? "single" : "full",
             iframe: (window.top !== window).toString(),
-            electron: (!!__guard__(
-              window.process != null ? window.process.versions : undefined,
-              (x) => x.electron,
-            )).toString(),
+            electron: (!!window.process?.versions?.electron).toString(),
           },
           shouldSendCallback: () => {
             try {
@@ -131,7 +118,7 @@ class App extends Events {
 
   bootAll() {
     const docs = this.settings.getDocs();
-    for (var doc of Array.from(this.DOCS)) {
+    for (var doc of this.DOCS) {
       (docs.indexOf(doc.slug) >= 0 ? this.docs : this.disabledDocs).add(doc);
     }
     this.migrateDocs();
@@ -144,13 +131,13 @@ class App extends Events {
 
   start() {
     let doc;
-    for (doc of Array.from(this.docs.all())) {
+    for (doc of this.docs.all()) {
       this.entries.add(doc.toEntry());
     }
-    for (doc of Array.from(this.disabledDocs.all())) {
+    for (doc of this.disabledDocs.all()) {
       this.entries.add(doc.toEntry());
     }
-    for (doc of Array.from(this.docs.all())) {
+    for (doc of this.docs.all()) {
       this.initDoc(doc);
     }
     this.trigger("ready");
@@ -165,7 +152,7 @@ class App extends Events {
   }
 
   initDoc(doc) {
-    for (var type of Array.from(doc.types.all())) {
+    for (var type of doc.types.all()) {
       doc.entries.add(type.toEntry());
     }
     this.entries.add(doc.entries.all());
@@ -173,7 +160,7 @@ class App extends Events {
 
   migrateDocs() {
     let needsSaving;
-    for (var slug of Array.from(this.settings.getDocs())) {
+    for (var slug of this.settings.getDocs()) {
       if (!this.docs.findBy("slug", slug)) {
         var doc;
 
@@ -227,7 +214,7 @@ class App extends Events {
   }
 
   saveDocs() {
-    this.settings.setDocs(Array.from(this.docs.all()).map((doc) => doc.slug));
+    this.settings.setDocs(this.docs.all().map((doc) => doc.slug));
     this.db.migrate();
     return this.serviceWorker != null
       ? this.serviceWorker.updateInBackground()
@@ -333,11 +320,11 @@ class App extends Events {
     if (this.cookieBlocked) {
       return;
     }
-    if (this.isInjectionError(...Array.from(args || []))) {
+    if (this.isInjectionError(...args)) {
       this.onInjectionError();
-    } else if (this.isAppError(...Array.from(args || []))) {
+    } else if (this.isAppError(...args)) {
       if (typeof this.previousErrorHandler === "function") {
-        this.previousErrorHandler(...Array.from(args || []));
+        this.previousErrorHandler(...args);
       }
       this.hideLoadingScreen();
       if (!this.errorNotif) {
@@ -387,9 +374,7 @@ Please check your browser extensions/addons. `);
         insertAdjacentHTML: !!document.body.insertAdjacentHTML,
         defaultPrevented:
           document.createEvent("CustomEvent").defaultPrevented === false,
-        cssVariables: !!__guardMethod__(CSS, "supports", (o) =>
-          o.supports("(--t: 0)"),
-        ),
+        cssVariables: !!CSS.supports?.("(--t: 0)"),
       };
 
       for (var key in features) {
@@ -431,23 +416,6 @@ Please check your browser extensions/addons. `);
       this.config.env === "production" &&
       location.host.indexOf(app.config.production_host) !== 0
     );
-  }
-}
-
-function __guard__(value, transform) {
-  return typeof value !== "undefined" && value !== null
-    ? transform(value)
-    : undefined;
-}
-function __guardMethod__(obj, methodName, transform) {
-  if (
-    typeof obj !== "undefined" &&
-    obj !== null &&
-    typeof obj[methodName] === "function"
-  ) {
-    return transform(obj, methodName);
-  } else {
-    return undefined;
   }
 }
 
