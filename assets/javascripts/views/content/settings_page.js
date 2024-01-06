@@ -21,7 +21,7 @@ app.views.SettingsPage = class SettingsPage extends app.View {
     settings.spaceScroll = app.settings.get("spaceScroll");
     settings.spaceTimeout = app.settings.get("spaceTimeout");
     settings.autoSupported = app.settings.autoSupported;
-    for (var layout of app.settings.LAYOUTS) {
+    for (var layout of app.Settings.LAYOUTS) {
       settings[layout] = app.settings.hasLayout(layout);
     }
     return settings;
