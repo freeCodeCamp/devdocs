@@ -1,23 +1,13 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Sanity-check the conversion and remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS206: Consider reworking classes to avoid initClass
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/main/docs/suggestions.md
- */
 app.views.Path = class Path extends app.View {
-  static initClass() {
-    this.className = "_path";
-    this.attributes = { role: "complementary" };
+  static className = "_path";
+  static attributes = { role: "complementary" };
 
-    this.events = { click: "onClick" };
+  static events = { click: "onClick" };
 
-    this.routes = { after: "afterRoute" };
-  }
+  static routes = { after: "afterRoute" };
 
   render(...args) {
-    this.html(this.tmpl("path", ...Array.from(args)));
+    this.html(this.tmpl("path", ...args));
     this.show();
   }
 
@@ -59,4 +49,3 @@ app.views.Path = class Path extends app.View {
     }
   }
 };
-app.views.Path.initClass();
