@@ -4,6 +4,7 @@ app.ServiceWorker = class ServiceWorker extends Events {
   }
 
   constructor() {
+    super();
     this.onStateChange = this.onStateChange.bind(this);
     this.registration = null;
     this.notifyUpdate = true;
