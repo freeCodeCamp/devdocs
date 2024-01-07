@@ -9,6 +9,7 @@ module Docs
       }
 
       def call
+        @doc = at_css('main')
         root_page? ? root : other
         doc
       end
@@ -16,6 +17,9 @@ module Docs
       def root
         header = at_css('h1')
         header.parent.before(header).remove
+
+        # css('#above-the-fold-headline-code').remove
+        # css('#adopt-gradually-content').remove
 
         css('h4').each do |node|
           node.name = 'h2'

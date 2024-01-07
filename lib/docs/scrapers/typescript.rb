@@ -4,11 +4,13 @@ module Docs
 
     self.name = 'TypeScript'
     self.type = 'typescript'
-    self.release = '5.1.3'
+    self.release = '5.3.3'
     self.base_urls = [
       'https://www.typescriptlang.org/docs/handbook/',
       'https://www.typescriptlang.org/'
     ]
+
+    self.root_path = 'docs/'
 
     def initial_urls
       [ 'https://www.typescriptlang.org/docs/handbook/',
@@ -22,16 +24,24 @@ module Docs
 
     html_filters.push 'typescript/entries', 'typescript/clean_html', 'title'
 
-    options[:container] = 'main'
+    options[:fix_urls_before_parse] = ->(url) do
+      url.sub! '/docs/handbook/esm-node.html', '/docs/handbook/modules/reference.html#node16-nodenext'
+      url.sub! '/docs/handbook/modules.html', '/docs/handbook/modules/introduction.html'
+      url
+    end
 
     options[:skip] = [
       'react-&-webpack.html'
     ]
 
     options[:skip_patterns] = [
+      /\Abranding/,
+      /\Acommunity/,
+      /\Adocs\Z/,
+      /\Atools/,
       /release-notes/,
       /dt\/search/,
-      /play\//
+      /play/
     ]
 
     options[:attribution] = <<-HTML
