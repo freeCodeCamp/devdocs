@@ -1,7 +1,7 @@
 module Docs
   class JqueryCore < Jquery
     self.name = 'jQuery'
-    self.release = '3.6.0'
+    self.release = '3.7.1'
     self.base_url = 'https://api.jquery.com/'
     self.initial_paths = %w(/index/index)
     self.links = {
