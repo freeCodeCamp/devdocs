@@ -7,12 +7,10 @@ module Docs
       end
 
       def get_type
-        if subpath.include?('developer-guide')
-          'Developer Guide'
-        elsif subpath.include?('guide')
-          'Guide'
-        elsif subpath.start_with?('rules')
-          'Rules'
+        if subpath.start_with?('rules')
+          return 'Rules'
+        else
+          at_css('nav.docs-index [aria-current="true"]').ancestors('li')[-1].at_css('a').content
         end
       end
     end
