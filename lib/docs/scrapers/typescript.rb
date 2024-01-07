@@ -4,11 +4,6 @@ module Docs
 
     self.name = 'TypeScript'
     self.type = 'typescript'
-    self.release = '5.3.3'
-    self.base_urls = [
-      'https://www.typescriptlang.org/docs/handbook/',
-      'https://www.typescriptlang.org/'
-    ]
 
     self.root_path = 'docs/'
 
@@ -48,6 +43,18 @@ module Docs
       &copy; 2012-2023 Microsoft<br>
       Licensed under the Apache License, Version 2.0.
     HTML
+
+    version do
+      self.release = '5.3.3'
+      self.base_urls = [
+        'https://www.typescriptlang.org/docs/handbook/',
+        'https://www.typescriptlang.org/'
+      ]
+    end
+
+    version '5.1' do
+      self.release = '5.1.3'
+    end
 
     def get_latest_version(opts)
       get_latest_github_release('Microsoft', 'TypeScript', opts)
