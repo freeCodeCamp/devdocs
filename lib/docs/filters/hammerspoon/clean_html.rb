@@ -3,6 +3,8 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
 
+        at_css("#search").parent.remove if at_css("#search")
+
         # Remove script tags for functionality not needed in DevDocs
         css("script").remove
 

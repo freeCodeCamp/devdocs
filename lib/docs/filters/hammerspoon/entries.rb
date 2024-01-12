@@ -6,17 +6,15 @@ module Docs
       end
 
       def get_type
-        subpath.split("/")[0]
+        slug.split("/").first
       end
 
       def additional_entries
         return [] if root_page?
         entries = []
 
-        base_name = at_css("h1").content
-
         # add a base entry
-        entries << [base_name, nil, base_name]
+        entries << [name, nil, name]
 
         css("section").each do |section|
           title_node = section.at_css("h5")
@@ -53,7 +51,7 @@ module Docs
 
           # Create a new entry for each method/function
           if fn_type != "Unknown"
-            entries << ["#{base_name}.#{entry_name}", entry_id, base_name]
+            entries << ["#{name}.#{entry_name}", entry_id, name]
           end
 
         end
