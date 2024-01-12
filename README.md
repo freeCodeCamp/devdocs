@@ -10,9 +10,9 @@ Please reach out to the community on [Discord](https://discord.gg/PRyKn3Vbay) if
 
 Keep track of development news:
 
-* Join the devdocs chat room on [Discord](https://discord.gg/PRyKn3Vbay)
-* Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
-* Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
+- Join the devdocs chat room on [Discord](https://discord.gg/PRyKn3Vbay)
+- Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
+- Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 
 **Table of Contents:** [Quick Start](#quick-start) · [Vision](#vision) · [App](#app) · [Scraper](#scraper) · [Commands](#available-commands) · [Contributing](#contributing) · [Documentation](#documentation) · [Related Projects](#related-projects) · [License](#copyright--license) · [Questions?](#questions)
 
@@ -55,14 +55,14 @@ DevDocs aims to make reading and searching reference documentation fast, easy an
 
 The app's main goals are to:
 
-* Keep load times as short as possible
-* Improve the quality, speed, and order of search results
-* Maximize the use of caching and other performance optimizations
-* Maintain a clean and readable user interface
-* Be fully functional offline
-* Support full keyboard navigation
-* Reduce “context switch” by using a consistent typography and design across all documentations
-* Reduce clutter by focusing on a specific category of content (API/reference) and indexing only the minimum useful to most developers.
+- Keep load times as short as possible
+- Improve the quality, speed, and order of search results
+- Maximize the use of caching and other performance optimizations
+- Maintain a clean and readable user interface
+- Be fully functional offline
+- Support full keyboard navigation
+- Reduce “context switch” by using a consistent typography and design across all documentations
+- Reduce clutter by focusing on a specific category of content (API/reference) and indexing only the minimum useful to most developers.
 
 **Note:** DevDocs is neither a programming guide nor a search engine. All our content is pulled from third-party sources and the project doesn't intend to compete with full-text search engines. Its backbone is metadata; each piece of content is identified by a unique, "obvious" and short string. Tutorials, guides and other content that don't meet this requirement are outside the scope of the project.
 
@@ -76,10 +76,10 @@ Another driving factor is performance and the fact that everything happens in th
 
 DevDocs being a developer tool, the browser requirements are high:
 
-* Recent versions of Firefox, Chrome, or Opera
-* Safari 11.1+
-* Edge 17+
-* iOS 11.3+
+- Recent versions of Firefox, Chrome, or Opera
+- Safari 11.1+
+- Edge 17+
+- iOS 11.3+
 
 This allows the code to take advantage of the latest DOM and HTML5 APIs and make developing DevDocs a lot more fun!
 
@@ -91,12 +91,12 @@ There are currently two kinds of scrapers: `UrlScraper` which downloads files vi
 
 Modifications made to each document include:
 
-* removing content such as the document structure (`<html>`, `<head>`, etc.), comments, empty nodes, etc.
-* fixing links (e.g. to remove duplicates)
-* replacing all external (not scraped) URLs with their fully qualified counterpart
-* replacing all internal (scraped) URLs with their unqualified and relative counterpart
-* adding content, such as a title and link to the original document
-* ensuring correct syntax highlighting using [Prism](http://prismjs.com/)
+- removing content such as the document structure (`<html>`, `<head>`, etc.), comments, empty nodes, etc.
+- fixing links (e.g. to remove duplicates)
+- replacing all external (not scraped) URLs with their fully qualified counterpart
+- replacing all internal (scraped) URLs with their unqualified and relative counterpart
+- adding content, such as a title and link to the original document
+- ensuring correct syntax highlighting using [Prism](http://prismjs.com/)
 
 These modifications are applied via a set of filters using the [HTML::Pipeline](https://github.com/jch/html-pipeline) library. Each scraper includes filters specific to itself, one of which is tasked with figuring out the pages' metadata.
 
@@ -145,10 +145,10 @@ Contributions are welcome. Please read the [contributing guidelines](./.github/C
 
 ## Documentation
 
-* [Adding documentations to DevDocs](./docs/adding-docs.md)
-* [Scraper Reference](./docs/scraper-reference.md)
-* [Filter Reference](./docs/filter-reference.md)
-* [Maintainers’ Guide](./docs/maintainers.md)
+- [Adding documentations to DevDocs](./docs/adding-docs.md)
+- [Scraper Reference](./docs/scraper-reference.md)
+- [Filter Reference](./docs/filter-reference.md)
+- [Maintainers’ Guide](./docs/maintainers.md)
 
 ## Related Projects
 
@@ -179,7 +179,7 @@ Made something cool? Feel free to open a PR to add a new row to this table! You 
 
 ## Copyright / License
 
-Copyright 2013–2023 Thibaut Courouble and [other contributors](https://github.com/freeCodeCamp/devdocs/graphs/contributors)
+Copyright 2013–2024 Thibaut Courouble and [other contributors](https://github.com/freeCodeCamp/devdocs/graphs/contributors)
 
 This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](./COPYRIGHT) and [LICENSE](./LICENSE) files.
 
