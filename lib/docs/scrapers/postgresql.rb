@@ -56,7 +56,7 @@ module Docs
     HTML
 
     version '16' do
-      self.release = '16.0'
+      self.release = '16.1'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
     
