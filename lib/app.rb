@@ -94,7 +94,7 @@ class App < Sinatra::Application
       ]
 
     sprockets.js_compressor = Terser.new
-    sprockets.css_compressor = :sassc
+    sprockets.css_compressor = :sass
 
     Sprockets::Helpers.configure do |config|
       config.digest = true
