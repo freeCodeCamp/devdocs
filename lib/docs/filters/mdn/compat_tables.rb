@@ -27,15 +27,14 @@ module Docs
         'chrome' => 'Chrome',
         'edge' => 'Edge',
         'firefox' => 'Firefox',
-        'ie' => 'Internet Explorer',
         'opera' => 'Opera',
         'safari' => 'Safari',
-        'webview_android' => 'WebView Android',
         'chrome_android' => 'Chrome Android',
         'firefox_android' => 'Firefox for Android',
         'opera_android' => 'Opera Android',
         'safari_ios' => 'Safari on IOS',
-        'samsunginternet_android' => 'Samsung Internet'
+        'samsunginternet_android' => 'Samsung Internet',
+        'webview_android' => 'WebView Android',
       }
 
       def is_javascript
