@@ -56,7 +56,7 @@ module Docs
         elsif PREPEND_TYPES.include?(type) || type.start_with?('Internals')
           "#{type.remove('Internals: ')}: #{base_name}"
         else
-          REPLACE_NAMES[base_name] || base_name
+          REPLACE_NAMES[base_name] || base_name.strip
         end
       end
 
