@@ -34,6 +34,7 @@ GEM
     exifr (1.4.0)
     ffi (1.15.5)
     fspath (3.1.2)
+    google-protobuf (3.25.2)
     highline (2.0.3)
     html-pipeline (2.14.3)
       activesupport (>= 2)
@@ -92,8 +93,11 @@ GEM
     rss (0.3.0)
       rexml
     ruby2_keywords (0.0.5)
-    sassc (2.4.0)
-      ffi (~> 1.9)
+    sass-embedded (1.69.7)
+      google-protobuf (~> 3.25)
+      rake (>= 13.0.0)
+    sassc-embedded (1.69.1)
+      sass-embedded (~> 1.69)
     sinatra (3.2.0)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
@@ -163,7 +167,7 @@ DEPENDENCIES
   redcarpet
   rr
   rss
-  sassc
+  sassc-embedded
   sinatra
   sinatra-contrib
   sprockets

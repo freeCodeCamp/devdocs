@@ -20,7 +20,7 @@ group :app do
   gem 'rack-ssl-enforcer'
   gem 'rack'
   gem 'rss'
-  gem 'sassc'
+  gem 'sassc-embedded'
   gem 'sinatra-contrib'
   gem 'sinatra'
   gem 'sprockets-helpers'
