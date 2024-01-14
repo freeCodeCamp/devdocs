@@ -16,12 +16,17 @@ module Docs
     options[:max_image_size] = 256_000
 
     options[:attribution] = <<-HTML
-    &copy; 2019 Torch Contributors<br>
+    &copy; 2019-2024 Torch Contributors<br>
     Licensed under the 3-clause BSD License.
     HTML
 
-    version do
-      self.release = '1.8.0'
+    version '2' do
+      self.release = '2.1'
+      self.base_url = "https://pytorch.org/docs/#{release}/"
+    end
+
+    version '1' do
+      self.release = '1.13'
       self.base_url = "https://pytorch.org/docs/#{release}/"
     end
 

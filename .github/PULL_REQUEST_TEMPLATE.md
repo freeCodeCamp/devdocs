@@ -22,7 +22,7 @@ If you’re adding a new scraper, please ensure that you have:
 If you're updating existing documentation to its latest version, please ensure that you have:
 
 - [ ] Updated the versions and releases in the scraper file
-- [ ] Ensured the license is up-to-date and that the documentation's entry in the array in `about_tmpl.coffee` matches its data in `self.attribution`
+- [ ] Ensured the license is up-to-date
 - [ ] Ensured the icons and the `SOURCE` file in <code>public/icons/*your_scraper_name*/</code> are up-to-date if the documentation has a custom icon
 - [ ] Ensured `self.links` contains up-to-date urls if `self.links` is defined
 - [ ] Tested the changes locally to ensure:
