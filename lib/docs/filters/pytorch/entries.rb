@@ -13,7 +13,7 @@ module Docs
         # The id of the container `div.section` indicates the page type.
         # If the id starts with `module-`, then it's an API reference,
         # otherwise it is a note or design doc.
-        section_id = at_css('.section')['id']
+        section_id = at_css('.section[id], section[id]')['id']
         if section_id.starts_with? 'module-'
           section_id.remove('module-')
         else

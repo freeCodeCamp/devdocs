@@ -20,83 +20,13 @@ module Docs
     Licensed under the 3-clause BSD License.
     HTML
 
-    version '2.1' do
+    version '2' do
       self.release = '2.1'
       self.base_url = "https://pytorch.org/docs/#{release}/"
     end
 
-    version '2.0' do
-      self.release = '2.0'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.13' do
+    version '1' do
       self.release = '1.13'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.12' do
-      self.release = '1.12'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.11' do
-      self.release = '1.11'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.10' do
-      self.release = '1.10'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.9' do
-      self.release = '1.9.1'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.8' do
-      self.release = '1.8.1'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.7' do
-      self.release = '1.7.1'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.6' do
-      self.release = '1.6.0'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.5' do
-      self.release = '1.5.1'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.4' do
-      self.release = '1.4.0'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.3' do
-      self.release = '1.3.1'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.2' do
-      self.release = '1.2.0'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.1' do
-      self.release = '1.1.0'
-      self.base_url = "https://pytorch.org/docs/#{release}/"
-    end
-
-    version '1.0' do
-      self.release = '1.0.1'
       self.base_url = "https://pytorch.org/docs/#{release}/"
     end
 
