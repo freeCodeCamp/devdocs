@@ -19,7 +19,7 @@ jobs:
     - name: Run tests
       run: bundle exec rake
     - name: Deploy to Heroku
-      uses: akhileshns/heroku-deploy@9fd0f9faae4aa93a38d6f5e25b9128589f1371b0 # v3.12.14
+      uses: akhileshns/heroku-deploy@581dd286c962b6972d427fcf8980f60755c15520 # v3.13.15
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "devdocs"
