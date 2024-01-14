@@ -20,11 +20,10 @@ group :app do
   gem 'rack-ssl-enforcer'
   gem 'rack'
   gem 'rss'
-  gem 'sass'
+  gem 'sassc'
   gem 'sinatra-contrib'
   gem 'sinatra'
   gem 'sprockets-helpers'
-  gem 'sprockets-sass'
   gem 'sprockets'
   gem 'thin'
 end
