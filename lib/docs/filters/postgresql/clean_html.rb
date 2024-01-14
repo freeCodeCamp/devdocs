@@ -88,6 +88,8 @@ module Docs
           node.remove_attribute 'class'
           node.remove_attribute 'style'
         end
+
+        css('.id_link').remove
       end
     end
   end
