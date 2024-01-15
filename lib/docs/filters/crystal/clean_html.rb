@@ -23,6 +23,8 @@ module Docs
 
         at_css('h1 + p').remove if current_url.path == "/api/#{release}/index.html"
 
+        css('a[href="https://manas.tech/"]').remove
+
         css('.method-permalink', '.doc + br', 'hr', 'a > br', 'div + br').remove
 
         css('pre > code').each do |node|
