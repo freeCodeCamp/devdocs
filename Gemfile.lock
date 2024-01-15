@@ -136,7 +136,7 @@ GEM
       strings (~> 0.2.0)
       tty-screen (~> 0.8)
     tty-screen (0.8.1)
-    typhoeus (1.4.0)
+    typhoeus (1.4.1)
       ethon (>= 0.9.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
