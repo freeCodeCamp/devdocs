@@ -161,6 +161,19 @@ curl https://v2.ocaml.org/releases/$VERSION/ocaml-$VERSION-refman-html.tar.gz | 
 tar xz --transform 's/htmlman/ocaml/' --directory docs/
 ```
 
+## Opengl
+
+Clone https://github.com/KhronosGroup/OpenGL-Refpages.git
+
+```sh
+DEVDOCS_ROOT=/path/to/devdocs
+git clone https://github.com/KhronosGroup/OpenGL-Refpages.git
+mkdir $DEVDOCS_ROOT/docs/opengl~gl4
+mkdir $DEVDOCS_ROOT/docs/opengl~gl2.1
+cp -r OpenGL-Refpages/gl4/html/* "$DEVDOCS_ROOT/docs/opengl~gl4"
+cp -r OpenGL-Refpages/gl2.1/xhtml/* "$DEVDOCS_ROOT/docs/opengl~gl2.1"
+```
+
 ## OpenJDK
 Search 'Openjdk' in https://www.debian.org/distrib/packages, find the `openjdk-$VERSION-doc` package,
 download it, extract it with `dpkg -x $PACKAGE ./` and move `./usr/share/doc/openjdk-16-jre-headless/api/`
