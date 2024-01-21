@@ -168,10 +168,10 @@ Clone https://github.com/KhronosGroup/OpenGL-Refpages.git
 ```sh
 DEVDOCS_ROOT=/path/to/devdocs
 git clone https://github.com/KhronosGroup/OpenGL-Refpages.git
-mkdir $DEVDOCS_ROOT/docs/opengl~gl4
-mkdir $DEVDOCS_ROOT/docs/opengl~gl2.1
-cp -r OpenGL-Refpages/gl4/html/* "$DEVDOCS_ROOT/docs/opengl~gl4"
-cp -r OpenGL-Refpages/gl2.1/xhtml/* "$DEVDOCS_ROOT/docs/opengl~gl2.1"
+mkdir $DEVDOCS_ROOT/docs/opengl~4
+mkdir $DEVDOCS_ROOT/docs/opengl~2.1
+cp -r OpenGL-Refpages/gl4/html/* "$DEVDOCS_ROOT/docs/opengl~4"
+cp -r OpenGL-Refpages/gl2.1/xhtml/* "$DEVDOCS_ROOT/docs/opengl~2.1"
 ```
 
 ## OpenJDK
