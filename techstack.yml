@@ -1,0 +1,597 @@
+repo_name: freeCodeCamp/devdocs
+report_id: 281e8991a46b88702952b7b18dd5e2b0
+version: 0.1
+repo_type: Public
+timestamp: '2024-01-27T03:50:22+00:00'
+requested_by: renovate[bot]
+provider: github
+branch: main
+detected_tools_count: 43
+tools:
+- name: CSS 3
+  description: The latest evolution of the Cascading Style Sheets language
+  website_url: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS3
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/6727/css.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs
+  detection_source: Repo Metadata
+- name: JavaScript
+  description: Lightweight, interpreted, object-oriented language with first-class
+    functions
+  website_url: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source_url: https://github.com/freeCodeCamp/devdocs
+  detection_source: Repo Metadata
+- name: Ruby
+  description: A dynamic, interpreted, open source programming language with a focus
+    on simplicity and productivity
+  website_url: https://www.ruby-lang.org
+  version: 3.3.0
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/989/ruby.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Repo Metadata
+  last_updated_by: Thibaut
+  last_updated_on: 2013-10-24 18:25:52.000000000 Z
+- name: Sinatra
+  description: Classy web-development dressed in a DSL
+  website_url: http://www.sinatrarb.com/
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Microframeworks (Backend)
+  image_url: https://img.stackshare.io/service/999/logo.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: Capybara
+  description: Acceptance test framework for web applications
+  website_url: http://jnicklas.github.io/capybara/
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Testing Frameworks
+  image_url: https://img.stackshare.io/service/2595/capybara.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile
+  detection_source: Gemfile
+  last_updated_by: Thibaut
+  last_updated_on: 2014-01-26 21:01:54.000000000 Z
+- name: Docker
+  description: Enterprise Container Platform for High-Velocity Innovation.
+  website_url: https://www.docker.com/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Virtual Machine Platforms & Containers
+  image_url: https://img.stackshare.io/service/586/n4u37v9t_400x400.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs
+  detection_source: Repo Metadata
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs
+  detection_source: Repo Metadata
+- name: GitHub Actions
+  description: Automate your workflow from idea to production
+  website_url: https://github.com/features/actions
+  open_source: false
+  hosted_saas: true
+  category: Build, Test, Deploy
+  sub_category: Continuous Integration
+  image_url: https://img.stackshare.io/service/11563/actions.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/.github/workflows/build.yml
+  detection_source: ".github/workflows/build.yml"
+  last_updated_by: renovate[bot]
+  last_updated_on: 2023-03-25 01:01:01.000000000 Z
+- name: New Relic
+  description: New Relic is the industry’s largest and most comprehensive cloud-based
+    observability platform.
+  website_url: http://newrelic.com
+  open_source: false
+  hosted_saas: true
+  category: Monitoring
+  sub_category: Performance Monitoring
+  image_url: https://img.stackshare.io/service/103/default_193410db3a7e419c7b436961bf41d733c7346b59.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile
+  detection_source: Gemfile
+  last_updated_by: Thibaut Courouble
+  last_updated_on: 2018-03-24 19:06:19.000000000 Z
+- name: RubyGems
+  description: Easily download, install, and use ruby software packages on your system
+  website_url: https://rubygems.org/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/service/12795/5jL6-BA5_400x400.jpeg
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile
+  detection_source: Gemfile
+  last_updated_by: Thibaut
+  last_updated_on: 2013-10-24 18:25:52.000000000 Z
+- name: npm
+  description: The package manager for JavaScript.
+  website_url: https://www.npmjs.com/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Front End Package Manager
+  image_url: https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile
+  detection_source: Gemfile
+  last_updated_by: Thibaut
+  last_updated_on: 2013-10-24 18:25:52.000000000 Z
+- name: activesupport
+  description: A toolkit of support libraries and Ruby core extensions extracted from
+    the Rails framework
+  package_url: https://rubygems.org/activesupport
+  version: 7.1.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18817/default_b17f14dbef6c1275120b34d9ec2eff5942499bd5.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: better_errors
+  description: Provides a better error page for Rails and other Rack apps
+  package_url: https://rubygems.org/better_errors
+  version: 2.10.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/19224/default_90da4313847baa579409c050c1ebb8de5a6e0fbc.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Thibaut
+  last_updated_on: 2013-10-24 18:25:52.000000000 Z
+- name: browser
+  description: Do some browser detection with Ruby
+  package_url: https://rubygems.org/browser
+  version: 5.3.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/19740/default_dd31b4f280886d69f8a43459d55ecc7f1ae44486.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: chunky_png
+  description: This pure Ruby library can read and write PNG images without depending
+    on an external image library, like RMagick
+  package_url: https://rubygems.org/chunky_png
+  version: 1.4.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/19118/default_ab0024f54be625eb1e21abc015158fc74b2e3704.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: erubi
+  description: Erubi is a ERB template engine for ruby
+  package_url: https://rubygems.org/erubi
+  version: 1.12.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/rubygems/image.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: html-pipeline
+  description: GitHub HTML processing filters and utilities
+  package_url: https://rubygems.org/html-pipeline
+  version: 2.14.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/19386/default_b0770ebdd12e1eb479a98261d0175b1714524f87.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Thibaut Courouble
+  last_updated_on: 2018-10-21 22:41:35.000000000 Z
+- name: image_optim
+  description: Command line tool and ruby interface to optimize
+  package_url: https://rubygems.org/image_optim
+  version: 0.31.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/19798/default_5acb201e8340ca5b337b8c46c2fcaff7aa0db0ec.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: image_optim_pack
+  description: 'Precompiled binaries for image_optim: advpng'
+  package_url: https://rubygems.org/image_optim_pack
+  version: 0.10.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/rubygems/image.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: minitest
+  description: Minitest provides a complete suite of testing facilities supporting
+    TDD, BDD, mocking, and benchmarking
+  package_url: https://rubygems.org/minitest
+  version: 5.21.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18818/default_f36df1cfa9ff6061d7f9b4879088be8538581c49.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Thibaut
+  last_updated_on: 2015-01-03 15:38:22.000000000 Z
+- name: net-sftp
+  description: A pure Ruby implementation of the SFTP client protocol
+  package_url: https://rubygems.org/net-sftp
+  version: 4.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/19106/default_92b412aaa5197ea1fc2d70a503018e4186714110.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: newrelic_rpm
+  description: New Relic is a performance management system, developed by New Relic,
+    Inc
+  package_url: https://rubygems.org/newrelic_rpm
+  version: 8.16.0
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/19246/default_518f3430d0c3ea4653c591ebd7e75da67f51cfaf.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Thibaut Courouble
+  last_updated_on: 2018-03-24 19:06:19.000000000 Z
+- name: nokogiri
+  description: Nokogiri
+  package_url: https://rubygems.org/nokogiri
+  version: 1.16.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18823/default_b8fbb83e23c963442e15398c5b56262cc6267d6f.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Thibaut Courouble
+  last_updated_on: 2018-10-21 22:41:35.000000000 Z
+- name: progress_bar
+  description: 'Give people feedback about long-running tasks without overloading
+    them with information: Use a progress bar'
+  package_url: https://rubygems.org/progress_bar
+  version: 1.3.3
+  license: WTFPL
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/19696/default_2312d4d1847ef96af6bbd57ed9959234ab92321c.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Thibaut
+  last_updated_on: 2014-01-26 21:01:54.000000000 Z
+- name: pry-byebug
+  description: Combine 'pry' with 'byebug'
+  package_url: https://rubygems.org/pry-byebug
+  version: 3.10.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18848/default_1c2935fa69cec14d38adad302e002464101cd71f.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: rack
+  description: Rack provides a minimal, modular and adaptable interface for developing
+    web applications in Ruby
+  package_url: https://rubygems.org/rack
+  version: 2.2.8
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18839/default_db5cfb0d85d9fd8bfb40a863581417a2a57791ab.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: rack-ssl-enforcer
+  description: Rack::SslEnforcer is a simple Rack middleware to enforce ssl connections
+  package_url: https://rubygems.org/rack-ssl-enforcer
+  version: 0.2.9
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/rubygems/image.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: rack-test
+  description: Rack::Test is a small, simple testing API for Rack apps
+  package_url: https://rubygems.org/rack-test
+  version: 2.1.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18845/default_db5cfb0d85d9fd8bfb40a863581417a2a57791ab.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: rake
+  description: Rake is a Make-like program implemented in Ruby
+  package_url: https://rubygems.org/rake
+  version: 13.1.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18812/default_f582e4648f4682adb72d2b201218cda7f8e894ac.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: redcarpet
+  description: A fast, safe and extensible Markdown to
+  package_url: https://rubygems.org/redcarpet
+  version: 3.6.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18853/default_b87d202e13d56f87c63181fa49bc5e099c9abaac.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: rr
+  description: RR is a test double framework that features a rich selection of double
+    techniques and a terse syntax
+  package_url: https://rubygems.org/rr
+  version: 3.1.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18915/default_353d3fd998e68372ebd6d80dbb4c0632f387d091.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Thibaut
+  last_updated_on: 2013-10-24 18:25:52.000000000 Z
+- name: sass
+  description: Ruby Sass is deprecated! See https://sass-lang.com/ruby-sass for details
+  package_url: https://rubygems.org/sass
+  version: 3.7.4
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18882/default_b1cb499f3e62fe773109c989f76e3365fbe49857.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Simon Legner
+  last_updated_on: 2024-01-13 21:26:48.000000000 Z
+- name: selenium-webdriver
+  description: WebDriver is a tool for writing automated tests of websites
+  package_url: https://rubygems.org/selenium-webdriver
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18901/default_f0ad2b1ffbe10fdd866f9f8e5f812599d9e8085b.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile
+  detection_source: Gemfile
+  last_updated_by: Thibaut
+  last_updated_on: 2014-01-26 21:01:54.000000000 Z
+- name: sinatra-contrib
+  description: Collection of useful Sinatra extensions
+  package_url: https://rubygems.org/sinatra-contrib
+  version: 3.2.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/19010/default_4361ccfae4dee655802081d8182ddcaebd7a2b3f.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: sprockets
+  description: Sprockets is a Rack-based asset packaging system that concatenates
+    and serves JavaScript
+  package_url: https://rubygems.org/sprockets
+  version: 3.7.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18932/default_36bbb38c1cd5521e90d6e99982778960b00ec515.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Simon Legner
+  last_updated_on: 2024-01-13 21:26:48.000000000 Z
+- name: sprockets-helpers
+  description: Asset path helpers for Sprockets 2.x &amp;amp; 3.x applications
+  package_url: https://rubygems.org/sprockets-helpers
+  version: 1.4.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/19732/default_be22d39d0c697424d0da2019daf25b87c93b4c6e.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Simon Legner
+  last_updated_on: 2024-01-13 21:26:48.000000000 Z
+- name: sprockets-sass
+  description: When using Sprockets 2.0 with Sass you will eventually run into a pretty
+    big issue
+  package_url: https://rubygems.org/sprockets-sass
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/19683/default_5a5984fb57132e73bff841a1ebf058577d3c8cb9.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile
+  detection_source: Gemfile
+  last_updated_by: Simon Legner
+  last_updated_on: 2024-01-13 21:26:48.000000000 Z
+- name: terminal-table
+  description: Simple, feature rich ascii table generation library
+  package_url: https://rubygems.org/terminal-table
+  version: 3.0.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18923/default_401820e785202ca0018a36ea3e12ee9a92b3efac.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Jasper van Merle
+  last_updated_on: 2019-10-11 15:55:09.000000000 Z
+- name: thin
+  description: A thin and fast web server
+  package_url: https://rubygems.org/thin
+  version: 1.8.2
+  license: GPL-2.0+,Ruby
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18900/default_f0ad2b1ffbe10fdd866f9f8e5f812599d9e8085b.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: thor
+  description: Thor is a toolkit for building powerful command-line interfaces
+  package_url: https://rubygems.org/thor
+  version: 1.3.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18827/default_fa0604c1b3b2c413c942b4fa310935704d314c2f.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: tty-pager
+  description: Terminal output paging in a cross-platform way supporting all major
+    ruby interpreters
+  package_url: https://rubygems.org/tty-pager
+  version: 0.14.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/rubygems/image.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Thibaut Courouble
+  last_updated_on: 2016-01-24 15:03:12.000000000 Z
+- name: typhoeus
+  description: Like a modern code version of the mythical beast with 100 serpent heads
+  package_url: https://rubygems.org/typhoeus
+  version: 1.4.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18891/default_b7088ec778267614a78a5a472c67252ec1721d10.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Paul Sernatinger
+  last_updated_on: 2022-11-14 14:30:30.000000000 Z
+- name: yajl-ruby
+  description: Ruby C bindings to the excellent Yajl JSON stream-based parser library
+  package_url: https://rubygems.org/yajl-ruby
+  version: 1.4.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: RubyGems Packages
+  image_url: https://img.stackshare.io/package/18895/default_9386886dd1c6c396a11bd4b49732afb9ec444f8d.png
+  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
+  detection_source: Gemfile
+  last_updated_by: Nicholas La Roux
+  last_updated_on: 2024-01-09 12:48:51.000000000 Z
