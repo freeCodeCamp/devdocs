@@ -1,7 +1,6 @@
 module Docs
   class Nim < UrlScraper
     self.type = 'simple'
-    self.release = '2.0.2'
     self.base_url = 'https://nim-lang.org/docs/'
     self.root_path = 'overview.html'
     self.links = {
@@ -17,6 +16,14 @@ module Docs
       &copy; 2006&ndash;2024 Andreas Rumpf<br>
       Licensed under the MIT License.
     HTML
+
+    version do
+      self.release = '2.0.2'
+    end
+
+    version '1' do
+      self.release = '1.4.8'
+    end
 
     def get_latest_version(opts)
       doc = fetch_doc('https://nim-lang.org/docs/overview.html', opts)
