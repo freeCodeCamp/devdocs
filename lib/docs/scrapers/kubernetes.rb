@@ -34,11 +34,6 @@ module Docs
       self.base_url = "https://v#{version.sub('.', '-')}.docs.kubernetes.io/docs/reference/kubernetes-api/"
     end
 
-   version '1.27' do
-      self.release = "#{version}"
-      self.base_url = "https://v#{version.sub('.', '-')}.docs.kubernetes.io/docs/reference/kubernetes-api/"
-    end
-
    version '1.26' do
       self.release = "#{version}"
       self.base_url = "https://v#{version.sub('.', '-')}.docs.kubernetes.io/docs/reference/kubernetes-api/"
