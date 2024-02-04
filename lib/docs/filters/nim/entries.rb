@@ -16,8 +16,10 @@ module Docs
         name.remove! ' User Guide'
         name.remove! ' User\'s manual'
         name.remove! %r{ \-.*}
+        name.remove! %r{\Asrc/}
+        name.remove! %r{\Astd/}
         name.strip!
-        name
+        name.split("/").last
       end
 
       def get_type
@@ -58,7 +60,7 @@ module Docs
             entry_name = match[1] || match[2]
 
             entry_id = slug + node['href']
-            entries << [entry_name, entry_id, name]
+            entries << ["#{entry_name} (#{name})", entry_id, name]
           end
 
         end
