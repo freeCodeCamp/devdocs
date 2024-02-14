@@ -1,6 +1,6 @@
 module Docs
     class Nextjs < UrlScraper
-        self.name = 'nextjs'
+        self.name = 'NextJS'
         self.type = 'simple'
         self.release = 'v14.1.0'
         self.base_url = 'https://nextjs.org/docs'
