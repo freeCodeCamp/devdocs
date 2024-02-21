@@ -4,12 +4,14 @@ module Docs
       def get_name
         name = at_css('h1').content
         name.sub! %r{\s*#\s*}, ''
+        name.sub! %r{\s*\u200B\s*}, ''
         name
       end
 
       def get_type
         name = at_css('h1').content
         name.sub! %r{\s*#\s*}, ''
+        name.sub! %r{\s*\u200B\s*}, ''
         name
       end
 
