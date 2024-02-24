@@ -7,6 +7,8 @@ module Docs
                 css('div:contains("NEWS:")').remove
                 css('h2:contains("sponsors"), #sponsor-table').remove
                 css('div.sticky').remove #remove the floating menu
+                css('footer').remove
+                css('div.feedback_inlineTriggerWrapper__o7yUx').remove
                 doc
             end
         end
