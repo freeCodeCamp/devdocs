@@ -9,6 +9,8 @@ module Docs
                 css('div.sticky').remove #remove the floating menu
                 css('footer').remove
                 css('div.feedback_inlineTriggerWrapper__o7yUx').remove
+                css('header').remove #remove links from the top of the page
+                css('nav').remove
                 doc
             end
         end
