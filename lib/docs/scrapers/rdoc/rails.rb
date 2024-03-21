@@ -76,7 +76,7 @@ module Docs
     end
 
     version '7.1' do
-      self.release = '7.1.2'
+      self.release = '7.1.3'
     end
 
     version '7.0' do
