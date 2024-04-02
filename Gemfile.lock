@@ -126,7 +126,7 @@ GEM
     strings-ansi (0.2.0)
     terminal-table (3.0.2)
       unicode-display_width (>= 1.1.1, < 3)
-    terser (1.2.1)
+    terser (1.2.2)
       execjs (>= 0.3.0, < 3)
     thin (1.8.2)
       daemons (~> 1.0, >= 1.0.9)
