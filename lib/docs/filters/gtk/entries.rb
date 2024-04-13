@@ -4,7 +4,7 @@ module Docs
       # The GTK documentation paths are "flat" and while the contents of each
       # page provides a way to determine the direct parent relationship, we
       # really need a full hierarchy of pages *a priori* to be able to fully
-      # categorize all pages and entries. So we're going to recursivly generate
+      # categorize all pages and entries. So we're going to recursively generate
       # a full map of page -> parent relationships from the table of contents...
       PARENT_BY_PATH = {}
 

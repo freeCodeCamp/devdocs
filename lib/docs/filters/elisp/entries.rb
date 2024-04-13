@@ -2,7 +2,7 @@ module Docs
   class Elisp
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        # remove numbers at the beginnig
+        # remove numbers at the beginning
         name = at_css('.chapter', '.section', '.subsection', '.subsubsection', '.appendix').content.slice(/[[:alpha:]]...*/)
 
         # remove 'Appendix' word
