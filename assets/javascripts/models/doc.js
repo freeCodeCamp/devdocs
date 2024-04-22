@@ -71,9 +71,14 @@ app.models.Doc = class Doc extends app.Model {
     return this.entry;
   }
 
+  encodePath(path) {
+    return path.replace(/@/g, "%40");
+  }
+
   findEntryByPathAndHash(path, hash) {
     let entry;
-    if (hash && (entry = this.entries.findBy("path", `${path}#${hash}`))) {
+    let encodedPath = this.encodePath(path);
+    if (hash && (entry = this.entries.findBy("path", `${encodedPath}#${hash}`))) {
       return entry;
     } else if (path === "index") {
       return this.toEntry();
