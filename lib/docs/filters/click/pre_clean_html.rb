@@ -2,7 +2,7 @@ module Docs
   class Click
     class PreCleanHtmlFilter < Filter
       def call
-        # Remove ¶ character from tag w/ name & type
+        # Remove ¶ character from headers
         css('.headerlink').remove
         doc
       end
