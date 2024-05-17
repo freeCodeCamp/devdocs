@@ -1,8 +1,19 @@
 module Docs
   class Click
     class EntriesFilter < Docs::EntriesFilter
+      TYPE_BY_SLUG = {}
 
-      def initialize(*)
+      def call
+        if root_page?
+          css('section').each do |node|
+            next if ['documentation', 'api-reference'].include?(node['id'])
+            type = node.at_css('h2').content.strip
+            node.css('li > a').each do |toclink|
+              slug = toclink['href'].split('/')[-2]
+              TYPE_BY_SLUG[slug] = type
+            end
+          end
+        end
         super
       end
 
@@ -11,15 +22,15 @@ module Docs
       end
 
       def get_type
-        return at_css('h1').content.strip
+        TYPE_BY_SLUG[slug.split('/').first] || at_css('h1').content.strip
       end
 
       def include_default_entry?
-        false
+        TYPE_BY_SLUG.include?(slug.split('/').first)
       end
 
       def additional_entries
-        return [] if root_page?
+        return [] if root_page? || TYPE_BY_SLUG.include?(slug.split('/').first)
 
         if slug == 'api/'
           entries = []
