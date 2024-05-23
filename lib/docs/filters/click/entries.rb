@@ -36,8 +36,10 @@ module Docs
           entries = []
           doc.css('> section').each do |section|
             title = section.at_css('h2').content.strip
-            section.css('> dl.py > dt[id]').each do |dt|
-              entries << [dt['id'], dt['id'], title]
+            section.css('dl.py > dt[id]').each do |dt|
+              name = dt['id'].split('.')[1..].join('.')
+              name << '()' if dt.parent.classes.intersect?(['function', 'method', 'classmethod', 'staticmethod'])
+              entries << [name, dt['id'], title]
             end
           end
           return entries
