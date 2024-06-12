@@ -14,25 +14,25 @@ module Docs
       end
 
       def get_type
-        if subpath.include?('/architecture')
+        if slug.start_with?('architecture')
           'Architecture'
-        elsif subpath.include?('/community')
+        elsif slug.start_with?('community')
           'Community'
-        elsif subpath.include?('/getting-started')
+        elsif slug.start_with?('getting-started')
           'Getting Started'
-        elsif subpath.include?('/messages')
+        elsif slug.start_with?('messages')
           'Messages'
-        elsif subpath.include?('/app/building-your-application')
+        elsif slug.start_with?('app/building-your-application')
           'Using App Router: Building your application'
-        elsif subpath.include?('/app/api-reference')
+        elsif slug.start_with?('app/api-reference')
           'Using App Router: api-reference'
-        elsif subpath.include?('/app')
+        elsif slug.start_with?('app')
           'Using App Router'
-        elsif subpath.include?('/pages/building-your-application')
+        elsif slug.start_with?('pages/building-your-application')
           'Using Pages Router: Building your application'
-        elsif subpath.include?('/pages/api-reference')
+        elsif slug.start_with?('pages/api-reference')
           'Using Pages Router: api-reference'
-        elsif subpath.include?('/pages')
+        elsif slug.start_with?('pages')
           'Using Pages Router'
         else
           get_name
