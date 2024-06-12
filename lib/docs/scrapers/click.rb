@@ -20,50 +20,8 @@ module Docs
       We are not supported nor endorsed by Pallets.
     HTML
 
-    version '8.1' do
-      self.release = '8.1.x'
-      self.base_url = "https://click.palletsprojects.com/en/#{self.release}/"
-    end
-
-    version '8.0' do
-      self.release = '8.0.x'
-      self.base_url = "https://click.palletsprojects.com/en/#{self.release}/"
-    end
-
-    version '7' do
-      self.release = '7.x'
-      self.base_url = "https://click.palletsprojects.com/en/#{self.release}/"
-    end
-
-    version '6' do
-      self.release = '6.x'
-      self.base_url = "https://click.palletsprojects.com/en/#{self.release}/"
-    end
-
-    version '5' do
-      self.release = '5.x'
-      self.base_url = "https://click.palletsprojects.com/en/#{self.release}/"
-    end
-
-    version '4' do
-      self.release = '4.x'
-      self.base_url = "https://click.palletsprojects.com/en/#{self.release}/"
-    end
-
-    version '3' do
-      self.release = '3.x'
-      self.base_url = "https://click.palletsprojects.com/en/#{self.release}/"
-    end
-
-    version '2' do
-      self.release = '2.x'
-      self.base_url = "https://click.palletsprojects.com/en/#{self.release}/"
-    end
-
-    version '1' do
-      self.release = '1.x'
-      self.base_url = "https://click.palletsprojects.com/en/#{self.release}/"
-    end
+    self.release = '8.1.x'
+    self.base_url = "https://click.palletsprojects.com/en/#{self.release}/"
 
     def get_latest_version(opts)
       get_latest_github_release('pallets', 'click', opts)
