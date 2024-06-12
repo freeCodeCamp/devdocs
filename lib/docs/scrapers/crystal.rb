@@ -36,7 +36,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://crystal-lang.org/', opts)
-      doc.at_css('.latest-release').content.scan(/([0-9.]+)/)[0][0]
+      doc.at_css('.latest-release-info > a > strong').content.scan(/([0-9.]+)/)[0][0]
     end
   end
 end

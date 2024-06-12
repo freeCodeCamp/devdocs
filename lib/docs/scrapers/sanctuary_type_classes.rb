@@ -23,7 +23,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get-npm-version("sanctuary-type-classes", opts)
+      get_npm_version("sanctuary-type-classes", opts)
     end
   end
 end
