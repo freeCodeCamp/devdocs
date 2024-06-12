@@ -15,7 +15,7 @@ module Docs
         group = 'kubectl'
         commands = css('h1').to_a()
         commands.map do |node|
-          # handle titles differnetly by converting them into sidebar groups (types)
+          # handle titles differently by converting them into sidebar groups (types)
           new_group = at_css("##{node['id']} > strong")
           if new_group
             group = new_group.content.titleize
