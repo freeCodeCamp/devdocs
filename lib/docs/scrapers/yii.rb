@@ -8,9 +8,8 @@ module Docs
     HTML
 
     version '2.0' do
-      self.release = '2.0.12'
-      self.base_url = 'http://www.yiiframework.com/doc-2.0/'
-      self.root_path = 'index.html'
+      self.release = '2.0.50'
+      self.base_url = 'https://www.yiiframework.com/doc/api/2.0'
       self.links = {
         home: 'http://www.yiiframework.com/',
         code: 'https://github.com/yiisoft/yii2'
