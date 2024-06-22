@@ -33,8 +33,12 @@ RUN addgroup -g $GROUP_ID $USERNAME && \
 FROM devdocs-base as devdocs-dev
 RUN bundle config unset without && \
     bundle install && \
-    apk add --update bash && \
-    rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache
+    apk add --update bash curl && \
+    curl -LO https://download.docker.com/linux/static/stable/x86_64/docker-26.1.4.tgz && \
+    tar -xzf docker-26.1.4.tgz && \
+    mv docker/docker /usr/bin && \
+    rm -rf docker docker-26.1.4.tgz && \
+    rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache 
 
 VOLUME [ "/devdocs" ]
 CMD bash
