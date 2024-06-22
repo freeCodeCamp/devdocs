@@ -1,9 +1,15 @@
 {
     "name": "DevDocs Dev Container",
-    "remoteUser": "devdocs",
-    "build": {
-        "context": "../",
-        "dockerfile": "../Dockerfile",
-        "target": "devdocs-dev"
+    "image": "devdocs-dev:latest",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "Shopify.ruby-lsp",
+                "streetsidesoftware.code-spell-checker",
+                "mhutchie.git-graph",
+                "github.vscode-github-actions",
+                "ms-azuretools.vscode-docker"
+            ]
+        }
     }
 }

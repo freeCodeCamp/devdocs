@@ -11,28 +11,32 @@ ARG GROUP_ID=1000
 WORKDIR /devdocs
 EXPOSE 9292
     
+
+COPY Gemfile Gemfile.lock Rakefile Thorfile /devdocs/
+
 RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev libcurl && \
-    gem install bundler && \
+    rm -rf /var/cache/apk/* /usr/lib/node_modules
+
+RUN gem install bundler && \
     bundle config set path.system true && \
     bundle config set without test && \
     bundle install && \
-    groupadd --gid $USER_GID $USERNAME && \
-    useradd --uid $USER_UID --gid $USER_GID -m $USERNAME && \
-    rm -rf /var/cache/apk/* ~/.gem /root/.bundle/cache \
-        /usr/local/bundle/cache /usr/lib/node_modules
+    rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache 
 
-COPY Gemfile Gemfile.lock Rakefile Thorfile /devdocs/
+RUN addgroup -g $GROUP_ID $USERNAME && \
+    adduser -u $USER_ID -G $USERNAME -D -h /devdocs $USERNAME && \
+    chown -R $USERNAME:$USERNAME /devdocs
 
 #
 # Development Image
 #
 FROM devdocs-base as devdocs-dev
-RUN bundle config unset without test && \
+RUN bundle config unset without && \
     bundle install && \
     apk add --update bash && \
     rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache
 
-USER $USERNAME
+VOLUME [ "/devdocs" ]
 CMD bash
 
 #
