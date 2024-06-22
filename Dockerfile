@@ -55,4 +55,4 @@ RUN thor assets:compile && \
 
 VOLUME ["/devdocs/public/docs"]
 USER $USERNAME
-CMD rackup -o 0.0.0.0
+CMD rackup --host 0.0.0.0 -E production
