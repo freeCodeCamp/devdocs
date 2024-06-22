@@ -6,6 +6,10 @@ module Docs
     self.release = '8.6.6'
     self.base_url = 'https://www.tcl.tk/man/tcl/'
     self.root_path = 'contents.htm'
+    self.links = {
+      home: 'https://www.tcl.tk/',
+      code: 'https://sourceforge.net/projects/tcl/files/Tcl/'
+    }
 
     html_filters.push 'tcl_tk/entries', 'tcl_tk/clean_html', 'title'
 

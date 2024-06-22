@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'base64'
 require 'image_optim'
 
 module Docs
@@ -43,6 +44,13 @@ module Docs
 
             unless response.mime_type.start_with?('image/')
               instrument 'invalid.image', url: url, content_type: response.mime_type
+              next
+            end
+
+            size = response.content_length
+
+            if size > (context[:max_image_size] || DEFAULT_MAX_SIZE)
+              instrument 'too_big.image', url: url, size: size
               next
             end
 

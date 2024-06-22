@@ -11,7 +11,7 @@ module Docs
 
     options[:attribution] = <<-HTML
       &copy; 2012&ndash;2018 Michael DeHaan<br>
-      &copy; 2018&ndash;2019 Red Hat, Inc.<br>
+      &copy; 2018&ndash;2021 Red Hat, Inc.<br>
       Licensed under the GNU General Public License version 3.
     HTML
 
@@ -22,7 +22,9 @@ module Docs
       reference_appendices/tower.html
       user_guide/quickstart.html
       modules/modules_by_category.html
-      modules/list_of_all_modules.html)
+      modules/list_of_all_modules.html
+      collections/all_plugins.html
+      collections/index_vars.html)
 
     options[:skip_patterns] = [
       /\Acommunity.*/i,
@@ -30,8 +32,17 @@ module Docs
       /\Aroadmap.*/i,
     ]
 
+    version do
+      self.base_url = "https://docs.ansible.com/ansible/latest/"
+    end
+
+    version '2.11' do
+      self.release = '2.11.0'
+      self.base_url = "https://docs.ansible.com/ansible/#{version}/"
+    end
+
     version '2.10' do
-      self.release = '2.10.3'
+      self.release = '2.10.5'
       self.base_url = "https://docs.ansible.com/ansible/#{version}/"
     end
 
@@ -75,8 +86,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://docs.ansible.com/ansible/latest/index.html', opts)
-      doc.at_css('.version').content.strip
+      tags = get_github_tags('ansible', 'ansible', opts)
+      tags[0]['name'][1..-1]
     end
   end
 end

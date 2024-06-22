@@ -12,6 +12,7 @@ module Docs
         '.button.section-edit',
         '.communitybox',
         '#Quick_Links',
+        'aside.metadata',
         'hr']
 
       BROWSER_UNNECESSARY_CLASS_REGEX = /\s*bc-browser[\w_-]+/
@@ -39,7 +40,20 @@ module Docs
 
         css('h2 > a[name]', 'h3 > a[name]').each do |node|
           node.parent['id'] = node['name']
-          node.before(node.content).remove
+          node.before(node.children).remove
+        end
+        css('h2 > a, h3 > a').each do |node|
+          # children instead of content for "Using the download attribute to save a <canvas> as a PNG" from https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a
+          node.before(node.children).remove
+        end
+
+        css('.notecard > h4').each do |node|
+          node.name = 'strong'
+        end
+
+        css('svg.icon.deprecated', 'svg.icon.experimental', 'svg.icon.non-standard', 'svg.icon.obsolete').each do |node|
+          node.name = 'span'
+          node.content = node.content
         end
 
         css('dt > a[id]').each do |node|
@@ -64,6 +78,9 @@ module Docs
         end
 
         # New compatibility tables
+        # FIXME(2021):
+        # - fetched from external JSON: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/alignment-baseline/bcd.json
+        # - https://github.com/mdn/yari/blob/master/build/bcd-urls.js
 
         css('.bc-data #Legend + dl', '.bc-data #Legend', '.bc-data #Legend_2 + dl', '.bc-data #Legend_2', '.bc-browser-name').remove
 

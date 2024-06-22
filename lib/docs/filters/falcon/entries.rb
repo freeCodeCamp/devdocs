@@ -13,6 +13,8 @@ module Docs
           'Guide'
         when 'api'
           'API'
+        when 'deploy'
+          'Deploy'
         end
       end
 

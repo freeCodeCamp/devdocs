@@ -40,8 +40,7 @@ class DocsCLI < Thor
     TTY::Pager.new.page(output)
   end
 
-  desc 'page <doc> [path] [--version] [--verbose] [--debug]', 'Generate a page (no indexing)'
-  option :version, type: :string
+  desc 'page (<doc> | <doc@version>) [path] [--verbose] [--debug]', 'Generate a page (no indexing)'
   option :verbose, type: :boolean
   option :debug, type: :boolean
   def page(name, path = '')
@@ -56,7 +55,8 @@ class DocsCLI < Thor
       Docs.install_report :filter, :request, :doc
     end
 
-    if Docs.generate_page(name, options[:version], path)
+    name, version = name.split(/@|~/)
+    if Docs.generate_page(name, version, path)
       puts 'Done'
     else
       puts "Failed!#{' (try running with --debug for more information)' unless options[:debug]}"
@@ -65,8 +65,7 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   end
 
-  desc 'generate <doc> [--version] [--verbose] [--debug] [--force] [--package]', 'Generate a documentation'
-  option :version, type: :string
+  desc 'generate (<doc> | <doc@version>) [--verbose] [--debug] [--force] [--package]', 'Generate a documentation'
   option :all, type: :boolean
   option :verbose, type: :boolean
   option :debug, type: :boolean
@@ -80,7 +79,7 @@ class DocsCLI < Thor
 
     require 'unix_utils' if options[:package]
 
-    doc = Docs.find(name, options[:version])
+    doc = find_doc(name)
 
     if doc < Docs::UrlScraper && !options[:force]
       puts <<-TEXT.strip_heredoc
@@ -119,7 +118,7 @@ class DocsCLI < Thor
     puts 'Done'
   end
 
-  desc 'download (<doc> <doc@version>... | --default | --installed | --all)', 'Download documentations'
+  desc 'download (<doc> <doc@version>... | --default | --installed | --all)', 'Download documentation packages'
   option :default, type: :boolean
   option :installed, type: :boolean
   option :all, type: :boolean
@@ -142,7 +141,7 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   end
 
-  desc 'package <doc> <doc@version>...', 'Package documentations'
+  desc 'package <doc> <doc@version>...', 'Create documentation packages'
   def package(*names)
     require 'unix_utils'
     docs = find_docs(names)
@@ -176,12 +175,12 @@ class DocsCLI < Thor
 
     # Verify files are present
     docs.each do |doc|
-      unless Dir.exists?(File.join(Docs.store_path, doc.path))
+      unless Dir.exist?(File.join(Docs.store_path, doc.path))
         puts "ERROR: directory #{File.join(Docs.store_path, doc.path)} not found."
         return
       end
 
-      unless File.exists?(File.join(Docs.store_path, "#{doc.path}.tar.gz"))
+      unless File.exist?(File.join(Docs.store_path, "#{doc.path}.tar.gz"))
         puts "ERROR: package for '#{doc.slug}' documentation not found. Run 'thor docs:package #{doc.slug}' to create it."
         return
       end
@@ -191,27 +190,23 @@ class DocsCLI < Thor
     puts '[S3] Begin syncing.'
     docs.each do |doc|
       puts "[S3] Syncing #{doc.path}..."
-      cmd = "aws s3 sync #{File.join(Docs.store_path, doc.path)} s3://devdocs-assets/#{doc.path} --delete --profile devdocs"
+      cmd = "aws s3 sync #{File.join(Docs.store_path, doc.path)} s3://devdocs-documents/#{doc.path} --delete --profile devdocs"
       cmd << ' --dryrun' if options[:dryrun]
       system(cmd)
     end
     puts '[S3] Done syncing.'
 
-    # Upload packages to dl.devdocs.io (used by the "thor docs:download" command)
-    puts '[MaxCDN] Begin uploading.'
-    Net::SFTP.start('ftp.devdocs-dl.devdocs.netdna-cdn.com', ENV['DEVDOCS_DL_USERNAME'], password: ENV['DEVDOCS_DL_PASSWORD']) do |sftp|
-      docs.each do |doc|
-        filename = "#{doc.path}.tar.gz"
-        print "[MaxCDN] Uploading #{filename}..."
-        if options[:dryrun]
-          print "\n"
-        else
-          sftp.upload! File.join(Docs.store_path, filename), File.join('', 'public_html', filename)
-          print " OK\n"
-        end
-      end
+    # Upload packages to downloads.devdocs.io (used by the "thor docs:download" command)
+    puts '[S3 bundle] Begin uploading.'
+
+    docs.each do |doc|
+      filename = "#{doc.path}.tar.gz"
+      puts "[S3 bundle] Uploading #{filename}..."
+      cmd = "aws s3 cp #{File.join(Docs.store_path, filename)} s3://devdocs-downloads/#{filename} --profile devdocs"
+      cmd << ' --dryrun' if options[:dryrun]
+      system(cmd)
     end
-    puts '[MaxCDN] Done uploading.'
+    puts '[S3 bundle] Done uploading.'
   end
 
   desc 'commit', '[private]'
@@ -244,9 +239,9 @@ class DocsCLI < Thor
           FileUtils.mkpath(dir)
 
           ['index.json', 'meta.json'].each do |filename|
-            json = "https://docs.devdocs.io/#{doc.path}/#{filename}?#{time}"
+            json = "https://documents.devdocs.io/#{doc.path}/#{filename}?#{time}"
             begin
-              open(json) do |file|
+              URI.open(json) do |file|
                 mutex.synchronize do
                   path = File.join(dir, filename)
                   File.write(path, file.read)
@@ -271,15 +266,17 @@ class DocsCLI < Thor
 
   private
 
-  def find_docs(names)
-    names.flat_map do |name|
-      name, version = name.split(/@|~/)
-      if version == 'all'
-        Docs.find(name, false).versions
-      else
-        Docs.find(name, version)
-      end
+  def find_doc(name)
+    name, version = name.split(/@|~/)
+    if version == 'all'
+      Docs.find(name, false).versions
+    else
+      Docs.find(name, version)
     end
+  end
+
+  def find_docs(names)
+    names.flat_map {|name| find_doc(name)}
   end
 
   def find_docs_by_slugs(slugs)
@@ -341,11 +338,12 @@ class DocsCLI < Thor
 
   def download_doc(doc)
     target_path = File.join(Docs.store_path, doc.path)
-    open "http://dl.devdocs.io/#{doc.path}.tar.gz" do |file|
+    URI.open "https://downloads.devdocs.io/#{doc.path}.tar.gz" do |file|
       FileUtils.mkpath(target_path)
       file.close
       tar = UnixUtils.gunzip(file.path)
       dir = UnixUtils.untar(tar)
+      FileUtils.rm(tar)
       FileUtils.rm_rf(target_path)
       FileUtils.mv(dir, target_path)
       FileUtils.rm(file.path)

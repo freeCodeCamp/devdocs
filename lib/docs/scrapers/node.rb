@@ -14,6 +14,7 @@ module Docs
     options[:root_title] = 'Node.js'
     options[:container] = '#apicontent'
     options[:skip] = %w(index.html all.html documentation.html synopsis.html)
+    # options[:only] = ['addons.html']
 
     options[:attribution] = <<-HTML
       &copy; Joyent, Inc. and other Node contributors<br>
@@ -23,38 +24,58 @@ module Docs
     HTML
 
     version do
-      self.release = '14.15.0'
+      self.release = '20.8.0'
+      self.base_url = 'https://nodejs.org/api/'
+    end
+
+    version '18 LTS' do
+      self.release = '18.18.0'
+      self.base_url = 'https://nodejs.org/dist/latest-v18.x/docs/api/'
+    end
+
+    version '16 LTS' do
+      self.release = '16.13.2'
+      self.base_url = 'https://nodejs.org/dist/latest-v16.x/docs/api/'
+    end
+
+    version '14 LTS' do
+      self.release = '14.17.0'
       self.base_url = 'https://nodejs.org/dist/latest-v14.x/docs/api/'
     end
 
     version '12 LTS' do
-      self.release = '12.19.0'
+      self.release = '12.22.1'
       self.base_url = 'https://nodejs.org/dist/latest-v12.x/docs/api/'
+      html_filters.replace('node/entries', 'node/old_entries')
     end
 
     version '10 LTS' do
-      self.release = '10.16.3'
+      self.release = '10.24.1'
       self.base_url = 'https://nodejs.org/dist/latest-v10.x/docs/api/'
+      html_filters.replace('node/entries', 'node/old_entries')
     end
 
     version '8 LTS' do
-      self.release = '8.16.1'
+      self.release = '8.17.0'
       self.base_url = 'https://nodejs.org/dist/latest-v8.x/docs/api/'
+      html_filters.replace('node/entries', 'node/old_entries')
     end
 
     version '6 LTS' do
-      self.release = '6.14.4'
+      self.release = '6.17.1'
       self.base_url = 'https://nodejs.org/dist/latest-v6.x/docs/api/'
+      html_filters.replace('node/entries', 'node/old_entries')
     end
 
     version '4 LTS' do
       self.release = '4.9.1'
       self.base_url = 'https://nodejs.org/dist/latest-v4.x/docs/api/'
+      html_filters.replace('node/entries', 'node/old_entries')
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://nodejs.org/en/', opts)
-      doc.at_css('#home-intro > .home-downloadblock:last-of-type > a')['data-version'][1..-1]
+      tags = get_github_tags('nodejs', 'node', opts)
+      tags[0]['name'][1..-1]
     end
   end
 end

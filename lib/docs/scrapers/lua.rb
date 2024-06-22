@@ -2,6 +2,9 @@ module Docs
   class Lua < UrlScraper
     self.type = 'lua'
     self.root_path = 'manual.html'
+    self.links = {
+      home: 'https://www.lua.org/'
+    }
 
     html_filters.push 'lua/clean_html', 'lua/entries'
 

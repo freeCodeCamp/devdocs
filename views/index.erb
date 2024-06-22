@@ -9,7 +9,12 @@
   <meta property="og:description" content="Fast, offline, and free documentation browser for developers. Search 100+ docs in one web app including HTML, CSS, JavaScript, PHP, Ruby, Python, Go, C, C++, and many more.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="<%= canonical_origin %>">
-  <meta property="og:image" content="<%= App.cdn_origin %>/images/icon-320.png">
+  <meta property="og:image" content="/images/icon-320.png">
+  <meta property="twitter:title" content="DevDocs API Documentation">
+  <meta property="twitter:description" content="Fast, offline, and free documentation browser for developers. Search 100+ docs in one web app: HTML, CSS, JavaScript, PHP, Ruby, Python, Go, C, C++…">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="<%= canonical_origin %>">
+  <meta property="twitter:image" content="/images/icon-320.png">
   <meta name="apple-mobile-web-app-title" content="DevDocs">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -21,22 +26,22 @@
   <link rel="manifest" href="/manifest.json">
   <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="DevDocs Search">
   <link rel="alternate" href="<%= canonical_origin %>/feed" title="DevDocs" type="application/atom+xml">
-  <link rel="icon" type="image/x-icon" href="<%= App.cdn_origin %>/favicon.ico">
-  <link rel="fluid-icon" href="<%= App.cdn_origin %>/images/fluid-icon.png" title="DevDocs">
-  <link rel="apple-touch-icon" sizes="72x72" href="<%= App.cdn_origin %>/images/apple-icon-72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="<%= App.cdn_origin %>/images/apple-icon-76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="<%= App.cdn_origin %>/images/apple-icon-114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="<%= App.cdn_origin %>/images/apple-icon-120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="<%= App.cdn_origin %>/images/apple-icon-144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="<%= App.cdn_origin %>/images/apple-icon-152.png">
-  <link rel="apple-touch-icon" sizes="160x160" href="<%= App.cdn_origin %>/images/apple-icon-160.png">
-  <link rel="mask-icon" href="<%= App.cdn_origin %>/images/webkit-mask-icon.svg" color="#398df0">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="fluid-icon" href="/images/fluid-icon.png" title="DevDocs">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152.png">
+  <link rel="apple-touch-icon" sizes="160x160" href="/images/apple-icon-160.png">
+  <link rel="mask-icon" href="/images/webkit-mask-icon.svg" color="#398df0">
   <%= stylesheet_tag 'application' %>
 </head>
 <body>
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
 <%= erb :app -%>
-<%= javascript_tag 'application', asset_host: false %>
+<%= javascript_tag 'application' %>
 <%= javascript_tag 'docs' %><% unless App.production? %>
 <%= javascript_tag 'debug' %><% end %>
 </body>

@@ -2,7 +2,7 @@ module Docs
   class Chai < UrlScraper
     self.name = 'Chai'
     self.type = 'simple'
-    self.release = '4.2.0'
+    self.release = '4.3.4'
     self.base_url = 'https://www.chaijs.com'
     self.root_path = '/api/'
     self.initial_paths = %w(/guide/installation/)

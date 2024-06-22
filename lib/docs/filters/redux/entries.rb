@@ -1,29 +1,30 @@
 module Docs
   class Redux
     class EntriesFilter < Docs::EntriesFilter
+
       def get_name
-        name = at_css('.page-inner h1, .page-inner h2').content
-        name.sub! %r{\(.*\)}, '()'
-        name
+        name = at_css('h1').content
+        name.gsub(/\(.*\)/, '()')
       end
 
       def get_type
-        path = slug.split('/')
-
-        if path.length > 1
-          path[0].titleize.sub('Api', 'API').sub('Faq', 'FAQ')
-        else
-          'Miscellaneous'
-        end
+        slug.match?(/\Astore\Z/) ? 'Store API' : 'Top-Level Exports'
       end
 
       def additional_entries
-        css('#store-methods + ul > li > a').map do |node|
-          id = node['href'].remove('#')
-          name = "#{self.name}##{id}()"
-          [name, id]
+        entries = []
+
+        if slug.match?(/\Astore\Z/)
+          css('h3').each do |node|
+            entry_path = node.content.gsub(/\(|\)/, '')
+            entry_name = node.content.gsub(/\(.*\)/, '()')
+            entries << [entry_name, entry_path.downcase, 'Store API']
+          end
         end
+
+        entries
       end
+
     end
   end
 end

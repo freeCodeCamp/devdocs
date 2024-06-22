@@ -1,5 +1,9 @@
 ._perl {
   @extend %simple;
 
-  > h4 { @extend %block-label; }
+  dt + dt { margin-top: 1em; }
+
+  > dl > dt  { @extend %block-label; }
+  > dl > dt.function { @extend %label-blue; }
+  > dl > dt.variable { @extend %label-green; }
 }

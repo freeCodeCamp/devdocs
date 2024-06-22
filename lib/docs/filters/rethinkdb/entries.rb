@@ -1,9 +1,17 @@
 module Docs
   class Rethinkdb
     class EntriesFilter < Docs::EntriesFilter
+
       def get_name
         if subpath.start_with?('api')
-          at_css('.title').content.remove('ReQL command:').split(', ').first
+          name = at_css('.title').content.remove('ReQL command:').split(', ').first
+
+          if name.strip.empty?
+            'lt'
+          else
+            name
+          end
+
         else
           at_css('.docs-nav .active').content
         end
@@ -30,6 +38,7 @@ module Docs
       def include_default_entry?
         at_css('.docs-article p').try(:content) != 'Choose your language:'
       end
+
     end
   end
 end

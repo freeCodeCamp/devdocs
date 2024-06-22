@@ -2,7 +2,7 @@ module Docs
   class Http
     class CleanHtmlFilter < Filter
       def call
-        current_url.host == 'tools.ietf.org' ? ietf : mdn
+        current_url.host == 'datatracker.ietf.org' ? ietf : mdn
         doc
       end
 
@@ -25,6 +25,8 @@ module Docs
       end
 
       def ietf
+        raise "#{slug} is obsolete!" if at_css('.meta-info *:contains("Obsoleted by")')
+        @doc = at_css('.draftcontent')
         doc.child.remove while doc.child.name != 'pre'
 
         css('span.grey', '.invisible', '.noprint', 'a[href^="#page-"]').remove
@@ -43,7 +45,7 @@ module Docs
         end
 
         css('.selflink').each do |node|
-          node.parent['id'] = node['name']
+          node.parent['id'] = node['id']
           node.before(node.children).remove
         end
 

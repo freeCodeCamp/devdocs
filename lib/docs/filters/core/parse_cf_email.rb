@@ -12,7 +12,7 @@ module Docs
           result += "%" + "0#{("0x#{slice.join}".hex ^ mask).to_s(16)}"[-2..-1]
         end
 
-        node.replace(URI.decode(result))
+        node.replace(URI.decode_www_form_component(result))
       end
 
       doc

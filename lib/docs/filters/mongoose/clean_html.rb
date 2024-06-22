@@ -17,7 +17,7 @@ module Docs
           node['data-language'] = 'javascript'
         end
 
-        css('.native-inline', '.api-nav', '.toc', '.api-content ul:first-child').remove
+        css('.native-inline', '.api-nav', '.toc', '.api-content ul:first-child', '.edit-docs-link').remove
 
         if !at_css('h1')
           if css('h2').count > 1

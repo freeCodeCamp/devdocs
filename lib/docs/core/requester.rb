@@ -7,7 +7,7 @@ module Docs
     def self.run(urls, options = {}, &block)
       urls = urls.dup
       requester = new(options)
-      requester.on_response(&block) if block
+      requester.on_response(&block) if block_given?
       requester.on_response do # cheap hack to ensure root page is processed first
         if urls
           requester.request(urls)
@@ -46,8 +46,8 @@ module Docs
 
     private
 
-    def build_and_queue_request(url, options, &block)
-      request = Request.new(url, request_options.merge(options))
+    def build_and_queue_request(url, options = {}, &block)
+      request = Request.new(url, **request_options.merge(options))
       request.on_complete(&block) if block
       queue(request)
       request

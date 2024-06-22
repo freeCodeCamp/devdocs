@@ -1,43 +1,49 @@
 module Docs
   class Relay
     class EntriesFilter < Docs::EntriesFilter
+      ONLY_SECTIONS = ['API Reference', 'Principles & Architecture']
+      ONLY_SLUGS = []
+
+      def call
+        if root_page?
+          css('.navGroup > h3').each do |node|
+            next if not ONLY_SECTIONS.include? node.content
+            node.next_element.css('a').each do |anchor|
+              ONLY_SLUGS << anchor['href'].split('/').last.strip
+            end
+          end
+        end
+        super
+      end
+
       def get_name
-        at_css('h1').children.select(&:text?).map(&:content).join.strip
+        at_css('h1').content
       end
 
       def get_type
-        link = at_css('.nav-docs-section .active, .toc .active')
-        section = link.ancestors('.nav-docs-section, section').first
-        type = section.at_css('h3').content.strip
-        type
+        at_css('h1').content
+      end
+
+      def include_default_entry?
+        ONLY_SLUGS.include? slug
       end
 
       def additional_entries
-        entries = []
+        return [] if not include_default_entry?
 
-        css('.inner-content h3 code, .inner-content h4 code').each do |node|
+        css('article h2, article h3').each_with_object [] do |node, entries|
+          next if node.content.include?('Argument') ||
+                  node.content.starts_with?('Example')
+
           name = node.content
-          name.remove! %r{[#\(\)]}
-          name.remove! %r{\w+\:}
-          name.strip!
-          id = name.parameterize
-          node.parent['id'] = id
-          entries << [name, id, 'Reference']
-        end
-
-        css('.apiIndex a pre').each do |node|
-          next unless node.parent['href'].start_with?('#')
-          id = node.parent['href'].remove('#')
-          name = node.content.strip
-          sep = name.start_with?('static') ? '.' : '#'
-          name.remove! %r{(abstract|static) }
-          name.sub! %r{\(.*\)}, '()'
-          name.prepend(self.name + sep)
+          if name.include?('(')
+            name = name.match(/.*\(/)[0] + ')'
+          end
+          id = node.at_css('a.anchor')['id']
           entries << [name, id]
         end
-
-        entries
       end
+
     end
   end
 end

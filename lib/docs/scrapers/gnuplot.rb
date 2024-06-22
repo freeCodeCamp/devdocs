@@ -1,9 +1,10 @@
 module Docs
   class Gnuplot < FileScraper
     self.type = 'gnuplot'
-    self.release = '5.2.8'
+    self.release = '5.4.0'
     self.links = {
-      home: 'http://gnuplot.sourceforge.net/'
+      home: 'http://www.gnuplot.info/',
+      code: 'https://sourceforge.net/projects/gnuplot/'
     }
 
     self.root_path = 'nofigures.html'

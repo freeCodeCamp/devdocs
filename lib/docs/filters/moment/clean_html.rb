@@ -4,7 +4,7 @@ module Docs
       def call
         # Set id attributes on headings
         css('a.docs-section-target', 'a.docs-method-target').each do |node|
-          node.next_element['id'] = node['name'].remove(/\A\//).remove(/\/\z/).gsub('/', '-')
+          node.next_element['id'] = node['id']
           node.remove
         end
 

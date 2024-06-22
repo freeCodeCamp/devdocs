@@ -8,19 +8,19 @@ module Docs
 
       # Assign the pages to main categories
       def get_type
-        if path.start_with?('manual/')
+        if base_url.path.include?('/docs/')
           'Manual'
-        elsif path.include?('lib/data-types')
+        elsif path.include?('src/data-types')
           'datatypes'
-        elsif path.include?('lib/errors/validation')
+        elsif path.include?('src/errors/validation')
           'errors/validation'
-        elsif path.include?('lib/errors/database')
+        elsif path.include?('src/errors/database')
           'errors/database'
-        elsif path.include?('lib/errors/connection')
+        elsif path.include?('src/errors/connection')
           'errors/connection'
-        elsif path.include?('lib/errors')
+        elsif path.include?('src/errors')
           'errors'
-        elsif path.include?('lib/associations')
+        elsif path.include?('src/associations')
           'associations'
         elsif path.include?('master/variable')
           'variables'
@@ -28,6 +28,11 @@ module Docs
           'classes'
         end
       end
+
+      def include_default_entry?
+        at_css('.card > h2:contains("📄️")').nil?
+      end
+
     end
   end
 end

@@ -4,7 +4,10 @@ module Docs
       def call
         @doc = at_css('.bd-content')
 
-        at_css('h1').content = 'Bootstrap 4' if root_page?
+        # 'View on Github' button
+        css('.btn').remove
+
+        at_css('h1').content = 'Bootstrap' if root_page?
 
         css('hr', '.bd-clipboard', '.modal', '.bd-example .bd-example').remove
 
@@ -21,14 +24,6 @@ module Docs
 
           if node.previous_element['class'].try(:include?, 'bd-example')
             node.remove
-          else
-            node.content = ''
-            node.name = 'p'
-            node['class'] = 'bd-example'
-            node.remove_attribute('data-example-id')
-            prev = node.previous_element
-            prev = prev.previous_element until prev['id']
-            node.inner_html = %(<a href="#{current_url}##{prev['id']}">Open example on getbootstrap.com</a>)
           end
         end
 

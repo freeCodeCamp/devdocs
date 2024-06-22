@@ -20,8 +20,6 @@ class App < Sinatra::Application
     set :root, Pathname.new(File.expand_path('../..', __FILE__))
     set :sprockets, Sprockets::Environment.new(root)
 
-    set :cdn_origin, ''
-
     set :assets_prefix, 'assets'
     set :assets_path, File.join(public_folder, assets_prefix)
     set :assets_manifest_path, File.join(assets_path, 'manifest.json')
@@ -32,7 +30,7 @@ class App < Sinatra::Application
     set :docs_origin, File.join('', docs_prefix)
     set :docs_path, File.join(public_folder, docs_prefix)
     set :docs_manifest_path, File.join(docs_path, 'docs.json')
-    set :default_docs, %w(css dom dom_events html http javascript)
+    set :default_docs, %w(css dom html http javascript)
     set :news_path, File.join(root, assets_prefix, 'javascripts', 'news.json')
 
     set :csp, false
@@ -58,7 +56,6 @@ class App < Sinatra::Application
 
     SpritesCLI.new.invoke(:generate, [], :disable_optimization => true)
 
-    require 'active_support/per_thread_registry'
     require 'active_support/cache'
     sprockets.cache = ActiveSupport::Cache.lookup_store :file_store, root.join('tmp', 'cache', 'assets', environment.to_s)
   end
@@ -75,9 +72,8 @@ class App < Sinatra::Application
 
   configure :production do
     set :static, false
-    set :cdn_origin, 'https://cdn.devdocs.io'
-    set :docs_origin, '//docs.devdocs.io'
-    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' https://cdn.devdocs.io https://www.google-analytics.com https://secure.gaug.es https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+    set :docs_origin, '//documents.devdocs.io'
+    set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' https://www.google-analytics.com https://secure.gaug.es https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
     use Rack::ETag
@@ -97,12 +93,11 @@ class App < Sinatra::Application
         ['/manifest.json',  { 'Cache-Control' => 'public, max-age=86400'  }]
       ]
 
-    sprockets.js_compressor = Uglifier.new output: { beautify: true, indent_level: 0 }
+    sprockets.js_compressor = Terser.new
     sprockets.css_compressor = :sass
 
     Sprockets::Helpers.configure do |config|
       config.digest = true
-      config.asset_host = 'cdn.devdocs.io'
       config.manifest = Sprockets::Manifest.new(sprockets, assets_manifest_path)
     end
   end
@@ -150,10 +145,8 @@ class App < Sinatra::Application
       @browser ||= Browser.new(request.user_agent)
     end
 
-    UNSUPPORTED_IE_VERSIONS = %w(6 7 8 9).freeze
-
     def unsupported_browser?
-      browser.ie? && UNSUPPORTED_IE_VERSIONS.include?(browser.version)
+      browser.ie?
     end
 
     def docs
@@ -202,7 +195,7 @@ class App < Sinatra::Application
 
     def service_worker_asset_urls
       @@service_worker_asset_urls ||= [
-        javascript_path('application', asset_host: false),
+        javascript_path('application'),
         stylesheet_path('application'),
         image_path('sprites/docs.png'),
         image_path('sprites/docs@2x.png'),
@@ -244,7 +237,22 @@ class App < Sinatra::Application
     end
 
     def supports_js_redirection?
-      browser.modern? && !memoized_cookies.empty?
+      modern_browser?(browser) && !memoized_cookies.empty?
+    end
+
+    # https://github.com/fnando/browser#detecting-modern-browsers
+    # https://github.com/fnando/browser/blob/v2.6.1/lib/browser/browser.rb
+    # This restores the old browser gem `#modern?` functionality as it was in 2.6.1
+    # It's possible this isn't even really needed any longer, these versions are quite old now
+    def modern_browser?(browser)
+      [
+        browser.webkit?,
+        browser.firefox? && browser.version.to_i >= 17,
+        browser.ie? && browser.version.to_i >= 9 && !browser.compatibility_view?,
+        browser.edge? && !browser.compatibility_view?,
+        browser.opera? && browser.version.to_i >= 12,
+        browser.firefox? && browser.device.tablet? && browser.platform.android? && b.version.to_i >= 14
+      ].any?
     end
   end
 

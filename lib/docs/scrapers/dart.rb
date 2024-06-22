@@ -17,11 +17,11 @@ module Docs
 
     options[:attribution] = <<-HTML
       &copy; 2012 the Dart project authors<br>
-      Licensed under the Creative Commons Attribution-ShareAlike License v4.0.
+      Licensed under the BSD 3-Clause "New" or "Revised" License.
     HTML
 
     version '2' do
-      self.release = '2.5.0'
+      self.release = '2.18.5'
       self.base_url = "https://api.dart.dev/stable/#{release}/"
     end
 
@@ -31,9 +31,10 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://api.dartlang.org/', opts)
+      doc = fetch_doc('https://api.dart.dev/', opts)
       label = doc.at_css('footer > span').content.strip
       label.sub(/Dart\s*/, '')
     end
+
   end
 end

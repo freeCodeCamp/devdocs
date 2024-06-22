@@ -3,25 +3,28 @@ module Docs
     self.name = 'scikit-learn'
     self.slug = 'scikit_learn'
     self.type = 'sphinx'
-    self.release = '0.20.0'
-    self.base_url = 'http://scikit-learn.org/stable/'
-    self.root_path = 'documentation.html'
+    self.release = '1.1.3'
+    self.base_url = "https://scikit-learn.org/1.1/"
+    self.root_path = 'index.html'
     self.force_gzip = true
     self.links = {
-      home: 'http://scikit-learn.org/',
+      home: 'https://scikit-learn.org/',
       code: 'https://github.com/scikit-learn/scikit-learn'
     }
 
-    html_filters.push 'scikit_learn/entries', 'scikit_learn/clean_html', 'sphinx/clean_html'
+    html_filters.push 'scikit_learn/entries', 'scikit_learn/clean_html', 'sphinx/clean_html', 'title'
 
-    options[:container] = ->(filter) { filter.root_page? ? '.container-index' : '.body' }
-    options[:skip] = %w(tutorial/statistical_inference/finding_help.html)
+    options[:container] = ->(filter) { filter.root_page? ? 'body > .container' : '#sk-page-content-wrapper > .body' }
+    options[:skip] = %w(modules/generated/sklearn.experimental.enable_iterative_imputer.html
+                        modules/generated/sklearn.experimental.enable_hist_gradient_boosting.html)
     options[:only_patterns] = [/\Amodules/, /\Adatasets/, /\Atutorial/, /\Aauto_examples/]
     options[:skip_patterns] = [/\Adatasets\/(?!index)/]
+    options[:title] = false
+    options[:root_title] = 'scikit-learn'
     options[:max_image_size] = 256_000
 
     options[:attribution] = <<-HTML
-      &copy; 2007&ndash;2018 The scikit-learn developers<br>
+      &copy; 2007&ndash;2022 The scikit-learn developers<br>
       Licensed under the 3-clause BSD License.
     HTML
 

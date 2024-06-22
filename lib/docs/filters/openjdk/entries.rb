@@ -27,19 +27,24 @@ module Docs
       end
 
       def additional_entries
-        # Only keep the first found entry with a unique name,
-        # i.e. overloaded methods are skipped in index
-        css('a[name$=".summary"]').each_with_object({}) do |summary, entries|
-          next if summary['name'].include?('nested') || summary['name'].include?('constructor') ||
-                  summary['name'].include?('field') || summary['name'].include?('constant')
-          summary.parent.css('.memberNameLink a').each do |node|
-            name = node.parent.parent.content.strip
-            name.sub! %r{\(.+?\)}m, '()'
-            id = node['href'].remove(%r{.*#})
-            entries[name] ||= ["#{self.name}.#{name}", id]
+        entries = []
+
+        css('.memberNameLink a').each do |node|
+          next unless node['href'].match?(/[-(]/) # skip non-methods
+
+          if (version=='8' || version == '8 GUI' || version == '8 Web')
+            id = node['href'].gsub(/.*#/, '')
+          else
+            id = slug.downcase + node['href']
           end
-        end.values
+
+          entries << [self.name + '.' + node.content + '()', id]
+        end
+
+        entries
+
       end
+
     end
   end
 end

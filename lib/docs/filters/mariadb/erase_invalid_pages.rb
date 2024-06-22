@@ -10,7 +10,9 @@ module Docs
         # If this page should not be scraped, we erase it's contents in here so that the internal urls are not picked up
         # The entries filter will make sure that no entry is saved for this page
 
-        if at_css('a.crumb[href="https://mariadb.com/kb/en/documentation/"]').nil?
+        if at_css('a.crumb[href="https://mariadb.com/kb/en/documentation/"]').nil? and at_css('a.crumb[href="https://mariadb.com/kb/en/training-tutorials/"]').nil?
+          doc.inner_html = ''
+        elsif at_css('.question') and at_css('.answer')
           doc.inner_html = ''
         end
 

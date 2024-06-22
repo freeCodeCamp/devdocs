@@ -3,9 +3,13 @@ module Docs
     self.name = 'Knockout.js'
     self.slug = 'knockout'
     self.type = 'knockout'
-    self.release = '3.4.2'
-    self.base_url = 'http://knockoutjs.com/documentation/'
+    self.release = '3.5.1'
+    self.base_url = 'https://knockoutjs.com/documentation/'
     self.root_path = 'introduction.html'
+    self.links = {
+      home: 'https://knockoutjs.com/',
+      code: 'https://github.com/knockout/knockout'
+    }
 
     html_filters.push 'knockout/clean_html', 'knockout/entries'
 

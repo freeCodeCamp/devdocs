@@ -11,6 +11,7 @@ module Docs
 
         css('div.highlighter-rouge').each do |node|
           lang = node['class'][/language-(\w+)/, 1]
+          lang = 'bash' if lang == 'sh'
           node['data-language'] = lang if lang
           node.content = node.content.strip
           node.name = 'pre'

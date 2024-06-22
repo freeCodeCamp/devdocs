@@ -96,8 +96,6 @@ dd {
   + dt { margin-top: 1em; }
 }
 
-dfn, var { font-style: normal; }
-
 abbr, acronym, dfn {
   cursor: help;
   border-bottom: 1px dotted var(--textColor);
@@ -134,6 +132,9 @@ table {
   border-collapse: separate;
   border-spacing: 0;
   border-radius: 3px;
+  display: inline-block;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 caption {

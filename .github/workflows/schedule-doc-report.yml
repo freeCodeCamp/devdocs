@@ -1,0 +1,18 @@
+name: Generate documentation versions report
+on:
+  schedule:
+    - cron: '17 4 1 * *'
+  workflow_dispatch:
+
+jobs:
+  report:
+    runs-on: ubuntu-20.04
+    if: github.repository == 'freeCodeCamp/devdocs'
+    steps:
+    - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@3783f195e29b74ae398d7caca108814bbafde90e # v1.180.1
+      with:
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Generate report
+      run: bundle exec thor updates:check --github-token ${{ secrets.DEVDOCS_BOT_PAT }} --upload

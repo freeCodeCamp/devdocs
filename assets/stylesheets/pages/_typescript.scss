@@ -1,0 +1,4 @@
+._typescript {
+  @extend %simple;
+  .deprecated { @extend %label-red; }
+}

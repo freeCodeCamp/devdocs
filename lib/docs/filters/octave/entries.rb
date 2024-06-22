@@ -13,7 +13,7 @@ module Docs
 
       def additional_entries
         css('dl:not([compact]) > dt').each_with_object [] do |node, entries|
-          name = node.content.gsub(/[A-z0-9\,… ]*\=/, '').strip.split(' ')[0]
+          name = node.content.gsub(/^: +/, '').gsub(/[A-z0-9\,… ]*\=/, '').strip.split(' ')[0]
           entries << [name, node['id'], 'Functions'] unless node['id'] =~ /-\d+\Z/
         end
       end

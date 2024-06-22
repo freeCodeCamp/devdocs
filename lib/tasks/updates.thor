@@ -17,7 +17,8 @@ class UpdatesCLI < Thor
     super
   end
 
-  desc 'check [--github-token] [--upload] [--verbose] [doc]...', 'Check for outdated documentations'
+  desc 'check [--markdown] [--github-token] [--upload] [--verbose] [doc]...', 'Check for outdated documentations'
+  option :markdown, :type => :boolean
   option :github_token, :type => :string
   option :upload, :type => :boolean
   option :verbose, :type => :boolean
@@ -67,7 +68,7 @@ class UpdatesCLI < Thor
       name: doc.name,
       scraper_version: format_version(scraper_version),
       latest_version: format_version(latest_version),
-      is_outdated: instance.is_outdated(scraper_version, latest_version)
+      outdated_state: instance.outdated_state(scraper_version, latest_version)
     }
   rescue NotImplementedError
     logger.warn("Couldn't check #{doc.name}, get_latest_version is not implemented")
@@ -94,24 +95,27 @@ class UpdatesCLI < Thor
   end
 
   def process_results(results)
-    successful_results = results.select {|result| result.key?(:is_outdated)}
+    successful_results = results.select {|result| result.key?(:outdated_state)}
+    grouped_results = successful_results.group_by {|result| result[:outdated_state]}
     failed_results = results.select {|result| result.key?(:error)}
 
-    up_to_date_results = successful_results.select {|result| !result[:is_outdated]}
-    outdated_results = successful_results.select {|result| result[:is_outdated]}
-
-    log_results(outdated_results, up_to_date_results, failed_results)
-    upload_results(outdated_results, up_to_date_results, failed_results) if options[:upload]
+    log_results(grouped_results, failed_results)
+    upload_results(grouped_results, failed_results) if options[:upload]
   end
 
   #
   # Result logging methods
   #
 
-  def log_results(outdated_results, up_to_date_results, failed_results)
+  def log_results(grouped_results, failed_results)
+    if options[:markdown]
+      puts all_results_to_markdown(grouped_results, failed_results)
+      return
+    end
     log_failed_results(failed_results) unless failed_results.empty?
-    log_successful_results('Up-to-date', up_to_date_results) unless up_to_date_results.empty?
-    log_successful_results('Outdated', outdated_results) unless outdated_results.empty?
+    grouped_results.each do |label, results|
+      log_successful_results(label, results)
+    end
   end
 
   def log_successful_results(label, results)
@@ -119,7 +123,7 @@ class UpdatesCLI < Thor
     headings = ['Documentation', 'Scraper version', 'Latest version']
     rows = results.map {|result| [result[:name], result[:scraper_version], result[:latest_version]]}
 
-    table = Terminal::Table.new :title => title, :headings => headings, :rows => rows
+    table = ::Terminal::Table.new :title => title, :headings => headings, :rows => rows
     puts table
   end
 
@@ -128,7 +132,7 @@ class UpdatesCLI < Thor
     headings = %w(Documentation Reason)
     rows = results.map {|result| [result[:name], result[:error]]}
 
-    table = Terminal::Table.new :title => title, :headings => headings, :rows => rows
+    table = ::Terminal::Table.new :title => title, :headings => headings, :rows => rows
     puts table
   end
 
@@ -136,7 +140,7 @@ class UpdatesCLI < Thor
   # Upload methods
   #
 
-  def upload_results(outdated_results, up_to_date_results, failed_results)
+  def upload_results(grouped_results, failed_results)
     # We can't create issues without a GitHub token
     unless options.key?(:github_token)
       logger.error("Please specify a GitHub token with the public_repo permission for #{UPLOAD_USER} with the --github-token parameter")
@@ -156,7 +160,10 @@ class UpdatesCLI < Thor
 
     logger.info('Creating a new GitHub issue')
 
-    issue = results_to_issue(outdated_results, up_to_date_results, failed_results)
+    issue = {
+      title: "Documentation versions report for #{Date.today.strftime('%B %Y')}",
+      body: all_results_to_markdown(grouped_results, failed_results)
+    }
     created_issue = github_post("/repos/#{UPLOAD_REPO}/issues", issue)
 
     logger.info('Checking if the previous issue is still open')
@@ -167,7 +174,7 @@ class UpdatesCLI < Thor
       order: 'desc'
     }
 
-    matching_issues = github_get('/search/issues', search_params)
+    matching_issues = github_get('/search/issues', **search_params)
     previous_issue = matching_issues['items'].find {|item| item['number'] != created_issue['number']}
 
     if previous_issue.nil?
@@ -189,17 +196,16 @@ class UpdatesCLI < Thor
     end
   end
 
-  def results_to_issue(outdated_results, up_to_date_results, failed_results)
-    results = [
-      successful_results_to_markdown('Outdated', outdated_results),
-      successful_results_to_markdown('Up-to-date', up_to_date_results),
-      failed_results_to_markdown(failed_results)
-    ]
+  def all_results_to_markdown(grouped_results, failed_results)
+    all_results = []
+    grouped_results.each do |label, results|
+      all_results.push(successful_results_to_markdown(label, results))
+    end
+    all_results.push(failed_results_to_markdown(failed_results))
 
-    results_str = results.select {|result| !result.nil?}.join("\n\n")
+    results_str = all_results.select {|result| !result.nil?}.join("\n\n")
     travis_str = ENV['TRAVIS'].nil? ? '' : "\n\nThis issue was created by Travis CI build [##{ENV['TRAVIS_BUILD_NUMBER']}](#{ENV['TRAVIS_BUILD_WEB_URL']})."
 
-    title = "Documentation versions report for #{Date.today.strftime('%B %Y')}"
     body = <<-MARKDOWN
 ## What is this?
 
@@ -209,16 +215,8 @@ Maintainers can close this issue when all documentations are up-to-date. The iss
 
 ## Results
 
-The #{outdated_results.length + up_to_date_results.length + failed_results.length} documentations are divided as follows:
-- #{outdated_results.length} that #{outdated_results.length == 1 ? 'is' : 'are'} outdated
-- #{up_to_date_results.length} that #{up_to_date_results.length == 1 ? 'is' : 'are'} up-to-date (patch updates are ignored)
-- #{failed_results.length} that could not be checked
     MARKDOWN
-
-    {
-      title: title,
-      body: body.strip + "\n\n" + results_str
-    }
+    body.strip + "\n\n" + results_str
   end
 
   def successful_results_to_markdown(label, results)
@@ -261,7 +259,7 @@ The #{outdated_results.length + up_to_date_results.length + failed_results.lengt
   # HTTP utilities
   #
 
-  def github_get(endpoint, params = {})
+  def github_get(endpoint, **params)
     github_request(endpoint, {method: :get, params: params})
   end
 

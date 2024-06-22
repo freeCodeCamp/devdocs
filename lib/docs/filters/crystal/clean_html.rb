@@ -2,14 +2,17 @@ module Docs
   class Crystal
     class CleanHtmlFilter < Filter
       def call
-        slug.start_with?('docs') ? book : api
+        current_url.path.start_with?('/reference/') ? book : api
         doc
       end
 
       def book
-        @doc = at_css('.page-inner section')
+        @doc = at_css('main article')
+
+        css('.headerlink').remove
 
         css('pre > code').each do |node|
+          node.parent['data-language'] = 'crystal'
           node.parent['data-language'] = node['class'][/lang-(\w+)/, 1] if node['class']
           node.parent.content = node.parent.content
         end
@@ -18,7 +21,9 @@ module Docs
       def api
         @doc = at_css('.main-content')
 
-        at_css('h1 + p').remove if root_page?
+        at_css('h1 + p').remove if current_url.path == "/api/#{release}/index.html"
+
+        css('a[href="https://manas.tech/"]').remove
 
         css('.method-permalink', '.doc + br', 'hr', 'a > br', 'div + br').remove
 

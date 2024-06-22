@@ -1,41 +1,56 @@
 module Docs
   class Typescript
     class EntriesFilter < Docs::EntriesFilter
+
+      DEPRECATED_PAGES = %w(
+        advanced-types
+        basic-types
+        classes
+        functions
+        generics
+        interfaces
+        literal-types
+        unions-and-intersections
+      )
+
       def get_name
-        name = at_css('h1').content.strip
-        name.sub! ' and ', ' & '
-        name
+        return 'TSConfig Reference' if slug == 'tsconfig'
+        at_css('h1') ? at_css('h1').content : at_css('h2').content
       end
 
       def get_type
-        return 'Declaration Files' if subpath.include?('declaration-files')
-        return 'Project Configuration' if slug == 'handbook/configuring-watch'
-        type = at_css('#main-nav a.active').ancestors('.panel').first.at_css('> a').content
-        type = name if type == 'Handbook'
-        type
-      end
-
-      SKIP_ENTRIES = ['Introduction', 'A note', 'A Note', ', and', 'Techniques', ' Concepts', 'Hello World', 'Working with', 'Our ', 'Implementing ', 'Difference between', 'Basic', 'sample', 'Questions', 'Example', 'Export as close', 'Red Flags', 'First steps', 'Pitfalls', 'Well-known', 'Starting out', 'Comparing ', 'Do not', 'Trade-off', ' vs', 'Overview', 'Related', 'Table of contents']
-
-      def additional_entries
-        return [] unless slug.start_with?('handbook')
-        return [] if slug.include?('release-notes')
-        return [] if slug == 'handbook/writing-definition-files'
-
-        css('.post-content h1, .post-content h2').each_with_object [] do |node, entries|
-          next if node.next_element.try(:name) == 'h2'
-          node.css('.anchor-hash').remove
-          name = node.content.strip
-          next if name.length > 40
-          next if name == self.name || SKIP_ENTRIES.any? { |str| name.include?(str) }
-          name.remove! %r{\A#{self.name.remove(/s\z/)}s? }
-          name.sub! 'for..of', 'for...of'
-          name.remove! 'Symbol.'
-          name.remove! '/// '
-          name.prepend "#{self.name}: "
-          entries << [name, node['id']]
+        if DEPRECATED_PAGES.include? slug
+          'Handbook (deprecated)'
+        elsif slug.include?('declaration-files')
+          'Declaration Files'
+        elsif slug == 'download'
+          'Handbook'
+        elsif slug == 'why-create-typescript'
+          'Handbook'
+        else
+          button = at_css('nav#sidebar > ul > li.open.highlighted > button')
+          button ? button.content : name
         end
       end
+
+      def additional_entries
+        return [] if DEPRECATED_PAGES.include? slug
+        return [] if slug == 'tsconfig-json'
+        base_url.path == '/' ? tsconfig_entries : handbook_entries
+      end
+
+      def tsconfig_entries
+        css('h3 > code').each_with_object [] do |node, entries|
+          entries << [node.content, node.parent['id']]
+        end
+      end
+
+      def handbook_entries
+        css('h2', 'h3:has(code)').each_with_object [] do |node, entries|
+          entries << ["#{name}: #{node.content}", node['id']] if node['id']
+        end
+      end
+
     end
   end
 end

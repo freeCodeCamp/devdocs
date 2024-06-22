@@ -12,6 +12,8 @@ module Docs
           'Guide'
         elsif slug.start_with?('tutorial')
           'Tutorial'
+        elsif slug.start_with?('api/platform-browser-dynamic')
+          'platform-browser-dynamic'
         elsif node = at_css('th:contains("npm Package")')
           node.next_element.content.remove('@angular/')
         elsif at_css('.api-type-label.module')

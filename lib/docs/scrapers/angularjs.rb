@@ -5,6 +5,10 @@ module Docs
     self.type = 'angularjs'
     self.root_path = 'api.html'
     self.initial_paths = %w(guide.html guide/controller.html)
+    self.links = {
+      home: 'https://angularjs.org/',
+      code: 'https://github.com/angular/angular.js'
+    }
 
     html_filters.push 'angularjs/clean_html', 'angularjs/entries', 'title'
     text_filters.push 'angularjs/clean_urls'

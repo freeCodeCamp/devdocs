@@ -31,8 +31,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://docs.phalconphp.com/', opts)
-      doc.at_css('.header__lang.expand > div > ul > li > a').content
+      tags = get_github_tags('phalcon', 'cphalcon', opts)
+      tags[0]['name'][1..-1]
     end
   end
 end

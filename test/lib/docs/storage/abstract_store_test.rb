@@ -1,7 +1,7 @@
-require 'test_helper'
-require 'docs'
+require_relative '../../../test_helper'
+require_relative '../../../../lib/docs'
 
-class DocsAbstractStoreTest < MiniTest::Spec
+class DocsAbstractStoreTest < Minitest::Spec
   InvalidPathError = Docs::AbstractStore::InvalidPathError
   LockError = Docs::AbstractStore::LockError
 
@@ -368,7 +368,7 @@ class DocsAbstractStoreTest < MiniTest::Spec
     end
 
     def stub_paths(*paths)
-      stub(store).each { |block| paths.each(&block) }
+      stub(store).each { |&block| paths.each(&block) }
     end
 
     it "calls the block" do

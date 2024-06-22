@@ -9,4 +9,8 @@ public/fonts
 public/docs/**/*
 docs/**/*
 !docs/*.md
-vendor
+/vendor
+*.tar
+*.tar.bz2
+*.tar.gz
+*.zip

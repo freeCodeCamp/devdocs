@@ -1,0 +1,9 @@
+{
+  "extends": ["github>freecodecamp/renovate-config"],
+  "packageRules": [
+    {
+      "matchPackageNames": ["better_errors"],
+      "allowedVersions": "!/^2\\.10\\.0$/"
+    }
+  ]
+}

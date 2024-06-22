@@ -7,11 +7,10 @@ module Docs
       end
 
       def root
-        doc.inner_html = doc.at_css('#Documentation + dl').to_html
       end
 
       def other
-        css('.prevnext').remove
+        css('.prev-next').remove
 
         if at_css('p').content.include?("\u{00AB}")
           at_css('p').remove

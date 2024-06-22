@@ -10,7 +10,7 @@ module Docs
           container = at_css 'main'
 
           # Add <dl> mentioning parent class and included modules
-          meta = Nokogiri::XML::Node.new 'dl', doc
+          meta = Nokogiri::XML::Node.new 'dl', doc.document
           meta['class'] = 'meta'
 
           if parent = at_css('#parent-class-section')

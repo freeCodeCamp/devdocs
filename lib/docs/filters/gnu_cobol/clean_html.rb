@@ -21,7 +21,7 @@ module Docs
 
         # Remove everything after Appendix B
         # This includes the license text, the document changelog, the compiler changelog and the footnote
-        current_element = at_css('a[name="Appendix-C-_002d-GNU-Free-Documentation-License"]').previous
+        current_element = at_css('a[name="Appendix-C1-_002d-Grouped-Word-Lists-by-feature-and-function"]').previous
         until current_element.nil?
           next_element = current_element.next
           current_element.remove

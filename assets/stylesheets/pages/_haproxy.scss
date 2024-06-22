@@ -1,0 +1,28 @@
+._haproxy {
+  padding-left: 1rem;
+
+  h1, h2, h3 { margin-left: -1rem; }
+  h2 { @extend %block-heading; }
+  h3 { @extend %block-label; }
+  h4 { @extend %block-label; }
+
+  ._mobile & {
+    padding-left: 0;
+
+    h1, h2, h3 { margin-left: 0; }
+  }
+
+  .pagination-centered { text-align: center; }
+
+  .pull-right { float: right !important; }
+
+  .keyword { @extend %block-label, %label-blue;}
+
+  pre.text {
+    background: var(--contentBackground);
+    border-width: 0px;
+  }
+
+  td.alert-success { background: var(--noteGreenBackground); }
+  td.alert-error { background: var(--noteRedBackground); }
+}

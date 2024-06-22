@@ -1,7 +1,7 @@
-require 'test_helper'
-require 'docs'
+require_relative '../../../../test_helper'
+require_relative '../../../../../lib/docs'
 
-class ContainerFilterTest < MiniTest::Spec
+class ContainerFilterTest < Minitest::Spec
   include FilterTestHelper
   self.filter_class = Docs::ContainerFilter
   self.filter_type = 'html'

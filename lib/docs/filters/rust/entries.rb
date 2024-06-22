@@ -1,13 +1,15 @@
 module Docs
   class Rust
     class EntriesFilter < Docs::EntriesFilter
+
       def get_name
         if slug.start_with?('book') || slug.start_with?('reference')
-          at_css("#sidebar a[href='#{File.basename(slug)}']").content
+          name = at_css("#sidebar a[href='#{File.basename(slug)}']")
+          name ? name.content : 'Introduction'
         elsif slug == 'error-index'
           'Compiler Errors'
         else
-          name = at_css('h1.fqn .in-band').content.remove(/\A.+\s/)
+          name = at_css('main h1').content.remove(/\A.+\s/).remove('⎘')
           mod = slug.split('/').first
           name.prepend("#{mod}::") unless name.start_with?(mod)
           name
@@ -25,7 +27,7 @@ module Docs
           'Compiler Errors'
         else
           path = name.split('::')
-          heading = at_css('h1.fqn .in-band').content.strip
+          heading = at_css('main h1').content.strip
           if path.length > 2 || (path.length == 2 && (heading.start_with?('Module') || heading.start_with?('Primitive')))
             path[0..1].join('::')
           else
@@ -44,13 +46,14 @@ module Docs
         else
           css('.method')
             .each_with_object({}) { |node, entries|
-              name = node.at_css('.fnname').try(:content)
+              name = node.at_css('a.fn').try(:content)
               next unless name
               name.prepend "#{self.name}::"
               entries[name] ||= [name, node['id']]
             }.values
         end
       end
+
     end
   end
 end

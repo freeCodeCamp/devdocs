@@ -1,8 +1,17 @@
 module Docs
   class Crystal < UrlScraper
+    include MultipleBaseUrls
     self.type = 'crystal'
-    self.base_url = 'https://crystal-lang.org/'
-    self.initial_paths = %w(docs/index.html)
+    self.release = '1.11.1'
+    self.base_urls = [
+      "https://crystal-lang.org/api/#{release}/",
+      "https://crystal-lang.org/reference/#{release[0..2]}/",
+    ]
+    def initial_urls
+      [ "https://crystal-lang.org/api/#{self.class.release}/index.html",
+        "https://crystal-lang.org/reference/#{self.class.release[0..2]}/index.html" ]
+    end
+
     self.links = {
       home: 'https://crystal-lang.org/',
       code: 'https://github.com/crystal-lang/crystal'
@@ -11,7 +20,7 @@ module Docs
     html_filters.push 'crystal/entries', 'crystal/clean_html'
 
     options[:attribution] = ->(filter) {
-      if filter.slug.start_with?('docs')
+      if filter.current_url.path.start_with?('/reference/')
         <<-HTML
           To the extent possible under law, the persons who contributed to this work
           have waived<br>all copyright and related or neighboring rights to this work
@@ -19,28 +28,15 @@ module Docs
         HTML
       else
         <<-HTML
-          &copy; 2012&ndash;2020 Manas Technology Solutions.<br>
+          &copy; 2012&ndash;2024 Manas Technology Solutions.<br>
           Licensed under the Apache License, Version 2.0.
         HTML
       end
     }
 
-    version do
-      self.release = '0.35.1'
-      self.root_path = "api/#{release}/index.html"
-
-      options[:only_patterns] = [/\Adocs\//, /\Aapi\/#{release}\//]
-      options[:skip_patterns] = [/debug/i]
-
-      options[:replace_paths] = {
-        "api/#{release}/" => "api/#{release}/index.html",
-        'docs/' => 'docs/index.html'
-      }
-    end
-
     def get_latest_version(opts)
       doc = fetch_doc('https://crystal-lang.org/', opts)
-      doc.at_css('.latest-release').content.scan(/([0-9.]+)/)[0][0]
+      doc.at_css('.latest-release-info > a > strong').content.scan(/([0-9.]+)/)[0][0]
     end
   end
 end

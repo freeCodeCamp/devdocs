@@ -4,8 +4,8 @@
   <Description>Search API documentation</Description>
   <Tags>devdocs</Tags>
   <Url type="text/html" method="get" template="https://devdocs.io/#q={searchTerms}"/>
-  <Image height="16" width="16" type="image/vnd.microsoft.icon">https://cdn.devdocs.io/favicon.ico</Image>
-  <Image height="64" width="64" type="image/x-icon">https://cdn.devdocs.io/images/icon-64.png</Image>
+  <Image height="16" width="16" type="image/vnd.microsoft.icon">https://devdocs.io/favicon.ico</Image>
+  <Image height="64" width="64" type="image/x-icon">https://devdocs.io/images/icon-64.png</Image>
   <InputEncoding>UTF-8</InputEncoding>
   <moz:SearchForm>https://devdocs.io</moz:SearchForm>
   <Url type="application/opensearchdescription+xml" rel="self" template="https://devdocs.io/opensearch.xml"/>

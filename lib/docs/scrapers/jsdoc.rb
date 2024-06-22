@@ -2,12 +2,12 @@ module Docs
   class Jsdoc < UrlScraper
     self.name = 'JSDoc'
     self.type = 'simple'
-    self.release = '3.5.5'
-    self.base_url = 'http://usejsdoc.org/'
+    self.release = '3.6.7'
+    self.base_url = 'https://jsdoc.app/'
     self.root_path = 'index.html'
     self.links = {
-      home: 'http://usejsdoc.org/',
-      code: 'https://github.com/jsdoc3/jsdoc'
+      home: 'https://jsdoc.app/',
+      code: 'https://github.com/jsdoc/jsdoc'
     }
 
     html_filters.push 'jsdoc/clean_html', 'jsdoc/entries'
@@ -23,7 +23,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_latest_github_release('jsdoc3', 'jsdoc', opts)
+      get_npm_version('jsdoc', opts)
     end
   end
 end

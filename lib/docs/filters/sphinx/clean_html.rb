@@ -20,8 +20,8 @@ module Docs
         css('div[class*="highlight-"]', 'div[class*="hl-"]').each do |node|
           pre = node.at_css('pre')
           pre.content = pre.content
-          lang = node['class'][/code (\w+) highlight/, 1] || node['class'][/highlight\-(\w+)/, 1] || node['class'][/hl\-(\w+)/, 1]
-          lang = 'php' if lang == 'ci'
+          lang = node['class'][/code (\w+) highlight/, 1] || node['class'][/highlight\-([\w\+]+)/, 1] || node['class'][/hl\-(\w+)/, 1]
+          lang = 'php' if lang == 'ci'|| lang == 'html+php'
           lang = 'markup' if lang == 'html+django'
           lang = 'bash' if lang == 'bash'
           lang = 'python' if lang == 'default' || lang.start_with?('python') || lang.start_with?('ipython')
@@ -36,9 +36,11 @@ module Docs
           node.replace(pre)
         end
 
-        css('span[id]:empty').each do |node|
-          (node.next_element || node.previous_element)['id'] ||= node['id'] if node.next_element || node.previous_element
-          node.remove
+        unless context[:sphinx_keep_empty_ids]
+          css('span[id]:empty').each do |node|
+            (node.next_element || node.previous_element)['id'] ||= node['id'] if node.next_element || node.previous_element
+            node.remove
+          end
         end
 
         css('.section').each do |node|
@@ -58,6 +60,10 @@ module Docs
         end
 
         css('dt').each do |node|
+          next if current_url.host == 'matplotlib.org'
+          next if current_url.host == 'numpy.org'
+          next if current_url.host == 'requests.readthedocs.io'
+          next if current_url.host == 'scikit-learn.org'
           next unless node['id'] || node.at_css('code, .classifier')
           links = []
           links << node.children.last.remove while node.children.last.try(:name) == 'a'

@@ -17,7 +17,7 @@ module Docs
       ].freeze
 
       def get_name
-        at_css('h1.article-title').content.strip
+        at_css('h1.main-content-title').content.strip
       end
 
       def get_type

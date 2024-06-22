@@ -6,13 +6,14 @@ module Docs
         name.remove! 'XPath.'
         name.remove! 'XSLT.'
         name.remove! 'Axes.'
-        name.prepend 'xsl:' if slug =~ /\AXSLT\/[a-z]/
+        name.remove! 'Element.'
+        name.prepend 'xsl:' if slug =~ /XSLT\/Element/
         name << '()' if name.gsub!('Functions.', '')
         name
       end
 
       def get_type
-        if slug =~ /\AXSLT\/[a-z]/
+        if slug =~ /XSLT\/Element/
           'XSLT Elements'
         elsif slug.start_with?('XPath/Axes')
           'XPath Axes'

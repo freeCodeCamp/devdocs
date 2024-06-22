@@ -87,8 +87,15 @@ module Docs
       end
 
       def store_page(store, id)
+        index = EntryIndex.new
+        pages = PageDb.new
+
         store.open(path) do
           if page = new.build_page(id) and store_page?(page)
+            index.add page[:entries]
+            pages.add page[:path], page[:output]
+            store_index(store, INDEX_FILENAME, index, false)
+            store_index(store, DB_FILENAME, pages, false)
             store.write page[:store_path], page[:output]
             true
           else
@@ -137,11 +144,11 @@ module Docs
         page[:entries].present?
       end
 
-      def store_index(store, filename, index)
-        old_json = store.read(filename) || '{}'
+      def store_index(store, filename, index, read_write=true)
+        old_json = read_write && store.read(filename) || '{}'
         new_json = index.to_json
         instrument "#{filename.remove('.json')}.doc", before: old_json, after: new_json
-        store.write(filename, new_json)
+        read_write && store.write(filename, new_json)
       end
 
       def store_meta(store)
@@ -184,7 +191,7 @@ module Docs
       raise NotImplementedError
     end
 
-    # Returns whether or not this scraper is outdated.
+    # Returns whether or not this scraper is outdated ("Outdated major version", "Outdated minor version" or 'Up-to-date').
     #
     # The default implementation assumes the documentation uses a semver(-like) approach when it comes to versions.
     # Patch updates are ignored because there are usually little to no documentation changes in bug-fix-only releases.
@@ -195,18 +202,21 @@ module Docs
     # 1 -> 2 = outdated
     # 1.1 -> 1.2 = outdated
     # 1.1.1 -> 1.1.2 = not outdated
-    def is_outdated(scraper_version, latest_version)
-      scraper_parts = scraper_version.to_s.split(/\./).map(&:to_i)
-      latest_parts = latest_version.to_s.split(/\./).map(&:to_i)
+    def outdated_state(scraper_version, latest_version)
+      scraper_parts = scraper_version.to_s.split(/[-.]/).map(&:to_i)
+      latest_parts = latest_version.to_s.split(/[-.]/).map(&:to_i)
 
       # Only check the first two parts, the third part is for patch updates
       [0, 1].each do |i|
         break if i >= scraper_parts.length or i >= latest_parts.length
-        return true if latest_parts[i] > scraper_parts[i]
-        return false if latest_parts[i] < scraper_parts[i]
+        return 'Outdated major version' if i == 0 and latest_parts[i] > scraper_parts[i]
+        return 'Outdated major version' if i == 1 and latest_parts[i] > scraper_parts[i] and latest_parts[0] == 0 and scraper_parts[0] == 0
+        return 'Outdated major version' if i == 1 and latest_parts[i] > scraper_parts[i] and latest_parts[0] == 1 and scraper_parts[0] == 1
+        return 'Outdated minor version' if i == 1 and latest_parts[i] > scraper_parts[i]
+        return 'Up-to-date' if latest_parts[i] < scraper_parts[i]
       end
 
-      false
+      'Up-to-date'
     end
 
     private
@@ -245,9 +255,9 @@ module Docs
       JSON.parse fetch(url, opts)
     end
 
-    def get_npm_version(package, opts)
+    def get_npm_version(package, opts, tag='latest')
       json = fetch_json("https://registry.npmjs.com/#{package}", opts)
-      json['dist-tags']['latest']
+      json['dist-tags'][tag]
     end
 
     def get_latest_github_release(owner, repo, opts)
@@ -269,6 +279,10 @@ module Docs
       commits = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/commits", opts)
       timestamp = commits[0]['commit']['author']['date']
       Date.iso8601(timestamp).to_time.to_i
+    end
+
+    def get_gitlab_tags(hostname, group, project, opts)
+      fetch_json("https://#{hostname}/api/v4/projects/#{group}%2F#{project}/repository/tags", opts)
     end
   end
 end

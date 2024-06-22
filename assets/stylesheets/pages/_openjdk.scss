@@ -1,5 +1,6 @@
 ._openjdk {
   @extend %simple;
+  > .inheritance { @extend %note; }
 
   ul.inheritance { list-style: none; }
   > ul.inheritance { @extend %note, %note-blue; }

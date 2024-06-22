@@ -1,0 +1,7 @@
+._joi {
+  @extend %simple;
+
+  pre > code {
+    font-size: inherit;
+  }
+}

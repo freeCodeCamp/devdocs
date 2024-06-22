@@ -6,4 +6,10 @@
   .note { @extend %note; }
   .warning { @extend %note, %note-red; }
   .note .label, .warning .label { font-weight: var(--boldFontWeight); }
+
+  .since {
+	  color: var(--textColorLight);
+	  font-weight: normal;
+	  font-size: small;
+  }
 }

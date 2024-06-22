@@ -1,7 +1,7 @@
 module Docs
   class Babel < UrlScraper
     self.type = 'simple'
-    self.base_url = 'https://babeljs.io/docs/en/'
+    self.base_url = 'https://babeljs.io/docs/'
     self.links = {
       home: 'https://babeljs.io/',
       code: 'https://github.com/babel/babel'
@@ -24,13 +24,17 @@ module Docs
       /roadmap/
     ]
 
+    options[:skip_link] = ->(link) {
+       link['href'].include?('https://babeljs.io/docs/en/')
+    }
+
     options[:attribution] = <<-HTML
-      &copy; 2020 Sebastian McKenzie<br>
+      &copy; 2014-present Sebastian McKenzie<br>
       Licensed under the MIT License.
     HTML
 
     version '7' do
-      self.release = '7.12.6'
+      self.release = '7.21.4'
     end
 
     version '6' do

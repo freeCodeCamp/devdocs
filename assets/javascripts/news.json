@@ -1,15 +1,160 @@
 [
   [
+    "2024-06-12",
+    "New documentations: <a href=\"/nextjs/\">Next.js</a>, <a href=\"/click/\">click</a>"
+  ],
+  [
+    "2024-01-24",
+    "New documentation: <a href=\"/playwright/\">Playwright</a>"
+  ],
+  [
+    "2024-01-20",
+    "New documentation: <a href=\"/htmx/\">htmx</a>"
+  ],
+  [
+    "2024-01-12",
+    "New documentation: <a href=\"/hammerspoon/\">Hammerspoon</a>"
+  ],
+  [
+    "2024-01-05",
+    "New documentation: <a href=\"/bazel/\">Bazel</a>"
+  ],
+  [
+    "2023-10-09",
+    "New documentations: <a href=\"/hapi/\">hapi</a>, <a href=\"/joi/\">joi</a>, <a href=\"/nushell/\">Nushell</a>, <a href=\"/varnish/\">Varnish</a>"
+  ],
+  [
+    "2023-08-24",
+    "New documentation: <a href=\"/fluture/\">Fluture</a>"
+  ],
+  [
+    "2022-12-20",
+    "New documentations: <a href=\"/qunit/\">QUnit</a>, <a href=\"/wagtail/\">Wagtail</a>"
+  ],
+  [
+    "2022-11-04",
+    "New documentation: <a href=\"/vueuse/\">VueUse</a>"
+  ],
+  [
+    "2022-10-10",
+    "New documentation: <a href=\"/astro/\">Astro</a>"
+  ],
+  [
+    "2022-10-09",
+    "New documentations: <a href=\"/fastapi/\">FastAPI</a>, <a href=\"/vitest/\">Vitest</a>"
+  ],
+  [
+    "2022-10-02",
+    "New documentation: <a href=\"/svelte/\">Svelte</a>"
+  ],
+  [
+    "2022-09-21",
+    "Added HTTP/3 to <a href=\"/http/\">HTTP</a>"
+  ],
+  [
+    "2022-09-06",
+    "New documentation: <a href=\"/date_fns/\">date-fns</a>"
+  ],
+  [
+    "2022-08-27",
+    "New documentations: <a href=\"/sanctuary/\">Sanctuary</a>, <a href=\"/requests/\">Requests</a>, <a href=\"/axios/\">Axios</a>"
+  ],
+  [
+    "2022-05-03",
+    "New documentations: <a href=\"/kubernetes/\">Kubernetes</a>, <a href=\"/kubectl/\">Kubectl</a>"
+  ],
+  [
+    "2022-04-25",
+    "New documentation: <a href=\"/nix/\">Nix</a>"
+  ],
+  [
+    "2022-03-31",
+    "New documentation: <a href=\"/eigen3/\">Eigen3</a>"
+  ],
+  [
+    "2022-02-21",
+    "New documentation: <a href=\"/tailwindcss/\">Tailwind CSS</a>"
+  ],
+  [
+    "2022-01-12",
+    "New documentation: <a href=\"/react_router/\">React Router</a>"
+  ],
+  [
+    "2022-01-09",
+    "New documentation: <a href=\"/deno/\">Deno</a>"
+  ],
+  [
+    "2021-12-29",
+    "New documentation: <a href=\"/point_cloud_library/\">PointCloudLibrary</a>"
+  ],
+  [
+    "2021-12-27",
+    "New documentation: <a href=\"/zig/\">Zig</a>"
+  ],
+  [
+    "2021-12-26",
+    "New documentation: <a href=\"/gnu_make/\">GNU Make</a>"
+  ],
+  [
+    "2021-12-07",
+    "New documentation: <a href=\"/prettier/\">Prettier</a>",
+    "Renamed documentation: <a href=\"/dom/\">Web APIs</a>"
+  ],
+  [
+    "2021-12-05",
+    "New documentation: <a href=\"/esbuild/\">esbuild</a>"
+  ],
+  [
+    "2021-12-04",
+    "New documentation: <a href=\"/vite/\">Vite</a>"
+  ],
+  [
+    "2021-11-29",
+    "New documentation: <a href=\"/i3/\">i3</a>"
+  ],
+  [
+    "2021-06-09",
+    "New documentation: <a href=\"/r/\">R</a>"
+  ],
+  [
+    "2021-05-31",
+    "New documentation: <a href=\"/web_extensions/\">Web Extensions</a>"
+  ],
+  [
+    "2021-05-26",
+    "New documentations: <a href=\"/latex/\">LaTeX</a>, <a href=\"/jq/\">jq</a>"
+  ],
+  [
+    "2021-04-29",
+    "Added <code class=\"_label\">alt + c</code> shortcut to copy URL of original page."
+  ],
+  [
+    "2021-02-26",
+    "New documentation: <a href=\"/react_bootstrap/\">React Bootstrap</a>"
+  ],
+  [
+    "2021-01-03",
+    "New documentation: <a href=\"/ocaml/\">OCaml</a>"
+  ],
+  [
+    "2020-12-23",
+    "New documentation: <a href=\"/gtk/\">GTK</a>"
+  ],
+  [
+    "2020-12-07",
+    "New documentations: <a href=\"/flask/\">Flask</a>, <a href=\"/groovy/\">Groovy</a>, <a href=\"/jinja/\">Jinja</a>, <a href=\"/werkzeug/\">Werkzeug</a>"
+  ],
+  [
+    "2020-12-04",
+    "New documentation: <a href=\"/haproxy/\">HAProxy</a>"
+  ],
+  [
     "2020-11-17",
     "TensorFlow has been split into <a href=\"/tensorflow/\">TensorFlow Python</a>, <a href=\"/tensorflow_cpp/\">TensorFlow C++</a>"
   ],
   [
     "2020-11-14",
-    "Newly added documentations: <a href=\"/pytorch/\">PyTorch</a>, <a href=\"/spring_boot/\">Spring Boot</a>"
-  ],
-  [
-    "2020-11-14",
-    "Updated documentations: <a href=\"/angular/\">Angular</a>, <a href=\"/angularjs/\">Angular.js</a>, <a href=\"/ansible/\">Ansible</a>, <a href=\"/cmake/\">CMake</a>, <a href=\"/codeigniter/\">CodeIgniter</a>, <a href=\"/crystal/\">Crystal</a>, <a href=\"/css/\">CSS</a>, <a href=\"/elixir/\">Elixir</a>, <a href=\"/go/\">Go</a>, <a href=\"/godot/\">Godot</a>, <a href=\"/haxe/\">Haxe</a>, <a href=\"/html/\">HTML</a>, <a href=\"/javascript/\">JavaScript</a>, <a href=\"/jest/\">Jest</a>, <a href=\"/laravel/\">Laravel</a>, <a href=\"/leaflet/\">Leaflet</a>, <a href=\"/lua/\">Lua</a>, <a href=\"/nginx/\">nginx</a>, <a href=\"/node/\">Node.js</a>, <a href=\"/openjdk/\">OpenJDK</a>, <a href=\"/postgresql/\">PostgreSQL</a>, <a href=\"/pug/\">Pug</a>, <a href=\"/python/\">Python</a>, <a href=\"/rails/\">Rails</a>, <a href=\"/react/\">React</a>, <a href=\"/ruby/\">Ruby</a>, <a href=\"/sqlite/\">SQLite</a>, <a href=\"/svg/\">SVG</a>, <a href=\"/xslt_xpath/\">XSLT + XPath</a>"
+    "New documentations: <a href=\"/pytorch/\">PyTorch</a>, <a href=\"/spring_boot/\">Spring Boot</a>"
   ],
   [
     "2020-01-13",

@@ -18,7 +18,7 @@ end
 
 ActiveSupport::TestCase.test_order = :random
 
-class MiniTest::Spec
+class Minitest::Spec
   include ActiveSupport::Testing::Assertions
 
   module DSL

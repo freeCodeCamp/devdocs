@@ -3,7 +3,7 @@ module Docs
     self.name = 'Liquid'
     self.type = 'liquid'
     self.base_url = 'https://shopify.github.io/liquid/'
-    self.release = '4.0.0'
+    self.release = '5.0.0'
     self.links = {
       home: 'https://shopify.github.io/liquid/',
       code: 'https://github.com/Shopify/liquid'
@@ -24,5 +24,6 @@ module Docs
       tags = get_github_tags('Shopify', 'liquid', opts)
       tags[0]['name'][1..-1]
     end
+
   end
 end

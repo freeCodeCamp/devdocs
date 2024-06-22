@@ -2,7 +2,8 @@ module Docs
   class Twig
     class CleanHtmlFilter < Filter
       def call
-        css('.infobar', '.offline-docs', '.headerlink').remove
+
+        css('.infobar', '.offline-docs', '.headerlink', '.linenos').remove
 
         css('.builtin-reference', '.admonition-wrapper', 'h1 > code', 'h2 > code', '.body-web', '.reference em').each do |node|
           node.before(node.children).remove
@@ -33,7 +34,23 @@ module Docs
           node['style'] = 'text-align: center'
         end
 
+        # syntax highlight
+        css('.highlight').each do |node|
+          node.css('pre').each do |subnode|
+            subnode['data-language'] = 'php'
+            subnode.add_class('highlight')
+          end
+        end
+
+        # fix code blocks style
+        css('.highlighttable').each do |node|
+          code = node.at_css('pre')
+          node.before(code)
+          node.remove
+        end
+
         doc
+
       end
     end
   end

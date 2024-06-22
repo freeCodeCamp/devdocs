@@ -14,6 +14,11 @@ module Docs
           node.content = node.content.strip
         end
 
+        css('pre.highlight').each do |node|
+          node['data-language'] = "liquid"
+          node['class'] = "language-liquid"
+        end
+
         doc
       end
     end

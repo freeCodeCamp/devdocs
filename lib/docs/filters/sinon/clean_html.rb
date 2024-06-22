@@ -20,7 +20,13 @@ module Docs
           node['data-language'] = 'javascript'
         end
 
+        css('#banner-message').remove
+
+        # Removes duplicate title
+        css('#json-p').remove
+
         doc
+
       end
     end
   end

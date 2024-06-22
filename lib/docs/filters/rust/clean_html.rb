@@ -13,12 +13,14 @@ module Docs
             node.before(node.children).remove
           end
         else
-          @doc = at_css('#main')
+          @doc = at_css('#main, #main-content')
 
           css('.toggle-wrapper').remove
+          css('.anchor').remove
 
-          css('h1.fqn').each do |node|
-            node.content = node.at_css('.in-band').content
+          css('.main-heading > h1').each do |node|
+            node.parent.name = 'h1'
+            node.parent.content = node.content
           end
 
           css('.stability .stab').each do |node|
@@ -27,10 +29,27 @@ module Docs
           end
         end
 
+        # Fix notable trait sections
+        css('.method, .rust.trait').each do |node|
+          traitSection = node.at_css('.notable-traits')
+
+          if traitSection
+            traitSectionContent = traitSection.css('.notable-traits-tooltiptext')
+            traitSection.css('.notable-traits-tooltip').remove
+            traitSection.add_child(traitSectionContent)
+            node.after(traitSection)
+          end
+        end
+
         css('.rusttest', '.test-arrow', 'hr').remove
 
         css('.docblock.attributes').each do |node|
           node.remove if node.content.include?('#[must_use]')
+        end
+
+        css('details').each do |node|
+          node.css('summary:contains("Expand description")').remove
+          node.before(node.children).remove
         end
 
         css('a.header').each do |node|
@@ -51,6 +70,11 @@ module Docs
         end
 
         css('> .impl-items', '> .docblock', 'pre > pre', '.tooltiptext', '.tooltip').each do |node|
+          # see .tooltip.ignore::after in https://doc.rust-lang.org/rustdoc1.50.0.css
+          node.content += ' This example is not tested' if node['class'].include?('ignore')
+          node.content += ' This example deliberately fails to compile' if node['class'].include?('compile_fail')
+          node.content += ' This example panics' if node['class'].include?('should_panic')
+          node.content += ' This code runs with edition ' + node['data-edition'] if node['class'].include?('edition')
           node.before(node.children).remove
         end
 
@@ -64,25 +88,16 @@ module Docs
         end
 
         css('pre').each do |node|
+          node.css('.where.fmt-newline').each do |node|
+            node.before("\n")
+          end
           node.content = node.content
           node['data-language'] = 'rust' if node['class'] && node['class'].include?('rust')
+          node['data-language'] = 'rust' if node.classes.include?('code-header')
         end
 
         doc.first_element_child.name = 'h1' if doc.first_element_child.name = 'h2'
         at_css('h1').content = 'Rust Documentation' if root_page?
-
-        css('.table-display').each do |node|
-          node.css('td').each do |td|
-            node.before(td.children)
-          end
-          node.remove
-        end
-
-        css('.important-traits').to_a.each_with_index do |node, index|
-          content = node.at_css('.content.hidden .content')
-          node.at_css('.content.hidden').replace(content) if content
-          node.parent.after(node) if node.parent.name.in?(%(h2 h3 h4))
-        end
 
         css('code.content').each do |node|
           node.name = 'pre'
@@ -93,9 +108,19 @@ module Docs
           node.content = node.content
         end
 
+        css('.rightside').each do |node|
+          node.children.each do |child|
+            child.remove if child.text?() and child.text() == " · "
+          end
+        end
+
         css('.since + .srclink').each do |node|
           node.previous_element.before(node)
         end
+
+        css('#copy-path').remove
+        css('.sidebar').remove
+        css('.collapse-toggle').remove
 
         doc
       end

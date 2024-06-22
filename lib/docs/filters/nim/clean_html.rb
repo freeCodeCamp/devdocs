@@ -4,7 +4,16 @@ module Docs
       def call
         @doc = at_css('#documentId .container')
 
-        css('.docinfo', '.footer', 'blockquote > p:empty', '.link-seesrc').remove
+        # add id to each proc, template and macro
+        css('dl > dt > pre').each do |node|
+          next if !(node.at_css('a'))
+          node.remove_attribute('id')
+          nodeId = node.at_css('a')['href']
+          nodeId.gsub!(/.*\#/, '')
+          node['id'] = nodeId
+        end
+
+        css('.docinfo', '.footer', 'blockquote > p:empty').remove
 
         css('h1:not(.title), h2, h3, h4').each do |node|
           node.name = node.name.sub(/\d/) { |i| i.to_i + 1 }
@@ -15,18 +24,9 @@ module Docs
           @doc = content
         end
 
-        if root_page?
-          at_css('h1').content = 'Nim Documentation'
-        end
-
         css('h1 > a', 'h2 > a', 'h3 > a', 'h4 > a').each do |node|
           node.parent['id'] = node['id'] if node['id']
           node.before(node.children).remove
-        end
-
-        css('a[name]').each do |node|
-          node.next_element['id'] = node['name']
-          node.remove
         end
 
         css('pre').each do |node|

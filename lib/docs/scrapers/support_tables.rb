@@ -1,15 +1,23 @@
 require 'yajl/json_gem'
 
 module Docs
-  class SupportTables < Doc
+  class SupportTables < Scraper
     include Instrumentable
 
     self.name = 'Support Tables'
     self.slug = 'browser_support_tables'
     self.type = 'support_tables'
+    self.release = '1.0.30001574'
+    self.base_url = 'https://github.com/Fyrd/caniuse/raw/main/'
+
+    # https://github.com/Fyrd/caniuse/blob/main/LICENSE
+    options[:attribution] = <<-HTML
+      &copy; 2020 Alexis Deveria<br>
+      Licensed under the Creative Commons Attribution 4.0 International License.
+    HTML
 
     def build_pages
-      url = 'https://github.com/Fyrd/caniuse/raw/master/data.json'
+      url = 'https://github.com/Fyrd/caniuse/raw/main/data.json'
       instrument 'running.scraper', urls: [url]
 
       response = Request.run(url)
@@ -22,20 +30,20 @@ module Docs
       data['agents']['and_ff']['browser'] = 'Android Firefox'
       data['agents']['and_uc']['browser'] = 'Android UC Browser'
       data['desktop_agents'] = data['agents'].select { |_, agent| agent['type'] == 'desktop' }
-      data['mobile_agents']  = data['agents'].select { |–, agent| agent['type'] == 'mobile' }
+      data['mobile_agents']  = data['agents'].select { |_, agent| agent['type'] == 'mobile' }
       data['total_versions'] = data['agents']['firefox']['versions'].length
 
       index_page = {
         path: 'index',
         store_path: 'index.html',
-        output: ERB.new(INDEX_PAGE_ERB).result(binding),
+        output: ERB.new(INDEX_PAGE_ERB, trim_mode:">").result(binding),
         entries: [Entry.new(nil, 'index', nil)]
       }
 
       yield index_page
 
       data['data'].each do |feature_id, feature|
-        url = "https://github.com/Fyrd/caniuse/raw/master/features-json/#{feature_id}.json"
+        url = "https://github.com/Fyrd/caniuse/raw/main/features-json/#{feature_id}.json"
 
         response = Request.run(url)
         instrument 'process_response.scraper', response: response
@@ -48,7 +56,7 @@ module Docs
         page = {
           path: feature_id,
           store_path: "#{feature_id}.html",
-          output: ERB.new(PAGE_ERB).result(binding),
+          output: ERB.new(PAGE_ERB, trim_mode:">").result(binding).split("\n").map(&:strip).join("\n"),
           entries: [Entry.new(name, feature_id, type)]
         }
 
@@ -174,15 +182,13 @@ module Docs
         <p class="_attribution-p">
           Data by caniuse.com<br>
           Licensed under the Creative Commons Attribution License v4.0.<br>
-          <a href="http://caniuse.com/#feat=<%= feature_id %>" class="_attribution-link">http://caniuse.com/#feat=<%= feature_id %></a>
+          <a href="https://caniuse.com/<%= feature_id %>" class="_attribution-link">https://caniuse.com/<%= feature_id %></a>
         </p>
       </div>
     HTML
 
     def get_latest_version(opts)
-      body = fetch('https://feeds.feedburner.com/WhenCanIUse?format=xml', opts)
-      timestamp = body.scan(/<updated>([^<]+)<\/updated>/)[0][0]
-      DateTime.parse(timestamp).to_time.to_i
+      get_npm_version('caniuse-db', opts)
     end
   end
 end

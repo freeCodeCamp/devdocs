@@ -2,4 +2,9 @@
   @extend %simple;
 
   p.tip { @extend %note; }
+  .custom-block {
+    @extend %note;
+    &.tip { @extend %note-green; }
+    &.info { @extend %note-blue; }
+  }
 }

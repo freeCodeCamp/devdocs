@@ -36,6 +36,9 @@ module Docs
         # Remove external links
         css('#external-links').remove
 
+        # Remove button to https://dart.dev/null-safety
+        css('.feature-null-safety').remove
+
         # Properly format header in v2 docs
         nested_title = at_css('div > h1')
         unless nested_title.nil?

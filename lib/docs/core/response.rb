@@ -12,6 +12,11 @@ module Docs
       body.blank?
     end
 
+    def content_length
+      value = headers['Content-Length'] || '0'
+      value.to_i
+    end
+
     def mime_type
       headers['Content-Type'] || 'text/plain'
     end

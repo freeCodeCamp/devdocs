@@ -7,7 +7,7 @@ module Docs
         at_css('#mainCol').prepend_child at_css('#feature .wrapper').children
         @doc = at_css('#mainCol')
 
-        container = Nokogiri::XML::Node.new 'div', doc
+        container = Nokogiri::XML::Node.new 'div', doc.document
         container['class'] = '_simple'
         container.children = doc.children
         doc << container
@@ -23,9 +23,12 @@ module Docs
         end
 
         css('pre').each do |node|
-          language = node['class'][/brush: ?(\w+)/, 1]
+          code = node.at_css('code')
+          language = code['class']
+          break if language.nil?
+          language = language [/highlight ?(\w+)/, 1]
           node['data-language'] = language unless language == 'plain'
-          node.remove_attribute('class')
+          code.remove_attribute('class')
           node.content = node.content.strip
         end
 

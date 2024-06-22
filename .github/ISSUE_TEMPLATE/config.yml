@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question
+    about: "Ask questions and have discussions on Discord"
+    url: "https://discord.gg/PRyKn3Vbay"
+  - name: New Documentation
+    about: "Request a new documentation on Trello"
+    url: "https://trello.com/b/6BmTulfx/devdocs-documentation"

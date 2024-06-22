@@ -2,33 +2,17 @@ module Docs
   class Npm
     class CleanHtmlFilter < Filter
       def call
-        if root_page?
-          css('#enterprise', '#policies', '#viewAll').remove
-        else
-          @doc = doc.at_css('#page')
-          css('meta', '.colophon').remove
-        end
+        @doc = at_css('main')
 
-        css('a.deep-link[id]', 'a.anchor[id]').each do |node|
-          node.parent['id'] = node['id']
-          node.remove
-        end
-
-        css('> section').each do |node|
-          node.before(node.children).remove
-        end
-
-        css('pre.editor').each do |node|
-          node.inner_html = node.inner_html.gsub(/<\/div>(?!\n|\z)/, "</div>\n")
-        end
-
-        css('h1 + h1.subtitle').each do |node|
-          node.name = 'p'
-          node.inner_html += '.'
-        end
+        css('details').remove
+        css('nav[aria-label="Breadcrumbs"]').remove
+        css('.gtWOdv').remove  # Select CLI Version
+        css('.ezMiXD').remove  # Navbox
+        css('.gOhcvK').remove  # Edit this page on GitHub
 
         css('pre').each do |node|
-          node.content = node.content
+          node.content = node.css('.token-line').map(&:content).join("\n")
+          node['data-language'] = 'javascript'
         end
 
         doc

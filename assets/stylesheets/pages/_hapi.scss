@@ -1,0 +1,7 @@
+._hapi {
+  @extend %simple;
+
+  pre > code {
+    font-size: inherit;
+  }
+}

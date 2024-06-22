@@ -4,9 +4,9 @@ module Docs
   class Cypress < UrlScraper
     self.name = 'Cypress'
     self.type = 'cypress'
-    self.release = '5.6.0'
+    self.release = '9.4.1'
     self.base_url = 'https://docs.cypress.io'
-    self.root_path = '/api/api/table-of-contents.html'
+    self.root_path = '/api/table-of-contents.html'
     self.links = {
       home: 'https://www.cypress.io/',
       code: 'https://github.com/cypress-io/cypress',
@@ -14,7 +14,7 @@ module Docs
 
     html_filters.push 'cypress/entries', 'cypress/clean_html'
 
-    options[:container] = '#content'
+    options[:container] = 'article'
     options[:max_image_size] = 300_000
     options[:include_default_entry] = true
 
@@ -29,7 +29,7 @@ module Docs
     }
 
     options[:attribution] = <<-HTML
-      &copy; 2020 Cypress.io<br>
+      &copy; 2017 Cypress.io<br>
       Licensed under the MIT License.
     HTML
 

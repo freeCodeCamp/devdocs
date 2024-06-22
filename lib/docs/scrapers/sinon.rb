@@ -14,48 +14,48 @@ module Docs
     options[:container] = '.content .container'
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2018 Christian Johansen<br>
+      &copy; 2010&ndash;2022 Christian Johansen<br>
       Licensed under the BSD License.
     HTML
 
-    version '7' do
-      self.release = '7.1.1'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
+    # Links in page point to '../page' what makes devdocs points to non-existent links
+    options[:fix_urls] = -> (url) do
+      if !(url =~ /releases\/v\d*/)
+        url.gsub!(/.*releases\//, "")
+      end
+
+      url
     end
 
-    version '6' do
-      self.release = '6.3.5'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
+    RELEASE_MAPPINGS = {
+      '15' => '15.0.1',
+      '14' => '14.0.2',
+      '13' => '13.0.1',
+      '12' => '12.0.1',
+      '11' => '11.1.2',
+      '10' => '10.0.1',
+      '9'  => '9.2.2.',
+      '8'  => '8.1.1',
+      '7'  => '7.5.0',
+      '6'  => '6.3.5',
+      '5'  => '5.1.0',
+      '4'  => '4.5.0',
+      '3'  => '3.3.0',
+      '2'  => '2.4.1',
+      '1'  => '1.17.7'
+    }
 
-    version '5' do
-      self.release = '5.1.0'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '4' do
-      self.release = '4.5.0'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '3' do
-      self.release = '3.3.0'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '2' do
-      self.release = '2.4.1'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
-    end
-
-    version '1' do
-      self.release = '1.17.7'
-      self.base_url = "https://sinonjs.org/releases/v#{release}/"
+    RELEASE_MAPPINGS.each do |ver, release|
+      version ver do
+        self.release = release
+        self.base_url = "https://sinonjs.org/releases/v#{ver}/"
+      end
     end
 
     def get_latest_version(opts)
-      body = fetch('https://sinonjs.org/', opts)
-      body.scan(/\/releases\/v([0-9.]+)/)[0][0]
+      tags = get_github_tags('sinonjs', 'sinon', opts)
+      tags[0]['name'][1..-1]
     end
+
   end
 end

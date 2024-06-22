@@ -7,7 +7,8 @@ module Docs
 
     self.name = 'Nokogiri'
     self.slug = 'nokogiri'
-    self.release = '1.10.4'
+    self.release = '1.14.2'
+    self.base_url = "https://nokogiri.org/rdoc/"
 
     html_filters.replace 'rdoc/entries', 'nokogiri2/entries'
 
@@ -15,8 +16,9 @@ module Docs
     options[:only_patterns] = [/\ANokogiri/, /\AXSD/]
 
     options[:attribution] = <<-HTML
-      &copy; 2008&ndash;2018 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo,<br>
-      Patrick Mahoney, Yoko Harada, Akinori MUSHA, John Shahid, Lars Kanis<br>
+      &copy; 2008&ndash;2023 by Mike Dalessio, Aaron Patterson, Yoko Harada, Akinori MUSHA, John Shahid,<br>
+      Karol Bucek, Sam Ruby, Craig Barnes, Stephen Checkoway, Lars Kanis, Sergio Arbeo,<br>
+      Timothy Elliott, Nobuyoshi Nakada, Charles Nutter, Patrick Mahoney
       Licensed under the MIT License.
     HTML
 

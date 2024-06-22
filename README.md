@@ -1,4 +1,4 @@
-# [DevDocs](https://devdocs.io) — API Documentation Browser [![Build Status](https://travis-ci.org/freeCodeCamp/devdocs.svg?branch=master)](https://travis-ci.org/freeCodeCamp/devdocs)
+# [DevDocs](https://devdocs.io) — API Documentation Browser
 
 DevDocs combines multiple developer documentations in a clean and organized web UI with instant search, offline support, mobile version, dark theme, keyboard shortcuts, and more.
 
@@ -6,11 +6,11 @@ DevDocs was created by [Thibaut Courouble](https://thibaut.me) and is operated b
 
 ## We are currently searching for maintainers
 
-Please reach out to the community on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs) if you would like to join the team!
+Please reach out to the community on [Discord](https://discord.gg/PRyKn3Vbay) if you would like to join the team!
 
 Keep track of development news:
 
-* Join the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs)
+* Join the devdocs chat room on [Discord](https://discord.gg/PRyKn3Vbay)
 * Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 
@@ -22,9 +22,9 @@ Unless you wish to contribute to the project, we recommend using the hosted vers
 
 DevDocs is made of two pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
-DevDocs requires Ruby 2.6.x, libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
+DevDocs requires Ruby 3.3.0 (defined in [`Gemfile`](./Gemfile)), libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
 
-```
+```sh
 git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
 gem install bundler
 bundle install
@@ -36,11 +36,11 @@ Finally, point your browser at [localhost:9292](http://localhost:9292) (the firs
 
 The `thor docs:download` command is used to download pre-generated documentations from DevDocs's servers (e.g. `thor docs:download html css`). You can see the list of available documentations and versions by running `thor docs:list`. To update all downloaded documentations, run `thor docs:download --installed`. To download and install all documentation this project has available, run `thor docs:download --all`.
 
-**Note:** there is currently no update mechanism other than `git pull origin master` to update the code and `thor docs:download --installed` to download the latest version of the docs. To stay informed about new releases, be sure to [watch](https://github.com/freeCodeCamp/devdocs/subscription) this repository.
+**Note:** there is currently no update mechanism other than `git pull origin main` to update the code and `thor docs:download --installed` to download the latest version of the docs. To stay informed about new releases, be sure to [watch](https://github.com/freeCodeCamp/devdocs/subscription) this repository.
 
 Alternatively, DevDocs may be started as a Docker container:
 
-```
+```sh
 # First, build the image
 git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
 docker build -t thibaut/devdocs .
@@ -53,7 +53,16 @@ docker run --name devdocs -d -p 9292:9292 thibaut/devdocs
 
 DevDocs aims to make reading and searching reference documentation fast, easy and enjoyable.
 
-The app's main goals are to: keep load times as short as possible; improve the quality, speed, and order of search results; maximize the use of caching and other performance optimizations; maintain a clean and readable user interface; be fully functional offline; support full keyboard navigation; reduce “context switch” by using a consistent typography and design across all documentations; reduce clutter by focusing on a specific category of content (API/reference) and indexing only the minimum useful to most developers.
+The app's main goals are to:
+
+* Keep load times as short as possible
+* Improve the quality, speed, and order of search results
+* Maximize the use of caching and other performance optimizations
+* Maintain a clean and readable user interface
+* Be fully functional offline
+* Support full keyboard navigation
+* Reduce “context switch” by using a consistent typography and design across all documentations
+* Reduce clutter by focusing on a specific category of content (API/reference) and indexing only the minimum useful to most developers.
 
 **Note:** DevDocs is neither a programming guide nor a search engine. All our content is pulled from third-party sources and the project doesn't intend to compete with full-text search engines. Its backbone is metadata; each piece of content is identified by a unique, "obvious" and short string. Tutorials, guides and other content that don't meet this requirement are outside the scope of the project.
 
@@ -99,7 +108,7 @@ More information about [scrapers](./docs/scraper-reference.md) and [filters](./d
 
 The command-line interface uses [Thor](http://whatisthor.com). To see all commands and options, run `thor list` from the project's root.
 
-```
+```sh
 # Server
 rackup              # Start the server (ctrl+c to stop)
 rackup --help       # List server options
@@ -116,10 +125,9 @@ thor docs:clean     # Delete documentation packages
 # Console
 thor console        # Start a REPL
 thor console:docs   # Start a REPL in the "Docs" module
-Note: tests can be run quickly from within the console using the "test" command. Run "help test"
-for usage instructions.
 
-# Tests
+# Tests can be run quickly from within the console using the "test" command.
+# Run "help test" for usage instructions.
 thor test:all       # Run all tests
 thor test:docs      # Run "Docs" tests
 thor test:app       # Run "App" tests
@@ -144,30 +152,36 @@ Contributions are welcome. Please read the [contributing guidelines](./.github/C
 
 ## Related Projects
 
-Made something cool? Feel free to open a PR to add a new row to this table!
+Made something cool? Feel free to open a PR to add a new row to this table! You might want to discover new projects via https://github.com/topics/devdocs.
 
-| Project                                                                                                 | Description                                                            | Last commit                                                                                                                                                                |
-|---------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Chrome web app](https://chrome.google.com/webstore/detail/devdocs/mnfehgbmkapmjnhcnbodoamcioleeooe)    | Chrome Web App which adds a shortcut to DevDocs apps page.             | N/A                                                                                                                                                                        |
-| [Ubuntu Touch app](https://uappexplorer.com/app/devdocsunofficial.berkes)                               | Application for devices running Ubuntu Touch.                          | N/A                                                                                                                                                                        |
-| [Sublime Text plugin](https://sublime.wbond.net/packages/DevDocs)                                       | Sublime Text plugin to search DevDocs by selection or by input.        | [![Latest GitHub commit](https://img.shields.io/github/last-commit/vitorbritto/sublime-devdocs?logo=github&label)](https://github.com/vitorbritto/sublime-devdocs)         |
-| [Atom plugin](https://atom.io/packages/devdocs)                                                         | Atom plugin adding the `doc` command to search DevDocs.                | [![Latest GitHub commit](https://img.shields.io/github/last-commit/masnun/atom-devdocs?logo=github&label)](https://github.com/masnun/atom-devdocs)                         |
-| [gruehle/dev-docs-viewer](https://github.com/gruehle/dev-docs-viewer)                                   | Brackets extension for searching and viewing DevDocs content.          | [![Latest GitHub commit](https://img.shields.io/github/last-commit/gruehle/dev-docs-viewer?logo=github&label)](https://github.com/gruehle/dev-docs-viewer)                 |
-| [naquad/devdocs-shell](https://github.com/naquad/devdocs-shell)                                         | GTK shell with Vim integration.                                        | [![Latest GitHub commit](https://img.shields.io/github/last-commit/naquad/devdocs-shell?logo=github&label)](https://github.com/naquad/devdocs-shell)                       |
-| [skeeto/devdocs-lookup](https://github.com/skeeto/devdocs-lookup)                                       | Quick Emacs API lookup on DevDocs.                                     | [![Latest GitHub commit](https://img.shields.io/github/last-commit/skeeto/devdocs-lookup?logo=github&label)](https://github.com/skeeto/devdocs-lookup)                     |
-| [yannickglt/alfred-devdocs](https://github.com/yannickglt/alfred-devdocs)                               | Alfred workflow for DevDocs.                                           | [![Latest GitHub commit](https://img.shields.io/github/last-commit/yannickglt/alfred-devdocs?logo=github&label)](https://github.com/yannickglt/alfred-devdocs)             |
-| [waiting-for-dev/vim-www](https://github.com/waiting-for-dev/vim-www)                                   | Vim search plugin with DevDocs in its defaults.                        | [![Latest GitHub commit](https://img.shields.io/github/last-commit/waiting-for-dev/vim-www?logo=github&label)](https://github.com/waiting-for-dev/vim-www)                 |
-| [vscode-devdocs for VS Code](https://marketplace.visualstudio.com/items?itemName=akfish.vscode-devdocs) | VS Code plugin to open and search DevDocs inside VS Code.              | [![Latest GitHub commit](https://img.shields.io/github/last-commit/akfish/vscode-devdocs?logo=github&label)](https://github.com/akfish/vscode-devdocs)                     |
-| [devdocs for VS Code](https://marketplace.visualstudio.com/items?itemName=deibit.devdocs)               | VS Code plugin to open the browser to search selected text on DevDocs. | [![Latest GitHub commit](https://img.shields.io/github/last-commit/deibit/vscode-devdocs?logo=github&label)](https://github.com/deibit/vscode-devdocs)                     |
-| [egoist/devdocs-desktop](https://github.com/egoist/devdocs-desktop)                                     | Cross-platform desktop application for DevDocs.                        | [![Latest GitHub commit](https://img.shields.io/github/last-commit/egoist/devdocs-desktop?logo=github&label)](https://github.com/egoist/devdocs-desktop)                   |
-| [qwfy/doc-browser](https://github.com/qwfy/doc-browser)                                                 | Native Linux app that supports DevDocs docsets.                        | [![Latest GitHub commit](https://img.shields.io/github/last-commit/qwfy/doc-browser?logo=github&label)](https://github.com/qwfy/doc-browser)                               |
-| [hardpixel/devdocs-desktop](https://github.com/hardpixel/devdocs-desktop)                               | GTK3 application for DevDocs with search integrated in the headerbar.  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/hardpixel/devdocs-desktop?logo=github&label)](https://github.com/hardpixel/devdocs-desktop)             |
-| [dteoh/devdocs-macos](https://github.com/dteoh/devdocs-macos)                                           | Native macOS application for DevDocs.                                  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/dteoh/devdocs-macos?logo=github&label)](https://github.com/dteoh/devdocs-macos)                         |
-| [Merith-TK/devdocs_webapp_kotlin](https://github.com/Merith-TK/devdocs_webapp_kotlin)                   | Android application which shows DevDocs in a webview.                  | [![Latest GitHub commit](https://img.shields.io/github/last-commit/Merith-TK/devdocs_webapp_kotlin?logo=github&label)](https://github.com/Merith-TK/devdocs_webapp_kotlin) |
+<!-- table is sorted by description -->
+
+| Project                                                                                     | Description                          | Last commit                                                                                                          | Stars                                                                                                  |
+| ------------------------------------------------------------------------------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [yannickglt/alfred-devdocs](https://github.com/yannickglt/alfred-devdocs)                   | Alfred workflow                      | ![Latest GitHub commit](https://img.shields.io/github/last-commit/yannickglt/alfred-devdocs?logo=github&label)       | ![GitHub stars](https://img.shields.io/github/stars/yannickglt/alfred-devdocs?logo=github&label)       |
+| [Merith-TK/devdocs_webapp_kotlin](https://github.com/Merith-TK/devdocs_webapp_kotlin)       | Android application                  | ![Latest GitHub commit](https://img.shields.io/github/last-commit/Merith-TK/devdocs_webapp_kotlin?logo=github&label) | ![GitHub stars](https://img.shields.io/github/stars/Merith-TK/devdocs_webapp_kotlin?logo=github&label) |
+| [gruehle/dev-docs-viewer](https://github.com/gruehle/dev-docs-viewer)                       | Brackets extension                   | ![Latest GitHub commit](https://img.shields.io/github/last-commit/gruehle/dev-docs-viewer?logo=github&label)         | ![GitHub stars](https://img.shields.io/github/stars/gruehle/dev-docs-viewer?logo=github&label)         |
+| [egoist/devdocs-desktop](https://github.com/egoist/devdocs-desktop)                         | Electron application                 | ![Latest GitHub commit](https://img.shields.io/github/last-commit/egoist/devdocs-desktop?logo=github&label)          | ![GitHub stars](https://img.shields.io/github/stars/egoist/devdocs-desktop?logo=github&label)          |
+| [skeeto/devdocs-lookup](https://github.com/skeeto/devdocs-lookup)                           | Emacs function                       | ![Latest GitHub commit](https://img.shields.io/github/last-commit/skeeto/devdocs-lookup?logo=github&label)           | ![GitHub stars](https://img.shields.io/github/stars/skeeto/devdocs-lookup?logo=github&label)           |
+| [astoff/devdocs.el](https://github.com/astoff/devdocs.el)                                   | Emacs viewer                         | ![Latest GitHub commit](https://img.shields.io/github/last-commit/astoff/devdocs.el?logo=github&label)               | ![GitHub stars](https://img.shields.io/github/stars/astoff/devdocs.el?logo=github&label)               |
+| [naquad/devdocs-shell](https://github.com/naquad/devdocs-shell)                             | GTK shell with Vim integration       | ![Latest GitHub commit](https://img.shields.io/github/last-commit/naquad/devdocs-shell?logo=github&label)            | ![GitHub stars](https://img.shields.io/github/stars/naquad/devdocs-shell?logo=github&label)            |
+| [hardpixel/devdocs-desktop](https://github.com/hardpixel/devdocs-desktop)                   | GTK application                      | ![Latest GitHub commit](https://img.shields.io/github/last-commit/hardpixel/devdocs-desktop?logo=github&label)       | ![GitHub stars](https://img.shields.io/github/stars/hardpixel/devdocs-desktop?logo=github&label)       |
+| [qwfy/doc-browser](https://github.com/qwfy/doc-browser)                                     | Linux application                    | ![Latest GitHub commit](https://img.shields.io/github/last-commit/qwfy/doc-browser?logo=github&label)                | ![GitHub stars](https://img.shields.io/github/stars/qwfy/doc-browser?logo=github&label)                |
+| [dteoh/devdocs-macos](https://github.com/dteoh/devdocs-macos)                               | macOS application                    | ![Latest GitHub commit](https://img.shields.io/github/last-commit/dteoh/devdocs-macos?logo=github&label)             | ![GitHub stars](https://img.shields.io/github/stars/dteoh/devdocs-macos?logo=github&label)             |
+| [Sublime Text plugin](https://sublime.wbond.net/packages/DevDocs)                           | Sublime Text plugin                  | ![Latest GitHub commit](https://img.shields.io/github/last-commit/vitorbritto/sublime-devdocs?logo=github&label)     | ![GitHub stars](https://img.shields.io/github/stars/vitorbritto/sublime-devdocs?logo=github&label)     |
+| [mohamed3nan/DevDocs-Tab](https://github.com/mohamed3nan/DevDocs-Tab)                       | VS Code extension (view as tab)      | ![Latest GitHub commit](https://img.shields.io/github/last-commit/mohamed3nan/DevDocs-Tab?logo=github&label)         | ![GitHub stars](https://img.shields.io/github/stars/mohamed3nan/DevDocs-Tab?logo=github&label)         |
+| [deibit/vscode-devdocs](https://marketplace.visualstudio.com/items?itemName=deibit.devdocs) | VS Code extension (open the browser) | ![Latest GitHub commit](https://img.shields.io/github/last-commit/deibit/vscode-devdocs?logo=github&label)           | ![GitHub stars](https://img.shields.io/github/stars/deibit/vscode-devdocs?logo=github&label)           |
+| [mdh34/quickDocs](https://github.com/mdh34/quickDocs)                                       | Vala/Python based viewer             | ![Latest GitHub commit](https://img.shields.io/github/last-commit/mdh34/quickDocs?logo=github&label)                 | ![GitHub stars](https://img.shields.io/github/stars/mdh34/quickDocs?logo=github&label)                 |
+| [girishji/devdocs.vim](https://github.com/girishji/devdocs.vim)                               | Vim plugin & TUI (browse inside Vim)                           | ![Latest GitHub commit](https://img.shields.io/github/last-commit/girishji/devdocs.vim?logo=github&label)             | ![GitHub stars](https://img.shields.io/github/stars/girishji/devdocs.vim?logo=github&label)             |
+| [romainl/vim-devdocs](https://github.com/romainl/vim-devdocs)                               | Vim plugin                           | ![Latest GitHub commit](https://img.shields.io/github/last-commit/romainl/vim-devdocs?logo=github&label)             | ![GitHub stars](https://img.shields.io/github/stars/romainl/vim-devdocs?logo=github&label)             |
+| [waiting-for-dev/vim-www](https://github.com/waiting-for-dev/vim-www)                       | Vim plugin                           | ![Latest GitHub commit](https://img.shields.io/github/last-commit/waiting-for-dev/vim-www?logo=github&label)         | ![GitHub stars](https://img.shields.io/github/stars/waiting-for-dev/vim-www?logo=github&label)         |
+| [luckasRanarison/nvim-devdocs](https://github.com/luckasRanarison/nvim-devdocs)             | Neovim plugin                        | ![Latest GitHub commit](https://img.shields.io/github/last-commit/luckasRanarison/nvim-devdocs?logo=github&label)    | ![GitHub stars](https://img.shields.io/github/stars/luckasRanarison/nvim-devdocs?logo=github&label)    |
+| [toiletbril/dedoc](https://github.com/toiletbril/dedoc)                                     | Terminal based viewer                | ![Latest GitHub commit](https://img.shields.io/github/last-commit/toiletbril/dedoc?logo=github&label)                | ![GitHub stars](https://img.shields.io/github/stars/toiletbril/dedoc?logo=github&label)                |
+| [Raycast Devdocs](https://www.raycast.com/pomdtr/devdocs)                                     | Raycast extension                | Unavailable                | Unavailable                |
 
 ## Copyright / License
 
-Copyright 2013-2020 Thibaut Courouble and [other contributors](https://github.com/freeCodeCamp/devdocs/graphs/contributors)
+Copyright 2013–2024 Thibaut Courouble and [other contributors](https://github.com/freeCodeCamp/devdocs/graphs/contributors)
 
 This software is licensed under the terms of the Mozilla Public License v2.0. See the [COPYRIGHT](./COPYRIGHT) and [LICENSE](./LICENSE) files.
 
@@ -177,4 +191,4 @@ We also wish that any documentation file generated using this software be attrib
 
 ## Questions?
 
-If you have any questions, please feel free to ask them on the contributor chat room on [Gitter](https://gitter.im/FreeCodeCamp/DevDocs).
+If you have any questions, please feel free to ask them on the contributor chat room on [Discord](https://discord.gg/PRyKn3Vbay).

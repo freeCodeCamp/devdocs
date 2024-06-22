@@ -1,12 +1,15 @@
 module Docs
   class Css < Mdn
+    # release = '2023-10-24'
     self.name = 'CSS'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/CSS'
     self.root_path = '/Reference'
+    self.links = {
+      home: 'https://developer.mozilla.org/en-US/docs/Web/CSS',
+      code: 'https://github.com/mdn/content/tree/main/files/en-us/web/css'
+    }
 
-    html_filters.push 'css/clean_html', 'css/entries', 'title'
-
-    options[:mdn_tag] = 'CSS'
+    html_filters.push 'css/clean_html', 'css/entries'
 
     options[:root_title] = 'CSS'
 

@@ -1,7 +1,7 @@
-require 'test_helper'
-require 'docs'
+require_relative '../../../test_helper'
+require_relative '../../../../lib/docs'
 
-class DocsResponseTest < MiniTest::Spec
+class DocsResponseTest < Minitest::Spec
   let :response do
     Typhoeus::Response.new(options).tap do |response|
       response.extend Docs::Response
@@ -60,6 +60,17 @@ class DocsResponseTest < MiniTest::Spec
     it "returns false when the body isn't blank" do
       options.body = 'body'
       refute response.blank?
+    end
+  end
+
+  describe "#content_length" do
+    it "returns the content type" do
+      options.headers['Content-Length'] = '188420'
+      assert_equal 188420, response.content_length
+    end
+
+    it "defaults to 0" do
+      assert_equal 0, response.content_length
     end
   end
 
