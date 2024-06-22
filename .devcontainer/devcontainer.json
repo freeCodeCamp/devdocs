@@ -1,0 +1,9 @@
+{
+    "name": "DevDocs Dev Container",
+    "remoteUser": "devdocs",
+    "build": {
+        "context": "../",
+        "dockerfile": "../Dockerfile",
+        "target": "devdocs-dev"
+    }
+}
