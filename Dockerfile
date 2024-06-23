@@ -40,7 +40,7 @@ RUN bundle config unset without && \
     rm -rf docker docker-26.1.4.tgz && \
     rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache 
 
-VOLUME [ "/devdocs" ]
+VOLUME [ "/devdocs",  "/devdocs/public/docs", "/devdocs/public/assets" ]
 CMD bash
 
 #
@@ -49,10 +49,9 @@ CMD bash
 FROM devdocs-base as devdocs
 ENV ENABLE_SERVICE_WORKER=true
 COPY . /devdocs/
-RUN thor docs:download --all && \
-    thor assets:compile && \
-    apk del gzip build-base git zlib-dev && \
+RUN apk del gzip build-base git zlib-dev && \
+    chown -R $USERNAME:$USERNAME /devdocs && \
     rm -rf /tmp
-RUN chown -R $USERNAME:$USERNAME /devdocs
+VOLUME [ "/devdocs/public/docs", "/devdocs/public/assets" ]
 USER $USERNAME
 CMD rackup --host 0.0.0.0 -E production
