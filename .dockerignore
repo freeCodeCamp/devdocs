@@ -6,3 +6,8 @@ Dockerfile*
 .travis.yml
 *.md
 public/docs/*
+public/assets/*
+log/*
+tmp/*
+test/*
+.bash_history

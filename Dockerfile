@@ -49,10 +49,10 @@ CMD bash
 FROM devdocs-base as devdocs
 ENV ENABLE_SERVICE_WORKER=true
 COPY . /devdocs/
-RUN thor assets:compile && \
+RUN thor docs:download --all && \
+    thor assets:compile && \
     apk del gzip build-base git zlib-dev && \
     rm -rf /tmp
-
-VOLUME ["/devdocs/public/docs"]
+RUN chown -R $USERNAME:$USERNAME /devdocs
 USER $USERNAME
 CMD rackup --host 0.0.0.0 -E production

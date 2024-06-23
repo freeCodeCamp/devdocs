@@ -38,16 +38,34 @@ The `thor docs:download` command is used to download pre-generated documentation
 
 **Note:** there is currently no update mechanism other than `git pull origin main` to update the code and `thor docs:download --installed` to download the latest version of the docs. To stay informed about new releases, be sure to [watch](https://github.com/freeCodeCamp/devdocs/subscription) this repository.
 
-Alternatively, DevDocs may be started as a Docker container:
+## Deploying via Docker
+The DevDocs server may also be deployed as a Docker container:
 
 ```sh
-# First, build the image
-git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
-docker build -t thibaut/devdocs .
+# First, pull the image
+docker pull devdocs/devdocs
 
-# Finally, start a DevDocs container (access http://localhost:9292)
-docker run --name devdocs -d -p 9292:9292 thibaut/devdocs
+# Start the DevDocs container (accessible at http://localhost:9292)
+docker run \
+    -e DEVDOCS_DISABLE_SSL \
+    -e DEVDOCS_DOCS_ORIGIN=localhost:9292 \
+    -e DEVDOCS_HOST=localhost:9292 \
+    -p 9292:9292 \
+    devdocs/devdocs
 ```
+
+There are multiple environment variables that you can set to consider the DevDocs server.
+
+These can be useful when deploying DevDocs behind a reverse proxy or on your own offline network.
+
+| Environment Variable | Default Value        | Description                                                                                     |
+|---------------------:|:---------------------|:------------------------------------------------------------------------------------------------|
+|`DEVDOCS_DISABLE_SSL` |Not defined           | Define this variable to disable HTTPS redirect.                                                 |
+|`DEVDOCS_HOST`        |`devdocs.io`          | Hostname that is serving the DevDocs application.                                               |
+|`DEVDOCS_DOCS_ORIGIN` |`documents.devdocs.io`| Hostname that is serving the DevDocs documentation pages.                                       |
+|`DEVDOCS_DISABLE_HSTS`|Not defined           | Define this variable to disable HSTS. If `DEVDOCS_DISABLE_SSL` is defined then this is implied. |
+
+
 
 ## Vision
 
