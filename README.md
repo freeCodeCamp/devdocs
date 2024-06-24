@@ -45,11 +45,13 @@ The DevDocs server may also be deployed as a Docker container:
 # First, pull the image
 docker pull devdocs/devdocs
 
-# Next, download documentation that you want, this example downloads the ruby docs.
+# Next, download documentation that you want, this example downloads the default set of docs, and the ruby docs.
+# Use: --default to download the default set of docs
+# Use: --all to download ALL available docs (WARNING: Will take a long time!)
 docker run --rm \
     -v devdocs-docs:/devdocs/public/docs \
     -v devdocs-assets:/devdocs/public/assets \
-    devdocs/devdocs thor docs:download ruby
+    devdocs/devdocs thor docs:download --default ruby
 
 # Now compile the assets. This must be done after you download all the documentation you want.
 docker run --rm \
