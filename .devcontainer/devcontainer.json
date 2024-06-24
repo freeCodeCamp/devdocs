@@ -1,6 +1,10 @@
 {
     "name": "DevDocs Dev Container",
-    "image": "devdocs-dev:0.0.1",
+    "build": {
+      "context": "../",
+      "dockerfile": "../Dockerfile",
+      "target": "devdocs-dev"  
+    },
     "customizations": {
         "vscode": {
             "extensions": [
