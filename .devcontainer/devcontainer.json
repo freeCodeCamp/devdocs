@@ -3,16 +3,16 @@
     "build": {
       "context": "../",
       "dockerfile": "../Dockerfile",
-      "target": "devdocs-dev"  
+      "target": "devdocs-dev"
     },
     "customizations": {
         "vscode": {
             "extensions": [
-                "Shopify.ruby-lsp",
                 "streetsidesoftware.code-spell-checker",
                 "mhutchie.git-graph",
                 "github.vscode-github-actions",
-                "ms-azuretools.vscode-docker"
+                "ms-azuretools.vscode-docker",
+                "EditorConfig.EditorConfig"
             ]
         }
     },
