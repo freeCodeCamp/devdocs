@@ -81,6 +81,10 @@ These can be useful when deploying DevDocs behind a reverse proxy or on your own
 |`DEVDOCS_DOCS_ORIGIN` |`documents.devdocs.io`| Hostname that is serving the DevDocs documentation pages.                                       |
 |`DEVDOCS_DISABLE_HSTS`|Not defined           | Define this variable to disable HSTS. If `DEVDOCS_DISABLE_SSL` is defined then this is implied. |
 
+To build the image fresh, use the below command:
+```bash
+docker build . -t devdocs/devdocs --target devdocs
+```
 
 ## Vision
 
