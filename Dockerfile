@@ -10,11 +10,10 @@ ARG USER_ID=1000
 ARG GROUP_ID=1000
 WORKDIR /devdocs
 EXPOSE 9292
-    
 
 COPY Gemfile Gemfile.lock Rakefile Thorfile /devdocs/
 
-RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev libcurl && \
+RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev libcurl oxipng && \
     rm -rf /var/cache/apk/* /usr/lib/node_modules
 
 RUN gem install bundler && \
