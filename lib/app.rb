@@ -76,7 +76,7 @@ class App < Sinatra::Application
 
   configure :production do
     set :static, false
-    set :docs_origin, "//" + ENV.fetch("DEVDOCS_DOCS_ORIGIN", "documents.devdocs.io")
+    set :docs_origin, ENV.fetch("DEVDOCS_DOCS_ORIGIN", "documents.devdocs.io")
     set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' https://www.google-analytics.com https://secure.gaug.es https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
@@ -427,7 +427,7 @@ class App < Sinatra::Application
       redirect "/#{doc}#{type}#{rest[0...-1]}#{query_string_for_redirection}"
     elsif !request.path.end_with?(".html") && user_has_docs?(doc) && supports_js_redirection?
       redirect_via_js(request.path)
-    elsif File.exist?(File.join(settings.public_folder, "docs", request.path.gsub("..","")))
+    elsif settings.docs_host == settings.docs_origin && File.exist?(File.join(settings.public_folder, "docs", request.path.gsub("..","")))
       send_file File.join(settings.public_folder, "docs", request.path.gsub("..","")), status: status
     else
       response.headers['Content-Security-Policy'] = settings.csp if settings.csp
