@@ -3,25 +3,21 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         css('h1 .app-vsn').remove
-        name = (at_css('h1 > span') or at_css('h1')).content.strip
-
-        if current_url.path.start_with?('/getting-started')
-          name.remove(/\.\z/)
-        else
-          name = name.split(' ').first unless name.start_with?('mix ') # ecto
-          name
-        end
+        (at_css('h1 > span') or at_css('h1')).content.strip
       end
 
       def get_type
-        if current_url.path.start_with?('/getting-started')
-          if subpath.start_with?('mix-otp')
-            'Guide: Mix & OTP'
-          elsif subpath.start_with?('meta')
-            'Guide: Metaprogramming'
-          else
-            'Guide'
-          end
+        section = at_css('h1 a.source').attr('href').match('elixir/pages/([^/]+)/')&.captures&.first
+        if section == "mix-and-otp"
+          return "Mix & OTP"
+        elsif section
+          return section.gsub("-", " ").capitalize
+        end
+
+        name = at_css('h1 span').text
+        case name.split(' ').first
+        when 'mix' then 'Mix Tasks'
+        when 'Changelog' then 'References'
         else
           case at_css('h1 small').try(:content)
           when 'exception'
@@ -29,19 +25,13 @@ module Docs
           when 'protocol'
             'Protocols'
           else
-            if name.start_with?('Phoenix')
-              name.split('.')[0..2].join('.')
-            elsif name.start_with?('mix ')
-              'Mix Tasks'
-            else
-              name.split('.').first
-            end
+            name
           end
         end
       end
 
       def additional_entries
-        return [] if type == 'Exceptions' || type == 'Guide' || root_page?
+        return [] if root_page?
 
         css('.detail-header').map do |node|
           id = node['id']
