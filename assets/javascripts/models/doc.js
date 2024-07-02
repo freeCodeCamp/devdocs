@@ -43,11 +43,11 @@ app.models.Doc = class Doc extends app.Model {
   }
 
   fileUrl(path) {
-    return `${app.config.docs_origin}${this.fullPath(path)}?${this.mtime}`;
+    return `//${app.config.docs_origin}${this.fullPath(path)}?${this.mtime}`;
   }
 
   dbUrl() {
-    return `${app.config.docs_origin}/${this.slug}/${app.config.db_filename}?${this.mtime}`;
+    return `//${app.config.docs_origin}/${this.slug}/${app.config.db_filename}?${this.mtime}`;
   }
 
   indexUrl() {
