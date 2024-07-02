@@ -70,19 +70,19 @@ module Docs
     HTML
 
     version '3.3' do
-      self.release = '3.3.0'
+      self.release = '3.3.2'
     end
 
     version '3.2' do
-      self.release = '3.2.2'
+      self.release = '3.2.3'
     end
 
     version '3.1' do
-      self.release = '3.1.4'
+      self.release = '3.1.6'
     end
 
     version '3' do
-      self.release = '3.0.6'
+      self.release = '3.0.7'
     end
 
     version '2.7' do
