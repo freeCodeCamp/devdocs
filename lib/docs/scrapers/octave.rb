@@ -51,7 +51,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://octave.org/doc/interpreter/', opts)
-      doc.at_css('h1').content.scan(/([0-9.]+)/)[0][0]
+      doc.at_css('#SEC_Top + p').content.scan(/([0-9.]+)/)[1][0][0..-2]
     end
 
   end

@@ -9,6 +9,7 @@ module Docs
     }
 
     options[:root_title] = 'Vitest'
+    options[:download_images] = false
 
     options[:attribution] = <<-HTML
       &copy; 2021-Present Anthony Fu<br>
@@ -16,7 +17,7 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    self.release = '1.1.3'
+    self.release = '1.2.2'
     self.base_url = 'https://vitest.dev/'
     self.initial_paths = %w(guide/)
     html_filters.push 'vitest/entries', 'vite/clean_html'

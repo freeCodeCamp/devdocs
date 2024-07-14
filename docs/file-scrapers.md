@@ -180,8 +180,8 @@ download it, extract it with `dpkg -x $PACKAGE ./` and move `./usr/share/doc/ope
 to `path/to/devdocs/docs/openjdk~$VERSION`
 
 ```sh
-curl -O http://ftp.at.debian.org/debian/pool/main/o/openjdk-21/openjdk-21-doc_21.0.1+12-3_all.deb
-tar xf openjdk-21-doc_21.0.1+12-3_all.deb
+curl -O http://ftp.at.debian.org/debian/pool/main/o/openjdk-21/openjdk-21-doc_21.0.2+13-2_all.deb
+tar xf openjdk-21-doc_21.0.2+13-2_all.deb
 tar xf data.tar.xz
 mv ./usr/share/doc/openjdk-21-jre-headless/api/ docs/openjdk~$VERSION
 ```

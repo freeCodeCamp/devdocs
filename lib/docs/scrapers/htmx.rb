@@ -25,7 +25,7 @@ module Docs
 
 	# https://github.com/bigskysoftware/htmx/blob/master/LICENSE
     options[:attribution] = <<-HTML
-	  Licensed under the Zero-Clause BSD
+	  Licensed under the Zero-Clause BSD License.
     HTML
 
     def get_latest_version(opts)
