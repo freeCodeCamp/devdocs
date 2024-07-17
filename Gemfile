@@ -39,7 +39,6 @@ group :development do
 end
 
 group :docs do
-  gem 'net-sftp', require: false
   gem 'progress_bar', require: false
   gem 'redcarpet'
   gem 'tty-pager', require: false

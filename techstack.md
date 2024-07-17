@@ -159,7 +159,6 @@ Full tech stack [here](/techstack.md)
 |[image_optim](https://rubygems.org/image_optim)|v0.31.3|11/14/22|Paul Sernatinger |MIT|N/A|
 |[image_optim_pack](https://rubygems.org/image_optim_pack)|v0.10.1|11/14/22|Paul Sernatinger |MIT|N/A|
 |[minitest](https://rubygems.org/minitest)|v5.21.2|01/03/15|Thibaut |MIT|N/A|
-|[net-sftp](https://rubygems.org/net-sftp)|v4.0.0|11/14/22|Paul Sernatinger |MIT|N/A|
 |[newrelic_rpm](https://rubygems.org/newrelic_rpm)|v8.16.0|03/24/18|Thibaut Courouble |Apache-2.0|N/A|
 |[nokogiri](https://rubygems.org/nokogiri)|v1.16.0|10/21/18|Thibaut Courouble |MIT|N/A|
 |[progress_bar](https://rubygems.org/progress_bar)|v1.3.3|01/26/14|Thibaut |WTFPL|N/A|

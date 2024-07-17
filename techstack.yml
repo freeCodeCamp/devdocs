@@ -268,20 +268,6 @@ tools:
   detection_source: Gemfile
   last_updated_by: Thibaut
   last_updated_on: 2015-01-03 15:38:22.000000000 Z
-- name: net-sftp
-  description: A pure Ruby implementation of the SFTP client protocol
-  package_url: https://rubygems.org/net-sftp
-  version: 4.0.0
-  license: MIT
-  open_source: true
-  hosted_saas: false
-  category: Libraries
-  sub_category: RubyGems Packages
-  image_url: https://img.stackshare.io/package/19106/default_92b412aaa5197ea1fc2d70a503018e4186714110.png
-  detection_source_url: https://github.com/freeCodeCamp/devdocs/blob/main/Gemfile.lock
-  detection_source: Gemfile
-  last_updated_by: Paul Sernatinger
-  last_updated_on: 2022-11-14 14:30:30.000000000 Z
 - name: newrelic_rpm
   description: New Relic is a performance management system, developed by New Relic,
     Inc
