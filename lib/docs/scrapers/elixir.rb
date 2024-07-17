@@ -17,7 +17,7 @@ module Docs
     options[:root_title] = 'Elixir'
 
     options[:attribution] = <<-HTML
-      &copy; 2012 - 2024 The Elixir Team<br>
+      &copy; 2012-2024 The Elixir Team<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 
@@ -31,7 +31,7 @@ module Docs
     end
 
     version '1.17' do
-      self.release = '1.17.0'
+      self.release = '1.17.2'
       self.base_urls = [
         "https://hexdocs.pm/elixir/#{release}/",
         "https://hexdocs.pm/eex/#{release}/",
@@ -51,6 +51,177 @@ module Docs
         "https://hexdocs.pm/iex/#{release}/",
         "https://hexdocs.pm/logger/#{release}/",
         "https://hexdocs.pm/mix/#{release}/"
+      ]
+    end
+
+    # scraping of older versions is no longer supported!
+
+    version '1.15' do
+      self.release = '1.15.4'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.14' do
+      self.release = '1.14.1'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.13' do
+      self.release = '1.13.4'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.12' do
+      self.release = '1.12.0'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.11' do
+      self.release = '1.11.2'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.10' do
+      self.release = '1.10.4'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.9' do
+      self.release = '1.9.4'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.8' do
+      self.release = '1.8.2'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.7' do
+      self.release = '1.7.4'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.6' do
+      self.release = '1.6.6'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.5' do
+      self.release = '1.5.3'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.4' do
+      self.release = '1.4.5'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
+      ]
+    end
+
+    version '1.3' do
+      self.release = '1.3.4'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/",
+        'https://elixir-lang.org/getting-started/'
       ]
     end
 
