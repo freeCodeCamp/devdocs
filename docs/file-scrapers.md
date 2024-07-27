@@ -196,9 +196,12 @@ mv ./usr/share/doc/openjdk-16-jre-headless/api/ docs/openjdk~$VERSION
 
 ## Pandas
 
+From the home directory; `devdocs`, execute below:
+
 ```sh
-curl https://pandas.pydata.org/docs/pandas.zip | bsdtar --extract --file - --directory=docs/pandas~1
+curl https://pandas.pydata.org/docs/pandas.zip -o tmp.zip && unzip tmp.zip -d docs/pandas~2 && rm tmp.zip
 ```
+
 
 ## PHP
 Click the link under the "Many HTML files" column on https://www.php.net/download-docs.php, extract the tarball, change its name to `php` and put it in `docs/`.

@@ -4,7 +4,7 @@ module Docs
   class Qunit
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.content[role="main"]')
+        @doc = at_css('.content[role="main"] > article')
         css('.sidebar').remove
         css('pre').each do |node|
           node['data-language'] = 'javascript'

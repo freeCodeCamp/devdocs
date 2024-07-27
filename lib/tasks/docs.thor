@@ -162,8 +162,6 @@ class DocsCLI < Thor
   option :dryrun, type: :boolean
   option :packaged, type: :boolean
   def upload(*names)
-    require 'net/sftp'
-
     if options[:packaged]
       slugs = Dir[File.join(Docs.store_path, '*.tar.gz')].map { |f| File.basename(f, '.tar.gz') }
       docs = find_docs_by_slugs(slugs)
