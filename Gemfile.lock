@@ -58,7 +58,7 @@ GEM
       ruby2_keywords (~> 0.0.1)
     mutex_m (0.2.0)
     newrelic_rpm (8.16.0)
-    nokogiri (1.16.6)
+    nokogiri (1.16.7)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     options (2.3.2)
