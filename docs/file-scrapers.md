@@ -161,17 +161,13 @@ curl https://v2.ocaml.org/releases/$VERSION/ocaml-$VERSION-refman-html.tar.gz | 
 tar xz --transform 's/htmlman/ocaml/' --directory docs/
 ```
 
-## Opengl
-
-Clone https://github.com/KhronosGroup/OpenGL-Refpages.git
+## OpenGL
 
 ```sh
-DEVDOCS_ROOT=/path/to/devdocs
+cd docs/
 git clone https://github.com/KhronosGroup/OpenGL-Refpages.git
-mkdir $DEVDOCS_ROOT/docs/opengl~4
-mkdir $DEVDOCS_ROOT/docs/opengl~2.1
-cp -r OpenGL-Refpages/gl4/html/* "$DEVDOCS_ROOT/docs/opengl~4"
-cp -r OpenGL-Refpages/gl2.1/xhtml/* "$DEVDOCS_ROOT/docs/opengl~2.1"
+ln -s OpenGL-Refpages/gl4/html/ opengl~4
+ln -s OpenGL-Refpages/gl2.1/xhtml/ opengl~2.1
 ```
 
 ## OpenJDK
