@@ -30,6 +30,8 @@ module Docs
           end
         end
 
+        css('.doc-anchor').remove
+
         # Fix notable trait sections
         css('.method, .rust.trait').each do |node|
           traitSection = node.at_css('.notable-traits')
