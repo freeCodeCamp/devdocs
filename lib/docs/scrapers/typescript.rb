@@ -40,12 +40,12 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2012-2023 Microsoft<br>
+      &copy; 2012-2024 Microsoft<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 
     version do
-      self.release = '5.3.3'
+      self.release = '5.5.4'
       self.base_urls = [
         'https://www.typescriptlang.org/docs/handbook/',
         'https://www.typescriptlang.org/'
