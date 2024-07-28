@@ -15,6 +15,7 @@ module Docs
       def additional_entries
         entries = []
         css('.fsfunc').each do |function|
+          next if function.text == name
           entries << [ function.text, function.text ]
         end
         entries
