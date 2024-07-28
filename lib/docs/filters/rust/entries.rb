@@ -9,6 +9,7 @@ module Docs
         elsif slug == 'error-index'
           'Compiler Errors'
         else
+          at_css('main h1').at_css('button')&.remove
           name = at_css('main h1').content.remove(/\A.+\s/).remove('⎘')
           mod = slug.split('/').first
           name.prepend("#{mod}::") unless name.start_with?(mod)
