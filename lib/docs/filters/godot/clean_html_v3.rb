@@ -1,6 +1,6 @@
 module Docs
   class Godot
-    class CleanHtmlV2Filter < Filter
+    class CleanHtmlV3Filter < Filter
       def call
         if root_page?
           at_css('h1').content = 'Godot Engine'
