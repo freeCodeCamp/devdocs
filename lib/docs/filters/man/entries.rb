@@ -2,24 +2,27 @@ module Docs
   class Man
     class EntriesFilter < Docs::EntriesFilter
 
+      @@TYPES = {}
+
       def get_name
+        return slug.split('/').last.sub(/\.(\d[^.]*)\z/, ' (\1)') if slug.start_with?('man')
         at_css('h1').content.sub(' — Linux manual page', '')
       end
 
       def get_type
-        'Linux manual page'
+        build_types if slug == 'dir_by_project'
+        @@TYPES[slug] or 'Linux manual page'
       end
 
-      def entries
-        return super unless slug == 'dir_by_project'
+      def build_types
         type0 = nil
-        return css('*').each_with_object [] do |node, entries|
+        css('*').each do |node|
           if node.name == 'h2'
             type0 = node.content
           elsif node.name == 'a' and node['href'] and node['href'].start_with?('man') and type0
-            name = node.content + node.next_sibling.content
-            path = node['href']
-            entries << Entry.new(name, path, type0)
+            # name = node.content + node.next_sibling.content
+            slug0 = node['href'].remove(/\.html\z/)
+            @@TYPES[slug0] = type0
           end
         end
       end

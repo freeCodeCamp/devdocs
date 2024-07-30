@@ -11,6 +11,7 @@ module Docs
         css('.start-footer').remove
         css('.footer').remove
         css('.end-footer').remove
+        css('.statcounter').remove
         css('form[action="https://www.google.com/search"]').remove
         doc
       end
