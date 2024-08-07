@@ -19,6 +19,12 @@ module Docs
 
     html_filters.push 'crystal/entries', 'crystal/clean_html'
 
+    options[:skip_patterns] = [
+      %r{\ACrystal/System/},
+      %r{\AIO/Evented.html\z},
+      %r{\ARegex/PCRE2.html\z}
+    ]
+
     options[:attribution] = ->(filter) {
       if filter.current_url.path.start_with?('/reference/')
         <<-HTML
