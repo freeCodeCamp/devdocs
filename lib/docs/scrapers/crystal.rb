@@ -2,7 +2,7 @@ module Docs
   class Crystal < UrlScraper
     include MultipleBaseUrls
     self.type = 'crystal'
-    self.release = '1.11.1'
+    self.release = '1.13.1'
     self.base_urls = [
       "https://crystal-lang.org/api/#{release}/",
       "https://crystal-lang.org/reference/#{release[0..2]}/",
@@ -18,6 +18,12 @@ module Docs
     }
 
     html_filters.push 'crystal/entries', 'crystal/clean_html'
+
+    options[:skip_patterns] = [
+      %r{\ACrystal/System/},
+      %r{\AIO/Evented.html\z},
+      %r{\ARegex/PCRE2.html\z}
+    ]
 
     options[:attribution] = ->(filter) {
       if filter.current_url.path.start_with?('/reference/')
