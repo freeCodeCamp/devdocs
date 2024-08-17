@@ -2,7 +2,7 @@ module Docs
   class Astro
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('article > section')
+        @doc = at_css('main')
 
         css('.anchor-link').remove
         css('.avatar-list').remove
@@ -12,7 +12,7 @@ module Docs
         end
 
         css('pre').each do |node|
-          node.content = node.css('.line').map(&:content).join("\n")
+          node.content = node.css('.ec-line').map(&:content).join("\n")
           node['data-language'] = node.ancestors('figure').first['class'][/lang-(\w+)/, 1]
           node.remove_attribute('style')
         end
