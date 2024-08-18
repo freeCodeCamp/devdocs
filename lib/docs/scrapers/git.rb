@@ -1,7 +1,7 @@
 module Docs
   class Git < UrlScraper
     self.type = 'git'
-    self.release = '2.43.1'
+    self.release = '2.46.0'
     self.base_url = 'https://git-scm.com/docs'
     self.initial_paths = %w(/git.html)
     self.links = {
@@ -15,6 +15,7 @@ module Docs
     options[:only_patterns] = [/\A\/[^\/]+\z/]
     options[:skip] = %w(/howto-index.html)
 
+    # https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt
     options[:attribution] = <<-HTML
       &copy; 2012&ndash;2024 Scott Chacon and others<br>
       Licensed under the MIT License.
