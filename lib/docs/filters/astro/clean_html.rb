@@ -13,7 +13,6 @@ module Docs
 
         css('pre').each do |node|
           node.content = node.css('.ec-line').map(&:content).join("\n")
-          node['data-language'] = node.ancestors('figure').first['class'][/lang-(\w+)/, 1]
           node.remove_attribute('style')
         end
 
