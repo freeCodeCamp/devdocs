@@ -9,8 +9,8 @@ module Docs
         css('.anchor-link').remove
         css('.avatar-list').remove
 
-        css('header > h1').each do |node|
-          node.parent.before(node).remove
+        css('div > div > h1').each do |node|
+          node.parent.parent.before(node).remove
         end
 
         css('pre').each do |node|
@@ -30,6 +30,8 @@ module Docs
         css('.cms-nav').remove
 
         css('.copy-button-wrapper, .copy-button-tooltip').remove
+
+        css('footer ~ section', 'footer').remove
 
         doc
       end
