@@ -15,10 +15,11 @@ module Docs
     options[:only_patterns] = [/\A\/[^\/]+\z/]
     options[:skip] = %w(/howto-index.html)
 
-    # https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt
+    # https://github.com/git/git?tab=License-1-ov-file#readme
+    # NOT https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt
     options[:attribution] = <<-HTML
-      &copy; 2012&ndash;2024 Scott Chacon and others<br>
-      Licensed under the MIT License.
+      &copy; 2005&ndash;2024 Linus Torvalds and others<br>
+      Licensed under the GNU General Public License version 2.
     HTML
 
     def get_latest_version(opts)
