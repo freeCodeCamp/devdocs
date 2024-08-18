@@ -22,9 +22,15 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2022 NumPy Developers<br>
+      &copy; 2005&ndash;2024 NumPy Developers<br>
       Licensed under the 3-clause BSD License.
     HTML
+
+    version '2.0' do
+      self.release = '2.0.1'
+      self.base_url = "https://numpy.org/doc/#{self.version}/"
+      options[:container] = nil
+    end
 
     version '1.23' do
       self.release = '1.23.0'
