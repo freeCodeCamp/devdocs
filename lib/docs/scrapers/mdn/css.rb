@@ -1,6 +1,6 @@
 module Docs
   class Css < Mdn
-    # release = '2023-10-24'
+    # release = '2024-08-18'
     self.name = 'CSS'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/CSS'
     self.root_path = '/Reference'
