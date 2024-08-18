@@ -14,7 +14,7 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    options[:skip_patterns] = [/tutorial/]
+    options[:skip_patterns] = [/tutorial/, /getting-started/]
 
     self.release = '4.14.2'
     self.base_url = 'https://docs.astro.build/en/'
