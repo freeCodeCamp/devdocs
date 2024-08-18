@@ -2,6 +2,8 @@ module Docs
   class Astro
     class CleanHtmlFilter < Filter
       def call
+        return '<h1>Astro</h1><p> Astro is a website build tool for the modern web — powerful developer experience meets lightweight output.</p>' if root_page?
+
         @doc = at_css('main')
 
         css('.anchor-link').remove

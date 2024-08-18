@@ -15,6 +15,7 @@ module Docs
       end
 
       def additional_entries
+        return [] if root_page?
         return [] if slug.start_with?('guides/deploy')
         return [] if slug.start_with?('guides/integrations-guide')
 
