@@ -10,15 +10,15 @@ module Docs
 
     # https://github.com/withastro/astro/blob/main/LICENSE
     options[:attribution] = <<-HTML
-      &copy; 2021 Fred K. Schott<br>
+      Copyright (c) 2022 withastro<br>
       Licensed under the MIT License.
     HTML
 
     options[:skip_patterns] = [/tutorial/]
 
-    self.release = '3.2.0'
+    self.release = '4.12.3'
     self.base_url = 'https://docs.astro.build/en/'
-    self.initial_paths = %w(getting-started/)
+    self.initial_paths = %w(install-and-setup/)
 
     html_filters.push 'astro/entries', 'astro/clean_html'
 
