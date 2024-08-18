@@ -10,7 +10,7 @@ module Docs
 
     # https://github.com/withastro/astro/blob/main/LICENSE
     options[:attribution] = <<-HTML
-      Copyright (c) 2022 withastro<br>
+      &copy; 2021 Fred K. Schott<br>
       Licensed under the MIT License.
     HTML
 
