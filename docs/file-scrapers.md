@@ -142,6 +142,13 @@ $GS = '/usr/local/opt/ghostscript/bin/gs';	# GhostScript
 ```
 </details>
 
+## Man
+
+```sh
+wget --recursive --no-parent https://man7.org/linux/man-pages/
+mv man7.org/linux/man-pages/ docs/man/
+```
+
 ## NumPy
 
 ```sh
