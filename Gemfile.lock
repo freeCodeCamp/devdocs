@@ -88,7 +88,7 @@ GEM
     redcarpet (3.6.0)
     rexml (3.2.6)
     rouge (1.11.1)
-    rr (3.1.0)
+    rr (3.1.1)
     rss (0.3.0)
       rexml
     ruby2_keywords (0.0.5)
