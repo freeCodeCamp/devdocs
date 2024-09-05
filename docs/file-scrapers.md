@@ -263,9 +263,9 @@ done
 * Open `railties/lib/rails/api/task.rb` and comment out any code related to sdoc (`configure_sdoc`)
 * Run `bundle config set --local without 'db job'` (in the Rails directory)
 * Run `bundle install && bundle exec rake rdoc` (in the Rails directory)
-* Run `cd guides && bundle exec rake guides:generate:html`
-* Copy the `guides/output` directory to `html/guides`
-* Copy the `html` directory to `docs/rails~[version]`
+* Run `cd guides && bundle exec rake guides:generate:html && cd ..`
+* Run `cp -r guides/output html/guides`
+* Run `cp -r html $DEVDOCS/docs/rails~[version]`
 
 ### Ruby
 Download the tarball of Ruby from https://www.ruby-lang.org/en/downloads/, extract it, run
