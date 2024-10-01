@@ -20,6 +20,11 @@ module Docs
       Licensed under the BSD 3-Clause "New" or "Revised" License.
     HTML
 
+    version '3' do
+      self.release = '3.5.3'
+      self.base_url = "https://api.dart.dev/stable/#{release}/"
+    end
+
     version '2' do
       self.release = '2.18.5'
       self.base_url = "https://api.dart.dev/stable/#{release}/"
