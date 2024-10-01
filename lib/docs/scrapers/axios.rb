@@ -2,11 +2,11 @@ module Docs
   class Axios < UrlScraper
     self.type = 'simple'
     self.links = {
-      home: 'hthttps://axios-http.com/',
+      home: 'https://axios-http.com/',
       code: 'https://github.com/axios/axios'
     }
     self.release = '1.7.7'
-    self.base_url = "https://axios-http.com/docs/"
+    self.base_url = "https://axios-http.com/docs/intro"
     self.initial_paths = %w(index intro)
 
     html_filters.push 'axios/entries', 'axios/clean_html'
