@@ -16,9 +16,14 @@ module Docs
     options[:follow_links] = false
 
     options[:attribution] = <<-HTML
-      &copy; 2023 Willy Tarreau, HAProxy contributors<br>
+      &copy; 2024 Willy Tarreau, HAProxy contributors<br>
       Licensed under the GNU General Public License version 2.
     HTML
+
+    version '3.0' do
+      self.release = '3.0.0'
+      self.base_url = "https://docs.haproxy.org/#{self.version}/"
+    end
 
     version '2.9' do
       self.release = '2.9.0'
