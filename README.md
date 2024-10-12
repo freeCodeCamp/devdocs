@@ -178,6 +178,7 @@ Made something cool? Feel free to open a PR to add a new row to this table! You 
 | [luckasRanarison/nvim-devdocs](https://github.com/luckasRanarison/nvim-devdocs)             | Neovim plugin                        | ![Latest GitHub commit](https://img.shields.io/github/last-commit/luckasRanarison/nvim-devdocs?logo=github&label)    | ![GitHub stars](https://img.shields.io/github/stars/luckasRanarison/nvim-devdocs?logo=github&label)    |
 | [toiletbril/dedoc](https://github.com/toiletbril/dedoc)                                     | Terminal based viewer                | ![Latest GitHub commit](https://img.shields.io/github/last-commit/toiletbril/dedoc?logo=github&label)                | ![GitHub stars](https://img.shields.io/github/stars/toiletbril/dedoc?logo=github&label)                |
 | [Raycast Devdocs](https://www.raycast.com/djpowers/devdocs)                                 | Raycast extension                    | Unavailable                 | Unavailable                |
+| [chrisgrieser/alfred-docs-searches](https://github.com/chrisgrieser/alfred-docs-searches)   | Alfred workflow                      | ![Latest GitHub commit](https://img.shields.io/github/last-commit/chrisgrieser/alfred-docs-searches?logo=github&label) | ![GitHub stars](https://img.shields.io/github/stars/chrisgrieser/alfred-docs-searches?logo=github&label) |
 
 ## Copyright / License
 
