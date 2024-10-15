@@ -2,10 +2,10 @@ module Docs
   class Deno < UrlScraper
     self.name = 'Deno'
     self.type = 'simple'
-    self.release = '1.27.0'
-    self.base_url = 'https://doc.deno.land/deno/stable/'
+    self.release = '1.46.3'
+    self.base_url = 'https://docs.deno.com/api/deno/'
     self.links = {
-      home: 'https://deno.land/',
+      home: 'https://deno.com',
       code: 'https://github.com/denoland/deno'
     }
 
@@ -13,7 +13,7 @@ module Docs
 
     # https://github.com/denoland/manual/blob/main/LICENSE
     options[:attribution] = <<-HTML
-      &copy; 2018–2022 the Deno authors
+      &copy; 2018–2024 the Deno authors
     HTML
 
     def get_latest_version(opts)

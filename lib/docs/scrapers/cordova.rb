@@ -28,6 +28,11 @@ module Docs
       Licensed under the Apache License 2.0.
     HTML
 
+    version '12' do
+      self.release = '12'
+      self.base_url = "https://cordova.apache.org/docs/en/#{self.version}.x/"
+    end
+
     version '9' do
       self.release = '9.0.0'
       self.base_url = "https://cordova.apache.org/docs/en/#{self.version}.x/"
