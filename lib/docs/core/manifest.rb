@@ -27,7 +27,7 @@ module Docs
         aliases = eval data.split("ALIASES = ").last.split(";").first
 
         # set alias value
-        json["alias"] = aliases[json["slug"].to_sym]
+        json["alias"] = aliases[json["slug"].try(:to_sym)]
 
         result << json
       end
