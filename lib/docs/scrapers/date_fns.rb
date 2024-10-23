@@ -7,7 +7,7 @@ module Docs
       home: 'https://date-fns.org/',
       code: 'https://github.com/date-fns/date-fns'
     }
-    self.release = '2.29.2'
+    self.release = '4.1.0'
     self.base_url = "https://date-fns.org/v#{self.release}/docs/"
 
     # https://github.com/date-fns/date-fns/blob/main/LICENSE.md

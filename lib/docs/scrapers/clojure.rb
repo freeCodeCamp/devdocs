@@ -17,6 +17,11 @@ module Docs
       Licensed under the Eclipse Public License 1.0.
     HTML
 
+    version '1.12' do
+      self.release = '1.12.0'
+      self.base_url = 'https://clojure.github.io/clojure/'
+    end
+
     version '1.11' do
       self.release = '1.11'
       self.base_url = 'https://clojure.github.io/clojure/'

@@ -18,6 +18,11 @@ module Docs
       Licensed under the MIT License.
     HTML
 
+    version '0.13' do
+      self.release = '0.12.13'
+      self.base_url = "https://bottlepy.org/docs/#{self.version}/"
+    end
+
     version '0.12' do
       self.release = '0.12.13'
       self.base_url = "https://bottlepy.org/docs/#{self.version}/"

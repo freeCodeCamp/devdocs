@@ -4,10 +4,10 @@ module Docs
   class Angular < UrlScraper
     self.type = 'angular'
     self.links = {
-      home: 'https://angular.io/',
+      home: 'https://angular.dev/',
       code: 'https://github.com/angular/angular'
     }
-    self.base_url = 'https://angular.io/'
+    self.base_url = 'https://angular.dev/'
     self.root_path = 'docs'
 
     html_filters.push 'angular/clean_html', 'angular/entries'
@@ -80,6 +80,12 @@ module Docs
         super
       end
       include Docs::Angular::Common
+    end
+
+    version do
+      self.release = '18.2.6'
+      self.base_url = 'https://angular.dev/'
+      include Docs::Angular::Since12
     end
 
     version do
