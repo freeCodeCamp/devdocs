@@ -18,6 +18,10 @@ module Docs
     HTML
 
     version do
+      self.release = '2.2.0'
+    end
+    
+    version do
       self.release = '2.0.2'
     end
 
