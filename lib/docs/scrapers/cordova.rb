@@ -8,10 +8,10 @@ module Docs
       code: 'https://github.com/apache/cordova'
     }
 
+    html_filters.replace 'clean_html', 'cordova/clean_html_core'
     html_filters.push 'cordova/entries', 'cordova/clean_html'
 
     options[:container] = '.docs'
-    options[:clean_html_maintain_nbsp] = true
     options[:skip] = %w(index.html)
 
     options[:fix_urls] = ->(url) do
