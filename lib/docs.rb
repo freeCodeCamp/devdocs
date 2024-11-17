@@ -101,7 +101,7 @@ module Docs
   end
 
   def self.generate_manifest
-    Manifest.new(store, all_versions, aliases).store
+    Manifest.new(store, all_versions).store
   end
 
   def self.store

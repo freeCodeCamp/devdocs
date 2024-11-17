@@ -4,10 +4,9 @@ module Docs
   class Manifest
     FILENAME = 'docs.json'
 
-    def initialize(store, docs, aliases)
+    def initialize(store, docs)
       @store = store
       @docs = docs
-      @aliases = aliases
     end
 
     def store
@@ -21,7 +20,7 @@ module Docs
         if doc.options[:attribution].is_a?(String)
           json[:attribution] = doc.options[:attribution].strip
         end
-        json[:alias] = @aliases[doc.slug]
+        json[:alias] = Docs.aliases[doc.slug]
         result << json
       end
     end
