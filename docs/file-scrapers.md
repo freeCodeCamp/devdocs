@@ -157,17 +157,6 @@ curl https://numpy.org/doc/$VERSION/numpy-html.zip | \
 bsdtar --extract --file=- --directory=docs/numpy~$VERSION/
 ```
 
-## OCaml
-
-Download from https://www.ocaml.org/docs/ the HTML reference:
-https://v2.ocaml.org/releases/4.14/ocaml-4.14-refman-html.tar.gz
-and extract it as `docs/ocaml`:
-
-```sh
-curl https://v2.ocaml.org/releases/$VERSION/ocaml-$VERSION-refman-html.tar.gz | \
-tar xz --transform 's/htmlman/ocaml/' --directory docs/
-```
-
 ## OpenGL
 
 ```sh

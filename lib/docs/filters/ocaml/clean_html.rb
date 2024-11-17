@@ -3,6 +3,8 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
 
+        css('#sidebar').remove
+
         css('pre').each do |node|
           span = node.at_css('span[id]')
           node['id'] = span['id'] if span
