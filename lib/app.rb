@@ -33,6 +33,42 @@ class App < Sinatra::Application
     set :default_docs, %w(css dom html http javascript)
     set :news_path, File.join(root, assets_prefix, 'javascripts', 'news.json')
 
+    set :docs_aliases, {
+      'angular' => 'ng',
+      'angular.js' => 'ng',
+      'backbone.js' => 'bb',
+      'c++' => 'cpp',
+      'coffeescript' => 'cs',
+      'crystal' => 'cr',
+      'elixir' => 'ex',
+      'javascript' => 'js',
+      'julia' => 'jl',
+      'jquery' => '$',
+      'knockout.js' => 'ko',
+      'kubernetes' => 'k8s',
+      'less' => 'ls',
+      'lodash' => '_',
+      'löve' => 'love',
+      'marionette' => 'mn',
+      'markdown' => 'md',
+      'matplotlib' => 'mpl',
+      'modernizr' => 'mdr',
+      'moment.js' => 'mt',
+      'openjdk' => 'java',
+      'nginx' => 'ngx',
+      'numpy' => 'np',
+      'pandas' => 'pd',
+      'postgresql' => 'pg',
+      'python' => 'py',
+      'ruby.on.rails' => 'ror',
+      'ruby' => 'rb',
+      'rust' => 'rs',
+      'sass' => 'scss',
+      'tensorflow' => 'tf',
+      'typescript' => 'ts',
+      'underscore.js' => '_',
+    }
+
     set :csp, false
 
     require 'docs'
