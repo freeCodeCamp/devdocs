@@ -20,10 +20,6 @@ module Docs
     version do
       self.release = '2.2.0'
     end
-    
-    version do
-      self.release = '2.0.2'
-    end
 
     version '1' do
       self.release = '1.4.8'
