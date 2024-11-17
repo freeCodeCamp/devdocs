@@ -233,7 +233,14 @@ tar xj --strip-components=1
 ```
 
 ## R
+
 ```bash
+sudo dnf install bzip2-devel
+sudo dnf install gcc-gfortran
+sudo dnf install libcurl-devel
+sudo dnf install texinfo
+sudo dnf install xz-devel
+
 DEVDOCSROOT=docs/r
 RLATEST=https://cran.r-project.org/src/base/R-latest.tar.gz # or /R-${VERSION::1}/R-$VERSION.tar.gz
 
@@ -243,7 +250,7 @@ mkdir -p "$RSOURCEDIR" "$RBUILDDIR" "$DEVDOCSROOT"
 
 # Download, configure, and build with static HTML pages
 curl "$RLATEST" | tar -C "$RSOURCEDIR" -xzf - --strip-components=1
-(cd "$RBUILDDIR" && "$RSOURCEDIR/configure" --enable-prebuilt-html --with-recommended-packages --disable-byte-compiled-packages --disable-shared --disable-java)
+(cd "$RBUILDDIR" && "$RSOURCEDIR/configure" --enable-prebuilt-html --with-recommended-packages --disable-byte-compiled-packages --disable-shared --disable-java --with-readline=no --with-x=no)
 make _R_HELP_LINKS_TO_TOPICS_=FALSE -C "$RBUILDDIR"
 
 # Export all html documentation built − global, and per-package
