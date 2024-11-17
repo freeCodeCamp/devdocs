@@ -108,6 +108,44 @@ module Docs
     store_class.new(store_path)
   end
 
+  def self.aliases
+    {
+      'angular' => 'ng',
+      'angular.js' => 'ng',
+      'backbone.js' => 'bb',
+      'c++' => 'cpp',
+      'coffeescript' => 'cs',
+      'crystal' => 'cr',
+      'elixir' => 'ex',
+      'javascript' => 'js',
+      'julia' => 'jl',
+      'jquery' => '$',
+      'knockout.js' => 'ko',
+      'kubernetes' => 'k8s',
+      'less' => 'ls',
+      'lodash' => '_',
+      'löve' => 'love',
+      'marionette' => 'mn',
+      'markdown' => 'md',
+      'matplotlib' => 'mpl',
+      'modernizr' => 'mdr',
+      'moment.js' => 'mt',
+      'openjdk' => 'java',
+      'nginx' => 'ngx',
+      'numpy' => 'np',
+      'pandas' => 'pd',
+      'postgresql' => 'pg',
+      'python' => 'py',
+      'ruby.on.rails' => 'ror',
+      'ruby' => 'rb',
+      'rust' => 'rs',
+      'sass' => 'scss',
+      'tensorflow' => 'tf',
+      'typescript' => 'ts',
+      'underscore.js' => '_',
+    }
+  end
+
   extend Instrumentable
 
   def self.install_report(*names)

@@ -20,7 +20,7 @@ module Docs
         if doc.options[:attribution].is_a?(String)
           json[:attribution] = doc.options[:attribution].strip
         end
-        json[:alias] = App.docs_aliases[json["slug"].try(:to_sym)]
+        json[:alias] = Docs.aliases[json["slug"].try(:to_sym)]
         result << json
       end
     end
