@@ -20,15 +20,7 @@ module Docs
         if doc.options[:attribution].is_a?(String)
           json[:attribution] = doc.options[:attribution].strip
         end
-
-        # parse doc aliases from JS file as Ruby hash
-        entry_file = File.open("assets/javascripts/models/entry.js")
-        data = entry_file.read
-        aliases = eval data.split("ALIASES = ").last.split(";").first
-
-        # set alias value
-        json["alias"] = aliases[json["slug"].try(:to_sym)]
-
+        json[:alias] = App.docs_aliases[json["slug"].try(:to_sym)]
         result << json
       end
     end
