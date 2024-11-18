@@ -8,15 +8,29 @@ module Docs
         end
 
         article = at_css('article[id^="post-"]')
-        @doc = at_css('article[id^="post-"]') unless article.nil?
+        @doc = article unless article.nil?
 
-        css('hr', '.screen-reader-text', '.table-of-contents',
-            '.anchor', '.toc-jump', '.source-code-links', '.user-notes',
-            '.show-more', '.hide-more').remove
+        css(
+          'hr',
+          '.screen-reader-text',
+          '.table-of-contents',
+          '.anchor',
+          '.toc-jump',
+          '.source-code-links',
+          '.user-notes',
+          '.show-more',
+          '.hide-more',
+          '.wp-block-wporg-sidebar-container',
+          'section[data-nosnippet="true"]',
+          # 'section:contains("before being able to contribute a note or feedback")',
+          ).remove
 
-        header = at_css('h1')
-        header.content = header.content.strip
-        doc.prepend_child header
+        if at_css('.entry-content')
+          header = at_css('h1')
+          header.remove_attribute('style')
+          @doc = at_css('.entry-content')
+          doc.prepend_child header
+        end
 
         # Remove permalink
         css('h2 > a, h3 > a').each do |node|
