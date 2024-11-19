@@ -3,7 +3,7 @@ app.templates.helpPage = function () {
   const navKey = $.isMac() ? "cmd" : "alt";
   const arrowScroll = app.settings.get("arrowScroll");
 
-  const aliases = Object.entries(app.models.Entry.ALIASES);
+  const aliases = Object.entries(app.config.docs_aliases);
   const middle = Math.ceil(aliases.length / 2);
   const aliases_one = aliases.slice(0, middle);
   const aliases_two = aliases.slice(middle);
