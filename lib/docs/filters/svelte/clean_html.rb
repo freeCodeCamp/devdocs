@@ -15,6 +15,8 @@ module Docs
 
         at_css('h1').content = 'Svelte' if root_page?
         css('pre').each do |node|
+          # Remove hover popup
+          node.css('.twoslash-popup-container').remove()
           node.content = node.css('.line').map(&:content).join("\n")
           node['data-language'] = 'typescript'
         end
