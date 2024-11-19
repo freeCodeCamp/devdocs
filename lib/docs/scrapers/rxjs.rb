@@ -4,7 +4,7 @@ module Docs
   class Rxjs < UrlScraper
     self.name = 'RxJS'
     self.type = 'rxjs'
-    self.release = '7.5.5'
+    self.release = '7.8.1'
     self.base_url = 'https://rxjs.dev/'
     self.root_path = 'guide/overview'
     self.links = {
@@ -16,7 +16,7 @@ module Docs
 
     options[:follow_links] = false
     options[:only_patterns] = [/guide\//, /api\//]
-    options[:skip_patterns] = [/api\/([^\/]+)\.json/]
+    options[:skip_patterns] = [/api\/([^\/]+)\.json/, /api\/index/]
     options[:fix_urls_before_parse] = ->(url) do
       url.sub! %r{\A(\.\/)?guide/}, '/guide/'
       url.sub! %r{\Aapi/}, '/api/'
