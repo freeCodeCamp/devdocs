@@ -13,15 +13,16 @@ module Docs
     HTML
 
     version 'Berry' do
-      self.release = '3.1.1'
+      self.release = '4.5.1'
       self.base_url = 'https://yarnpkg.com/'
       self.links = {
         home: 'https://yarnpkg.com/',
         code: 'https://github.com/yarnpkg/berry'
       }
-      html_filters.push 'yarn/entries_berry', 'yarn/clean_html_berry', 'title'
-      options[:skip] = ['features', 'cli', 'configuration', 'advanced']
-      options[:skip_patterns] = [/\Aapi/, /\Apackage/]
+      self.root_path = 'getting-started'
+      html_filters.push 'yarn/entries_berry', 'yarn/clean_html_berry'
+      options[:skip] = ['cli', 'cli/builder', 'cli/pnpify', 'cli/sdks', 'protocols']
+      options[:skip_patterns] = [/\Aapi/, /\Ablog/, /\Apackage/, /\Aassets/]
     end
 
     version 'Classic' do
@@ -37,6 +38,14 @@ module Docs
 
     def get_latest_version(opts)
       get_latest_github_release('yarnpkg', 'berry', opts)[/[\d.]+/]
+    end
+
+    private
+
+    # Some pages contain null bytes and cause the parser to fail
+    def parse(response)
+      response.body.gsub!(/[\x00\u0000\0]/, '')
+      super
     end
   end
 end
