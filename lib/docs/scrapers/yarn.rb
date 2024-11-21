@@ -12,7 +12,7 @@ module Docs
       Licensed under the BSD License.
     HTML
 
-    version 'Berry' do
+    version do
       self.release = '4.5.1'
       self.base_url = 'https://yarnpkg.com/'
       self.links = {
@@ -24,6 +24,18 @@ module Docs
       options[:skip] = ['cli', 'cli/builder', 'cli/pnpify', 'cli/sdks', 'protocols']
       options[:skip_patterns] = [/\Aapi/, /\Ablog/, /\Apackage/, /\Aassets/]
     end
+
+    version '3' do
+      self.release = '3.1.1'
+      self.base_url = 'https://v3.yarnpkg.com/'
+      self.links = {
+        home: 'https://v3.yarnpkg.com/',
+        code: 'https://github.com/yarnpkg/berry'
+      }
+      self.root_path = 'getting-started'
+      html_filters.push 'yarn/entries_berry', 'yarn/clean_html_berry', 'title'
+      options[:skip] = ['features', 'cli', 'configuration', 'advanced']
+      options[:skip_patterns] = [/\Aapi/, /\Apackage/]    end
 
     version 'Classic' do
       self.release = '1.22.17'
