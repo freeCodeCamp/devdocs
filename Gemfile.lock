@@ -56,7 +56,7 @@ GEM
     logger (1.6.1)
     method_source (1.0.0)
     mini_portile2 (2.8.7)
-    minitest (5.25.1)
+    minitest (5.25.2)
     multi_json (1.15.0)
     mustermann (3.0.3)
       ruby2_keywords (~> 0.0.1)
