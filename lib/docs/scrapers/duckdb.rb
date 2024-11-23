@@ -8,7 +8,13 @@ module Docs
       code: 'https://github.com/duckdb/duckdb'
     }
 
+    # https://duckdb.org/docs/guides/offline-copy.html
+    # curl -O https://duckdb.org/duckdb-docs.zip; bsdtar xf duckdb-docs.zip; cd duckdb-docs; python -m http.server
+    self.release = '1.1.3'
+    self.base_url = 'http://localhost:8000/docs/'
+
     html_filters.push 'duckdb/entries', 'duckdb/clean_html'
+    text_filters.replace 'attribution', 'duckdb/attribution'
 
     options[:container] = '.documentation'
     
@@ -29,41 +35,8 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    version '1.1' do
-      self.release = '1.1.x'
-      self.base_url = 'http://localhost:8000/docs/'
-    end
-
-    # version '1.0' do
-    #     self.release = '1.0.x'
-    #     self.base_url = "https://duckdb.org/docs/archive/#{self.version}/"
-
-    #     html_filters.push 'duckdb/clean_html'
-    # end
-
-    # version '0.9' do
-    #     self.release = '0.9.x'
-    #     self.base_url = "https://duckdb.org/docs/archive/#{self.version}/"
-
-    #     html_filters.push 'duckdb/clean_html'
-    # end
-
-    # version '0.8' do
-    #     self.release = '0.8.x'
-    #     self.base_url = "https://duckdb.org/docs/archive/#{self.version}/"
-
-    #     html_filters.push 'duckdb/clean_html'
-    # end
-
-    # version '0.7' do
-    #     self.release = '0.7.x'
-    #     self.base_url = "https://duckdb.org/docs/archive/#{self.version}/"
-
-    #     html_filters.push 'duckdb/clean_html'
-    # end
-
     def get_latest_version(opts)
-      get_github_tags('duckdb', 'duckdb', opts)
+      get_github_tags('duckdb', 'duckdb', opts)[0]['name']
     end
   end
 end

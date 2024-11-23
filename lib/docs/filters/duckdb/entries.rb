@@ -2,7 +2,7 @@ module Docs
   class Duckdb
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('h1')&.content || 'DuckDB'
+        at_css('h1', '.title').content
       end
 
       def get_type
