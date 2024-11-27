@@ -22,8 +22,13 @@ module Docs
     html_filters.push 'vite/entries', 'vite/clean_html'
 
     version do
-      self.release = '5.4.11'
+      self.release = '6.0.1'
       self.base_url = 'https://vite.dev/'
+    end
+
+    version '5' do
+      self.release = '5.4.11'
+      self.base_url = 'https://v5.vite.dev/'
     end
 
     version '4' do
