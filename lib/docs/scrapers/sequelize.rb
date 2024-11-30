@@ -30,7 +30,7 @@ module Docs
     end
 
     version '6' do
-      self.release = '6.23.2'
+      self.release = '6.37.5'
       self.base_url = "https://sequelize.org/docs/v6/"
       self.base_urls = [
         "https://sequelize.org/docs/v6/",
