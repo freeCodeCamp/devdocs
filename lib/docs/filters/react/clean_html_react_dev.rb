@@ -43,6 +43,9 @@ module Docs
           node['data-language'] = 'jsx'
         end
 
+        # Remove styling
+        css('*').remove_attr('class').remove_attr('style')
+
         doc
       end
     end
