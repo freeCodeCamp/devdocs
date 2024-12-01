@@ -10,7 +10,7 @@ module Docs
       def get_type
         breadcrumb_nodes = css('a.tracking-wide')
         category = breadcrumb_nodes.last.content
-        is_learn_page = base_url.to_s.end_with?('learn')
+        is_learn_page = path.start_with?('learn/')
         prefix = is_learn_page ? 'Learn: ' : ''
         return prefix + (category || 'Miscellaneous')
       end

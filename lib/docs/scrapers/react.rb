@@ -1,6 +1,5 @@
 module Docs
   class React < UrlScraper
-    include MultipleBaseUrls
 
     self.name = 'React'
     self.type = 'simple'
@@ -11,14 +10,12 @@ module Docs
 
     version do
       self.release = '18.3.1'
-      host = 'https://react.dev'
-      self.base_urls = [
-        "#{host}/reference",
-        "#{host}/learn",
-      ]
-      self.initial_paths = %w(/react)
+      self.base_url = 'https://react.dev'
+      self.initial_paths = %w(/reference/react /learn)
 
       html_filters.push 'react/entries_react_dev', 'react/clean_html_react_dev'
+
+      options[:only_patterns] = [/\A\/learn/, /\A\/reference/]
 
       options[:attribution] = <<-HTML
         &copy; 2013&ndash;present Facebook Inc.<br>
