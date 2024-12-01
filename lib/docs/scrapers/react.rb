@@ -1,5 +1,7 @@
 module Docs
   class React < UrlScraper
+    include MultipleBaseUrls
+
     self.name = 'React'
     self.type = 'simple'
     self.links = {
@@ -9,8 +11,12 @@ module Docs
 
     version do
       self.release = '18.3.1'
-      # TODO add /learn
-      self.base_url = 'https://react.dev/reference'
+      host = 'https://react.dev'
+      self.base_urls = [
+        "#{host}/reference",
+        "#{host}/learn",
+      ]
+      self.initial_paths = %w(/react)
 
       html_filters.push 'react/entries_react_dev', 'react/clean_html_react_dev'
 
