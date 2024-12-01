@@ -9,13 +9,27 @@ module Docs
           node.previous.remove
         end
 
-        # Remove prev-next links
-        css('div.grid > a').each do |node|
+        remove_selectors = [
+          'div.grid > a', # prev-next links
+           'button', # "show more" etc. buttons
+           'div.order-last', # code iframe containers
+           'a[title="Open in CodeSandbox"]', # codesandbox links
+        ]
+        css(*remove_selectors).each do |node|
           node.remove
         end
 
-        # Remove styling divs
-        css('div[class*="ps-0"]', 'div[class*="mx-"]', 'div[class*="px-"]', 'div[class=""]', 'div.cm-line').each do |node|
+        # Remove recipe blocks - TODO transform to outgoing link to docs
+        css('h4[id^="examples-"]').each do |node|
+          node.parent.parent.parent.remove
+        end
+
+        # Remove styling divs while lifting children
+        styling_prefixes = [
+          'ps-', 'mx-', 'my-', 'px-', 'py-', 'mb-', 'sp-', 'rounded-'
+        ]
+        selectors = styling_prefixes.map { |prefix| "div[class*=\"#{prefix}\"]" }
+        css(*selectors, 'div[class=""]', 'div.cm-line').each do |node|
           node.before(node.children).remove
         end
 
