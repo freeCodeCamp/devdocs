@@ -33,6 +33,14 @@ module Docs
           node.before(node.children).remove
         end
 
+        # Syntax highlighting
+        css('pre br').each do |node|
+          node.replace("\n")
+        end
+        css('pre').each do |node|
+          node['data-language'] = 'jsx'
+        end
+
         doc
       end
     end
