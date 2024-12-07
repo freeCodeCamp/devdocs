@@ -3,11 +3,21 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
 
       def get_name
-        at_css('h1').content
+        if result[:path].start_with?('api/deno/')
+          at_css('main')['id'][/\Asymbol_([.\w]+)/, 1]
+        else
+          at_css('main article h1').content
+        end
       end
 
       def get_type
-        'Deno CLI APIs'
+        if result[:path].start_with?('api/deno/')
+          'API'
+        elsif result[:path].start_with?('runtime/reference/cli')
+          'CLI'
+        else
+          at_css('main article nav ul :first span').content
+        end
       end
 
     end

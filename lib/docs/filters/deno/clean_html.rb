@@ -2,26 +2,30 @@ module Docs
   class Deno
     class CleanHtmlFilter < Filter
       def call
-        if root_page?
-          @doc = at_css('h2[id]').parent.parent
+        if result[:path].start_with?('api/deno/')
+          @doc = at_css('main')
         else
-          @doc = at_css('article')
+          @doc = at_css('main article .markdown-body')
         end
 
-        css('*[aria-label="Anchor"]').remove
-        css('pre', '.tw-1nkr705').each do |node|
-          node['data-language'] = 'typescript'
-          node.name = 'pre'
+        if at_css('.text-2xl')
+          doc.prepend_child at_css('.text-2xl').remove
+          at_css('.text-2xl').name = 'h1'
         end
-        css('.tw-8ej7ai').each do |node|
-          code = node.at_css('.font-mono')
-          next unless code
-          code.parent.name = 'blockquote'
-          code.name = 'code'
+
+        css('code').each do |node|
+          if node['class']
+            lang = node['class'][/language-(\w+)/, 1]
+          end
+          node['data-language'] = lang || 'ts'
+          node.remove_attribute('class')
+          if node.parent.name == 'div'
+            node.content = node.content.strip
+          end
         end
-        css('*[class]').remove_attribute('class')
-        xpath('//a[text()="[src]"]').remove
-        
+
+        css('a.header-anchor').remove()
+
         doc
       end
     end
