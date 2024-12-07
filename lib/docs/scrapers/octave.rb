@@ -29,6 +29,11 @@ module Docs
       Permission is granted to copy and distribute translations of this manual into another language, under the above conditions for modified versions.
     HTML
 
+    version '9' do
+      self.release = '9.2.0'
+      self.base_url = "https://docs.octave.org/v#{self.release}/"
+    end
+
     version '8' do
       self.release = '8.1.0'
       self.base_url = "https://docs.octave.org/v#{self.release}/"
