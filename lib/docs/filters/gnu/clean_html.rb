@@ -2,7 +2,10 @@ module Docs
   class Gnu
     class CleanHtmlFilter < Filter
       def call
+        css('.nav-panel', '.copiable-link').remove
         heading = at_css('h1, h2, h3, h4, h5')
+        heading.content = heading.content
+        doc.prepend_child heading.remove
         heading_level = heading.name[/h(\d)/, 1].to_i
 
         css('h2, h3, h4, h5, h6').each do |node|
