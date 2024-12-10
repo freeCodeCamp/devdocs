@@ -2,21 +2,21 @@ module Docs
   class React
     class EntriesReactDevFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('article h1').content
+        name = at_css('article h1')&.content
         return update_canary_copy(name)
       end
 
       def get_type
-        breadcrumb_nodes = css('a.tracking-wide')
-        is_top_level_page = breadcrumb_nodes.length == 1
-        category = if is_top_level_page
-          # Category is the opened category in the sidebar
-          css('aside a.text-link div').first.content
-        else
-          breadcrumb_nodes.last.content
-        end
-        is_learn_page = path.start_with?('learn/')
-        prefix = is_learn_page ? 'Learn: ' : ''
+        # Category is the opened category in the sidebar
+        category = css('a:has(> span.text-link) > div').first&.content
+        # The grey category in the sidebar
+        top_category = css('h3:has(~ li a.text-link)')
+                         .last&.content
+                         &.sub(/@.*$/, '') # remove version tag
+                         &.sub(/^./, &:upcase) # capitalize first letter
+                         &.concat(": ")
+        is_learn_page = path.start_with?('learn/') || slug == 'learn'
+        prefix = is_learn_page ? 'Learn: ' : top_category
         return update_canary_copy(prefix + (category || 'Miscellaneous'))
       end
 

@@ -31,9 +31,7 @@ module Docs
         end
 
         # Remove styling divs while lifting children
-        styling_prefixes = [
-          'ps-', 'mx-', 'my-', 'px-', 'py-', 'mb-', 'sp-', 'rounded-'
-        ]
+        styling_prefixes = %w[ps- mx- my- px- py- mb- sp- rounded-]
         selectors = styling_prefixes.map { |prefix| "div[class*=\"#{prefix}\"]" }
         css(*selectors, 'div[class=""]', 'div.cm-line').each do |node|
           node.before(node.children).remove
