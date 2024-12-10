@@ -34,6 +34,7 @@ module Docs
         class_transform = {
           '.expandable-callout[class*=yellow]' => 'note note-orange', # pitfalls, experimental
           '.expandable-callout[class*=green]' => 'note note-green', # note
+          '.expandable-callout[class*=gray]' => 'note', # canary
           '.bg-card' => 'note', # you will learn
           'details' => 'note note-blue' # deep dive
         }
