@@ -27,19 +27,6 @@ module Docs
 
         string.sub(canary_copy, ' (Canary)')
       end
-
-      def additional_entries
-        excluded = %w(usage troubleshooting recap reference challenges alternatives)
-        entries =  []
-        css('article h2, article h3').map do |node|
-          next unless node.has_attribute?('id')
-          name = node.content.strip
-          next if excluded.include?(name.downcase)
-          entries << [name, node['id'], type]
-        end
-
-        entries
-      end
     end
   end
 end
