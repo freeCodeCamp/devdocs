@@ -3,6 +3,10 @@
 
   .note {
     @extend %note;
+    h4 {
+      margin-top: .25rem;
+      margin-bottom: .5rem;
+    }
   }
 
   .note-orange {
