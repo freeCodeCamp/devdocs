@@ -3,7 +3,8 @@ module Docs
     class EntriesReactDevFilter < Docs::EntriesFilter
       def get_name
         name = at_css('article h1')&.content
-        return update_canary_copy(name)
+
+        update_canary_copy(name)
       end
 
       def get_type
@@ -17,12 +18,14 @@ module Docs
                          &.concat(": ")
         is_learn_page = path.start_with?('learn/') || slug == 'learn'
         prefix = is_learn_page ? 'Learn: ' : top_category || ''
-        return update_canary_copy(prefix + (category || 'Miscellaneous'))
+
+        update_canary_copy(prefix + (category || 'Miscellaneous'))
       end
 
       def update_canary_copy(string)
         canary_copy = '- This feature is available in the latest Canary'
-        return string.sub(canary_copy, ' (Canary)')
+
+        string.sub(canary_copy, ' (Canary)')
       end
 
       def additional_entries
@@ -34,7 +37,8 @@ module Docs
           next if excluded.include?(name.downcase)
           entries << [name, node['id'], type]
         end
-        return entries
+
+        entries
       end
     end
   end

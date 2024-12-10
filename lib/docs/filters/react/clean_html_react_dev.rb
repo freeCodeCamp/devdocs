@@ -6,7 +6,7 @@ module Docs
 
         # Remove breadcrumbs before h1
         css('h1').each do |node|
-          if (node.previous)
+          if node.previous
             node.previous.remove
           end
         end
