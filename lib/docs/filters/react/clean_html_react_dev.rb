@@ -13,13 +13,17 @@ module Docs
 
         remove_selectors = [
           'div.grid > a', # prev-next links
-           'button', # "show more" etc. buttons
-           'div.order-last', # code iframe containers
-           'a[title="Open in CodeSandbox"]', # codesandbox links
+          'button', # "show more" etc. buttons
+          'div.order-last', # code iframe containers
+          'div.dark-image', # dark images
+          'a[title="Open in CodeSandbox"]', # codesandbox links
         ]
         css(*remove_selectors).each do |node|
           node.remove
         end
+
+        # Fix images not loading
+        css('img').remove_attr('srcset')
 
         # Remove recipe blocks - TODO transform to outgoing link to docs
         css('h4[id^="examples-"]').each do |node|
