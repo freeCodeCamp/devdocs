@@ -16,7 +16,7 @@ module Docs
                          &.sub(/^./, &:upcase) # capitalize first letter
                          &.concat(": ")
         is_learn_page = path.start_with?('learn/') || slug == 'learn'
-        prefix = is_learn_page ? 'Learn: ' : top_category
+        prefix = is_learn_page ? 'Learn: ' : top_category || ''
         return update_canary_copy(prefix + (category || 'Miscellaneous'))
       end
 

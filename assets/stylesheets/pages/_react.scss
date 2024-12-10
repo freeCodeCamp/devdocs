@@ -1,0 +1,20 @@
+._react {
+  @extend %simple;
+
+  .note {
+    @extend %note;
+  }
+
+  .note-orange {
+    @extend %note-orange;
+  }
+
+  .note-blue {
+    @extend %note-blue;
+  }
+
+  .note-green {
+    @extend %note-green;
+  }
+
+}

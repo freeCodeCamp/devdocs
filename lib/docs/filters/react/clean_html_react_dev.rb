@@ -30,9 +30,30 @@ module Docs
           node.parent.parent.parent.remove
         end
 
+        # Transform callout blocks
+        class_transform = {
+          '.expandable-callout[class*=yellow]' => 'note note-orange', # pitfalls, experimental
+          '.expandable-callout[class*=green]' => 'note note-green', # note
+          '.bg-card' => 'note', # you will learn
+          'details' => 'note note-blue' # deep dive
+        }
+
+        class_transform.each do |old_class, new_class|
+          css(old_class).each do |node|
+            node.set_attribute('class', new_class)
+          end
+        end
+
+        # Transform h3 to h4 inside callouts
+        css('.note h3').each do |node|
+          new_node = Nokogiri::XML::Node.new('h4', @doc)
+          new_node.content = node.content
+          node.replace(new_node)
+        end
+
         # Remove styling divs while lifting children
         styling_prefixes = %w[ps- mx- my- px- py- mb- sp- rounded-]
-        selectors = styling_prefixes.map { |prefix| "div[class*=\"#{prefix}\"]" }
+        selectors = styling_prefixes.map { |prefix| "div[class*=\"#{prefix}\"]:not(.note)" }
         css(*selectors, 'div[class=""]', 'div.cm-line').each do |node|
           node.before(node.children).remove
         end
@@ -45,8 +66,8 @@ module Docs
           node['data-language'] = 'jsx'
         end
 
-        # Remove styling
-        css('*').remove_attr('class').remove_attr('style')
+        # Remove styling except for callouts and images
+        css('*:not([class*=image]):not(.note)').remove_attr('class').remove_attr('style')
 
         doc
       end

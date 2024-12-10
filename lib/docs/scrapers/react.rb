@@ -2,7 +2,7 @@ module Docs
   class React < UrlScraper
 
     self.name = 'React'
-    self.type = 'simple'
+    self.type = 'react'
     self.links = {
       home: 'https://react.dev/',
       code: 'https://github.com/facebook/react'
