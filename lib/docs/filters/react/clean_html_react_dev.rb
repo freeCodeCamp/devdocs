@@ -46,7 +46,7 @@ module Docs
         end
 
         # Transform h3 to h4 inside callouts
-        css('.note h3').each do |node|
+        css('.note h3', '.note h2').each do |node|
           new_node = Nokogiri::XML::Node.new('h4', @doc)
           new_node.content = node.content
           node.replace(new_node)
