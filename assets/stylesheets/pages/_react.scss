@@ -1,0 +1,24 @@
+._react {
+  @extend %simple;
+
+  .note {
+    @extend %note;
+    h4 {
+      margin-top: .25rem;
+      margin-bottom: .5rem;
+    }
+  }
+
+  .note-orange {
+    @extend %note-orange;
+  }
+
+  .note-blue {
+    @extend %note-blue;
+  }
+
+  .note-green {
+    @extend %note-green;
+  }
+
+}
