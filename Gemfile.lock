@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.2.2)
+    activesupport (7.2.2.1)
       base64
       benchmark (>= 0.3)
       bigdecimal
@@ -53,7 +53,7 @@ GEM
       image_optim (~> 0.19)
     image_size (3.3.0)
     in_threads (1.6.0)
-    logger (1.6.1)
+    logger (1.6.2)
     method_source (1.0.0)
     mini_portile2 (2.8.8)
     minitest (5.25.4)
@@ -99,7 +99,7 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    securerandom (0.3.1)
+    securerandom (0.3.2)
     sinatra (3.2.0)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
