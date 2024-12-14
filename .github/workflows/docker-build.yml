@@ -53,5 +53,5 @@ jobs:
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:alpine
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:alpine-{{date 'YYYYMMDD'}}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:alpine-${TAG_DATE}
           labels: ${{ steps.meta.outputs.labels }} 
