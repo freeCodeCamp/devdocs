@@ -2,11 +2,10 @@ name: Build and Push Docker Images
 on:
   schedule:
     - cron: '0 0 1 * *'  # Run monthly on the 1st
-  workflow_dispatch:
+  workflow_dispatch:  # Allow manual triggers
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  TAG_DATE: ${{ format('{0}{1}{2}', github.event.repository.pushed_at.substring(0,4), github.event.repository.pushed_at.substring(5,7), github.event.repository.pushed_at.substring(8,10)) }}
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -16,10 +15,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Set current date
-        id: date
-        run: echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3
@@ -35,7 +30,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest
-            type=raw,value=${{ env.DATE }}
+            type=raw,value={{date 'YYYYMMDD'}}
 
       - name: Build and push regular image
         uses: docker/build-push-action@v5
@@ -54,5 +49,5 @@ jobs:
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:alpine
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:alpine-${{ env.DATE }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:alpine-{{date 'YYYYMMDD'}}
           labels: ${{ steps.meta.outputs.labels }}
