@@ -1,8 +1,8 @@
 name: Build and Push Docker Images
 on:
   schedule:
-    - cron: '0 0 1 *'*  # Run monthly on the 1st
-  workflow_dispatch:  # Allow manual triggers
+    - cron: '0 0 1 * *'  # Run monthly on the 1st
+  workflow_dispatch:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
