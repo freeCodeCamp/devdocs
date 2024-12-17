@@ -15,10 +15,21 @@ jobs:
     permissions:
       contents: read
       packages: write
+    strategy:
+      matrix:
+        variant:
+          - name: regular
+            file: Dockerfile
+            suffix: ''
+          - name: alpine
+            file: Dockerfile-alpine
+            suffix: '-alpine'
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3
@@ -33,25 +44,14 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=latest
-            type=raw,value={{date 'YYYYMMDD'}}
+            type=raw,value=latest${{ matrix.variant.suffix }}
+            type=raw,value={{date 'YYYYMMDD'}}${{ matrix.variant.suffix }}
 
-      - name: Build and push regular image
+      - name: Build and push image
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
+          file: ./${{ matrix.variant.file }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Build and push Alpine image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile-alpine
-          push: true
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:alpine
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:alpine-{{date 'YYYYMMDD'}}
-          labels: ${{ steps.meta.outputs.labels }} 
