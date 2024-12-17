@@ -24,12 +24,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           persist-credentials: false
 
       - name: Log in to the Container registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -37,7 +37,7 @@ jobs:
 
       - name: Extract metadata for Docker
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
@@ -45,7 +45,7 @@ jobs:
             type=raw,value={{date 'YYYYMMDD'}}${{ matrix.variant.suffix }}
 
       - name: Build and push image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5
         with:
           context: .
           file: ./${{ matrix.variant.file }}
