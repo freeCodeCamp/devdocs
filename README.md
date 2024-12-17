@@ -20,6 +20,30 @@ Keep track of development news:
 
 Unless you wish to contribute to the project, we recommend using the hosted version at [devdocs.io](https://devdocs.io). It's up-to-date and works offline out-of-the-box.
 
+### Using Docker (Recommended)
+
+The easiest way to run DevDocs locally is using Docker:
+
+```sh
+docker run --name devdocs -d -p 9292:9292 ghcr.io/freecodcamp/devdocs:latest
+```
+
+This will start DevDocs at [localhost:9292](http://localhost:9292). We provide both regular and Alpine-based images:
+- `ghcr.io/freecodcamp/devdocs:latest` - Standard image
+- `ghcr.io/freecodcamp/devdocs:latest-alpine` - Alpine-based (smaller size)
+
+Images are automatically built and updated monthly with the latest documentation.
+
+Alternatively, you can build the image yourself:
+
+```sh
+git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
+docker build -t devdocs .
+docker run --name devdocs -d -p 9292:9292 devdocs
+```
+
+### Manual Installation
+
 DevDocs is made of two pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
 DevDocs requires Ruby 3.3.0 (defined in [`Gemfile`](./Gemfile)), libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
@@ -37,17 +61,6 @@ Finally, point your browser at [localhost:9292](http://localhost:9292) (the firs
 The `thor docs:download` command is used to download pre-generated documentations from DevDocs's servers (e.g. `thor docs:download html css`). You can see the list of available documentations and versions by running `thor docs:list`. To update all downloaded documentations, run `thor docs:download --installed`. To download and install all documentation this project has available, run `thor docs:download --all`.
 
 **Note:** there is currently no update mechanism other than `git pull origin main` to update the code and `thor docs:download --installed` to download the latest version of the docs. To stay informed about new releases, be sure to [watch](https://github.com/freeCodeCamp/devdocs/subscription) this repository.
-
-Alternatively, DevDocs may be started as a Docker container:
-
-```sh
-# First, build the image
-git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
-docker build -t thibaut/devdocs .
-
-# Finally, start a DevDocs container (access http://localhost:9292)
-docker run --name devdocs -d -p 9292:9292 thibaut/devdocs
-```
 
 ## Vision
 
