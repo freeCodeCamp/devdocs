@@ -1,7 +1,7 @@
 module Docs
   class Threejs < FileScraper
     self.name = 'Three.js'
-    self.type = 'threejs'
+    self.type = 'simple'
     self.slug = 'threejs'
     self.links = {
       home: 'https://threejs.org/',

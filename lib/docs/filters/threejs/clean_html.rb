@@ -4,71 +4,7 @@ module Docs
       def call
         # Remove unnecessary elements
         css('head, script, style').remove
-
-        # Add syntax highlighting CSS
-        style = doc.document.create_element('style')
-        style.content = <<-CSS
-          .highlight { background: #272b30; color: #e9ecef; border-radius: 4px; margin: 1em 0; }
-          .highlight pre { margin: 0; padding: 10px; }
-          .highlight .k { color: #cc7832; font-weight: bold; } /* Keyword */
-          .highlight .kd { color: #cc7832; font-weight: bold; } /* Keyword.Declaration */
-          .highlight .nb { color: #6897bb; } /* Name.Builtin */
-          .highlight .nx { color: #ffc66d; } /* Name.Other */
-          .highlight .nf { color: #ffc66d; } /* Name.Function */
-          .highlight .mi { color: #6897bb; } /* Literal.Number.Integer */
-          .highlight .s1 { color: #6a8759; } /* Literal.String.Single */
-          .highlight .s2 { color: #6a8759; } /* Literal.String.Double */
-          .highlight .c1 { color: #808080; font-style: italic; } /* Comment.Single */
-          .highlight .lineno { color: #606366; margin-right: 10px; -webkit-user-select: none; user-select: none; }
-          .highlight-javascript { padding: 0; }
-          
-          /* Method signatures */
-          .sig { padding: 5px 10px; }
-          .sig-name { color: #ffc66d; }
-          .sig-param { color: #e9ecef; }
-          .sig-param .sig-type { color: #6897bb; }
-          .sig-returns { color: #cc7832; }
-          .sig-returns .sig-type { color: #6897bb; }
-          .sig-paren { color: #e9ecef; }
-          .property .pre { color: #cc7832; }
-          
-          /* Inline code */
-          code.literal { background: #2b2b2b; padding: 2px 4px; border-radius: 3px; }
-          code.literal .pre { color: #e9ecef; }
-          
-          /* Links */
-          .reference { color: #6897bb; text-decoration: none; }
-          .reference:hover { text-decoration: underline; }
-          .reference.external { color: #6a8759; }
-          
-          /* Notes */
-          .admonition.note { background: #2b2b2b; padding: 12px 15px; border-left: 4px solid #6897bb; margin: 1em 0; }
-          .admonition-title { color: #6897bb; font-weight: bold; margin: 0 0 5px 0; }
-        CSS
-        doc.at_css('head') ? doc.at_css('head').add_child(style) : doc.add_child(style)
-
-        # Create a wrapper div for better styling
-        if root = at_css('body')
-          content = root.inner_html
-        else
-          content = doc.inner_html
-        end
-
-        # Create Django-like structure
-        content = <<-HTML
-          <div class="document">
-            <div class="documentwrapper">
-              <div class="bodywrapper">
-                <div class="body" role="main">
-                  #{content}
-                </div>
-              </div>
-            </div>
-          </div>
-        HTML
-
-        doc.inner_html = content
-
+        
         # Handle source links
         css('h2').each do |node|
           if node.content.strip == 'Source'
@@ -319,6 +255,10 @@ module Docs
           end
         end
 
+        # Remove the navigation arrows and links
+        css('.nav').remove if at_css('.nav')
+        # If the arrows are in a different container, adjust the selector accordingly
+        
         doc
       end
 
