@@ -289,3 +289,11 @@ it to `docs/sqlite`
 ```sh
 curl https://sqlite.org/2022/sqlite-doc-3400000.zip | bsdtar --extract --file - --directory=docs/sqlite/ --strip-components=1
 ```
+
+## Three.js
+
+```sh
+git clone --depth 1 --branch r${VERSION} https://github.com/mrdoob/three.js.git
+mv three.js/docs/ docs/threejs~${VERSION}/
+rm -rf three.js/
+```
