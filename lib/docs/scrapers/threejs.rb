@@ -42,8 +42,8 @@ module Docs
 
     self.class_attribute :release
 
-    version '160' do
-      self.release = '160'
+    version '171' do
+      self.release = '171'
       self.base_url = "https://threejs.org/docs"
     end
 
