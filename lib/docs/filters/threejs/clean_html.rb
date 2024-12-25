@@ -4,6 +4,7 @@ module Docs
       def call
         # Remove unnecessary elements
         css('head, script, style').remove
+        
         # Wrap code blocks with pre tags and add syntax highlighting
         css('code').each do |node|
           unless node.parent.name == 'pre'

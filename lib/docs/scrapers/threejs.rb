@@ -40,8 +40,6 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    self.class_attribute :release
-
     version '171' do
       self.release = '171'
       self.base_url = "https://threejs.org/docs"
@@ -53,7 +51,7 @@ module Docs
 
     def initial_paths
       paths = []
-      json_path = File.expand_path("docs/threejs~#{self.release}/list.json")
+      json_path = File.expand_path("/tmp/list.json")
       json_content = File.read(json_path)
       json_data = JSON.parse(json_content)
 
