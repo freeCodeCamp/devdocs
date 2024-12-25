@@ -4,6 +4,14 @@ module Docs
       def call
         # Remove unnecessary elements
         css('head, script, style').remove
+        # Wrap code blocks with pre tags and add syntax highlighting
+        css('code').each do |node|
+          unless node.parent.name == 'pre'
+            pre = node.wrap('<pre>')
+            pre['data-language'] = 'javascript'
+            pre['class'] = 'language-javascript'
+          end
+        end
         
         # Handle source links
         css('h2').each do |node|
@@ -202,38 +210,12 @@ module Docs
           end
         end
         
-        # Clean up code blocks
-        css('pre').each do |node|
-          wrapper = doc.document.create_element('div')
-          wrapper['class'] = 'highlight'
-          node.replace(wrapper)
-          
-          div = doc.document.create_element('div')
-          div['class'] = 'highlight-javascript notranslate'
-          wrapper.add_child(div)
-          
-          pre = doc.document.create_element('pre')
-          pre['class'] = ''
-          div.add_child(pre)
-
-          # Format the code content
-          code = node.content.strip
-          
-          # Add syntax highlighting spans
-          highlighted_code = highlight_javascript(code)
-          
-          pre.inner_html = highlighted_code
-        end
-
         # Add proper heading IDs and classes
         css('h1, h2, h3, h4').each do |node|
           node['id'] ||= node.content.strip.downcase.gsub(/[^\w]+/, '-')
           existing_class = node['class'].to_s
           node['class'] = "#{existing_class} section-header"
         end
-
-        # Remove interactive examples
-        css('.threejs_example_container').remove
 
         # Add note styling
         css('p').each do |node|
@@ -254,34 +236,7 @@ module Docs
             node.replace(wrapper)
           end
         end
-
-        # Remove the navigation arrows and links
-        css('.nav').remove if at_css('.nav')
-        # If the arrows are in a different container, adjust the selector accordingly
-        
         doc
-      end
-
-      private
-
-      def highlight_javascript(code)
-        code = code.gsub(/\b(function|return|var|let|const|if|else|for|while|do|switch|case|break|continue|new|try|catch|throw|this|typeof|instanceof|in|of|class|extends|super|import|export|default|null|undefined|true|false)\b/, '<span class="k">\1</span>') # keywords
-        code = code.gsub(/\b(\d+(\.\d+)?)\b/, '<span class="mi">\1</span>') # numbers
-        code = code.gsub(/'([^']*)'/, '<span class="s1">\'\1\'</span>') # single quotes
-        code = code.gsub(/"([^"]*)"/, '<span class="s2">"\1"</span>') # double quotes
-        code = code.gsub(/`([^`]*)`/, '<span class="s2">`\1`</span>') # template literals
-        code = code.gsub(/\/\/[^\n]*/, '<span class="c1">\0</span>') # single line comments
-        code = code.gsub(/\b(console|document|window|Array|Object|String|Number|Boolean|Function|Symbol|Map|Set|Promise|async|await)\b/, '<span class="nb">\1</span>') # built-ins
-        code = code.gsub(/([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/, '<span class="nx">\1</span>(') # function calls
-        code = code.gsub(/\b(addEventListener|querySelector|getElementById|setTimeout|setInterval)\b/, '<span class="nx">\1</span>') # common methods
-        
-        # Add line numbers
-        lines = code.split("\n")
-        numbered_lines = lines.map.with_index(1) do |line, i|
-          "<span class=\"lineno\">#{i}</span>#{line}"
-        end
-        
-        numbered_lines.join("\n")
       end
     end
   end
