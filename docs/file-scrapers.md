@@ -298,7 +298,7 @@ Make sure to set the version per the release tag (e.g. r160). Note that the r pr
 curl https://codeload.github.com/mrdoob/three.js/tar.gz/refs/tags/r${VERSION} > threejs.tar.gz
 tar -xzf threejs.tar.gz
 mkdir -p docs/threejs~${VERSION}
-mv three.js-r${VERSION}/list.json /tmp/list.json
+mv three.js-r${VERSION}/list.json tmp/list.json
 mv three.js-r${VERSION}/docs/* docs/threejs~${VERSION}/
 
 rm -rf three.js-r${VERSION}/
