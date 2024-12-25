@@ -1,243 +1,238 @@
 module Docs
   class Threejs
     class CleanHtmlFilter < Filter
+      PATTERNS = {
+        method_this: /\[method:this\s+([^\]]+)\]\s*\((.*?)\)/,
+        method_return: /\[method:([^\s\]]+)\s+([^\]]+)\]\s*\((.*?)\)/,
+        method_no_params: /\[method:([^\s\]]+)\s+([^\]]+)\](?!\()/,
+        property: /\[property:([^\]]+?)\s+([^\]]+?)\]/,
+        example_link: /\[example:([^\s\]]+)\s+([^\]]+)\]/,
+        external_link_text: /\[link:([^\s\]]+)\s+([^\]]+)\]/,
+        external_link: /\[link:([^\]]+)\]/,
+        page_link_text: /\[page:([^\]]+?)\s+([^\]]+?)\]/,
+        page_link: /\[page:([^\]]+?)\]/,
+        inline_code: /`([^`]+)`/,
+        name_placeholder: /\[name\]/,
+        constructor_param: /\[param:([^\]]+?)\s+([^\]]+?)\]/
+      }.freeze
+
       def call
-        # Remove unnecessary elements
+        remove_unnecessary_elements
+        wrap_code_blocks
+        process_sections
+        format_links
+        add_section_structure
+        format_notes
+        add_heading_attributes
+        doc
+      end
+
+      private
+
+      def remove_unnecessary_elements
         css('head, script, style').remove
-        
-        # Wrap code blocks with pre tags and add syntax highlighting
+      end
+
+      def wrap_code_blocks
         css('code').each do |node|
-          unless node.parent.name == 'pre'
-            pre = node.wrap('<pre>')
-            pre['data-language'] = 'javascript'
-            pre['class'] = 'language-javascript'
-          end
+          next if node.parent.name == 'pre'
+          pre = node.wrap('<pre>')
+          pre['data-language'] = pre['class'] = 'language-javascript'
         end
-        
+      end
+
+      def process_sections
         # Handle source links
         css('h2').each do |node|
-          if node.content.strip == 'Source'
-            content = node.next_element&.inner_html
-            if content
-              # Clean up any existing formatting
-              content = content.gsub(/<[^>]+>/, '')
-              # Extract the path from the content
-              if content =~ /src\/(.*?)\.js/
-                path = "/#{$1}.js"
-                formatted_link = %Q(<a class="reference external" href="https://github.com/mrdoob/three.js/blob/master/src#{path}">src#{path}</a>)
-                node.next_element.inner_html = formatted_link if node.next_element
-              end
-            end
-          end
+          next unless node.content.strip == 'Source'
+          handle_source_link(node)
         end
 
-        # Handle method signatures
+        # Handle method signatures and properties
         css('h3').each do |node|
           content = node.inner_html
-
-          # Handle [method:this methodName]( param1, param2, ... ) format
-          content = content.gsub(/\[method:this\s+([^\]]+)\]\s*\((.*?)\)/) do |match|
-            method_name, params_str = $1, $2
-            
-            # Format parameters
-            params = params_str.split(',').map do |param|
-              param = param.strip
-              if param.include?(' ')
-                type, name = param.split(' ', 2).map(&:strip)
-                "<span class='sig-param'><span class='sig-type'>#{type}</span> <span class='sig-name'>#{name}</span></span>"
-              else
-                "<span class='sig-param'>#{param}</span>"
-              end
-            end.join("<span class='sig-paren'>, </span>")
-
-            "<dt class='sig sig-object js' id='#{method_name}'>" \
-            "<span class='property'><span class='pre'>this</span></span>." \
-            "<span class='sig-name descname'>#{method_name}</span>" \
-            "<span class='sig-paren'>(</span>" \
-            "#{params}" \
-            "<span class='sig-paren'>)</span></dt>"
-          end
-
-          # Handle [method:returnType methodName]( param1, param2, ... ) format
-          content = content.gsub(/\[method:([^\s\]]+)\s+([^\]]+)\]\s*\((.*?)\)/) do |match|
-            return_type, method_name, params_str = $1, $2, $3
-            next if method_name.start_with?('this') # Skip if already handled above
-            
-            # Format parameters
-            params = params_str.split(',').map do |param|
-              param = param.strip
-              if param.include?(' ')
-                type, name = param.split(' ', 2).map(&:strip)
-                "<span class='sig-param'><span class='sig-type'>#{type}</span> <span class='sig-name'>#{name}</span></span>"
-              else
-                "<span class='sig-param'>#{param}</span>"
-              end
-            end.join("<span class='sig-paren'>, </span>")
-
-            "<dt class='sig sig-object js' id='#{method_name}'>" \
-            "<span class='sig-name descname'>#{method_name}</span>" \
-            "<span class='sig-paren'>(</span>" \
-            "#{params}" \
-            "<span class='sig-paren'>)</span>" \
-            "<span class='sig-returns'><span class='sig-colon'>:</span> " \
-            "<span class='sig-type'>#{return_type}</span></span></dt>"
-          end
-
-          # Handle [method:returnType methodName] format (no parameters)
-          content = content.gsub(/\[method:([^\s\]]+)\s+([^\]]+)\](?!\()/) do |match|
-            return_type, method_name = $1, $2
-            "<dt class='sig sig-object js' id='#{method_name}'>" \
-            "<span class='sig-name descname'>#{method_name}</span>" \
-            "<span class='sig-paren'>(</span>" \
-            "<span class='sig-paren'>)</span>" \
-            "<span class='sig-returns'><span class='sig-colon'>:</span> " \
-            "<span class='sig-type'>#{return_type}</span></span></dt>"
-          end
-
+          content = handle_method_signatures(content)
+          content = handle_properties(content)
           node.inner_html = content
         end
 
-        # Handle [name] placeholders in headers and constructor
+        # Handle name placeholders and constructor params
         css('h1, h3').each do |node|
           content = node.inner_html
-          
-          # Replace [name] with class name
-          content = content.gsub(/\[name\]/) do
-            name = slug.split('/').last.gsub('.html', '')
-            "<span class='descname'>#{name}</span>"
-          end
-          
-          # Format constructor parameters
-          content = content.gsub(/\[param:([^\]]+?)\s+([^\]]+?)\]/) do |match|
-            type, name = $1, $2
-            "<span class='sig-param'><span class='sig-type'>#{type}</span> <code class='sig-name'>#{name}</code></span>"
-          end
-          
+          content = handle_name_placeholders(content)
+          content = format_constructor_params(content)
           node.inner_html = content
         end
+      end
 
-        # Clean up property formatting
-        css('h3').each do |node|
-          node.inner_html = node.inner_html.gsub(/\[property:([^\]]+?)\s+([^\]]+?)\]/) do |match|
-            type, name = $1, $2
-            "<dt class='sig sig-object js'>" \
-            "<span class='sig-name descname'>#{name}</span>" \
-            "<span class='sig-colon'>:</span> " \
-            "<span class='sig-type'>#{type}</span></dt>"
+      def handle_source_link(node)
+        content = node.next_element&.inner_html
+        return unless content
+        content = content.gsub(/<[^>]+>/, '')
+        if content =~ /src\/(.*?)\.js/
+          path = "/#{$1}.js"
+          formatted_link = %Q(<a class="reference external" href="https://github.com/mrdoob/three.js/blob/master/src#{path}">src#{path}</a>)
+          node.next_element.inner_html = formatted_link if node.next_element
+        end
+      end
+
+      def handle_method_signatures(content)
+        content
+          .gsub(PATTERNS[:method_this]) { format_method_signature('this', $1, $2) }
+          .gsub(PATTERNS[:method_return]) do |match|
+            next if $2.start_with?('this')
+            format_method_signature($1, $2, $3, true)
           end
+          .gsub(PATTERNS[:method_no_params]) { format_method_signature($1, $2, nil, true) }
+      end
+
+      def format_method_signature(type_or_this, name, params_str, with_return = false)
+        params = if params_str
+          params_str.split(',').map { |param| format_parameter(param.strip) }.join("<span class='sig-paren'>, </span>")
         end
 
-        # Clean up external links
+        html = "<dt class='sig sig-object js' id='#{name}'>"
+        if type_or_this == 'this'
+          html << "<span class='property'><span class='pre'>this</span></span>."
+        end
+        html << "<span class='sig-name descname'>#{name}</span>" \
+               "<span class='sig-paren'>(</span>" \
+               "#{params}" \
+               "<span class='sig-paren'>)</span>"
+        if with_return
+          html << "<span class='sig-returns'><span class='sig-colon'>:</span> " \
+                 "<span class='sig-type'>#{type_or_this}</span></span>"
+        end
+        html << "</dt>"
+      end
+
+      def format_parameter(param)
+        if param.include?(' ')
+          type, name = param.split(' ', 2).map(&:strip)
+          "<span class='sig-param'><span class='sig-type'>#{type}</span> <span class='sig-name'>#{name}</span></span>"
+        else
+          "<span class='sig-param'>#{param}</span>"
+        end
+      end
+
+      def handle_properties(content)
+        content.gsub(PATTERNS[:property]) do |match|
+          type, name = $1, $2
+          "<dt class='sig sig-object js'>" \
+          "<span class='sig-name descname'>#{name}</span>" \
+          "<span class='sig-colon'>:</span> " \
+          "<span class='sig-type'>#{type}</span></dt>"
+        end
+      end
+
+      def handle_name_placeholders(content)
+        content.gsub(PATTERNS[:name_placeholder]) do
+          name = slug.split('/').last.gsub('.html', '')
+          "<span class='descname'>#{name}</span>"
+        end
+      end
+
+      def format_constructor_params(content)
+        content.gsub(PATTERNS[:constructor_param]) do |match|
+          type, name = $1, $2
+          "<span class='sig-param'><span class='sig-type'>#{type}</span> <code class='sig-name'>#{name}</code></span>"
+        end
+      end
+
+      def format_links
         css('*').each do |node|
           next if node.text?
           
-          # Handle example links [example:tag Title]
-          node.inner_html = node.inner_html.gsub(/\[example:([^\s\]]+)\s+([^\]]+)\]/) do |match|
-            tag, title = $1, $2
-            "<a class='reference external' href='https://threejs.org/examples/##{tag}'>#{title}</a>"
-          end
-
-          # Handle external links with [link:url text] format
-          node.inner_html = node.inner_html.gsub(/\[link:([^\s\]]+)\s+([^\]]+)\]/) do |match|
-            url, text = $1, $2
-            "<a class='reference external' href='#{url}'>#{text}</a>"
-          end
-
-          # Handle external links with [link:url] format
-          node.inner_html = node.inner_html.gsub(/\[link:([^\]]+)\]/) do |match|
-            url = $1
-            "<a class='reference external' href='#{url}'>#{url}</a>"
-          end
-
-          # Handle internal page links with text
-          node.inner_html = node.inner_html.gsub(/\[page:([^\]]+?)\s+([^\]]+?)\]/) do
-            path, text = $1, $2
-            "<a class='reference internal' href='#{path.downcase}'><code class='xref js js-#{path.downcase}'>#{text}</code></a>"
-          end
-
-          # Handle internal page links without text
-          node.inner_html = node.inner_html.gsub(/\[page:([^\]]+?)\]/) do |match|
-            path = $1
-            "<a class='reference internal' href='#{path.downcase}'><code class='xref js js-#{path.downcase}'>#{path}</code></a>"
-          end
+          content = node.inner_html
+            .gsub(PATTERNS[:example_link]) { create_external_link("https://threejs.org/examples/##{$1}", $2) }
+            .gsub(PATTERNS[:external_link_text]) { create_external_link($1, $2) }
+            .gsub(PATTERNS[:external_link]) { create_external_link($1, $1) }
+            .gsub(PATTERNS[:page_link_text]) { create_internal_link($1, $2) }
+            .gsub(PATTERNS[:page_link]) { create_internal_link($1, $1) }
+          
+          node.inner_html = content
         end
 
-        # Fix all href attributes to be lowercase and remove .html
+        normalize_href_attributes
+      end
+
+      def create_external_link(url, text)
+        %Q(<a class='reference external' href='#{url}'>#{text}</a>)
+      end
+
+      def create_internal_link(path, text)
+        %Q(<a class='reference internal' href='#{path.downcase}'><code class='xref js js-#{path.downcase}'>#{text}</code></a>)
+      end
+
+      def normalize_href_attributes
         css('a[href]').each do |link|
           next if link['href'].start_with?('http')
           link['href'] = link['href'].remove('../').downcase.sub(/\.html$/, '')
           link['class'] = 'reference internal'
         end
+      end
 
-        # Add section classes
+      def add_section_structure
         css('h2').each do |node|
           node['class'] = 'section-title'
           section = node.next_element
-          if section
-            wrapper = doc.document.create_element('div')
-            wrapper['class'] = 'section'
-            node.after(wrapper)
-            wrapper.add_child(node)
-            current = section
-            while current && current.name != 'h2'
-              next_el = current.next
-              wrapper.add_child(current)
-              current = next_el
-            end
-          end
-        end
+          next unless section
 
-        # Format description paragraphs
-        css('p.desc').each do |node|
-          node['class'] = 'section-desc'
-        end
-
-        # Handle inline code/backticks in text
-        css('p, li, dt, dd').each do |node|
-          next if node.at_css('pre') # Skip if contains a code block
+          wrapper = doc.document.create_element('div')
+          wrapper['class'] = 'section'
+          node.after(wrapper)
+          wrapper.add_child(node)
           
-          # Replace backticks with proper code formatting
-          node.inner_html = node.inner_html.gsub(/`([^`]+)`/) do |match|
-            code = $1
-            "<code class='docutils literal notranslate'><span class='pre'>#{code}</span></code>"
+          current = section
+          while current && current.name != 'h2'
+            next_el = current.next
+            wrapper.add_child(current)
+            current = next_el
           end
         end
 
-        # Handle inline code in property descriptions
-        css('.property-type').each do |node|
-          node.inner_html = node.inner_html.gsub(/`([^`]+)`/) do |match|
-            code = $1
-            "<code class='docutils literal notranslate'><span class='pre'>#{code}</span></code>"
-          end
+        css('p.desc').each { |node| node['class'] = 'section-desc' }
+      end
+
+      def format_notes
+        css('p').each do |node|
+          next unless node.content.start_with?('Note:')
+          
+          wrapper = doc.document.create_element('div')
+          wrapper['class'] = 'admonition note'
+          
+          title = doc.document.create_element('p')
+          title['class'] = 'first admonition-title'
+          title.content = 'Note'
+          
+          content = doc.document.create_element('p')
+          content['class'] = 'last'
+          content.inner_html = node.inner_html.sub('Note:', '').strip
+          
+          wrapper.add_child(title)
+          wrapper.add_child(content)
+          node.replace(wrapper)
         end
-        
-        # Add proper heading IDs and classes
+      end
+
+      def add_heading_attributes
         css('h1, h2, h3, h4').each do |node|
           node['id'] ||= node.content.strip.downcase.gsub(/[^\w]+/, '-')
           existing_class = node['class'].to_s
           node['class'] = "#{existing_class} section-header"
         end
 
-        # Add note styling
-        css('p').each do |node|
-          if node.content.start_with?('Note:')
-            wrapper = doc.document.create_element('div')
-            wrapper['class'] = 'admonition note'
-            
-            title = doc.document.create_element('p')
-            title['class'] = 'first admonition-title'
-            title.content = 'Note'
-            
-            content = doc.document.create_element('p')
-            content['class'] = 'last'
-            content.inner_html = node.inner_html.sub('Note:', '').strip
-            
-            wrapper.add_child(title)
-            wrapper.add_child(content)
-            node.replace(wrapper)
+        format_inline_code
+      end
+
+      def format_inline_code
+        selectors = ['p', 'li', 'dt', 'dd', '.property-type'].join(', ')
+        css(selectors).each do |node|
+          next if node.at_css('pre')
+          node.inner_html = node.inner_html.gsub(PATTERNS[:inline_code]) do |match|
+            "<code class='docutils literal notranslate'><span class='pre'>#{$1}</span></code>"
           end
         end
-        doc
       end
     end
   end
