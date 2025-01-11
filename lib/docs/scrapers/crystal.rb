@@ -21,6 +21,7 @@ module Docs
 
     options[:skip_patterns] = [
       %r{\ACrystal/System/},
+      %r{\ACrystal/PointerPairingHeap/},
       %r{\AIO/Evented.html\z},
       %r{\ARegex/PCRE2.html\z}
     ]
