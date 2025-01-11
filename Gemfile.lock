@@ -36,7 +36,8 @@ GEM
     exifr (1.4.0)
     ffi (1.15.5)
     fspath (3.1.2)
-    highline (2.0.3)
+    highline (3.1.2)
+      reline
     html-pipeline (2.14.3)
       activesupport (>= 2)
       nokogiri (>= 1.4)
@@ -53,6 +54,7 @@ GEM
       image_optim (~> 0.19)
     image_size (3.3.0)
     in_threads (1.6.0)
+    io-console (0.8.0)
     logger (1.6.2)
     method_source (1.0.0)
     mini_portile2 (2.8.8)
@@ -88,6 +90,8 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redcarpet (3.6.0)
+    reline (0.6.0)
+      io-console (~> 0.5)
     rexml (3.3.9)
     rouge (1.11.1)
     rr (3.1.1)
@@ -187,7 +191,7 @@ DEPENDENCIES
   yajl-ruby
 
 RUBY VERSION
-   ruby 3.3.6p108
+   ruby 3.4.1p0
 
 BUNDLED WITH
    2.4.6
