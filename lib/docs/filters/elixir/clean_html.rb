@@ -34,7 +34,9 @@ module Docs
             node.name = 'h3'
             node['id'] = id
 
-            source_href = node.at_css('a.icon-action[title="View Source"]').attr('href')
+            a = node.at_css('a.icon-action[title="View Source"]')
+            a ||= node.at_css('a.icon-action[aria-label="View Source"]')
+            source_href = a.attr('href')
 
             node.content = node.at_css('.signature').inner_text
             node << %(<a href="#{source_href}" class="source">Source</a>)

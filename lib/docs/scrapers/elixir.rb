@@ -30,6 +30,18 @@ module Docs
         "https://hexdocs.pm/mix/#{self.class.release}/Mix.html" ]
     end
 
+    version '1.18' do
+      self.release = '1.18.1'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/"
+      ]
+    end
+
     version '1.17' do
       self.release = '1.17.2'
       self.base_urls = [
