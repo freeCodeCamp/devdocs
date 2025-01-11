@@ -254,6 +254,17 @@ done
 
 ### Nokogiri
 ### Ruby / Minitest
+
+```sh
+git clone https://github.com/seattlerb/minitest
+cd minitest/
+bundle install
+bundle add rdoc hoe
+bundle exec rak docs
+cd ..
+cp -r minitest/docs $DEVDOCS/docs/minitest
+```
+
 ### Ruby on Rails
 * Download a release at https://github.com/rails/rails/releases or clone https://github.com/rails/rails.git (checkout to the branch of the rails' version that is going to be scraped)
 * Open `railties/lib/rails/api/task.rb` and comment out any code related to sdoc (`configure_sdoc`)
