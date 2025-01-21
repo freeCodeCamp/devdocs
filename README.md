@@ -25,12 +25,12 @@ Unless you wish to contribute to the project, we recommend using the hosted vers
 The easiest way to run DevDocs locally is using Docker:
 
 ```sh
-docker run --name devdocs -d -p 9292:9292 ghcr.io/freecodcamp/devdocs:latest
+docker run --name devdocs -d -p 9292:9292 ghcr.io/freecodecamp/devdocs:latest
 ```
 
 This will start DevDocs at [localhost:9292](http://localhost:9292). We provide both regular and Alpine-based images:
-- `ghcr.io/freecodcamp/devdocs:latest` - Standard image
-- `ghcr.io/freecodcamp/devdocs:latest-alpine` - Alpine-based (smaller size)
+- `ghcr.io/freecodecamp/devdocs:latest` - Standard image
+- `ghcr.io/freecodecamp/devdocs:latest-alpine` - Alpine-based (smaller size)
 
 Images are automatically built and updated monthly with the latest documentation.
 
