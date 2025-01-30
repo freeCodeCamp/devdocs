@@ -28,6 +28,9 @@
 
   p > code, li > code { @extend %label; }
 
+  details { @extend %box; }
+  summary > div { display: inline; }
+
   > .note,
   .notecard, // MDN 2021
   .notice,
