@@ -42,7 +42,7 @@ module Docs
     def fix_url(url)
       if context[:redirections]
         url = URL.parse(url)
-        path = url.path.downcase
+        path = url.path ? url.path.downcase : nil
 
         if context[:redirections].key?(path)
           url.path = context[:redirections][path]
