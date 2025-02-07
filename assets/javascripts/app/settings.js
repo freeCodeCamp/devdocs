@@ -16,6 +16,7 @@ app.Settings = class Settings {
     "autoInstall",
     "spaceScroll",
     "spaceTimeout",
+    "noDocSpecificIcon",
   ];
 
   static INTERNAL_KEYS = ["count", "schema", "version", "news"];
@@ -38,6 +39,7 @@ app.Settings = class Settings {
     theme: "auto",
     spaceScroll: 1,
     spaceTimeout: 0.5,
+    noDocSpecificIcon: false,
   };
 
   constructor() {
