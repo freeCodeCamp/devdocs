@@ -3,7 +3,7 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         i = 1
-        n = at_css("#navmenu a[href='#{result[:path].split('/').last}']").parent
+        n = at_css("#navmenu .submenu-content a[href='#{result[:path].split('/').last}']").parent
         i += 1 while n && n = n.previous_element
         at_css('h1')['data-level'] = i
 
