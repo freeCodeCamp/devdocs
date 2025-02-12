@@ -2,7 +2,7 @@ module Docs
   class Crystal < UrlScraper
     include MultipleBaseUrls
     self.type = 'crystal'
-    self.release = '1.15.0'
+    self.release = '1.15.1'
     self.base_urls = [
       "https://crystal-lang.org/api/#{release}/",
       "https://crystal-lang.org/reference/#{release[0..2]}/",
