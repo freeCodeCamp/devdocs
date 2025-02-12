@@ -249,6 +249,10 @@ module Docs
               "link": "/core/usePreferredReducedMotion/"
             },
             {
+              "text": "usePreferredReducedTransparency",
+              "link": "/core/usePreferredReducedTransparency/"
+            },
+            {
               "text": "useScreenOrientation",
               "link": "/core/useScreenOrientation/"
             },
@@ -263,6 +267,10 @@ module Docs
             {
               "text": "useShare",
               "link": "/core/useShare/"
+            },
+            {
+              "text": "useSSRWidth",
+              "link": "/core/useSSRWidth/"
             },
             {
               "text": "useStyleTag",
@@ -312,6 +320,10 @@ module Docs
             {
               "text": "onClickOutside",
               "link": "/core/onClickOutside/"
+            },
+            {
+              "text": "onElementRemoval",
+              "link": "/core/onElementRemoval/"
             },
             {
               "text": "onKeyStroke",
@@ -788,6 +800,10 @@ module Docs
         {
           "text": "Time",
           "items": [
+            {
+              "text": "useCountdown",
+              "link": "/core/useCountdown/"
+            },
             {
               "text": "useDateFormat",
               "link": "/shared/useDateFormat/"
