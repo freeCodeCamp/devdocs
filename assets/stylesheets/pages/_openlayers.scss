@@ -1,0 +1,10 @@
+._openlayers {
+  @extend %simple;
+  .nameContainer {
+    @extend %block-label;
+    > * { display: inline-block; margin: 0; }
+    > .tag-source { float: right; }
+  }
+  .card { @extend %box; margin-bottom: 1rem; padding: 1rem; }
+  .signature, .type-signature { @extend %code; }
+}
