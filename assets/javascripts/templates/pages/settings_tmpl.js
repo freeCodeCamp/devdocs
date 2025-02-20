@@ -66,6 +66,12 @@ app.templates.settingsPage = (settings) => `\
       }>Enable tracking cookies
       <small>With this checked, we enable Google Analytics and Gauges to collect anonymous traffic information.</small>
     </label>
+    <label class="_settings-label _hide-on-mobile">
+      <input type="checkbox" form="settings" name="noDocSpecificIcon"${
+        settings.noDocSpecificIcon ? " checked" : ""
+      }>Disable Language-specific Doc Favicons
+      <small>With this checked, we will display the default DevDocs icon for all pages.</small>
+    </label>
   </div>
 </div>
 

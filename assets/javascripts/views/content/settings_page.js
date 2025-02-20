@@ -20,6 +20,7 @@ app.views.SettingsPage = class SettingsPage extends app.View {
     settings.analyticsConsent = app.settings.get("analyticsConsent");
     settings.spaceScroll = app.settings.get("spaceScroll");
     settings.spaceTimeout = app.settings.get("spaceTimeout");
+    settings.noDocSpecificIcon = app.settings.get("noDocSpecificIcon");
     settings.autoSupported = app.settings.autoSupported;
     for (var layout of app.Settings.LAYOUTS) {
       settings[layout] = app.settings.hasLayout(layout);
