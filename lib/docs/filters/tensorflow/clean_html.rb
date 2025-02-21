@@ -46,6 +46,9 @@ module Docs
           node.replace("<p>#{node.to_html}</p>")
         end
 
+        css('span[slot="popout-heading"]').remove
+        css('span[slot="popout-contents"]').remove
+
         doc
       end
     end
