@@ -457,13 +457,13 @@ $.noop = function () {};
 
 $.popup = function (value) {
   try {
+    window.open(value.href || value, "_blank", "noopener");
+  } catch (error) {
     const win = window.open();
     if (win.opener) {
       win.opener = null;
     }
     win.location = value.href || value;
-  } catch (error) {
-    window.open(value.href || value, "_blank");
   }
 };
 
