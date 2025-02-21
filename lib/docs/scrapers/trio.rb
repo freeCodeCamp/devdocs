@@ -25,7 +25,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://trio.readthedocs.io/en/stable/', opts)
-      doc.at_css('.rst-other-versions a[href^="/en/v"]').content[1..-1]
+      doc.at_css('div.trio-version').content[0..-1]
     end
   end
 end

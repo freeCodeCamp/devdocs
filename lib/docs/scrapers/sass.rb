@@ -20,12 +20,12 @@ module Docs
       &copy; 2006&ndash;2024 the Sass team, and numerous contributors<br>
       Licensed under the MIT License.
     HTML
-  
-    private
 
     def get_latest_version(opts)
       get_npm_version('sass', opts)
     end
+
+    private
 
     def parse(response)
       response.body.gsub! '<span class="widont">&nbsp;</span>', '&nbsp;'
