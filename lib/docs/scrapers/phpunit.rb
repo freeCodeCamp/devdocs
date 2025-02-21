@@ -77,8 +77,8 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://phpunit.readthedocs.io/', opts)
-      label = doc.at_css('.rst-current-version').content.strip
-      label.scan(/v: ([0-9.]+)/)[0][0]
+      label = doc.at_css('meta[name="readthedocs-version-slug"]')["content"]
+      label
     end
 
   end

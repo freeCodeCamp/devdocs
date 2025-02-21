@@ -22,8 +22,7 @@ module Docs
 
     def get_latest_version(opts)
       body = fetch('http://download.redis.io/redis-stable/00-RELEASENOTES', opts)
-      body = body.lines[1..-1].join
-      body.scan(/Redis ([0-9.]+)/)[0][0]
+      body.scan(/Redis Community Edition ([0-9.]+)/)[0][0]
     end
 
     private

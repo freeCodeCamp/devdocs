@@ -23,9 +23,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://nixos.org/manual/nix/stable/', opts)
-      json = JSON.parse(doc.at_css('body')['data-nix-channels'])
-      channel = json.find { |c| c['channel'] == 'stable' }
-      channel['version']
+      doc.at_css('a.active')['href'].scan(/([0-9.]+)/)[0][0]
     end
   end
 end

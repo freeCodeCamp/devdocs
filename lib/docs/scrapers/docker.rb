@@ -96,7 +96,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://docs.docker.com/engine/release-notes/', opts)
-      latest_version = doc.at_css('.DocSearch-content > h2 > a').content.strip
+      latest_version = doc.at_css('h2.scroll-mt-20 > a').content.strip
       latest_version.rpartition(' ')[-1]
     end
   end
