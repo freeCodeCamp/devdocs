@@ -16,8 +16,12 @@ module Docs
           name
         else
           return at_css('h1').content.strip unless at_css('.type-name')
-          name = at_css('.type-name').children.last.content.strip
+          name = at_css('.type-name').children.reject { |n| n.matches?('.kind') }
+          name.map! { |n| n.text.strip }
+          name.reject! &:empty?
+          name = name.join
           name.remove! %r{\(.*\)}
+          name.strip!
           name
         end
       end
