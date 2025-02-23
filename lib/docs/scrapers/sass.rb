@@ -1,7 +1,7 @@
 module Docs
   class Sass < UrlScraper
     self.type = 'yard'
-    self.release = '1.82.9'
+    self.release = '1.85.0'
     self.base_url = 'https://sass-lang.com/documentation'
     self.root_path = 'index.html'
     self.links = {
@@ -17,7 +17,7 @@ module Docs
     options[:trailing_slash] = false
 
     options[:attribution] = <<-HTML
-      &copy; 2006&ndash;2024 the Sass team, and numerous contributors<br>
+      &copy; 2006&ndash;2025 the Sass team, and numerous contributors<br>
       Licensed under the MIT License.
     HTML
 
