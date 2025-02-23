@@ -16,7 +16,7 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    self.release = '0.23.1'
+    self.release = '0.25.0'
     self.base_url = 'https://esbuild.github.io/'
     html_filters.push 'esbuild/clean_html', 'esbuild/entries'
 
