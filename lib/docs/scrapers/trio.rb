@@ -1,7 +1,7 @@
 module Docs
   class Trio < UrlScraper
     self.type = 'simple'
-    self.release = '0.22.2'
+    self.release = '0.29.0'
     self.base_url = "https://trio.readthedocs.io/en/v#{self.release}/"
     self.root_path = 'index.html'
     self.links = {
