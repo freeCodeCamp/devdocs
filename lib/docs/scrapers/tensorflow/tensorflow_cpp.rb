@@ -4,7 +4,7 @@ module Docs
     self.slug = 'tensorflow_cpp'
 
     version do
-      self.release = "2.18.0"
+      self.release = "2.16.1"
       self.base_url = "https://www.tensorflow.org/api_docs/cc"
     end
 

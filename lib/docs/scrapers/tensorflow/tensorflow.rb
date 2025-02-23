@@ -20,7 +20,7 @@ module Docs
     HTML
 
     version do
-      self.release = "2.18.0"
+      self.release = "2.16.1"
       self.base_url = "https://www.tensorflow.org/api_docs/python/tf"
     end
 
@@ -45,7 +45,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      get_latest_github_release('tensorflow', 'tensorflow', opts)
+      doc = fetch_doc(self.base_url, opts)
+      doc.title[/TensorFlow v([.\d]+)/, 1]
     end
 
     private
