@@ -217,10 +217,9 @@ app.views.EntryPage = class EntryPage extends app.View {
       this.load();
     } else if (target.classList.contains("_pre-clip")) {
       $.stopEvent(event);
-      target.classList.add(
-        $.copyToClipboard(target.parentNode.textContent)
-          ? "_pre-clip-success"
-          : "_pre-clip-error",
+      navigator.clipboard.writeText(target.parentNode.textContent).then(
+        () => target.classList.add("_pre-clip-success"),
+        () => target.classList.add("_pre-clip-error"),
       );
       setTimeout(() => (target.className = "_pre-clip"), 2000);
     }

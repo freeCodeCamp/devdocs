@@ -526,21 +526,3 @@ $.highlight = function (el, options) {
   el.classList.add(options.className);
   setTimeout(() => el.classList.remove(options.className), options.delay);
 };
-
-$.copyToClipboard = function (string) {
-  let result;
-  const textarea = document.createElement("textarea");
-  textarea.style.position = "fixed";
-  textarea.style.opacity = 0;
-  textarea.value = string;
-  document.body.appendChild(textarea);
-  try {
-    textarea.select();
-    result = !!document.execCommand("copy");
-  } catch (error) {
-    result = false;
-  } finally {
-    document.body.removeChild(textarea);
-  }
-  return result;
-};
