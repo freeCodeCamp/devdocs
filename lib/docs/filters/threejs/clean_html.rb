@@ -36,8 +36,8 @@ module Docs
       def wrap_code_blocks
         css('code').each do |node|
           next if node.parent.name == 'pre'
-          pre = node.wrap('<pre>')
-          pre['data-language'] = pre['class'] = 'language-javascript'
+          node.wrap('<pre>')
+          node.parent['data-language'] = 'javascript'
         end
       end
 
@@ -45,7 +45,8 @@ module Docs
         # Handle source links
         css('h2').each do |node|
           next unless node.content.strip == 'Source'
-          handle_source_link(node)
+          node.next_element.remove
+          node.remove
         end
 
         # Handle method signatures and properties
@@ -62,17 +63,6 @@ module Docs
           content = handle_name_placeholders(content)
           content = format_constructor_params(content)
           node.inner_html = content
-        end
-      end
-
-      def handle_source_link(node)
-        content = node.next_element&.inner_html
-        return unless content
-        content = content.gsub(/<[^>]+>/, '')
-        if content =~ /src\/(.*?)\.js/
-          path = "/#{$1}.js"
-          formatted_link = %Q(<a class="reference external" href="https://github.com/mrdoob/three.js/blob/master/src#{path}">src#{path}</a>)
-          node.next_element.inner_html = formatted_link if node.next_element
         end
       end
 

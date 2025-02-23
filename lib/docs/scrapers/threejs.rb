@@ -1,5 +1,5 @@
 module Docs
-  class Threejs < FileScraper
+  class Threejs < UrlScraper
     self.name = 'Three.js'
     self.type = 'simple'
     self.slug = 'threejs'
@@ -40,20 +40,18 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    version '171' do
-      self.release = '171'
-      self.base_url = "https://threejs.org/docs"
-    end
+    self.release = '173'
+    self.base_url = "https://threejs.org/docs"
 
     def get_latest_version(opts)
-      get_latest_github_release('mrdoob', 'three.js', opts)
+      get_latest_github_release('mrdoob', 'three.js', opts)[1..]
     end
 
     def initial_paths
       paths = []
-      json_path = File.expand_path("/tmp/list.json")
-      json_content = File.read(json_path)
-      json_data = JSON.parse(json_content)
+      url = 'https://threejs.org/docs/list.json'
+      response = Request.run(url)
+      json_data = JSON.parse(response.body)
 
       # Process both API and manual sections
       process_documentation(json_data['en'], paths)
