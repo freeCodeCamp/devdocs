@@ -2,6 +2,7 @@ module Docs
   class ScikitLearn
     class CleanHtmlFilter < Filter
       def call
+        @doc = at_css('main article', 'main')
         if root_page?
           css('.row').each do |node|
             html = '<dl>'

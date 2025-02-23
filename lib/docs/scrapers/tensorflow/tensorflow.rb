@@ -19,6 +19,11 @@ module Docs
       Code samples licensed under the Apache 2.0 License.
     HTML
 
+    version do
+      self.release = "2.18.0"
+      self.base_url = "https://www.tensorflow.org/api_docs/python/tf"
+    end
+
     version '2.9' do
       self.release = "2.9.1"
       self.base_url = "https://www.tensorflow.org/versions/r#{version}/api_docs/python/tf"

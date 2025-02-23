@@ -1,7 +1,7 @@
 module Docs
   class Trio < UrlScraper
     self.type = 'simple'
-    self.release = '0.22.2'
+    self.release = '0.29.0'
     self.base_url = "https://trio.readthedocs.io/en/v#{self.release}/"
     self.root_path = 'index.html'
     self.links = {
@@ -25,7 +25,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://trio.readthedocs.io/en/stable/', opts)
-      doc.at_css('.rst-other-versions a[href^="/en/v"]').content[1..-1]
+      doc.at_css('div.trio-version').content[0..-1]
     end
   end
 end

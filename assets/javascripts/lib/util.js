@@ -457,13 +457,13 @@ $.noop = function () {};
 
 $.popup = function (value) {
   try {
+    window.open(value.href || value, "_blank", "noopener");
+  } catch (error) {
     const win = window.open();
     if (win.opener) {
       win.opener = null;
     }
     win.location = value.href || value;
-  } catch (error) {
-    window.open(value.href || value, "_blank");
   }
 };
 
@@ -525,22 +525,4 @@ $.highlight = function (el, options) {
   options = { ...HIGHLIGHT_DEFAULTS, ...(options || {}) };
   el.classList.add(options.className);
   setTimeout(() => el.classList.remove(options.className), options.delay);
-};
-
-$.copyToClipboard = function (string) {
-  let result;
-  const textarea = document.createElement("textarea");
-  textarea.style.position = "fixed";
-  textarea.style.opacity = 0;
-  textarea.value = string;
-  document.body.appendChild(textarea);
-  try {
-    textarea.select();
-    result = !!document.execCommand("copy");
-  } catch (error) {
-    result = false;
-  } finally {
-    document.body.removeChild(textarea);
-  }
-  return result;
 };

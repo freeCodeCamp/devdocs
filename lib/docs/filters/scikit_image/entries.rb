@@ -3,7 +3,8 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = at_css('h1').content.strip
-        name.remove! "\u{00b6}"
+        name.delete_suffix! "¶"
+        name.delete_suffix! "#"
 
         if slug.start_with?('api')
           name.remove! 'Module: '

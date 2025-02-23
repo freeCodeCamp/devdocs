@@ -3,8 +3,10 @@ module Docs
     self.name = 'scikit-image'
     self.slug = 'scikit_image'
     self.type = 'sphinx'
-    self.release = '0.18.1'
-    self.base_url = 'https://scikit-image.org/docs/0.18.x/'
+    self.release = '0.25.0'
+    v = self.release[/\d+\.\d+/]
+    self.base_url = "https://scikit-image.org/docs/#{v}.x/"
+    self.initial_paths = %w(/ /api/ /user_guide/)
     self.links = {
       home: 'https://scikit-image.org/',
       code: 'https://github.com/scikit-image/scikit-image'
@@ -12,7 +14,7 @@ module Docs
 
     html_filters.push 'scikit_image/entries', 'sphinx/clean_html'
 
-    options[:container] = '.span9'
+    options[:container] = 'main article'
     options[:skip] = %w(api_changes.html)
     options[:only_patterns] = [/\Aapi/, /\Auser_guide/]
 

@@ -12,6 +12,11 @@ module Docs
     Licensed under the Creative Commons Attribution 4.0 License, and code samples are licensed under the Apache 2.0 License.
     HTML
 
+    version '8.0' do
+      self.release = '8.0.0'
+      self.base_url = 'https://bazel.build/versions/8.0.0/reference/be/'
+    end
+
     version '7.0' do
       self.release = '7.0.0'
       self.base_url = 'https://bazel.build/versions/7.0.0/reference/be/'
