@@ -96,16 +96,9 @@ app.views.EntryPage = class EntryPage extends app.View {
       return content;
     }
 
-    const links = (() => {
-      const result = [];
-      for (var link in this.entry.doc.links) {
-        var url = this.entry.doc.links[link];
-        result.push(
-          `<a href="${url}" class="_links-link">${EntryPage.LINKS[link]}</a>`,
-        );
-      }
-      return result;
-    })();
+    const links = Object.entries(this.entry.doc.links).map(([link, url]) => {
+      return `<a href="${url}" class="_links-link">${EntryPage.LINKS[link]}</a>`;
+    });
 
     return `<p class="_links">${links.join("")}</p>${content}`;
   }
@@ -203,8 +196,8 @@ app.views.EntryPage = class EntryPage extends app.View {
   }
 
   restore() {
-    let path;
-    if (this.cacheMap[(path = this.entry.filePath())]) {
+    const path = this.entry.filePath();
+    if (this.cacheMap[[path]]) {
       this.render(this.cacheMap[path], true);
       return true;
     }
@@ -226,8 +219,8 @@ app.views.EntryPage = class EntryPage extends app.View {
   }
 
   onAltC() {
-    let link;
-    if (!(link = this.find("._attribution:last-child ._attribution-link"))) {
+    const link = this.find("._attribution:last-child ._attribution-link");
+    if (!link) {
       return;
     }
     console.log(link.href + location.hash);
@@ -235,8 +228,8 @@ app.views.EntryPage = class EntryPage extends app.View {
   }
 
   onAltO() {
-    let link;
-    if (!(link = this.find("._attribution:last-child ._attribution-link"))) {
+    const link = this.find("._attribution:last-child ._attribution-link");
+    if (!link) {
       return;
     }
     this.delay(() => $.popup(link.href + location.hash));
