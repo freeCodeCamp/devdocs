@@ -47,8 +47,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://docs.meteor.com/#/full/', opts)
-      doc.at_css('select.version-select > option').content
+      get_npm_version('meteor', opts)
     end
   end
 end
