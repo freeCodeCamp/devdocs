@@ -3,8 +3,8 @@ module Docs
     self.name = 'TensorFlow C++'
     self.slug = 'tensorflow_cpp'
 
-    version '2.16' do
-      self.release = "2.16.1"
+    version do
+      self.release = "2.18.0"
       self.base_url = "https://www.tensorflow.org/api_docs/cc"
     end
 
