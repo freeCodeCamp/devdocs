@@ -24,7 +24,7 @@ module Docs
           lang = 'php' if lang == 'ci'|| lang == 'html+php'
           lang = 'markup' if lang == 'html+django'
           lang = 'bash' if lang == 'bash'
-          lang = 'python' if lang == 'default' || lang.start_with?('python') || lang.start_with?('ipython')
+          lang = 'python' if lang == 'default' || lang == 'pycon' || lang.start_with?('python') || lang.start_with?('ipython')
           pre['data-language'] = lang
           node.replace(pre)
         end
