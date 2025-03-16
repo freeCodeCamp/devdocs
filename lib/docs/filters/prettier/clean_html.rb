@@ -2,7 +2,7 @@ module Docs
   class Prettier
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.post')
+        @doc = at_css('article .markdown')
 
         if root_page?
           at_css('h1').content = 'React Native Documentation'
@@ -34,10 +34,12 @@ module Docs
           node.replace(node.at_css('pre.highlight'))
         end
 
-        css('.prism').each do |node|
+        css('.prism-code').each do |node|
           node.name = 'pre'
           node['data-language'] = node['class'][/(?<=language\-)(\w+)/]
-          node.content = node.content
+          node.content = node.css('.token-line').map(&:content).join("\n")
+          node.remove_attribute('class')
+          node.remove_attribute('style')
         end
 
         css('pre > code.hljs').each do |node|

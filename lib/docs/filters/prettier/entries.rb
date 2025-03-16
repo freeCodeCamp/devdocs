@@ -6,9 +6,9 @@ module Docs
       end
 
       def type
-        link = at_css('.navListItemActive')
-        section = link.ancestors('.navGroup').first
-        type = section.at_css('h3').content.strip
+        link = at_css('.menu__link--active')
+        section = link.ancestors('.theme-doc-sidebar-item-category-level-1').first
+        type = section.at_css('.menu__link--sublist').content.strip
         return name if type == 'Configuring Prettier'
         return name if type == 'Usage'
         type
@@ -16,9 +16,8 @@ module Docs
 
       def additional_entries
         entries = []
-        css('.mainContainer h2').each do |node|
-          id = node.at_css('.anchor')['id']
-          entries << [node.text, id]
+        css('h2').each do |node|
+          entries << [node.text, node['id']]
         end
         entries
       end
