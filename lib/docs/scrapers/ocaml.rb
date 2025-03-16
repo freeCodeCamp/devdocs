@@ -25,7 +25,7 @@ module Docs
     HTML
 
     version '' do
-      self.release = '5.2'
+      self.release = '5.3'
       self.base_url = "https://ocaml.org/manual/#{self.release}/"
     end
 
