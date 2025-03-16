@@ -2,7 +2,7 @@ module Docs
   class Playwright < UrlScraper
     self.name = 'Playwright'
     self.type = 'simple'
-    self.release = '1.49.0'
+    self.release = '1.51.0'
     self.base_url = 'https://playwright.dev/docs/'
     self.root_path = 'intro'
     self.links = {
@@ -16,7 +16,7 @@ module Docs
 
 	# https://github.com/microsoft/playwright/blob/main/LICENSE
     options[:attribution] = <<-HTML
-      &copy; 2024 Microsoft<br>
+      &copy; 2025 Microsoft<br>
 	  Licensed under the Apache License, Version 2.0.
     HTML
 
