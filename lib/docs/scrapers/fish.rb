@@ -8,13 +8,21 @@ module Docs
       code: 'https://github.com/fish-shell/fish-shell'
     }
 
-    options[:skip] = %w(design.html license.html)
+    options[:skip] = %w(design.html license.html contributing.html)
 
     # https://fishshell.com/docs/current/license.html
     options[:attribution] = <<-HTML
-      &copy; 2005-2009 Axel Liljencrantz, 2009-2023 fish-shell contributors<br>
+      &copy; 2005-2009 Axel Liljencrantz, 2009-2025 fish-shell contributors<br>
       Licensed under the GNU General Public License, version 2.
     HTML
+
+    version '4.0' do
+      self.release = '4.0.1'
+      self.base_url = "https://fishshell.com/docs/#{version}/"
+
+      options[:skip].concat %w(genindex.html relnotes.html)
+      html_filters.push 'sphinx/clean_html', 'fish/clean_html_sphinx', 'fish/entries_sphinx'
+    end
 
     version '3.7' do
       self.release = '3.7.0'
