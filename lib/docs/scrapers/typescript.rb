@@ -19,16 +19,6 @@ module Docs
 
     html_filters.push 'typescript/entries', 'typescript/clean_html', 'title'
 
-    options[:fix_urls_before_parse] = ->(url) do
-      url.sub! '/docs/handbook/esm-node.html', '/docs/handbook/modules/reference.html#node16-nodenext'
-      url.sub! '/docs/handbook/modules.html', '/docs/handbook/modules/introduction.html'
-      url
-    end
-
-    options[:skip] = [
-      'react-&-webpack.html'
-    ]
-
     options[:skip_patterns] = [
       /\Abranding/,
       /\Acommunity/,
@@ -40,12 +30,12 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2012-2024 Microsoft<br>
+      &copy; 2012-2025 Microsoft<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 
     version do
-      self.release = '5.7.2'
+      self.release = '5.8.2'
       self.base_urls = [
         'https://www.typescriptlang.org/docs/handbook/',
         'https://www.typescriptlang.org/'
