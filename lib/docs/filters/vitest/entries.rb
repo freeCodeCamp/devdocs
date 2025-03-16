@@ -9,10 +9,9 @@ module Docs
       end
 
       def get_type
-        name = at_css('h1').content
-        name.sub! %r{\s*#\s*}, ''
-        name.sub! %r{\s*\u200B\s*}, ''
-        name
+        return 'browser' if slug.starts_with?('guide/browser')
+        return 'cli' if slug.starts_with?('guide/cli')
+        return slug.split('/').first
       end
 
       def additional_entries
