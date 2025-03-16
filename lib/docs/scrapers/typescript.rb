@@ -1,16 +1,9 @@
 module Docs
   class Typescript < UrlScraper
-    include MultipleBaseUrls
-
     self.name = 'TypeScript'
     self.type = 'typescript'
 
     self.root_path = 'docs/'
-
-    def initial_urls
-      [ 'https://www.typescriptlang.org/docs/handbook/',
-        'https://www.typescriptlang.org/tsconfig' ]
-    end
 
     self.links = {
       home: 'https://www.typescriptlang.org',
@@ -19,11 +12,17 @@ module Docs
 
     html_filters.push 'typescript/entries', 'typescript/clean_html', 'title'
 
+    options[:only_patterns] = [
+      /\Adocs\Z/,
+      /\Adocs\/handbook/,
+      /\Atsconfig/,
+    ]
     options[:skip_patterns] = [
       /\Abranding/,
       /\Acommunity/,
       /\Adocs\Z/,
       /\Atools/,
+      /react.*webpack/,
       /release-notes/,
       /dt\/search/,
       /play/
@@ -36,10 +35,7 @@ module Docs
 
     version do
       self.release = '5.8.2'
-      self.base_urls = [
-        'https://www.typescriptlang.org/docs/handbook/',
-        'https://www.typescriptlang.org/'
-      ]
+      self.base_url = 'https://www.typescriptlang.org/'
     end
 
     version '5.1' do
