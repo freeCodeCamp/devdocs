@@ -154,7 +154,7 @@ app.Searcher = class Searcher extends Events {
   };
 
   static SEPARATORS_REGEXP =
-    /#|::|:-|->|\$(?=\w)|\-(?=\w)|\:(?=\w)|\ [\/\-&]\ |:\ |\ /g;
+    /#|:-|->|\$(?=\w)|\-(?=\w)|\:(?=\w)|\ [\/\-&]\ |:\ |\ /g;
   static EOS_SEPARATORS_REGEXP = /(\w)[\-:]$/;
   static INFO_PARANTHESES_REGEXP = /\ \(\w+?\)$/;
   static EMPTY_PARANTHESES_REGEXP = /\(\)/;
