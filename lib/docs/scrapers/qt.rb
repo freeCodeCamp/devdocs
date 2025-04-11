@@ -11,7 +11,7 @@ module Docs
 
     html_filters.push 'qt/entries', 'qt/clean_html'
 
-    options[:container] = '.main'
+    options[:container] = 'article, .main'
     options[:max_image_size] = 156_000
     options[:skip_patterns] = [
       # License, copyright attributions
@@ -103,12 +103,12 @@ module Docs
       Licensed under the GNU Free Documentation License, Version 1.3.
     HTML
 
-    version '6.8' do
+    version do
       self.release = '6.8'
       self.base_url = "https://doc.qt.io/qt-#{self.release}/"
     end
 
-    version do
+    version '6.2' do
       self.release = '6.2'
       self.base_url = "https://doc.qt.io/qt-#{self.release}/"
     end
