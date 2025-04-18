@@ -2,7 +2,7 @@ module Docs
   class Crystal < UrlScraper
     include MultipleBaseUrls
     self.type = 'crystal'
-    self.release = '1.16.0'
+    self.release = '1.16.1'
     self.base_urls = [
       "https://crystal-lang.org/api/#{release}/",
       "https://crystal-lang.org/reference/#{release[0..2]}/",
@@ -20,8 +20,10 @@ module Docs
     html_filters.push 'crystal/entries', 'crystal/clean_html'
 
     options[:skip_patterns] = [
-      %r{\ACrystal/System/},
+      %r{\ALibLLVM\.html\z},
+      %r{\ACrystal/System(/|\.html\z)},
       %r{\ACrystal/PointerPairingHeap/},
+      %r{\AFiber/ExecutionContext/Scheduler.html\z},
       %r{\AIO/Evented.html\z},
       %r{\ARegex/PCRE2.html\z}
     ]
