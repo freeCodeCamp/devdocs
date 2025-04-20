@@ -2,7 +2,7 @@ module Docs
   class Eslint < UrlScraper
     self.name = 'ESLint'
     self.type = 'simple'
-    self.release = '9.15.0'
+    self.release = '9.25.0'
     self.base_url = 'https://eslint.org/docs/latest/'
     self.root_path = '/'
     self.links = {
