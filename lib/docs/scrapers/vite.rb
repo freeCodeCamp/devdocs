@@ -22,7 +22,7 @@ module Docs
     html_filters.push 'vite/entries', 'vite/clean_html'
 
     version do
-      self.release = '6.2.2'
+      self.release = '6.3.2'
       self.base_url = 'https://vite.dev/'
     end
 
