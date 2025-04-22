@@ -10,6 +10,8 @@ module Docs
       def get_type
         if slug.start_with?('guide')
           'Guide'
+        elsif slug.start_with?('cli')
+          'CLI'
         elsif slug.start_with?('tutorial')
           'Tutorial'
         elsif slug.start_with?('api/platform-browser-dynamic')
