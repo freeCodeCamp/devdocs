@@ -2780,7 +2780,7 @@
             var utils = _dereq_(5);
 
             /*
- TraceKit - Cross brower stack traces
+ TraceKit - Cross browser stack traces
 
  This was originally forked from github.com/occ/TraceKit, but has since been
  largely re-written and is now maintained as part of raven-js.  Tests for
