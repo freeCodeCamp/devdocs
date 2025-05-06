@@ -78,7 +78,7 @@ GEM
       byebug (~> 12.0)
       pry (>= 0.13, < 0.16)
     racc (1.8.1)
-    rack (2.2.13)
+    rack (2.2.14)
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
       rack (~> 2.2, >= 2.2.4)
