@@ -17,6 +17,7 @@ RUN bundle install --system && \
 COPY . /devdocs
 
 RUN thor docs:download --all && \
+    thor docs:generate vertx --force \
     thor assets:compile && \
     rm -rf /tmp
 
