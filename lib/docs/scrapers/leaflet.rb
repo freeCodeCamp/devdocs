@@ -14,10 +14,15 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2010&ndash;2022 Vladimir Agafonkin<br>
+      &copy; 2010&ndash;2025 Vladimir Agafonkin<br>
       &copy; 2010&ndash;2011, CloudMade<br>
       Maps &copy; OpenStreetMap contributors.
     HTML
+
+    version '2.0' do
+      self.release = '2.0.0-alpha'
+      self.base_url = "https://leafletjs.com/reference-2.0.0.html"
+    end
 
     version '1.9' do
       self.release = '1.9.4'
