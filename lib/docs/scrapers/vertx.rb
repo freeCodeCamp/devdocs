@@ -9,7 +9,9 @@ module Docs
     html_filters.push 'vertx/entries', 'vertx/clean_html'
 
     options[:attribution] = <<-HTML
-      by Dor Sahar :)
+      © 2025 Eclipse Vert.x™</br>
+      Eclipse Vert.x™ is open source and dual-licensed under the Eclipse Public License 2.0 and the Apache License 2.0.</br>
+      Website design by Michel Krämer.
     HTML
 
     options[:skip_patterns] = [
