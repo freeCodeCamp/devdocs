@@ -7,7 +7,6 @@ module Docs
         return nil unless node
 
         result = node.content.strip
-        result = "v5.0.0 - #{result}" if slug.include?('5.0.0')
         result << ' event' if type == 'Events'
         result << '()' if node['class'].to_s.include?('function')
         result

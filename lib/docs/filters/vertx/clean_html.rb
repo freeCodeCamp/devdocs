@@ -2,12 +2,11 @@ module Docs
   class Vertx
     class CleanHtmlFilter < Filter
       def call
-        css('hr', 'header', 'nav', '.navbar', '.topbar').remove
+        css('footer', 'hr', 'header', 'nav', '.navbar', '.topbar', '.bg-bg-warning').remove
         xpath('//*[@id="docs-layout"]/div/div[3]').remove
         xpath('//*[@id="docs-layout"]/div/div[1]').remove
         xpath('//main/div[last()]').remove
         xpath('//main/div[1]').remove
-        xpath('//footer').remove
         css('#changelog').remove if root_page?
 
         # Set id attributes on <h3> instead of an empty <a>
