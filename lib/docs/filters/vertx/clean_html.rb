@@ -22,6 +22,7 @@ module Docs
 
         # Remove code highlighting
         css('pre').each do |node|
+          node['data-language'] = node.at_css('code')['data-lang'] if node.at_css('code')
           node.content = node.content
         end
 

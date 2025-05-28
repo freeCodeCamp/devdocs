@@ -1,5 +1,7 @@
 module Docs
   class Vertx < UrlScraper
+    self.name = 'Vert.x'
+    self.slug = 'vertx'
     self.type = 'vertx'
     self.links = {
       home: 'http://vertx.io',
@@ -21,19 +23,24 @@ module Docs
       /blog/,
     ]
 
-    version '5.0.0' do
+    version '5' do
       self.release = '5.0.0'
       self.base_url = "https://vertx.io/docs/"
     end
 
-    version '4.5.15' do
+    version '4' do
       self.release = '4.5.15'
-      self.base_url = "https://vertx.io/docs/#{self.version}"
+      self.base_url = "https://vertx.io/docs/#{self.release}"
     end
 
-    version '3.9.16' do
-      self.release = '4.5.15'
-      self.base_url = "https://vertx.io/docs/#{self.version}"
+    version '3' do
+      self.release = '3.9.16'
+      self.base_url = "https://vertx.io/docs/#{self.release}"
+    end
+
+    def get_latest_version(opts)
+      doc = fetch_doc('https://repo1.maven.org/maven2/io/vertx/vertx-stack-manager/maven-metadata.xml', opts)
+      doc.css('version')[-1].text
     end
   end
 end
