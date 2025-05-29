@@ -38,9 +38,9 @@ module Docs
           case node.name
           when "h2"
             type = node.text
-            if node.attributes["id"].value == "type-class-hierarchy"
+            if node.parent.attributes["id"]&.value == "type-class-hierarchy"
               name = node.text
-              id = node.attributes["id"].value
+              id = node.parent.attributes["id"].value
               entries << [name, id, type]
             end
           when "h4"

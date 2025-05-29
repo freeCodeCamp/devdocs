@@ -2,7 +2,7 @@
 
 module Docs
   class Koa < Github
-    self.base_url = 'https://github.com/koajs/koa/tree/master/docs'
+    self.base_url = 'https://github.com/koajs/koa/blob/master/docs'
     self.release = '2.15.0'
 
     self.root_path = 'api/index.md'
@@ -26,7 +26,7 @@ module Docs
 
     html_filters.push 'koa/clean_html', 'koa/entries'
 
-    options[:skip] = %w[middleware.gif]
+    options[:skip_patterns] = [/\.gif/]
     options[:trailing_slash] = false
     options[:container] = '.markdown-body'
 
