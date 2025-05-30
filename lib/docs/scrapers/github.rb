@@ -16,7 +16,13 @@ module Docs
     end
 
     def parse(response)
-      parsed = JSON.parse(response.response_body)
+      embedded_json = response
+        .response_body
+        .match(/react-app\.embeddedData">(.+?)<\/script>/)
+        &.captures
+        &.first
+      parsed = JSON.parse(embedded_json)
+
       [parsed['payload']['blob']['richText'], parsed['title']]
     end
   end

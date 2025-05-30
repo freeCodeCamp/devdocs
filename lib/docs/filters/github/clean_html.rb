@@ -2,6 +2,11 @@ module Docs
   class Github
     class CleanHtmlFilter < Filter
       def call
+        # Remove h1 wrapper to render it correctly.
+        css('.markdown-heading h1').each do |node|
+          node.parent.replace(node)
+        end
+
         css('.anchor').each do |node|
           node.parent['id'] = node['href'].remove('#')
           node.remove
