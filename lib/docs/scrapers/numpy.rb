@@ -1,4 +1,8 @@
 module Docs
+  # Requires downloading the documents to local disk first.
+  # Go to https://numpy.org/doc/, click "HTML+zip" to download
+  # (example url: https://numpy.org/doc/2.2/numpy-html.zip),
+  # then extract into "docs/numpy~#{version}/"
   class Numpy < FileScraper
     self.name = 'NumPy'
     self.type = 'sphinx'
@@ -25,6 +29,18 @@ module Docs
       &copy; 2005&ndash;2024 NumPy Developers<br>
       Licensed under the 3-clause BSD License.
     HTML
+
+    version '2.2' do
+      self.release = '2.2'
+      self.base_url = "https://numpy.org/doc/#{self.version}/"
+      options[:container] = nil
+    end
+
+    version '2.1' do
+      self.release = '2.1'
+      self.base_url = "https://numpy.org/doc/#{self.version}/"
+      options[:container] = nil
+    end
 
     version '2.0' do
       self.release = '2.0.1'
