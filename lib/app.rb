@@ -376,6 +376,8 @@ class App < Sinatra::Application
     'angular~1.3' => 'angularjs~1.3',
     'angular~1.2' => 'angularjs~1.2',
     'codeigniter~3.0' => 'codeigniter~3',
+    'pytorch~1' => 'pytorch~1.13',
+    'pytorch~2' => 'pytorch',
     'webpack~2' => 'webpack'
   }
 
