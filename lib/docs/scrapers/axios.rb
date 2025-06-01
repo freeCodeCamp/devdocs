@@ -5,7 +5,7 @@ module Docs
       home: 'hthttps://axios-http.com/',
       code: 'https://github.com/axios/axios'
     }
-    self.release = '1.7.7'
+    self.release = '1.9.0'
     self.base_url = "https://axios-http.com/docs/"
     self.initial_paths = %w(index intro)
     options[:skip] = %w(sponsor)
