@@ -5,21 +5,22 @@ module Docs
 
       def get_name
         name = super
-        name.sub!('Element.', '').try(:downcase!)
-        name.sub!('Global attributes.', '').try(:concat, ' (attribute)')
+        name.sub!('Guides.', '')
+        name.sub!('How to.', '')
+        name.sub!('Reference.Elements.', '').try(:downcase!)
+        name.sub!('Reference.Attributes.', '').try(:concat, ' (attribute)')
+        name.sub!('Reference.Global attributes.', '').try(:concat, ' (attribute)')
         name.sub!(/input\.([-\w]+)/, 'input type="\1"')
         name
       end
 
       def get_type
-        return 'Miscellaneous' if slug.include?('CORS') || slug.include?('Using')
-
         if at_css('.deprecated', '.non-standard', '.obsolete')
-        'Obsolete'
-        elsif slug.start_with?('Global_attr')
-          'Attributes'
-        elsif slug.start_with?('Element/')
-          'Elements'
+          'Obsolete'
+        elsif slug.start_with?('Guides/')
+          'Guides'
+        elsif slug.start_with?('Reference/')
+          slug.split('/').drop(1).first.sub(/_/, ' ')
         else
           'Miscellaneous'
         end
