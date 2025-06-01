@@ -13,7 +13,7 @@ module Docs
 
     # https://github.com/sveltejs/svelte/blob/master/LICENSE.md
     options[:attribution] = <<-HTML
-      &copy; 2016–2024 Rich Harris and contributors<br>
+      &copy; 2016–2025 Rich Harris and contributors<br>
       Licensed under the MIT License.
     HTML
 
@@ -21,7 +21,7 @@ module Docs
     html_filters.push 'svelte/entries', 'svelte/clean_html'
 
     version do
-      self.release = '5.2.3'
+      self.release = '5.33.11'
     end
 
     version '4' do
