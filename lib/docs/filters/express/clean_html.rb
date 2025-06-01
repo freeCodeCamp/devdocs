@@ -7,13 +7,13 @@ module Docs
         i += 1 while n && n = n.previous_element
         at_css('h1')['data-level'] = i
 
-        @doc = at_css('#api-doc, .content')
+        @doc = at_css('#api-doc, main, .content')
+
+        css('nav').remove # aria-labelledby="sidebar-heading"
 
         css('section', 'div.highlighter-rouge').each do |node|
           node.before(node.children).remove
         end
-
-        @doc = at_css('#page-doc') unless root_page?
 
         if root_page?
           at_css('h1').remove
