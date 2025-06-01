@@ -9,7 +9,7 @@ module Docs
     self.initial_paths = [
       "https://pointclouds.org/documentation/hierarchy.html"
     ]
-    self.release = '1.13.0'
+    self.release = '1.15.0'
 
     self.links = {
       home: 'https://pointclouds.org/',
