@@ -59,6 +59,12 @@ curl -L https://github.com/erlang/otp/releases/download/OTP-$RELEASE/otp_doc_htm
 bsdtar --extract --file - --directory=docs/erlang\~$VERSION/
 ```
 
+## es-toolkit
+
+```sh
+git clone https://github.com/toss/es-toolkit docs/es_toolkit
+```
+
 ## Gnu
 
 ### Bash
