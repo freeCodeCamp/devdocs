@@ -19,13 +19,13 @@ module Docs
     version '4' do
       self.root_path = 'index.php'
       self.release = '4'
-      self.base_url = "https://registry.khronos.org/OpenGL-Refpages/gl#{self.version}/"
+      self.base_url = "https://registry.khronos.org/OpenGL-Refpages/gl#{self.version}/html/"
     end
 
     version '2.1' do
       self.root_path = 'index.html'
       self.release = '2.1'
-      self.base_url = "https://registry.khronos.org/OpenGL-Refpages/gl#{self.version}/"
+      self.base_url = "https://registry.khronos.org/OpenGL-Refpages/gl#{self.version}/xhtml/"
     end
 
     def get_latest_version(opts)
