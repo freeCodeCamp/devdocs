@@ -35,7 +35,7 @@ module Docs
         type = path.split("/")[0..-2]
         type = type.map(&:capitalize).join(" ")
         # really bad way to sort
-        type = type.gsub(/^(Compat|Error)\b/, "~ \\1")
+        type = type.gsub(/^(Compat|Error)\b/, "\u2063\\1") #  U+2063 INVISIBLE SEPARATOR
       else
         name = type = nil
       end
