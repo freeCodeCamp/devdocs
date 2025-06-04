@@ -61,13 +61,14 @@ module Docs
       s.gsub!(%r{(</?h)3>}, "\\14>")
 
       # manually add attribution
+      link = "#{self.class.links[:home]}#{filename.gsub(/^docs/,'').gsub(/md$/,'html')}"
       s += <<~HTML
         <div class="_attribution">
           <p class="_attribution-p">
             #{options[:attribution]}
             <br>
-            <a href="#{self.class.links[:home]}" class="_attribution-link">
-              #{self.class.links[:home]}
+            <a href="#{link}" class="_attribution-link">
+              #{link}
             </a>
           </p>
         </div>
