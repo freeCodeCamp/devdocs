@@ -27,7 +27,7 @@ module Docs
 
     def get_latest_version(opts)
       body = fetch('https://zsh.sourceforge.io/Doc/Release', opts)
-      body.scan(/, Zsh version ([0-9.]+)/)[0][0][0...-1]
+      body.scan(/Zsh version ([0-9.]+)/)[0][0]
     end
   end
 end
