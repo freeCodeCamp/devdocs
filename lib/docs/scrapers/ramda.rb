@@ -17,8 +17,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://ramdajs.com/docs/', opts)
-      doc.at_css('.navbar-brand > .version').content[1..-1]
+      get_npm_version('ramda', opts)
     end
   end
 end
