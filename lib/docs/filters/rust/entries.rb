@@ -4,8 +4,10 @@ module Docs
 
       def get_name
         if slug.start_with?('book') || slug.start_with?('reference')
-          name = at_css("#sidebar a[href='#{File.basename(slug)}']")
-          name ? name.content : 'Introduction'
+          name = at_css("h2", "h1")
+          ch1 = slug[/ch(\d+)-(\d+)/, 1]
+          ch2 = slug[/ch(\d+)-(\d+)/, 2]
+          name ? "#{ch1}.#{ch2}. #{name.content}" : 'Introduction'
         elsif slug == 'error-index'
           'Compiler Errors'
         else
