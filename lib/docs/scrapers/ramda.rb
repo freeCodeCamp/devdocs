@@ -10,17 +10,12 @@ module Docs
 
     options[:title] = 'Ramda'
     options[:attribution] = <<-HTML
-      &copy; 2013&ndash;2024 Scott Sauyet and Michael Hurley<br>
+      &copy; 2013&ndash;2025 Scott Sauyet and Michael Hurley<br>
       Licensed under the MIT License.
     HTML
 
-    version '0.30' do
-      self.release = '0.30.1'
-      self.base_url = "https://ramdajs.com/#{release}/docs/"
-    end
-
-    version '0.29' do
-      self.release = '0.29.1'
+    version do
+      self.release = '0.31.3'
       self.base_url = "https://ramdajs.com/#{release}/docs/"
     end
 
