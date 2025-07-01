@@ -16,7 +16,7 @@ module Docs
 
     options[:skip_patterns] = [/tutorial/, /getting-started/]
 
-    self.release = '4.14.2'
+    self.release = '5.10.2'
     self.base_url = 'https://docs.astro.build/en/'
     self.initial_paths = %w(install-and-setup/)
 
