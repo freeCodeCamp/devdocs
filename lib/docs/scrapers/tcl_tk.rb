@@ -30,7 +30,7 @@ module Docs
     version '8.6' do
       self.base_url = "https://www.tcl-lang.org/man/tcl#{self.version}/"
       self.root_path = 'contents.htm'
-      self.release = '8.6.6'
+      self.release = '8.6.16'
     end
 
     version '9.0' do
