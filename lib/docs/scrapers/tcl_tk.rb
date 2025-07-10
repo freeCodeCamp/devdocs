@@ -3,9 +3,6 @@ module Docs
     self.name = 'Tcl/Tk'
     self.type = 'tcl_tk'
     self.slug = 'tcl_tk'
-    self.release = '8.6.6'
-    self.base_url = 'https://www.tcl-lang.org/man/tcl/'
-    self.root_path = 'contents.htm'
     self.links = {
       home: 'https://www.tcl-lang.org/',
       code: 'https://sourceforge.net/projects/tcl/files/Tcl/'
@@ -29,6 +26,17 @@ module Docs
     options[:attribution] = <<-HTML
       Licensed under <a href="http://www.tcl-lang.org/software/tcltk/license.html">Tcl/Tk terms</a>
     HTML
+
+    version '8.6' do
+      self.base_url = "https://www.tcl-lang.org/man/tcl#{self.version}/"
+      self.root_path = 'contents.htm'
+      self.release = '8.6.6'
+    end
+
+    version '9.0' do
+      self.base_url = "https://www.tcl-lang.org/man/tcl#{self.version}/"
+      self.release = '9.0.2'
+    end
 
     def get_latest_version(opts)
       doc = fetch_doc('https://www.tcl-lang.org/man/tcl/', opts)
