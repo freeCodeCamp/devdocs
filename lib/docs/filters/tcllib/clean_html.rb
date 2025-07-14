@@ -29,6 +29,10 @@ module Docs
           node.name = 'h2'
         end
 
+        css('pre').each do |node|
+          node['data-language'] = 'tcl'
+        end
+
         doc
       end
     end
