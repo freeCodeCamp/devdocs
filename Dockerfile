@@ -1,7 +1,7 @@
 #
 # Base layer that both dev and runtime inherit from.
 #
-FROM ruby:3.4.5 as devdocs-base
+FROM ruby:3.4.5-alpine AS devdocs-base
 ENV LANG=C.UTF-8
 
 ARG USERNAME=devdocs
@@ -28,7 +28,7 @@ RUN addgroup -g $GROUP_ID $USERNAME && \
 #
 # Development Image
 #
-FROM devdocs-base as devdocs-dev
+FROM devdocs-base AS devdocs-dev
 RUN bundle config unset without && \
     bundle install && \
     apk add --update bash curl && \
@@ -44,7 +44,7 @@ CMD bash
 #
 # Runtime Image
 #
-FROM devdocs-base as devdocs
+FROM devdocs-base AS devdocs
 ENV ENABLE_SERVICE_WORKER=true
 COPY . /devdocs/
 RUN apk del gzip build-base git zlib-dev && \
