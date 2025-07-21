@@ -13,7 +13,7 @@ GEM
       minitest (>= 5.1)
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
-    base64 (0.2.0)
+    base64 (0.3.0)
     benchmark (0.3.0)
     better_errors (2.10.1)
       erubi (>= 1.0.0)
