@@ -39,7 +39,7 @@ RUN bundle config unset without && \
     rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache
 
 VOLUME [ "/devdocs",  "/devdocs/public/docs", "/devdocs/public/assets" ]
-CMD bash
+CMD ["bash"]
 
 #
 # Runtime Image
@@ -52,4 +52,4 @@ RUN apk del gzip build-base git zlib-dev && \
     rm -rf /tmp
 VOLUME [ "/devdocs/public/docs", "/devdocs/public/assets" ]
 USER $USERNAME
-CMD rackup --host 0.0.0.0 -E production
+CMD ["rackup", "--host", "0.0.0.0", "-E", "production"]
