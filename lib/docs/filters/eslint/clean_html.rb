@@ -5,6 +5,7 @@ module Docs
         @doc = at_css('#main') if at_css('#main')
         @doc = at_css('.docs-main__content') if at_css('.docs-main__content')
 
+        css('.docs-toc').remove
         css('.eslint-ad').remove
         css('.glyphicon').remove
         css('hr', 'colgroup', 'td:empty').remove

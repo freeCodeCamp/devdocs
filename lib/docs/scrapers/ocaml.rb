@@ -1,5 +1,5 @@
 module Docs
-  class Ocaml < FileScraper
+  class Ocaml < UrlScraper
     self.name = 'OCaml'
     self.type = 'ocaml'
     self.root_path = 'index.html'
@@ -16,15 +16,20 @@ module Docs
 
     options[:skip_patterns] = [
       /\Acompilerlibref\//,
-      /\Alibref\/type_/,
-      /\Alibref\/Stdlib\.\w+\.html/,
+      /\Aapi\/type_/,
+      /\Aapi\/Stdlib\.\w+\.html/,
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 1995-2022 INRIA.
+      &copy; 1995-2024 INRIA.
     HTML
 
     version '' do
+      self.release = '5.3'
+      self.base_url = "https://ocaml.org/manual/#{self.release}/"
+    end
+
+    version '5.0' do
       self.release = '5.0'
       self.base_url = "https://v2.ocaml.org/releases/#{self.release}/htmlman/"
     end

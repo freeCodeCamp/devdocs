@@ -2,7 +2,7 @@ module Docs
   class Sequelize
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('article', '.content')
+        @doc = at_css('article', '.content .self-detail', '.content')
 
         if at_css('header > h1')
           # Pull the header out of its container

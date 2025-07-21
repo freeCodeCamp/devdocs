@@ -11,10 +11,35 @@ module Docs
     options[:skip] = %w(internals.html release.html contributing.html whatsnew.html)
     options[:skip_patterns] = [/whatsnew\//]
 
+    # https://github.com/pandas-dev/pandas/blob/main/LICENSE
     options[:attribution] = <<-HTML
-      &copy; 2008&ndash;2022, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>
+      &copy; 2008&ndash;2011, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team<br>
+      &copy; 2011&ndash;2025, Open source contributors<br>
       Licensed under the 3-clause BSD License.
     HTML
+
+    version '2' do
+      self.release = '2.3.0'
+      self.base_url = "https://pandas.pydata.org/pandas-docs/version/#{self.release}/"
+
+      html_filters.push 'pandas/clean_html', 'pandas/entries'
+
+      options[:container] = 'main section'
+
+      options[:skip_patterns] = [
+        /development/,
+        /getting_started/,
+        /whatsnew/
+      ]
+
+      options[:skip] = [
+        'panel.html',
+        'pandas.pdf',
+        'pandas.zip',
+        'ecosystem.html'
+      ]
+
+    end
 
     version '1' do
       self.release = '1.5.0'

@@ -46,13 +46,23 @@ module Docs
       'Wtrigraphs.html' => 'Invocation.html'
     }
 
+    version '14' do
+      self.release = '14.2.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
+    end
+
+    version '14 CPP' do
+      self.release = '14.2.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
+    end
+
     version '13' do
-      self.release = '13.1.0'
+      self.release = '13.3.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
     version '13 CPP' do
-      self.release = '13.1.0'
+      self.release = '13.3.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
     end
 

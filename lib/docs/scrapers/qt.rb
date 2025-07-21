@@ -11,7 +11,7 @@ module Docs
 
     html_filters.push 'qt/entries', 'qt/clean_html'
 
-    options[:container] = '.main'
+    options[:container] = 'article, .main'
     options[:max_image_size] = 156_000
     options[:skip_patterns] = [
       # License, copyright attributions
@@ -104,6 +104,11 @@ module Docs
     HTML
 
     version do
+      self.release = '6.8'
+      self.base_url = "https://doc.qt.io/qt-#{self.release}/"
+    end
+
+    version '6.2' do
       self.release = '6.2'
       self.base_url = "https://doc.qt.io/qt-#{self.release}/"
     end

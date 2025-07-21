@@ -14,7 +14,7 @@
   em.stab, span.stab { @extend %label; }
   em.stab.unstable, span.stab.unstable { @extend %label-orange; }
   .out-of-band { float: right; }
-  .since, .srclink {
+  .since, .src, .rightside {
     float: right;
     margin-left: .5rem;
   }

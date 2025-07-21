@@ -23,12 +23,12 @@ module Docs
     }
 
     options[:attribution] = <<-HTML
-      &copy; 2020 Jekyll Core Team and contributors<br>
+      &copy; 2025 Jekyll Core Team and contributors<br>
       Licensed under the MIT license.
     HTML
 
     version '4' do
-      self.release = '4.2.0'
+      self.release = '4.4.1'
     end
 
     version '3' do

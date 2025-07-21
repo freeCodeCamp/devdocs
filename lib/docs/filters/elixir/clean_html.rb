@@ -2,32 +2,12 @@ module Docs
   class Elixir
     class CleanHtmlFilter < Filter
       def call
-        if current_url.path.start_with?('/getting-started')
-          guide
-        else
-          api
-        end
+        api
         doc
       end
 
-      def guide
-        @doc = at_css('#content article')
-
-        css('pre > code').each do |node|
-          node.parent.content = node.content
-        end
-
-        css('div > pre.highlight').each do |node|
-          node.content = node.content
-          node['data-language'] = node.parent['class'][/language-(\w+)/, 1]
-          node.parent.before(node).remove
-        end
-      end
-
       def api
-        css('.hover-link', 'footer', ':not(.detail-header) > .view-source').remove
-
-        css('h1 .settings').remove
+        css('.top-search').remove
 
         css('.summary').each do |node|
           node.name = 'dl'
@@ -54,7 +34,9 @@ module Docs
             node.name = 'h3'
             node['id'] = id
 
-            source_href = node.at_css('a.icon-action[title="View Source"]').attr('href')
+            a = node.at_css('a.icon-action[title="View Source"]')
+            a ||= node.at_css('a.icon-action[aria-label="View Source"]')
+            source_href = a.attr('href')
 
             node.content = node.at_css('.signature').inner_text
             node << %(<a href="#{source_href}" class="source">Source</a>)
@@ -63,6 +45,11 @@ module Docs
           detail.css('.docstring h2').each do |node|
             node.name = 'h4'
           end
+        end
+
+        css('h1 a.icon-action[title="View Source"]').each do |node|
+          node['class'] = 'source'
+          node.content = "Source"
         end
 
         css('pre').each do |node|

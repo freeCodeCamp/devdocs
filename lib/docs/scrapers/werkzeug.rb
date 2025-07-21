@@ -17,6 +17,11 @@ module Docs
       Licensed under the BSD 3-clause License.
     HTML
 
+    version do
+      self.release = '3.1.1'
+      self.base_url = "https://werkzeug.palletsprojects.com/en/latest/"
+    end
+
     version '3.0' do
       self.release = '3.0.x'
       self.base_url = "https://werkzeug.palletsprojects.com/en/#{self.release}/"

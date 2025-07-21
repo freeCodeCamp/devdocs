@@ -72,6 +72,8 @@ module Docs
           node.remove_attribute('class')
         end
 
+        css('.example-header').remove
+
         css('table').each do |node|
           node.before %(<div class="_table"></div>)
           node.previous_element << node

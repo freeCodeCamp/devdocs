@@ -6,8 +6,13 @@ module Docs
       home: 'https://gcc.gnu.org/fortran/'
     }
 
+    version '14' do
+      self.release = '14.2.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gfortran/"
+    end
+
     version '13' do
-      self.release = '13.1.0'
+      self.release = '13.3.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gfortran/"
     end
 

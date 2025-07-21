@@ -162,8 +162,6 @@ class DocsCLI < Thor
   option :dryrun, type: :boolean
   option :packaged, type: :boolean
   def upload(*names)
-    require 'net/sftp'
-
     if options[:packaged]
       slugs = Dir[File.join(Docs.store_path, '*.tar.gz')].map { |f| File.basename(f, '.tar.gz') }
       docs = find_docs_by_slugs(slugs)
@@ -241,7 +239,7 @@ class DocsCLI < Thor
           ['index.json', 'meta.json'].each do |filename|
             json = "https://documents.devdocs.io/#{doc.path}/#{filename}?#{time}"
             begin
-              URI.open(json) do |file|
+              URI.open(json, "Accept-Encoding" => "identity") do |file|
                 mutex.synchronize do
                   path = File.join(dir, filename)
                   File.write(path, file.read)

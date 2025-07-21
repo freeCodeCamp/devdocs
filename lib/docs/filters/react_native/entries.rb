@@ -6,7 +6,7 @@ module Docs
       end
 
       def get_type
-        type = at_css('.navbar__link--active')
+        type = at_css('.menu__link--active')
         return 'Miscellaneous' unless type
         type.content.strip
       end

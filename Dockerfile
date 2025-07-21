@@ -1,8 +1,7 @@
 #
 # Base layer that both dev and runtime inherit from.
 #
-FROM ruby:3.3.2-alpine as devdocs-base
-
+FROM ruby:3.4.5 as devdocs-base
 ENV LANG=C.UTF-8
 
 ARG USERNAME=devdocs
@@ -20,7 +19,7 @@ RUN gem install bundler && \
     bundle config set path.system true && \
     bundle config set without test && \
     bundle install && \
-    rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache 
+    rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache
 
 RUN addgroup -g $GROUP_ID $USERNAME && \
     adduser -u $USER_ID -G $USERNAME -D -h /devdocs $USERNAME && \
@@ -37,7 +36,7 @@ RUN bundle config unset without && \
     tar -xzf docker-26.1.4.tgz && \
     mv docker/docker /usr/bin && \
     rm -rf docker docker-26.1.4.tgz && \
-    rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache 
+    rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache
 
 VOLUME [ "/devdocs",  "/devdocs/public/docs", "/devdocs/public/assets" ]
 CMD bash

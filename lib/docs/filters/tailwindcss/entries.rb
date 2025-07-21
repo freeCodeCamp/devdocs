@@ -3,21 +3,34 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_type
         # We are only interested in children list items
-        selector = "nav li li a[href='#{result[:path]}']"
+        
 
-        anchor = at_css(selector)
-        category_list = anchor.ancestors('li')[1]
-        title = category_list.css('h5')
+        anchor = at_css(get_selector)
+        title =
+          if version == '3'
+            anchor.ancestors('li')[1].css('h5')
+          else
+            anchor.ancestors('ul').last.previous_element
+          end
 
         return title.inner_text
       end
 
       def get_name
         # We are only interested in children list items
-        selector = "nav li li a[href='#{result[:path]}']"
-        item = at_css(selector)
+        item = at_css(get_selector)
 
         return item.inner_text
+      end
+
+      private
+
+      def get_selector
+        if version == '3'
+          "nav li li a[href='#{result[:path]}']"
+        else
+          "nav li a[href*='#{result[:path]}']"
+        end
       end
     end
   end

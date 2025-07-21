@@ -17,11 +17,20 @@ module Docs
     options[:title] = false
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2020 Sebastian Bergmann<br>
+      &copy; 2005&ndash;2025 Sebastian Bergmann<br>
       Licensed under the Creative Commons Attribution 3.0 Unported License.
     HTML
 
     FILTERS = %w(phpunit/clean_html phpunit/entries title)
+
+    version do
+      self.release = '12.0'
+      self.base_url = "https://docs.phpunit.de/en/#{release}/"
+
+      html_filters.push FILTERS
+
+      options[:container] = '.document'
+    end
 
     version '9' do
       self.release = '9.5'
@@ -77,8 +86,8 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://phpunit.readthedocs.io/', opts)
-      label = doc.at_css('.rst-current-version').content.strip
-      label.scan(/v: ([0-9.]+)/)[0][0]
+      label = doc.at_css('meta[name="readthedocs-version-slug"]')["content"]
+      label
     end
 
   end

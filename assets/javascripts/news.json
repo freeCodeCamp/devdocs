@@ -1,5 +1,41 @@
 [
   [
+    "2025-07-14",
+    "New documentation: <a href=\"/tcllib/\">Tcllib</a>"
+  ],
+  [
+    "2025-06-27",
+    "New documentation: <a href=\"/zsh/\">Zsh</a>"
+  ],
+  [
+    "2025-06-04",
+    "New documentation: <a href=\"/es_toolkit/\">es-toolkit</a>"
+  ],
+  [
+    "2025-05-28",
+    "New documentation: <a href=\"/vertx/\">Vert.x</a>"
+  ],
+  [
+    "2025-02-23",
+    "New documentation: <a href=\"/threejs/\">Three.js</a>"
+  ],
+  [
+    "2025-02-16",
+    "New documentation: <a href=\"/openlayers/\">OpenLayers</a>"
+  ],
+  [
+    "2024-11-23",
+    "New documentation: <a href=\"/duckdb/\">DuckDB</a>"
+  ],
+  [
+    "2024-08-20",
+    "New documentation: <a href=\"/man/\">Linux man pages</a>"
+  ],
+  [
+    "2024-07-28",
+    "New documentation: <a href=\"/opengl/\">OpenGL</a>"
+  ],
+  [
     "2024-06-12",
     "New documentations: <a href=\"/nextjs/\">Next.js</a>, <a href=\"/click/\">click</a>"
   ],

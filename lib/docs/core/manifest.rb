@@ -20,6 +20,7 @@ module Docs
         if doc.options[:attribution].is_a?(String)
           json[:attribution] = doc.options[:attribution].strip
         end
+        json[:alias] = Docs.aliases[doc.slug[/^[^~]+/, 0]]
         result << json
       end
     end

@@ -14,13 +14,13 @@ module Docs
     options[:container] = '.td-content'
 
     options[:attribution] = <<-HTML
-      &copy; 2022 The Kubernetes Authors | Documentation Distributed under CC BY 4.0 <br>
-      Copyright &copy; 2022 The Linux Foundation ®. All rights reserved.
+      &copy; 2025 The Kubernetes Authors | Documentation Distributed under CC BY 4.0 <br>
+      Copyright &copy; 2025 The Linux Foundation ®. All rights reserved.
     HTML
 
     # latest version has a special URL that does not include the version identifier 
     version do
-      self.release = "1.29"
+      self.release = "1.33.1"
       self.base_url = "https://kubernetes.io/docs/reference/kubernetes-api/"
     end
 

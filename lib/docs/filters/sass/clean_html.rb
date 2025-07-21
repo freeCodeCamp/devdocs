@@ -5,14 +5,13 @@ module Docs
         @doc = at_css('#main-content .typedoc', '#main-content')
 
         css('.sl-c-alert').remove
-
         css('.sl-l-medium-holy-grail__navigation').remove
-
         css('.sl-r-banner').remove
-
         css('.site-footer').remove
-
         css('.tsd-breadcrumb').remove
+        css('.sl-c-callout--warning > h3').remove
+        css('.ui-tabs-nav').remove
+        css('.sl-c-to-playground').remove
 
         # Add id to code blocks
         css('pre.signature').each do |node|
@@ -42,14 +41,19 @@ module Docs
         css('.visuallyhidden').remove
 
         ### Syntax Highlight ###
-        css('.highlight.scss', '.highlight.sass').each do |node|
+        css('.language-scss').each do |node|
           node['data-language'] = 'scss'
           node.content = node.content.strip
         end
 
-        css('.highlight.css').each do |node|
+        css('.language-sass').each do |node|
+          node['data-language'] = 'sass'
+          node.content = "// SASS\n#{node.content.strip}"
+        end
+
+        css('.language-css').each do |node|
           node['data-language'] = 'css'
-          node.content = node.content.strip
+          node.content = "/* CSS */\n#{node.content.strip}"
         end
 
         doc

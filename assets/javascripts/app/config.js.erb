@@ -2,6 +2,7 @@ app.config = {
   db_filename: 'db.json',
   default_docs: <%= App.default_docs.to_json %>,
   docs_origin: document.getElementById("docs-origin-meta").content,
+  docs_aliases: <%= App.docs_aliases.to_json %>,
   env: '<%= App.environment %>',
   history_cache_size: 10,
   index_filename: 'index.json',

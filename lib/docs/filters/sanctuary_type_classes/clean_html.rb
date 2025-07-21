@@ -8,11 +8,6 @@ module Docs
           node.name = 'h3'
         }
 
-        # correct and unify link ids
-        css('h3').each { |node|
-          node.attributes["id"].value = node.text.split(' :: ')[0]
-        }
-
         doc
       end
     end

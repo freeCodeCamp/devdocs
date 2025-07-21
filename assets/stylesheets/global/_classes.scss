@@ -133,6 +133,11 @@
   border-color: var(--noteRedBorder);
 }
 
+%note-gray, %label-gray {
+  background: var(--boxBackground);
+  border: 1px solid var(--boxBorder);
+}
+
 //
 // External links
 //

@@ -1,5 +1,5 @@
 module Docs
-  class Q < Github
+  class Q < UrlScraper
     self.name = 'Q'
     self.release = '1.5.1'
     self.base_url = 'https://github.com/kriskowal/q/wiki/'
@@ -16,7 +16,7 @@ module Docs
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
-      &copy; 2009&ndash;2017 Kristopher Michael Kowal<br>
+      &copy; 2009&ndash;2018 Kristopher Michael Kowal<br>
       Licensed under the MIT License.
     HTML
 

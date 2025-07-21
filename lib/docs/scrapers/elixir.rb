@@ -4,7 +4,7 @@ module Docs
 
     self.name = 'Elixir'
     self.type = 'elixir'
-    self.root_path = 'api-reference.html'
+    self.root_path = 'introduction.html'
     self.links = {
       home: 'https://elixir-lang.org/',
       code: 'https://github.com/elixir-lang/elixir'
@@ -12,26 +12,61 @@ module Docs
 
     html_filters.push 'elixir/clean_html', 'elixir/entries', 'title'
 
-    options[:container] = ->(filter) {
-      filter.current_url.path.start_with?('/getting-started') ? '#main' : '#content'
-    }
+    options[:container] = '#content'
     options[:title] = false
     options[:root_title] = 'Elixir'
 
     options[:attribution] = <<-HTML
-      &copy; 2012 Plataformatec<br>
+      &copy; 2012-2024 The Elixir Team<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 
     def initial_urls
-      [ "https://hexdocs.pm/elixir/#{self.class.release}/api-reference.html",
+      [ "https://hexdocs.pm/elixir/#{self.class.release}/introduction.html",
         "https://hexdocs.pm/eex/#{self.class.release}/EEx.html",
         "https://hexdocs.pm/ex_unit/#{self.class.release}/ExUnit.html",
         "https://hexdocs.pm/iex/#{self.class.release}/IEx.html",
         "https://hexdocs.pm/logger/#{self.class.release}/Logger.html",
-        "https://hexdocs.pm/mix/#{self.class.release}/Mix.html",
-        "https://elixir-lang.org/getting-started/introduction.html" ]
+        "https://hexdocs.pm/mix/#{self.class.release}/Mix.html" ]
     end
+
+    version '1.18' do
+      self.release = '1.18.1'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/"
+      ]
+    end
+
+    version '1.17' do
+      self.release = '1.17.2'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/"
+      ]
+    end
+
+    version '1.16' do
+      self.release = '1.16.3'
+      self.base_urls = [
+        "https://hexdocs.pm/elixir/#{release}/",
+        "https://hexdocs.pm/eex/#{release}/",
+        "https://hexdocs.pm/ex_unit/#{release}/",
+        "https://hexdocs.pm/iex/#{release}/",
+        "https://hexdocs.pm/logger/#{release}/",
+        "https://hexdocs.pm/mix/#{release}/"
+      ]
+    end
+
+    # scraping of older versions is no longer supported!
 
     version '1.15' do
       self.release = '1.15.4'

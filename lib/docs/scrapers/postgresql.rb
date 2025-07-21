@@ -17,6 +17,7 @@ module Docs
     options[:title] = false
     options[:root_title] = 'PostgreSQL'
     options[:follow_links] = ->(filter) { filter.initial_page? }
+    options[:rate_limit] = 200
 
     options[:skip] = %w(
       index.html
@@ -51,9 +52,14 @@ module Docs
       /\Aunsupported-features/ ]
 
     options[:attribution] = <<-HTML
-      &copy; 1996&ndash;2023 The PostgreSQL Global Development Group<br>
+      &copy; 1996&ndash;2025 The PostgreSQL Global Development Group<br>
       Licensed under the PostgreSQL License.
     HTML
+
+    version '17' do
+      self.release = '17.5'
+      self.base_url = "https://www.postgresql.org/docs/#{version}/"
+    end
 
     version '16' do
       self.release = '16.1'

@@ -2,14 +2,15 @@
 
 app.models.Entry = class Entry extends app.Model {
   static applyAliases(string) {
-    if (Entry.ALIASES.hasOwnProperty(string)) {
-      return [string, Entry.ALIASES[string]];
+    const aliases = app.config.docs_aliases;
+    if (aliases.hasOwnProperty(string)) {
+      return [string, aliases[string]];
     } else {
       const words = string.split(".");
       for (let i = 0; i < words.length; i++) {
         var word = words[i];
-        if (Entry.ALIASES.hasOwnProperty(word)) {
-          words[i] = Entry.ALIASES[word];
+        if (aliases.hasOwnProperty(word)) {
+          words[i] = aliases[word];
           return [string, words.join(".")];
         }
       }
@@ -17,43 +18,7 @@ app.models.Entry = class Entry extends app.Model {
     return string;
   }
 
-  static ALIASES = {
-    angular: "ng",
-    "angular.js": "ng",
-    "backbone.js": "bb",
-    "c++": "cpp",
-    coffeescript: "cs",
-    crystal: "cr",
-    elixir: "ex",
-    javascript: "js",
-    julia: "jl",
-    jquery: "$",
-    "knockout.js": "ko",
-    kubernetes: "k8s",
-    less: "ls",
-    lodash: "_",
-    löve: "love",
-    marionette: "mn",
-    markdown: "md",
-    matplotlib: "mpl",
-    modernizr: "mdr",
-    "moment.js": "mt",
-    openjdk: "java",
-    nginx: "ngx",
-    numpy: "np",
-    pandas: "pd",
-    postgresql: "pg",
-    python: "py",
-    "ruby.on.rails": "ror",
-    ruby: "rb",
-    rust: "rs",
-    sass: "scss",
-    tensorflow: "tf",
-    typescript: "ts",
-    "underscore.js": "_",
-  };
   // Attributes: name, type, path
-
   constructor() {
     super(...arguments);
     this.text = Entry.applyAliases(app.Searcher.normalizeString(this.name));

@@ -19,6 +19,11 @@ module Docs
       Code samples licensed under the Apache 2.0 License.
     HTML
 
+    version do
+      self.release = "2.16.1"
+      self.base_url = "https://www.tensorflow.org/api_docs/python/tf"
+    end
+
     version '2.9' do
       self.release = "2.9.1"
       self.base_url = "https://www.tensorflow.org/versions/r#{version}/api_docs/python/tf"
@@ -40,7 +45,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      get_latest_github_release('tensorflow', 'tensorflow', opts)
+      doc = fetch_doc(self.base_url, opts)
+      doc.title[/TensorFlow v([.\d]+)/, 1]
     end
 
     private

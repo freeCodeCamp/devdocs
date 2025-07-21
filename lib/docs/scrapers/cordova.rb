@@ -8,6 +8,7 @@ module Docs
       code: 'https://github.com/apache/cordova'
     }
 
+    html_filters.replace 'clean_html', 'cordova/clean_html_core'
     html_filters.push 'cordova/entries', 'cordova/clean_html'
 
     options[:container] = '.docs'

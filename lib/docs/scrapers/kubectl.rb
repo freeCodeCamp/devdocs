@@ -14,13 +14,13 @@ module Docs
     options[:container] = '#page-content-wrapper'
 
     options[:attribution] = <<-HTML
-      &copy; 2022 The Kubernetes Authors | Documentation Distributed under CC BY 4.0 <br>
-      Copyright &copy; 2022 The Linux Foundation ®. All rights reserved.
+      &copy; 2025 The Kubernetes Authors | Documentation Distributed under CC BY 4.0 <br>
+      Copyright &copy; 2025 The Linux Foundation ®. All rights reserved.
     HTML
 
     # latest version has a special URL that does not include the version identifier 
     version do
-      self.release = "1.26"
+      self.release = "1.33.1"
       self.base_url = "https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands"
     end
 

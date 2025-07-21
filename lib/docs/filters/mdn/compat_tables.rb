@@ -24,11 +24,13 @@ module Docs
       end
 
       BROWSERS = {
+        # Desktop
         'chrome' => 'Chrome',
         'edge' => 'Edge',
         'firefox' => 'Firefox',
         'opera' => 'Opera',
         'safari' => 'Safari',
+        # Mobile
         'chrome_android' => 'Chrome Android',
         'firefox_android' => 'Firefox for Android',
         'opera_android' => 'Opera Android',
@@ -43,7 +45,11 @@ module Docs
 
       def browsers
         if is_javascript
-          {}.merge(BROWSERS).merge({'deno' => 'Deno', 'nodejs' => 'Node.js'})
+          {}.merge(BROWSERS).merge({
+            # Server
+            'deno' => 'Deno',
+            'nodejs' => 'Node.js',
+          })
         else
           BROWSERS
         end
@@ -51,9 +57,9 @@ module Docs
 
       def browser_types
         if is_javascript
-          {'Desktop'=>6, 'Mobile'=>6, 'Server'=>2,}
+          {'Desktop'=>5, 'Mobile'=>6, 'Server'=>2,}
         else
-          {'Desktop'=>6, 'Mobile'=>6,}
+          {'Desktop'=>5, 'Mobile'=>6,}
         end
       end
 

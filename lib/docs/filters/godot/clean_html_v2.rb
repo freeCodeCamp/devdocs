@@ -4,7 +4,7 @@ module Docs
       def call
         if root_page?
           at_css('h1').content = 'Godot Engine'
-          at_css('.admonition.tip').remove
+          at_css('.admonition.caution').remove
         end
 
         css('ul[id].simple li:first-child:last-child').each do |node|

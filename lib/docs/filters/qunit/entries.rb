@@ -8,7 +8,8 @@ module Docs
         'assert' => '2. Assertions',
         'callbacks' => '3. Callback events',
         'config' => '4. Configuration',
-        'extension' => '5. Extension interface'
+        'extension' => '5. Extension interface',
+        'reporters' => '6. Reporters',
       }
       def get_name
         at_css('h1').content

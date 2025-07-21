@@ -2,9 +2,7 @@ module Docs
   class Express < UrlScraper
     self.name = 'Express'
     self.type = 'express'
-    self.release = '4.18.1'
     self.base_url = 'https://expressjs.com/en/'
-    self.root_path = '4x/api.html'
     self.initial_paths = %w(
       starter/installing.html
       guide/routing.html
@@ -28,6 +26,16 @@ module Docs
       &copy; 2017 StrongLoop, IBM, and other expressjs.com contributors.<br>
       Licensed under the Creative Commons Attribution-ShareAlike License v3.0.
     HTML
+
+    version do
+      self.release = '5.1.0'
+      self.root_path = '5x/api.html'
+    end
+
+    version '4' do
+      self.release = '4.21.2'
+      self.root_path = '4x/api.html'
+    end
 
     def get_latest_version(opts)
       get_npm_version('express', opts)

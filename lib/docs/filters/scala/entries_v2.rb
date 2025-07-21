@@ -71,7 +71,7 @@ module Docs
       # name from the HTML because companion object classes may be broken out into
       # their own entries (by the source documentation). When that happens,
       # we want to group these classes (like `scala.reflect.api.Annotations.Annotation`)
-      # under the package name, and not the fully-qualfied name which would
+      # under the package name, and not the fully-qualified name which would
       # include the companion object.
       def package_name
         name = package_drop_last(slug_parts)

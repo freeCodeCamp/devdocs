@@ -90,7 +90,7 @@ module Docs
         css('svg *[style], svg *[fill]').each do |node|
           next if slug == 'geopoly'
           # transform style in SVG diagrams, e.g. on https://sqlite.org/lang_insert.html
-          if node['style'] == 'fill:rgb(0,0,0)' or node['fill'] == 'rgb(0,0,0)'
+          if (node['style'] or '').starts_with?('fill:rgb(0,0,0)') or node['fill'] == 'rgb(0,0,0)'
             node.add_class('fill')
             node.remove_attribute('fill')
           elsif node['style'] == 'fill:none;stroke-width:2.16;stroke:rgb(0,0,0);'

@@ -14,11 +14,11 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    options[:skip_patterns] = [/tutorial/]
+    options[:skip_patterns] = [/tutorial/, /getting-started/]
 
-    self.release = '3.2.0'
+    self.release = '5.10.2'
     self.base_url = 'https://docs.astro.build/en/'
-    self.initial_paths = %w(getting-started/)
+    self.initial_paths = %w(install-and-setup/)
 
     html_filters.push 'astro/entries', 'astro/clean_html'
 

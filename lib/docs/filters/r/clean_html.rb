@@ -13,8 +13,8 @@ module Docs
           title = at_css('h2')
           title.inner_html = "<code>#{slug_parts[3]}</code> #{title.content}"
 
-          summary = at_css('table[summary]')
-          summary.remove if summary
+          css('table:contains("R Documentation")').remove
+          css('table[summary]').remove
 
           css('hr ~ *, hr').remove
 

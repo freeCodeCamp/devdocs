@@ -19,7 +19,7 @@ const withImage = function (url, action) {
 };
 
 this.setFaviconForDoc = function (doc) {
-  if (currentSlug === doc.slug) {
+  if (currentSlug === doc.slug || app.settings.get("noDocSpecificIcon")) {
     return;
   }
 

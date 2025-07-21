@@ -28,9 +28,18 @@
 
   p > code, li > code { @extend %label; }
 
+  details { @extend %note; @extend %box; }
+  details.baseline-indicator.not { @extend %note; @extend %note-gray; }
+  details.baseline-indicator.low { @extend %note; @extend %note-blue; }
+  details.baseline-indicator.high { @extend %note; @extend %note-green; }
+  summary > div { display: inline; }
+  summary .status-title { font-weight: bold; }
+
   > .note,
   .notecard, // MDN 2021
-  .notice,
+  .notice {
+    @extend %note; @extend %note-blue;
+  }
   .warning,
   .overheadIndicator,
   .blockIndicator,

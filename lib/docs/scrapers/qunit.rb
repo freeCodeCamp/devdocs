@@ -4,8 +4,8 @@ module Docs
   class Qunit < UrlScraper
     self.name = 'QUnit'
     self.type = 'qunit'
-    self.release = '2.19.3'
-    self.base_url = 'https://api.qunitjs.com/'
+    self.release = '2.24.1'
+    self.base_url = 'https://qunitjs.com/api/'
     self.root_path = '/'
     self.links = {
       home: 'https://qunitjs.com/',
@@ -18,13 +18,14 @@ module Docs
 
     options[:container] = '.main'
     options[:skip_patterns] = [
-      /deprecated/,
       /^QUnit$/,
       /^assert$/,
       /^callbacks$/,
       /^async$/,
       /^config$/,
       /^extension$/,
+      /^deprecated$/,
+      /^removed$/,
     ]
 
     options[:attribution] = <<-HTML

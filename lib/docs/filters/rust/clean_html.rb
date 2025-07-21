@@ -19,6 +19,7 @@ module Docs
           css('.anchor').remove
 
           css('.main-heading > h1').each do |node|
+            node.at('button')&.remove
             node.parent.name = 'h1'
             node.parent.content = node.content
           end
@@ -28,6 +29,8 @@ module Docs
             node.content = node.content
           end
         end
+
+        css('.doc-anchor').remove
 
         # Fix notable trait sections
         css('.method, .rust.trait').each do |node|

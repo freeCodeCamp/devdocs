@@ -3,7 +3,7 @@ module Docs
     self.name = 'R'
     self.slug = 'r'
     self.type = 'simple'
-    self.release = '4.1.0'
+    self.release = '4.4.2'
     self.links = {
       home: 'https://www.r-project.org/',
       code: 'https://svn.r-project.org/R/'

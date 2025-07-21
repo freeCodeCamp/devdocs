@@ -59,6 +59,12 @@ curl -L https://github.com/erlang/otp/releases/download/OTP-$RELEASE/otp_doc_htm
 bsdtar --extract --file - --directory=docs/erlang\~$VERSION/
 ```
 
+## es-toolkit
+
+```sh
+git clone https://github.com/toss/es-toolkit docs/es_toolkit
+```
+
 ## Gnu
 
 ### Bash
@@ -142,6 +148,13 @@ $GS = '/usr/local/opt/ghostscript/bin/gs';	# GhostScript
 ```
 </details>
 
+## Man
+
+```sh
+wget --recursive --no-parent https://man7.org/linux/man-pages/
+mv man7.org/linux/man-pages/ docs/man/
+```
+
 ## NumPy
 
 ```sh
@@ -150,15 +163,13 @@ curl https://numpy.org/doc/$VERSION/numpy-html.zip | \
 bsdtar --extract --file=- --directory=docs/numpy~$VERSION/
 ```
 
-## OCaml
-
-Download from https://www.ocaml.org/docs/ the HTML reference:
-https://v2.ocaml.org/releases/4.14/ocaml-4.14-refman-html.tar.gz
-and extract it as `docs/ocaml`:
+## OpenGL
 
 ```sh
-curl https://v2.ocaml.org/releases/$VERSION/ocaml-$VERSION-refman-html.tar.gz | \
-tar xz --transform 's/htmlman/ocaml/' --directory docs/
+cd docs/
+git clone https://github.com/KhronosGroup/OpenGL-Refpages.git
+ln -s OpenGL-Refpages/gl4/html/ opengl~4
+ln -s OpenGL-Refpages/gl2.1/xhtml/ opengl~2.1
 ```
 
 ## OpenJDK
@@ -183,9 +194,12 @@ mv ./usr/share/doc/openjdk-16-jre-headless/api/ docs/openjdk~$VERSION
 
 ## Pandas
 
+From the home directory; `devdocs`, execute below:
+
 ```sh
-curl https://pandas.pydata.org/docs/pandas.zip | bsdtar --extract --file - --directory=docs/pandas~1
+curl https://pandas.pydata.org/docs/pandas.zip -o tmp.zip && unzip tmp.zip -d docs/pandas~2 && rm tmp.zip
 ```
+
 
 ## PHP
 Click the link under the "Many HTML files" column on https://www.php.net/download-docs.php, extract the tarball, change its name to `php` and put it in `docs/`.
@@ -214,7 +228,14 @@ tar xj --strip-components=1
 ```
 
 ## R
+
 ```bash
+sudo dnf install bzip2-devel
+sudo dnf install gcc-gfortran
+sudo dnf install libcurl-devel
+sudo dnf install texinfo
+sudo dnf install xz-devel
+
 DEVDOCSROOT=docs/r
 RLATEST=https://cran.r-project.org/src/base/R-latest.tar.gz # or /R-${VERSION::1}/R-$VERSION.tar.gz
 
@@ -224,7 +245,7 @@ mkdir -p "$RSOURCEDIR" "$RBUILDDIR" "$DEVDOCSROOT"
 
 # Download, configure, and build with static HTML pages
 curl "$RLATEST" | tar -C "$RSOURCEDIR" -xzf - --strip-components=1
-(cd "$RBUILDDIR" && "$RSOURCEDIR/configure" --enable-prebuilt-html --with-recommended-packages --disable-byte-compiled-packages --disable-shared --disable-java)
+(cd "$RBUILDDIR" && "$RSOURCEDIR/configure" --enable-prebuilt-html --with-recommended-packages --disable-byte-compiled-packages --disable-shared --disable-java --with-readline=no --with-x=no)
 make _R_HELP_LINKS_TO_TOPICS_=FALSE -C "$RBUILDDIR"
 
 # Export all html documentation built − global, and per-package
@@ -239,14 +260,25 @@ done
 
 ### Nokogiri
 ### Ruby / Minitest
+
+```sh
+git clone https://github.com/seattlerb/minitest
+cd minitest/
+bundle install
+bundle add rdoc hoe
+bundle exec rak docs
+cd ..
+cp -r minitest/docs $DEVDOCS/docs/minitest
+```
+
 ### Ruby on Rails
 * Download a release at https://github.com/rails/rails/releases or clone https://github.com/rails/rails.git (checkout to the branch of the rails' version that is going to be scraped)
 * Open `railties/lib/rails/api/task.rb` and comment out any code related to sdoc (`configure_sdoc`)
 * Run `bundle config set --local without 'db job'` (in the Rails directory)
 * Run `bundle install && bundle exec rake rdoc` (in the Rails directory)
-* Run `cd guides && bundle exec rake guides:generate:html`
-* Copy the `guides/output` directory to `html/guides`
-* Copy the `html` directory to `docs/rails~[version]`
+* Run `cd guides && bundle exec rake guides:generate:html && cd ..`
+* Run `cp -r guides/output html/guides`
+* Run `cp -r html $DEVDOCS/docs/rails~[version]`
 
 ### Ruby
 Download the tarball of Ruby from https://www.ruby-lang.org/en/downloads/, extract it, run
@@ -273,4 +305,19 @@ it to `docs/sqlite`
 
 ```sh
 curl https://sqlite.org/2022/sqlite-doc-3400000.zip | bsdtar --extract --file - --directory=docs/sqlite/ --strip-components=1
+```
+
+## Three.js
+Download the docs from https://github.com/mrdoob/three.js/tree/dev/files or run the following commands in your terminal:
+Make sure to set the version per the release tag (e.g. r160). Note that the r prefix is already included, only the version number is needed.
+
+```sh
+curl https://codeload.github.com/mrdoob/three.js/tar.gz/refs/tags/r${VERSION} > threejs.tar.gz
+tar -xzf threejs.tar.gz
+mkdir -p docs/threejs~${VERSION}
+mv three.js-r${VERSION}/list.json tmp/list.json
+mv three.js-r${VERSION}/docs/* docs/threejs~${VERSION}/
+
+rm -rf three.js-r${VERSION}/
+rm threejs.tar.gz
 ```

@@ -35,6 +35,10 @@ module Docs
           node.content = node.content.capitalize
         end
 
+        css('pre').each do |node|
+          node['data-language'] = 'tcl'
+        end
+
         doc
       end
     end

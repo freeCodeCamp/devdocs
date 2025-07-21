@@ -14,7 +14,7 @@ module Docs
       end
 
       def get_type
-        if root_page? || slug == 'faq' || slug == 'completions' || slug == 'fish_for_bash_users'
+        if root_page? || slug == 'faq' || slug == 'completions' || slug == 'fish_for_bash_users' || slug == 'prompt'
           'Manual'
         elsif slug.starts_with?('cmds') || slug == 'commands'
           'Commands'

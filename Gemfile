@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '3.3.2'
+ruby '3.4.5'
 
 gem 'activesupport', require: false
 gem 'html-pipeline'
@@ -39,7 +39,6 @@ group :development do
 end
 
 group :docs do
-  gem 'net-sftp', require: false
   gem 'progress_bar', require: false
   gem 'redcarpet'
   gem 'tty-pager', require: false

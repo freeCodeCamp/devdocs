@@ -39,8 +39,10 @@ module Docs
           when "h3"
             type = node.text
           when "h4"
+            # Parent <div>'s ID set in github/clean_html.
+            id = node.parent.attributes["id"].value
             name = node.text.split(' :: ')[0]
-            id = node.attributes["id"].value
+
             entries << [name, id, type]
           end
         end
