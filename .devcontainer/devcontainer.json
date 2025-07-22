@@ -1,0 +1,24 @@
+{
+    "name": "DevDocs Dev Container",
+    "build": {
+      "context": "../",
+      "dockerfile": "../Dockerfile",
+      "target": "devdocs-dev"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "streetsidesoftware.code-spell-checker",
+                "mhutchie.git-graph",
+                "github.vscode-github-actions",
+                "ms-azuretools.vscode-docker",
+                "EditorConfig.EditorConfig"
+            ]
+        }
+    },
+    "mounts": [
+        {"source":"/var/run/docker.sock","target":"/var/run/docker.sock","type": "bind"},
+        {"source": "devdocs-downloaded","target": "/devdocs/public/docs","type": "volume"}
+    ],
+    "appPort": 9292
+}
