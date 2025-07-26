@@ -16,7 +16,8 @@ module Docs
 
     options[:follow_links] = false
     options[:only_patterns] = [/guide\//, /api\//]
-    options[:skip_patterns] = [/api\/([^\/]+)\.json/, /api\/index/]
+    options[:skip_patterns] = []
+
     options[:fix_urls_before_parse] = ->(url) do
       url.sub! %r{\A(\.\/)?guide/}, '/guide/'
       url.sub! %r{\Aapi/}, '/api/'
@@ -44,8 +45,10 @@ module Docs
       Request.run "#{self.class.base_url}generated/navigation.json" do |response|
         data = JSON.parse(response.body)
         dig = ->(entry) do
-          initial_urls << url_for("generated/docs/#{entry['url']}.json") if entry['url'] && entry['url'] != 'api'
-          entry['children'].each(&dig) if entry['children']
+          if entry['url'] && entry['url'] != 'api'
+            initial_urls << url_for("generated/docs/#{entry['url']}.json")
+          end
+          entry['children']&.each(&dig)
         end
         data['SideNav'].each(&dig)
       end
@@ -55,14 +58,13 @@ module Docs
         dig = ->(entry) do
           initial_urls << url_for("generated/docs/#{entry['path']}.json") if entry['path']
           initial_urls << url_for("generated/docs/api/#{entry['name']}.json") if entry['name'] && !entry['path']
-          entry['items'].each(&dig) if entry['items']
+          entry['items']&.each(&dig)
         end
         data.each(&dig)
       end
 
       initial_urls.select do |url|
-        options[:only_patterns].any? { |pattern| url =~ pattern } &&
-          options[:skip_patterns].none? { |pattern| url =~ pattern }
+        options[:only_patterns].any? { |pattern| url =~ pattern }
       end
     end
 
