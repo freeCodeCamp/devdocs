@@ -15,6 +15,7 @@ module Docs
           name.gsub!(/[[:digit:]]/, '')
         end
 
+        name.remove! '¶'
         name.strip
 
       end
@@ -38,7 +39,7 @@ module Docs
 
         entries = []
 
-        css('table[class^=index-] td[valign=top] > a').each_slice(2) do |entry_node, section_node|
+        css('dt > a').each_slice(2) do |entry_node, section_node|
           entry_name = entry_node.content
           entry_path = entry_node['href']
           entries << [entry_name, entry_path, entry_type]
