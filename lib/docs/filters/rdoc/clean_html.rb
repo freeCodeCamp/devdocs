@@ -30,11 +30,23 @@ module Docs
           node.remove_attribute 'id'
         end
 
-        # Convert "click to toggle source" into a link
+        # (RDoc prior to Ruby 3.4) Convert "click to toggle source" into a link
         css('.method-click-advice').each do |node|
           node.name = 'a'
           node.content = 'Show source'
         end
+
+        # (RDoc for Ruby 3.4+) Add a "Show source" link
+        css('.method-source-toggle').each do |node|
+          link_node = Nokogiri::XML::Node.new('a', doc.document)
+          link_node.content = 'Show source'
+          link_node['class'] = 'method-click-advice'
+
+          node.parent.parent.at_css('.method-heading').add_child(link_node)
+        end
+
+        # (RDoc for Ruby 3.4+) Remove the additional "Source" toggle from the page
+        css('.method-controls').remove
 
         # Add class to differentiate Ruby code from C code
         css('.method-source-code').each do |node|
