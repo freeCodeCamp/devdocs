@@ -12,7 +12,10 @@ class App < Sinatra::Application
   Rack::Mime::MIME_TYPES['.webapp'] = 'application/x-web-app-manifest+json'
 
   configure do
-    use Rack::SslEnforcer, only_environments: ['production', 'test'], hsts: true, force_secure_cookies: false
+
+    unless ENV.has_key?('DEVDOCS_DISABLE_SSL')
+      use Rack::SslEnforcer, only_environments: ['production', 'test'], hsts: !ENV.has_key?('DEVDOCS_DISABLE_HSTS'), force_secure_cookies: false
+    end
 
     set :sentry_dsn, ENV['SENTRY_DSN']
     set :protection, except: [:frame_options, :xss_header]
@@ -26,6 +29,7 @@ class App < Sinatra::Application
     set :assets_compile, %w(*.png docs.js docs.json application.js application.css application-dark.css)
 
     require 'yajl/json_gem'
+    set :docs_host, ENV.fetch("DEVDOCS_HOST", "devdocs.io")
     set :docs_prefix, 'docs'
     set :docs_origin, File.join('', docs_prefix)
     set :docs_path, File.join(public_folder, docs_prefix)
@@ -73,7 +77,7 @@ class App < Sinatra::Application
 
   configure :production do
     set :static, false
-    set :docs_origin, '//documents.devdocs.io'
+    set :docs_origin, ENV.fetch("DEVDOCS_DOCS_ORIGIN", "documents.devdocs.io")
     set :csp, "default-src 'self' *; script-src 'self' 'nonce-devdocs' https://www.google-analytics.com https://secure.gaug.es https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
 
     use Rack::ConditionalGet
@@ -126,8 +130,8 @@ class App < Sinatra::Application
   end
 
   configure :production do
-    set :docs, parse_docs
-    set :news, parse_news
+    set :docs, -> { parse_docs }
+    set :news, -> { parse_news }
   end
 
   helpers do
@@ -424,8 +428,10 @@ class App < Sinatra::Application
       redirect "/#{doc}#{type}/#{query_string_for_redirection}"
     elsif rest.length > 1 && rest.end_with?('/')
       redirect "/#{doc}#{type}#{rest[0...-1]}#{query_string_for_redirection}"
-    elsif user_has_docs?(doc) && supports_js_redirection?
+    elsif !request.path.end_with?(".html") && user_has_docs?(doc) && supports_js_redirection?
       redirect_via_js(request.path)
+    elsif settings.docs_host == settings.docs_origin && File.exist?(File.join(settings.public_folder, "docs", request.path.gsub("..","")))
+      send_file File.join(settings.public_folder, "docs", request.path.gsub("..","")), status: status
     else
       response.headers['Content-Security-Policy'] = settings.csp if settings.csp
       erb :other
