@@ -4,7 +4,7 @@ module Docs
 
       def get_name
         if result[:path].start_with?('api/deno/')
-          at_css('main')['id'][/\Asymbol_([.\w]+)/, 1]
+          at_css('main[id!="content"]')['id'][/\Asymbol_([.\w]+)/, 1]
         else
           at_css('main article h1').content
         end

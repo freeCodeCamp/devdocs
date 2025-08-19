@@ -3,7 +3,7 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         if result[:path].start_with?('api/deno/')
-          @doc = at_css('main')
+          @doc = at_css('main[id!="content"] article', 'main[id!="content"]')
         else
           @doc = at_css('main article .markdown-body')
         end
@@ -25,6 +25,7 @@ module Docs
         end
 
         css('a.header-anchor').remove()
+        css('.breadcrumbs').remove()
 
         doc
       end

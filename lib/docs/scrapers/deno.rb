@@ -8,8 +8,9 @@ module Docs
     }
 
     # https://github.com/denoland/manual/blob/main/LICENSE
+    # https://github.com/denoland/deno/blob/main/LICENSE.md
     options[:attribution] = <<-HTML
-      &copy; 2018–2024 the Deno authors<br>
+      &copy; 2018–2025 the Deno authors<br>
       Licensed under the MIT License.
     HTML
 
@@ -17,7 +18,7 @@ module Docs
     html_filters.push 'deno/entries', 'deno/clean_html'
 
     version '2' do
-      self.release = '2.1.1'
+      self.release = '2.4.4'
       self.base_url = 'https://docs.deno.com/'
       self.root_path = 'runtime'
       options[:only_patterns] = [/\Aruntime/, /\Aapi\/deno\/~/, /\Adeploy/, /\Asubhosting/]
