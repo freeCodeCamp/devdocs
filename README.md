@@ -62,6 +62,56 @@ The `thor docs:download` command is used to download pre-generated documentation
 
 **Note:** there is currently no update mechanism other than `git pull origin main` to update the code and `thor docs:download --installed` to download the latest version of the docs. To stay informed about new releases, be sure to [watch](https://github.com/freeCodeCamp/devdocs/subscription) this repository.
 
+## Deploying via Docker
+The DevDocs server may also be deployed as a Docker container:
+
+```sh
+# First, pull the image
+docker pull devdocs/devdocs
+
+# Next, download documentation that you want, this example downloads the default set of docs, and the ruby docs.
+# Use: --default to download the default set of docs
+# Use: --all to download ALL available docs (WARNING: Will take a long time!)
+docker run --rm \
+    -v devdocs-docs:/devdocs/public/docs \
+    -v devdocs-assets:/devdocs/public/assets \
+    devdocs/devdocs thor docs:download --default ruby
+
+# Now compile the assets. This must be done after you download all the documentation you want.
+docker run --rm \
+    -v devdocs-docs:/devdocs/public/docs \
+    -v devdocs-assets:/devdocs/public/assets \
+    devdocs/devdocs thor assets:compile
+
+# Start the DevDocs container (accessible at http://localhost:9292)
+docker run \
+    -v devdocs-docs:/devdocs/public/docs \
+    -v devdocs-assets:/devdocs/public/assets \
+    -e DEVDOCS_DISABLE_SSL \
+    -e DEVDOCS_DOCS_ORIGIN=localhost:9292 \
+    -e DEVDOCS_HOST=localhost:9292 \
+    -p 9292:9292 \
+    devdocs/devdocs
+```
+
+The `devdocs-docs` and `devdocs-assets` volumes contain the downloaded documentation and static site data used by the server.
+
+There are multiple environment variables that you can set to configure the DevDocs server.
+
+These can be useful when deploying DevDocs behind a reverse proxy or on your own offline network.
+
+| Environment Variable | Default Value        | Description                                                                                     |
+|---------------------:|:---------------------|:------------------------------------------------------------------------------------------------|
+|`DEVDOCS_DISABLE_SSL` |Not defined           | Define this variable to disable HTTPS redirect.                                                 |
+|`DEVDOCS_HOST`        |`devdocs.io`          | Hostname that is serving the DevDocs application.                                               |
+|`DEVDOCS_DOCS_ORIGIN` |`documents.devdocs.io`| Hostname that is serving the DevDocs documentation pages.                                       |
+|`DEVDOCS_DISABLE_HSTS`|Not defined           | Define this variable to disable HSTS. If `DEVDOCS_DISABLE_SSL` is defined then this is implied. |
+
+To build the image fresh, use the below command:
+```bash
+docker build . -t devdocs/devdocs --target devdocs
+```
+
 ## Vision
 
 DevDocs aims to make reading and searching reference documentation fast, easy and enjoyable.

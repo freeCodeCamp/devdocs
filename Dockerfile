@@ -1,24 +1,55 @@
-FROM ruby:3.4.5
+#
+# Base layer that both dev and runtime inherit from.
+#
+FROM ruby:3.4.5-alpine AS devdocs-base
 ENV LANG=C.UTF-8
-ENV ENABLE_SERVICE_WORKER=true
 
+ARG USERNAME=devdocs
+ARG USER_ID=1000
+ARG GROUP_ID=1000
 WORKDIR /devdocs
+EXPOSE 9292
 
-RUN apt-get update && \
-    apt-get -y install git nodejs libcurl4 && \
-    gem install bundler && \
-    rm -rf /var/lib/apt/lists/*
+COPY Gemfile Gemfile.lock Rakefile Thorfile /devdocs/
 
-COPY Gemfile Gemfile.lock Rakefile /devdocs/
+RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev libcurl oxipng && \
+    rm -rf /var/cache/apk/* /usr/lib/node_modules
 
-RUN bundle install --system && \
+RUN gem install bundler && \
+    bundle config set path.system true && \
+    bundle config set without test && \
+    bundle install && \
     rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache
 
-COPY . /devdocs
+RUN addgroup -g $GROUP_ID $USERNAME && \
+    adduser -u $USER_ID -G $USERNAME -D -h /devdocs $USERNAME && \
+    chown -R $USERNAME:$USERNAME /devdocs
 
-RUN thor docs:download --all && \
-    thor assets:compile && \
+#
+# Development Image
+#
+FROM devdocs-base AS devdocs-dev
+RUN bundle config unset without && \
+    bundle install && \
+    apk add --update bash curl && \
+    curl -LO https://download.docker.com/linux/static/stable/x86_64/docker-26.1.4.tgz && \
+    tar -xzf docker-26.1.4.tgz && \
+    mv docker/docker /usr/bin && \
+    rm -rf docker docker-26.1.4.tgz && \
+    rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache
+
+VOLUME [ "/devdocs",  "/devdocs/public/docs", "/devdocs/public/assets" ]
+CMD ["bash"]
+
+#
+# Runtime Image
+#
+FROM devdocs-base AS devdocs
+ENV ENABLE_SERVICE_WORKER=true
+COPY . /devdocs/
+RUN apk del gzip build-base git zlib-dev && \
+    chown -R $USERNAME:$USERNAME /devdocs && \
     rm -rf /tmp
-
-EXPOSE 9292
-CMD rackup -o 0.0.0.0
+VOLUME [ "/devdocs/public/docs", "/devdocs/public/assets" ]
+USER $USERNAME
+CMD ["rackup", "--host", "0.0.0.0", "-E", "production"]
