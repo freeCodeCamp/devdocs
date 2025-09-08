@@ -18,4 +18,73 @@
     float: right;
     margin-left: .5rem;
   }
+
+  .grammar-container { @extend %note, %note-gray; }
+
+  /* Railroad styles from:
+   * https://github.com/rust-lang/reference/blob/f82156b8c3a784158ce609bebfa3a77b5ae8a5ed/theme/reference.css#L683-L734
+   * Plus CSS variables inheriting from DevDocs variables
+   */
+
+  svg.railroad {
+    --railroad-background-color: var(--boxBackground);
+    --railroad-background-image:
+    linear-gradient(to right, rgb(from currentColor r g b / 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(from currentColor r g b / 0.1) 1px, transparent 1px);
+    --railroad-path-stroke: currentColor;
+    --railroad-rect-stroke: currentColor;
+    --railroad-rect-fill: var(--noteBackground);
+    --railroad-text-fill: currentColor;
+
+    background-color: var(--railroad-background-color);
+    background-size: 15px 15px;
+    background-image: var(--railroad-background-image);
+  }
+
+  svg.railroad rect.railroad_canvas {
+    stroke-width: 0px;
+    fill: none;
+  }
+
+  svg.railroad path {
+    stroke-width: 3px;
+    stroke: var(--railroad-path-stroke);
+    fill: none;
+  }
+
+  svg.railroad .debug {
+    stroke-width: 1px;
+    stroke: red;
+  }
+
+  svg.railroad text {
+    font: 14px monospace;
+    text-anchor: middle;
+    fill: var(--railroad-text-fill);
+  }
+
+  svg.railroad .nonterminal text {
+    font-weight: bold;
+  }
+
+  svg.railroad text.comment {
+    font: italic 12px monospace;
+  }
+
+  svg.railroad rect {
+    stroke-width: 3px;
+    stroke: var(--railroad-rect-stroke);
+    fill: var(--railroad-rect-fill);
+  }
+
+  svg.railroad g.labeledbox>rect {
+    stroke-width: 1px;
+    stroke: grey;
+    stroke-dasharray: 5px;
+    fill: rgba(90, 90, 150, .1);
+  }
+
+  svg.railroad g.exceptbox > rect {
+    fill:rgba(245, 160, 125, .1);
+  }
 }
