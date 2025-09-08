@@ -57,6 +57,20 @@ module Docs
           node.before(node.children).remove
         end
 
+        css('button.grammar-toggle-railroad').remove
+        css('.grammar-container').each do |node|
+          next_element = node.next_element
+          if next_element && next_element['class'] && next_element['class'].include?('grammar-railroad')
+            next_element.remove
+            node.add_child(next_element)
+          end
+        end
+
+        css('.grammar-railroad').each do |node|
+          node.name = 'details'
+          node.prepend_child("<summary>Syntax diagram</summary>")
+        end
+
         css('a.header').each do |node|
           unless node.first_element_child.nil?
             node.first_element_child['id'] = node['name'] || node['id']
