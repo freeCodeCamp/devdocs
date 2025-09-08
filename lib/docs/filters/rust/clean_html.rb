@@ -64,6 +64,12 @@ module Docs
             next_element.remove
             node.add_child(next_element)
           end
+
+          # We changed this to a <pre> in parse(), changing it back here
+          node.name = 'div'
+          node.css('.grammar-literal').each do |literal|
+            literal.name = 'code'
+          end
         end
 
         css('.grammar-railroad').each do |node|

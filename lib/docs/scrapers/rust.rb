@@ -57,6 +57,8 @@ module Docs
 
     def parse(response) # Hook here because Nokogori removes whitespace from headings
       response.body.gsub! %r{<h[1-6] class="code-header">}, '<pre class="code-header">'
+      # And the reference uses whitespace for indentation in grammar definitions
+      response.body.gsub! %r{<div class="grammar-container">([\W\w]+?)</div>}, '<pre class="grammar-container">\1</pre>'
       super
     end
   end
