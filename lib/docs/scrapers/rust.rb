@@ -9,7 +9,7 @@ module Docs
     self.initial_paths = %w(
       reference/introduction.html
       std/index.html
-      error-index.html)
+      error_codes/error-index.html)
     self.links = {
       home: 'https://www.rust-lang.org/',
       code: 'https://github.com/rust-lang/rust'
@@ -21,7 +21,8 @@ module Docs
       /\Abook\//,
       /\Areference\//,
       /\Acollections\//,
-      /\Astd\// ]
+      /\Astd\//,
+      /\Aerror_codes\//, ]
 
     options[:skip] = %w(book/README.html book/ffi.html)
     options[:skip_patterns] = [/(?<!\.html)\z/, /\/print\.html/, /\Abook\/second-edition\//]

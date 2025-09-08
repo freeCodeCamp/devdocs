@@ -4,9 +4,9 @@ module Docs
   class Rust
     class CleanHtmlFilter < Filter
       def call
-        if slug.start_with?('book') ||  slug.start_with?('reference')
+        if slug.start_with?('book') ||  slug.start_with?('reference') || slug.start_with?('error_codes')
           @doc = at_css('#content main')
-        elsif slug == 'error-index'
+        elsif slug.start_with?('error_codes')
           css('.error-undescribed').remove
 
           css('.error-described').each do |node|
