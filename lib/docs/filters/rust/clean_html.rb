@@ -65,6 +65,10 @@ module Docs
             node.add_child(next_element)
           end
 
+          node.css('[onclick="show_railroad()"]').each do |subnode|
+            subnode.remove_attribute('onclick')
+          end
+
           # We changed this to a <pre> in parse(), changing it back here
           node.name = 'div'
           node.css('.grammar-literal').each do |literal|
