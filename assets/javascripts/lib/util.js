@@ -353,6 +353,16 @@ $.lockScroll = function (el, fn) {
   }
 };
 
+// If `el` is inside any `<details>` elements, expand them.
+$.openDetailsAncestors = function (el) {
+  while (el) {
+    if (el.tagName === "DETAILS") {
+      el.open = true;
+    }
+    el = el.parentElement;
+  }
+}
+
 let smoothScroll =
   (smoothStart =
   smoothEnd =
