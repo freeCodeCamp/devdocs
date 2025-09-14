@@ -1,7 +1,7 @@
 module Docs
   class Go < UrlScraper
     self.type = 'go'
-    self.release = '1.25.0'
+    self.release = '1.25.1'
     self.base_url = 'https://golang.org/pkg/'
     self.links = {
       home: 'https://golang.org/',
@@ -10,7 +10,7 @@ module Docs
 
     # Run godoc locally, since https://golang.org/pkg/ redirects to https://pkg.go.dev/std with rate limiting / scraping protection.
 
-    # podman run --net host --rm -it docker.io/golang:1.25.0
+    # podman run --net host --rm -it docker.io/golang:1.25.1
     #podman# go install golang.org/x/tools/cmd/godoc@latest
     #podman# rm -r /usr/local/go/test/
     #podman# godoc -http 0.0.0.0:6060 -v
@@ -18,8 +18,8 @@ module Docs
     # or using alpine
     # podman run --net host --rm -it alpine:latest
     #podman# apk add curl
-    #podman# curl -LO https://go.dev/dl/go1.25.0.linux-amd64.tar.gz
-    #podman# tar xf go1.25.0.linux-amd64.tar.gz
+    #podman# curl -LO https://go.dev/dl/go1.25.1.linux-amd64.tar.gz
+    #podman# tar xf go1.25.1.linux-amd64.tar.gz
     #podman# go/bin/go install golang.org/x/tools/cmd/godoc@latest
     #podman# /root/go/bin/godoc -http 0.0.0.0:6060 -v
 
