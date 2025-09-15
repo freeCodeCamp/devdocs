@@ -3,7 +3,7 @@ module Docs
     prepend FixInternalUrlsBehavior
     prepend FixRedirectionsBehavior
 
-    # release = '2024-08-20'
+    # release = '2025-09-15'
     self.name = 'SVG'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/SVG'
     self.links = {
@@ -16,9 +16,9 @@ module Docs
     options[:root_title] = 'SVG'
 
     options[:title] = ->(filter) do
-      if filter.slug.starts_with?('Element/')
+      if filter.slug.starts_with?('Reference/Element/')
         "<#{filter.default_title}>"
-      elsif filter.slug != 'Attribute' && filter.slug != 'Element'
+      elsif filter.slug != 'Reference/Attribute' && filter.slug != 'Reference/Element'
         filter.default_title
       else
         false

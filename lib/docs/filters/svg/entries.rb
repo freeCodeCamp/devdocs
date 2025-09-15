@@ -3,9 +3,11 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = super
-        name.gsub!('Element.', '')
         name.gsub!('Attribute.', '')
-        name.gsub!('Tutorial.', '')
+        name.gsub!('Element.', '')
+        name.gsub!('Guides.', '')
+        name.gsub!('Reference.', '')
+        name.gsub!('Tutorials.', '')
         name.gsub!('_', '')
 
         if name.in?(%w(Element Attribute Content\ type))
@@ -16,14 +18,14 @@ module Docs
       end
 
       def get_type
-        if slug.start_with?('Element')
+        if slug.start_with?('Reference/Element')
           'Elements'
-        elsif slug.start_with?('Attribute')
+        elsif slug.start_with?('Reference/Attribute')
           'Attributes'
-        elsif slug.start_with?('Tutorial')
-          'Tutorial'
-        elsif slug == 'Content_type'
-          'Content types'
+        elsif slug.start_with?('Guides')
+          'Guides'
+        elsif slug.start_with?('Tutorials')
+          'Tutorials'
         else
           'Miscellaneous'
         end
