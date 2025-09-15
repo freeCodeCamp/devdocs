@@ -5,31 +5,23 @@ module Docs
       # Generate browser compatibility table
       # Fixes "BCD tables only load in the browser"
       # https://github.com/mdn/browser-compat-data
-      # https://github.com/mdn/yari/tree/main/client/src/document/ingredients/browser-compatibility-table
+      # https://github.com/mdn/yari/tree/main/client/src/lit/compat
 
       def call
-        if at_css('#browser_compatibility') \
-          and not at_css('#browser_compatibility').next_sibling.classes.include?('warning') \
-          and not at_css('#browser_compatibility').next_sibling.content.match?('Supported')
-
-          at_css('#browser_compatibility').next_sibling.remove
-
-          compatibility_tables = generate_compatibility_table()
-          compatibility_tables.each do |table|
-            at_css('#browser_compatibility').add_next_sibling(table)
-          end
-        end
+        generate_compatibility_table()
 
         doc
       end
 
-      BROWSERS = {
+      BROWSERS_DESKTOP = {
         # Desktop
         'chrome' => 'Chrome',
         'edge' => 'Edge',
         'firefox' => 'Firefox',
         'opera' => 'Opera',
         'safari' => 'Safari',
+      }
+      BROWSERS_MOBILE = {
         # Mobile
         'chrome_android' => 'Chrome Android',
         'firefox_android' => 'Firefox for Android',
@@ -37,6 +29,13 @@ module Docs
         'safari_ios' => 'Safari on IOS',
         'samsunginternet_android' => 'Samsung Internet',
         'webview_android' => 'WebView Android',
+        'webview_ios' => 'WebView on iOS',
+      }
+      BROWSERS_SERVER = {
+        # Server
+        'bun' => 'Bun',
+        'deno' => 'Deno',
+        'nodejs' => 'Node.js',
       }
 
       def is_javascript
@@ -45,40 +44,28 @@ module Docs
 
       def browsers
         if is_javascript
-          {}.merge(BROWSERS).merge({
-            # Server
-            'deno' => 'Deno',
-            'nodejs' => 'Node.js',
-          })
+          {}.merge(BROWSERS_DESKTOP).merge(BROWSERS_MOBILE).merge(BROWSERS_SERVER)
         else
-          BROWSERS
+          {}.merge(BROWSERS_DESKTOP).merge(BROWSERS_MOBILE)
         end
       end
 
       def browser_types
         if is_javascript
-          {'Desktop'=>5, 'Mobile'=>6, 'Server'=>2,}
+          {'Desktop'=>BROWSERS_DESKTOP.length, 'Mobile'=>BROWSERS_MOBILE.length, 'Server'=>BROWSERS_SERVER.length,}
         else
-          {'Desktop'=>5, 'Mobile'=>6,}
+          {'Desktop'=>BROWSERS_DESKTOP.length, 'Mobile'=>BROWSERS_MOBILE.length,}
         end
       end
 
       def generate_compatibility_table()
-        json_files_uri = request_bcd_uris()
-
-        compat_tables = []
-
-        json_files_uri.each do |uri|
-          compat_tables.push(generate_compatibility_table_wrapper(uri))
+        css('mdn-compat-table-lazy').each do |node|
+          file = node.attr('query')
+          # https://github.com/mdn/browser-compat-data/blob/main/javascript/builtins/Set.json
+          # https://bcd.developer.mozilla.org/bcd/api/v0/current/javascript.builtins.Set.json
+          uri = "https://bcd.developer.mozilla.org/bcd/api/v0/current/#{file}.json"
+          node.replace generate_compatibility_table_wrapper(uri)
         end
-
-        return compat_tables
-      end
-
-      def request_bcd_uris
-        hydration = JSON.load at_css('#hydration').text
-        files = hydration['doc']['browserCompat'] || []
-        files.map { |file| "https://bcd.developer.mozilla.org/bcd/api/v0/current/#{file}.json" }
       end
 
       def generate_compatibility_table_wrapper(url)
