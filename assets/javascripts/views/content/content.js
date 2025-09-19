@@ -114,6 +114,7 @@ app.views.Content = class Content extends app.View {
       $.scrollToWithImageLock(el, this.scrollEl, "top", {
         margin: this.scrollEl === this.el ? 0 : $.offset(this.el).top,
       });
+      $.openDetailsAncestors(el);
       $.highlight(el, { className: "_highlight" });
     } else {
       this.scrollTo(this.scrollMap[this.routeCtx.state.id]);

@@ -271,13 +271,25 @@ var onclick = function (event) {
   }
 
   let link = $.eventTarget(event);
-  while (link && link.tagName !== "A") {
+  while (link && !(link.tagName === "A" || link.tagName === "a")) {
     link = link.parentNode;
   }
 
-  if (link && !link.target && isSameOrigin(link.href)) {
+  if (!link) return;
+
+  // If the `<a>` is in an SVG, its attributes are `SVGAnimatedString`s
+  // instead of strings
+  let href = link.href instanceof SVGAnimatedString
+    ? new URL(link.href.baseVal, location.href).href
+    : link.href;
+  let target = link.target instanceof SVGAnimatedString
+    ? link.target.baseVal
+    : link.target;
+
+  if (!target && isSameOrigin(href)) {
     event.preventDefault();
-    let path = link.pathname + link.search + link.hash;
+    let parsedHref = new URL(href);
+    let path = parsedHref.pathname + parsedHref.search + parsedHref.hash;
     path = path.replace(/^\/\/+/, "/"); // IE11 bug
     page.show(path);
   }
