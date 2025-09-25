@@ -4,9 +4,9 @@ module Docs
   class Rust
     class CleanHtmlFilter < Filter
       def call
-        if slug.start_with?('book') ||  slug.start_with?('reference')
+        if slug.start_with?('book') ||  slug.start_with?('reference') || slug.start_with?('error_codes')
           @doc = at_css('#content main')
-        elsif slug == 'error-index'
+        elsif slug.start_with?('error_codes')
           css('.error-undescribed').remove
 
           css('.error-described').each do |node|
@@ -32,6 +32,8 @@ module Docs
 
         css('.doc-anchor').remove
 
+        css('.rule-link').remove
+
         # Fix notable trait sections
         css('.method, .rust.trait').each do |node|
           traitSection = node.at_css('.notable-traits')
@@ -53,6 +55,30 @@ module Docs
         css('details').each do |node|
           node.css('summary:contains("Expand description")').remove
           node.before(node.children).remove
+        end
+
+        css('button.grammar-toggle-railroad').remove
+        css('.grammar-container').each do |node|
+          next_element = node.next_element
+          if next_element && next_element['class'] && next_element['class'].include?('grammar-railroad')
+            next_element.remove
+            node.add_child(next_element)
+          end
+
+          node.css('[onclick="show_railroad()"]').each do |subnode|
+            subnode.remove_attribute('onclick')
+          end
+
+          # We changed this to a <pre> in parse(), changing it back here
+          node.name = 'div'
+          node.css('.grammar-literal').each do |literal|
+            literal.name = 'code'
+          end
+        end
+
+        css('.grammar-railroad').each do |node|
+          node.name = 'details'
+          node.prepend_child("<summary>Syntax diagram</summary>")
         end
 
         css('a.header').each do |node|

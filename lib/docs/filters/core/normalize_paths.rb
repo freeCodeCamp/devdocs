@@ -7,8 +7,11 @@ module Docs
       result[:store_path] = store_path
 
       css('a').each do |link|
-        next unless (href = link['href']) && relative_url_string?(href)
-        link['href'] = normalize_href(href)
+        href = link['href']
+        link['href'] = normalize_href(href) if href && relative_url_string?(href)
+
+        xlink_href = link['xlink:href']
+        link['xlink:href'] = normalize_href(xlink_href) if xlink_href && relative_url_string?(xlink_href)
       end
 
       doc

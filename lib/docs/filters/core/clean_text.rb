@@ -2,7 +2,7 @@
 
 module Docs
   class CleanTextFilter < Filter
-    EMPTY_NODES_RGX = /<(?!td|th|iframe|mspace)(\w+)[^>]*>[[:space:]]*<\/\1>/
+    EMPTY_NODES_RGX = /<(?!td|th|iframe|mspace|rect|path|ellipse|line|polyline)(\w+)[^>]*>[[:space:]]*<\/\1>/
 
     def call
       return html if context[:clean_text] == false

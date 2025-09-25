@@ -3,13 +3,22 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
 
       def get_name
-        if slug.start_with?('book') || slug.start_with?('reference')
-          name = at_css("h2", "h1")
-          ch1 = slug[/ch(\d+)-(\d+)/, 1]
-          ch2 = slug[/ch(\d+)-(\d+)/, 2]
+        if slug.start_with?('book')
+          name = at_css('main h1', 'main h2')
+
+          if slug.start_with?('book/appendix')
+            return name ? name.content : 'Appendix'
+          end
+
+          ch1 = slug[/ch(\d+)-(\d+)/, 1] || '00'
+          ch2 = slug[/ch(\d+)-(\d+)/, 2] || '00'
           name ? "#{ch1}.#{ch2}. #{name.content}" : 'Introduction'
-        elsif slug == 'error-index'
+        elsif slug.start_with?('reference')
+          at_css('main h1').content
+        elsif slug == 'error_codes/error-index'
           'Compiler Errors'
+        elsif slug.start_with?('error_codes')
+          slug.split('/').last.upcase
         else
           at_css('main h1').at_css('button')&.remove
           name = at_css('main h1').content.remove(/\A.+\s/).remove('⎘')
@@ -26,7 +35,7 @@ module Docs
           'Guide'
         elsif slug.start_with?('reference')
           'Reference'
-        elsif slug == 'error-index'
+        elsif slug.start_with?('error_codes')
           'Compiler Errors'
         else
           path = name.split('::')
@@ -40,12 +49,8 @@ module Docs
       end
 
       def additional_entries
-        if slug.start_with?('book') || slug.start_with?('reference')
+        if slug.start_with?('book') || slug.start_with?('reference') || slug.start_with?('error_codes')
           []
-        elsif slug == 'error-index'
-          css('.error-described h2.section-header').each_with_object [] do |node, entries|
-            entries << [node.content, node['id']] unless node.content.include?('Note:')
-          end
         else
           css('.method')
             .each_with_object({}) { |node, entries|
