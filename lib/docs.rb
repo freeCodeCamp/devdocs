@@ -124,7 +124,7 @@ module Docs
       'kubernetes' => 'k8s',
       'less' => 'ls',
       'lodash' => '_',
-      'love' => 'löve',
+      'love' => 'love',
       'marionette' => 'mn',
       'markdown' => 'md',
       'matplotlib' => 'mpl',
