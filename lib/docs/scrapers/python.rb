@@ -28,14 +28,14 @@ module Docs
     HTML
 
     version '3.14' do
-      self.release = '3.14.0rc2'
+      self.release = '3.14.0'
       self.base_url = "https://docs.python.org/#{self.version}/"
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
     end
 
     version '3.13' do
-      self.release = '3.13.6'
+      self.release = '3.13.8'
       self.base_url = "https://docs.python.org/#{self.version}/"
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
