@@ -4,16 +4,16 @@ module Docs
       def call
         @doc = at_css('> div[id]') if at_css('> div[id]')
         # Remove the navigation header and footer and the lines underneath and above it
-        at_css('.header + hr').remove
+        at_css('.nav-panel + hr').remove
         line_above = at_xpath('//div[@class="header"]/preceding::hr[1]')
         line_above.remove unless line_above.nil?
-        css('.header').remove
+        css('.nav-panel').remove
 
         css('.copiable-anchor').remove
 
         # Remove chapter and section numbers from title
         title_node = at_css('h1, h2, h3, h4, h5, h6')
-        title_node.content = title_node.content.gsub(/(\d+\.?)+/, '').strip
+        title_node.content = title_node.content.gsub(/(\d+\.?)+/, '').gsub('¶', '').strip
         title_node.name = 'h1'
 
         # Remove the "D. " from names like "D. Concept Index" and "D. Function Index"
@@ -52,7 +52,7 @@ module Docs
         end
 
         # Remove the rows with a horizontal line in them from the index tables
-        css('td[colspan="4"]').remove
+        css('td[colspan="3"]').remove
 
         # Remove additional text from menu entry and index entry cells
         css('td[valign=top]').each do |node|
