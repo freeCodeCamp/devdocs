@@ -21,4 +21,40 @@
   }
 
   td h3 { margin: 0 !important; }
+
+  .docs-reference-member-card .docs-reference-card-item {
+    &:has(~ .docs-reference-card-item),
+    &:last-child:not(:first-of-type) {
+      margin: .25rem 0 1.5rem 1.5rem;
+      padding: .625rem 1rem;
+      @extend %box;
+    }
+    span {
+      display: inline-block;
+    }
+    .docs-param-group {
+      margin-block-start: 1rem;
+      &:not(:has(~ .docs-param-group)) {
+        margin-block: 1rem;
+      }
+      .docs-param-name {
+        @extend %code;
+        margin-inline-end: 0.25rem;
+      }
+      .docs-param-name:after {
+        content: ":";
+      }
+      .docs-parameter-description p:first-child {
+        margin-block-start: 0;
+      }
+    }
+    .docs-param-keyword {
+      color: var(--focusText);
+      @extend %code;
+      margin-inline-end: 0.5rem;
+    }
+    .docs-return-type {
+      padding-block: 1rem;
+    }
+  }
 }
