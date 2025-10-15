@@ -15,6 +15,7 @@ module Docs
 
     version do
       self.release = '19'
+      self.release = '19.2'
       self.base_url = 'https://react.dev'
       self.initial_paths = %w(/reference/react /learn)
       html_filters.push 'react/entries_react_dev', 'react/clean_html_react_dev'
