@@ -22,7 +22,15 @@ module Docs
         else
           at_css('main h1').at_css('button')&.remove
           name = at_css('main h1').content.remove(/\A.+\s/).remove('⎘')
-          mod = slug.split('/').first
+          path = slug.split('/')
+          if path.length == 2
+            # Anything in the standard library but not in a `std::*` module is
+            # globally available, not `use`d from the `std` crate, so we don't
+            # prepend `std::` to their name.
+            return name
+          end
+          path.pop if path.last == 'index'
+          mod = path[0..-2].join('::')
           name.prepend("#{mod}::") unless name.start_with?(mod)
           name
         end
@@ -38,13 +46,12 @@ module Docs
         elsif slug.start_with?('error_codes')
           'Compiler Errors'
         else
-          path = name.split('::')
-          heading = at_css('main h1').content.strip
-          if path.length > 2 || (path.length == 2 && (heading.start_with?('Module') || heading.start_with?('Primitive')))
-            path[0..1].join('::')
-          else
-            path[0]
-          end
+          path = slug.split('/')
+          # Discard the filename, and use the first two path components as the
+          # type, or one if there is only one. This means anything in a module
+          # `std::foo` or submodule `std::foo::bar` gets type `std::foo`, and
+          # things not in modules, e.g. primitive types, get type `std`.
+          path[0..-2][0..1].join('::')
         end
       end
 
