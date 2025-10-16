@@ -11,8 +11,8 @@ module Docs
 
     html_filters.push 'qt/entries', 'qt/clean_html'
 
-    options[:container] = 'article, .main'
-    options[:max_image_size] = 156_000
+    options[:container] = '.b-sidebar__content'
+    options[:max_image_size] = 256_000
     options[:skip_patterns] = [
       # License, copyright attributions
       /3rdparty/,
@@ -56,6 +56,8 @@ module Docs
       "compatmap.html",
 
       # Indexes
+      "qdoc-index.html",
+      "qmake-manual.html",
       "classes.html",
       "qtmodules.html",
       "modules-qml.html",
@@ -103,7 +105,12 @@ module Docs
       Licensed under the GNU Free Documentation License, Version 1.3.
     HTML
 
-    version do
+    version '6.9' do
+      self.release = '6.9'
+      self.base_url = "https://doc.qt.io/qt-#{self.release}/"
+    end
+
+    version '6.8' do
       self.release = '6.8'
       self.base_url = "https://doc.qt.io/qt-#{self.release}/"
     end
