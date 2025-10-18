@@ -64,6 +64,13 @@ module Docs
           h.prepend_child(kindtag)
         end
 
+        # View source
+        css('h2 ~ a.viewSourceLink, h3 ~ a.viewSourceLink, h4 ~ a.viewSourceLink').each do |node|
+          node['class'] = 'view-source'
+          node.content = 'Source'
+          node.previous_element << node
+        end
+
         doc
       end
     end

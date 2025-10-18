@@ -1,25 +1,30 @@
 ._lit {
   @extend %simple;
 
-  h4 { @extend %block-label, %label-blue; }
+  h4 {
+    @extend %block-label, %label-blue;
+  }
 
+  .view-source {
+    float: right;
+  }
   .propertyDetails {
-    padding-left:1.5em
+    padding-left: 1.5em;
   }
   .heading.property {
-    margin-top:2em
+    margin-top: 2em;
   }
   .heading.property > h4 {
-    font-weight:400
+    font-weight: 400;
   }
   .newKeyword,
   .readonlyKeyword,
   .staticKeyword {
-    font-style:italic
+    font-style: italic;
   }
   .functionName,
   .propertyName {
-    font-weight:700
+    font-weight: 700;
   }
   aside.litdev-aside {
     display: flex;
