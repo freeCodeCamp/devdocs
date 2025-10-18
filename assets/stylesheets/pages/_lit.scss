@@ -1,0 +1,57 @@
+._lit {
+  @extend %simple;
+
+  h4 {
+    @extend %block-label, %label-blue;
+  }
+
+  .view-source {
+    float: right;
+  }
+  .propertyDetails {
+    padding-left: 1.5em;
+  }
+  .heading.property {
+    margin-top: 2em;
+  }
+  .heading.property > h4 {
+    font-weight: 400;
+  }
+  .newKeyword,
+  .readonlyKeyword,
+  .staticKeyword {
+    font-style: italic;
+  }
+  .functionName,
+  .propertyName {
+    font-weight: 700;
+  }
+  aside.litdev-aside {
+    display: flex;
+    border-style: solid;
+    border-width: 1px;
+    padding: 1em 1em 1em 0em;
+    margin: 1em 0;
+    svg {
+      width: 1.5em;
+      margin-inline: 1em;
+    }
+  }
+  litdev-switchable-sample {
+    pre[data-language] {
+      position: relative;
+    }
+    pre[data-language]::before {
+      position: absolute;
+      top: 0;
+      right: 16px;
+      opacity: 0.5;
+    }
+    pre[data-language="js"]::before {
+      content: "JavaScript";
+    }
+    pre[data-language="ts"]::before {
+      content: "TypeScript";
+    }
+  }
+}
