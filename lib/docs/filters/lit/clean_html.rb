@@ -71,6 +71,12 @@ module Docs
           node.previous_element << node
         end
 
+        css('.mdnIcon').each do |node|
+          parent = node.parent
+          node.remove
+          parent.content = parent.content.strip
+        end
+
         doc
       end
     end
