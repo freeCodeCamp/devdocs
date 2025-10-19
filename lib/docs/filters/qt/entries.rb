@@ -19,25 +19,8 @@ module Docs
       end
 
       def get_type
-        breadcrumb = css('#main_title_bar + ul li')
-        category = if breadcrumb.length < 3
-          then 'Qt'.dup
-          else breadcrumb.at(1).content
-        end
-
-        if category == 'Qt'
-          return 'Qt Platforms' if name.include?(' for ') || name == 'Qt Platform Abstraction'
-          return 'Qt Quick' if name == 'Qt Quick Test' || name == 'Qt Quick Test Reference Documentation'
-
-          alwaysInQt = ['Qt Configure Options', 'Qt Image Formats']
-          category = name if name.start_with?('Qt ') && !alwaysInQt.include?(name)
-        end
-
-        qtPlatformsTypes = ['Qt Platform Headers', 'Qt Android Extras', 'Qt Mac Extras', 'Qt Windows Extras', 'Qt X11 Extras']
-        return 'Qt Platforms' if qtPlatformsTypes.include?(category)
-
-        category.remove!(' Manual')
-        category
+        breadcrumb = css('ul.c-breadcrump li') # Yes, really: breadcrump.
+        breadcrumb[1].content
       end
 
       def include_default_entry?
@@ -107,11 +90,9 @@ module Docs
         end
 
         # QML properties/functions
-        qmlTypeName = at_css('h1.title').content.remove(' QML Type', '')
         css('.qmlproto').each do |node|
           title = node.content.strip
-          id = node.at_css('tr')['id']
-          id = node.at_css('a')['name'] if id.blank?
+          id = node.at_css('span.name').content
 
           # Remove options
           title.remove!(%r{^\[.*\] })
@@ -128,7 +109,8 @@ module Docs
           # Remove return type
           title.remove!(%r{.* })
 
-          title = "#{qmlTypeName}.#{title.strip}"
+          title = title.strip
+
           unless titles.include?(title) # Remove duplicates (function overloading)
             entries << [title, id]
             titles.push(title)

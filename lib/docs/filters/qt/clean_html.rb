@@ -2,20 +2,17 @@ module Docs
   class Qt
     class CleanHtmlFilter < Filter
       def call
-        # Remove unneeded elements
-        css('.copy-notice, .navigationbar, .headerNavi, .footerNavi, .sidebar, .toc, #ec_toggle', '.landingicons img', 'br').remove
+        # Narrow down container further. Breadcrumb is safe to remove.
+        @doc = at_css('article .mainContent .context') unless root_page?
+
+        css('h1').remove_attribute('class')
 
         # QML property/method header
         css('.qmlproto').each do |node|
-          id = node.at_css('tr')['id']
-          id = node.at_css('a')['name'] if id.blank?
+          id = node.at_css('span.name').content
           node.inner_html = node.at_css('td').inner_html
           node.name = 'h3'
           node['id'] = id
-        end
-
-        css('.main-rounded', '.content', '.line', '.context', '.descr', '.types', '.func', '.table', 'div:not([class])', '.landing', '.col-1', '.heading', '.qmlitem', '.qmldoc', 'div.pre').each do |node|
-          node.before(node.children).remove
         end
 
         css('pre').each do |node|
