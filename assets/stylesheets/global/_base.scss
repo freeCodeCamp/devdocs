@@ -123,6 +123,14 @@ pre, %pre {
   @extend %box;
 }
 
+details:has(> pre) {
+  margin: 1.5em 0;
+
+  > pre {
+    margin: 0;
+  }
+}
+
 a > code { color: inherit; }
 
 table {

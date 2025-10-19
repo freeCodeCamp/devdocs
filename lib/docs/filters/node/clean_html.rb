@@ -8,15 +8,17 @@ module Docs
           next unless (node.css('code').to_a.length > 1)
 
           node.css('code').each do |subnode|
+            node.before(subnode)
 
             if subnode.classes.include?('mjs')
-              node.before('<p class=module-type>MJS modules</p>')
+              subnode.wrap('<details open>')
+              subnode.wrap('<pre>')
+              subnode.ancestors('details').first.prepend_child('<summary>JavaScript modules</summary>')
             elsif subnode.classes.include?('cjs')
-              node.before('<p class=module-type>CJS modules</p>')
+              subnode.wrap('<details>')
+              subnode.wrap('<pre>')
+              subnode.ancestors('details').first.prepend_child('<summary>CommonJS</summary>')
             end
-
-            node.before(subnode)
-            subnode.wrap('<pre>')
           end
 
           node.remove
