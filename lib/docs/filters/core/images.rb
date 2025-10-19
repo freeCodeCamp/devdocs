@@ -31,6 +31,7 @@ module Docs
 
         self.class.cache[src] = false
 
+        next if src.start_with? 'data:image/'
         url = Docs::URL.parse(src)
         url.scheme = 'https' if url.scheme.nil?
         next unless url.scheme == 'http' || url.scheme == 'https'
