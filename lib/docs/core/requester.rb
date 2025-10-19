@@ -54,6 +54,12 @@ module Docs
     end
 
     def handle_response(response)
+      if response.code.to_i == 0 || (response.code.to_i >= 500 && response.code.to_i < 600)
+        instrument 'handle_response.retry', url: response.url do
+          build_and_queue_request(response.url)
+        end
+        return
+      end
       instrument 'handle_response.requester', url: response.url do
         on_response.each do |callback|
           result = callback.call(response)
