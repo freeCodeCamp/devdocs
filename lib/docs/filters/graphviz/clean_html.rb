@@ -7,6 +7,9 @@ module Docs
         content = at_css('.td-content')
         @doc = content if content
 
+        css('a:contains("Search the Graphviz codebase")').remove
+        css('.td-page-meta__lastmod').remove
+
         css('pre:has(code)').each do |node|
           pre = Nokogiri::XML::Node.new('pre', @doc)
           code = node.at_css('code')
