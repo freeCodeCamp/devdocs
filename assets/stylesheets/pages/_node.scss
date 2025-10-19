@@ -1,9 +1,11 @@
 ._node {
+  // https://nodejs.org/api/documentation.html#stability-index
   .api_stability { clear: both; }
-  .api_stability_0, .api_stability_1 { @extend %note, %note-red; }
-  .api_stability_2 { @extend %note; }
-  .api_stability_3, .api_stability_4 { @extend %note, %note-green; }
-  .api_stability_5 { @extend %note, %note-blue; }
+  .api_stability_0 { @extend %note, %note-red; }
+  .api_stability_1 { @extend %note, %note-orange; }
+  .api_stability_1 { @extend %note; }
+  .api_stability_2 { @extend %note, %note-green; }
+  .api_stability_3 { @extend %note, %note-blue; }
 
   > h2 { @extend %block-heading; }
   > h3 { @extend %block-label, %label-blue; }
