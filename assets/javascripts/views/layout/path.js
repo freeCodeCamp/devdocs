@@ -24,8 +24,8 @@ app.views.Path = class Path extends app.View {
   }
 
   onClick(event) {
-    let link;
-    if ((link = $.closestLink(event.target, this.el))) {
+    const link = $.closestLink(event.target, this.el);
+    if (link) {
       this.clicked = true;
     }
   }

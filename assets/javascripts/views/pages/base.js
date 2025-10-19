@@ -55,8 +55,8 @@ app.views.BasePage = class BasePage extends app.View {
     }
 
     for (var el of this.highlightNodes.splice(0, this.nodesPerFrame)) {
-      var clipEl;
-      if ((clipEl = el.lastElementChild)) {
+      const clipEl = el.lastElementChild;
+      if (clipEl) {
         $.remove(clipEl);
       }
       Prism.highlightElement(el);

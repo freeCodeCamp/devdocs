@@ -119,14 +119,14 @@ app.views.Search = class Search extends app.View {
   }
 
   searchUrl() {
-    let value;
     if (location.pathname === "/") {
       this.scope.searchUrl();
     } else if (!app.router.isIndex()) {
       return;
     }
 
-    if (!(value = this.extractHashValue())) {
+    const value = this.extractHashValue();
+    if (!value) {
       return;
     }
     this.input.value = this.value = value;
@@ -141,8 +141,8 @@ app.views.Search = class Search extends app.View {
   }
 
   externalSearch(url) {
-    let value;
-    if ((value = this.value)) {
+    const value = this.value;
+    if (value) {
       if (this.scope.name()) {
         value = `${this.scope.name()} ${value}`;
       }

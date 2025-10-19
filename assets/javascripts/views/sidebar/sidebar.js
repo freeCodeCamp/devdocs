@@ -180,10 +180,10 @@ app.views.Sidebar = class Sidebar extends app.View {
   }
 
   onEscape() {
-    let doc;
+    const doc = this.search.getScopeDoc();
     this.reset();
     this.resetDisplay();
-    if ((doc = this.search.getScopeDoc())) {
+    if (doc) {
       this.docList.reveal(doc.toEntry());
     } else {
       this.scrollToTop();

@@ -101,8 +101,8 @@ function ajax(options) {
 
   function onComplete(xhr, options) {
     if (200 <= xhr.status && xhr.status < 300) {
-      let response;
-      if ((response = parseResponse(xhr, options)) != null) {
+      const response = parseResponse(xhr, options);
+      if (response != null) {
         onSuccess(response, xhr, options);
       } else {
         onError("invalid", xhr, options);

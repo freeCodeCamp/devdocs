@@ -72,8 +72,8 @@ app.models.Doc = class Doc extends app.Model {
   }
 
   findEntryByPathAndHash(path, hash) {
-    let entry;
-    if (hash && (entry = this.entries.findBy("path", `${path}#${hash}`))) {
+    const entry = hash && this.entries.findBy("path", `${path}#${hash}`);
+    if (entry) {
       return entry;
     } else if (path === "index") {
       return this.toEntry();
@@ -110,8 +110,8 @@ app.models.Doc = class Doc extends app.Model {
   }
 
   _loadFromCache(onSuccess) {
-    let data;
-    if (!(data = this._getCache())) {
+    const data = this._getCache();
+    if (!data) {
       return;
     }
 
@@ -125,8 +125,8 @@ app.models.Doc = class Doc extends app.Model {
   }
 
   _getCache() {
-    let data;
-    if (!(data = app.localStorage.get(this.slug))) {
+    const data = app.localStorage.get(this.slug);
+    if (!data) {
       return;
     }
 

@@ -13,8 +13,8 @@ app.views.HiddenPage = class HiddenPage extends app.View {
   }
 
   onClick(event) {
-    let link;
-    if ((link = $.closestLink(event.target, this.el))) {
+    const link = $.closestLink(event.target, this.el);
+    if (link) {
       $.stopEvent(event);
       $.popup(link);
     }

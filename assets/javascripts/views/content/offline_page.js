@@ -68,9 +68,9 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   }
 
   onClick(event) {
-    let action;
     let el = $.eventTarget(event);
-    if ((action = el.getAttribute("data-action"))) {
+    let action = el.getAttribute("data-action");
+    if (action) {
       const doc = this.docByEl(el);
       if (action === "update") {
         action = "install";
@@ -78,7 +78,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
       doc[action](
         this.onInstallSuccess.bind(this, doc),
         this.onInstallError.bind(this, doc),
-        this.onInstallProgress.bind(this, doc),
+        this.onInstallProgress.bind(this, doc)
       );
       el.parentNode.innerHTML = `${el.textContent.replace(/e$/, "")}ing…`;
     } else if (
@@ -101,11 +101,11 @@ app.views.OfflinePage = class OfflinePage extends app.View {
       return;
     }
     doc.getInstallStatus((status) => {
-      let el;
       if (!this.activated) {
         return;
       }
-      if ((el = this.docEl(doc))) {
+      const el = this.docEl(doc);
+      if (el) {
         el.outerHTML = this.renderDoc(doc, status);
         $.highlight(el, { className: "_highlight" });
         this.refreshLinks();
@@ -114,25 +114,25 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   }
 
   onInstallError(doc) {
-    let el;
     if (!this.activated) {
       return;
     }
-    if ((el = this.docEl(doc))) {
+    const el = this.docEl(doc);
+    if (el) {
       el.lastElementChild.textContent = "Error";
     }
   }
 
   onInstallProgress(doc, event) {
-    let el;
     if (!this.activated || !event.lengthComputable) {
       return;
     }
-    if ((el = this.docEl(doc))) {
+    const el = this.docEl(doc);
+    if (el) {
       const percentage = Math.round((event.loaded * 100) / event.total);
       el.lastElementChild.textContent = el.lastElementChild.textContent.replace(
         /(\s.+)?$/,
-        ` (${percentage}%)`,
+        ` (${percentage}%)`
       );
     }
   }

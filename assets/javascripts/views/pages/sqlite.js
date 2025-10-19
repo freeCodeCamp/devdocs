@@ -4,11 +4,12 @@ app.views.SqlitePage = class SqlitePage extends app.views.BasePage {
   static events = { click: "onClick" };
 
   onClick(event) {
-    let el, id;
-    if (!(id = event.target.getAttribute("data-toggle"))) {
+    const id = event.target.getAttribute("data-toggle");
+    if (!id) {
       return;
     }
-    if (!(el = this.find(`#${id}`))) {
+    const el = this.find(`#${id}`);
+    if (!el) {
       return;
     }
     $.stopEvent(event);

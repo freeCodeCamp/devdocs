@@ -52,15 +52,15 @@ app.views.SearchScope = class SearchScope extends app.View {
   }
 
   searchUrl() {
-    let value;
-    if ((value = this.extractHashValue())) {
+    const value = this.extractHashValue();
+    if (value) {
       this.search(value, true);
     }
   }
 
   onResults(results) {
-    let doc;
-    if (!(doc = results[0])) {
+    const doc = results[0];
+    if (!doc) {
       return;
     }
     if (app.docs.contains(doc)) {
@@ -155,11 +155,11 @@ app.views.SearchScope = class SearchScope extends app.View {
   }
 
   extractHashValue() {
-    let value;
-    if ((value = this.getHashValue())) {
+    const value = this.getHashValue();
+    if (value) {
       const newHash = $.urlDecode(location.hash).replace(
         `#${SearchScope.SEARCH_PARAM}=${value} `,
-        `#${SearchScope.SEARCH_PARAM}=`,
+        `#${SearchScope.SEARCH_PARAM}=`
       );
       app.router.replaceHash(newHash);
       return value;

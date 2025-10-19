@@ -35,12 +35,12 @@ app.Router = class Router extends Events {
   }
 
   before(context, next) {
-    let res;
     const previousContext = this.context;
     this.context = context;
     this.trigger("before", context);
 
-    if ((res = next())) {
+    const res = next();
+    if (res) {
       this.context = previousContext;
       return res;
     } else {
@@ -79,7 +79,6 @@ app.Router = class Router extends Events {
   }
 
   entry(context, next) {
-    let entry;
     const doc = app.docs.findBySlug(context.params.doc);
     if (!doc) {
       return next();
@@ -87,19 +86,22 @@ app.Router = class Router extends Events {
     let { path } = context.params;
     const { hash } = context;
 
-    if ((entry = doc.findEntryByPathAndHash(path, hash))) {
+    let entry = doc.findEntryByPathAndHash(path, hash);
+    if (entry) {
       context.doc = doc;
       context.entry = entry;
       this.triggerRoute("entry");
       return;
     } else if (path.slice(-6) === "/index") {
       path = path.substr(0, path.length - 6);
-      if ((entry = doc.findEntryByPathAndHash(path, hash))) {
+      entry = doc.findEntryByPathAndHash(path, hash);
+      if (entry) {
         return entry.fullPath();
       }
     } else {
       path = `${path}/index`;
-      if ((entry = doc.findEntryByPathAndHash(path, hash))) {
+      entry = doc.findEntryByPathAndHash(path, hash);
+      if (entry) {
         return entry.fullPath();
       }
     }
@@ -169,10 +171,8 @@ app.Router = class Router extends Events {
 
   setInitialPath() {
     // Remove superfluous forward slashes at the beginning of the path
-    let path;
-    if (
-      (path = location.pathname.replace(/^\/{2,}/g, "/")) !== location.pathname
-    ) {
+    let path = location.pathname.replace(/^\/{2,}/g, "/");
+    if (path !== location.pathname) {
       page.replace(path + location.search + location.hash, null, true);
     }
 
@@ -192,8 +192,8 @@ app.Router = class Router extends Events {
   }
 
   getInitialPathFromCookie() {
-    let path;
-    if ((path = Cookies.get("initial_path"))) {
+    const path = Cookies.get("initial_path");
+    if (path) {
       Cookies.expire("initial_path");
       return path;
     }
@@ -203,7 +203,7 @@ app.Router = class Router extends Events {
     page.replace(
       location.pathname + location.search + (hash || ""),
       null,
-      true,
+      true
     );
   }
 };

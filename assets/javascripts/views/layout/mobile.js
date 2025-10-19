@@ -76,7 +76,6 @@ app.views.Mobile = class Mobile extends app.View {
   }
 
   showSidebar() {
-    let selection;
     if (this.isSidebarShown()) {
       window.scrollTo(0, 0);
       return;
@@ -86,7 +85,8 @@ app.views.Mobile = class Mobile extends app.View {
     this.content.style.display = "none";
     this.sidebar.style.display = "block";
 
-    if ((selection = this.findByClass(app.views.ListSelect.activeClass))) {
+    const selection = this.findByClass(app.views.ListSelect.activeClass);
+    if (selection) {
       const scrollContainer =
         window.scrollY === this.body.scrollTop
           ? this.body

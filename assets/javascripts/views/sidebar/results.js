@@ -79,11 +79,11 @@ app.views.Results = class Results extends app.View {
   }
 
   onClick(event) {
-    let slug;
     if (event.which !== 1) {
       return;
     }
-    if ((slug = $.eventTarget(event).getAttribute("data-enable"))) {
+    const slug = $.eventTarget(event).getAttribute("data-enable");
+    if (slug) {
       $.stopEvent(event);
       const doc = app.disabledDocs.findBy("slug", slug);
       if (doc) {

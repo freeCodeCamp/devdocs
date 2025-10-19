@@ -31,8 +31,8 @@ app.views.ListFocus = class ListFocus extends app.View {
   }
 
   blur() {
-    let cursor;
-    if ((cursor = this.getCursor())) {
+    const cursor = this.getCursor();
+    if (cursor) {
       cursor.classList.remove(this.constructor.activeClass);
       $.trigger(cursor, "blur");
     }
@@ -46,8 +46,8 @@ app.views.ListFocus = class ListFocus extends app.View {
   }
 
   findNext(cursor) {
-    let next;
-    if ((next = cursor.nextSibling)) {
+    const next = cursor.nextSibling;
+    if (next) {
       if (next.tagName === "A") {
         return next;
       } else if (next.tagName === "SPAN") {
@@ -71,8 +71,8 @@ app.views.ListFocus = class ListFocus extends app.View {
   }
 
   findFirst(cursor) {
-    let first;
-    if (!(first = cursor.firstChild)) {
+    const first = cursor.firstChild;
+    if (!first) {
       return;
     }
 
@@ -86,8 +86,8 @@ app.views.ListFocus = class ListFocus extends app.View {
   }
 
   findPrev(cursor) {
-    let prev;
-    if ((prev = cursor.previousSibling)) {
+    const prev = cursor.previousSibling;
+    if (prev) {
       if (prev.tagName === "A") {
         return prev;
       } else if (prev.tagName === "SPAN") {
@@ -111,8 +111,8 @@ app.views.ListFocus = class ListFocus extends app.View {
   }
 
   findLast(cursor) {
-    let last;
-    if (!(last = cursor.lastChild)) {
+    const last = cursor.lastChild;
+    if (!last) {
       return;
     }
 
@@ -128,8 +128,8 @@ app.views.ListFocus = class ListFocus extends app.View {
   }
 
   onDown() {
-    let cursor;
-    if ((cursor = this.getCursor())) {
+    const cursor = this.getCursor();
+    if (cursor) {
       this.focusOnNextFrame(this.findNext(cursor));
     } else {
       this.focusOnNextFrame(this.findByTag("a"));
@@ -137,8 +137,8 @@ app.views.ListFocus = class ListFocus extends app.View {
   }
 
   onUp() {
-    let cursor;
-    if ((cursor = this.getCursor())) {
+    const cursor = this.getCursor();
+    if (cursor) {
       this.focusOnNextFrame(this.findPrev(cursor));
     } else {
       this.focusOnNextFrame(this.findLastByTag("a"));
@@ -160,15 +160,15 @@ app.views.ListFocus = class ListFocus extends app.View {
   }
 
   onEnter() {
-    let cursor;
-    if ((cursor = this.getCursor())) {
+    const cursor = this.getCursor();
+    if (cursor) {
       $.click(cursor);
     }
   }
 
   onSuperEnter() {
-    let cursor;
-    if ((cursor = this.getCursor())) {
+    const cursor = this.getCursor();
+    if (cursor) {
       $.popup(cursor);
     }
   }

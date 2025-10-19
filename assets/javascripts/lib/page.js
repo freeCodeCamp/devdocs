@@ -42,14 +42,14 @@ page.stop = function () {
 };
 
 page.show = function (path, state) {
-  let res;
   if (path === currentState?.path) {
     return;
   }
   const context = new Context(path, state);
   const previousState = currentState;
   currentState = context.state;
-  if ((res = page.dispatch(context))) {
+  const res = page.dispatch(context);
+  if (res) {
     currentState = previousState;
     location.assign(res);
   } else {
@@ -84,12 +84,9 @@ page.replace = function (path, state, skipDispatch, init) {
 
 page.dispatch = function (context) {
   let i = 0;
-  var next = function () {
-    let fn, res;
-    if ((fn = callbacks[i++])) {
-      res = fn(context, next);
-    }
-    return res;
+  const next = function () {
+    let fn = callbacks[i++];
+    return fn?.(context, next);
   };
   return next();
 };
@@ -170,8 +167,8 @@ class Route {
 
   middleware(fn) {
     return (context, next) => {
-      let params;
-      if (this.match(context.pathname, (params = []))) {
+      let params = [];
+      if (this.match(context.pathname, params)) {
         context.params = params;
         return fn(context, next);
       } else {
@@ -181,19 +178,19 @@ class Route {
   }
 
   match(path, params) {
-    let matchData;
-    if (!(matchData = this.regexp.exec(path))) {
+    const matchData = this.regexp.exec(path);
+    if (!matchData) {
       return;
     }
 
     const iterable = matchData.slice(1);
     for (let i = 0; i < iterable.length; i++) {
-      var key;
+      var key = this.keys[i];
       var value = iterable[i];
       if (typeof value === "string") {
         value = decodeURIComponent(value);
       }
-      if ((key = this.keys[i])) {
+      if (key) {
         params[key.name] = value;
       } else {
         params.push(value);

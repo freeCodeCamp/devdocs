@@ -18,8 +18,8 @@ app.views.ListSelect = class ListSelect extends app.View {
   }
 
   deselect() {
-    let selection;
-    if ((selection = this.getSelection())) {
+    const selection = this.getSelection();
+    if (selection) {
       selection.classList.remove(this.constructor.activeClass);
       $.trigger(selection, "deselect");
     }

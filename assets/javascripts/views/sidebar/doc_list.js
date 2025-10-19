@@ -59,7 +59,7 @@ app.views.DocList = class DocList extends app.View {
 
   renderDisabled() {
     this.append(
-      this.tmpl("sidebarDisabled", { count: app.disabledDocs.size() }),
+      this.tmpl("sidebarDisabled", { count: app.disabledDocs.size() })
     );
     this.refreshElements();
     this.renderDisabledList();
@@ -164,8 +164,8 @@ app.views.DocList = class DocList extends app.View {
   }
 
   revealCurrent() {
-    let model;
-    if ((model = app.router.context.type || app.router.context.entry)) {
+    const model = app.router.context.type || app.router.context.entry;
+    if (model) {
       this.reveal(model);
       this.select(model);
     }
@@ -213,7 +213,6 @@ app.views.DocList = class DocList extends app.View {
   }
 
   onClick(event) {
-    let slug;
     const target = $.eventTarget(event);
     if (
       this.disabledTitle &&
@@ -222,7 +221,10 @@ app.views.DocList = class DocList extends app.View {
     ) {
       $.stopEvent(event);
       this.toggleDisabled();
-    } else if ((slug = target.getAttribute("data-enable"))) {
+      return;
+    }
+    const slug = target.getAttribute("data-enable");
+    if (slug) {
       $.stopEvent(event);
       const doc = app.disabledDocs.findBy("slug", slug);
       if (doc) {

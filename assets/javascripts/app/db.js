@@ -150,8 +150,8 @@ app.DB = class DB {
   }
 
   onUpgradeNeeded(event) {
-    let db;
-    if (!(db = event.target.result)) {
+    const db = event.target.result;
+    if (!db) {
       return;
     }
 
@@ -351,7 +351,7 @@ app.DB = class DB {
   load(entry, onSuccess, onError) {
     if (this.shouldLoadWithIDB(entry)) {
       return this.loadWithIDB(entry, onSuccess, () =>
-        this.loadWithXHR(entry, onSuccess, onError),
+        this.loadWithXHR(entry, onSuccess, onError)
       );
     } else {
       return this.loadWithXHR(entry, onSuccess, onError);
@@ -418,8 +418,8 @@ app.DB = class DB {
 
     const req = txn.objectStore("docs").openCursor();
     req.onsuccess = (event) => {
-      let cursor;
-      if (!(cursor = event.target.result)) {
+      const cursor = event.target.result;
+      if (!cursor) {
         return;
       }
       this.cachedDocs[cursor.key] = cursor.value;

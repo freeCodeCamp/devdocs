@@ -28,13 +28,13 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
   }
 
   runExample(el) {
-    let iframe;
     const source = el.getElementsByClassName("syntaxhighlighter")[0];
     if (!source || source.innerHTML.indexOf("!doctype") === -1) {
       return;
     }
 
-    if (!(iframe = el.getElementsByClassName(JqueryPage.demoClassName)[0])) {
+    let iframe = el.getElementsByClassName(JqueryPage.demoClassName)[0];
+    if (!iframe) {
       iframe = document.createElement("iframe");
       iframe.className = JqueryPage.demoClassName;
       iframe.width = "100%";
