@@ -54,6 +54,12 @@ module Docs
     end
 
     def handle_response(response)
+      if ENV['RETRY'] == '1' && [0, 500, 501, 502, 503, 504].include?(response.code.to_i)
+        instrument 'handle_response.retry', url: response.url do
+          build_and_queue_request(response.url)
+        end
+        return
+      end
       instrument 'handle_response.requester', url: response.url do
         on_response.each do |callback|
           result = callback.call(response)
