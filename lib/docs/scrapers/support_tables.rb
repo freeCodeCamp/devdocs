@@ -7,7 +7,7 @@ module Docs
     self.name = 'Support Tables'
     self.slug = 'browser_support_tables'
     self.type = 'support_tables'
-    self.release = '1.0.30001742'
+    self.release = '1.0.30001751'
     self.base_url = 'https://github.com/Fyrd/caniuse/raw/main/'
 
     # https://github.com/Fyrd/caniuse/blob/main/LICENSE
