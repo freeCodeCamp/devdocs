@@ -54,7 +54,7 @@ module Docs
     end
 
     def handle_response(response)
-      if response.code.to_i == 0 || (response.code.to_i >= 500 && response.code.to_i < 600)
+      if ENV['RETRY'] == '1' && [0, 500, 501, 502, 503, 504].include?(response.code.to_i)
         instrument 'handle_response.retry', url: response.url do
           build_and_queue_request(response.url)
         end
