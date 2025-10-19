@@ -3,7 +3,7 @@ module Docs
     self.name = 'Moment.js Timezone'
     self.slug = 'moment_timezone'
     self.type = 'moment'
-    self.release = '0.5.37'
+    self.release = '0.6.0'
     self.base_url = 'https://momentjs.com/timezone'
     self.root_path = '/docs/'
     self.initial_paths = %w(/docs/)
