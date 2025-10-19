@@ -210,7 +210,7 @@ class DocsCLI < Thor
       cmd << ' --dryrun' if options[:dryrun]
       if options[:rclone]
         puts "[S3 bundle] Uploading #{filename} using rclone..."
-        cmd = "rclone copy #{File.join(Docs.store_path, filename)} devdocs:devdocs-downloads/"
+        cmd = "rclone copy #{File.join(Docs.store_path, filename)} devdocs:devdocs-downloads/ --s3-no-check-bucket"
         cmd << ' --dry-run' if options[:dryrun]
       end
       system(cmd)
