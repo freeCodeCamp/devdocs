@@ -11,9 +11,7 @@ module Docs
       end
 
       def additional_entries
-        entries = []
-
-        css('h3 > code, h4 > code, h5 > code, h6 > code').each do |node|
+        css('h3 > code, h4 > code, h5 > code, h6 > code').each_with_object [] do |node, entries|
           name = node.content.gsub(/\(.*\)/, '()')
           id = node.parent['id']
 
@@ -24,15 +22,15 @@ module Docs
             entries << ["Event #{name}", id, type]
           end
 
-          if node.parent.child.is_a?(Nokogiri::XML::Text)
+          if node.parent.child.is_a?(Nokogiri::XML::Text) && !node.parent.child.content.include?('Static method:')
             next
+          elsif entries.select {|entry| entry[0] == name}.first
+            entries << [node.content, id, type]
           else
             entries << [name, id, type]
           end
 
         end
-
-        entries
       end
 
     end
