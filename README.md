@@ -10,7 +10,7 @@ Please reach out to the community on [Discord](https://discord.gg/PRyKn3Vbay) if
 
 Keep track of development news:
 
-* Join the devdocs chat room on [Discord](https://discord.gg/PRyKn3Vbay)
+* Join the `#contributors` chat room on [Discord](https://discord.gg/PRyKn3Vbay)
 * Watch the repository on [GitHub](https://github.com/freeCodeCamp/devdocs/subscription)
 * Follow [@DevDocs](https://twitter.com/DevDocs) on Twitter
 
@@ -205,4 +205,4 @@ We also wish that any documentation file generated using this software be attrib
 
 ## Questions?
 
-If you have any questions, please feel free to ask them on the contributor chat room on [Discord](https://discord.gg/PRyKn3Vbay).
+If you have any questions, please feel free to ask them on the `#contributors` chat room on [Discord](https://discord.gg/PRyKn3Vbay).
