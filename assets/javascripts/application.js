@@ -20,7 +20,7 @@
 
 //= require tracking
 
-var init = function () {
+const init = function () {
   document.removeEventListener("DOMContentLoaded", init, false);
 
   if (document.body) {
