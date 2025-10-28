@@ -28,6 +28,11 @@ module Docs
       self.base_url = 'https://nodejs.org/api/'
     end
 
+    version '24 LTS' do
+      self.release = '24.10.0'
+      self.base_url = 'https://nodejs.org/dist/latest-v24.x/docs/api/'
+    end
+
     version '22 LTS' do
       self.release = '22.20.0'
       self.base_url = 'https://nodejs.org/dist/latest-v22.x/docs/api/'
