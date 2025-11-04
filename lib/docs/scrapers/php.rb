@@ -46,7 +46,7 @@ module Docs
       fdf ftp funchand fpm gearman geoip gettext gmagick gmp gnupg hash ibase iconv iisfunc image
       imagick imap info inotify intl iisfunc json judy ldap libevent libxml lua lzf mail mailparse
       math mhash mbstring mcrypt memcached misc mysqli ncurses network nsapi oauth openssl openal opcache
-      outcontrol password parle pcntl phpdbg pcre pdo pgsql phar posix proctitle pspell pthreads quickhash recode regex runkit runkit7 radius rar
+      outcontrol password parle pcntl phpdbg pcre pdo pgsql phar posix proctitle pspell pthreads quickhash recode regex runkit runkit7 radius random rar
       reflection readline sca session sem session-pgsql shmop simplexml ssdeep sdo sdodasrel sdo-das-xml sodium soap sockets solr snmp sphinx spl stomp
       spl-types sqlite3 sqlsrv ssh2 stats stream strings sync svm svn taint tidy tokenizer uodbc url uopz
       v8js var varnish wddx weakref wincache xattr xdiff xhprof xml xmlreader xmlrpc xmlwriter xsl yaf yar yaml yac zip zookeeper zlib)
