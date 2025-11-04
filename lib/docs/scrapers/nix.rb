@@ -23,7 +23,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://nixos.org/manual/nix/stable/', opts)
-      doc.at_css('a.active')['href'].scan(/([0-9.]+)/)[0][0]
+      doc.at_css('h1.menu-title').content.scan(/([0-9.]+)/).first.first
     end
   end
 end
