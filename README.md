@@ -179,7 +179,6 @@ Below are some helpful shortcuts and usage tips that are not immediately obvious
 - You can pin specific documentation sets to the sidebar for quicker access.
 
 These shortcuts make DevDocs faster to navigate and more efficient for daily use.
-These shortcuts make DevDocs faster to navigate and more efficient for daily use.
 
 
 ## Related Projects
