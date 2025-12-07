@@ -100,8 +100,22 @@ module Docs
     end
 
     version do
-      self.release = '20.3.4'
+      self.release = '21.0.3'
       self.base_url = 'https://angular.dev/'
+      self.root_path = 'overview'
+
+      options[:follow_links] = true
+      options[:container] = '.docs-app-main-content'
+      options[:fix_urls] = Since18.handle_redirects(self.version)
+
+      html_filters.push 'angular/entries', 'angular/clean_html_v18'
+
+      include Docs::Angular::Since18
+    end
+
+    version '20' do
+      self.release = '20.3.15'
+      self.base_url = 'https://v20.angular.dev/'
       self.root_path = 'overview'
 
       options[:follow_links] = true
