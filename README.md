@@ -46,7 +46,9 @@ docker run --name devdocs -d -p 9292:9292 devdocs
 
 DevDocs is made of two pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
-DevDocs requires Ruby 3.4.1 (defined in [`Gemfile`](./Gemfile)), libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). Once you have these installed, run the following commands:
+DevDocs requires Ruby 3.4.1 (defined in [`Gemfile`](./Gemfile)), libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). On Arch Linux run `pacman -S ruby ruby-bundler ruby-erb ruby-irb`.
+
+Once you have these installed, run the following commands:
 
 ```sh
 git clone https://github.com/freeCodeCamp/devdocs.git && cd devdocs
