@@ -167,14 +167,14 @@ Contributions are welcome. Please read the [contributing guidelines](./.github/C
 
 Below are some helpful shortcuts and usage tips that are not immediately obvious to new users:
 
-- Press **/** or **Ctrl + K** to instantly focus the search bar.
-- Press **?** to open DevDocs’ built-in help overlay.
-- Press **↑ / ↓** to navigate search results without touching the mouse.
-- Press **Enter** to open the highlighted search result.
-- Press **Backspace** to go back to the previously viewed page.
-- Press **Shift + S** to toggle the sidebar visibility.
-- Press **A** to open the list of all installed documentation sets.
-- Press **Esc** to close popups, overlays, and search.
+- Press <kbd>/</kbd> or <kbd>Ctrl + K</kbd> to instantly focus the search bar.
+- Press <kbd>?</kbd> to open DevDocs’ built-in help overlay.
+- Press <kbd>↑</kbd> or <kbd>↓</kbd> to navigate search results without touching the mouse.
+- Press <kbd>Enter</kbd> to open the highlighted search result.
+- Press <kbd>Backspace</kbd> to go back to the previously viewed page.
+- Press <kbd>Shift + S</kbd> to toggle the sidebar visibility.
+- Press <kbd>A</kbd> to open the list of all installed documentation sets.
+- Press <kbd>Esc</kbd> to close popups, overlays, and search.
 - Use the **⚡ Offline Mode toggle** to download docs for offline use.
 - You can pin specific documentation sets to the sidebar for quicker access.
 
