@@ -3,25 +3,22 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
 
       def get_name
-        if slug.start_with?('book')
-          name = at_css('main h1', 'main h2')
-
-          if slug.start_with?('book/appendix')
-            return name ? name.content : 'Appendix'
-          end
-
+        name = at_css('main h1', 'main h2', '.main-heading h1')
+        if slug.start_with?('book/appendix')
+          name ? name.content : 'Appendix'
+        elsif slug.start_with?('book')
           ch1 = slug[/ch(\d+)-(\d+)/, 1] || '00'
           ch2 = slug[/ch(\d+)-(\d+)/, 2] || '00'
           name ? "#{ch1}.#{ch2}. #{name.content}" : 'Introduction'
         elsif slug.start_with?('reference')
-          at_css('main h1').content
+          name.content
         elsif slug == 'error_codes/error-index'
           'Compiler Errors'
         elsif slug.start_with?('error_codes')
           slug.split('/').last.upcase
         else
-          at_css('main h1').at_css('button')&.remove
-          name = at_css('main h1').content.remove(/\A.+\s/).remove('⎘')
+          name.at_css('button')&.remove
+          name = name.content.strip.remove(/\A.+\s/)
           path = slug.split('/')
           if path.length == 2
             # Anything in the standard library but not in a `std::*` module is
