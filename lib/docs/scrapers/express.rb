@@ -28,7 +28,7 @@ module Docs
     HTML
 
     version do
-      self.release = '5.1.0'
+      self.release = '5.2.1'
       self.root_path = '5x/api.html'
     end
 

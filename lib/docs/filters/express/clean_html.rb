@@ -39,6 +39,7 @@ module Docs
 
         css('pre > code').each do |node|
           node.parent['data-language'] = node['class'][/language-(\w+)/, 1] if node['class']
+          node.parent['data-language'] ||= 'javascript'
           node.parent.content = node.parent.content
         end
 
