@@ -7,6 +7,7 @@ module Docs
       code: "https://github.com/toss/es-toolkit",
       home: "https://es-toolkit.slash.page",
     }
+    self.release = '1.42.0'
 
     options[:attribution] = <<-HTML
       &copy; 2024-2025, Viva Republica<br>
@@ -14,7 +15,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_github_tags("toss", "es-toolkit", opts).first["name"]
+      get_github_tags("toss", "es-toolkit", opts).first["name"][1..]
     end
 
     def build_pages(&block)
