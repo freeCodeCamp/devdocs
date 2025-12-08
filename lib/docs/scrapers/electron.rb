@@ -26,11 +26,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://releases.electronjs.org/release?channel=stable', opts)
-
-      # Builds are sorted by build time, not latest version. Manually sort rows by version.
-      # This list is paginated; it is assumed the latest version is somewhere on the first page.
-      doc.css('table.w-full > tbody > tr td:first-child').map(&:content).sort!.last
+      get_latest_github_release('electron', 'electron', opts)
     end
   end
 end
