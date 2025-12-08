@@ -2,7 +2,7 @@ module Docs
   class Playwright < UrlScraper
     self.name = 'Playwright'
     self.type = 'simple'
-    self.release = '1.55.0'
+    self.release = '1.57.0'
     self.base_url = 'https://playwright.dev/docs/'
     self.root_path = 'intro'
     self.links = {
