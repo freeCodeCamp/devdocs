@@ -7,7 +7,7 @@ module Docs
       home: 'https://leafletjs.com/',
       code: 'https://github.com/oven-sh/bun'
     }
-    self.release = '1.3.0'
+    self.release = '1.3.4'
     self.base_url = "https://bun.com/docs/"
     self.root_path = 'installation'
 
@@ -19,14 +19,15 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    options[:skip_patterns] = [/^project/]
+    options[:download_images] = false
+    options[:skip_patterns] = [/^project/, /^feedback/]
     options[:fix_urls] = ->(url) do
       url.sub! %r{.md$}, ''
       url
     end
 
     def get_latest_version(opts)
-      tags = get_github_tags('oven-sh', 'bun', opts)
+      get_latest_github_release('oven-sh', 'bun', opts)[5..]
     end
   end
 end

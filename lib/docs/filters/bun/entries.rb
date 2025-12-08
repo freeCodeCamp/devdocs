@@ -11,12 +11,12 @@ module Docs
       end
 
       def additional_entries
-        if slug.start_with?('cli')
+        if slug.start_with?('pm/cli')
           css('h2[id]').each_with_object [] do |node, entries|
             name = get_name + " " + node.content.strip
             entries << [name, node['id']]
           end
-        elsif slug.start_with?('api')
+        elsif slug.start_with?('runtime')
           css('h2[id]').each_with_object [] do |node, entries|
             name = get_name + ": " + node.content.strip
             entries << [name, node['id']]
