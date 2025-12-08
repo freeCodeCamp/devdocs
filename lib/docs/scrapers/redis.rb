@@ -21,8 +21,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      body = fetch('http://download.redis.io/redis-stable/00-RELEASENOTES', opts)
-      body.scan(/^Redis ([0-9.]+)\s+Released/).first.first
+      get_latest_github_release('redis', 'redis', opts)
     end
 
     private
