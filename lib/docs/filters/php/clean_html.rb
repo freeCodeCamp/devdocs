@@ -4,6 +4,7 @@ module Docs
     class CleanHtmlFilter < Filter
 
       def call
+        @doc = at_css('#layout-content')
         root_page? ? root : other
         doc
       end
