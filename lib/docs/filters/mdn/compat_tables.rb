@@ -138,76 +138,51 @@ module Docs
         version_removed = []
         notes = []
 
-        if json
-          if json.is_a?(Array)
-            json.each do |element|
-
-              if element['version_added']
-                version_added.push(element['version_added'])
-              else
-                version_added.push(false)
-              end
-
-              if element['version_removed']
-                version_removed.push(element['version_removed'])
-              else
-                version_removed.push(false)
-              end
-
-              if element['notes']
-                notes.push(element['notes'])
-              else
-                notes.push(false)
-              end
-
-            end
-          else
-            version_added.push(json['version_added'])
-            version_removed.push(json['version_removed'])
-            notes.push(json['notes'])
-          end
-
-          version_added.map! do |version|
-            if version == true
-              'Yes'
-            elsif version == false
-              'No'
-            elsif version.is_a?(String)
-              version
-            else
-              '?'
-            end
-          end
-
-          if version_removed[0]
-            format_string = "<td class=bc-supports-no>"
-          elsif version_added[0] == 'No'
-            format_string = "<td class=bc-supports-no>"
-          elsif version_added[0] == '?'
-            format_string = "<td class=bc-supports-unknown>"
-          else
-            format_string = "<td class=bc-supports-yes>"
-          end
-
-          for value in (0..version_added.length-1) do
-            if version_removed[value]
-              version_string = "#{version_added[value]}–#{version_removed[value]}"
-            else
-              version_string = version_added[value]
-            end
-
-            if notes[value]
-              format_string += "<details><summary>#{version_string}</summary>#{notes[value]}</details>"
-            else
-              format_string += "<div>#{version_string}</div>"
-            end
-          end
-
-          format_string += "</td>"
-
-        else
+        if !json
           format_string = "<td class=bc-supports-unknown><div>?</div></td>"
+          entry.add_child(format_string)
+          return
         end
+
+        format_string = "<td class=bc-supports-unknown>"
+        (json.is_a?(Array) ? json : [json]).each do |element|
+          version = element['version_added']
+          if version.is_a?(String) and element['release_date']
+            format_string = "<td class=bc-supports-yes>"
+            format_string = "<td class=bc-supports-preview>" if element['release_date'] > Time.now.iso8601
+            version_added.push("<abbr title='Release date: #{element['release_date']}'>#{version}</abbr>")
+          elsif version == 'preview'
+            format_string = "<td class=bc-supports-preview>"
+            version_added.push(version)
+          elsif version.is_a?(String)
+            format_string = "<td class=bc-supports-yes>"
+            version_added.push(version)
+          elsif version == true
+            format_string = "<td class=bc-supports-yes>"
+            version_added.push('Yes')
+          else
+            format_string = "<td class=bc-supports-no>"
+            version_added.push('No')
+          end
+          version_removed.push(element['version_removed'] || false)
+          notes.push(element['notes'] || false)
+        end
+
+        for value in (0..version_added.length-1) do
+          if version_removed[value]
+            version_string = "#{version_added[value]}–#{version_removed[value]}"
+          else
+            version_string = version_added[value]
+          end
+
+          if notes[value]
+            format_string += "<details><summary>#{version_string}</summary>#{notes[value]}</details>"
+          else
+            format_string += "<div>#{version_string}</div>"
+          end
+        end
+
+        format_string += "</td>"
 
         entry.add_child(format_string)
       end

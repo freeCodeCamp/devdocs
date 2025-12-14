@@ -19,6 +19,12 @@ module Docs
         css('div > .overheadIndicator:first-child:last-child', 'div > .blockIndicator:first-child:last-child').each do |node|
           node.parent.replace(node)
         end
+
+        css('.baseline-indicator').each do |node|
+          if node.next.text == '> '
+            node.next.remove
+          end
+        end
       end
     end
   end
