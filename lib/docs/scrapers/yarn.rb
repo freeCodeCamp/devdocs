@@ -13,7 +13,7 @@ module Docs
     HTML
 
     version do
-      self.release = '4.5.1'
+      self.release = '4.12.0'
       self.base_url = 'https://yarnpkg.com/'
       self.links = {
         home: 'https://yarnpkg.com/',
