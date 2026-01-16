@@ -37,7 +37,7 @@ module Docs
         HTML
       else
         <<-HTML
-          &copy; 2012&ndash;2025 Manas Technology Solutions.<br>
+          &copy; 2012&ndash;2026 Manas Technology Solutions.<br>
           Licensed under the Apache License, Version 2.0.
         HTML
       end
