@@ -10,8 +10,6 @@ module Docs
         css('.layout-body-aside').remove
         css('#site-user-feedback-footer').remove
         css('footer').remove
-        # docfx
-        css('.sideaffix').remove
         # markdown-folder-to-html
         css('#menuLink').remove
         css('#menu').remove
