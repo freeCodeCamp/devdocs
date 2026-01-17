@@ -2,7 +2,7 @@ module Docs
   class Powershell
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('h1')&.content || "PowerShell"
+        at_css('h1')&.content.chop.chop || "" # remove the extra ' #'
       end
 
       def get_type
@@ -18,7 +18,7 @@ module Docs
           when /^7\.6/
             '7.6'
           else
-            'Module'
+            'Manual'
         end
       end
     end
