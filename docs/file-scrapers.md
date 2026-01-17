@@ -321,3 +321,56 @@ mv three.js-r${VERSION}/docs/* docs/threejs~${VERSION}/
 rm -rf three.js-r${VERSION}/
 rm threejs.tar.gz
 ```
+
+## PowerShell
+
+```sh
+curl -o PowerShell-Docs-main.zip 'https://github.com/MicrosoftDocs/PowerShell-Docs/archive/refs/heads/main.zip'
+unzip PowerShell-Docs-main.zip
+cd PowerShell-Docs-main
+
+## Has missing documentation, claims it can't find files from toc.yml (get-help.md etc.)
+# pacman -S dotnet-host aspnet-runtime
+# yay -S dotnet-runtime-8.0-bin # for DocFxTocGenerator
+# dotnet --list-runtimes
+# dotnet tool update -g docfx
+# dotnet tool install DocFxTocGenerator -g
+# cd PowerShell-Docs-main/reference
+# DocFxTocGenerator -d reference -sr --indexing NoDefault
+# docfx reference/docfx.json -o ../docs/powershell
+
+
+# strip all front matter in all Markdown files
+find reference -name "*.md" -type f -exec sed -i '/^---$/,/^---$/d' {} +
+## create a simpified template
+# cat > reference/template.html << 'EOF'
+# <!doctype html>
+# <html>
+#     <head>
+#         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+#         <meta charset="utf-8" />
+#     </head>
+
+#     <body>
+#         <nav id="menu">
+#             <!--NAV-->
+#         </nav>
+#         <div id="layout">
+#             <article id="main" class="content">
+#                 <!--CONTENT-->
+#             </article>
+#         </div>
+#     </body>
+# </html>
+# EOF
+
+npx markdown-folder-to-html reference
+cp -r _reference ../docs/powershell
+cd ..
+
+# process whent on indefinatly
+bundle exec thor docs:generate powershell --debug 
+
+rm -rdf PowerShell-Docs-main/
+rm PowerShell-Docs-main.zip
+```
