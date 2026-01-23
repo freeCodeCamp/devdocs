@@ -7,8 +7,9 @@ module Docs
       end
 
       def get_type
+        name.gsub!(/\P{ASCII}/, '')
         if name.in? ['Assertions', 'Annotations', 'The XML Configuration File']
-          name
+          name.gsub('The ', '')
         else
           'Guides'
         end
@@ -17,11 +18,10 @@ module Docs
       def additional_entries
         return [] if type == 'Guides'
 
-        css('h2').map do |node|
-          [node.content, node['id']]
+        css('h3').map do |node|
+          [node.content.gsub('The ', ''), node['id']]
         end
       end
-
     end
   end
 end
