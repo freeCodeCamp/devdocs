@@ -1,3 +1,5 @@
+@use 'global/classes';
+
 ._support_tables {
   h2 { @extend %block-heading; }
   code { @extend %label; }

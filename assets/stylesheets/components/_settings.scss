@@ -2,6 +2,9 @@
 // Settings
 //
 
+@use 'global/classes';
+@use 'global/icons';
+
 ._settings {
   display: none;
   position: absolute;

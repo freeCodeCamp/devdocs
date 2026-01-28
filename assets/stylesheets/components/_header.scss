@@ -2,6 +2,10 @@
 // Header
 //
 
+@use 'global/icons';
+@use 'global/mixins' as m;
+@use 'global/classes';
+
 ._header {
   position: absolute;
   z-index: var(--headerZ);
@@ -17,7 +21,7 @@
   @extend %border-box;
   @extend %user-select-none;
 
-  @include mobile { width: var(--sidebarMediumWidth); }
+  @include m.mobile { width: var(--sidebarMediumWidth); }
 }
 
 ._header-left {

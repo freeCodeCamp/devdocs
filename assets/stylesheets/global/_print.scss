@@ -1,4 +1,6 @@
-@include print {
+@use 'global/mixins' as m;
+
+@include m.print {
   ._header, ._sidebar, ._path, ._notif, ._toc, ._pre-clip, ._notice, ._links {
     display: none !important;
   }
