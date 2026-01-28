@@ -1,6 +1,25 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    actionpack (7.2.3)
+      actionview (= 7.2.3)
+      activesupport (= 7.2.3)
+      cgi
+      nokogiri (>= 1.8.5)
+      racc
+      rack (>= 2.2.4, < 3.3)
+      rack-session (>= 1.0.1)
+      rack-test (>= 0.6.3)
+      rails-dom-testing (~> 2.2)
+      rails-html-sanitizer (~> 1.6)
+      useragent (~> 0.16)
+    actionview (7.2.3)
+      activesupport (= 7.2.3)
+      builder (~> 3.1)
+      cgi
+      erubi (~> 1.11)
+      rails-dom-testing (~> 2.2)
+      rails-html-sanitizer (~> 1.6)
     activesupport (7.2.3)
       base64
       benchmark (>= 0.3)
@@ -21,13 +40,24 @@ GEM
       rouge (>= 1.0.0)
     bigdecimal (3.1.9)
     browser (5.3.1)
+    builder (3.3.0)
     byebug (12.0.0)
+    cgi (0.5.1)
     chunky_png (1.4.0)
     coderay (1.1.3)
     concurrent-ruby (1.3.5)
     connection_pool (2.4.1)
+    crass (1.0.6)
     daemons (1.4.1)
+    dartsass-sprockets (3.2.1)
+      railties (>= 4.0.0)
+      sassc-embedded (~> 1.80.1)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
+    date (3.5.1)
     drb (2.2.3)
+    erb (6.0.1)
     erubi (1.13.1)
     ethon (0.17.0)
       ffi (>= 1.15.0)
@@ -36,6 +66,9 @@ GEM
     exifr (1.4.0)
     ffi (1.17.2)
     fspath (3.1.2)
+    google-protobuf (4.33.4)
+      bigdecimal
+      rake (>= 13)
     highline (3.1.2)
       reline
     html-pipeline (2.14.3)
@@ -55,7 +88,14 @@ GEM
     image_size (3.3.0)
     in_threads (1.6.0)
     io-console (0.8.0)
+    irb (1.16.0)
+      pp (>= 0.6.0)
+      rdoc (>= 4.0.0)
+      reline (>= 0.4.2)
     logger (1.6.6)
+    loofah (2.25.0)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.12.0)
     method_source (1.1.0)
     mini_portile2 (2.8.9)
     minitest (5.27.0)
@@ -67,6 +107,9 @@ GEM
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     options (2.3.2)
+    pp (0.6.3)
+      prettyprint
+    prettyprint (0.2.0)
     progress (3.6.0)
     progress_bar (1.3.4)
       highline (>= 1.6)
@@ -77,18 +120,44 @@ GEM
     pry-byebug (3.11.0)
       byebug (~> 12.0)
       pry (>= 0.13, < 0.16)
+    psych (5.3.1)
+      date
+      stringio
     racc (1.8.1)
     rack (2.2.21)
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
       rack (~> 2.2, >= 2.2.4)
+    rack-session (1.0.2)
+      rack (< 3)
     rack-ssl-enforcer (0.2.9)
     rack-test (2.2.0)
       rack (>= 1.3)
+    rackup (1.0.1)
+      rack (< 3)
+      webrick
+    rails-dom-testing (2.3.0)
+      activesupport (>= 5.0.0)
+      minitest
+      nokogiri (>= 1.6)
+    rails-html-sanitizer (1.6.2)
+      loofah (~> 2.21)
+      nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    railties (7.2.3)
+      actionpack (= 7.2.3)
+      activesupport (= 7.2.3)
+      cgi
+      irb (~> 1.13)
+      rackup (>= 1.0.0)
+      rake (>= 12.2)
+      thor (~> 1.0, >= 1.2.2)
+      tsort (>= 0.2)
+      zeitwerk (~> 2.6)
     rake (13.3.1)
-    rb-fsevent (0.11.2)
-    rb-inotify (0.10.1)
-      ffi (~> 1.0)
+    rdoc (7.1.0)
+      erb
+      psych (>= 4.0.0)
+      tsort
     redcarpet (3.6.1)
     reline (0.6.0)
       io-console (~> 0.5)
@@ -98,11 +167,11 @@ GEM
     rss (0.3.1)
       rexml
     ruby2_keywords (0.0.5)
-    sass (3.7.4)
-      sass-listen (~> 4.0.0)
-    sass-listen (4.0.0)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
+    sass-embedded (1.97.3)
+      google-protobuf (~> 4.31)
+      rake (>= 13)
+    sassc-embedded (1.80.8)
+      sass-embedded (~> 1.80)
     securerandom (0.3.2)
     sinatra (3.2.0)
       mustermann (~> 3.0)
@@ -115,14 +184,17 @@ GEM
       rack-protection (= 3.2.0)
       sinatra (= 3.2.0)
       tilt (~> 2.0)
-    sprockets (3.7.5)
-      base64
+    sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
-      rack (> 1, < 3)
+      logger
+      rack (>= 2.2.4, < 4)
     sprockets-helpers (1.4.0)
       sprockets (>= 2.2)
-    sprockets-sass (2.0.0.beta2)
-      sprockets (>= 2.0, < 4.0)
+    sprockets-rails (3.5.2)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
+      sprockets (>= 3.0.0)
+    stringio (3.2.0)
     strings (0.2.1)
       strings-ansi (~> 0.2)
       unicode-display_width (>= 1.5, < 3.0)
@@ -138,6 +210,7 @@ GEM
       rack (>= 1, < 3)
     thor (1.4.0)
     tilt (2.6.0)
+    tsort (0.2.0)
     tty-pager (0.14.0)
       strings (~> 0.2.0)
       tty-screen (~> 0.8)
@@ -149,7 +222,10 @@ GEM
     unicode-display_width (2.3.0)
     unicode_utils (1.4.0)
     unix_utils (0.0.15)
+    useragent (0.16.11)
+    webrick (1.9.2)
     yajl-ruby (1.4.3)
+    zeitwerk (2.7.4)
 
 PLATFORMS
   ruby
@@ -159,6 +235,7 @@ DEPENDENCIES
   better_errors
   browser
   chunky_png
+  dartsass-sprockets
   erubi
   html-pipeline
   image_optim
@@ -175,12 +252,10 @@ DEPENDENCIES
   redcarpet
   rr
   rss
-  sass
   sinatra
   sinatra-contrib
   sprockets
   sprockets-helpers
-  sprockets-sass
   terminal-table
   terser
   thin

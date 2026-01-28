@@ -1,3 +1,5 @@
+@use 'global/classes';
+
 ._gnu_make {
     dl dt {
         @extend %block-label, %label-blue;

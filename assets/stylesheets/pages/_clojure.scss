@@ -1,3 +1,5 @@
+@use 'global/classes';
+
 ._clojure {
   h2:not([id]) { @extend %block-heading; }
   h2[id], h3 { @extend %block-label, %label-blue; }

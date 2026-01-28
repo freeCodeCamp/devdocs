@@ -12,3 +12,7 @@ docs/**/*
 *.tar.bz2
 *.tar.gz
 *.zip
+
+# SCSS manually compiled from ERB.
+assets/stylesheets/global/_icons.scss
+assets/stylesheets/components/_environment.scss

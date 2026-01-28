@@ -1,3 +1,5 @@
+@use 'global/classes';
+
 %sphinx {
   h2 { @extend %block-heading; }
   h3 { @extend %block-label; }

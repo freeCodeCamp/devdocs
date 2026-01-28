@@ -1,3 +1,5 @@
+@use 'pages/simple';
+
 ._terraform {
   @extend %simple;
   .note, .alert { @extend %note; }

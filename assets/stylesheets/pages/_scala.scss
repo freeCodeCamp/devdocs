@@ -1,3 +1,7 @@
+@use 'global/base';
+@use 'global/mixins' as m;
+@use 'pages/simple';
+
 ._scala {
   @extend %simple;
   
@@ -22,7 +26,7 @@
 
     a { padding: .4em }
 
-    @include print {
+    @include m.print {
       display: none;
     }
   }
@@ -36,7 +40,7 @@
 
     &:hover { text-decoration: underline; }
 
-    @include print {
+    @include m.print {
       display: none;
     }
   }

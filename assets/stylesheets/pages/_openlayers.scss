@@ -1,3 +1,6 @@
+@use 'global/base';
+@use 'pages/simple';
+
 ._openlayers {
   @extend %simple;
   .nameContainer {

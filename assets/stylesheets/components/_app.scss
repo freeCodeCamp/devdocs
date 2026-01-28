@@ -1,3 +1,5 @@
+@use 'global/classes';
+
 html._booting { background: var(--contentBackground); }
 body._max-width { background: none; }
 html._booting body._max-width { background: var(--documentBackground); }
