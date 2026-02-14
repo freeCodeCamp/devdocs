@@ -2,12 +2,11 @@ module Docs
   class Couchdb
     class CleanHtmlFilter < Filter
       def call
-        css('h1').each do |node|
-          node.content = node.content.gsub(/\d*\. |\P{ASCII}/, '').split('.').last
-        end
+        css('.section-number').remove
+        css('.headerlink').remove
 
-        css('h2', 'h3').each do |node|
-          node.content = node.content.gsub(/\P{ASCII}/, '').split('.').last
+        css('.sig-name').each do |node|
+          node.name = 'code'
         end
 
         css('pre').each do |node|
