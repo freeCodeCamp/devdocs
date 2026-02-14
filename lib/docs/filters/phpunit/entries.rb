@@ -19,7 +19,7 @@ module Docs
         return [] if type == 'Guides'
 
         css('h3').map do |node|
-          [node.content.gsub('The ', ''), node['id']]
+          [node.content.gsub('The ', ''), node['id'] || node.ancestors('section[id]').first['id']]
         end
       end
     end
