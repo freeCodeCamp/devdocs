@@ -7,6 +7,7 @@ module Docs
         end
         @doc = at_css('main > .body')
         css('.links').remove
+        css('.sponsors_container').remove
         css('pre').each do |node|
           node.content = node.content
           node['data-language'] = node['class'][/lang-(\w+)/, 1]
