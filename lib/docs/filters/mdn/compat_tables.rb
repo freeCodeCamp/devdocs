@@ -71,7 +71,9 @@ module Docs
       def generate_compatibility_table_wrapper(url)
         response = Request.run url
         return "" unless response.success?
-        @json_data = JSON.load(response.body)['data']
+        parsed = JSON.parse(response.body)
+        return "" unless parsed.is_a?(Hash) && parsed['data'].is_a?(Hash)
+        @json_data = parsed['data']
 
         html_table = generate_basic_html_table()
 
@@ -117,9 +119,9 @@ module Docs
 
         if key == '__compat'
           tmp = slug.split('/')
-          last_table_entry.add_child("<th><code>#{tmp.last}")
+          last_table_entry.add_child("<th><code>#{CGI.escapeHTML(tmp.last.to_s)}")
         else
-          last_table_entry.add_child("<th><code>#{key}")
+          last_table_entry.add_child("<th><code>#{CGI.escapeHTML(key.to_s)}")
         end
 
 
@@ -150,13 +152,13 @@ module Docs
           if version.is_a?(String) and element['release_date']
             format_string = "<td class=bc-supports-yes>"
             format_string = "<td class=bc-supports-preview>" if element['release_date'] > Time.now.iso8601
-            version_added.push("<abbr title='Release date: #{element['release_date']}'>#{version}</abbr>")
+            version_added.push("<abbr title='Release date: #{CGI.escapeHTML(element['release_date'].to_s)}'>#{CGI.escapeHTML(version)}</abbr>")
           elsif version == 'preview'
             format_string = "<td class=bc-supports-preview>"
-            version_added.push(version)
+            version_added.push(CGI.escapeHTML(version))
           elsif version.is_a?(String)
             format_string = "<td class=bc-supports-yes>"
-            version_added.push(version)
+            version_added.push(CGI.escapeHTML(version))
           elsif version == true
             format_string = "<td class=bc-supports-yes>"
             version_added.push('Yes')
@@ -164,7 +166,7 @@ module Docs
             format_string = "<td class=bc-supports-no>"
             version_added.push('No')
           end
-          version_removed.push(element['version_removed'] || false)
+          version_removed.push(element['version_removed'] ? CGI.escapeHTML(element['version_removed'].to_s) : false)
           notes.push(element['notes'] || false)
         end
 
