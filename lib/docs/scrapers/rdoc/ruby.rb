@@ -27,7 +27,6 @@ module Docs
       syntax_rdoc.html
       extension_rdoc.html
       extension_ja_rdoc.html
-      Data.html
       English.html
       Fcntl.html
       Kconv.html
@@ -68,6 +67,11 @@ module Docs
       Ruby Standard Library &copy; contributors<br>
       Licensed under their own licenses.
     HTML
+
+    version '4.0' do
+      self.release = '4.0.1'
+      self.root_path = 'index.html'
+    end
 
     version '3.4' do
       self.release = '3.4.7'
