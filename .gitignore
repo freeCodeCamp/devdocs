@@ -12,3 +12,4 @@ docs/**/*
 *.tar.bz2
 *.tar.gz
 *.zip
+assets/stylesheets/global/_icons.scss
