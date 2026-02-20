@@ -15,16 +15,15 @@ group :app do
   gem 'browser'
   gem 'chunky_png'
   gem 'erubi'
+  gem 'dartsass-sprockets'
   gem 'image_optim_pack', platforms: :ruby
   gem 'image_optim'
   gem 'rack-ssl-enforcer'
   gem 'rack'
   gem 'rss'
-  gem 'sass'
   gem 'sinatra-contrib'
   gem 'sinatra'
   gem 'sprockets-helpers'
-  gem 'sprockets-sass'
   gem 'sprockets'
   gem 'thin'
 end

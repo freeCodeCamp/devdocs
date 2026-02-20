@@ -1,3 +1,6 @@
+@use 'global/classes';
+@use 'global/mixins' as m;
+
 ._rdoc {
   > .description, > .documentation-section { padding-left: 1rem; }
   > .description > h2, header > h3, > h2 { @extend %block-heading; }
@@ -28,7 +31,7 @@
 
     &:hover { text-decoration: underline; }
 
-    @include print {
+    @include m.print {
       display: none;
     }
   }

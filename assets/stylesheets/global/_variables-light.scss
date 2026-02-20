@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 html._theme-default {
   --absolute: black;
 
@@ -29,8 +31,8 @@ html._theme-default {
 
   --headerBackground: #eee;
   --headerBorder: #d7d7d7;
-  --searchTagBackground: #{darken(#eee, 5%)};
-  --searchBorder: #{darken(#d7d7d7, 2%)};
+  --searchTagBackground: #{color.adjust(#eee, $lightness: -5%)};
+  --searchBorder: #{color.adjust(#d7d7d7, $lightness: -2%)};
 
   --sidebarBackground: #f9f9f9;
   --transparentSidebarBackground: #{rgba(#f9f9f9, 0)};

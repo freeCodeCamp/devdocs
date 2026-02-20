@@ -1,3 +1,5 @@
+@use 'global/classes';
+
 ._elisp {
     dl > dt {
         @extend %block-label, %label-blue;

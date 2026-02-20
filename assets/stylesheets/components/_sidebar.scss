@@ -2,6 +2,10 @@
 // Sidebar
 //
 
+@use 'global/classes';
+@use 'global/icons';
+@use 'global/mixins' as m;
+
 ._sidebar {
   position: absolute;
   z-index: var(--sidebarZ);
@@ -76,7 +80,7 @@
   box-shadow: inset -1px 0 var(--sidebarBorder);
   @extend %border-box;
 
-  @include mobile { width: var(--sidebarMediumWidth); }
+  @include m.mobile { width: var(--sidebarMediumWidth); }
 
   ._sidebar > & { min-height: 100%; }
 
@@ -311,7 +315,7 @@
           transform: translate3d(0, 0, 0);
   @extend %border-box;
 
-  @include mobile { min-width: var(--sidebarMediumWidth); }
+  @include m.mobile { min-width: var(--sidebarMediumWidth); }
 
   > ._list-text { display: inline; }
 

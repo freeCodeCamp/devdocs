@@ -1,3 +1,5 @@
+@use 'global/classes';
+
 ._nginx {
   h4 { @extend %block-heading; }
   .note { @extend %note; }
