@@ -3,11 +3,11 @@ module Docs
 
     self.name = 'Ruby / Minitest'
     self.slug = 'minitest'
-    self.release = '5.25.4'
+    self.release = '6.0.1'
     self.links = {
+      home: 'https://minite.st',
       code: 'https://github.com/minitest/minitest'
     }
-    self.base_url = 'https://docs.seattlerb.org/minitest/'
 
     html_filters.replace 'rdoc/entries', 'minitest/entries'
 

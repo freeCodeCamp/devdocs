@@ -61,6 +61,9 @@ module Docs
           node['data-language'] = 'c' if node['class'] == 'c'
           node['data-language'] = 'ruby' if node['class'] && node['class'].include?('ruby')
         end
+
+        # Remove navigation breadcrumbs
+        css('ol[role="navigation"]').remove
       end
     end
   end
