@@ -8,7 +8,7 @@ module Docs
       def get_name
         heading = at_css('h1')
         return super if heading.nil?
-        heading.content.gsub(/\s+/, ' ').strip
+        normalized_heading_text(heading)
       end
 
       def get_type
@@ -21,7 +21,7 @@ module Docs
         return [] if root_page?
 
         css('h2[id], h3[id]').each_with_object([]) do |node, entries|
-          section_name = node.content.gsub(/\s+/, ' ').strip
+          section_name = normalized_heading_text(node)
           next if section_name.empty?
           next if section_name == name
           entries << ["#{name}: #{section_name}", node['id']]
@@ -29,6 +29,12 @@ module Docs
       end
 
       private
+
+      def normalized_heading_text(node)
+        fragment = node.dup
+        fragment.css('a').remove
+        fragment.content.gsub(/\s+/, ' ').strip
+      end
 
       def standards_sdk_doc?
         slug.start_with?('libraries/standards-sdk/')
