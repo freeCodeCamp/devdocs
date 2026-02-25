@@ -321,3 +321,23 @@ mv three.js-r${VERSION}/docs/* docs/threejs~${VERSION}/
 rm -rf three.js-r${VERSION}/
 rm threejs.tar.gz
 ```
+
+## PowerShell
+
+```sh
+curl -o PowerShell-Docs-main.zip 'https://github.com/MicrosoftDocs/PowerShell-Docs/archive/refs/heads/main.zip'
+unzip PowerShell-Docs-main.zip
+cd PowerShell-Docs-main
+
+# strip all front matter in all Markdown files
+find reference -name "*.md" -type f -exec sed -i '/^---$/,/^---$/d' {} +
+
+
+npx markdown-folder-to-html reference
+cp -r _reference ../docs/powershell
+cd ..
+bundle exec thor docs:generate powershell
+
+rm -rdf PowerShell-Docs-main/
+rm PowerShell-Docs-main.zip
+```
