@@ -4,8 +4,9 @@ module Docs
       def call
         return doc unless slug.start_with?('guides')
 
-        at_css('#mainCol').prepend_child at_css('#feature .wrapper').children
-        @doc = at_css('#mainCol')
+        main_col = at_css('#mainCol') || at_css('#column-main')
+        main_col.prepend_child at_css('#feature .wrapper').children
+        @doc = main_col
 
         container = Nokogiri::XML::Node.new 'div', doc.document
         container['class'] = '_simple'
