@@ -29,12 +29,13 @@ GEM
     daemons (1.4.1)
     drb (2.2.3)
     erubi (1.13.1)
-    ethon (0.17.0)
+    ethon (0.18.0)
       ffi (>= 1.15.0)
+      logger
     eventmachine (1.2.7)
     execjs (2.9.1)
     exifr (1.4.0)
-    ffi (1.17.2)
+    ffi (1.17.3)
     fspath (3.1.2)
     highline (3.1.2)
       reline
