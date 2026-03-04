@@ -11,6 +11,7 @@ module Docs
 
         css('.alert').each do |node|
           node.name = 'blockquote'
+          node.css('svg').remove # warning icons
         end
 
         css('pre').each do |node|
