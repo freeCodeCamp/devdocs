@@ -1,3 +1,5 @@
+@use 'global/base';
+
 ._d {
   h2 { @extend %block-heading; }
   h3, .d_decl { @extend %block-label, %label-blue; }

@@ -1,3 +1,6 @@
+@use 'global/base';
+@use 'pages/simple';
+
 ._jq {
   @extend %simple;
 

@@ -1,3 +1,6 @@
+@use 'global/variables-light';
+@use 'global/variables-dark';
+
 // Variables needed to style the error message for browsers that don't support CSS variables.
 $baseFont: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
 $textColor: #333;

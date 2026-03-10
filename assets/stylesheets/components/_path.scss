@@ -1,3 +1,6 @@
+@use 'global/mixins' as m;
+@use 'global/icons';
+
 ._path {
   position: absolute;
   z-index: var(--headerZ);
@@ -11,7 +14,7 @@
   background: var(--pathBackground);
   box-shadow: inset 0 1px var(--pathBorder);
 
-  @include mobile { left: var(--sidebarMediumWidth); }
+  @include m.mobile { left: var(--sidebarMediumWidth); }
 
   ._sidebar-hidden & { left: 0; }
 

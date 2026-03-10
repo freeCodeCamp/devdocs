@@ -18,6 +18,8 @@
 
 //= require_tree ./templates
 
+//= link_tree ../images/sprites
+
 //= require tracking
 
 var init = function () {
