@@ -3,7 +3,8 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = at_css('h1').content
-        name.sub! %r{#\s*}, ''
+        name.sub! %r{#\s*|\s*\u200B\s*}, ''
+        name.strip!
         name
       end
 
@@ -18,6 +19,7 @@ module Docs
       end
 
       def additional_entries
+        return []
         return [] unless subpath.start_with?('api')
 
         entries = [
@@ -29,14 +31,18 @@ module Docs
 
         css('h3').each do |node|
           entry_name = node.content.strip
+          entry_name.sub! %r{#\s*|\s*\u200B\s*}, ''
 
           # Get the previous h2 title
           title = node
-          title = title.previous_element until title.name == 'h2'
-          title = title.content.strip
-          title.sub! %r{#\s*}, ''
-
-          entry_name.sub! %r{#\s*}, ''
+          begin
+            title = title.previous_element until title.name == 'h2'
+            title = title.content.strip
+            title.sub! %r{#\s*}, ''
+          rescue
+            title = ''
+            entry_name = "#{name}.#{entry_name}"
+          end
 
           case title
           when 'Router Construction Options'

@@ -100,7 +100,7 @@ module Docs
     end
 
     version do
-      self.release = '21.0.3'
+      self.release = '21.2.0'
       self.base_url = 'https://angular.dev/'
       self.root_path = 'overview'
 

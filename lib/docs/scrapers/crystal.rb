@@ -2,7 +2,7 @@ module Docs
   class Crystal < UrlScraper
     include MultipleBaseUrls
     self.type = 'crystal'
-    self.release = '1.18.0'
+    self.release = '1.19.0'
     self.base_urls = [
       "https://crystal-lang.org/api/#{release}/",
       "https://crystal-lang.org/reference/#{release[0..2]}/",
@@ -37,7 +37,7 @@ module Docs
         HTML
       else
         <<-HTML
-          &copy; 2012&ndash;2025 Manas Technology Solutions.<br>
+          &copy; 2012&ndash;2026 Manas Technology Solutions.<br>
           Licensed under the Apache License, Version 2.0.
         HTML
       end

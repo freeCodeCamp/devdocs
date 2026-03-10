@@ -16,9 +16,14 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2013&ndash;present Evan You<br>
+      &copy; 2014-present Evan You, Eduardo San Martin Morote<br>
       Licensed under the MIT License.
     HTML
+
+    version '5' do
+      self.release = '5.0.2'
+      self.base_url = 'https://router.vuejs.org/'
+    end
 
     version '4' do
       self.release = '4.0.12'

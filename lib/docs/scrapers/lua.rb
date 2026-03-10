@@ -17,7 +17,7 @@ module Docs
 
     version '5.5' do
       self.release = '5.5.0'
-      self.base_url = 'https://www.lua.org/manual/5.4/'
+      self.base_url = 'https://www.lua.org/manual/5.5/'
     end
 
     version '5.4' do

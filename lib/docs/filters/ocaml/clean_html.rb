@@ -2,6 +2,7 @@ module Docs
   class Ocaml
     class CleanHtmlFilter < Filter
       def call
+        @doc = at_css('.api') || doc
 
         css('#sidebar').remove
 

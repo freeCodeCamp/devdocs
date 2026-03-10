@@ -7,7 +7,7 @@ module Docs
       home: 'https://leafletjs.com/',
       code: 'https://github.com/oven-sh/bun'
     }
-    self.release = '1.3.5'
+    self.release = '1.3.10'
     self.base_url = "https://bun.com/docs/"
     self.root_path = 'installation'
 
