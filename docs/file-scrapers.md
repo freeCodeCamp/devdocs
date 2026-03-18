@@ -262,13 +262,12 @@ done
 ### Ruby / Minitest
 
 ```sh
-git clone https://github.com/seattlerb/minitest
+git clone https://github.com/minitest/minitest
 cd minitest/
+echo -e "source 'https://rubygems.org'\n\ngem 'hoe'\ngem 'rdoc', '< 7'" > Gemfile
 bundle install
-bundle add rdoc hoe
-bundle exec rak docs
-cd ..
-cp -r minitest/docs $DEVDOCS/docs/minitest
+bundle exec rake docs
+cp -r docs $DEVDOCS/docs/minitest
 ```
 
 ### Ruby on Rails
