@@ -52,7 +52,8 @@ module Docs
 
         # Add class to differentiate Ruby code from C code
         css('.method-source-code').each do |node|
-          node.parent.prepend_child(node)
+          header = node.ancestors('.method-detail').first.at_css('.method-header')
+          header.add_next_sibling(node)
           pre = node.at_css('pre')
           pre['class'] = pre.at_css('.ruby-keyword') ? 'ruby' : 'c'
         end
