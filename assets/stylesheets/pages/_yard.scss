@@ -1,3 +1,6 @@
+@use 'global/classes';
+@use 'pages/simple';
+
 ._yard {
   @extend %simple;
 

@@ -56,6 +56,9 @@ class SpritesCLI < Thor
 
     save_manifest(items, icons_per_row, 'assets/images/sprites/docs.json')
 
+    # SCSS wrapped in ERB templates must be compiled manually.
+    compile_scss_erb
+
     if options[:remove_public_icons]
       logger.info('Removing public/icons')
       FileUtils.rm_rf('public/icons')
@@ -211,6 +214,18 @@ class SpritesCLI < Thor
 
   def get_output_path(size)
     "assets/images/sprites/docs#{size == 32 ? '@2x' : ''}.png"
+  end
+
+  def compile_scss_erb
+    scss_erb_files = Dir['assets/stylesheets/**/*.scss.erb']
+
+    scss_erb_files.each do |erb_path|
+      scss_path = erb_path.gsub('.erb', '')
+      File.open(scss_path, 'w') do |f|
+        f.write(ERB.new(File.open(erb_path).read).result)
+        logger.info("Compiling #{erb_path} to #{scss_path}")
+      end
+    end
   end
 
   def image_optim
