@@ -42,7 +42,9 @@ module Docs
           link_node.content = 'Show source'
           link_node['class'] = 'method-click-advice'
 
-          node.parent.parent.at_css('.method-heading').add_child(link_node)
+          # Only add "Show source" if source is present
+          method_root = node.ancestors('.method-detail').first
+          method_root.at_css('.method-heading').add_child(link_node) if method_root.at_css('.method-source-code')
         end
 
         # (RDoc for Ruby 3.4+) Remove the additional "Source" toggle from the page
