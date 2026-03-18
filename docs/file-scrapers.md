@@ -270,6 +270,16 @@ bundle exec rake docs
 cp -r docs $DEVDOCS/docs/minitest
 ```
 
+### Ruby / Rack
+
+```sh
+git clone https://github.com/rack/rack
+cd rack/
+bundle install
+bundle exec rdoc
+cp -r doc $DEVDOCS/docs/rack
+```
+
 ### Ruby on Rails
 * Run `git clone --branch v$RELEASE --depth 7 https://github.com/rails/rails.git && cd rails`
 * Open `railties/lib/rails/api/task.rb` and comment out any code related to sdoc (`configure_sdoc`)
