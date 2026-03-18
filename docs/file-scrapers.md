@@ -272,13 +272,13 @@ cp -r minitest/docs $DEVDOCS/docs/minitest
 ```
 
 ### Ruby on Rails
-* Download a release at https://github.com/rails/rails/releases or clone https://github.com/rails/rails.git (checkout to the branch of the rails' version that is going to be scraped)
+* Run `git clone --branch v$RELEASE --depth 7 https://github.com/rails/rails.git && cd rails`
 * Open `railties/lib/rails/api/task.rb` and comment out any code related to sdoc (`configure_sdoc`)
 * Run `bundle config set --local without 'db job'` (in the Rails directory)
 * Run `bundle install && bundle exec rake rdoc` (in the Rails directory)
 * Run `cd guides && bundle exec rake guides:generate:html && cd ..`
 * Run `cp -r guides/output html/guides`
-* Run `cp -r html $DEVDOCS/docs/rails~[version]`
+* Run `cp -r html $DEVDOCS/docs/rails~$VERSION`
 
 ### Ruby
 Download the tarball of Ruby from https://www.ruby-lang.org/en/downloads/, extract it, run
