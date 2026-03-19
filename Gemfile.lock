@@ -64,7 +64,7 @@ GEM
       logger
     eventmachine (1.2.7)
     execjs (2.9.1)
-    exifr (1.4.0)
+    exifr (1.4.1)
     ffi (1.17.3)
     fspath (3.1.2)
     google-protobuf (4.33.4)
@@ -77,7 +77,7 @@ GEM
       nokogiri (>= 1.4)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
-    image_optim (0.31.3)
+    image_optim (0.31.4)
       exifr (~> 1.2, >= 1.2.2)
       fspath (~> 3.0)
       image_size (>= 1.5, < 4)
