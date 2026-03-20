@@ -48,6 +48,7 @@ group :test do
   gem 'minitest'
   gem 'rack-test', require: false
   gem 'rr', require: false
+  gem 'simplecov', require: false
 end
 
 if ENV['SELENIUM'] == '1'

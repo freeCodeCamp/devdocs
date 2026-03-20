@@ -154,6 +154,72 @@ class DocsEntryIndexTest < Minitest::Spec
     end
   end
 
+  describe "#sort_fn" do
+    def sort(a, b)
+      index.send(:sort_fn, a, b)
+    end
+
+    context "when neither string starts with a digit 1-9" do
+      it "uses case-insensitive string comparison" do
+        assert_operator sort('apple', 'banana'), :<, 0
+        assert_operator sort('banana', 'apple'), :>, 0
+      end
+
+      it "returns 0 for case-insensitive equal strings" do
+        assert_equal 0, sort('Apple', 'apple')
+      end
+
+      it "treats strings starting with '0' as non-numeric" do
+        assert_equal '0apple'.casecmp('banana'), sort('0apple', 'banana')
+      end
+    end
+
+    context "when at least one string starts with 1-9 but neither contains version dots" do
+      it "uses case-insensitive string comparison" do
+        # lexicographic: '1' < '2', so '10 Test' < '2 Test'
+        assert_operator sort('10 Test', '2 Test'), :<, 0
+      end
+
+      it "returns 0 for case-insensitive equal strings" do
+        assert_equal 0, sort('2 Test', '2 test')
+      end
+    end
+
+    context "when one string has version dots and the other does not" do
+      it "sorts the dotted string before the undotted one" do
+        assert_operator sort('1.2. Test', '2 Test'), :<, 0
+      end
+
+      it "sorts the undotted string after the dotted one" do
+        assert_operator sort('2 Test', '1.2. Test'), :>, 0
+      end
+
+      it "sorts the dotted string before a non-numeric string" do
+        assert_operator sort('1.2. Test', 'abc'), :<, 0
+      end
+    end
+
+    context "when both strings have version dots" do
+      it "sorts numerically rather than lexicographically" do
+        assert_operator sort('1.9. Test', '1.10. Test'), :<, 0
+        assert_operator sort('4.20. Test', '4.3. Test'), :>, 0
+      end
+
+      it "pads shorter version depths with zeros before comparing" do
+        assert_operator sort('4. Test', '4.2. Test'), :<, 0
+        assert_operator sort('4.2. Test', '4. Test'), :>, 0
+      end
+
+      it "compares multi-level versions against shorter ones correctly" do
+        assert_operator sort('4.2.2. Test', '4.3. Test'), :<, 0
+      end
+
+      it "returns 0 for identical version strings" do
+        assert_equal 0, sort('1.2. Test', '1.2. Test')
+      end
+    end
+  end
+
   describe "#to_json" do
     it "returns the JSON string for #as_json" do
       stub(index).as_json { { entries: [1], types: [2] } }

@@ -85,6 +85,38 @@ class DocsUrlScraperTest < Minitest::Spec
       stub(Docs::Requester).run { 'response' }
       assert_equal 'response', result
     end
+
+    context "when options[:rate_limit] is set" do
+      before do
+        @saved_limiter = Docs::UrlScraper.class_variable_get(:@@rate_limiter)
+        Docs::UrlScraper.class_variable_set(:@@rate_limiter, nil)
+        stub(Scraper).options { { rate_limit: 5 } }
+        stub(Docs::Requester).run
+      end
+
+      after do
+        Docs::UrlScraper.class_variable_set(:@@rate_limiter, @saved_limiter)
+      end
+
+      it "creates a RateLimiter with the given limit" do
+        stub(Typhoeus).before
+        scraper.send :request_all, 'urls'
+        assert_equal 5, Docs::UrlScraper.class_variable_get(:@@rate_limiter).limit
+      end
+
+      it "registers the RateLimiter with Typhoeus.before" do
+        mock(Typhoeus).before
+        scraper.send :request_all, 'urls'
+      end
+
+      it "updates the existing RateLimiter's limit instead of creating a new one" do
+        existing = Docs::UrlScraper::RateLimiter.new(3)
+        Docs::UrlScraper.class_variable_set(:@@rate_limiter, existing)
+        dont_allow(Typhoeus).before
+        scraper.send :request_all, 'urls'
+        assert_equal 5, existing.limit
+      end
+    end
   end
 
   describe "#process_response?" do
@@ -118,6 +150,36 @@ class DocsUrlScraperTest < Minitest::Spec
 
     it "returns true otherwise" do
       assert result
+    end
+  end
+
+  describe "RateLimiter" do
+    let :limiter do
+      Docs::UrlScraper::RateLimiter.new(3)
+    end
+
+    describe "#initialize" do
+      it "sets the limit" do
+        assert_equal 3, limiter.limit
+      end
+    end
+
+    describe "#limit=" do
+      it "updates the limit" do
+        limiter.limit = 10
+        assert_equal 10, limiter.limit
+      end
+    end
+
+    describe "#to_proc" do
+      it "returns a Proc" do
+        assert_instance_of Proc, limiter.to_proc
+      end
+
+      it "returns a proc that calls #call" do
+        mock(limiter).call
+        limiter.to_proc.call
+      end
     end
   end
 end
