@@ -6,9 +6,12 @@ module Docs
 
     def call
       return html if context[:clean_text] == false
-      html.strip!
-      while html.gsub!(EMPTY_NODES_RGX, ''); end
-      html
+
+      # Clone frozen literal.
+      result = html.dup
+      result.strip!
+      while result.gsub!(EMPTY_NODES_RGX, ''); end
+      result
     end
   end
 end

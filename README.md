@@ -146,6 +146,7 @@ thor console:docs   # Start a REPL in the "Docs" module
 thor test:all       # Run all tests
 thor test:docs      # Run "Docs" tests
 thor test:app       # Run "App" tests
+thor test:coverage  # Run coverage report on "App" tests
 
 # Assets
 thor assets:compile # Compile assets (not required in development mode)

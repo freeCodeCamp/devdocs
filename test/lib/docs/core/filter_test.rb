@@ -8,6 +8,12 @@ class DocsFilterTest < Minitest::Spec
   before do
     context[:base_url] = 'http://example.com/path'
     context[:url] = 'http://example.com/path/file'
+    context[:version] = '6.1'
+    context[:release] = '6.1.1'
+    context[:links] = {
+      home: 'homunculus',
+      code: 'codified'
+    }
   end
 
   describe "#subpath" do
@@ -52,6 +58,24 @@ class DocsFilterTest < Minitest::Spec
 
     it "returns 'dir/path' when #subpath is '/dir/path'" do
       assert_equal 'dir/path', slug('/dir/path')
+    end
+  end
+
+  describe "#version" do
+    it "returns the version" do
+      assert_equal filter.version, "6.1"
+    end
+  end
+
+  describe "#release" do
+    it "returns the release" do
+      assert_equal filter.release, "6.1.1"
+    end
+  end
+
+  describe "#links" do
+    it "returns the links hash" do
+      assert_equal filter.links, { home: 'homunculus', code: 'codified' }
     end
   end
 
@@ -174,6 +198,20 @@ class DocsFilterTest < Minitest::Spec
 
     it "returns false with 'http'" do
       refute filter.absolute_url_string?('http')
+    end
+  end
+
+  describe "#clean_path" do
+    it "replaces some special characters with dashes" do
+      bad_path = "/horrible!url:design;huh".freeze
+      good_path = "/horrible-url-design-huh".freeze
+      assert_equal filter.clean_path(bad_path), good_path
+    end
+
+    it "replaces + with the word 'plus'" do
+      bad_path = "/c++".freeze
+      good_path = "/c_plus__plus_".freeze
+      assert_equal filter.clean_path(bad_path), good_path
     end
   end
 end
