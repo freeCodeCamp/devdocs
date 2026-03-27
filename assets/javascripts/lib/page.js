@@ -98,26 +98,35 @@ page.canGoForward = () => !Context.isLastState(currentState);
 const currentPath = () => location.pathname + location.search + location.hash;
 
 class Context {
+  /**
+   * A counter tracking the largest state ID used.
+   */
+  static stateId = 0;
+
+  /**
+   * The session ID to apply across all contexts.
+   */
+  static sessionId = Date.now();
+
   static isIntialState(state) {
     return state.id === 0;
   }
 
   static isLastState(state) {
-    return state.id === this.stateId - 1;
+    return state.id === Context.stateId - 1;
   }
 
   static isInitialPopState(state) {
-    return state.path === this.initialPath && this.stateId === 1;
+    return state.path === this.initialPath && Context.stateId === 1;
   }
 
   static isSameSession(state) {
-    return state.sessionId === this.sessionId;
+    return state.sessionId === Context.sessionId;
   }
 
   constructor(path, state) {
     this.initialPath = currentPath();
-    this.sessionId = Date.now();
-    this.stateId = 0;
+
     if (path == null) {
       path = "/";
     }
@@ -136,10 +145,11 @@ class Context {
     );
 
     if (this.state.id == null) {
-      this.state.id = this.constructor.stateId++;
+      Context.stateId++;
+      this.state.id = Context.stateId;
     }
     if (this.state.sessionId == null) {
-      this.state.sessionId = this.constructor.sessionId;
+      this.state.sessionId = Context.sessionId;
     }
     this.state.path = this.path;
   }
