@@ -29,12 +29,12 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2012-2025 Microsoft<br>
+      &copy; 2012-2026 Microsoft<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 
     version do
-      self.release = '5.9.2'
+      self.release = '6.0.2'
       self.base_url = 'https://www.typescriptlang.org/'
     end
 
