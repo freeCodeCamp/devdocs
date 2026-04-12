@@ -23,12 +23,12 @@ module Docs
       library/sunau.html)
 
     options[:attribution] = <<-HTML
-      &copy; 2001&ndash;2025 Python Software Foundation<br>
+      &copy; 2001 Python Software Foundation<br>
       Licensed under the PSF License.
     HTML
 
     version '3.14' do
-      self.release = '3.14.3'
+      self.release = '3.14.4'
       self.base_url = "https://docs.python.org/#{self.version}/"
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'
