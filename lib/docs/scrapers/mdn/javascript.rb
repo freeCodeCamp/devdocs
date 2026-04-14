@@ -3,7 +3,7 @@ module Docs
     prepend FixInternalUrlsBehavior
     prepend FixRedirectionsBehavior
 
-    # release = '2026-03-16'
+    # release = '2026-04-14'
     self.name = 'JavaScript'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference'
     self.links = {
