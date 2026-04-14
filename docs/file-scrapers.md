@@ -62,7 +62,7 @@ bsdtar --extract --file - --directory=docs/erlang\~$VERSION/
 ## es-toolkit
 
 ```sh
-git clone https://github.com/toss/es-toolkit docs/es_toolkit
+git clone --branch v$RELEASE https://github.com/toss/es-toolkit docs/es_toolkit
 ```
 
 ## Gnu
