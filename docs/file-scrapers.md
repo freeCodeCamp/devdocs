@@ -197,7 +197,7 @@ mv ./usr/share/doc/openjdk-16-jre-headless/api/ docs/openjdk~$VERSION
 From the home directory; `devdocs`, execute below:
 
 ```sh
-curl https://pandas.pydata.org/docs/pandas.zip -o tmp.zip && unzip tmp.zip -d docs/pandas~2 && rm tmp.zip
+curl https://pandas.pydata.org/docs/pandas.zip -o tmp.zip && unzip tmp.zip -d docs/pandas~3 && rm tmp.zip
 ```
 
 

@@ -18,6 +18,29 @@ module Docs
       Licensed under the 3-clause BSD License.
     HTML
 
+    version '3' do
+      self.release = '3.0.8'
+      self.base_url = "https://pandas.pydata.org/pandas-docs/version/#{self.release}/"
+
+      html_filters.push 'pandas/clean_html', 'pandas/entries'
+
+      options[:container] = 'main section'
+
+      options[:skip_patterns] = [
+        /development/,
+        /getting_started/,
+        /whatsnew/
+      ]
+
+      options[:skip] = [
+        'panel.html',
+        'pandas.pdf',
+        'pandas.zip',
+        'ecosystem.html'
+      ]
+
+    end
+
     version '2' do
       self.release = '2.3.0'
       self.base_url = "https://pandas.pydata.org/pandas-docs/version/#{self.release}/"
