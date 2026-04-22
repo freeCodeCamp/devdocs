@@ -36,7 +36,12 @@ module Docs
         else # tsconfig page
         end
 
+        css('> section').each do |node|
+          node.before(node.children).remove
+        end
+
         css('.anchor', 'a:contains("Try")', 'h2 a', 'h3 a', 'svg', '#full-option-list').remove
+        css('#sidebar', '.page-helpful-popup', '.handbook-toc', '.bottom-section-content').remove
 
         # tsconfig page
         css('.markdown', '.compiler-option', '.compiler-option-md', '.compiler-content').each do |node|
