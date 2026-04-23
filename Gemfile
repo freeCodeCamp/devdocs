@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
-ruby '3.4.8'
+ruby '4.0.3'
 
 gem 'activesupport', require: false
-gem 'html-pipeline'
+gem 'html-pipeline', '~> 2.14'
+gem 'ostruct'
 gem 'nokogiri'
 gem 'pry-byebug'
 gem 'rake'
@@ -55,3 +56,5 @@ if ENV['SELENIUM'] == '1'
   gem 'capybara'
   gem 'selenium-webdriver'
 end
+
+gem "webrick", "~> 1.9"
