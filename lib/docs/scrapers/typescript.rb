@@ -34,7 +34,7 @@ module Docs
     HTML
 
     version do
-      self.release = '6.0.2'
+      self.release = '6.0.3'
       self.base_url = 'https://www.typescriptlang.org/'
     end
 
