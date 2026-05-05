@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '3.4.8'
+ruby '3.4.9'
 
 gem 'activesupport', require: false
 gem 'html-pipeline'
