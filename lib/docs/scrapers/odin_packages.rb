@@ -5,7 +5,6 @@ module Docs
         self.type = 'odin_packages'
         self.release = 'latest'
         self.base_url = 'https://pkg.odin-lang.org/'
-        # self.root_path = 'https://pkg.odin-lang.org/'
         self.initial_paths = %w(base core vendor)
 
         options[:trailing_slash] = false

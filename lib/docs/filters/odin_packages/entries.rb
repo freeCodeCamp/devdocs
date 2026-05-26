@@ -22,7 +22,6 @@ module Docs
           if breadcrumb_base[0]
             breadcrumb_base[0].content
           end
-        # breadcrumb_base.content
         elsif doc_directory
           title = context[:html_title].gsub(/ library - pkg.odin-lang.org/, "")
           title
