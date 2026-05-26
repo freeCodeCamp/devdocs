@@ -19,9 +19,7 @@ module Docs
         breadcrumb_base = css(".pkg-breadcrumb > ol > li")
         doc_directory = css(".doc-directory")
         if breadcrumb_base[0]
-          if breadcrumb_base[0]
-            breadcrumb_base[0].content
-          end
+          breadcrumb_base[0].content
         elsif doc_directory
           title = context[:html_title].gsub(/ library - pkg.odin-lang.org/, "")
           title
