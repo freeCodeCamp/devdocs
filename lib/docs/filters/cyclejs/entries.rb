@@ -6,6 +6,7 @@ module Docs
         name = title ? title.content.strip : subpath.sub(/\.html\z/, '').titleize
         name = 'Cycle.js' if root_page?
         name = 'API Reference' if slug == 'api/index'
+        name.delete_suffix! ' - source'
         name
       end
 
@@ -18,7 +19,7 @@ module Docs
           name = node.content.strip
           name.sub!(/\A#\s*/, '')
           name.sub!(/\s+#\z/, '')
-          [name, node['id']]
+          [get_name + ': ' + name, node['id']]
         end
       end
     end

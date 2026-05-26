@@ -2,13 +2,12 @@ module Docs
   class Cyclejs
     class CleanHtmlFilter < Filter
       def call
+        return "<h1>Cycle.js</h1><p>A functional and reactive JavaScript framework for predictable code</p>" if root_page?
         css('br').remove
 
         css('pre > code').each do |node|
           parent = node.parent
-          if node['class'] && node['class'] =~ /language-(\w+)/
-            parent['data-language'] = Regexp.last_match(1)
-          end
+          parent['data-language'] = 'javascript'
           parent.content = node.content.strip
         end
 

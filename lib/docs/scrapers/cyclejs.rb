@@ -49,6 +49,7 @@ module Docs
       /\Aapi\//
     ]
 
+    options[:download_images] = false
     options[:attribution] = <<-HTML
       &copy; 2014&ndash;present Cycle.js contributors.<br>
       Licensed under the MIT License.
