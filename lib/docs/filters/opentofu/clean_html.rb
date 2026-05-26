@@ -3,9 +3,10 @@ module Docs
     class CleanHtmlFilter < Filter
       def fix_syntax_highlight
         css('pre').each do |node|
+          node['data-language'] = node['class'][/language-(\w+)/, 1] if node['class']
+          node.content = node.css('.token-line').map(&:content).join("\n")
           node.remove_attribute('class')
           node.remove_attribute('style')
-          node.css('.token-line').remove_attribute('style')
         end
 
         css('[class*="buttonGroup_"]').remove
