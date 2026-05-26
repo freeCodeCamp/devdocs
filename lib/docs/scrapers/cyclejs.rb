@@ -1,5 +1,3 @@
-require 'redcarpet'
-
 module Docs
   class Cyclejs < UrlScraper
     self.name = 'Cycle.js'
@@ -73,6 +71,7 @@ module Docs
     end
 
     def markdown_renderer
+      require 'redcarpet'
       @markdown_renderer ||= Redcarpet::Markdown.new(
         Redcarpet::Render::HTML.new(with_toc_data: true),
         autolink: true,
