@@ -2,6 +2,10 @@ module Docs
   class Node
     class CleanHtmlFilter < Filter
       def call
+        unless at_css('h1')
+          at_css('h2').name = 'h1'
+        end
+
         css('hr').remove
 
         css('pre').each do |node|
