@@ -16,6 +16,14 @@ module Docs
       Licensed under the GNU General Public License, version 2.
     HTML
 
+    version '4.7' do
+      self.release = '4.7.1'
+      self.base_url = "https://fishshell.com/docs/#{version}/"
+
+      options[:skip].concat %w(genindex.html relnotes.html)
+      html_filters.push 'sphinx/clean_html', 'fish/clean_html_sphinx', 'fish/entries_sphinx'
+    end
+
     version '4.6' do
       self.release = '4.6.0'
       self.base_url = "https://fishshell.com/docs/#{version}/"
