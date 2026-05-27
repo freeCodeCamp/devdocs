@@ -223,7 +223,7 @@ class DocsCLI < Thor
   option :amend, type: :boolean
   def commit(name)
     doc = Docs.find(name, false)
-    message = options[:message] || "Update #{doc.name} documentation (#{doc.versions.first.release})"
+    message = options[:message] || "Update #{doc.name} documentation (#{doc.versions.first.release})".delete_suffix(" ()")
     amend = " --amend" if options[:amend]
     system("git add assets/ *#{name}*") && system("git commit -m '#{message}'#{amend}")
   rescue Docs::DocNotFound => error
@@ -235,6 +235,7 @@ class DocsCLI < Thor
     puts 'Docs -- BEGIN'
 
     require 'open-uri'
+    require 'net/http'
     require 'thread'
 
     docs = Docs.all_versions
@@ -250,15 +251,30 @@ class DocsCLI < Thor
           ['index.json', 'meta.json'].each do |filename|
             json = "https://documents.devdocs.io/#{doc.path}/#{filename}?#{time}"
             begin
-              URI.open(json, "Accept-Encoding" => "identity") do |file|
-                mutex.synchronize do
-                  path = File.join(dir, filename)
-                  File.write(path, file.read)
+              attempts = 0
+
+              begin
+                attempts += 1
+
+                URI.open(json, "Accept-Encoding" => "identity") do |file|
+                  mutex.synchronize do
+                    path = File.join(dir, filename)
+                    File.write(path, file.read)
+                  end
                 end
+              rescue Net::OpenTimeout, Net::ReadTimeout => e
+                if attempts <= 3
+                  wait_seconds = 2**(attempts - 1)
+                  puts "Docs -- Retrying #{json} in #{wait_seconds}s (#{e.class}: #{e.message})"
+                  sleep(wait_seconds)
+                  retry
+                end
+
+                raise
               end
             rescue => e
-              puts "Docs -- Failed to download #{json}!"
-              throw e
+              puts "Docs -- Failed to download #{json} after #{attempts} attempts!"
+              raise
             end
           end
 

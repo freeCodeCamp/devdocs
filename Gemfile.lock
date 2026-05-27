@@ -510,4 +510,8 @@ RUBY VERSION
   ruby 4.0.3
 
 BUNDLED WITH
+<<<<<<< HEAD
   4.0.10
+=======
+   4.0.12
+>>>>>>> 4ad118fed0a8edbb6fab061f53401143dde66b70
