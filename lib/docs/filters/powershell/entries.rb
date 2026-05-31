@@ -2,7 +2,7 @@ module Docs
   class Powershell
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('h1')&.content&.strip || ''
+        at_css('h1').content.strip
       end
 
       def get_type

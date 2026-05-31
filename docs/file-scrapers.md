@@ -337,8 +337,9 @@ npx markdown-folder-to-html docs-conceptual
 cp -r _reference ../docs/powershell
 cp -r _docs-conceptual ../docs/powershell/docs-conceptual
 cd ..
-bundle exec thor docs:generate powershell~7.7 powershell~7.6 powershell~7.5 powershell~7.4 powershell~5.1 "powershell~scripting"
-
+# powershell~7.7 powershell~7.6 powershell~7.5 powershell~7.4 powershell~5.1 "powershell~scripting"
+bundle exec thor docs:generate powershell~${VERSION}
+bundle exec thor docs:generate "powershell~scripting"
 rm -rdf PowerShell-Docs-main/
 rm PowerShell-Docs-main.zip
 ```
