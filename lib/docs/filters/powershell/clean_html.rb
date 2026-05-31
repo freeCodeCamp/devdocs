@@ -15,6 +15,7 @@ module Docs
         css('#menu').remove
         css('script').remove
         css('style').remove
+        css('.heading-anchor-permalink').remove
         doc
       end
     end

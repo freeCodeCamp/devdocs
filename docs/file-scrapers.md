@@ -330,13 +330,14 @@ unzip PowerShell-Docs-main.zip
 cd PowerShell-Docs-main
 
 # strip all front matter in all Markdown files
-find reference -name "*.md" -type f -exec sed -i '/^---$/,/^---$/d' {} +
-
+find reference docs-conceptual -name "*.md" -type f -exec sed -i '/^---$/,/^---$/d' {} +
 
 npx markdown-folder-to-html reference
+npx markdown-folder-to-html docs-conceptual
 cp -r _reference ../docs/powershell
+cp -r _docs-conceptual ../docs/powershell/docs-conceptual
 cd ..
-bundle exec thor docs:generate powershell
+bundle exec thor docs:generate powershell~7.7 powershell~7.6 powershell~7.5 powershell~7.4 powershell~5.1 "powershell~scripting"
 
 rm -rdf PowerShell-Docs-main/
 rm PowerShell-Docs-main.zip
