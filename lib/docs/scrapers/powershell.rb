@@ -46,6 +46,12 @@ module Docs
       @source_directory ||= File.join(Docs::FileScraper::SOURCE_DIRECTORY, 'powershell', self.class.version)
     end
 
+    def get_latest_version(opts)
+      # Stable PowerShell releases are tagged like "v7.5.2"; the docs are
+      # versioned by major.minor (e.g. "7.5"), so drop the patch component.
+      get_latest_github_release('PowerShell', 'PowerShell', opts).split('.')[0..1].join('.')
+    end
+
     # No index page, enumerate all HTML files
     def request_all(urls)
       assert_source_directory_exists
