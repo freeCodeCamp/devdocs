@@ -320,3 +320,9 @@ mv three.js-r${VERSION}/docs/* docs/threejs~${VERSION}/
 rm -rf three.js-r${VERSION}/
 rm threejs.tar.gz
 ```
+
+## PowerShell
+
+```sh
+curl -L 'https://github.com/MicrosoftDocs/PowerShell-Docs/archive/refs/heads/main.zip' | bsdtar --extract --file - --directory=docs/powershell/ --strip-components=2
+```
