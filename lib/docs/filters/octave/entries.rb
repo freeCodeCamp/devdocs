@@ -2,7 +2,7 @@ module Docs
   class Octave
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('h1').content.sub(/(A?[0-9.]+ )/, '')
+        at_css('h1').content.sub(/(A?[0-9.]+¶ )/, '')
       end
 
       def get_type

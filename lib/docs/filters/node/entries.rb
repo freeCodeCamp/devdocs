@@ -7,7 +7,7 @@ module Docs
       end
 
       def get_type
-        at_css('h2').content.strip
+        at_css('h1, h2').content.strip
       end
 
       def additional_entries

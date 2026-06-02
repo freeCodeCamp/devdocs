@@ -10,6 +10,8 @@ module Docs
 
     html_filters.push 'octave/clean_html', 'octave/entries', 'title'
 
+    options[:container] = 'body > div[id], body > .contents'
+
     options[:skip] = %w(
       Copying.html
       Preface.html
@@ -23,19 +25,24 @@ module Docs
     options[:root_title] = 'GNU Octave'
 
     options[:attribution] = <<-HTML
-      &copy; 1996–2025 The Octave Project Developers<br>
+      &copy; 1996–2026 The Octave Project Developers<br>
       Permission is granted to make and distribute verbatim copies of this manual provided the copyright notice and this permission notice are preserved on all copies.<br/>
       Permission is granted to copy and distribute modified versions of this manual under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.</br>
       Permission is granted to copy and distribute translations of this manual into another language, under the above conditions for modified versions.
     HTML
 
+    version '11' do
+      self.release = '11.1.0'
+      self.base_url = "https://docs.octave.org/v#{self.release}/"
+    end
+
     version '10' do
-      self.release = '10.1.0'
+      self.release = '10.3.0'
       self.base_url = "https://docs.octave.org/v#{self.release}/"
     end
 
     version '9' do
-      self.release = '9.2.0'
+      self.release = '9.4.0'
       self.base_url = "https://docs.octave.org/v#{self.release}/"
     end
 

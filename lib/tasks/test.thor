@@ -26,4 +26,11 @@ class TestCLI < Thor
   def app
     require 'app_test'
   end
+
+  desc 'coverage', 'Coverage report for core tests'
+  def coverage
+    ENV['COVERAGE'] = 'true'
+    require_relative '../../test/test_helper'
+    self.all
+  end
 end

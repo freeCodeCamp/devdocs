@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
-ruby '3.4.7'
+ruby '4.0.5'
 
 gem 'activesupport', require: false
-gem 'html-pipeline'
+gem 'html-pipeline', '~> 2.14'
+gem 'ostruct'
 gem 'nokogiri'
 gem 'pry-byebug'
 gem 'rake'
@@ -15,16 +16,15 @@ group :app do
   gem 'browser'
   gem 'chunky_png'
   gem 'erubi'
+  gem 'dartsass-sprockets'
   gem 'image_optim_pack', platforms: :ruby
   gem 'image_optim'
   gem 'rack-ssl-enforcer'
   gem 'rack'
   gem 'rss'
-  gem 'sass'
   gem 'sinatra-contrib'
   gem 'sinatra'
   gem 'sprockets-helpers'
-  gem 'sprockets-sass'
   gem 'sprockets'
   gem 'thin'
 end
@@ -49,9 +49,12 @@ group :test do
   gem 'minitest'
   gem 'rack-test', require: false
   gem 'rr', require: false
+  gem 'simplecov', require: false
 end
 
 if ENV['SELENIUM'] == '1'
   gem 'capybara'
   gem 'selenium-webdriver'
 end
+
+gem "webrick", "~> 1.9"

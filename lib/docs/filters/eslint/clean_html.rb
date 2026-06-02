@@ -24,8 +24,10 @@ module Docs
         end
 
         css('code', 'p').remove_attr('class')
-
-        css('.resource__image', '.resource__domain').remove
+        css('.copy-btn').remove
+        
+        css('svg').remove
+        css('.resource__icon', '.resource__img').remove
 
         doc
       end

@@ -1,0 +1,22 @@
+@use 'pages/simple';
+
+._opentofu {
+  .theme-code-block figure {
+    margin-inline-start: 0;
+  }
+
+  // "sr" means screen reader
+  .sr-only {
+    clip: rect(0,0,0,0);
+    border-width: 0;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    width: 1px
+  }
+
+  .font-bold {
+    font-weight: var(--boldFontWeight);
+  }
+}

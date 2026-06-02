@@ -11,7 +11,7 @@ module Docs
     options[:root_title] = 'Vite'
 
     options[:attribution] = <<-HTML
-      &copy; 2019–present, Yuxi (Evan) You and Vite contributors<br>
+      &copy; 2019-present, VoidZero Inc. and Vite contributors<br>
       Licensed under the MIT License.
     HTML
 
@@ -22,8 +22,13 @@ module Docs
     html_filters.push 'vite/entries', 'vite/clean_html'
 
     version do
-      self.release = '7.1.2'
+      self.release = '8.0.0'
       self.base_url = 'https://vite.dev/'
+    end
+
+    version '7' do
+      self.release = '7.3.1'
+      self.base_url = 'https://v7.vite.dev/'
     end
 
     version '6' do

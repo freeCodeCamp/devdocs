@@ -1,3 +1,5 @@
+@use 'global/classes';
+
 ._fail { // Don't use CSS variables, in case the browser doesn't support them.
   display: block;
   position: relative;

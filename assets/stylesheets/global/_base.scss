@@ -1,13 +1,17 @@
+@use 'global/classes';
+@use 'global/mixins' as m;
+@use 'global/variables' as *;
+@use 'global/print';
+
 html {
   height: 100%;
   font-size: 100%;
   background: #fff; // fallback to show the error message to browsers that don't support CSS variables.
   background: var(--documentBackground);
 
-  @include mobile { font-size: 93.75%; }
+  @include m.mobile { font-size: 93.75%; }
 
-  @include print { background: none; }
-  @import 'global/print';
+  @include m.print { background: none; }
 }
 
 html._theme-default {

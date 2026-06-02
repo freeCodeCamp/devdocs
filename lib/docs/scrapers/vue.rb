@@ -14,12 +14,12 @@ module Docs
     options[:replace_paths] = { 'guide/' => 'guide/index.html' }
 
     options[:attribution] = <<-HTML
-      &copy; 2013&ndash;present Yuxi Evan You<br>
+      &copy; 2018-present, Yuxi (Evan) You and Vue contributors<br>
       Licensed under the MIT License.
     HTML
 
     version '3' do
-      self.release = '3.5.18'
+      self.release = '3.5.28'
       self.base_url = 'https://vuejs.org/'
       self.initial_paths = %w(guide/introduction.html)
       html_filters.push 'vue/entries_v3', 'vue/clean_html'

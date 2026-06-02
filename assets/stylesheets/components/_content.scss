@@ -2,6 +2,11 @@
 // Content
 //
 
+@use 'global/base';
+@use 'global/icons';
+@use 'global/mixins' as m;
+@use 'global/classes';
+
 ._container {
   position: relative;
   z-index: var(--contentZ);
@@ -10,7 +15,7 @@
   pointer-events: none;
   @extend %border-box;
 
-  @include mobile { margin-left: var(--sidebarMediumWidth); }
+  @include m.mobile { margin-left: var(--sidebarMediumWidth); }
 
   ._sidebar-hidden & { margin-left: 0; }
   body:not(._native-scrollbars) & { -webkit-margin-end: -1px; }

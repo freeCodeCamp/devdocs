@@ -8,7 +8,10 @@ public/docs/**/*
 docs/**/*
 !docs/*.md
 /vendor
+/coverage
 *.tar
 *.tar.bz2
 *.tar.gz
 *.zip
+assets/stylesheets/components/_environment.scss
+assets/stylesheets/global/_icons.scss

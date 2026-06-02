@@ -44,14 +44,20 @@ app.views.Resizer = class Resizer extends app.View {
       return;
     }
     this.lastDragValue = value;
-    if (this.lastDrag && this.lastDrag > Date.now() - 50) {
+    if (this.rafPending) {
       return;
     }
-    this.lastDrag = Date.now();
-    this.resize(value, false);
+    this.rafPending = requestAnimationFrame(() => {
+      this.rafPending = null;
+      this.resize(this.lastDragValue, false);
+    });
   }
 
   onDragEnd(event) {
+    if (this.rafPending) {
+      cancelAnimationFrame(this.rafPending);
+      this.rafPending = null;
+    }
     $.off(window, "dragover", this.onDrag);
     let value = event.pageX || event.screenX - window.screenX;
     if (

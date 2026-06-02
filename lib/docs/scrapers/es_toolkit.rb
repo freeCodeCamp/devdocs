@@ -7,10 +7,10 @@ module Docs
       code: "https://github.com/toss/es-toolkit",
       home: "https://es-toolkit.slash.page",
     }
-    self.release = '1.42.0'
+    self.release = '1.45.1'
 
     options[:attribution] = <<-HTML
-      &copy; 2024-2025, Viva Republica<br>
+      &copy; 2024-2026, Viva Republica<br>
       Licensed under the MIT License.
     HTML
 

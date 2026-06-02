@@ -58,6 +58,11 @@ module Docs
         css('a', 'dl', 'table', 'code').remove_attr('class')
         css('table').remove_attr('border')
 
+        # Remove Source/Edit links.
+        css('dd > a').each do |node|
+          node.remove if node.inner_html == 'Source' || node.inner_html == 'Edit'
+        end
+
         doc
       end
     end

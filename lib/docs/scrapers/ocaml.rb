@@ -21,11 +21,11 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 1995-2024 INRIA.
+      &copy; 1995-2025 INRIA.
     HTML
 
     version '' do
-      self.release = '5.3'
+      self.release = '5.4'
       self.base_url = "https://ocaml.org/manual/#{self.release}/"
     end
 

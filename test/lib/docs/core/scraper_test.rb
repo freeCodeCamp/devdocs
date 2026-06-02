@@ -510,4 +510,166 @@ class DocsScraperTest < Minitest::Spec
       assert_equal Docs, pipeline.instrumentation_service
     end
   end
+
+  # PRIVATE INSTANCE METHODS
+
+  describe "#url_for" do
+    it "returns the root url when path is empty" do
+      assert_equal scraper.root_url.to_s, scraper.send(:url_for, '')
+    end
+
+    it "returns the root url when path is '/'" do
+      assert_equal scraper.root_url.to_s, scraper.send(:url_for, '/')
+    end
+
+    it "joins base_url and path for a non-root path" do
+      stub(Scraper).base_url { 'http://example.com/' }
+      assert_equal 'http://example.com/page', scraper.send(:url_for, '/page')
+    end
+  end
+
+  describe "#parse" do
+    it "returns a two-element array" do
+      response.body = '<html><head><title>T</title></head><body></body></html>'
+      assert_equal 2, scraper.send(:parse, response).length
+    end
+
+    it "extracts the title from an HTML document" do
+      response.body = '<html><head><title>My Title</title></head><body></body></html>'
+      _, title = scraper.send(:parse, response)
+      assert_equal 'My Title', title
+    end
+
+    it "returns nil title for an HTML fragment" do
+      response.body = '<div>just a fragment</div>'
+      _, title = scraper.send(:parse, response)
+      assert_nil title
+    end
+  end
+
+  describe "#pipeline_context" do
+    it "returns options merged with the response url" do
+      stub(scraper).options { { base_url: 'http://example.com/' } }
+      response.url = 'http://example.com/page'
+      context = scraper.send(:pipeline_context, response)
+      assert_equal 'http://example.com/page', context[:url]
+      assert_equal 'http://example.com/', context[:base_url]
+    end
+
+    it "does not mutate the options hash" do
+      opts = { base_url: 'http://example.com/' }
+      stub(scraper).options { opts }
+      response.url = 'url'
+      scraper.send(:pipeline_context, response)
+      refute opts.key?(:url)
+    end
+  end
+
+  describe "#process_response" do
+    before do
+      stub(scraper).parse(response) { ['<div></div>', 'My Title'] }
+      response.url = 'http://example.com/'
+    end
+
+    it "returns a hash" do
+      assert_instance_of Hash, scraper.send(:process_response, response)
+    end
+
+    it "passes :html_title from parse into the pipeline context" do
+      mock(scraper.pipeline).call(anything, anything, anything) do |_, context, _|
+        assert_equal 'My Title', context[:html_title]
+      end
+      scraper.send(:process_response, response)
+    end
+  end
+
+  describe "#with_filters" do
+    it "uses only the given filters inside the block" do
+      scraper.send(:with_filters) do
+        @filters = scraper.pipeline.filters
+      end
+      assert_equal [], @filters
+    end
+
+    it "resets the pipeline after the block" do
+      pipeline_before = scraper.pipeline
+      scraper.send(:with_filters) {}
+      refute_same pipeline_before, scraper.pipeline
+    end
+  end
+
+  describe "#additional_options" do
+    it "returns an empty hash" do
+      assert_equal({}, scraper.send(:additional_options))
+    end
+  end
+
+  class FixedScraper < Scraper
+    include Docs::Scraper::FixInternalUrlsBehavior
+  end
+
+  describe "FixInternalUrlsBehavior" do
+    let :fixed_scraper do
+      FixedScraper.new.tap { |s| s.extend FakeInstrumentation }
+    end
+
+    describe ".with_internal_urls (private)" do
+      it "sets .internal_urls to the result of fetch_internal_urls during the block" do
+        any_instance_of(FixedScraper) do |instance|
+          stub(instance).fetch_internal_urls { ['url1', 'url2'] }
+        end
+        FixedScraper.send(:with_internal_urls) do
+          @urls = FixedScraper.internal_urls
+        end
+        assert_equal ['url1', 'url2'], @urls
+      end
+
+      it "clears .internal_urls after the block" do
+        any_instance_of(FixedScraper) do |instance|
+          stub(instance).fetch_internal_urls { [] }
+        end
+        FixedScraper.send(:with_internal_urls) {}
+        assert_nil FixedScraper.internal_urls
+      end
+    end
+
+    describe "#additional_options (private)" do
+      it "returns an empty hash when .internal_urls is nil" do
+        stub(FixedScraper).internal_urls { nil }
+        assert_equal({}, fixed_scraper.send(:additional_options))
+      end
+
+      it "returns fixed_internal_urls: true when .internal_urls is set" do
+        stub(FixedScraper).internal_urls { ['url'] }
+        assert fixed_scraper.send(:additional_options)[:fixed_internal_urls]
+      end
+
+      it "sets :only to a Set of .internal_urls" do
+        stub(FixedScraper).internal_urls { ['url1', 'url2'] }
+        assert_equal Set.new(['url1', 'url2']), fixed_scraper.send(:additional_options)[:only]
+      end
+
+      it "sets :only_patterns to nil" do
+        stub(FixedScraper).internal_urls { ['url'] }
+        assert_nil fixed_scraper.send(:additional_options)[:only_patterns]
+      end
+
+      it "sets :skip to nil" do
+        stub(FixedScraper).internal_urls { ['url'] }
+        assert_nil fixed_scraper.send(:additional_options)[:skip]
+      end
+    end
+
+    describe "#process_response (private)" do
+      before do
+        stub(fixed_scraper).parse(response) { ['<div></div>', nil] }
+        response.url = 'http://example.com/page'
+      end
+
+      it "merges :response_url from the response into the result" do
+        result = fixed_scraper.send(:process_response, response)
+        assert_equal 'http://example.com/page', result[:response_url]
+      end
+    end
+  end
 end

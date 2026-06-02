@@ -6,7 +6,7 @@ module Docs
     self.name = "Nushell"
     self.slug = "nushell"
     self.type = "nushell"
-    self.release = "0.85.0"
+    self.release = "0.113.1"
     self.links = {
       home: "https://www.nushell.sh/",
       code: "https://github.com/nushell/nushell",
@@ -14,11 +14,11 @@ module Docs
 
     html_filters.push "nushell/clean_html", "nushell/entries", "nushell/fix_links"
 
-    options[:container] = '.theme-container'
+    options[:container] = 'main > [vp-content]'
     options[:follow_links] = true
     options[:title] = "Nushell"
     options[:attribution] = <<-HTML
-      Copyright &copy; 2019–2023 The Nushell Project Developers
+      Copyright &copy; 2019–2026 The Nushell Project Developers
       Licensed under the MIT License.
     HTML
 

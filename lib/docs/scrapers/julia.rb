@@ -7,9 +7,20 @@ module Docs
 
 
     options[:attribution] = <<-HTML
-      &copy; 2009&ndash;2024 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors<br>
+      &copy; 2009&ndash;2026 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors<br>
       Licensed under the MIT License.
     HTML
+
+    version '1.12' do
+      self.release = '1.12.6'
+      self.base_url = "https://docs.julialang.org/en/v#{version}/"
+      self.type = 'julia'
+
+      html_filters.push 'julia/entries', 'julia/clean_html'
+
+      options[:container] = '.docs-main'
+      options[:only_patterns] = [/\Amanual\//, /\Abase\//, /\Astdlib\//]
+    end
 
     version '1.11' do
       self.release = '1.11.2'

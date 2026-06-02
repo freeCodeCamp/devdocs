@@ -12,6 +12,8 @@ module Docs
 
       def other
         css('.header', 'hr').remove
+        css('.nav-panel').remove
+        css('.copiable-link').remove
 
         css('.footnote > h3').each do |node|
           node.name = 'h5'

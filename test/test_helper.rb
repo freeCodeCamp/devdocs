@@ -1,3 +1,13 @@
+# Flag set by Thor coverage task.
+if ENV['COVERAGE'] == 'true'
+  require 'simplecov'
+
+  # Focus only on core app files.
+  SimpleCov.add_filter {|src| !(src.filename =~ /\/core\//)}
+
+  SimpleCov.start 'rails'
+end
+
 ENV['RACK_ENV'] = 'test'
 
 require 'bundler/setup'

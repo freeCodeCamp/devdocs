@@ -5,7 +5,7 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         if slug.start_with?('book') ||  slug.start_with?('reference') || slug.start_with?('error_codes')
-          @doc = at_css('#content main')
+          @doc = at_css('#mdbook-content main')
         elsif slug.start_with?('error_codes')
           css('.error-undescribed').remove
 

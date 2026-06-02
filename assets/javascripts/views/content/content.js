@@ -149,6 +149,16 @@ app.views.Content = class Content extends app.View {
 
   beforeRoute(context) {
     this.cacheScrollPosition();
+
+    /*
+     * If scroll position wasn't cached from an earlier visit:
+     * - let the anchor (if there is one) set position, or
+     * - scroll to top.
+     */
+    if (!this.scrollMap[context.state.id] && !context.hash) {
+      this.scrollToTop();
+    }
+
     this.routeCtx = context;
     this.scrollToTargetTimeout = this.delay(this.scrollToTarget);
   }

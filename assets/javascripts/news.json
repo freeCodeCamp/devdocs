@@ -1,5 +1,13 @@
 [
   [
+    "2026-05-26",
+    "New documentations: <a href=\"/opentofu/\">OpenTofu</a>, <a href=\"/cyclejs/\">Cycle.js</a>, <a href=\"/polars/\">Polars</a>"
+  ],
+  [
+    "2026-02-14",
+    "New documentation: <a href=\"/couchdb/\">CouchDB</a>"
+  ],
+  [
     "2025-10-19",
     "New documentations: <a href=\"/lit/\">Lit</a>, <a href=\"/graphviz/\">Graphviz</a>, <a href=\"/bun/\">Bun</a>"
   ],

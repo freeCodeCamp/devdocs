@@ -62,7 +62,7 @@ bsdtar --extract --file - --directory=docs/erlang\~$VERSION/
 ## es-toolkit
 
 ```sh
-git clone https://github.com/toss/es-toolkit docs/es_toolkit
+git clone --branch v$RELEASE https://github.com/toss/es-toolkit docs/es_toolkit
 ```
 
 ## Gnu
@@ -197,7 +197,7 @@ mv ./usr/share/doc/openjdk-16-jre-headless/api/ docs/openjdk~$VERSION
 From the home directory; `devdocs`, execute below:
 
 ```sh
-curl https://pandas.pydata.org/docs/pandas.zip -o tmp.zip && unzip tmp.zip -d docs/pandas~2 && rm tmp.zip
+curl https://pandas.pydata.org/docs/pandas.zip -o tmp.zip && unzip tmp.zip -d docs/pandas~3 && rm tmp.zip
 ```
 
 
@@ -262,23 +262,22 @@ done
 ### Ruby / Minitest
 
 ```sh
-git clone https://github.com/seattlerb/minitest
+git clone https://github.com/minitest/minitest
 cd minitest/
+echo -e "source 'https://rubygems.org'\n\ngem 'hoe'\ngem 'rdoc', '< 7'" > Gemfile
 bundle install
-bundle add rdoc hoe
-bundle exec rak docs
-cd ..
-cp -r minitest/docs $DEVDOCS/docs/minitest
+bundle exec rake docs
+cp -r docs $DEVDOCS/docs/minitest
 ```
 
 ### Ruby on Rails
-* Download a release at https://github.com/rails/rails/releases or clone https://github.com/rails/rails.git (checkout to the branch of the rails' version that is going to be scraped)
+* Run `git clone --branch v$RELEASE --depth 7 https://github.com/rails/rails.git && cd rails`
 * Open `railties/lib/rails/api/task.rb` and comment out any code related to sdoc (`configure_sdoc`)
 * Run `bundle config set --local without 'db job'` (in the Rails directory)
 * Run `bundle install && bundle exec rake rdoc` (in the Rails directory)
 * Run `cd guides && bundle exec rake guides:generate:html && cd ..`
 * Run `cp -r guides/output html/guides`
-* Run `cp -r html $DEVDOCS/docs/rails~[version]`
+* Run `cp -r html $DEVDOCS/docs/rails~$VERSION`
 
 ### Ruby
 Download the tarball of Ruby from https://www.ruby-lang.org/en/downloads/, extract it, run
