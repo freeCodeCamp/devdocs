@@ -10,8 +10,11 @@ module Docs
     html_filters.push 'powershell/clean_html', 'powershell/entries'
     text_filters.replace 'attribution', 'powershell/attribution'
 
+    # https://github.com/MicrosoftDocs/PowerShell-Docs/blob/main/LICENSE-CODE.md
+    # https://github.com/MicrosoftDocs/PowerShell-Docs/blob/main/LICENSE.md
     options[:attribution] = <<-HTML
-      The MIT License (MIT) Copyright (c) Microsoft Corporation
+    &copy; Microsoft Corporation
+    Code licensed under an MIT-style License. Documentation licensed under CC BY 4.0.
     HTML
 
     version '7.7' do
