@@ -49,10 +49,29 @@ module Docs
     # No index page, enumerate all HTML files
     def request_all(urls)
       assert_source_directory_exists
-      Dir.glob(File.join(source_directory, '**', '*.html')).sort.each do |path|
+      Dir.glob(File.join(source_directory, '**', '*.md')).sort.each do |path|
         url = File.join(base_url.to_s, path.sub("#{source_directory}/", ''))
         yield request_one(url)
       end
+    end
+
+    private
+
+    def parse(response)
+      body = response.body.sub(/\A---\s*\n.*?\n---\s*\n/m, '')
+      html = markdown_renderer.render(body)
+      [Parser.new("<html></head><body>#{html}</body></html>").html, ""]
+    end
+
+    def markdown_renderer
+      require 'redcarpet'
+      @markdown_renderer ||= Redcarpet::Markdown.new(
+        Redcarpet::Render::HTML.new(with_toc_data: true),
+        autolink: true,
+        fenced_code_blocks: true,
+        no_intra_emphasis: true,
+        tables: true
+      )
     end
   end
 end

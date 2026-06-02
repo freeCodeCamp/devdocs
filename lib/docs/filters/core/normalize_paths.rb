@@ -51,6 +51,8 @@ module Docs
         "#{path}index"
       elsif path.end_with? '.html'
         path[0..-6]
+      elsif path.end_with? '.md'
+        path[0..-4]
       else
         path
       end

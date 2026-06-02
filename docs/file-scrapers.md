@@ -324,21 +324,5 @@ rm threejs.tar.gz
 ## PowerShell
 
 ```sh
-curl -o PowerShell-Docs-main.zip 'https://github.com/MicrosoftDocs/PowerShell-Docs/archive/refs/heads/main.zip'
-unzip PowerShell-Docs-main.zip
-cd PowerShell-Docs-main
-
-# strip all front matter in all Markdown files
-find reference docs-conceptual -name "*.md" -type f -exec sed -i '/^---$/,/^---$/d' {} +
-
-npx markdown-folder-to-html reference
-npx markdown-folder-to-html docs-conceptual
-cp -r _reference ../docs/powershell
-cp -r _docs-conceptual ../docs/powershell/docs-conceptual
-cd ..
-# powershell~7.7 powershell~7.6 powershell~7.5 powershell~7.4 powershell~5.1 "powershell~scripting"
-bundle exec thor docs:generate powershell~${VERSION}
-bundle exec thor docs:generate "powershell~scripting"
-rm -rdf PowerShell-Docs-main/
-rm PowerShell-Docs-main.zip
+curl -L 'https://github.com/MicrosoftDocs/PowerShell-Docs/archive/refs/heads/main.zip' | bsdtar --extract --file - --directory=docs/powershell/ --strip-components=2
 ```
