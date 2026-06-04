@@ -301,6 +301,70 @@ class App < Sinatra::Application
     200
   end
 
+  # llms.txt - LLM-friendly documentation index
+  # See https://llmstxt.org/ for the specification
+  get '/llms.txt' do
+    content_type 'text/plain'
+
+    lines = []
+    lines << '# DevDocs'
+    lines << ''
+    lines << '> DevDocs combines multiple API documentations in a fast, organized, and searchable interface.'
+    lines << ''
+    lines << '## Documentation'
+    lines << ''
+
+    settings.docs.each do |slug, doc|
+      lines << "- [#{doc['full_name']}](https://devdocs.io/#{slug}/)"
+    end
+
+    lines.join("\n")
+  end
+
+  get %r{/([\w~\.%]+)/llms\.txt} do |doc|
+    doc.sub! '%7E', '~'
+    return 404 unless @doc = find_doc(doc)
+
+    content_type 'text/plain'
+
+    index_path = File.join(settings.docs_path, @doc['slug'], 'index.json')
+    return 404 unless File.exist?(index_path)
+
+    index = JSON.parse(File.read(index_path))
+
+    lines = []
+    lines << "# #{@doc['full_name']}"
+    lines << ''
+    lines << "> #{@doc['full_name']} documentation on DevDocs."
+    lines << ''
+
+    if index['types'] && !index['types'].empty?
+      grouped = {}
+      (index['entries'] || []).each do |entry|
+        type_name = entry['type'] || 'General'
+        grouped[type_name] ||= []
+        grouped[type_name] << entry
+      end
+
+      grouped.sort_by { |type, _| type }.each do |type, entries|
+        lines << "## #{type}"
+        lines << ''
+        entries.each do |entry|
+          path = entry['path'].to_s.split('#').first
+          lines << "- [#{entry['name']}](https://devdocs.io/#{@doc['slug']}/#{path})"
+        end
+        lines << ''
+      end
+    else
+      (index['entries'] || []).each do |entry|
+        path = entry['path'].to_s.split('#').first
+        lines << "- [#{entry['name']}](https://devdocs.io/#{@doc['slug']}/#{path})"
+      end
+    end
+
+    lines.join("\n")
+  end
+
   %w(docs.json application.js application.css).each do |asset|
     class_eval <<-CODE, __FILE__, __LINE__ + 1
       get '/#{asset}' do
