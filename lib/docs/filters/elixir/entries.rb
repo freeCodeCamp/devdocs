@@ -7,11 +7,19 @@ module Docs
       end
 
       def get_type
+        # Use section titles for Elixir docs
         section = at_css('.top-heading a.source')&.attr('href')&.match('elixir/pages/([^/]+)/')&.captures&.first
         if section == "mix-and-otp"
           return "Mix & OTP"
         elsif section
-          return section.gsub("-", " ").capitalize
+        return section.gsub(/[-_]/, " ").capitalize
+        end
+
+        # Use section titles for guides
+        guide = at_css('.top-heading a.source')&.attr('href')&.match('guides/(?:([^/]+)/)?')
+        if guide
+          section = guide.captures.first || "Guides"
+          return section.gsub(/[-_]/, " ").capitalize
         end
 
         # Sometimes the heading includes additional text in a <small> tag,
