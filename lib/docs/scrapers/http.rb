@@ -2,7 +2,7 @@ module Docs
   class Http < Mdn
     include MultipleBaseUrls
 
-    # release = '2022-11-17'
+    # release = '2026-06-21'
     self.name = 'HTTP'
     self.base_urls = [
       'https://developer.mozilla.org/en-US/docs/Web/HTTP',
@@ -18,14 +18,18 @@ module Docs
       Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.
     HTML
 
-    html_filters.push 'http/clean_html', 'http/entries', 'title'
+    # 'http/clean_html' must run before 'mdn/clean_html', which unwraps all
+    # <h2>/<h3> child anchors and would otherwise discard the datatracker
+    # section-id anchors before they can be promoted to their heading.
+    html_filters.insert_before 'mdn/clean_html', 'http/clean_html'
+    html_filters.push 'http/entries', 'title'
 
     options[:root_title] = 'HTTP'
     options[:title] = ->(filter) do
       filter.current_url.host == 'datatracker.ietf.org' ? false : filter.default_title
     end
     options[:container] = ->(filter) do
-      filter.current_url.host == 'datatracker.ietf.org' ? '.content' : Docs::Mdn.options[:container]
+      filter.current_url.host == 'datatracker.ietf.org' ? '.rfcmarkup, .rfchtml' : Docs::Mdn.options[:container]
     end
     options[:skip_links] = ->(filter) do
       filter.current_url.host == 'datatracker.ietf.org'
@@ -47,11 +51,14 @@ module Docs
     def initial_urls
       %w(https://developer.mozilla.org/en-US/docs/Web/HTTP
          https://datatracker.ietf.org/doc/html/rfc4918
+         https://datatracker.ietf.org/doc/html/rfc6265
          https://datatracker.ietf.org/doc/html/rfc9110
          https://datatracker.ietf.org/doc/html/rfc9111
          https://datatracker.ietf.org/doc/html/rfc9112
          https://datatracker.ietf.org/doc/html/rfc9113
          https://datatracker.ietf.org/doc/html/rfc9114
+         https://datatracker.ietf.org/doc/html/rfc9651
+         https://datatracker.ietf.org/doc/html/rfc9931
          https://datatracker.ietf.org/doc/html/rfc5023)
     end
   end
