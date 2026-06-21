@@ -216,7 +216,7 @@ app.views.Search = class Search extends app.View {
 
   getHashValue() {
     try {
-      return Search.HASH_RGX.exec($.urlDecode(location.hash))?.[1];
+      return Search.HASH_RGX.exec($.urlDecodeFragment(location.hash))?.[1];
     } catch (error) {}
   }
 };
