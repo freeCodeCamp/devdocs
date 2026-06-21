@@ -24,7 +24,7 @@ module Docs
     HTML
 
     version do
-      self.release = '26.2.0'
+      self.release = '26.3.1'
       self.base_url = 'https://nodejs.org/api/'
     end
 
