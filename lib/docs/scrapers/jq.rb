@@ -3,12 +3,12 @@ module Docs
     self.name = 'jq'
     self.slug = 'jq'
     self.type = 'jq'
-    self.release = '1.7'
+    self.release = '1.8'
     self.links = {
-      home: 'https://jqlang.github.io/jq/'
+      home: 'https://jqlang.org/'
     }
 
-    self.base_url = "https://jqlang.github.io/jq/manual/v#{self.release}/index.html"
+    self.base_url = "https://jqlang.org/manual/v#{self.release}/"
 
     html_filters.push 'jq/entries', 'jq/clean_html'
 
