@@ -78,10 +78,9 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://www.haskell.org/ghc/download.html', opts)
-      links = doc.css('a').to_a
-      versions = links.map {|link| link.content.scan(/\A([0-9.]+)\Z/)}
-      versions.find {|version| !version.empty?}[0][0]
+      tags = get_github_tags('ghc', 'ghc', opts)
+      tag = tags.find {|t| t['name'].ends_with?('-release') }['name']
+      tag[/ghc-(.*)-release/, 1]
     end
 
   end
