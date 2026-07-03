@@ -15,6 +15,7 @@ module Docs
 
     options[:skip_patterns] = [/whatsnew/]
     options[:skip] = %w(
+      archives/
       library/2to3.html
       library/formatter.html
       library/intro.html
@@ -28,7 +29,7 @@ module Docs
     HTML
 
     version '3.14' do
-      self.release = '3.14.4'
+      self.release = '3.14.6'
       self.base_url = "https://docs.python.org/#{self.version}/"
 
       html_filters.push 'python/entries_v3', 'sphinx/clean_html', 'python/clean_html'

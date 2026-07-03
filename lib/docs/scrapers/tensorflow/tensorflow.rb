@@ -45,8 +45,8 @@ module Docs
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc(self.base_url, opts)
-      doc.title[/TensorFlow v([.\d]+)/, 1]
+      tag = get_github_tags('tensorflow', 'tensorflow', opts).find { |t| !t['name'].include?('-rc') }
+      tag['name'][1..-1]
     end
 
     private

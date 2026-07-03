@@ -29,9 +29,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://mongoosejs.com/docs/', opts)
-      label = doc.at_css('.pure-menu-link').content.strip
-      label.sub(/Version /, '')
+      get_github_tags('Automattic', 'mongoose', opts).find {|t| t['name'].starts_with?(/\d/)}['name']
     end
   end
 end
