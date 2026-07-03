@@ -1,0 +1,14 @@
+@use 'pages/simple';
+
+._celery {
+  @extend %simple;
+
+  .note, .warning, .seealso {
+    @extend %note;
+    .admonition-title { font-weight: bold; }
+  }
+
+  .note { @extend %note-gray; }
+  .seealso { @extend %note-green; }
+  .warning { @extend %note-red; }
+}
