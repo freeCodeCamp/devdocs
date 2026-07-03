@@ -9,6 +9,7 @@ module Docs
       home: 'https://cfdocs.org/',
       code: 'https://github.com/foundeo/cfdocs'
     }
+    self.release = '2026-04-30'
 
     html_filters.push 'coldfusion/entries', 'coldfusion/clean_html'
 
@@ -51,8 +52,7 @@ module Docs
     def get_latest_version(opts)
       # CFDocs is continuously updated and has no formal version number; use the
       # date of the latest commit as a proxy version.
-      commits = get_github_commits('foundeo', 'cfdocs', opts)
-      commits[0]['commit']['committer']['date'][0...10]
+      get_latest_github_commit_date('foundeo', 'cfdocs', opts)
     end
   end
 end
