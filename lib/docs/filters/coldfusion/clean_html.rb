@@ -11,6 +11,7 @@ module Docs
         css('.modal', '.add-example-modal-lg', '.example-modal').remove
         css('.example-btn', '.copy-btn', '.issuebutton', '.issuecount').remove
         css('button').remove
+        css('br').remove
         css('#search2').remove
 
         # Drop the "Add An Example" / edit / fork affordances.
