@@ -4,6 +4,8 @@ module Docs
       def call
         # 'This document describes the current stable version of Celery...'
         css('div.deck').remove
+  
+        css('.reference.external.image-reference').remove
         
         # Table of Contents.
         css('nav.contents.local', 'table.docutils').remove
