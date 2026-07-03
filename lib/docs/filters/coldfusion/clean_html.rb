@@ -39,6 +39,10 @@ module Docs
         # Inline code: nothing special needed, but strip prettyprint hints.
         css('code').each { |node| node.remove_attribute('class') }
 
+        # Unwrap Bootstrap `.container` layout wrappers; DevDocs supplies its own
+        # page width, so these only add centering/padding we don't want.
+        css('.container').each { |node| node.before(node.children).remove }
+
         # Remove now-empty wrappers left behind by the source template's many
         # conditional blank lines.
         css('div', 'p', 'span', 'ul', 'ol').each do |node|
