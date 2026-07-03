@@ -450,6 +450,9 @@ $.escapeRegexp = (string) => string.replace(ESCAPE_REGEXP, "\\$1");
 
 $.urlDecode = (string) => decodeURIComponent(string.replace(/\+/g, "%20"));
 
+// Hash fragments are not form-encoded, so literal plus signs must stay plus signs.
+$.urlDecodeFragment = (string) => decodeURIComponent(string);
+
 $.classify = function (string) {
   string = string.split("_");
   for (let i = 0; i < string.length; i++) {

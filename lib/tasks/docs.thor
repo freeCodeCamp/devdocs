@@ -122,6 +122,7 @@ class DocsCLI < Thor
   option :default, type: :boolean
   option :installed, type: :boolean
   option :all, type: :boolean
+  option :rclone, type: :boolean
   def download(*names)
     require 'unix_utils'
     docs = if options[:default]
@@ -363,16 +364,31 @@ class DocsCLI < Thor
 
   def download_doc(doc)
     target_path = File.join(Docs.store_path, doc.path)
-    URI.open "https://downloads.devdocs.io/#{doc.path}.tar.gz" do |file|
-      FileUtils.mkpath(target_path)
-      file.close
-      tar = UnixUtils.gunzip(file.path)
-      dir = UnixUtils.untar(tar)
-      FileUtils.rm(tar)
-      FileUtils.rm_rf(target_path)
-      FileUtils.mv(dir, target_path)
-      FileUtils.rm(file.path)
+
+    if options[:rclone]
+      require 'tmpdir'
+      Dir.mktmpdir do |dir|
+        system("rclone copy devdocs:devdocs-downloads/#{doc.path}.tar.gz #{dir}")
+        tar_gz_path = File.join(dir, "#{File.basename(doc.path)}.tar.gz")
+        raise "rclone did not download #{doc.path}.tar.gz (not found on remote?)" unless File.exist?(tar_gz_path)
+        extract_doc(tar_gz_path, target_path)
+      end
+    else
+      URI.open "https://downloads.devdocs.io/#{doc.path}.tar.gz" do |file|
+        file.close
+        extract_doc(file.path, target_path)
+        FileUtils.rm(file.path)
+      end
     end
+  end
+
+  def extract_doc(tar_gz_path, target_path)
+    FileUtils.mkpath(target_path)
+    tar = UnixUtils.gunzip(tar_gz_path)
+    dir = UnixUtils.untar(tar)
+    FileUtils.rm(tar)
+    FileUtils.rm_rf(target_path)
+    FileUtils.mv(dir, target_path)
   end
 
   def package_doc(doc)

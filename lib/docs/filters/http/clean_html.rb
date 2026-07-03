@@ -25,8 +25,18 @@ module Docs
       end
 
       def ietf
-        raise "#{slug} is obsolete!" if at_css('.meta-info *:contains("Obsoleted by")')
-        @doc = at_css('.draftcontent')
+        # datatracker serves two layouts: a legacy plain-text rendering wrapped
+        # in .rfcmarkup (older RFCs) and a modern structured HTML rendering
+        # wrapped in .rfchtml (RFCs with xml2rfc v3 sources, e.g. RFC 9110+).
+        doc['class'].to_s.include?('rfchtml') ? ietf_html : ietf_text
+      end
+
+      def ietf_html
+        css('.pilcrow', '.noprint').remove
+      end
+
+      def ietf_text
+        @doc = at_css('.rfcmarkup')
         doc.child.remove while doc.child.name != 'pre'
 
         css('span.grey', '.invisible', '.noprint', 'a[href^="#page-"]').remove

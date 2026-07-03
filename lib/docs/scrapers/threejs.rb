@@ -44,17 +44,17 @@ module Docs
     self.base_url = "https://threejs.org/docs"
 
     def get_latest_version(opts)
-      get_latest_github_release('mrdoob', 'three.js', opts)[1..]
+      get_github_tags('mrdoob', 'three.js', opts).first['name'][1..]
     end
 
     def initial_paths
       paths = []
-      url = 'https://threejs.org/docs/list.json'
+      url = 'https://threejs.org/docs/search.json'
       response = Request.run(url)
       json_data = JSON.parse(response.body)
 
       # Process both API and manual sections
-      process_documentation(json_data['en'], paths)
+      process_documentation(json_data, paths)
       paths
     end
 

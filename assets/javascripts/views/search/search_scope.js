@@ -157,7 +157,7 @@ app.views.SearchScope = class SearchScope extends app.View {
   extractHashValue() {
     const value = this.getHashValue();
     if (value) {
-      const newHash = $.urlDecode(location.hash).replace(
+      const newHash = $.urlDecodeFragment(location.hash).replace(
         `#${SearchScope.SEARCH_PARAM}=${value} `,
         `#${SearchScope.SEARCH_PARAM}=`
       );
@@ -168,7 +168,7 @@ app.views.SearchScope = class SearchScope extends app.View {
 
   getHashValue() {
     try {
-      return SearchScope.HASH_RGX.exec($.urlDecode(location.hash))?.[1];
+      return SearchScope.HASH_RGX.exec($.urlDecodeFragment(location.hash))?.[1];
     } catch (error) {}
   }
 

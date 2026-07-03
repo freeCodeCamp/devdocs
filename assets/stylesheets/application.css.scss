@@ -30,6 +30,7 @@
 @use 'pages/bootstrap';
 @use 'pages/cppref';
 @use 'pages/cakephp';
+@use 'pages/celery';
 @use 'pages/clojure';
 @use 'pages/codeception';
 @use 'pages/coffeescript';
@@ -99,6 +100,7 @@
 @use 'pages/pygame';
 @use 'pages/python';
 @use 'pages/qt';
+@use 'pages/rabbit_mq';
 @use 'pages/ramda';
 @use 'pages/rdoc';
 @use 'pages/react';

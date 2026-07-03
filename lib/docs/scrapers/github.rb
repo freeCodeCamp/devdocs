@@ -23,7 +23,7 @@ module Docs
         &.first
       parsed = JSON.parse(embedded_json)
 
-      [parsed['payload']['blob']['richText'], parsed['title']]
+      [parsed['payload']['codeViewBlobRoute']['richText'], parsed['title']]
     end
   end
 end
