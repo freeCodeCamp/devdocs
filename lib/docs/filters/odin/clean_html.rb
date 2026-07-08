@@ -12,6 +12,9 @@ module Docs
         css('#pkg-sidebar').remove
         css('#odin-search-info').remove
         css('#odin-search-results').remove
+        css('.pkg-index').remove
+        css('h2 .text-decoration-none').remove
+        css('h3 .text-decoration-none').remove
 
         doc
       end
