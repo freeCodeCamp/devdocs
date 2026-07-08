@@ -1,5 +1,9 @@
 [
   [
+    "2026-07-08",
+    "New documentation: <a href=\"/odin/\">Odin</a>"
+  ],
+  [
     "2026-07-03",
     "New documentations: <a href=\"/celery/\">Celery</a>, <a href=\"/rabbit_mq/\">RabbitMQ</a>, <a href=\"/coldfusion/\">ColdFusion</a>"
   ],
