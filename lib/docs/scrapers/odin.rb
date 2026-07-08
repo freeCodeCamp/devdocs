@@ -4,7 +4,7 @@ module Docs
       self.name = 'Odin'
       self.slug = 'odin'
       self.type = 'odin'
-      self.release = 'latest'
+      self.release = '2026-07'
       self.base_urls = [ 
         'https://odin-lang.org/',
         'https://pkg.odin-lang.org/'
@@ -53,6 +53,10 @@ module Docs
         &copy; 2016-#{Date.today.year} Ginger Bill<br>
         Licensed under the zlib License.
       HTML
+
+    def get_latest_version(opts)
+      get_latest_github_release('odin-lang', 'Odin', opts)[4..]
+    end
 
     end
 end
