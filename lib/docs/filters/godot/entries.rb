@@ -4,6 +4,7 @@ module Docs
       def get_name
         name = at_css('h1').content
         name.remove! "\u{00B6}" # Remove the pilcrow
+        name.remove! "\u{F0C1}" # Remove the anchor icon
         name
       end
 
