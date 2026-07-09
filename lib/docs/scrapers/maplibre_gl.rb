@@ -11,7 +11,9 @@ module Docs
       code: 'https://github.com/maplibre/maplibre-gl-js'
     }
 
-    html_filters.push 'maplibre_gl/container', 'maplibre_gl/clean_html', 'maplibre_gl/entries'
+    html_filters.push 'maplibre_gl/clean_html', 'maplibre_gl/entries'
+
+    options[:container] = '.md-content__inner'
 
     # Only scrape the TypeDoc-generated API reference and the guides.
     # The examples (200+ interactive demos) and the embedded style
