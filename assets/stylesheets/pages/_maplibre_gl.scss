@@ -1,0 +1,17 @@
+@use 'global/classes';
+
+._maplibre_gl {
+  > h1 { @extend %block-heading; }
+  > h2 { @extend %block-heading; }
+  > h3 { @extend %block-label, %label-blue; }
+
+  code { @extend %label; }
+
+  .admonition { @extend %note; }
+  .admonition.tip { @extend %note-green; }
+  .admonition.note, .admonition.info { @extend %note-blue; }
+  .admonition.warning { @extend %note-orange; }
+  .admonition-title {
+    font-weight: var(--bolderFontWeight);
+  }
+}
