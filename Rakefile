@@ -19,5 +19,6 @@ namespace :assets do
 
     load 'tasks/assets.thor'
     AssetsCLI.new.compile
+    AssetsCLI.new.render_static
   end
 end
