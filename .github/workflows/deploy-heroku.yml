@@ -28,7 +28,7 @@ jobs:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: |
         heroku --version
-        heroku stack:set heroku-24 --app devdocs
+        heroku stack:set heroku-26 --app devdocs
         heroku git:remote --app devdocs
         # no --force; --force should never be necessary
         git push heroku HEAD:main
