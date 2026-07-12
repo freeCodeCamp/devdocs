@@ -46,21 +46,11 @@ class AppTest < Minitest::Spec
   end
 
   describe "/[static-page]" do
-    it "redirects to /#/[static-page] by default" do
-      %w(offline about news help).each do |page|
+    it "renders the app shell directly" do
+      %w(settings offline about news help).each do |page|
         get "/#{page}", {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
-        assert last_response.redirect?
-        assert_equal "https://example.org/#/#{page}", last_response['Location']
-      end
-    end
-
-    it "redirects via JS cookie when a cookie exists" do
-      %w(offline about news help).each do |page|
-        set_cookie('foo=bar')
-        get "/#{page}", {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
-        assert last_response.redirect?
-        assert_equal 'https://example.org/', last_response['Location']
-        assert last_response['Set-Cookie'].start_with?("initial_path=%2F#{page}; path=/; expires=")
+        assert last_response.ok?
+        assert_nil last_response['Set-Cookie']
       end
     end
   end
@@ -90,12 +80,11 @@ class AppTest < Minitest::Spec
       assert last_response.ok?
     end
 
-    it "redirects via JS cookie when the doc exists and is enabled" do
+    it "renders when the doc exists and is enabled" do
       set_cookie('docs=html~5')
       get '/html~5/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
-      assert last_response.redirect?
-      assert_equal 'https://example.org/', last_response['Location']
-      assert last_response['Set-Cookie'].start_with?("initial_path=%2Fhtml%7E5%2F; path=/; expires=")
+      assert last_response.ok?
+      assert_nil last_response['Set-Cookie']
     end
 
     it "renders when the doc exists, has no version in the path, and isn't enabled" do
@@ -103,12 +92,11 @@ class AppTest < Minitest::Spec
       assert last_response.ok?
     end
 
-    it "redirects via JS cookie when the doc exists, has no version in the path, and a version is enabled" do
+    it "renders when the doc exists, has no version in the path, and a version is enabled" do
       set_cookie('docs=html~5')
       get '/html/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
-      assert last_response.redirect?
-      assert_equal 'https://example.org/', last_response['Location']
-      assert last_response['Set-Cookie'].start_with?("initial_path=%2Fhtml%2F; path=/; expires=")
+      assert last_response.ok?
+      assert_nil last_response['Set-Cookie']
     end
 
     it "renders when the doc exists and is enabled, and the request is from Googlebot" do
