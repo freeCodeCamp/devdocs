@@ -7,8 +7,11 @@ module Docs
     self.name = 'Support Tables'
     self.slug = 'browser_support_tables'
     self.type = 'support_tables'
-    self.release = '1.0.30001751'
+    self.release = '1.0.30001805'
     self.base_url = 'https://github.com/Fyrd/caniuse/raw/main/'
+
+    # Clone of https://github.com/Fyrd/caniuse into docs/caniuse
+    CANIUSE_DIRECTORY = File.expand_path('../../../../docs/caniuse', __FILE__)
 
     # https://github.com/Fyrd/caniuse/blob/main/LICENSE
     options[:attribution] = <<-HTML
@@ -17,13 +20,10 @@ module Docs
     HTML
 
     def build_pages
-      url = 'https://github.com/Fyrd/caniuse/raw/main/data.json'
-      instrument 'running.scraper', urls: [url]
+      path = File.join(CANIUSE_DIRECTORY, 'data.json')
+      instrument 'running.scraper', urls: [path]
 
-      response = Request.run(url)
-      instrument 'process_response.scraper', response: response
-
-      data = JSON.parse(response.body)
+      data = JSON.parse(File.read(path))
       instrument 'queued.scraper', urls: data['data'].keys
 
       data['agents']['and_chr']['browser'] = 'Android Chrome'
@@ -43,12 +43,9 @@ module Docs
       yield index_page
 
       data['data'].each do |feature_id, feature|
-        url = "https://github.com/Fyrd/caniuse/raw/main/features-json/#{feature_id}.json"
+        path = File.join(CANIUSE_DIRECTORY, 'features-json', "#{feature_id}.json")
 
-        response = Request.run(url)
-        instrument 'process_response.scraper', response: response
-
-        feature = JSON.parse(response.body)
+        feature = JSON.parse(File.read(path))
 
         name = feature['title']
         type = feature['categories'].find { |category| name.include?(category) } || feature['categories'].first
