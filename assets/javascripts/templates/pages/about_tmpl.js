@@ -25,7 +25,6 @@ app.templates.aboutPage = function () {
 <p>DevDocs is free and <a href="https://github.com/freeCodeCamp/devdocs">open source</a>. It was created by <a href="https://thibaut.me">Thibaut Courouble</a> and is operated by <a href="https://www.freecodecamp.org/">freeCodeCamp</a>.
 <p>To keep up-to-date with the latest news:
 <ul>
-  <li>Follow <a href="https://twitter.com/DevDocs">@DevDocs</a> on Twitter
   <li>Watch the repository on <a href="https://github.com/freeCodeCamp/devdocs/subscription">GitHub</a> <iframe class="_github-btn" src="https://ghbtns.com/github-btn.html?user=freeCodeCamp&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20" tabindex="-1"></iframe>
   <li>Join the <a href="https://discord.gg/PRyKn3Vbay">Discord</a> chat room
 </ul>
