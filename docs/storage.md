@@ -31,7 +31,8 @@ the page content. In [`models/doc.js`](../assets/javascripts/models/doc.js):
   otherwise it clears the stale entry.
 - **Written / updated:** `Doc#load({readCache, writeCache})` reads `localStorage`
   first (a hit ⇒ no network); on a miss (first enable or changed `mtime`) it
-  fetches `index.json` and writes it back. Runs for every enabled doc at boot via
+  fetches `index.json` from `docs_origin` — the docs CDN, a different origin in
+  production — and writes it back. Runs for every enabled doc at boot via
   `Docs#load`.
 
 ## 3. Doc content (page HTML) → IndexedDB, or fetched live
@@ -60,8 +61,9 @@ What makes the app work offline. Two parts with different justifications
   The precache list is kept doc-independent so a flaky doc index can't fail the
   atomic `cache.addAll` install.
 - **Index files (fallback for layer 2's quota).** The `fetch` handler also caches
-  same-origin `index.json` at runtime. This seems redundant with layer 2, but
-  `localStorage` has a ~5 MB quota and `LocalStorageStore.set` swallows
+  `index.json` at runtime (from the docs CDN, which sends CORS headers so the
+  response is cacheable regardless of origin). This seems redundant with layer 2,
+  but `localStorage` has a ~5 MB quota and `LocalStorageStore.set` swallows
   `QuotaExceededError` silently — so with many/large docs, some indexes never
   persist there and are re-fetched offline. Only the Cache API (far larger quota)
   can then satisfy them, making the service worker the reliable high-capacity
