@@ -51,9 +51,9 @@ app.models.Doc = class Doc extends app.Model {
   }
 
   indexUrl() {
-    return `${app.indexHost()}/${this.slug}/${app.config.index_filename}?${
-      this.mtime
-    }`;
+    return `${app.config.docs_origin}/${this.slug}/${
+      app.config.index_filename
+    }?${this.mtime}`;
   }
 
   toEntry() {

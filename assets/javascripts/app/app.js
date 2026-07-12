@@ -282,16 +282,6 @@ class App extends Events {
     document.documentElement.classList.remove("_booting");
   }
 
-  indexHost() {
-    // Can't load the index files from the host/CDN when service worker is
-    // enabled because it doesn't support caching URLs that use CORS.
-    return this.config[
-      this.serviceWorker && this.settings.hasDocs()
-        ? "index_path"
-        : "docs_origin"
-    ];
-  }
-
   onBootError(...args) {
     this.trigger("bootError");
     this.hideLoadingScreen();

@@ -249,12 +249,10 @@ class DocsCLI < Thor
           dir = File.join(Docs.store_path, doc.path)
           FileUtils.mkpath(dir)
 
-          # meta.json is needed to build the manifest. index.json must also be
-          # copied to the app's own origin: when the service worker is enabled
-          # (the production default) clients load index.json from same-origin
-          # /docs rather than the CDN, because the service worker can't cache
-          # the CDN's CORS responses (see App#indexHost / app.js).
-          ['index.json', 'meta.json'].each do |filename|
+          # Only meta.json is needed to build the manifest; clients (and the
+          # service worker precache) load index.json directly from the CDN,
+          # which serves it with CORS headers.
+          ['meta.json'].each do |filename|
             json = "https://documents.devdocs.io/#{doc.path}/#{filename}?#{time}"
             begin
               attempts = 0
