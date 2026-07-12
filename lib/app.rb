@@ -5,7 +5,6 @@ Bundler.require :app
 
 class App < Sinatra::Application
   Bundler.require environment
-  require 'sinatra/cookies'
   require 'tilt/erubi'
   require 'active_support/notifications'
 
@@ -131,12 +130,7 @@ class App < Sinatra::Application
   end
 
   helpers do
-    include Sinatra::Cookies
     include Sprockets::Helpers
-
-    def memoized_cookies
-      @memoized_cookies ||= cookies.to_hash
-    end
 
     def canonical_origin
       "https://#{request.host_with_port}"
@@ -150,39 +144,12 @@ class App < Sinatra::Application
       browser.ie?
     end
 
-    def docs
-      @docs ||= begin
-        cookie = memoized_cookies['docs']
-
-        if cookie.nil?
-          settings.default_docs
-        else
-          cookie.split('/')
-        end
-      end
-    end
-
     def find_doc(slug)
       settings.docs[slug] || begin
         settings.docs.each do |_, doc|
           return doc if doc['slug_without_version'] == slug
         end
         nil
-      end
-    end
-
-    def user_has_docs?(slug)
-      docs.include?(slug) || begin
-        slug = "#{slug}~"
-        docs.any? { |_slug| _slug.start_with?(slug) }
-      end
-    end
-
-    def doc_index_urls
-      docs.each_with_object [] do |slug, result|
-        if doc = settings.docs[slug]
-          result << "#{settings.docs_origin}/#{slug}/index.json?#{doc['mtime']}"
-        end
       end
     end
 
