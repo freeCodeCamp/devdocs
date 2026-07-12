@@ -249,7 +249,9 @@ class DocsCLI < Thor
           dir = File.join(Docs.store_path, doc.path)
           FileUtils.mkpath(dir)
 
-          ['index.json', 'meta.json'].each do |filename|
+          # Only meta.json is needed to build the manifest; index.json is served
+          # to clients directly from documents.devdocs.io and is never read here.
+          ['meta.json'].each do |filename|
             json = "https://documents.devdocs.io/#{doc.path}/#{filename}?#{time}"
             begin
               attempts = 0
