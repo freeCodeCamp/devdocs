@@ -23,7 +23,7 @@ module Docs
       if Dir.exist?(CANIUSE_DIRECTORY)
         system('git', '-C', CANIUSE_DIRECTORY, 'pull')
       else
-        system('git', 'clone', 'https://github.com/Fyrd/caniuse', CANIUSE_DIRECTORY)
+        system('git', 'clone', '--depth', '32', 'https://github.com/Fyrd/caniuse', CANIUSE_DIRECTORY)
       end
 
       path = File.join(CANIUSE_DIRECTORY, 'data.json')
