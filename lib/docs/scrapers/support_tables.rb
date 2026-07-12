@@ -11,7 +11,7 @@ module Docs
     self.base_url = 'https://github.com/Fyrd/caniuse/raw/main/'
 
     # Clone of https://github.com/Fyrd/caniuse into docs/caniuse
-    CANIUSE_DIRECTORY = File.expand_path('../../../../docs/caniuse', __FILE__)
+    CANIUSE_DIRECTORY = 'docs/caniuse'
 
     # https://github.com/Fyrd/caniuse/blob/main/LICENSE
     options[:attribution] = <<-HTML
@@ -20,6 +20,8 @@ module Docs
     HTML
 
     def build_pages
+      system('git', '-C', CANIUSE_DIRECTORY, 'pull')
+
       path = File.join(CANIUSE_DIRECTORY, 'data.json')
       instrument 'running.scraper', urls: [path]
 
