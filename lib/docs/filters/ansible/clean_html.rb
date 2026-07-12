@@ -14,6 +14,10 @@ module Docs
           end
         end
 
+        css('pre[data-language="yaml+jinja"]').each do |node|
+          node['data-language'] = 'yaml'
+        end
+
         doc
 
       end
