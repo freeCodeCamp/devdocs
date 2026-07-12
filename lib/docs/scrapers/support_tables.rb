@@ -20,7 +20,11 @@ module Docs
     HTML
 
     def build_pages
-      system('git', '-C', CANIUSE_DIRECTORY, 'pull')
+      if Dir.exist?(CANIUSE_DIRECTORY)
+        system('git', '-C', CANIUSE_DIRECTORY, 'pull')
+      else
+        system('git', 'clone', 'https://github.com/Fyrd/caniuse', CANIUSE_DIRECTORY)
+      end
 
       path = File.join(CANIUSE_DIRECTORY, 'data.json')
       instrument 'running.scraper', urls: [path]
