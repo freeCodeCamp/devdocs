@@ -232,29 +232,6 @@ class App < Sinatra::Application
       end
     end
 
-    def redirect_via_js(path)
-      response.set_cookie :initial_path, value: path, expires: Time.now + 15, path: '/'
-      redirect '/', 302
-    end
-
-    def supports_js_redirection?
-      modern_browser?(browser) && !memoized_cookies.empty?
-    end
-
-    # https://github.com/fnando/browser#detecting-modern-browsers
-    # https://github.com/fnando/browser/blob/v2.6.1/lib/browser/browser.rb
-    # This restores the old browser gem `#modern?` functionality as it was in 2.6.1
-    # It's possible this isn't even really needed any longer, these versions are quite old now
-    def modern_browser?(browser)
-      [
-        browser.webkit?,
-        browser.firefox? && browser.version.to_i >= 17,
-        browser.ie? && browser.version.to_i >= 9 && !browser.compatibility_view?,
-        browser.edge? && !browser.compatibility_view?,
-        browser.opera? && browser.version.to_i >= 12,
-        browser.firefox? && browser.device.tablet? && browser.platform.android? && b.version.to_i >= 14
-      ].any?
-    end
   end
 
   before do
@@ -285,11 +262,8 @@ class App < Sinatra::Application
 
   %w(settings offline about news help).each do |page|
     get "/#{page}" do
-      if supports_js_redirection?
-        redirect_via_js "/#{page}"
-      else
-        redirect "/#/#{page}", 302
-      end
+      response.headers['Content-Security-Policy'] = settings.csp if settings.csp
+      erb :index
     end
   end
 
@@ -424,8 +398,6 @@ class App < Sinatra::Application
       redirect "/#{doc}#{type}/#{query_string_for_redirection}"
     elsif rest.length > 1 && rest.end_with?('/')
       redirect "/#{doc}#{type}#{rest[0...-1]}#{query_string_for_redirection}"
-    elsif user_has_docs?(doc) && supports_js_redirection?
-      redirect_via_js(request.path)
     else
       response.headers['Content-Security-Policy'] = settings.csp if settings.csp
       erb :other
