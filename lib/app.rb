@@ -153,10 +153,6 @@ class App < Sinatra::Application
       end
     end
 
-    def doc_index_page?
-      @doc && (request.path == "/#{@doc['slug']}/" || request.path == "/#{@doc['slug_without_version']}/")
-    end
-
     def query_string_for_redirection
       request.query_string.empty? ? nil : "?#{request.query_string}"
     end
@@ -367,7 +363,7 @@ class App < Sinatra::Application
       redirect "/#{doc}#{type}#{rest[0...-1]}#{query_string_for_redirection}"
     else
       response.headers['Content-Security-Policy'] = settings.csp if settings.csp
-      erb :other
+      erb :index
     end
   end
 

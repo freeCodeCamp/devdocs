@@ -139,13 +139,11 @@ class AppTest < Minitest::Spec
     it "works when the doc exists" do
       get '/html~4-foo-bar_42/'
       assert last_response.ok?
-      assert_includes last_response.body, 'data-doc="{&quot;name&quot;:&quot;HTML&quot;,&quot;slug&quot;:&quot;html~4&quot;'
     end
 
     it "works when the doc has no version in the path and a version exists" do
       get '/html-foo-bar_42/'
       assert last_response.ok?
-      assert_includes last_response.body, 'data-doc="{&quot;name&quot;:&quot;HTML&quot;,&quot;slug&quot;:&quot;html~5&quot;'
     end
 
     it "returns 404 when the type is blank" do
