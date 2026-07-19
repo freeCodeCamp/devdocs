@@ -8,6 +8,11 @@ class App extends Events {
   views = {};
 
   init() {
+    // Determine the boot mode from the URL before anything else, so error
+    // tracking and the rest of init can rely on isSingleDoc().
+    const singleDoc = this.singleDocFromLocation();
+    this.singleDoc = !!singleDoc;
+
     try {
       this.initErrorTracking();
     } catch (error) {}
@@ -36,14 +41,34 @@ class App extends Events {
       this.mobile = new app.views.Mobile();
     }
 
-    if (document.body.hasAttribute("data-doc")) {
-      this.DOC = JSON.parse(document.body.getAttribute("data-doc"));
+    if (singleDoc) {
+      this.DOC = singleDoc;
       this.bootOne();
     } else if (this.DOCS) {
       this.bootAll();
     } else {
       this.onBootError();
     }
+  }
+
+  // Detects whether the current URL is a direct link to a single documentation
+  // (e.g. /python~3.12/functions) and, if so, returns its entry from the
+  // catalog. Anything else — the root app or a path that isn't a doc slug (the
+  // app pages, unknown docs) — returns undefined and boots the full app, which
+  // resolves aliases/redirects.
+  singleDocFromLocation() {
+    if (!this.DOCS) {
+      return;
+    }
+    const segment = location.pathname.split("/")[1];
+    if (!segment) {
+      return;
+    }
+    const slug = decodeURIComponent(segment);
+    return (
+      this.DOCS.find((doc) => doc.slug === slug) ||
+      this.DOCS.find((doc) => doc.slug.split("~")[0] === slug)
+    );
   }
 
   browserCheck() {
@@ -115,6 +140,7 @@ class App extends Events {
     });
     new app.views.Notice("singleDoc", this.doc);
     delete this.DOC;
+    delete this.DOCS;
   }
 
   bootAll() {
@@ -383,7 +409,7 @@ Please check your browser extensions/addons. `);
   }
 
   isSingleDoc() {
-    return document.body.hasAttribute("data-doc");
+    return !!this.singleDoc;
   }
 
   isMobile() {
