@@ -4,16 +4,16 @@ module Docs
       def call
         @doc = at_css('> div[id]') if at_css('> div[id]')
         # Remove the navigation header and footer and the lines underneath and above it
-        at_css('.header + hr').remove
+        at_css('.nav-panel + hr').try(:remove)
         line_above = at_xpath('//div[@class="header"]/preceding::hr[1]')
         line_above.remove unless line_above.nil?
-        css('.header').remove
+        css('.nav-panel').remove
 
-        css('.copiable-anchor').remove
+        css('.copiable-anchor', '.copiable-link').remove
 
         # Remove chapter and section numbers from title
         title_node = at_css('h1, h2, h3, h4, h5, h6')
-        title_node.content = title_node.content.gsub(/(\d+\.?)+/, '').strip
+        title_node.content = title_node.content.gsub(/(\d+\.?)+/, '').gsub('¶', '').strip
         title_node.name = 'h1'
 
         # Remove the "D. " from names like "D. Concept Index" and "D. Function Index"
@@ -23,39 +23,32 @@ module Docs
         # In the original reference they are used to add width between two columns
         xpath('//td[text()=" " and not(descendant::*)]').remove
 
-        # Add id's to additional entry nodes
-        css('dl > dt > code').each do |node|
-          # Only take the direct text (i.e. "<div>Hello <span>World</span></div>" becomes "Hello")
-          node['id'] = node.xpath('text()').to_s.strip
-        end
-
-        # Fix hashes of index entries so they link to the correct hash on the linked page
-        css('table[class^=index-] td[valign=top] > a').each do |node|
-          path = node['href'].split('#')[0]
-          hash = node.content
-
-          # Fix the index entries linking to the Special Parameters page
-          # There are multiple index entries that should link to the same paragraph on that page
-          # Example: the documentation for "$!" is equal to the documentation for "!"
-          if path.downcase.include?('special-parameters')
-            if hash.size > 1 && hash[0] == '$'
-              hash = hash[1..-1]
-            end
+        # The manual marks index targets with empty anchors (<a id="index-…"></a>), which the
+        # clean_text filter strips. Move their ids onto the enclosing node so the index entries
+        # keep linking to the right paragraph.
+        css('a[id]').each do |node|
+          next unless node.content.strip.empty?
+          parent = node.parent
+          if parent && parent['id'].blank?
+            parent['id'] = node['id']
+          else
+            # Several anchors can share a parent; keep the extra ones alive by giving
+            # them content the clean_text filter doesn't consider empty
+            node.content = "​"
           end
-
-          node['href'] = path + '#' + hash
-        end
-
-        # Fix index table letter hashes (the "Jump to" hashes)
-        css('table[class^=index-] th > a').each do |node|
-          node['id'] = node['name']
         end
 
         # Remove the rows with a horizontal line in them from the index tables
-        css('td[colspan="4"]').remove
+        css('td[colspan="3"]').remove
+
+        # Remove the empty spacer cells of the index tables
+        css('td.printindex-index-entry').each do |node|
+          previous = node.previous_element
+          previous.remove if previous && previous.name == 'td' && previous.content.strip.empty?
+        end
 
         # Remove additional text from menu entry and index entry cells
-        css('td[valign=top]').each do |node|
+        css('td.printindex-index-entry, td.printindex-index-section').each do |node|
           link = node.at_css('a')
           node.children = link unless link.nil?
         end
