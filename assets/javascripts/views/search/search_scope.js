@@ -3,11 +3,15 @@ app.views.SearchScope = class SearchScope extends app.View {
 
   static elements = {
     input: "._search-input",
+    hint: "._search-hint",
+    hintKey: "._search-hint-key",
+    hintDoc: "._search-hint-doc",
     tag: "._search-tag",
   };
 
   static events = {
     click: "onClick",
+    input: "onInput",
     keydown: "onKeydown",
     textInput: "onTextInput",
   };
@@ -24,6 +28,12 @@ app.views.SearchScope = class SearchScope extends app.View {
       max_results: 1,
     });
     this.searcher.on("results", (results) => this.onResults(results));
+
+    this.hintSearcher = new app.SynchronousSearcher({
+      fuzzy_min_length: 2,
+      max_results: 1,
+    });
+    this.hintSearcher.on("results", (results) => this.onHintResults(results));
   }
 
   getScope() {
@@ -70,12 +80,39 @@ app.views.SearchScope = class SearchScope extends app.View {
     }
   }
 
+  onHintResults(results) {
+    const doc = results[0];
+    if (!doc) {
+      return;
+    }
+    this.hintKey.textContent = app.isMobile() ? "Space" : "Tab";
+    this.hintDoc.textContent = doc.fullName;
+    this.hint.style.display = "block";
+    this.input.style.paddingRight = this.hint.offsetWidth + 28 + "px";
+  }
+
+  hideHint() {
+    this.hint.style.display = "none";
+    this.hintDoc.textContent = "";
+    this.input.style.paddingRight = "";
+  }
+
+  onInput() {
+    this.hideHint();
+    if (this.doc || app.isSingleDoc() || !this.input.value) {
+      return;
+    }
+    const value = this.input.value.slice(0, this.input.selectionStart);
+    this.hintSearcher.find(app.docs.all(), "text", value);
+  }
+
   selectDoc(doc) {
     const previousDoc = this.doc;
     if (doc === previousDoc) {
       return;
     }
     this.doc = doc;
+    this.hideHint();
 
     this.tag.textContent = doc.fullName;
     this.tag.style.display = "block";
@@ -95,6 +132,7 @@ app.views.SearchScope = class SearchScope extends app.View {
   }
 
   reset() {
+    this.hideHint();
     if (!this.doc) {
       return;
     }

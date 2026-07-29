@@ -48,3 +48,42 @@ test("URL search hash preserves encoded literal plus signs in the query", () => 
 
   assert.equal(search.getHashValue(), "operator+");
 });
+
+test("search scope shows a hint for the matching enabled documentation", () => {
+  const scope = Object.create(context.app.views.SearchScope.prototype);
+  const docs = [{ fullName: "Ruby 3" }];
+  let searchArgs;
+
+  context.app.docs = { all: () => docs };
+  context.app.isMobile = () => false;
+  context.app.isSingleDoc = () => false;
+
+  scope.input = {
+    value: "ruby",
+    selectionStart: 4,
+    style: {},
+  };
+  scope.hint = { offsetWidth: 140, style: {} };
+  scope.hintKey = {};
+  scope.hintDoc = {};
+  scope.hintSearcher = {
+    find: (...args) => {
+      searchArgs = args;
+    },
+  };
+
+  scope.onInput();
+  assert.deepEqual(searchArgs, [docs, "text", "ruby"]);
+
+  scope.onHintResults(docs);
+  assert.equal(scope.hintKey.textContent, "Tab");
+  assert.equal(scope.hintDoc.textContent, "Ruby 3");
+  assert.equal(scope.hint.style.display, "block");
+  assert.equal(scope.input.style.paddingRight, "168px");
+
+  scope.doc = docs[0];
+  scope.onInput();
+  assert.equal(scope.hint.style.display, "none");
+  assert.equal(scope.hintDoc.textContent, "");
+  assert.equal(scope.input.style.paddingRight, "");
+});
