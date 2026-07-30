@@ -15,6 +15,11 @@ class AppTest < Minitest::Spec
     current_session.env('HTTPS', 'on')
   end
 
+  it 'includes PHP in the default documentation set' do
+    assert_includes App.settings.default_docs, 'php'
+    assert_includes Docs.defaults.map(&:name), 'PHP'
+  end
+
   it 'redirects to HTTPS' do
     get 'http://example.com/test?q=1', {}, 'HTTPS' => 'off'
     assert last_response.redirect?
