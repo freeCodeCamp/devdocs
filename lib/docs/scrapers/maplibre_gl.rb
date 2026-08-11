@@ -3,7 +3,7 @@ module Docs
     self.name = 'MapLibre GL JS'
     self.slug = 'maplibre_gl'
     self.type = 'maplibre_gl'
-    self.release = '5.24.0'
+    self.release = '6.3.0'
     self.base_url = 'https://maplibre.org/maplibre-gl-js/docs/'
     self.root_path = '/'
     self.links = {
