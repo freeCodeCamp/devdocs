@@ -27,6 +27,11 @@ page.start = function (options) {
   }
   if (!running) {
     running = true;
+    // The app restores scroll positions itself (see app.views.Content), which
+    // the browser's automatic restoration would race with and override.
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
     addEventListener("popstate", onpopstate);
     addEventListener("click", onclick);
     page.replace(currentPath(), null, null, true);
