@@ -10,12 +10,14 @@ module Docs
 
       TYPE_BY_DIR = {
         'command' => 'Commands',
+        'diagnostic' => 'Diagnostics',
         'guide' => 'Guides',
         'manual' => 'Manual',
         'module' => 'Modules',
         'policy' => 'Policies',
         'prop_cache' => 'Properties: Cache Entries',
         'prop_dir' => 'Properties: Directories',
+        'prop_fs' => 'Properties: File Sets',
         'prop_gbl' => 'Properties of Global Scope',
         'prop_inst' => 'Properties: Installed Files',
         'prop_sf' => 'Properties: Source Files',
@@ -29,6 +31,10 @@ module Docs
           NAME_BY_SLUG[slug]
         elsif slug =~ /\Amanual\/cmake-([\w\-]+)\.7\z/
           $1.titleize
+        elsif slug.start_with?('guide/')
+          # Guide slugs are directory names ("tutorial", "ide-integration");
+          # the heading holds the real title ("CMake Tutorial").
+          at_css('h1')&.content&.strip.presence || slug.split('/')[1].titleize
         else
           dir, name = slug.split('/')
           name << '()' if dir == 'command'
