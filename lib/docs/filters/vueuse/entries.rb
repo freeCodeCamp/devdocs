@@ -92,6 +92,10 @@ module Docs
               "link": "/core/useElementBounding/"
             },
             {
+              "text": "useElementOverflow",
+              "link": "/core/useElementOverflow/"
+            },
+            {
               "text": "useElementSize",
               "link": "/core/useElementSize/"
             },
@@ -165,6 +169,10 @@ module Docs
               "link": "/core/useColorMode/"
             },
             {
+              "text": "useCssSupports",
+              "link": "/core/useCssSupports/"
+            },
+            {
               "text": "useCssVar",
               "link": "/core/useCssVar/"
             },
@@ -203,6 +211,10 @@ module Docs
             {
               "text": "useImage",
               "link": "/core/useImage/"
+            },
+            {
+              "text": "useLiveAnnouncer",
+              "link": "/core/useLiveAnnouncer/"
             },
             {
               "text": "useMediaControls",
@@ -545,10 +557,6 @@ module Docs
               "link": "/core/createTemplatePromise/"
             },
             {
-              "text": "templateRef",
-              "link": "/core/templateRef/"
-            },
-            {
               "text": "tryOnBeforeMount",
               "link": "/shared/tryOnBeforeMount/"
             },
@@ -671,6 +679,10 @@ module Docs
               "link": "/shared/computedWithControl/"
             },
             {
+              "text": "createRef",
+              "link": "/shared/createRef/"
+            },
+            {
               "text": "extendRef",
               "link": "/shared/extendRef/"
             },
@@ -707,6 +719,10 @@ module Docs
               "link": "/shared/refDefault/"
             },
             {
+              "text": "refManualReset",
+              "link": "/shared/refManualReset/"
+            },
+            {
               "text": "refThrottled",
               "link": "/shared/refThrottled/"
             },
@@ -733,10 +749,6 @@ module Docs
             {
               "text": "toRefs",
               "link": "/shared/toRefs/"
-            },
-            {
-              "text": "toValue",
-              "link": "/shared/toValue/"
             }
           ]
         },
@@ -811,12 +823,20 @@ module Docs
             {
               "text": "useTimeAgo",
               "link": "/core/useTimeAgo/"
+            },
+            {
+              "text": "useTimeAgoIntl",
+              "link": "/core/useTimeAgoIntl/"
             }
           ]
         },
         {
           "text": "Utilities",
           "items": [
+            {
+              "text": "createDisposableDirective",
+              "link": "/shared/createDisposableDirective/"
+            },
             {
               "text": "createEventHook",
               "link": "/shared/createEventHook/"
@@ -1217,17 +1237,31 @@ module Docs
         }
       ]
 
+      # The add-on packages (/electron/readme, /math/readme, ...) aren't listed in
+      # the sidebar; their functions are, so borrow the type from those.
+      ADD_ON_TYPES = SIDEBAR_TYPES.each_with_object({}) do |group, types|
+        next unless group[:text].start_with? '@'
+        group[:items].each do |item|
+          next unless (dir = item[:link][%r{\A/([^/]+)/}, 1])
+          types[dir.downcase] ||= group[:text]
+        end
+      end
+
       def get_name
-        name = at_css('h1').content
-        name.sub! %r{\s*#\s*}, ''
-        name
+        heading = at_css('h1').dup
+        # The permalink holds a zero-width space, which would trail the name.
+        heading.css('.header-anchor').remove
+        heading.content.strip
       end
 
       def get_type
         return 'Guide' if slug == 'export-size'
         return 'Guide' if slug == 'functions'
         return 'Guide' if slug == 'guidelines'
+        return 'Guide' if slug == 'why-no-translations'
         return 'Guide' if slug.start_with? 'guide'
+        return ADD_ON_TYPES[$1] if slug =~ %r{\A([^/]+)/readme\z}
+        # Raises when the sidebar above went stale — refresh it from the site data.
         SIDEBAR_TYPES.find { |i| i[:items].find { |j| j[:link][1..].downcase.start_with? slug.downcase } }[:text]
       end
     end

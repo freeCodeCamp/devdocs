@@ -8,8 +8,9 @@ module Docs
       code: 'https://github.com/vueuse/vueuse'
     }
 
-    options[:skip] = %w(add-ons contributing ecosystem)
-    options[:skip_patterns] = [/index$/]
+    options[:skip] = %w(add-ons contributing ecosystem team)
+    # `*.md` URLs serve the SPA shell rather than the page they name.
+    options[:skip_patterns] = [/index$/, /\.md$/]
     options[:fix_urls] = ->(url) do
       url.sub! %r{/index$}, ''
       url.sub! 'vueuse.org/on', 'vueuse.org/core/on'
@@ -22,7 +23,7 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    self.release = '14.2.1'
+    self.release = '14.4.0'
     self.base_url = 'https://vueuse.org/'
     self.initial_paths = %w(functions.html)
     html_filters.push 'vueuse/entries', 'vite/clean_html', 'vueuse/clean_html'
