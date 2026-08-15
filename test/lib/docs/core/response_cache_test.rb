@@ -56,6 +56,27 @@ class DocsResponseCacheTest < Minitest::Spec
       cache.set request, response
       refute File.exist?(cache.path_for(request))
     end
+
+    it "stores the response as a HAR entry" do
+      cache.set request, response
+      entry = JSON.parse File.read(cache.path_for(request))
+      assert_equal 'GET', entry['request']['method']
+      assert_equal 'http://example.com/page', entry['request']['url']
+      assert_equal 200, entry['response']['status']
+      assert_equal '<html></html>', entry['response']['content']['text']
+      assert_equal 'text/html', entry['response']['content']['mimeType']
+      assert_equal 'http://example.com/page', entry['_effectiveUrl']
+      assert_includes entry['response']['headers'],
+        { 'name' => 'Content-Type', 'value' => 'text/html' }
+    end
+
+    it "base64-encodes bodies that aren't valid UTF-8" do
+      response.options[:body] = "\xC3<html>".b
+      cache.set request, response
+      entry = JSON.parse File.read(cache.path_for(request))
+      assert_equal 'base64', entry['response']['content']['encoding']
+      assert_equal "\xC3<html>".b, cache.get(request).body
+    end
   end
 
   describe "#get" do
@@ -71,6 +92,11 @@ class DocsResponseCacheTest < Minitest::Spec
       assert_equal response.headers.to_h, result.headers.to_h
       assert_equal response.effective_url.to_s, result.effective_url
       assert result.cached?
+    end
+
+    it "returns the body as binary, like a response off the wire" do
+      cache.set request, response
+      assert_equal Encoding::BINARY, cache.get(request).body.encoding
     end
 
     it "returns nil when the stored response can't be read" do
