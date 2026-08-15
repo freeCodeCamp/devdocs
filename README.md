@@ -212,6 +212,7 @@ Made something cool? Feel free to open a PR to add a new row to this table! You 
 | [toiletbril/dedoc](https://github.com/toiletbril/dedoc)                                     | Terminal based viewer                | ![Latest GitHub commit](https://img.shields.io/github/last-commit/toiletbril/dedoc?logo=github&label)                | ![GitHub stars](https://img.shields.io/github/stars/toiletbril/dedoc?logo=github&label)                |
 | [Raycast Devdocs](https://www.raycast.com/djpowers/devdocs)                                 | Raycast extension                    | Unavailable                 | Unavailable                |
 | [chrisgrieser/alfred-docs-searches](https://github.com/chrisgrieser/alfred-docs-searches)   | Alfred workflow                      | ![Latest GitHub commit](https://img.shields.io/github/last-commit/chrisgrieser/alfred-docs-searches?logo=github&label) | ![GitHub stars](https://img.shields.io/github/stars/chrisgrieser/alfred-docs-searches?logo=github&label) |
+| [madhan-g-p/DevDocs-MCP](https://github.com/madhan-g-p/DevDocs-MCP) | Model Context Protocol (MCP) server providing version-pinned authoritative DevDocs content to AI agents | ![Latest Github commit](https://img.shields.io/github/last-commit/madhan-g-p/DevDocs-MCP?logo=github&label) | ![GitHub stars](https://img.shields.io/github/stars/madhan-g-p/DevDocs-MCP?logo=github&label) |
 
 ## Copyright / License
 
