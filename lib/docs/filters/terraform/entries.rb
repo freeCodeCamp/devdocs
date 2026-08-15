@@ -1,75 +1,61 @@
 module Docs
   class Terraform
     class EntriesFilter < Docs::EntriesFilter
-
-      # Some providers have non-trivial mappings between the directory they live in and their name
-      # Anything *not* in this list will be capitalized instead.
-      PROVIDER_NAME_MAP = {
-        'aws'              => 'AWS',
-        'azure'            => 'Azure (Legacy)',
-        'azurerm'          => 'Azure',
-        'centurylinkcloud' => 'CenturyLinkCloud',
-        'cloudscale'       => 'CloudScale.ch',
-        'cloudstack'       => 'CloudStack',
-        'dme'              => 'DNSMadeEasy',
-        'dns'              => 'DNS',
-        'dnsimple'         => 'DNSimple',
-        'do'               => 'DigitalOcean',
-        'github'           => 'GitHub',
-        'google'           => 'Google Cloud',
-        'http'             => 'HTTP',
-        'mysql'            => 'MySQL',
-        'newrelic'         => 'New Relic',
-        'oneandone'        => '1&1',
-        'opentelekomcloud' => 'OpenTelekomCloud',
-        'opsgenie'         => 'OpsGenie',
-        'opc'              => 'Oracle Public Cloud',
-        'oraclepaas'       => 'Oracle Cloud Platform',
-        'ovh'              => 'OVH',
-        'pagerduty'        => 'PagerDuty',
-        'panos'            => 'Palo Alto Networks',
-        'postgresql'       => 'PostgreSQL',
-        'powerdns'         => 'PowerDNS',
-        'profitbricks'     => 'ProfitBricks',
-        'rabbitmq'         => 'RabbitMQ',
-        'softlayer'        => 'SoftLayer',
-        'statuscake'       => 'StatusCake',
-        'tls'              => 'TLS',
-        'ultradns'         => 'UltraDNS',
-        'vcd'              => 'VMware vCloud Director',
-        'nsxt'             => 'VMware NSX-T',
-        'vsphere'          => 'VMware vSphere',
+      # Fallback types for pages whose sidebar navigation cannot be interpreted,
+      # keyed by the first segment of the slug.
+      SECTION_NAME_MAP = {
+        'cdktf'      => 'CDK for Terraform',
+        'cli'        => 'Terraform CLI',
+        'docs'       => 'Documentation',
+        'intro'      => 'Intro to Terraform',
+        'internals'  => 'Internals',
+        'language'   => 'Configuration Language',
+        'mcp-server' => 'MCP Server',
+        'migrate'    => 'Migrate',
+        'plugin'     => 'Plugin Development',
+        'policy'     => 'Policy Enforcement',
+        'registry'   => 'Registry Publishing',
+        'tutorials'  => 'Tutorials',
       }
-
-      # Some providers have a lot (> 100) entries, which makes browsing them unwieldy.
-      # Any present in the list below will have an extra set of types added, breaking the pages out into the different
-      # products they offer.
-      LARGE_PROVIDERS = {
-        "aws"     => true,
-        "azurerm" => true,
-        "google"  => true,
-      }
-
 
       def get_name
-        name ||= at_css('#inner h1').content
-        name.remove! "» "
-        name.remove! "Data Source: "
-        name
+        at_css('#main h1').content.strip
       end
 
       def get_type
-        category, subcategory, subfolder, page = *slug.split('/')
-        provider = page ? subcategory : category
-        nice_provider = PROVIDER_NAME_MAP[provider] || provider.capitalize
+        # The sidebar heading names the section the page belongs to, e.g. "Terraform CLI".
+        section = at_css('#sidebar-label').try(:content).try(:strip)
+        root = slug.split('/').first
+        section = SECTION_NAME_MAP[root] if section.blank?
+        return 'Terraform' if section.blank?
 
-        if LARGE_PROVIDERS[provider]
-          category_node = at_css('ul > li > ul > li.active')
-          parent_node = category_node.parent.previous_element if category_node
-          nice_provider = nice_provider + ": #{parent_node.content}" if category_node
+        # Tutorials reuse the same section names as the reference docs
+        # (e.g. "CLI"), so keep the two apart.
+        return "Tutorials: #{section}" if root == 'tutorials' && section != 'Tutorials'
+
+        group = sidebar_group
+        group.present? ? "#{section}: #{group}" : section
+      end
+
+      private
+
+      # Returns the label of the outermost collapsible group containing the
+      # current page in the sidebar, e.g. "Provisioning Infrastructure".
+      def sidebar_group
+        nav = at_css('#sidebar-nav')
+        return if nav.nil?
+
+        node = nav.at_css('a[aria-current="page"]')
+        label = nil
+
+        while node && node != nav
+          node = node.parent
+          next unless node && node.name == 'li'
+          button = node.at_css('> button > span')
+          label = button.content.strip if button
         end
 
-        nice_provider
+        label
       end
     end
   end
