@@ -3,7 +3,7 @@ module Docs
     self.name = 'scikit-image'
     self.slug = 'scikit_image'
     self.type = 'sphinx'
-    self.release = '0.25.0'
+    self.release = '0.26.0'
     v = self.release[/\d+\.\d+/]
     self.base_url = "https://scikit-image.org/docs/#{v}.x/"
     self.initial_paths = %w(/ /api/ /user_guide/)
