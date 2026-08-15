@@ -1,5 +1,9 @@
 [
   [
+    "2026-08-15",
+    "New documentation: <a href=\"/rack/\">Rack</a>"
+  ],
+  [
     "2026-07-27",
     "New documentation: <a href=\"/tokio/\">Tokio</a>"
   ],
