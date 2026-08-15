@@ -202,7 +202,9 @@ class DocsCLI < Thor
         puts "[S3] Syncing #{doc.path} using rclone..."
         # --checksum compares MD5 sums instead of size and modification time,
         # to avoid re-uploading the unchanged pages of a re-scraped documentation
-        cmd = "rclone sync #{File.join(Docs.store_path, doc.path)} devdocs:devdocs-documents/#{doc.path} --checksum --delete-after --progress"
+        # --transfers/--checkers raise the low defaults of 4/8, since a
+        # documentation consists of thousands of small files
+        cmd = "rclone sync #{File.join(Docs.store_path, doc.path)} devdocs:devdocs-documents/#{doc.path} --checksum --transfers 32 --checkers 64 --delete-after --progress"
         cmd << ' --dry-run' if options[:dryrun]
       end
       system(cmd)

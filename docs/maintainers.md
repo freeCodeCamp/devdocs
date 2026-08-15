@@ -37,6 +37,13 @@ In order to deploy DevDocs, you must:
   aws configure --profile devdocs
   ```
 
+  A documentation consists of thousands of small files, for which the default of 10 concurrent requests is low. Raising it speeds up `thor docs:upload` considerably:
+
+  ```
+  aws configure set s3.max_concurrent_requests 100 --profile devdocs
+  aws configure set s3.max_queue_size 10000 --profile devdocs
+  ```
+
 ## Thor commands
 
 In addition to the [publicly-documented commands](https://github.com/freeCodeCamp/devdocs#available-commands), the following commands are aimed at DevDocs maintainers:
