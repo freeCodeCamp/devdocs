@@ -5,6 +5,9 @@ tmp
 public/assets
 public/fonts
 public/docs/**/*
+public/index.html
+public/service-worker.js
+public/feed.atom
 docs/**/*
 !docs/*.md
 /vendor
