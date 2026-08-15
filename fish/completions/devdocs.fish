@@ -40,7 +40,7 @@ complete -c devdocs -n __fish_is_first_arg -a prepare_deploy -d 'Internal task e
 complete -c devdocs -n __fish_is_first_arg -a upload -d 'Upload documentation packages'
 
 # Documentation slugs (<doc> and <doc@version>)
-complete -c devdocs -n '__fish_seen_subcommand_from download generate outdated package page' -a '(__devdocs_docs)' -d Documentation
+complete -c devdocs -n '__fish_seen_subcommand_from commit download generate outdated package page' -a '(__devdocs_docs)' -d Documentation
 
 # Options
 complete -c devdocs -n '__fish_seen_subcommand_from list upload' -l packaged -d 'Restrict to packaged documentations'
