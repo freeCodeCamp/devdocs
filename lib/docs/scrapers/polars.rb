@@ -24,11 +24,11 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    # Polars tags both Rust (rs-*) and Python (py-*) releases in the same repo.
-    # The tags API only lists recent Rust ones, but the latest GitHub release is
-    # always the Python one, so use that and drop the py- prefix.
+    # Polars tags both Rust (rs-*) and Python (py-*) releases in the same repo,
+    # and the latest release is whichever of the two was published last, so pick
+    # the most recent py-* one.
     def get_latest_version(opts)
-      get_latest_github_release('pola-rs', 'polars', opts).sub(/\Apy-/, '')
+      get_latest_github_release('pola-rs', 'polars', opts, pattern: /\Apy-(.+)\z/)
     end
 
     private
