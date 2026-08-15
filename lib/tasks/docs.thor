@@ -200,7 +200,9 @@ class DocsCLI < Thor
       cmd << ' --dryrun' if options[:dryrun]
       if options[:rclone]
         puts "[S3] Syncing #{doc.path} using rclone..."
-        cmd = "rclone sync #{File.join(Docs.store_path, doc.path)} devdocs:devdocs-documents/#{doc.path} --delete-after --progress"
+        # --checksum compares MD5 sums instead of size and modification time,
+        # to avoid re-uploading the unchanged pages of a re-scraped documentation
+        cmd = "rclone sync #{File.join(Docs.store_path, doc.path)} devdocs:devdocs-documents/#{doc.path} --checksum --delete-after --progress"
         cmd << ' --dry-run' if options[:dryrun]
       end
       system(cmd)
