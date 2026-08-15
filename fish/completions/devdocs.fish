@@ -33,13 +33,14 @@ complete -c devdocs -n __fish_is_first_arg -a download -d 'Download documentatio
 complete -c devdocs -n __fish_is_first_arg -a generate -d 'Generate a documentation'
 complete -c devdocs -n __fish_is_first_arg -a list -d 'List available documentations'
 complete -c devdocs -n __fish_is_first_arg -a manifest -d 'Create the manifest'
+complete -c devdocs -n __fish_is_first_arg -a outdated -d 'Check for outdated documentations'
 complete -c devdocs -n __fish_is_first_arg -a package -d 'Create documentation packages'
 complete -c devdocs -n __fish_is_first_arg -a page -d 'Generate a page (no indexing)'
 complete -c devdocs -n __fish_is_first_arg -a prepare_deploy -d 'Internal task executed before deployment'
 complete -c devdocs -n __fish_is_first_arg -a upload -d 'Upload documentation packages'
 
 # Documentation slugs (<doc> and <doc@version>)
-complete -c devdocs -n '__fish_seen_subcommand_from download generate package page' -a '(__devdocs_docs)' -d Documentation
+complete -c devdocs -n '__fish_seen_subcommand_from download generate outdated package page' -a '(__devdocs_docs)' -d Documentation
 
 # Options
 complete -c devdocs -n '__fish_seen_subcommand_from list upload' -l packaged -d 'Restrict to packaged documentations'
@@ -58,5 +59,5 @@ complete -c devdocs -n '__fish_seen_subcommand_from upload' -l dryrun -d 'Do not
 complete -c devdocs -n '__fish_seen_subcommand_from commit' -l message -r -d 'Commit message'
 complete -c devdocs -n '__fish_seen_subcommand_from commit' -l amend -d 'Amend the last commit'
 
-complete -c devdocs -n '__fish_seen_subcommand_from generate page' -l verbose -d 'Verbose output'
+complete -c devdocs -n '__fish_seen_subcommand_from generate outdated page' -l verbose -d 'Verbose output'
 complete -c devdocs -n '__fish_seen_subcommand_from generate page' -l debug -d 'Debug output'

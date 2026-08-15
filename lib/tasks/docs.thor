@@ -40,6 +40,12 @@ class DocsCLI < Thor
     TTY::Pager.new.page(output)
   end
 
+  desc 'outdated [--verbose] [doc]...', 'Check for outdated documentations'
+  option :verbose, type: :boolean
+  def outdated(*names)
+    invoke 'updates:check', names, options
+  end
+
   desc 'page (<doc> | <doc@version>) [path] [--verbose] [--debug]', 'Generate a page (no indexing)'
   option :verbose, type: :boolean
   option :debug, type: :boolean
