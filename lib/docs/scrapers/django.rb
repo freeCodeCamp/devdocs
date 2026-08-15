@@ -126,7 +126,7 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://docs.djangoproject.com/', opts)
-      doc.at_css('#doc-versions > li.current > span > strong').content
+      doc.at_css('#doc-versions > li.current > button > strong').content
     end
   end
 end

@@ -27,5 +27,9 @@ module Docs
       self.release = '2.1'
       self.base_url = "https://registry.khronos.org/OpenGL-Refpages/gl#{self.version}/"
     end
+
+    def get_latest_version(opts)
+      self.class.release
+    end
   end
 end

@@ -12,5 +12,10 @@ module Docs
     options[:attribution] = <<-HTML
 	  ...
     HTML
+
+    def get_latest_version(opts)
+      body = fetch('https://man7.org/linux/man-pages/man7/man-pages.7.html', opts)
+      body.match(/Linux man-pages ([\d.]+)/)[1]
+    end
   end
 end
