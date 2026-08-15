@@ -71,6 +71,19 @@ In addition to the [publicly-documented commands](https://github.com/freeCodeCam
 
   Shortcut command to delete all package files (once uploaded via `thor docs:upload`, they are not needed anymore).
 
+## Shell completion for fish
+
+The [`fish/`](../fish) directory provides a `devdocs` function for the [fish shell](https://fishshell.com/), with completion for the `docs:` commands and the documentation slugs. Install it by symlinking the files into your fish configuration:
+
+```bash
+ln -s $PWD/fish/functions/devdocs.fish ~/.config/fish/functions/
+ln -s $PWD/fish/completions/devdocs.fish ~/.config/fish/completions/
+```
+
+The `docs:` namespace is implied, so `devdocs package rails@5.2` runs `thor docs:package rails@5.2`. The commands must be run from the repository root, like `thor` itself.
+
+Completion of the documentation slugs is cached in `~/.cache/devdocs/docs-list` and refreshed weekly; delete that file to update it after adding a documentation.
+
 ## Deploying DevDocs
 
 Once docs have been uploaded via `thor docs:upload` (if applicable), you can push to the DevDocs main branch (or merge the PR containing the updates). This triggers a GitHub action which starts by running the tests. If they succeed, the Heroku application will be deployed automatically.
