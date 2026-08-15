@@ -211,6 +211,34 @@ It is useful to preserve whitespaces of code segments within non-pre blocks, bec
 
 
 
+## Response cache
+
+`UrlScraper` stores every response it fetches in `tmp/cache/[slug]` and serves subsequent runs from there. Tweaking filters and running `thor docs:generate` again is therefore fast and doesn't put any load on the source site. (`FileScraper` doesn't need a cache, as it already reads from the local filesystem.)
+
+The cache never expires. Run `thor docs:clean` to empty it, which is required to pick up changes made to the source site. Only successful responses are stored, so timeouts, 404s and server errors are requested anew on the next run.
+
+Each response is stored in its own file, named after a hash of the request — changing a scraper's `params` or `headers` invalidates its cache. The files are JSON, in the entry schema of the [HTTP Archive (HAR) format](http://www.softwareishard.com/blog/har-12-spec/), so that it's easy to see what a scraper got back:
+
+```json
+{
+  "startedDateTime": "2026-08-15T11:05:10.430Z",
+  "time": 412,
+  "request": {
+    "method": "GET",
+    "url": "https://vite.dev/guide/",
+    "headers": [{ "name": "User-Agent", "value": "DevDocs" }]
+  },
+  "response": {
+    "status": 200,
+    "headers": [{ "name": "Content-Type", "value": "text/html; charset=utf-8" }],
+    "content": { "size": 57302, "mimeType": "text/html; charset=utf-8", "text": "<!doctype html>…" }
+  },
+  "_effectiveUrl": "https://vite.dev/guide/"
+}
+```
+
+(Fields irrelevant here are elided. Redirections are followed transparently, so an entry only holds the last response of a chain, and `_effectiveUrl` is the URL it ended up at.)
+
 ## Keeping scrapers up-to-date
 
 In order to keep scrapers up-to-date the `get_latest_version(opts)` method should be overridden. If `self.release` is defined, this should return the latest version of the documentation. If `self.release` is not defined, it should return the Epoch time when the documentation was last modified. If the documentation will never change, simply return `1.0.0`. The result of this method is periodically reported in a "Documentation versions report" issue which helps maintainers keep track of outdated documentations.

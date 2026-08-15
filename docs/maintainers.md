@@ -76,7 +76,7 @@ In addition to the [publicly-documented commands](https://github.com/freeCodeCam
 
 - `thor docs:clean`
 
-  Shortcut command to delete all package files (once uploaded via `thor docs:upload`, they are not needed anymore).
+  Shortcut command to delete all package files (once uploaded via `thor docs:upload`, they are not needed anymore), as well as the responses cached by the scrapers in `tmp/cache` (see the [Scraper Reference](./scraper-reference.md#response-cache)).
 
 ## Shell completion for fish
 

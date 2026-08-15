@@ -148,5 +148,67 @@ class DocsRequesterTest < Minitest::Spec
         requester.run
       end
     end
+
+    context "with a cache" do
+      let :cache_path do
+        File.join tmp_path, 'requester_cache'
+      end
+
+      let :cache do
+        Docs::ResponseCache.new cache_path
+      end
+
+      let :options do
+        { request_options: { cache: cache } }
+      end
+
+      def cache_response(url, body)
+        Docs::Request.new(url, cache: cache).response = Typhoeus::Response.new(
+          code: 200, headers: {}, body: body, effective_url: url, return_code: :ok)
+      end
+
+      after do
+        FileUtils.rm_rf cache_path
+      end
+
+      it "serves the requests from the cache" do
+        cache_response url, 'body'
+        requester.on_response { |response| @response = response }
+        requester.request(url)
+        requester.run
+        assert @response.cached?
+        assert_equal 'body', @response.body
+      end
+
+      it "serves the urls returned by the callbacks from the cache" do
+        cache_response url, 'body'
+        cache_response 'http://example.com/one', 'one'
+        cache_response 'http://example.com/two', 'two'
+
+        bodies = []
+        requester.on_response do |response|
+          bodies << response.body
+          ['http://example.com/one', 'http://example.com/two'] if response.body == 'body'
+        end
+
+        requester.request(url)
+        requester.run
+        assert_equal %w(body one two), bodies
+      end
+
+      it "requests the urls that aren't cached" do
+        cache_response url, 'body'
+        stub_request 'http://example.com/one'
+
+        requester.on_response do |response|
+          @count = @count.to_i + 1
+          ['http://example.com/one'] if response.cached?
+        end
+
+        requester.request(url)
+        requester.run
+        assert_equal 2, @count
+      end
+    end
   end
 end

@@ -25,6 +25,9 @@ module Docs
   mattr_accessor :store_path
   self.store_path = File.expand_path '../public/docs', @@root_path
 
+  mattr_accessor :cache_path
+  self.cache_path = File.expand_path '../tmp/cache', @@root_path
+
   mattr_accessor :rescue_errors
   self.rescue_errors = false
 

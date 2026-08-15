@@ -53,25 +53,29 @@ class DocsUrlScraperTest < Minitest::Spec
       scraper.send :request_all, 'urls', &block
     end
 
+    let :cache do
+      scraper.send :response_cache
+    end
+
     it "runs a Requester with the given urls" do
-      mock(Docs::Requester).run('urls', request_options: {params: {}, headers: {"User-Agent" => "DevDocs"}})
+      mock(Docs::Requester).run('urls', request_options: {params: {}, headers: {"User-Agent" => "DevDocs"}, cache: cache})
       result
     end
 
     it "runs a Requester with .headers as :request_options" do
       stub(Scraper).headers { { testheader: true } }
-      mock(Docs::Requester).run('urls', request_options: {params: {}, headers: {testheader: true}})
+      mock(Docs::Requester).run('urls', request_options: {params: {}, headers: {testheader: true}, cache: cache})
       result
     end
 
     it "runs a Requester with default .headers as :request_options" do
-      mock(Docs::Requester).run('urls', request_options: {params: {}, headers: {"User-Agent" => "DevDocs"}})
+      mock(Docs::Requester).run('urls', request_options: {params: {}, headers: {"User-Agent" => "DevDocs"}, cache: cache})
       result
     end
 
     it "runs a Requester with .params as :request_options" do
       stub(Scraper).params { { test: true } }
-      mock(Docs::Requester).run('urls', request_options: {params: {test: true}, headers: {"User-Agent" => "DevDocs"}})
+      mock(Docs::Requester).run('urls', request_options: {params: {test: true}, headers: {"User-Agent" => "DevDocs"}, cache: cache})
       result
     end
 
