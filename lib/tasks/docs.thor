@@ -159,9 +159,10 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   end
 
-  desc 'clean', 'Delete documentation packages'
+  desc 'clean', 'Delete documentation packages and cached responses'
   def clean
     File.delete(*Dir[File.join Docs.store_path, '*.tar.gz'])
+    Docs::ResponseCache.clean
     puts 'Done'
   end
 

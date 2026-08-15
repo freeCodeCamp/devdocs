@@ -39,9 +39,13 @@ module Docs
     end
 
     def request_options
-      options = { params: self.class.params, headers: self.class.headers }
+      options = { params: self.class.params, headers: self.class.headers, cache: response_cache }
       options[:accept_encoding] = 'gzip' if self.class.force_gzip
       options
+    end
+
+    def response_cache
+      @response_cache ||= ResponseCache.new(File.join(Docs.cache_path, self.class.slug))
     end
 
     def process_response?(response)

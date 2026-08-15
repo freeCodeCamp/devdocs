@@ -66,4 +66,48 @@ class DocsRequestTest < Minitest::Spec
       assert_includes response.singleton_class.ancestors, Docs::Response
     end
   end
+
+  describe "with a :cache" do
+    let :cache_path do
+      File.join tmp_path, 'request_cache'
+    end
+
+    let :cache do
+      Docs::ResponseCache.new cache_path
+    end
+
+    let :fetched_response do
+      Typhoeus::Response.new(
+        code: 200, headers: {}, body: 'body', effective_url: url, return_code: :ok)
+    end
+
+    def request(**options)
+      super(url, cache: cache, **options)
+    end
+
+    after do
+      FileUtils.rm_rf cache_path
+    end
+
+    it "isn't passed on as a request option" do
+      assert_equal cache, request.cache
+      refute request.options.key?(:cache)
+    end
+
+    it "stores the response" do
+      request.response = fetched_response
+      assert cache.get(request)
+    end
+
+    it "returns the cached response instead of making a request" do
+      request.response = fetched_response
+      response = request.run
+      assert response.cached?
+      assert_equal 'body', response.body
+    end
+
+    it "makes a request when the response isn't cached" do
+      assert_equal self.response, request.run
+    end
+  end
 end
