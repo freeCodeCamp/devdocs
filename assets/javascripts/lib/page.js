@@ -91,7 +91,7 @@ page.dispatch = function (context) {
   return next();
 };
 
-page.canGoBack = () => !Context.isIntialState(currentState);
+page.canGoBack = () => !Context.isInitialState(currentState);
 
 page.canGoForward = () => !Context.isLastState(currentState);
 
@@ -99,7 +99,7 @@ const currentPath = () => location.pathname + location.search + location.hash;
 
 class Context {
   /**
-   * A counter tracking the largest state ID used.
+   * The number of states created so far; also the ID of the next state.
    */
   static stateId = 0;
 
@@ -108,7 +108,12 @@ class Context {
    */
   static sessionId = Date.now();
 
-  static isIntialState(state) {
+  /**
+   * The path the document was loaded with.
+   */
+  static initialPath = currentPath();
+
+  static isInitialState(state) {
     return state.id === 0;
   }
 
@@ -117,7 +122,7 @@ class Context {
   }
 
   static isInitialPopState(state) {
-    return state.path === this.initialPath && Context.stateId === 1;
+    return state.path === Context.initialPath && Context.stateId === 1;
   }
 
   static isSameSession(state) {
@@ -125,8 +130,6 @@ class Context {
   }
 
   constructor(path, state) {
-    this.initialPath = currentPath();
-
     if (path == null) {
       path = "/";
     }
@@ -145,8 +148,7 @@ class Context {
     );
 
     if (this.state.id == null) {
-      Context.stateId++;
-      this.state.id = Context.stateId;
+      this.state.id = Context.stateId++;
     }
     if (this.state.sessionId == null) {
       this.state.sessionId = Context.sessionId;
