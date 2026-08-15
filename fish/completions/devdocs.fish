@@ -2,8 +2,7 @@
 # The command list mirrors `bundle exec thor list docs`; refresh it after adding tasks.
 
 function __devdocs_docs --description "List DevDocs documentation slugs (cached)"
-    set -l root (__devdocs_root)
-    test -n "$root"; or return
+    test -f Thorfile; and command -q bundle; or return
 
     set -l dir (set -q XDG_CACHE_HOME; and echo $XDG_CACHE_HOME; or echo $HOME/.cache)/devdocs
     set -l cache $dir/docs-list
@@ -11,12 +10,9 @@ function __devdocs_docs --description "List DevDocs documentation slugs (cached)
     # Rebuild when missing/empty or older than a week (`rm` the file to force it).
     set -l stale (find $cache -mtime +7 2>/dev/null)
     if not test -s $cache; or test -n "$stale"
-        command -q bundle; or return
         mkdir -p $dir
-        pushd $root
         bundle exec thor docs:list >$cache.tmp 2>/dev/null
         set -l ok $status
-        popd
         if test $ok -eq 0 -a -s $cache.tmp
             mv -f $cache.tmp $cache
         else
