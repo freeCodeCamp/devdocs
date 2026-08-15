@@ -27,7 +27,7 @@ end
 complete -c devdocs -f
 
 # Commands (the `docs:` namespace is implied)
-complete -c devdocs -n __fish_is_first_arg -a clean -d 'Delete documentation packages'
+complete -c devdocs -n __fish_is_first_arg -a clean -d 'Delete documentation packages and cached responses'
 complete -c devdocs -n __fish_is_first_arg -a commit -d 'Commit the generated documentations'
 complete -c devdocs -n __fish_is_first_arg -a download -d 'Download documentation packages'
 complete -c devdocs -n __fish_is_first_arg -a generate -d 'Generate a documentation'
