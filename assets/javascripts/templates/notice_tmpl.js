@@ -7,3 +7,9 @@ app.templates.singleDocNotice = (doc) =>
 app.templates.disabledDocNotice = () =>
   notice(` <strong>This documentation is disabled.</strong>
 To enable it, go to <a href="/settings" class="_notice-link">Preferences</a>. `);
+
+app.templates.noOriginalLinkNotice = () =>
+  notice(` The original page link is not available for this documentation. `);
+
+app.templates.copyFailedNotice = () =>
+  notice(` Couldn't copy the original page link to the clipboard. `);
