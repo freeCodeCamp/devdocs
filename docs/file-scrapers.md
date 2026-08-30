@@ -48,19 +48,10 @@ Nothing to do — the scraper downloads and extracts the HTML tarball into
 `docs/bash` automatically when it's missing.
 
 ### GCC
-Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of GCC Manual and GCC CPP manual or run the following commands to download the tarballs:
 
-```sh
-# GCC manual
-mkdir docs/gcc~${VERSION}; \
-curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/gcc-html.tar.gz | \
-tar --extract --gzip --strip-components=1 --directory=docs/gcc~${VERSION}
-
-# GCC CPP manual
-mkdir docs/gcc~${VERSION}_cpp; \
-curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/cpp-html.tar.gz | \
-tar --extract --gzip --strip-components=1 --directory=docs/gcc~${VERSION}_cpp
-```
+Nothing to do — the scraper downloads and extracts the GCC and GCC CPP manuals
+into `docs/gcc~$VERSION` and `docs/gcc~${VERSION}_cpp` automatically when
+they're missing.
 
 ### GNU Fortran
 Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of Fortran manual or run the following commands to download the tarball:

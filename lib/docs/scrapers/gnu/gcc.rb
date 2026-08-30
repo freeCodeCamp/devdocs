@@ -179,5 +179,14 @@ module Docs
       label = doc.at_css('details > ul > li > a')['href'].strip
       label.scan(/([0-9.]+)/)[2..-1][0][0]
     end
+
+    private
+
+    def download_source
+      # Each manual is published next to the online documentation as
+      # "<name>-html.tar.gz", expanding to a directory of the same name.
+      manual = base_url.path.split('/').last
+      download_and_extract("https://gcc.gnu.org/onlinedocs/gcc-#{self.class.release}/#{manual}-html.tar.gz", manual)
+    end
   end
 end
