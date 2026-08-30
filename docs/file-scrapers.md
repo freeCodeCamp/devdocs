@@ -194,13 +194,10 @@ curl https://pandas.pydata.org/docs/pandas.zip -o tmp.zip && unzip tmp.zip -d do
 
 
 ## PHP
-Click the link under the "Many HTML files" column on https://www.php.net/download-docs.php, extract the tarball, change its name to `php` and put it in `docs/`.
 
-Or run the following commands in your terminal:
+Nothing to do — the scraper downloads and extracts the manual into `docs/php`
+automatically when it's missing.
 
-```sh
-curl https://www.php.net/distributions/manual/php_manual_en.tar.gz | tar xz; mv php-chunked-xhtml/ docs/php/
-```
 ## Python 3.6+
 
 ```sh

@@ -71,5 +71,29 @@ module Docs
       doc.at_css('table > tbody > .stable:last-of-type > td > a').content.strip
     end
 
+    private
+
+    def archive_url
+      'https://www.php.net/distributions/manual/php_manual_en.tar.gz'
+    end
+
+    def download_source
+      require 'unix_utils'
+
+      instrument 'info.doc', msg: %(Downloading #{archive_url}...)
+      archive = UnixUtils.curl(archive_url)
+
+      instrument 'info.doc', msg: %(Extracting the documentation files to "#{source_directory}"...)
+      tarball = UnixUtils.gunzip(archive)
+      directory = UnixUtils.untar(tarball)
+
+      FileUtils.mkpath(File.dirname(source_directory))
+      # The archive expands to a single directory holding the chunked XHTML manual.
+      FileUtils.mv(File.join(directory, 'php-chunked-xhtml'), source_directory)
+    ensure
+      FileUtils.rm_f(archive) if archive
+      FileUtils.rm_f(tarball) if tarball
+      FileUtils.rm_rf(directory) if directory
+    end
   end
 end
