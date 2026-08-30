@@ -20,6 +20,20 @@ module Docs
       Licensed under the BSD 3-Clause "New" or "Revised" License.
     HTML
 
+    version '3' do
+      self.release = '3.13.2'
+      self.base_url = "https://api.dart.dev/stable/#{release}/"
+
+      # dartdoc now serves each library from its directory index, leaving a
+      # redirect behind at the old location:
+      #   dart-io/dart-io-library.html > dart-io/index.html
+      #   dart-io/                     > dart-io/index.html
+      options[:fix_urls] = ->(url) do
+        url.sub!(%r{/(dart-[^/]+)/(?:\1-library\.html)?(?=#|\z)}, '/\1/index.html')
+        url
+      end
+    end
+
     version '2' do
       self.release = '2.19.6'
       self.base_url = "https://api.dart.dev/stable/#{release}/"

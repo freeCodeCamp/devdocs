@@ -10,8 +10,8 @@ module Docs
           at_css('.main-content').prepend_child("<h1>#{name} #{kind}</h1>")
         end
 
-        # Add a title to the homepage of the v2 docs
-        if subpath == 'index.html' && at_css('.main-content > h1').nil?
+        # Add a title to the homepage when it doesn't have one of its own
+        if subpath == 'index.html' && at_css('.main-content h1').nil?
           at_css('.main-content').prepend_child('<h1>Dart SDK</h1>')
         end
 
