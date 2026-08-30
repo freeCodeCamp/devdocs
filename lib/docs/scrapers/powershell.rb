@@ -66,6 +66,13 @@ module Docs
 
     private
 
+    def download_source
+      # The repository holds every version under "reference", each in the
+      # directory #source_directory is named after.
+      download_and_extract('https://github.com/MicrosoftDocs/PowerShell-Docs/archive/refs/heads/main.zip',
+                           "PowerShell-Docs-main/reference/#{File.basename(source_directory)}")
+    end
+
     def parse(response)
       body = response.body.sub(/\A---\s*\n.*?\n---\s*\n/m, '')
       html = markdown_renderer.render(body)

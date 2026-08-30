@@ -266,6 +266,5 @@ rm threejs.tar.gz
 
 ## PowerShell
 
-```sh
-curl -L 'https://github.com/MicrosoftDocs/PowerShell-Docs/archive/refs/heads/main.zip' | bsdtar --extract --file - --directory=docs/powershell/ --strip-components=2
-```
+Nothing to do — the scraper downloads and extracts the reference for the version
+it needs into `docs/powershell` automatically when it's missing.
