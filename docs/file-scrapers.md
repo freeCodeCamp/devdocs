@@ -145,11 +145,8 @@ mv ./usr/share/doc/openjdk-16-jre-headless/api/ docs/openjdk~$VERSION
 
 ## Pandas
 
-From the home directory; `devdocs`, execute below:
-
-```sh
-curl https://pandas.pydata.org/docs/pandas.zip -o tmp.zip && unzip tmp.zip -d docs/pandas~3 && rm tmp.zip
-```
+Nothing to do — the scraper downloads and extracts the HTML archive into
+`docs/pandas~$VERSION` automatically when it's missing.
 
 
 ## PHP

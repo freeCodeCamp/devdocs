@@ -168,5 +168,12 @@ module Docs
     def get_latest_version(opts)
       get_latest_github_release('pandas-dev', 'pandas', opts)
     end
+
+    private
+
+    def download_source
+      # The archives are published per minor version rather than per release.
+      download_and_extract("https://pandas.pydata.org/pandas-docs/version/#{self.class.release[/\A\d+\.\d+/]}/pandas.zip")
+    end
   end
 end
