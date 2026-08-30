@@ -198,23 +198,10 @@ curl https://pandas.pydata.org/docs/pandas.zip -o tmp.zip && unzip tmp.zip -d do
 Nothing to do — the scraper downloads and extracts the manual into `docs/php`
 automatically when it's missing.
 
-## Python 3.6+
+## Python
 
-```sh
-mkdir docs/python~$VERSION
-cd docs/python~$VERSION
-curl -L https://docs.python.org/$VERSION/archives/python-$RELEASE-docs-html.tar.bz2 | \
-tar xj --strip-components=1
-```
-
-## Python < 3.6
-
-```sh
-mkdir docs/python~$VERSION
-cd docs/python~$VERSION
-curl -L https://docs.python.org/ftp/python/doc/$RELEASE/python-$RELEASE-docs-html.tar.bz2 | \
-tar xj --strip-components=1
-```
+Nothing to do — the scraper downloads and extracts the HTML archive into
+`docs/python~$VERSION` automatically when it's missing.
 
 ## R
 

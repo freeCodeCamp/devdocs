@@ -1,5 +1,5 @@
 module Docs
-  class Python < UrlScraper
+  class Python < FileScraper
     self.type = 'python'
     self.root_path = 'index.html'
     self.links = {
@@ -13,9 +13,9 @@ module Docs
     # bypass sphinx modifying empty ids
     options[:sphinx_keep_empty_ids] = true
 
-    options[:skip_patterns] = [/whatsnew/]
+    # The downloadable archives are linked from the docs but aren't part of them
+    options[:skip_patterns] = [/whatsnew/, %r{\Aarchives/}]
     options[:skip] = %w(
-      archives/
       library/2to3.html
       library/formatter.html
       library/intro.html
@@ -108,6 +108,37 @@ module Docs
     def get_latest_version(opts)
       doc = fetch_doc('https://docs.python.org/', opts)
       doc.at_css('title').content.split(' ')[0]
+    end
+
+    private
+
+    # Maintained branches publish the archive under their version, while
+    # branches that have reached EOL keep the one built from their last release.
+    def archive_url
+      @archive_url ||= [self.class.version, self.class.release].map { |name|
+        "https://docs.python.org/#{self.class.version}/archives/python-#{name}-docs-html.tar.bz2"
+      }.find { |url| Request.run(url, method: :head).success? }
+    end
+
+    def download_source
+      require 'unix_utils'
+
+      raise SetupError, "No documentation archive found for Python #{self.class.release}." if archive_url.nil?
+
+      instrument 'info.doc', msg: %(Downloading #{archive_url}...)
+      archive = UnixUtils.curl(archive_url)
+
+      instrument 'info.doc', msg: %(Extracting the documentation files to "#{source_directory}"...)
+      tarball = UnixUtils.bunzip2(archive)
+      directory = UnixUtils.untar(tarball)
+
+      FileUtils.mkpath(File.dirname(source_directory))
+      # The archive expands to a single directory named after itself.
+      FileUtils.mv(File.join(directory, File.basename(archive_url, '.tar.bz2')), source_directory)
+    ensure
+      FileUtils.rm_f(archive) if archive
+      FileUtils.rm_f(tarball) if tarball
+      FileUtils.rm_rf(directory) if directory
     end
   end
 end
