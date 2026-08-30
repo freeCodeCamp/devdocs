@@ -121,24 +121,10 @@ module Docs
     end
 
     def download_source
-      require 'unix_utils'
-
       raise SetupError, "No documentation archive found for Python #{self.class.release}." if archive_url.nil?
 
-      instrument 'info.doc', msg: %(Downloading #{archive_url}...)
-      archive = UnixUtils.curl(archive_url)
-
-      instrument 'info.doc', msg: %(Extracting the documentation files to "#{source_directory}"...)
-      tarball = UnixUtils.bunzip2(archive)
-      directory = UnixUtils.untar(tarball)
-
-      FileUtils.mkpath(File.dirname(source_directory))
       # The archive expands to a single directory named after itself.
-      FileUtils.mv(File.join(directory, File.basename(archive_url, '.tar.bz2')), source_directory)
-    ensure
-      FileUtils.rm_f(archive) if archive
-      FileUtils.rm_f(tarball) if tarball
-      FileUtils.rm_rf(directory) if directory
+      download_and_extract(archive_url, File.basename(archive_url, '.tar.bz2'))
     end
   end
 end

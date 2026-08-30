@@ -145,24 +145,11 @@ module Docs
     end
 
     def download_source
-      require 'unix_utils'
-
       raise SetupError, "No documentation archive found for NumPy #{self.class.release}." if archive_url.nil?
 
-      instrument 'info.doc', msg: %(Downloading #{archive_url}...)
-      archive = UnixUtils.curl(archive_url)
-
-      instrument 'info.doc', msg: %(Extracting the documentation files to "#{source_directory}"...)
-      directory = UnixUtils.unzip(archive)
-
-      FileUtils.mkpath(File.dirname(source_directory))
       # The archive holds the whole documentation, of which the older versions
       # are scraped from the "reference" subdirectory alone.
-      root = base_url.path.end_with?('/reference/') ? File.join(directory, 'reference') : directory
-      FileUtils.mv(root, source_directory)
-    ensure
-      FileUtils.rm_f(archive) if archive
-      FileUtils.rm_rf(directory) if directory
+      download_and_extract(archive_url, ('reference' if base_url.path.end_with?('/reference/')))
     end
   end
 end
