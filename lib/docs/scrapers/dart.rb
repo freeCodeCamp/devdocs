@@ -36,5 +36,27 @@ module Docs
       label.sub(/Dart\s*/, '')
     end
 
+    private
+
+    def archive_url
+      "https://storage.googleapis.com/dart-archive/channels/stable/release/#{self.class.release}/api-docs/dartdocs-gen-api.zip"
+    end
+
+    def download_source
+      require 'unix_utils'
+
+      instrument 'info.doc', msg: %(Downloading #{archive_url}...)
+      archive = UnixUtils.curl(archive_url)
+
+      instrument 'info.doc', msg: %(Extracting the documentation files to "#{source_directory}"...)
+      directory = UnixUtils.unzip(archive)
+
+      FileUtils.mkpath(File.dirname(source_directory))
+      # The archive expands to a single directory holding the generated API docs.
+      FileUtils.mv(File.join(directory, 'gen-dartdocs'), source_directory)
+    ensure
+      FileUtils.rm_f(archive) if archive
+      FileUtils.rm_rf(directory) if directory
+    end
   end
 end

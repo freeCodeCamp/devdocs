@@ -21,10 +21,19 @@ module Docs
 
     private
 
+    # Override in a scraper to fetch the original documentation files into
+    # #source_directory when they're missing. See Docs::Dart for an example.
+    def download_source
+      false
+    end
+
     def assert_source_directory_exists
-      unless Dir.exist?(source_directory)
-        raise SetupError, "The #{self.class.name} scraper requires the original documentation files to be stored in the \"#{source_directory}\" directory."
-      end
+      return if Dir.exist?(source_directory)
+
+      download_source
+      return if Dir.exist?(source_directory)
+
+      raise SetupError, "The #{self.class.name} scraper requires the original documentation files to be stored in the \"#{source_directory}\" directory."
     end
 
     def request_one(url)

@@ -6,16 +6,8 @@ If you open a PR to update one of these docs, please add/fix the instructions.
 
 ## Dart
 
-Click the “API docs” link under the “Stable channel” header on
-https://www.dartlang.org/tools/sdk/archive. Rename the expanded ZIP to `dart~2`
-and put it in `docs/`
-
-Or run the following commands in your terminal:
-
-```sh
-curl https://storage.googleapis.com/dart-archive/channels/stable/release/$RELEASE/api-docs/dartdocs-gen-api.zip > dartApi.zip; \
-unzip dartApi.zip; mv gen-dartdocs docs/dart~$VERSION
-```
+Nothing to do — the scraper downloads and extracts the API docs into
+`docs/dart~$VERSION` automatically when they're missing.
 
 ## date-fns
 
