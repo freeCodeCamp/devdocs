@@ -119,9 +119,9 @@ app.views.EntryPage = class EntryPage extends app.View {
   }
 
   subViewClass() {
-    return (
-      app.views[`${$.classify(this.entry.doc.type)}Page`] || app.views.BasePage
-    );
+    // doc.type is optional (e.g. the Q documentation has none).
+    const type = this.entry.doc.type;
+    return (type && app.views[`${$.classify(type)}Page`]) || app.views.BasePage;
   }
 
   getTitle() {
