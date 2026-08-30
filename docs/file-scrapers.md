@@ -43,13 +43,9 @@ Nothing to do — the scraper downloads and extracts the release tarball into
 ## Gnu
 
 ### Bash
-Go to https://www.gnu.org/software/bash/manual/, download the HTML tar file (with one web page per node) and extract its content in `docs/bash` or run the following command:
 
-```sh
-mkdir docs/bash \
-&& curl https://www.gnu.org/software/bash/manual/bash.html_node.tar.gz | \
-tar --extract --gzip --directory=docs/bash
-```
+Nothing to do — the scraper downloads and extracts the HTML tarball into
+`docs/bash` automatically when it's missing.
 
 ### GCC
 Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of GCC Manual and GCC CPP manual or run the following commands to download the tarballs:
