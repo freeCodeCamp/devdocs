@@ -32,13 +32,8 @@ Nothing to do — the scraper downloads and extracts the HTML tarball into
 
 ## Erlang
 
-Go to https://www.erlang.org/downloads and download the HTML documentation file.
-
-```ah
-mkdir --parent docs/erlang\~$VERSION/; \
-curl -L https://github.com/erlang/otp/releases/download/OTP-$RELEASE/otp_doc_html_$RELEASE.tar.gz | \
-bsdtar --extract --file - --directory=docs/erlang\~$VERSION/
-```
+Nothing to do — the scraper downloads and extracts the HTML documentation into
+`docs/erlang~$VERSION` automatically when it's missing.
 
 ## es-toolkit
 
