@@ -27,13 +27,8 @@ Nothing to do — the scraper downloads and extracts the HTML archive into
 
 ## Elisp
 
-Go to https://www.gnu.org/software/emacs/manual/elisp.html, download the HTML tarball and extract its content in `docs/elisp` or run the following command:
-
-```sh
-mkdir docs/elisp \
-&& curl curl https://www.gnu.org/software/emacs/manual/elisp.html_node.tar.gz | \
-tar --extract --gzip --strip-components=1 --directory=docs/elisp
-```
+Nothing to do — the scraper downloads and extracts the HTML tarball into
+`docs/elisp` automatically when it's missing.
 
 ## Erlang
 

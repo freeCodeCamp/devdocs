@@ -66,5 +66,11 @@ module Docs
       body.scan(/version \d*\.?\d*/)[0].sub('version', '')
     end
 
+    private
+
+    def download_source
+      # The archive expands to a single "elisp" directory.
+      download_and_extract('https://www.gnu.org/software/emacs/manual/elisp.html_node.tar.gz', 'elisp')
+    end
   end
 end
