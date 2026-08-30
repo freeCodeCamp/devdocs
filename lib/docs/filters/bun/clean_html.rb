@@ -1,43 +1,57 @@
 module Docs
   class Bun
     class CleanHtmlFilter < Filter
+      LANGUAGE_ALIASES = {
+        'js' => 'javascript',
+        'jsonc' => 'json',
+        'sh' => 'bash',
+        'shell' => 'bash',
+        'ts' => 'typescript',
+        'tsx' => 'jsx'
+      }
+
+      SUPPORTED_LANGUAGES = %w(
+        bash c cpp csharp css diff go html java javascript json jsx kotlin lua
+        markdown nginx nix ocaml perl php python ruby rust scala scss sql
+        typescript yaml zig
+      )
+
       def call
-        @doc = at_css('#content-area')
-        doc.children = css('#header, #content')
+        @doc = at_css('#docs-content')
 
-        header = at_css('header:has(h1)')
-        if header
-          header.content = header.at_css('h1').content
-          header.name = 'h1'
+        # The page header holds a breadcrumb and "Copy page" actions above the
+        # <h1>; the footer holds prev/next pagination and "Edit on GitHub" links.
+        css('nav[aria-label="Breadcrumb"]').each { |node| node.parent.remove }
+        doc.element_children.each { |node| node.remove if node.name == 'footer' }
+
+        # Tabbed sections and code groups only render the selected panel; label
+        # every panel with its tab name and unhide the rest.
+        css('*[role="tablist"]').each do |tablist|
+          labels = tablist.css('*[role="tab"]').each_with_object({}) do |tab, memo|
+            memo[tab['id']] = tab.content.strip
+          end
+
+          tablist.parent.element_children.each do |panel|
+            next unless panel['role'] == 'tabpanel'
+            panel.remove_attribute('hidden')
+            name = labels[panel['aria-labelledby']]
+            panel.prepend_child("<p><strong>#{CGI.escape_html(name)}</strong></p>") if name.present?
+          end
+
+          tablist.remove
         end
 
-        css('*[aria-label="Navigate to header"]', '*[aria-label="Copy the contents from the code block"]').each do |node|
-          node.parent.remove
-        end
-        css('img').remove
-        css('svg').remove
-        
-        css('.code-block *[data-component-part="code-block-header"]').remove
-        css('.code-block', '.code-group').each do |node|
-          node.name = 'pre'
+        css('pre').each do |node|
+          language = node.ancestors('*[data-lang]').first.try(:[], 'data-lang')
+          language = LANGUAGE_ALIASES.fetch(language, language)
           node.content = node.content
-          node['data-language'] = 'typescript'
-          node.remove_attribute('style')
+          node['data-language'] = language if SUPPORTED_LANGUAGES.include?(language)
         end
 
-        css('.font-mono').each do |node|
-          node.name = 'code'
-          node.content = node.content
-        end
+        css('a.anchor', 'button', 'svg', 'img', '.doc-icon', '*[aria-hidden="true"]').remove
 
-        css('.font-mono.text-blue-600').each do |node|
-          node[:class] = 'token keyword'
-        end
-
-        css('*[class]').each do |node|
-          next if node.name == 'code'
-          node.remove_attribute('class')
-        end
+        css('*[class]').each { |node| node.remove_attribute('class') }
+        css('*[style]').each { |node| node.remove_attribute('style') }
 
         doc
       end
