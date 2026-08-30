@@ -116,12 +116,8 @@ Nothing to do — the scraper downloads and extracts the HTML archive into
 
 ## OpenGL
 
-```sh
-cd docs/
-git clone https://github.com/KhronosGroup/OpenGL-Refpages.git
-ln -s OpenGL-Refpages/gl4/html/ opengl~4
-ln -s OpenGL-Refpages/gl2.1/xhtml/ opengl~2.1
-```
+Nothing to do — the scraper downloads the reference pages into
+`docs/opengl~$VERSION` automatically when they're missing.
 
 ## OpenJDK
 Search 'Openjdk' in https://www.debian.org/distrib/packages, find the `openjdk-$VERSION-doc` package,
