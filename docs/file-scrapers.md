@@ -8,11 +8,6 @@ still need the documents to be built or assembled by hand.
 
 If you open a PR to update one of these docs, please add/fix the instructions.
 
-## Dart
-
-Nothing to do — the scraper downloads and extracts the API docs into
-`docs/dart~$VERSION` automatically when they're missing.
-
 ## date-fns
 
 ```sh
@@ -23,49 +18,6 @@ yarn install
 node scripts/build/docs.js
 ls tmp/docs.json
 ```
-
-## Django
-
-Nothing to do — the scraper downloads and extracts the HTML archive into
-`docs/django~$VERSION` automatically when it's missing.
-
-## Elisp
-
-Nothing to do — the scraper downloads and extracts the HTML tarball into
-`docs/elisp` automatically when it's missing.
-
-## Erlang
-
-Nothing to do — the scraper downloads and extracts the HTML documentation into
-`docs/erlang~$VERSION` automatically when it's missing.
-
-## es-toolkit
-
-Nothing to do — the scraper downloads and extracts the release tarball into
-`docs/es_toolkit` automatically when it's missing.
-
-## Gnu
-
-### Bash
-
-Nothing to do — the scraper downloads and extracts the HTML tarball into
-`docs/bash` automatically when it's missing.
-
-### GCC
-
-Nothing to do — the scraper downloads and extracts the GCC and GCC CPP manuals
-into `docs/gcc~$VERSION` and `docs/gcc~${VERSION}_cpp` automatically when
-they're missing.
-
-### GNU Fortran
-
-Nothing to do — the scraper downloads and extracts the manual into
-`docs/gnu_fortran~$VERSION` automatically when it's missing.
-
-## GNU Make
-
-Nothing to do — the scraper downloads and extracts the HTML tarball into
-`docs/gnu_make` automatically when it's missing.
 
 ## Gnuplot
 
@@ -113,16 +65,6 @@ wget --recursive --no-parent https://man7.org/linux/man-pages/
 mv man7.org/linux/man-pages/ docs/man/
 ```
 
-## NumPy
-
-Nothing to do — the scraper downloads and extracts the HTML archive into
-`docs/numpy~$VERSION` automatically when it's missing.
-
-## OpenGL
-
-Nothing to do — the scraper downloads the reference pages into
-`docs/opengl~$VERSION` automatically when they're missing.
-
 ## OpenJDK
 Search 'Openjdk' in https://www.debian.org/distrib/packages, find the `openjdk-$VERSION-doc` package,
 download it, extract it with `dpkg -x $PACKAGE ./` and move `./usr/share/doc/openjdk-16-jre-headless/api/`
@@ -142,22 +84,6 @@ dpkg -x $PACKAGE ./
 # previous command makes a directory called 'usr' in the current directory
 mv ./usr/share/doc/openjdk-16-jre-headless/api/ docs/openjdk~$VERSION
 ```
-
-## Pandas
-
-Nothing to do — the scraper downloads and extracts the HTML archive into
-`docs/pandas~$VERSION` automatically when it's missing.
-
-
-## PHP
-
-Nothing to do — the scraper downloads and extracts the manual into `docs/php`
-automatically when it's missing.
-
-## Python
-
-Nothing to do — the scraper downloads and extracts the HTML archive into
-`docs/python~$VERSION` automatically when it's missing.
 
 ## R
 
@@ -244,8 +170,3 @@ documentation into `docs/scala~$VERSION` automatically when it's missing.
 Scala 3 has no official documentation download
 (see https://contributors.scala-lang.org/t/5537) and has to be built by hand;
 see the comment in `lib/docs/scrapers/scala.rb`.
-
-## PowerShell
-
-Nothing to do — the scraper downloads and extracts the reference for the version
-it needs into `docs/powershell` automatically when it's missing.
