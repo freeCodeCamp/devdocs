@@ -59,13 +59,9 @@ Nothing to do — the scraper downloads and extracts the manual into
 `docs/gnu_fortran~$VERSION` automatically when it's missing.
 
 ## GNU Make
-Go to https://www.gnu.org/software/make/manual/, download the HTML tarball and extract its content in `docs/gnu_make` or run the following command:
 
-```sh
-mkdir docs/gnu_make \
-&& curl https://www.gnu.org/software/make/manual/make.html_node.tar.gz | \
-tar --extract --gzip --strip-components=1 --directory=docs/gnu_make
-```
+Nothing to do — the scraper downloads and extracts the HTML tarball into
+`docs/gnu_make` automatically when it's missing.
 
 ## Gnuplot
 

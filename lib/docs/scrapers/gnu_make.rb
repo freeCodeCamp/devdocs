@@ -30,5 +30,10 @@ module Docs
       body.scan(/version \d*\.?\d*/)[0].sub('version', '')
     end
 
+    private
+
+    def download_source
+      download_and_extract('https://www.gnu.org/software/make/manual/make.html_node.tar.gz')
+    end
   end
 end
