@@ -149,11 +149,8 @@ mv man7.org/linux/man-pages/ docs/man/
 
 ## NumPy
 
-```sh
-mkdir --parent docs/numpy~$VERSION/; \
-curl https://numpy.org/doc/$VERSION/numpy-html.zip | \
-bsdtar --extract --file=- --directory=docs/numpy~$VERSION/
-```
+Nothing to do — the scraper downloads and extracts the HTML archive into
+`docs/numpy~$VERSION` automatically when it's missing.
 
 ## OpenGL
 
