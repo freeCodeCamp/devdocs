@@ -66,5 +66,13 @@ module Docs
       label = doc.at_css('details > ul > li > a')['href'].strip
       label.scan(/([0-9.]+)/)[2..-1][0][0]
     end
+
+    private
+
+    def download_source
+      # The manual is published next to the online documentation and expands to
+      # a single "gfortran" directory.
+      download_and_extract("https://gcc.gnu.org/onlinedocs/gcc-#{self.class.release}/gfortran-html.tar.gz", 'gfortran')
+    end
   end
 end

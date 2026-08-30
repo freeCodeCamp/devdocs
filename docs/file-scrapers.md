@@ -54,13 +54,9 @@ into `docs/gcc~$VERSION` and `docs/gcc~${VERSION}_cpp` automatically when
 they're missing.
 
 ### GNU Fortran
-Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of Fortran manual or run the following commands to download the tarball:
 
-```sh
-mkdir docs/gnu_fortran~$VERSION; \
-curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/gfortran-html.tar.gz | \
-tar --extract --gzip --strip-components=1 --directory=docs/gnu_fortran~$VERSION
-```
+Nothing to do — the scraper downloads and extracts the manual into
+`docs/gnu_fortran~$VERSION` automatically when it's missing.
 
 ## GNU Make
 Go to https://www.gnu.org/software/make/manual/, download the HTML tarball and extract its content in `docs/gnu_make` or run the following command:
