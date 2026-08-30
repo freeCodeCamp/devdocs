@@ -102,5 +102,19 @@ module Docs
       doc = fetch_doc('https://www.scala-lang.org/api/3.x/', opts)
       doc.at_css('.projectVersion').content
     end
+
+    private
+
+    def download_source
+      # Scala 3 has no documentation download, it has to be built by hand.
+      subdirectory = case self.class.version
+                     when /Library\z/ then 'scala-library'
+                     when /Reflection\z/ then 'scala-reflect'
+                     else return false
+                     end
+
+      download_and_extract("https://downloads.lightbend.com/scala/#{self.class.release}/scala-docs-#{self.class.release}.zip",
+                           "scala-#{self.class.release}/api/#{subdirectory}")
+    end
   end
 end
