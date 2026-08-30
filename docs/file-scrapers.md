@@ -22,14 +22,8 @@ ls tmp/docs.json
 
 ## Django
 
-Go to https://docs.djangoproject.com/, select the version from the
-bubble in the bottom-right corner, then download the HTML version from the sidebar.
-
-```sh
-mkdir --parent docs/django\~$VERSION/; \
-curl https://media.djangoproject.com/docs/django-docs-$VERSION-en.zip | \
-bsdtar --extract --file - --directory=docs/django\~$VERSION/
-```
+Nothing to do — the scraper downloads and extracts the HTML archive into
+`docs/django~$VERSION` automatically when it's missing.
 
 ## Elisp
 
