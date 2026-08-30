@@ -85,5 +85,13 @@ module Docs
         tables: true
       )
     end
+
+    private
+
+    def download_source
+      # The archive expands to a single directory named after the release.
+      download_and_extract("https://github.com/toss/es-toolkit/archive/refs/tags/v#{self.class.release}.tar.gz",
+                           "es-toolkit-#{self.class.release}")
+    end
   end
 end

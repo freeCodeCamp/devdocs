@@ -37,9 +37,8 @@ Nothing to do — the scraper downloads and extracts the HTML documentation into
 
 ## es-toolkit
 
-```sh
-git clone --branch v$RELEASE https://github.com/toss/es-toolkit docs/es_toolkit
-```
+Nothing to do — the scraper downloads and extracts the release tarball into
+`docs/es_toolkit` automatically when it's missing.
 
 ## Gnu
 
