@@ -15,9 +15,29 @@ module Docs
     options[:max_image_size] = 1_000_000
 
     options[:attribution] = <<-HTML
-    &copy; 2025, PyTorch Contributors<br>
+    &copy; 2026, PyTorch Contributors<br>
     PyTorch has a BSD-style license, as found in the <a href="https://github.com/pytorch/pytorch/blob/main/LICENSE">LICENSE</a> file.
     HTML
+
+    version '2.13' do
+      self.release = '2.13'
+      self.base_url = "https://docs.pytorch.org/docs/#{release}/"
+    end
+
+    version '2.12' do
+      self.release = '2.12'
+      self.base_url = "https://docs.pytorch.org/docs/#{release}/"
+    end
+
+    version '2.11' do
+      self.release = '2.11'
+      self.base_url = "https://docs.pytorch.org/docs/#{release}/"
+    end
+
+    version '2.10' do
+      self.release = '2.10'
+      self.base_url = "https://docs.pytorch.org/docs/#{release}/"
+    end
 
     version '2.9' do
       self.release = '2.9'
