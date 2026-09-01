@@ -7,7 +7,7 @@ module Docs
 
         at_css('h1').content = 'Jest Documentation' if root_page?
 
-        css('hr', '.hash-link', 'button', '.badge').remove
+        css('hr', '.hash-link', 'button', '.badge', '.alert svg').remove
 
         css('.prism-code').each do |node|
           node.parent.parent.before(node)
