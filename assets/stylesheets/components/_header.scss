@@ -206,6 +206,31 @@
   ._search-active > & { display: block; }
 }
 
+._search-hint {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  top: .875rem;
+  right: 2rem;
+  max-width: 62%;
+  padding-left: .25rem;
+  overflow: hidden;
+  line-height: 1.25rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: .75rem;
+  color: var(--textColorLighter);
+  background: var(--contentBackground);
+  pointer-events: none;
+
+  > kbd {
+    padding: 0 .25rem;
+    color: var(--textColorLight);
+    background: var(--searchTagBackground);
+    border-radius: 2px;
+  }
+}
+
 ._search-tag {
   display: none;
   position: absolute;
