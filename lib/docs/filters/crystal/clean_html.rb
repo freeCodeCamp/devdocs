@@ -2,6 +2,7 @@ module Docs
   class Crystal
     class CleanHtmlFilter < Filter
       def call
+        css('a:contains("Edit this page")').remove
         current_url.path.start_with?('/reference/') ? book : api
         doc
       end
