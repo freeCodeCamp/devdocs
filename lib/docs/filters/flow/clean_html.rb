@@ -3,11 +3,12 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         root_page? ? root : other
+        css('footer', 'header', 'svg').remove
         doc
       end
 
       def root
-        @doc = at_css('.bg-faded + .container')
+        @doc = at_css('article')
 
         css('.row', '.col-lg-4', '.card-block').each do |node|
           node.before(node.children).remove
@@ -23,9 +24,9 @@ module Docs
       end
 
       def other
-        @doc = at_css('.article')
+        @doc = at_css('article')
 
-        css('.nav-tabs', '#select-platform', '.guide-controls + .list-group', '.guide-controls', 'hr').remove
+        css('.theme-doc-breadcrumbs', '.theme-doc-toc-mobile', '.nav-tabs', '#select-platform', '.guide-controls + .list-group', '.guide-controls', 'hr').remove
 
         css('.guide-content', '.tabs', '.tab-content').each do |node|
           node.before(node.children).remove
@@ -34,6 +35,18 @@ module Docs
         css('a[id].toc').each do |node|
           node.parent['id'] = node['id']
           node.remove
+        end
+
+        css('pre').each do |node|
+          token_lines = node.css('.token-line')
+          next if token_lines.empty?
+
+          node.css('[class*="codeBlockLineNumber"]').remove
+          node.content = token_lines.map(&:content).join("\n")
+          node['data-language'] = 'typescript'
+          node.remove_attribute('class')
+          node.remove_attribute('style')
+          node.ancestors('[class*="codeBlockContainer"]').first.replace(node)
         end
 
         unless at_css('h2')
