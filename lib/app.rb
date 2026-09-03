@@ -105,6 +105,7 @@ class App < Sinatra::Application
 
   configure :test do
     set :docs_manifest_path, File.join(root, 'test', 'files', 'docs.json')
+    set :docs_path, File.join(root, 'test', 'files', 'docs')
   end
 
   def self.parse_docs
@@ -273,6 +274,14 @@ class App < Sinatra::Application
 
   get '/ping' do
     200
+  end
+
+  require 'mcp/server'
+
+  post '/mcp' do
+    content_type :json
+    payload = JSON.parse(request.body.read)
+    Mcp::Server.handle(payload, settings).to_json
   end
 
   %w(docs.json application.js application.css).each do |asset|
