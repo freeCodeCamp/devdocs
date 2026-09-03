@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-24.04
     if: github.repository == 'freeCodeCamp/devdocs'
     steps:
-    - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
+    - uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e # v2.8.0
       with:
         fetch-depth: 0 # Heroku rejects shallow pushes
     - name: Set up Ruby
