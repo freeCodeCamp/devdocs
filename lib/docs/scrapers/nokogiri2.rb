@@ -1,22 +1,21 @@
 module Docs
-  class Nokogiri2 < Rdoc
-    # Instructions:
-    #   1. Download the latest release at https://github.com/sparklemotion/nokogiri/releases
-    #   2. Run "bundle install && bundle exec rake docs" (in the Nokogiri directory)
-    #   4. Copy the "doc" directory to "docs/nokogiri"
-
+  class Nokogiri2 < UrlScraper
     self.name = 'Nokogiri'
     self.slug = 'nokogiri'
-    self.release = '1.14.2'
-    self.base_url = "https://nokogiri.org/rdoc/"
+    self.type = 'rdoc'
+    self.release = '1.19.4'
+    self.base_url = 'https://nokogiri.org/rdoc/'
+    self.root_path = 'index.html'
 
-    html_filters.replace 'rdoc/entries', 'nokogiri2/entries'
+    html_filters.replace 'container', 'nokogiri2/container'
+    html_filters.push 'nokogiri2/entries', 'nokogiri2/clean_html', 'title'
 
+    options[:title] = false
     options[:root_title] = 'Nokogiri'
     options[:only_patterns] = [/\ANokogiri/, /\AXSD/]
 
     options[:attribution] = <<-HTML
-      &copy; 2008&ndash;2023 by Mike Dalessio, Aaron Patterson, Yoko Harada, Akinori MUSHA, John Shahid,<br>
+      &copy; 2008&ndash;2026 by Mike Dalessio, Aaron Patterson, Yoko Harada, Akinori MUSHA, John Shahid,<br>
       Karol Bucek, Sam Ruby, Craig Barnes, Stephen Checkoway, Lars Kanis, Sergio Arbeo,<br>
       Timothy Elliott, Nobuyoshi Nakada, Charles Nutter, Patrick Mahoney
       Licensed under the MIT License.

@@ -116,7 +116,6 @@ done
 
 ## RDoc
 
-### Nokogiri
 ### Ruby / Minitest
 
 ```sh
