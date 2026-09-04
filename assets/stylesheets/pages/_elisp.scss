@@ -1,16 +1,8 @@
 @use 'global/classes';
 
 ._elisp {
-    dl > dt {
+    // definitions (@deffn, @defvr, ...) — the items of a plain @table have no class
+    dl > dt[class] {
         @extend %block-label, %label-blue;
     }
-
-    dl[compact] > dt {
-        background: none;
-        border-color: none;
-        line-height: normal;
-        margin: auto;
-        border: none;
-    }
-
 }
