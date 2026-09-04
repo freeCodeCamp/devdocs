@@ -221,17 +221,32 @@ app.views.EntryPage = class EntryPage extends app.View {
   onAltC() {
     const link = this.find("._attribution:last-child ._attribution-link");
     if (!link) {
+      this.showTransientNotice("noOriginalLink");
       return;
     }
-    console.log(link.href + location.hash);
-    navigator.clipboard.writeText(link.href + location.hash);
+    navigator.clipboard.writeText(link.href + location.hash).catch(() =>
+      this.showTransientNotice("copyFailed"),
+    );
   }
 
   onAltO() {
     const link = this.find("._attribution:last-child ._attribution-link");
     if (!link) {
+      this.showTransientNotice("noOriginalLink");
       return;
     }
     this.delay(() => $.popup(link.href + location.hash));
+  }
+
+  showTransientNotice(type) {
+    if (this.transientNotice) {
+      clearTimeout(this.transientNoticeTimer);
+      this.transientNotice.deactivate();
+    }
+    this.transientNotice = new app.views.Notice(type);
+    this.transientNoticeTimer = setTimeout(() => {
+      this.transientNotice.deactivate();
+      this.transientNotice = null;
+    }, 3000);
   }
 };
