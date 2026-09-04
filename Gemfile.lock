@@ -106,28 +106,28 @@ GEM
       image_size (>= 1.5, < 4)
       in_threads (~> 1.3)
       progress (~> 3.0, >= 3.0.1)
-    image_optim_pack (0.13.1.20260418)
+    image_optim_pack (0.13.1.20260816)
       fspath (>= 2.1, < 4)
       image_optim (~> 0.19)
-    image_optim_pack (0.13.1.20260418-aarch64-linux)
+    image_optim_pack (0.13.1.20260816-aarch64-linux)
       fspath (>= 2.1, < 4)
       image_optim (~> 0.19)
-    image_optim_pack (0.13.1.20260418-aarch64-linux-gnu)
+    image_optim_pack (0.13.1.20260816-aarch64-linux-gnu)
       fspath (>= 2.1, < 4)
       image_optim (~> 0.19)
-    image_optim_pack (0.13.1.20260418-aarch64-linux-musl)
+    image_optim_pack (0.13.1.20260816-aarch64-linux-musl)
       fspath (>= 2.1, < 4)
       image_optim (~> 0.19)
-    image_optim_pack (0.13.1.20260418-arm64-darwin)
+    image_optim_pack (0.13.1.20260816-arm64-darwin)
       fspath (>= 2.1, < 4)
       image_optim (~> 0.19)
-    image_optim_pack (0.13.1.20260418-x86_64-darwin)
+    image_optim_pack (0.13.1.20260816-x86_64-darwin)
       fspath (>= 2.1, < 4)
       image_optim (~> 0.19)
-    image_optim_pack (0.13.1.20260418-x86_64-linux-gnu)
+    image_optim_pack (0.13.1.20260816-x86_64-linux-gnu)
       fspath (>= 2.1, < 4)
       image_optim (~> 0.19)
-    image_optim_pack (0.13.1.20260418-x86_64-linux-musl)
+    image_optim_pack (0.13.1.20260816-x86_64-linux-musl)
       fspath (>= 2.1, < 4)
       image_optim (~> 0.19)
     image_size (3.6.0)
@@ -411,14 +411,14 @@ CHECKSUMS
   html-pipeline (2.14.3) sha256=8a1d4d7128b2141913387cac0f8ba898bb6812557001acc0c2b46910f59413a0
   i18n (1.14.8) sha256=285778639134865c5e0f6269e0b818256017e8cde89993fdfcbfb64d088824a5
   image_optim (0.32.0) sha256=457d5ea28ee93244c2aabc7134e06455587fb670f210e88e1be40aea882c2ba3
-  image_optim_pack (0.13.1.20260418) sha256=ee0f6a34f3d37b8553c6289d0a1beb7110c0c2e665068585c0e070c637755db7
-  image_optim_pack (0.13.1.20260418-aarch64-linux) sha256=126251ce06869799163cb454b37fbbdd2f8336120dc7c6d6c55821d4e1e8956f
-  image_optim_pack (0.13.1.20260418-aarch64-linux-gnu) sha256=cd453d28bd2d6b02aded04c04ba046e4b409a12e930ec8f5a87b289b0cce259f
-  image_optim_pack (0.13.1.20260418-aarch64-linux-musl) sha256=832011b9e266b65ddef5b6a9ce3f4625775f62c8cc6bb3e05703d18a4df8a25b
-  image_optim_pack (0.13.1.20260418-arm64-darwin) sha256=f491b719c6940d8b89c4fed33d434afae516f6b75803d73b33d32fc482107ece
-  image_optim_pack (0.13.1.20260418-x86_64-darwin) sha256=dc869667175e05c5d5a242ebe50f06437da3ab0ff4a89045cce46045bd673f95
-  image_optim_pack (0.13.1.20260418-x86_64-linux-gnu) sha256=21892f6ec63f386a7a63c920a440a13034d23620b74cd89badd22acff1e4aab5
-  image_optim_pack (0.13.1.20260418-x86_64-linux-musl) sha256=a68e1953cf4edcdd3d7590fec1b14bd49e3177e3cb16c344a7c7f5af7b8223c2
+  image_optim_pack (0.13.1.20260816) sha256=5e37513014fb90900b032467f83abc36b5c8b87bd715cf1d6c85e3c8642d7438
+  image_optim_pack (0.13.1.20260816-aarch64-linux) sha256=fd0525ecf79a7d4db58e328b892c1604796451d8aa273f1a816b8d85c1b15a0f
+  image_optim_pack (0.13.1.20260816-aarch64-linux-gnu) sha256=a4ad086a83f040dff9bab568d178cce858c49cef7599e2dd0ca98f9488063d9a
+  image_optim_pack (0.13.1.20260816-aarch64-linux-musl) sha256=70359dd3ecfa6d3870c6b0760adcb0d13ff7479ff8c2394089d23f29add37d4b
+  image_optim_pack (0.13.1.20260816-arm64-darwin) sha256=14429a57b302e3574290efb10405efe84ba264782755eb73d8781d878ba114e4
+  image_optim_pack (0.13.1.20260816-x86_64-darwin) sha256=5591c9bac5d0a062a6e2c3964071f853ad1f5ee61aeac3f00bd877159c9b39f6
+  image_optim_pack (0.13.1.20260816-x86_64-linux-gnu) sha256=ff3f4813f76229f6b7c6641cbefa2d289e61c9227e0277789f80e97f98ce63f0
+  image_optim_pack (0.13.1.20260816-x86_64-linux-musl) sha256=50aa4d521bb9a6d880d9040c1ef3f19d4ab12dbdbaa1b2ec77d584e37ac5f163
   image_size (3.6.0) sha256=1b9c4196cb658bf503a887920543a3991e927a4b767a5c770fb9665bce0dcb28
   in_threads (1.6.0) sha256=91a7e6138d279dc632f59b8a9a409e47148948e297c0f69c92f9a2479a182149
   io-console (0.8.2) sha256=d6e3ae7a7cc7574f4b8893b4fca2162e57a825b223a177b7afa236c5ef9814cc
