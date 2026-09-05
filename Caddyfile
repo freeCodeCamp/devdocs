@@ -1,0 +1,185 @@
+# Caddyfile — serve DevDocs as static files, with no Ruby at request time.
+#
+# Serves the prerendered output of `rake assets:precompile`
+# (public/index.html, public/service-worker.js, public/feed.atom) plus the
+# compiled assets under public/. This is an ALTERNATIVE production front end;
+# the Sinatra app (config.ru) is untouched and remains the dev/preview server
+# and the source of truth for the redirect/header rules mirrored below.
+#
+# Local preview (no ACME, single host):
+#   DEVDOCS_SITE_ADDRESS=:8080 caddy run --config Caddyfile
+#   # then comment out the `out.devdocs.io` block below
+# Production:
+#   caddy run --config Caddyfile   # automatic HTTPS for devdocs.io
+
+# ---------------------------------------------------------------------------
+# Outbound sponsor / tracking links (302). Shared by both hostnames because
+# out.devdocs.io keeps serving /s/* while redirecting everything else.
+# Mirrors the `/s/*` hash in lib/app.rb.
+# ---------------------------------------------------------------------------
+(sponsors) {
+	redir /s/maxcdn https://www.maxcdn.com/?utm_source=devdocs&utm_medium=banner&utm_campaign=devdocs
+	redir /s/shopify https://www.shopify.com/careers?utm_source=devdocs&utm_medium=banner&utm_campaign=devdocs
+	redir /s/jetbrains https://www.jetbrains.com/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs
+	redir /s/jetbrains/ruby https://www.jetbrains.com/ruby/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs
+	redir /s/jetbrains/python https://www.jetbrains.com/pycharm/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs
+	redir /s/jetbrains/c https://www.jetbrains.com/clion/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs
+	redir /s/jetbrains/web https://www.jetbrains.com/webstorm/?utm_source=devdocs&utm_medium=sponsorship&utm_campaign=devdocs
+	redir /s/code-school https://www.codeschool.com/?utm_campaign=devdocs&utm_content=homepage&utm_source=devdocs&utm_medium=sponsorship
+	redir /s/tw "https://twitter.com/intent/tweet?url=http%3A%2F%2Fdevdocs.io&via=DevDocs&text=All-in-one%20API%20documentation%20browser%20with%20offline%20mode%20and%20instant%20search%3A"
+	redir /s/fb "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdevdocs.io"
+	redir /s/re "https://www.reddit.com/submit?url=http%3A%2F%2Fdevdocs.io&title=All-in-one%20API%20documentation%20browser%20with%20offline%20mode%20and%20instant%20search&resubmit=true"
+}
+
+# ---------------------------------------------------------------------------
+# Main site
+# ---------------------------------------------------------------------------
+{$DEVDOCS_SITE_ADDRESS:devdocs.io} {
+	root * {$DEVDOCS_ROOT:./public}
+	encode zstd gzip
+
+	# --- Security headers (mirrors lib/app.rb production :csp + SslEnforcer hsts) ---
+	header {
+		Content-Security-Policy "default-src 'self' *; script-src 'self' 'nonce-devdocs' https://www.google-analytics.com https://secure.gaug.es https://*.jquery.com; font-src 'none'; style-src 'self' 'unsafe-inline' *; img-src 'self' * data:;"
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		-Server
+	}
+
+	# --- Cache-Control (mirrors Rack::Static header_rules) ---
+	@assets path /assets/*
+	header @assets Cache-Control "public, max-age=604800"
+	@day path /docs/* /images/* /favicon.ico /robots.txt /opensearch.xml /mathml.css /manifest.json
+	header @day Cache-Control "public, max-age=86400"
+	@nocache not path /assets/* /docs/* /images/* /favicon.ico /robots.txt /opensearch.xml /mathml.css /manifest.json
+	header @nocache Cache-Control "no-cache, max-age=0"
+
+	# All routing in one ordered block: first matching terminal handler wins.
+	route {
+		import sponsors
+
+		# --- Gone (410) — mirrors the /maxcdn routes ---
+		@maxcdn path /maxcdn /maxcdn/
+		respond @maxcdn 410
+
+		# --- Health check ---
+		respond /ping 200
+
+		# --- Search → client-side hash query (/search?q=… and /?q=…) ---
+		redir /search /#q={query.q}
+		@rootq {
+			path /
+			query q=*
+		}
+		redir @rootq /#q={query.q}
+
+		# --- Legacy path redirects (301) ---
+		redir /tips /help permanent
+		redir /css-data-types/ /css-values-units/ permanent
+		redir /css-at-rules/ "/?q=css%20%40" permanent
+		redir /dom/window/setinterval /dom/windoworworkerglobalscope/setinterval permanent
+		redir /html/article /html/element/article permanent
+		redir /html-html5/ /html-elements/ permanent
+		redir /html-standard/ /html-elements/ permanent
+		redir /http-status-codes/ /http-status/ permanent
+		redir /ruby/bignum /ruby~2.3/bignum permanent
+		redir /ruby/fixnum /ruby~2.3/fixnum permanent
+
+		# --- Documentation renames (301, path-preserving) — mirrors DOC_REDIRECTS ---
+		@r_iojs path_regexp iojs ^/iojs([/-].*)?$
+		redir @r_iojs /node{re.iojs.1} permanent
+		@r_node_lts path_regexp node_lts ^/node_lts([/-].*)?$
+		redir @r_node_lts /node~6_lts{re.node_lts.1} permanent
+		@r_node42 path_regexp node42 ^/node~4\.2_lts([/-].*)?$
+		redir @r_node42 /node~4_lts{re.node42.1} permanent
+		@r_yii1 path_regexp yii1 ^/yii1([/-].*)?$
+		redir @r_yii1 /yii~1.1{re.yii1.1} permanent
+		@r_python2 path_regexp python2 ^/python2([/-].*)?$
+		redir @r_python2 /python~2.7{re.python2.1} permanent
+		@r_xpath path_regexp xpath ^/xpath([/-].*)?$
+		redir @r_xpath /xslt_xpath{re.xpath.1} permanent
+		@r_ng4ts path_regexp ng4ts ^/angular~4_typescript([/-].*)?$
+		redir @r_ng4ts /angular{re.ng4ts.1} permanent
+		@r_ng2ts path_regexp ng2ts ^/angular~2_typescript([/-].*)?$
+		redir @r_ng2ts /angular~2{re.ng2ts.1} permanent
+		@r_ng20ts path_regexp ng20ts ^/angular~2\.0_typescript([/-].*)?$
+		redir @r_ng20ts /angular~2{re.ng20ts.1} permanent
+		@r_ng15 path_regexp ng15 ^/angular~1\.5([/-].*)?$
+		redir @r_ng15 /angularjs~1.5{re.ng15.1} permanent
+		@r_ng14 path_regexp ng14 ^/angular~1\.4([/-].*)?$
+		redir @r_ng14 /angularjs~1.4{re.ng14.1} permanent
+		@r_ng13 path_regexp ng13 ^/angular~1\.3([/-].*)?$
+		redir @r_ng13 /angularjs~1.3{re.ng13.1} permanent
+		@r_ng12 path_regexp ng12 ^/angular~1\.2([/-].*)?$
+		redir @r_ng12 /angularjs~1.2{re.ng12.1} permanent
+		@r_ci30 path_regexp ci30 ^/codeigniter~3\.0([/-].*)?$
+		redir @r_ci30 /codeigniter~3{re.ci30.1} permanent
+		@r_pt1 path_regexp pt1 ^/pytorch~1([/-].*)?$
+		redir @r_pt1 /pytorch~1.13{re.pt1.1} permanent
+		@r_pt2 path_regexp pt2 ^/pytorch~2([/-].*)?$
+		redir @r_pt2 /pytorch{re.pt2.1} permanent
+		@r_wp2 path_regexp wp2 ^/webpack~2([/-].*)?$
+		redir @r_wp2 /webpack{re.wp2.1} permanent
+
+		# --- MDN angular/dom fragment rewrites (301) — mirrors the catch-all ---
+		# The regexes are mutually exclusive, so their order is irrelevant.
+		@ng_api path_regexp ng_api ^/angular(/ng.*)$
+		redir @ng_api /angularjs/api{re.ng_api.1} permanent
+		@dom_wt path_regexp dom_wt ^/dom/windowtimers(.*)$
+		redir @dom_wt /dom/windoworworkerglobalscope{re.dom_wt.1} permanent
+		@dom_url path_regexp dom_url ^/dom/window/url\.(.*)$
+		redir @dom_url /dom/url/{re.dom_url.1} permanent
+		@dom_win path_regexp dom_win ^/dom/window\.(.*)$
+		redir @dom_win /dom/window/{re.dom_win.1} permanent
+		@dom_el path_regexp dom_el ^/dom/element\.(.*)$
+		redir @dom_el /dom/element/{re.dom_el.1} permanent
+		@dom_ev path_regexp dom_ev ^/dom/event\.(.*)$
+		redir @dom_ev /dom/event/{re.dom_ev.1} permanent
+		@dom_doc path_regexp dom_doc ^/dom/document\.(.*)$
+		redir @dom_doc /dom/document/{re.dom_doc.1} permanent
+
+		# --- News feed (static Atom at /feed and /feed.atom) ---
+		# Terminal handle, before canonicalization, so /feed isn't treated as a
+		# bare doc slug and given a trailing slash.
+		@feed path /feed /feed.atom
+		handle @feed {
+			rewrite * /feed.atom
+			file_server
+		}
+
+		# --- Documentation URL canonicalization (mirrors the catch-all) ---
+		# Strip a trailing slash from entry paths (two+ segments): /css/x/ -> /css/x
+		@entry_slash path_regexp entry_slash ^(/[^/]+/.+)/$
+		redir @entry_slash {re.entry_slash.1} permanent
+		# Add a trailing slash to a bare doc slug: /css -> /css/. Excludes the app
+		# pages and the static root files, which are served as-is below.
+		@doc_index {
+			path_regexp doc_index ^/([\w.~%-]+)$
+			not path /settings /offline /about /news /help
+			not path /favicon.ico /robots.txt /opensearch.xml /mathml.css /manifest.json /service-worker.js
+		}
+		redir @doc_index {path}/ permanent
+
+		# --- Static files, with SPA fallback to the prerendered shell ---
+		# Real files (assets, docs, images, service-worker.js, feed.atom, the app
+		# pages) are served from disk; every other path falls back to index.html so
+		# the client-side router resolves it.
+		try_files {path} /index.html
+		file_server
+	}
+
+	# 404/500 → the prebuilt error pages (mirrors not_found/error in app.rb).
+	handle_errors {
+		rewrite * /{err.status_code}.html
+		file_server
+	}
+}
+
+# ---------------------------------------------------------------------------
+# Tracking domain: out.devdocs.io keeps serving /s/* and 302-redirects
+# everything else to the canonical host. Mirrors the OUT_HOST `before` filter.
+# Remove this block for local preview.
+# ---------------------------------------------------------------------------
+out.devdocs.io {
+	import sponsors
+	redir * https://devdocs.io{uri}
+}
