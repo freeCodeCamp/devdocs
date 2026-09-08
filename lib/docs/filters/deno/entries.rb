@@ -1,25 +1,19 @@
 module Docs
   class Deno
     class EntriesFilter < Docs::EntriesFilter
+      TYPES_BY_PATH = {
+        'api'     => 'API',
+        'runtime' => 'Runtime',
+      }
 
       def get_name
-        if result[:path].start_with?('api/deno/')
-          at_css('main[id!="content"]')['id'][/\Asymbol_([.\w]+)/, 1]
-        else
-          at_css('main article h1').content
-        end
+        name = at_css('h1')
+        name ? name.content.strip : slug.split('/').last
       end
 
       def get_type
-        if result[:path].start_with?('api/deno/')
-          'API'
-        elsif result[:path].start_with?('runtime/reference/cli')
-          'CLI'
-        else
-          at_css('main article nav ul :first span').content
-        end
+        TYPES_BY_PATH[slug.split('/').first] || 'Guide'
       end
-
     end
   end
 end

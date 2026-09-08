@@ -2,30 +2,25 @@ module Docs
   class Deno
     class CleanHtmlFilter < Filter
       def call
-        if result[:path].start_with?('api/deno/')
-          @doc = at_css('main[id!="content"] article', 'main[id!="content"]')
-        else
-          @doc = at_css('main article .markdown-body')
+        @doc = at_css('main#content article', 'article') || doc
+
+        css('.breadcrumbs', '.copy-page-split', '.copyButton',
+            '.docNodeKindIcon', '.header-anchor', 'a > svg',
+            'nav[aria-label="Breadcrumb"]',
+            'nav[aria-label="Previous and next page"]').remove
+
+        css('details > summary').each do |node|
+          node.parent.remove if node.content.strip == 'On this page'
         end
 
-        if at_css('.text-2xl')
-          doc.prepend_child at_css('.text-2xl').remove
-          at_css('.text-2xl').name = 'h1'
+        css('h1, h2, h3, h4, h5, h6').each do |node|
+          node.css('a.anchor[aria-label="Anchor"]').remove
         end
 
-        css('code').each do |node|
-          if node['class']
-            lang = node['class'][/language-(\w+)/, 1]
-          end
-          node['data-language'] = lang || 'ts'
-          node.remove_attribute('class')
-          if node.parent.name == 'div'
-            node.content = node.content.strip
-          end
+        css('pre > code').each do |node|
+          language = node['class'].to_s[/\blanguage-([\w-]+)/, 1]
+          node.parent['data-language'] = language if language
         end
-
-        css('a.header-anchor').remove()
-        css('.breadcrumbs').remove()
 
         doc
       end
