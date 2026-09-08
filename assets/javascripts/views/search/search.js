@@ -141,7 +141,7 @@ app.views.Search = class Search extends app.View {
   }
 
   externalSearch(url) {
-    const value = this.value;
+    let value = this.value;
     if (value) {
       if (this.scope.name()) {
         value = `${this.scope.name()} ${value}`;
