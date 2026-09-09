@@ -35,12 +35,94 @@ class McpTest < Minitest::Spec
       assert_includes names, 'devdocs_get_page'
     end
 
-    it 'calls devdocs_list_docsets and returns the configured doc sets' do
+    it 'calls devdocs_list_docsets and returns paginated docsets in condensed format' do
       result = rpc('tools/call', { 'name' => 'devdocs_list_docsets', 'arguments' => {} })['result']
-      docsets = JSON.parse(result['content'].first['text'])
+      response = JSON.parse(result['content'].first['text'])
+
+      assert response.key?('docsets')
+      assert response.key?('offset')
+      assert response.key?('limit')
+      assert response.key?('total')
+      assert response.key?('returned')
+
+      docsets = response['docsets']
+      assert docsets.length > 0
+      first = docsets.first
+      assert first.key?('slug')
+      assert first.key?('name')
+      assert first.key?('version')
+      refute first.key?('release_date'), 'should not include release_date'
+      refute first.key?('mtime'), 'should not include mtime'
+
       slugs = docsets.map { |d| d['slug'] }
       assert_includes slugs, 'css'
       assert_includes slugs, 'html~5'
+    end
+
+    it 'paginates results with offset and limit' do
+      result = rpc('tools/call', {
+        'name' => 'devdocs_list_docsets',
+        'arguments' => { 'offset' => 0, 'limit' => 2 }
+      })['result']
+      response = JSON.parse(result['content'].first['text'])
+
+      assert_equal 0, response['offset']
+      assert_equal 2, response['limit']
+      assert_equal 2, response['returned']
+      assert response['total'] > 2
+      assert_equal 2, response['docsets'].length
+    end
+
+    it 'respects offset to skip results' do
+      first_page = rpc('tools/call', {
+        'name' => 'devdocs_list_docsets',
+        'arguments' => { 'offset' => 0, 'limit' => 2 }
+      })['result']
+      first_docsets = JSON.parse(first_page['content'].first['text'])['docsets'].map { |d| d['slug'] }
+
+      second_page = rpc('tools/call', {
+        'name' => 'devdocs_list_docsets',
+        'arguments' => { 'offset' => 2, 'limit' => 2 }
+      })['result']
+      second_docsets = JSON.parse(second_page['content'].first['text'])['docsets'].map { |d| d['slug'] }
+
+      assert first_docsets != second_docsets
+    end
+
+    it 'filters docsets by query string' do
+      result = rpc('tools/call', {
+        'name' => 'devdocs_list_docsets',
+        'arguments' => { 'query' => 'css' }
+      })['result']
+      response = JSON.parse(result['content'].first['text'])
+
+      docsets = response['docsets']
+      assert docsets.length > 0
+      assert docsets.all? { |d| d['slug'].downcase.include?('css') || d['name'].downcase.include?('css') }
+    end
+
+    it 'filters case-insensitively' do
+      result = rpc('tools/call', {
+        'name' => 'devdocs_list_docsets',
+        'arguments' => { 'query' => 'CSS' }
+      })['result']
+      response = JSON.parse(result['content'].first['text'])
+
+      docsets = response['docsets']
+      assert docsets.length > 0
+      assert docsets.any? { |d| d['slug'] == 'css' }
+    end
+
+    it 'returns empty docsets for non-matching query' do
+      result = rpc('tools/call', {
+        'name' => 'devdocs_list_docsets',
+        'arguments' => { 'query' => 'nonexistentdocthing' }
+      })['result']
+      response = JSON.parse(result['content'].first['text'])
+
+      assert_equal 0, response['returned']
+      assert_equal [], response['docsets']
+      assert response['total'] == 0
     end
 
     it 'calls devdocs_search and returns matching entries for a doc set' do

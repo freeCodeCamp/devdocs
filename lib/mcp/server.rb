@@ -6,8 +6,16 @@ module Mcp
     TOOLS = [
       {
         'name' => 'devdocs_list_docsets',
-        'description' => 'List documentation sets available on this DevDocs instance.',
-        'inputSchema' => { 'type' => 'object', 'properties' => {}, 'additionalProperties' => false },
+        'description' => 'List documentation sets available on this DevDocs instance. Returns paginated results with optional filtering.',
+        'inputSchema' => {
+          'type' => 'object',
+          'properties' => {
+            'offset' => { 'type' => 'integer', 'description' => 'Number of results to skip (default: 0)', 'minimum' => 0 },
+            'limit' => { 'type' => 'integer', 'description' => 'Maximum results to return (default: 50, max: 500)', 'minimum' => 1, 'maximum' => 500 },
+            'query' => { 'type' => 'string', 'description' => 'Filter by slug or name (case-insensitive substring match)' },
+          },
+          'additionalProperties' => false,
+        },
       },
       {
         'name' => 'devdocs_search',
@@ -62,8 +70,8 @@ module Mcp
       params = request['params']
       case params['name']
       when 'devdocs_list_docsets'
-        docsets = app_settings.docs.values
-        as_text_result(request, docsets)
+        result = list_docsets(app_settings, params['arguments'] || {})
+        as_text_result(request, result)
       when 'devdocs_search'
         entries = search_docset(app_settings, params['arguments']['slug'], params['arguments']['query'])
         as_text_result(request, entries)
@@ -71,6 +79,39 @@ module Mcp
         text = get_page(app_settings, params['arguments']['slug'], params['arguments']['path'])
         respond(request, { 'content' => [{ 'type' => 'text', 'text' => text }] })
       end
+    end
+
+    def self.list_docsets(app_settings, args)
+      offset = (args['offset'] || 0).to_i
+      limit = [(args['limit'] || 50).to_i, 500].min
+      query = args['query']&.downcase
+
+      all_docsets = app_settings.docs.values.map do |docset|
+        {
+          'slug' => docset['slug'],
+          'name' => docset['name'],
+          'version' => docset['version'],
+        }
+      end
+
+      filtered = if query
+        all_docsets.select do |docset|
+          docset['slug'].downcase.include?(query) || docset['name'].downcase.include?(query)
+        end
+      else
+        all_docsets
+      end
+
+      total_count = filtered.length
+      paginated = filtered.drop(offset).take(limit)
+
+      {
+        'docsets' => paginated,
+        'offset' => offset,
+        'limit' => limit,
+        'total' => total_count,
+        'returned' => paginated.length,
+      }
     end
 
     def self.get_page(app_settings, slug, path)
@@ -83,8 +124,10 @@ module Mcp
     def self.search_docset(app_settings, slug, query)
       index_path = File.join(app_settings.docs_path, slug, 'index.json')
       index = JSON.parse(File.read(index_path))
-      q = query.downcase
-      index['entries'].select { |e| e['name'].downcase.include?(q) || e['path'].downcase.include?(q) }
+      query_lower = query.downcase
+      index['entries'].select do |entry|
+        entry['name'].downcase.include?(query_lower) || entry['path'].downcase.include?(query_lower)
+      end
     end
 
     def self.as_text_result(request, data)
