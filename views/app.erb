@@ -5,7 +5,8 @@
     </button>
     <form class="_search" role="search">
       <svg><use xlink:href="#icon-search"/></svg>
-      <input type="search" name="q" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="30" aria-label="Search">
+      <input type="search" name="q" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="30" aria-label="Search" aria-describedby="search-hint">
+      <div class="_search-hint" id="search-hint">Press <kbd class="_search-hint-key">Tab</kbd> to search <span class="_search-hint-doc"></span></div>
       <button type="reset" class="_search-clear" title="Clear search"><svg><use xlink:href="#icon-close"/></svg>Clear search</button>
       <div class="_search-tag"></div>
     </form>
