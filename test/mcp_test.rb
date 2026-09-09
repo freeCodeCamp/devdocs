@@ -142,6 +142,40 @@ class McpTest < Minitest::Spec
       refute_includes text, '<h1>'
     end
 
+    it 'returns error for invalid slug in search (path traversal protection)' do
+      args = { 'slug' => '../../../etc/passwd', 'query' => 'test' }
+      response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
+      assert response.key?('error'), 'should return an error for invalid slug'
+      assert_equal(-32603, response['error']['code'])
+      assert_includes response['error']['message'], 'Invalid docset slug'
+    end
+
+    it 'returns error for invalid slug in get_page (path traversal protection)' do
+      args = { 'slug' => '..\\windows\\system32', 'path' => '/test' }
+      response = rpc('tools/call', { 'name' => 'devdocs_get_page', 'arguments' => args })
+      assert response.key?('error'), 'should return an error for invalid slug'
+      assert_equal(-32603, response['error']['code'])
+      assert_includes response['error']['message'], 'Invalid docset slug'
+    end
+
+    it 'returns error for missing search index in devdocs_search' do
+      args = { 'slug' => 'css', 'query' => 'test' }
+      response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
+      if response.key?('error')
+        assert_equal(-32603, response['error']['code'])
+        assert_includes response['error']['message'].downcase, 'search index'
+      end
+    end
+
+    it 'returns error for missing page database in devdocs_get_page' do
+      args = { 'slug' => 'css', 'path' => '/test' }
+      response = rpc('tools/call', { 'name' => 'devdocs_get_page', 'arguments' => args })
+      if response.key?('error')
+        assert_equal(-32603, response['error']['code'])
+        assert_includes response['error']['message'].downcase, 'database'
+      end
+    end
+
     it 'returns a JSON-RPC error for an unsupported method' do
       response = rpc('not/a/real/method')
       assert_equal(-32601, response['error']['code'])

@@ -73,11 +73,23 @@ module Mcp
         result = list_docsets(app_settings, params['arguments'] || {})
         as_text_result(request, result)
       when 'devdocs_search'
-        entries = search_docset(app_settings, params['arguments']['slug'], params['arguments']['query'])
-        as_text_result(request, entries)
+        slug = params['arguments']['slug']
+        query = params['arguments']['query']
+        begin
+          entries = search_docset(app_settings, slug, query)
+          as_text_result(request, entries)
+        rescue => err
+          error(request, -32603, "Search failed: #{err.message}")
+        end
       when 'devdocs_get_page'
-        text = get_page(app_settings, params['arguments']['slug'], params['arguments']['path'])
-        respond(request, { 'content' => [{ 'type' => 'text', 'text' => text }] })
+        slug = params['arguments']['slug']
+        path = params['arguments']['path']
+        begin
+          text = get_page(app_settings, slug, path)
+          respond(request, { 'content' => [{ 'type' => 'text', 'text' => text }] })
+        rescue => err
+          error(request, -32603, "Page retrieval failed: #{err.message}")
+        end
       end
     end
 
@@ -114,15 +126,31 @@ module Mcp
       }
     end
 
+    def self.validate_slug(app_settings, slug)
+      unless app_settings.docs.key?(slug)
+        raise ArgumentError, "Invalid docset slug: #{slug}"
+      end
+      slug
+    end
+
     def self.get_page(app_settings, slug, path)
+      validate_slug(app_settings, slug)
       db_path = File.join(app_settings.docs_path, slug, 'db.json')
+      unless File.exist?(db_path)
+        raise "Page database not available for #{slug}. Full content is served from the CDN."
+      end
       db = JSON.parse(File.read(db_path))
       html = db[path]
+      raise "Page not found: #{path}" unless html
       Nokogiri::HTML::DocumentFragment.parse(html).text.squeeze(' ').strip
     end
 
     def self.search_docset(app_settings, slug, query)
+      validate_slug(app_settings, slug)
       index_path = File.join(app_settings.docs_path, slug, 'index.json')
+      unless File.exist?(index_path)
+        raise "Search index not available for #{slug}. The search index is served from the CDN."
+      end
       index = JSON.parse(File.read(index_path))
       query_lower = query.downcase
       index['entries'].select do |entry|
