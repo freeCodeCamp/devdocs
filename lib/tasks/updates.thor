@@ -23,7 +23,7 @@ class UpdatesCLI < Thor
   option :verbose, :type => :boolean
   def check(*names)
     # Convert names to a list of Scraper instances
-    # Versions are omitted, if v10 is outdated than v8 is aswell
+    # Versions are omitted, if v10 is outdated than v8 is as well
     docs = names.map {|name| Docs.find(name.split(/@|~/)[0], false)}.uniq
 
     # Check all documentations for updates when no arguments are given

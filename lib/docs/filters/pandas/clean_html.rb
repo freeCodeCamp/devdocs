@@ -11,7 +11,7 @@ module Docs
 
         css('form').remove
 
-        # add ':' to '.classifier' clases
+        # add ':' to '.classifier' classes
         css('.classifier').each do |node|
           text = node.content
           node.content = ':' + text

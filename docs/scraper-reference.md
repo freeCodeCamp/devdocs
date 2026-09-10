@@ -85,7 +85,7 @@ Configuration is done via class attributes and divided into three main categorie
 
 Each scraper has two [filter](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/core/filter.rb) [stacks](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/core/filter_stack.rb): `html_filters` and `text_filters`. They are combined into a pipeline (using the [HTML::Pipeline](https://github.com/jch/html-pipeline) library) which causes each filter to hand its output to the next filter's input.
 
-HTML filters are executed first and manipulate a parsed version of the document (a [Nokogiri](http://nokogiri.org/Nokogiri/XML/Node.html) node object), whereas text filters manipulate the document as a string. This separation avoids parsing the document multiple times.
+HTML filters are executed first and manipulate a parsed version of the document (a [Nokogiri](https://nokogiri.org/rdoc/Nokogiri/XML/Node.html) node object), whereas text filters manipulate the document as a string. This separation avoids parsing the document multiple times.
 
 Filter stacks are like sorted sets. They can be modified using the following methods:
 

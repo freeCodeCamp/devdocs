@@ -24,7 +24,7 @@ Add a description about how the documentation should be
 
 ## Actual style
 <!--
-Add images or urls of the miss-formatted DevDocs documentation
+Add images or urls of the mis-formatted DevDocs documentation
 -->
 
 ## Expected style
