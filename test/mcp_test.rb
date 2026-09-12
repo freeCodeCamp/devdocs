@@ -125,12 +125,41 @@ class McpTest < Minitest::Spec
       assert response['total'] == 0
     end
 
-    it 'calls devdocs_search and returns matching entries for a doc set' do
+    it 'calls devdocs_search and returns paginated matching entries' do
       args = { 'slug' => 'mcp_fixture', 'query' => 'push' }
       result = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })['result']
-      entries = JSON.parse(result['content'].first['text'])
+      response = JSON.parse(result['content'].first['text'])
+
+      assert response.key?('entries')
+      assert response.key?('offset')
+      assert response.key?('limit')
+      assert response.key?('total')
+      assert response.key?('returned')
+
+      entries = response['entries']
       assert_equal 1, entries.length
       assert_equal 'array/push', entries.first['path']
+    end
+
+    it 'returns error for empty search query' do
+      args = { 'slug' => 'mcp_fixture', 'query' => '' }
+      response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
+      assert response.key?('error')
+      assert_equal(-32603, response['error']['code'])
+      assert_includes response['error']['message'].downcase, 'empty'
+    end
+
+    it 'paginates search results with offset and limit' do
+      result = rpc('tools/call', {
+        'name' => 'devdocs_search',
+        'arguments' => { 'slug' => 'mcp_fixture', 'query' => 'a', 'offset' => 0, 'limit' => 1 }
+      })['result']
+      response = JSON.parse(result['content'].first['text'])
+
+      assert_equal 0, response['offset']
+      assert_equal 1, response['limit']
+      assert response['total'] > 0
+      assert_equal 1, response['returned']
     end
 
     it 'calls devdocs_get_page and returns the entry as plain text' do

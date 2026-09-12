@@ -19,12 +19,14 @@ module Mcp
       },
       {
         'name' => 'devdocs_search',
-        'description' => 'Search entry names/paths within one downloaded DevDocs doc set.',
+        'description' => 'Search entry names/paths within one downloaded DevDocs doc set. Returns paginated results.',
         'inputSchema' => {
           'type' => 'object',
           'properties' => {
             'slug' => { 'type' => 'string' },
-            'query' => { 'type' => 'string' },
+            'query' => { 'type' => 'string', 'description' => 'Non-empty search query' },
+            'offset' => { 'type' => 'integer', 'description' => 'Number of results to skip (default: 0)', 'minimum' => 0 },
+            'limit' => { 'type' => 'integer', 'description' => 'Maximum results to return (default: 50, max: 500)', 'minimum' => 1, 'maximum' => 500 },
           },
           'required' => %w(slug query),
           'additionalProperties' => false,
@@ -91,8 +93,8 @@ module Mcp
         slug = arguments['slug']
         query = arguments['query']
         begin
-          entries = search_docset(app_settings, slug, query)
-          as_text_result(request, entries)
+          result = search_docset(app_settings, slug, query, arguments)
+          as_text_result(request, result)
         rescue => err
           error(request, -32603, "Search failed: #{err.message}")
         end
@@ -222,17 +224,35 @@ module Mcp
       %w(p div h1 h2 h3 h4 h5 h6 ul ol li blockquote pre br).include?(tag_name.downcase)
     end
 
-    def self.search_docset(app_settings, slug, query)
+    def self.search_docset(app_settings, slug, query, args = {})
+      raise "Query cannot be empty" if query.to_s.strip.empty?
+
       validate_slug(app_settings, slug)
       index_path = File.join(app_settings.docs_path, slug, 'index.json')
       unless File.exist?(index_path)
         raise "Search index not available for #{slug}. The search index is served from the CDN."
       end
+
+      offset = (args['offset'] || 0).to_i
+      limit = [(args['limit'] || 50).to_i, 500].min
+
       index = JSON.parse(File.read(index_path))
       query_lower = query.downcase
-      index['entries'].select do |entry|
+
+      all_matches = index['entries'].select do |entry|
         entry['name'].downcase.include?(query_lower) || entry['path'].downcase.include?(query_lower)
       end
+
+      total_count = all_matches.length
+      paginated = all_matches.drop(offset).take(limit)
+
+      {
+        'entries' => paginated,
+        'offset' => offset,
+        'limit' => limit,
+        'total' => total_count,
+        'returned' => paginated.length,
+      }
     end
 
     def self.as_text_result(request, data)
