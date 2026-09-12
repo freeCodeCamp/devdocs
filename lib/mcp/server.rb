@@ -60,6 +60,8 @@ module Mcp
       else
         error(request, -32601, "Unsupported method: #{request['method']}")
       end
+    rescue => err
+      error(request, -32603, "Internal error: #{err.message}")
     end
 
     def self.error(request, code, message)
@@ -68,7 +70,9 @@ module Mcp
 
     def self.call_tool(request, app_settings)
       params = request['params']
-      case params['name']
+      tool_name = params['name']
+
+      case tool_name
       when 'devdocs_list_docsets'
         result = list_docsets(app_settings, params['arguments'] || {})
         as_text_result(request, result)
@@ -90,6 +94,8 @@ module Mcp
         rescue => err
           error(request, -32603, "Page retrieval failed: #{err.message}")
         end
+      else
+        error(request, -32602, "Unknown tool: #{tool_name}")
       end
     end
 

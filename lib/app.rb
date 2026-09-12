@@ -280,8 +280,19 @@ class App < Sinatra::Application
 
   post '/mcp' do
     content_type :json
-    payload = JSON.parse(request.body.read)
-    Mcp::Server.handle(payload, settings).to_json
+    begin
+      body = request.body.read
+      payload = JSON.parse(body)
+      Mcp::Server.handle(payload, settings).to_json
+    rescue JSON::ParserError => err
+      error_response(nil, -32700, "Parse error: #{err.message}").to_json
+    rescue => err
+      error_response(nil, -32603, "Internal error: #{err.message}").to_json
+    end
+  end
+
+  def error_response(id, code, message)
+    { 'jsonrpc' => '2.0', 'id' => id, 'error' => { 'code' => code, 'message' => message } }
   end
 
   %w(docs.json application.js application.css).each do |asset|
