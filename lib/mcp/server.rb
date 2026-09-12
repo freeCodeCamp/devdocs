@@ -3,6 +3,7 @@ module Mcp
   # string keys) to the appropriate MCP handler and returns a response Hash
   # ready to be serialized back to the client.
   module Server
+    DB_CACHE = {}
     TOOLS = [
       {
         'name' => 'devdocs_list_docsets',
@@ -194,14 +195,23 @@ module Mcp
 
     def self.get_page(app_settings, slug, path)
       validate_slug(app_settings, slug)
+      db = load_db(app_settings, slug)
+      html = db[path]
+      raise "Page not found: #{path}" unless html
+      html_to_text(html)
+    end
+
+    def self.load_db(app_settings, slug)
+      cache_key = "#{app_settings.docs_path}:#{slug}"
+      return DB_CACHE[cache_key] if DB_CACHE.key?(cache_key)
+
       db_path = File.join(app_settings.docs_path, slug, 'db.json')
       unless File.exist?(db_path)
         raise "Page database not available for #{slug}. Full content is served from the CDN."
       end
-      db = JSON.parse(File.read(db_path))
-      html = db[path]
-      raise "Page not found: #{path}" unless html
-      html_to_text(html)
+
+      DB_CACHE[cache_key] = JSON.parse(File.read(db_path))
+      DB_CACHE[cache_key]
     end
 
     def self.html_to_text(html)
