@@ -199,7 +199,27 @@ module Mcp
       db = JSON.parse(File.read(db_path))
       html = db[path]
       raise "Page not found: #{path}" unless html
-      Nokogiri::HTML::DocumentFragment.parse(html).text.squeeze(' ').strip
+      html_to_text(html)
+    end
+
+    def self.html_to_text(html)
+      doc = Nokogiri::HTML::DocumentFragment.parse(html)
+      text_parts = []
+
+      doc.traverse do |node|
+        if node.text?
+          text_parts << node.text
+        elsif block_element?(node.name)
+          text_parts << "\n" if text_parts.last != "\n"
+        end
+      end
+
+      text_parts.join.squeeze(' ').gsub(/\n\s*\n/, "\n").strip
+    end
+
+    def self.block_element?(tag_name)
+      return false unless tag_name
+      %w(p div h1 h2 h3 h4 h5 h6 ul ol li blockquote pre br).include?(tag_name.downcase)
     end
 
     def self.search_docset(app_settings, slug, query)
