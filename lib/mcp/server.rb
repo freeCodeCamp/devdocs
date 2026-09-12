@@ -71,14 +71,25 @@ module Mcp
     def self.call_tool(request, app_settings)
       params = request['params']
       tool_name = params['name']
+      arguments = params['arguments'] || {}
+
+      tool_def = TOOLS.find { |t| t['name'] == tool_name }
+      unless tool_def
+        return error(request, -32602, "Unknown tool: #{tool_name}")
+      end
+
+      validation_error = validate_arguments(arguments, tool_def['inputSchema'])
+      if validation_error
+        return error(request, -32602, validation_error)
+      end
 
       case tool_name
       when 'devdocs_list_docsets'
-        result = list_docsets(app_settings, params['arguments'] || {})
+        result = list_docsets(app_settings, arguments)
         as_text_result(request, result)
       when 'devdocs_search'
-        slug = params['arguments']['slug']
-        query = params['arguments']['query']
+        slug = arguments['slug']
+        query = arguments['query']
         begin
           entries = search_docset(app_settings, slug, query)
           as_text_result(request, entries)
@@ -86,17 +97,57 @@ module Mcp
           error(request, -32603, "Search failed: #{err.message}")
         end
       when 'devdocs_get_page'
-        slug = params['arguments']['slug']
-        path = params['arguments']['path']
+        slug = arguments['slug']
+        path = arguments['path']
         begin
           text = get_page(app_settings, slug, path)
           respond(request, { 'content' => [{ 'type' => 'text', 'text' => text }] })
         rescue => err
           error(request, -32603, "Page retrieval failed: #{err.message}")
         end
-      else
-        error(request, -32602, "Unknown tool: #{tool_name}")
       end
+    end
+
+    def self.validate_arguments(arguments, schema)
+      required = schema['required'] || []
+      properties = schema['properties'] || {}
+
+      required.each do |field|
+        return "Missing required field: #{field}" unless arguments.key?(field)
+      end
+
+      arguments.each do |field, value|
+        return "Unknown field: #{field}" unless properties.key?(field)
+        prop_schema = properties[field]
+        error_msg = validate_value(value, prop_schema)
+        return error_msg if error_msg
+      end
+
+      return "Additional properties not allowed" if schema['additionalProperties'] == false && arguments.keys.any? { |k| !properties.key?(k) }
+
+      nil
+    end
+
+    def self.validate_value(value, schema)
+      type = schema['type']
+
+      case type
+      when 'string'
+        return "Expected string, got #{value.class}" unless value.is_a?(String)
+      when 'integer'
+        return "Expected integer, got #{value.class}" unless value.is_a?(Integer)
+      when 'number'
+        return "Expected number, got #{value.class}" unless value.is_a?(Numeric)
+      end
+
+      if schema['minimum'] && value < schema['minimum']
+        return "Value #{value} is below minimum #{schema['minimum']}"
+      end
+      if schema['maximum'] && value > schema['maximum']
+        return "Value #{value} exceeds maximum #{schema['maximum']}"
+      end
+
+      nil
     end
 
     def self.list_docsets(app_settings, args)

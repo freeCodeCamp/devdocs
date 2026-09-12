@@ -176,6 +176,30 @@ class McpTest < Minitest::Spec
       end
     end
 
+    it 'returns error for missing required arguments' do
+      args = { 'slug' => 'mcp_fixture' }
+      response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
+      assert response.key?('error')
+      assert_equal(-32602, response['error']['code'])
+      assert_includes response['error']['message'], 'query'
+    end
+
+    it 'returns error for invalid argument types' do
+      args = { 'slug' => 'mcp_fixture', 'query' => 123 }
+      response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
+      assert response.key?('error')
+      assert_equal(-32602, response['error']['code'])
+      assert_includes response['error']['message'].downcase, 'string'
+    end
+
+    it 'returns error for invalid parameter values' do
+      args = { 'offset' => 0, 'limit' => 1000 }
+      response = rpc('tools/call', { 'name' => 'devdocs_list_docsets', 'arguments' => args })
+      assert response.key?('error')
+      assert_equal(-32602, response['error']['code'])
+      assert_includes response['error']['message'], 'exceeds maximum'
+    end
+
     it 'returns a JSON-RPC error for an unsupported method' do
       response = rpc('not/a/real/method')
       assert_equal(-32601, response['error']['code'])
