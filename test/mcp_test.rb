@@ -229,6 +229,14 @@ class McpTest < Minitest::Spec
       assert_includes response['error']['message'], 'exceeds maximum'
     end
 
+    it 'returns JSON-RPC error for malformed JSON' do
+      post '/mcp', '{invalid json}', 'CONTENT_TYPE' => 'application/json'
+      response = JSON.parse(last_response.body)
+      assert response.key?('error')
+      assert_equal(-32700, response['error']['code'])
+      assert_includes response['error']['message'].downcase, 'parse'
+    end
+
     it 'returns a JSON-RPC error for an unsupported method' do
       response = rpc('not/a/real/method')
       assert_equal(-32601, response['error']['code'])
