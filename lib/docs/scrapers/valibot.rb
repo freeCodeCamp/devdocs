@@ -5,7 +5,7 @@ module Docs
     self.name = 'Valibot'
     self.slug = 'valibot'
     self.type = 'simple'
-    self.release = '1.4.2'
+    self.release = '1.5.0'
     self.base_url = 'https://valibot.dev/'
     self.links = {
       home: 'https://valibot.dev/',
