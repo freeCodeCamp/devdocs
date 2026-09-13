@@ -8,4 +8,18 @@
   td > pre { margin: .5em 0; }
 
   .api-docs-breadcrumbs { @extend %note; }
+
+  // Dokka 2 (Kotlin 2 and above)
+  .breadcrumbs { @extend %note; }
+  .platform-hint { @extend %note, %note-gray; }
+
+  .table-row {
+    margin: .5em 0;
+    padding-top: .5em;
+    border-top: 1px solid var(--boxBorder);
+  }
+
+  .main-subrow > div:first-child { font-weight: var(--boldFontWeight); }
+
+  .inline-comment, .brief { margin: .5em 0; }
 }
