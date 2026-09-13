@@ -7,19 +7,31 @@ module Docs
       end
 
       def get_type
-        section = at_css('h1 a.source').attr('href').match('elixir/pages/([^/]+)/')&.captures&.first
+        # Use section titles for Elixir docs
+        section = at_css('.top-heading a.source')&.attr('href')&.match('elixir/pages/([^/]+)/')&.captures&.first
         if section == "mix-and-otp"
           return "Mix & OTP"
         elsif section
-          return section.gsub("-", " ").capitalize
+        return section.gsub(/[-_]/, " ").capitalize
         end
 
-        name = at_css('h1 span').text
+        # Use section titles for guides
+        guide = at_css('.top-heading a.source')&.attr('href')&.match('guides/(?:([^/]+)/)?')
+        if guide
+          section = guide.captures.first || "Guides"
+          return section.gsub(/[-_]/, " ").capitalize
+        end
+
+        # Sometimes the heading includes additional text in a <small> tag,
+        # in which case the main text is wrapped in a <span>
+        # e.g. https://elixir.hexdocs.pm/Exception.html
+        heading = at_css('.top-heading h1 span') || at_css('.top-heading h1')
+        name = heading.text
         case name.split(' ').first
         when 'mix' then 'Mix Tasks'
         when 'Changelog' then 'References'
         else
-          case at_css('h1 small').try(:content)
+          case at_css('.top-heading h1 small').try(:content)
           when 'exception'
             'Exceptions'
           when 'protocol'

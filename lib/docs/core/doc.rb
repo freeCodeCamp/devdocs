@@ -260,9 +260,30 @@ module Docs
       json['dist-tags'][tag]
     end
 
-    def get_latest_github_release(owner, repo, opts)
-      release = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/releases/latest", opts)
-      tag_name = release['tag_name']
+    # Returns the tag name of the latest release, without its leading "v" if any.
+    #
+    # Repositories that tag more than one product (e.g. pola-rs/polars tags both
+    # "rs-*" and "py-*" releases) can pass a regexp as +pattern+ to select the
+    # latest release whose tag matches it. If the pattern has a capture group,
+    # its content is returned instead of the whole tag name:
+    #
+    #   get_latest_github_release('pola-rs', 'polars', opts, pattern: /\Apy-(.+)\z/)
+    def get_latest_github_release(owner, repo, opts, pattern: nil)
+      if pattern
+        releases = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/releases?per_page=100", opts)
+        match = nil
+        # Drafts and prereleases are skipped to match the /releases/latest endpoint
+        release = releases.find do |rel|
+          next false if rel['draft'] || rel['prerelease']
+          match = pattern.match(rel['tag_name'])
+        end
+        raise "No release matching #{pattern.inspect} in the 100 latest #{owner}/#{repo} releases" if release.nil?
+        return match[1] if match.length > 1
+        tag_name = release['tag_name']
+      else
+        release = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/releases/latest", opts)
+        tag_name = release['tag_name']
+      end
       tag_name.start_with?('v') ? tag_name[1..-1] : tag_name
     end
 

@@ -2,8 +2,8 @@ module Docs
   class Cpp < Cppref
     self.name = 'C++'
     self.slug = 'cpp'
-    self.base_url = 'https://en.cppreference.com/w/cpp/'
-    # release = '2023-03-24'
+    self.base_url = 'https://en.cppreference.com/cpp/'
+    # release = '2026-04-20'
 
     html_filters.insert_before 'cppref/clean_html', 'cpp/entries'
 

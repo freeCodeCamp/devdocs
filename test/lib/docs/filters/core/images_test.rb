@@ -1,5 +1,6 @@
 require_relative '../../../../test_helper'
 require_relative '../../../../../lib/docs'
+require 'ostruct'
 
 class ImagesFilterTest < Minitest::Spec
   include FilterTestHelper

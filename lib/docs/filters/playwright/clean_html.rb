@@ -22,6 +22,7 @@ module Docs
         end
 
         css('*[class]').remove_attribute('class')
+        css('*[style]').remove_attribute('style')
 
         doc
       end

@@ -34,6 +34,11 @@ module Docs
       Licensed under the BSD License.
     HTML
 
+    version '6.1' do
+      self.release = '6.1'
+      self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
+    end
+
     version '6.0' do
       self.release = '6.0'
       self.base_url = "https://docs.djangoproject.com/en/#{self.version}/"
@@ -121,7 +126,13 @@ module Docs
 
     def get_latest_version(opts)
       doc = fetch_doc('https://docs.djangoproject.com/', opts)
-      doc.at_css('#doc-versions > li.current > span > strong').content
+      doc.at_css('#doc-versions > li.current > button > strong').content
+    end
+
+    private
+
+    def download_source
+      download_and_extract("https://media.djangoproject.com/docs/django-docs-#{self.class.version}-en.zip")
     end
   end
 end

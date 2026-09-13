@@ -87,7 +87,7 @@ Each scraper has two [filter](https://github.com/freeCodeCamp/devdocs/blob/main/
 
 HTML filters are executed first and manipulate a parsed version of the document (a [Nokogiri](http://nokogiri.org/Nokogiri/XML/Node.html) node object), whereas text filters manipulate the document as a string. This separation avoids parsing the document multiple times.
 
-Filter stacks are like sorted sets. They can modified using the following methods:
+Filter stacks are like sorted sets. They can be modified using the following methods:
 
 ```ruby
 push(*names)                 # append one or more filters at the end
@@ -189,7 +189,7 @@ More information about how filters work is available on the [Filter Reference](.
 
 ### Processing responses before filters
 
-These methods are runned before filter stacks, and can directly process responses.
+These methods are run before filter stacks, and can directly process responses.
 
 * `process_response?(response)`
 
@@ -204,12 +204,40 @@ These methods are runned before filter stacks, and can directly process response
 
   Parse HTTP/File response, and convert to a Nokogiri document by default.
 
-  Overrides this method if you want to modified HTML source code before Nokogiri.
+  Overrides this method if you want to modify HTML source code before Nokogiri.
 It is useful to preserve whitespaces of code segments within non-pre blocks, because Nokogiri may delete them.
 
   Example: [lib/docs/scrapers/go.rb](../lib/docs/scrapers/go.rb)
 
 
+
+## Response cache
+
+`UrlScraper` stores every response it fetches in `tmp/cache/[slug]` and serves subsequent runs from there. Tweaking filters and running `thor docs:generate` again is therefore fast and doesn't put any load on the source site. (`FileScraper` doesn't need a cache, as it already reads from the local filesystem.)
+
+The cache never expires. Run `thor docs:clean` to empty it, which is required to pick up changes made to the source site. Only successful responses are stored, so timeouts, 404s and server errors are requested anew on the next run.
+
+Each response is stored in its own file, named after a hash of the request — changing a scraper's `params` or `headers` invalidates its cache. The files are JSON, in the entry schema of the [HTTP Archive (HAR) format](http://www.softwareishard.com/blog/har-12-spec/), so that it's easy to see what a scraper got back:
+
+```json
+{
+  "startedDateTime": "2026-08-15T11:05:10.430Z",
+  "time": 412,
+  "request": {
+    "method": "GET",
+    "url": "https://vite.dev/guide/",
+    "headers": [{ "name": "User-Agent", "value": "DevDocs" }]
+  },
+  "response": {
+    "status": 200,
+    "headers": [{ "name": "Content-Type", "value": "text/html; charset=utf-8" }],
+    "content": { "size": 57302, "mimeType": "text/html; charset=utf-8", "text": "<!doctype html>…" }
+  },
+  "_effectiveUrl": "https://vite.dev/guide/"
+}
+```
+
+(Fields irrelevant here are elided. Redirections are followed transparently, so an entry only holds the last response of a chain, and `_effectiveUrl` is the URL it ended up at.)
 
 ## Keeping scrapers up-to-date
 
@@ -256,7 +284,7 @@ To make life easier, there are a few utility methods that you can use in `get_la
 
   Returns the contents of the requested file in the default branch of the given repository.
 
-  Example: [lib/docs/scrapers/minitest.rb](../lib/docs/scrapers/minitest.rb)
+  Example: [lib/docs/scrapers/rdoc/minitest.rb](../lib/docs/scrapers/rdoc/minitest.rb)
 * `get_latest_github_commit_date(owner, repo, opts)`
 
     Returns the date of the most recent commit in the default branch of the given repository.

@@ -3,8 +3,20 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         header = at_css('h1')
-        name = header.nil? ? current_url.normalized_path[1..-1].gsub(/-/, ' ') : header.content.strip
-        name.remove! %r{\(.*}
+
+        if current_url.path.start_with?('/rubydoc')
+          # Titles in rubydoc content follow a different format, with a bit of cleanup needed.
+          name = header
+            .content
+            .gsub('Class: ', '')
+            .gsub('Module: ', '')
+            .gsub('Exception: ', '')
+            .gsub(' Private', '')
+        else
+          name = header.nil? ? current_url.normalized_path[1..-1].gsub(/-/, ' ') : header.content.strip
+          name.remove! %r{\(.*}
+        end
+
         name
       end
 
@@ -26,13 +38,21 @@ module Docs
         Building-Against-Non-Homebrew-Dependencies
         How-to-Create-and-Maintain-a-Tap
         Brew-Test-Bot
-        Prose-Style-Guidelines
         Typechecking
         Reproducible-Builds
       )
 
       def get_type
-        if CONTRIBUTOR_SLUGS.include?(slug)
+        if current_url.path.start_with?('/rubydoc')
+          header = at_css('h1').content
+          if header.start_with?('Module')
+            'API Modules'
+          elsif header.start_with?('Class')
+            'API Classes'
+          else
+            'API Exceptions'
+          end
+        elsif CONTRIBUTOR_SLUGS.include?(slug)
           'Contributors'
         else
           'Users'

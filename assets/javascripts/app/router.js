@@ -179,8 +179,6 @@ app.Router = class Router extends Events {
     if (location.pathname === "/") {
       if ((path = this.getInitialPathFromHash())) {
         page.replace(path + location.search, null, true);
-      } else if ((path = this.getInitialPathFromCookie())) {
-        page.replace(path + location.search + location.hash, null, true);
       }
     }
   }
@@ -189,14 +187,6 @@ app.Router = class Router extends Events {
     try {
       return new RegExp("#/(.+)").exec(decodeURIComponent(location.hash))?.[1];
     } catch (error) {}
-  }
-
-  getInitialPathFromCookie() {
-    const path = Cookies.get("initial_path");
-    if (path) {
-      Cookies.expire("initial_path");
-      return path;
-    }
   }
 
   replaceHash(hash) {

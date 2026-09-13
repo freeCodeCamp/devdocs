@@ -23,6 +23,11 @@ module Docs
         false
       end
 
+      def get_name
+        name = at_css('h1').content
+        name
+      end
+
       def additional_entries
         entries = []
         type = ""
@@ -38,6 +43,7 @@ module Docs
           css("h1").each do |node|
             name = node.at_css("code") ?
               node.at_css("code").text : node.text
+            node = node.at_css('> span') if node.at_css('> span')
             type = node.children.length >= 3 ?
               node.children[2].text.sub(" for ", "").capitalize :
               node.text

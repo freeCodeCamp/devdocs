@@ -90,6 +90,6 @@ app.templates.unsupportedBrowser = `\
     Note: if you're already using one of the browsers above, check your settings and add-ons.
     The app uses feature detection, not user agent sniffing.
   <p class="_fail-text">
-    &mdash; <a href="https://twitter.com/DevDocs">@DevDocs</a>
+    &mdash; DevDocs
 </div>\
 `;

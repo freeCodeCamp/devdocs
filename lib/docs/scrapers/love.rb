@@ -43,8 +43,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://love2d.org/wiki/Version_History', opts)
-      doc.at_css('#mw-content-text table a').content
+      get_github_tags('love2d', 'love', opts).first['name']
     end
   end
 end

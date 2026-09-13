@@ -1,0 +1,17 @@
+@use 'pages/simple';
+
+._rabbit_mq {
+  @extend %simple;
+
+  .alert--info, .alert--warning, .alert--success, .alert--secondary {
+    @extend %note;
+    .admonitionHeading_Gvgb {
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  }
+  .alert--success { @extend %note, %note-green; }
+  .alert--info { @extend %note, %note-blue; }
+  .alert--warning { @extend %note, %note-orange; }
+  .alert--secondary { @extend %note, %note-gray; }
+}

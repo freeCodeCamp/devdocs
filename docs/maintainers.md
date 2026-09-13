@@ -37,6 +37,13 @@ In order to deploy DevDocs, you must:
   aws configure --profile devdocs
   ```
 
+  A documentation consists of thousands of small files, for which the default of 10 concurrent requests is low. Raising it speeds up `thor docs:upload` considerably:
+
+  ```
+  aws configure set s3.max_concurrent_requests 100 --profile devdocs
+  aws configure set s3.max_queue_size 10000 --profile devdocs
+  ```
+
 ## Thor commands
 
 In addition to the [publicly-documented commands](https://github.com/freeCodeCamp/devdocs#available-commands), the following commands are aimed at DevDocs maintainers:
@@ -69,7 +76,20 @@ In addition to the [publicly-documented commands](https://github.com/freeCodeCam
 
 - `thor docs:clean`
 
-  Shortcut command to delete all package files (once uploaded via `thor docs:upload`, they are not needed anymore).
+  Shortcut command to delete all package files (once uploaded via `thor docs:upload`, they are not needed anymore), as well as the responses cached by the scrapers in `tmp/cache` (see the [Scraper Reference](./scraper-reference.md#response-cache)).
+
+## Shell completion for fish
+
+The [`fish/`](../fish) directory provides a `devdocs` function for the [fish shell](https://fishshell.com/), with completion for the `docs:` commands and the documentation slugs. Install it by symlinking the files into your fish configuration:
+
+```bash
+ln -s $PWD/fish/functions/devdocs.fish ~/.config/fish/functions/
+ln -s $PWD/fish/completions/devdocs.fish ~/.config/fish/completions/
+```
+
+The `docs:` namespace is implied, so `devdocs package rails@5.2` runs `thor docs:package rails@5.2`. The commands must be run from the repository root, like `thor` itself.
+
+Completion of the documentation slugs is cached in `~/.cache/devdocs/docs-list` and refreshed weekly; delete that file to update it after adding a documentation.
 
 ## Deploying DevDocs
 

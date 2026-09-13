@@ -17,13 +17,22 @@ module Docs
     options[:title] = false
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2025 Sebastian Bergmann<br>
+      &copy; 2005&ndash;2026 Sebastian Bergmann<br>
       Licensed under the Creative Commons Attribution 3.0 Unported License.
     HTML
 
     FILTERS = %w(phpunit/clean_html phpunit/entries title)
 
     version do
+      self.release = '13.2'
+      self.base_url = "https://docs.phpunit.de/en/#{release}/"
+
+      html_filters.push FILTERS
+
+      options[:container] = '.document'
+    end
+
+    version '12' do
       self.release = '12.5'
       self.base_url = "https://docs.phpunit.de/en/#{release}/"
 

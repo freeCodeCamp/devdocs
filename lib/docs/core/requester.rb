@@ -38,6 +38,31 @@ module Docs
       super
     end
 
+    # Cached responses are set aside instead of being handed over right away,
+    # because delivering them from here would nest one request's callbacks
+    # inside the previous one's and blow the stack on large documentations.
+    def add(request)
+      if response = request.cached_response
+        cached_responses << [request, response]
+      else
+        super
+      end
+    end
+
+    def run
+      loop do
+        while pair = cached_responses.shift
+          pair[0].finish(pair[1])
+        end
+        break if queued_requests.empty? && multi.easy_handles.empty?
+        super
+      end
+    end
+
+    def cached_responses
+      @cached_responses ||= []
+    end
+
     def on_response(&block)
       @on_response ||= []
       @on_response << block if block

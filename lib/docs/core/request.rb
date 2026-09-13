@@ -13,18 +13,31 @@ module Docs
       request.run
     end
 
+    # The ResponseCache the request reads from and writes to, if any.
+    attr_reader :cache
+
     def initialize(url, options = {})
-      super url.to_s, DEFAULT_OPTIONS.merge(options)
+      options = DEFAULT_OPTIONS.merge(options)
+      @cache = options.delete(:cache)
+      super url.to_s, options
+    end
+
+    def cached_response
+      cache.get(self) if cache
     end
 
     def response=(value)
-      value.extend Response if value
+      if value
+        value.extend Response
+        cache.set(self, value) if cache
+      end
       super
     end
 
     def run
       instrument 'response.request', url: base_url do |payload|
-        response = super
+        cached = cached_response
+        response = cached ? finish(cached) : super
         payload[:response] = response
         response
       end

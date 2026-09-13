@@ -15,13 +15,14 @@ module Docs
           name.gsub!(/[[:digit:]]/, '')
         end
 
+        name.remove! '¶'
         name.strip
 
       end
 
       def get_type
         return 'Manual: Appendices' if name.start_with?('Appendix')
-        return 'Manual: Indexes' if at_css('a[rel=up]').content.include?("Index")
+        return 'Manual: Indexes' if at_css('a[rel=up]').try(:content).to_s.include?("Index")
         "Manual"
       end
 
@@ -38,7 +39,7 @@ module Docs
 
         entries = []
 
-        css('table[class^=index-] td[valign=top] > a').each_slice(2) do |entry_node, section_node|
+        css('td.printindex-index-entry > a').each do |entry_node|
           entry_name = entry_node.content
           entry_path = entry_node['href']
           entries << [entry_name, entry_path, entry_type]

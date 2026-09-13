@@ -46,8 +46,28 @@ module Docs
       'Wtrigraphs.html' => 'Invocation.html'
     }
 
+    version '16' do
+      self.release = '16.2.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
+    end
+
+    version '16 CPP' do
+      self.release = '16.2.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
+    end
+
+    version '15' do
+      self.release = '15.3.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
+    end
+
+    version '15 CPP' do
+      self.release = '15.3.0'
+      self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/cpp/"
+    end
+
     version '14' do
-      self.release = '14.2.0'
+      self.release = '14.4.0'
       self.base_url = "https://gcc.gnu.org/onlinedocs/gcc-#{release}/gcc/"
     end
 
@@ -178,6 +198,15 @@ module Docs
       doc = fetch_doc('https://gcc.gnu.org/onlinedocs/', opts)
       label = doc.at_css('details > ul > li > a')['href'].strip
       label.scan(/([0-9.]+)/)[2..-1][0][0]
+    end
+
+    private
+
+    def download_source
+      # Each manual is published next to the online documentation as
+      # "<name>-html.tar.gz", expanding to a directory of the same name.
+      manual = base_url.path.split('/').last
+      download_and_extract("https://gcc.gnu.org/onlinedocs/gcc-#{self.class.release}/#{manual}-html.tar.gz", manual)
     end
   end
 end

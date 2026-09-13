@@ -79,5 +79,11 @@ module Docs
     def get_latest_version(opts)
       get_latest_github_release('erlang', 'otp', opts)[4..-1]
     end
+
+    private
+
+    def download_source
+      download_and_extract("https://github.com/erlang/otp/releases/download/OTP-#{self.class.release}/otp_doc_html_#{self.class.release}.tar.gz")
+    end
   end
 end

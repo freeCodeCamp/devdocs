@@ -1,0 +1,10 @@
+@use 'pages/simple';
+
+._tokio {
+  @extend %simple;
+
+  .stab {
+    @extend %note;
+    @extend %note-orange;
+  }
+}

@@ -47,7 +47,7 @@ module Docs
           end
         end
 
-        css('h1 a.icon-action[title="View Source"]').each do |node|
+        css('.top-heading a.icon-action[title="View Source"]').each do |node|
           node['class'] = 'source'
           node.content = "Source"
         end

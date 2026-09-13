@@ -4,12 +4,13 @@ module Docs
     self.type = 'simple'
     self.slug = 'bun'
     self.links = {
-      home: 'https://leafletjs.com/',
+      home: 'https://bun.com/',
       code: 'https://github.com/oven-sh/bun'
     }
-    self.release = '1.3.12'
-    self.base_url = "https://bun.com/docs/"
-    self.root_path = 'installation'
+    self.release = '1.4.0'
+    self.base_url = "https://bun.com/"
+    self.root_path = 'docs/installation'
+    self.initial_paths = ['guides']
 
     html_filters.push 'bun/clean_html', 'bun/entries'
 
@@ -20,10 +21,19 @@ module Docs
     HTML
 
     options[:download_images] = false
-    options[:skip_patterns] = [/^project/, /^feedback/]
+    options[:only_patterns] = [/\Adocs\//, /\Aguides/]
+    options[:skip_patterns] = [/\Adocs\/project/, /\Adocs\/feedback/]
     options[:fix_urls] = ->(url) do
       url.sub! %r{.md$}, ''
       url
+    end
+
+    version do
+      self.release = '1.4.0'
+    end
+
+    version '1.3' do
+      self.release = '1.3.12'
     end
 
     def get_latest_version(opts)

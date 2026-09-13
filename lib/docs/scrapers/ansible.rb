@@ -33,8 +33,8 @@ module Docs
     ]
 
     version do
-      # 2025-08-14
-      self.base_url = "https://docs.ansible.com/ansible/latest/"
+      # 2026-05-26
+      self.base_url = "https://docs.ansible.com/projects/ansible/latest/"
     end
 
     version '2.11' do

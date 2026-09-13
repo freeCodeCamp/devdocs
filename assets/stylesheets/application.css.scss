@@ -30,6 +30,7 @@
 @use 'pages/bootstrap';
 @use 'pages/cppref';
 @use 'pages/cakephp';
+@use 'pages/celery';
 @use 'pages/clojure';
 @use 'pages/codeception';
 @use 'pages/coffeescript';
@@ -75,6 +76,7 @@
 @use 'pages/love';
 @use 'pages/lua';
 @use 'pages/gnu_make';
+@use 'pages/maplibre_gl';
 @use 'pages/mariadb';
 @use 'pages/mdn';
 @use 'pages/meteor';
@@ -88,6 +90,7 @@
 @use 'pages/octave';
 @use 'pages/openjdk';
 @use 'pages/openlayers';
+@use 'pages/opentofu';
 @use 'pages/perl';
 @use 'pages/phalcon';
 @use 'pages/phaser';
@@ -98,6 +101,7 @@
 @use 'pages/pygame';
 @use 'pages/python';
 @use 'pages/qt';
+@use 'pages/rabbit_mq';
 @use 'pages/ramda';
 @use 'pages/rdoc';
 @use 'pages/react';
@@ -122,6 +126,7 @@
 @use 'pages/tcl_tk';
 @use 'pages/tensorflow';
 @use 'pages/terraform';
+@use 'pages/tokio';
 @use 'pages/typescript';
 @use 'pages/underscore';
 @use 'pages/vue';

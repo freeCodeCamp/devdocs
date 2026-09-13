@@ -37,6 +37,9 @@ module Docs
         # remove the remotely hosted "percent-translated" badge
         css('a[href^="https://hosted.weblate"]').remove if root_page?
 
+        # remove the "User-contributed notes" section, which is loaded via JS
+        css('div#godot-giscus').remove
+
         doc
       end
     end

@@ -148,7 +148,7 @@ app.views.Content = class Content extends app.View {
   }
 
   beforeRoute(context) {
-    this.cacheScrollPosition();
+    this.cacheScrollPosition(context);
 
     /*
      * If scroll position wasn't cached from an earlier visit:
@@ -163,11 +163,21 @@ app.views.Content = class Content extends app.View {
     this.scrollToTargetTimeout = this.delay(this.scrollToTarget);
   }
 
-  cacheScrollPosition() {
+  cacheScrollPosition(context) {
     if (!this.routeCtx || this.routeCtx.hash) {
       return;
     }
     if (this.routeCtx.path === "/") {
+      return;
+    }
+    /*
+     * Never cache a position for the state being entered. A single history
+     * entry can be dispatched more than once, and by the second dispatch the
+     * route context is already the one we're navigating to -- caching then
+     * would overwrite the position saved for that state with the position of
+     * the page currently on screen.
+     */
+    if (context?.state.id === this.routeCtx.state.id) {
       return;
     }
 

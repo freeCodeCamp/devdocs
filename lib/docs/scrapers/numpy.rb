@@ -1,8 +1,4 @@
 module Docs
-  # Requires downloading the documents to local disk first.
-  # Go to https://numpy.org/doc/, click "HTML+zip" to download
-  # (example url: https://numpy.org/doc/2.4/numpy-html.zip),
-  # then extract into "docs/numpy~#{version}/"
   class Numpy < FileScraper
     self.name = 'NumPy'
     self.type = 'sphinx'
@@ -26,9 +22,15 @@ module Docs
     ]
 
     options[:attribution] = <<-HTML
-      &copy; 2005&ndash;2024 NumPy Developers<br>
+      &copy; 2005&ndash;2026 NumPy Developers<br>
       Licensed under the 3-clause BSD License.
     HTML
+
+    version '2.5' do
+      self.release = '2.5'
+      self.base_url = "https://numpy.org/doc/#{self.version}/"
+      options[:container] = nil
+    end
 
     version '2.4' do
       self.release = '2.4'
@@ -130,6 +132,24 @@ module Docs
 
     def get_latest_version(opts)
       get_latest_github_release('numpy', 'numpy', opts)
+    end
+
+    private
+
+    # The documents predating 1.18 were published on docs.scipy.org instead.
+    def archive_url
+      @archive_url ||= [
+        "https://numpy.org/doc/#{self.class.version}/numpy-html.zip",
+        "https://docs.scipy.org/doc/numpy-#{self.class.release}/numpy-html-#{self.class.release}.zip"
+      ].find { |url| Request.run(url, method: :head).success? }
+    end
+
+    def download_source
+      raise SetupError, "No documentation archive found for NumPy #{self.class.release}." if archive_url.nil?
+
+      # The archive holds the whole documentation, of which the older versions
+      # are scraped from the "reference" subdirectory alone.
+      download_and_extract(archive_url, ('reference' if base_url.path.end_with?('/reference/')))
     end
   end
 end

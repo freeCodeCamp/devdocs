@@ -13,14 +13,15 @@ module Docs
     options[:title] = false
     options[:root_title] = 'CMake Reference Documentation'
     options[:skip] = %w(release/index.html genindex.html search.html)
-    options[:skip_patterns] = [/\Agenerator/, /\Acpack_gen/, /\Ainclude/, /\Arelease/, /tutorial\/(\w*%20)+/]
+    options[:skip_patterns] = [/\Agenerator/, /\Acpack_gen/, /\Ainclude/, /\Arelease/, /tutorial\/[^\/]*%20/]
 
     options[:attribution] = <<-HTML
-      &copy; 2000&ndash;2024 Kitware, Inc. and Contributors<br>
+      &copy; 2000&ndash;2026 Kitware, Inc. and Contributors<br>
       Licensed under the BSD 3-clause License.
     HTML
 
     version do
+      self.release = '4.4'
       self.base_url = "https://cmake.org/cmake/help/latest/"
     end
 

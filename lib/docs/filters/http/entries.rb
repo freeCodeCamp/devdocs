@@ -3,7 +3,9 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         if current_url.host == 'datatracker.ietf.org'
-          name = at_css('h1').content
+          # The modern (.rfchtml) layout has two h1s: the RFC number and the
+          # title. The legacy (.rfcmarkup) layout has a single title h1.
+          name = (at_css('h1#title') || at_css('h1')).content
           name.remove! %r{\A.+\:}
           name.remove! %r{\A.+\-\-}
           name = 'WebDAV' if name.include?('WebDAV')
@@ -24,13 +26,13 @@ module Docs
       def get_type
         return name if current_url.host == 'datatracker.ietf.org'
 
-        if slug.start_with?('Headers/Content-Security-Policy')
+        if slug.start_with?('Reference/Headers/Content-Security-Policy')
           'CSP'
-        elsif slug.start_with?('Headers')
+        elsif slug.start_with?('Reference/Headers')
           'Headers'
-        elsif slug.start_with?('Methods')
+        elsif slug.start_with?('Reference/Methods')
           'Methods'
-        elsif slug.start_with?('Status')
+        elsif slug.start_with?('Reference/Status')
           'Status'
         elsif slug.start_with?('Basics_of_HTTP')
           'Guides: Basics'
@@ -86,15 +88,31 @@ module Docs
       LEVEL_3 = /\A(\d+)\.\d+\.\d+\z/
       LEVEL_4 = /\A(\d+)\.\d+\.\d+\.\d+\z/
 
+      # Returns ordered [section-id, heading-text] pairs for each numbered
+      # section, handling both datatracker layouts: the legacy text rendering
+      # puts the section id on the heading element itself, while the modern HTML
+      # rendering wraps each section in <section id="section-X"> with the heading
+      # as a child.
+      def section_headings
+        sections = css('section[id^="section-"]')
+        if sections.any?
+          sections.filter_map do |section|
+            heading = section.element_children.find { |node| node.name =~ /\Ah[1-6]\z/ }
+            [section['id'], heading.content.strip.gsub(/\s+/, ' ')] if heading
+          end
+        else
+          css('*[id^="section-"]').map { |node| [node['id'], node.content.strip] }
+        end
+      end
+
       def additional_entries
         return [] unless current_url.host == 'datatracker.ietf.org'
         type = nil
 
-        css('*[id^="section-"]').each_with_object([]) do |node, entries|
-          id = node['id']
+        section_headings.each_with_object([]) do |(id, content), entries|
           break entries if entries.any? { |e| e[1] == id }
 
-          content = node.content.strip
+          content = content.dup
           content.remove! %r{\s*\.+\d*\z}
           content.remove! %r{\A[\.\s]+}
 

@@ -1,7 +1,7 @@
 module Docs
   class Bash < FileScraper
     self.type = 'bash'
-    self.release = '5.2'
+    self.release = '5.3'
     self.base_url = 'https://www.gnu.org/software/bash/manual/html_node'
     self.root_path = 'index.html'
     self.links = {
@@ -19,6 +19,12 @@ module Docs
     def get_latest_version(opts)
       body = fetch('https://www.gnu.org/software/bash/manual/html_node/index.html', opts)
       body.scan(/, Version ([0-9.]+)/)[0][0][0...-1]
+    end
+
+    private
+
+    def download_source
+      download_and_extract('https://www.gnu.org/software/bash/manual/bash.html_node.tar.gz')
     end
   end
 end

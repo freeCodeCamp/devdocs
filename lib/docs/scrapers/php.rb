@@ -71,5 +71,15 @@ module Docs
       doc.at_css('table > tbody > .stable:last-of-type > td > a').content.strip
     end
 
+    private
+
+    def archive_url
+      'https://www.php.net/distributions/manual/php_manual_en.tar.gz'
+    end
+
+    def download_source
+      # The archive expands to a single directory holding the chunked XHTML manual.
+      download_and_extract(archive_url, 'php-chunked-xhtml')
+    end
   end
 end

@@ -11,7 +11,7 @@ module Docs
 
         if version >= "2.10" || version == ""
           if slug =~ /\Acollections\// and slug !~ /index$/
-            name = name.split('.')[2]
+            name = name.split(' – ').first
           end
         end
 

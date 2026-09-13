@@ -40,6 +40,12 @@ class DocsCLI < Thor
     TTY::Pager.new.page(output)
   end
 
+  desc 'outdated [--verbose] [doc]...', 'Check for outdated documentations'
+  option :verbose, type: :boolean
+  def outdated(*names)
+    invoke 'updates:check', names, options
+  end
+
   desc 'page (<doc> | <doc@version>) [path] [--verbose] [--debug]', 'Generate a page (no indexing)'
   option :verbose, type: :boolean
   option :debug, type: :boolean
@@ -122,6 +128,7 @@ class DocsCLI < Thor
   option :default, type: :boolean
   option :installed, type: :boolean
   option :all, type: :boolean
+  option :rclone, type: :boolean
   def download(*names)
     require 'unix_utils'
     docs = if options[:default]
@@ -152,9 +159,10 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   end
 
-  desc 'clean', 'Delete documentation packages'
+  desc 'clean', 'Delete documentation packages and cached responses'
   def clean
     File.delete(*Dir[File.join Docs.store_path, '*.tar.gz'])
+    Docs::ResponseCache.clean
     puts 'Done'
   end
 
@@ -193,7 +201,11 @@ class DocsCLI < Thor
       cmd << ' --dryrun' if options[:dryrun]
       if options[:rclone]
         puts "[S3] Syncing #{doc.path} using rclone..."
-        cmd = "rclone sync #{File.join(Docs.store_path, doc.path)} devdocs:devdocs-documents/#{doc.path} --delete-after --progress"
+        # --checksum compares MD5 sums instead of size and modification time,
+        # to avoid re-uploading the unchanged pages of a re-scraped documentation
+        # --transfers/--checkers raise the low defaults of 4/8, since a
+        # documentation consists of thousands of small files
+        cmd = "rclone sync #{File.join(Docs.store_path, doc.path)} devdocs:devdocs-documents/#{doc.path} --checksum --transfers 32 --checkers 64 --delete-after --progress"
         cmd << ' --dry-run' if options[:dryrun]
       end
       system(cmd)
@@ -223,7 +235,7 @@ class DocsCLI < Thor
   option :amend, type: :boolean
   def commit(name)
     doc = Docs.find(name, false)
-    message = options[:message] || "Update #{doc.name} documentation (#{doc.versions.first.release})"
+    message = options[:message] || "Update #{doc.name} documentation (#{doc.versions.first.release})".delete_suffix(" ()")
     amend = " --amend" if options[:amend]
     system("git add assets/ *#{name}*") && system("git commit -m '#{message}'#{amend}")
   rescue Docs::DocNotFound => error
@@ -235,6 +247,7 @@ class DocsCLI < Thor
     puts 'Docs -- BEGIN'
 
     require 'open-uri'
+    require 'net/http'
     require 'thread'
 
     docs = Docs.all_versions
@@ -247,18 +260,36 @@ class DocsCLI < Thor
           dir = File.join(Docs.store_path, doc.path)
           FileUtils.mkpath(dir)
 
-          ['index.json', 'meta.json'].each do |filename|
+          # Only meta.json is needed to build the manifest; clients (and the
+          # service worker precache) load index.json directly from the CDN,
+          # which serves it with CORS headers.
+          ['meta.json'].each do |filename|
             json = "https://documents.devdocs.io/#{doc.path}/#{filename}?#{time}"
             begin
-              URI.open(json, "Accept-Encoding" => "identity") do |file|
-                mutex.synchronize do
-                  path = File.join(dir, filename)
-                  File.write(path, file.read)
+              attempts = 0
+
+              begin
+                attempts += 1
+
+                URI.open(json, "Accept-Encoding" => "identity") do |file|
+                  mutex.synchronize do
+                    path = File.join(dir, filename)
+                    File.write(path, file.read)
+                  end
                 end
+              rescue Net::OpenTimeout, Net::ReadTimeout => e
+                if attempts <= 3
+                  wait_seconds = 2**(attempts - 1)
+                  puts "Docs -- Retrying #{json} in #{wait_seconds}s (#{e.class}: #{e.message})"
+                  sleep(wait_seconds)
+                  retry
+                end
+
+                raise
               end
             rescue => e
-              puts "Docs -- Failed to download #{json}!"
-              throw e
+              puts "Docs -- Failed to download #{json} after #{attempts} attempts!"
+              raise
             end
           end
 
@@ -347,16 +378,31 @@ class DocsCLI < Thor
 
   def download_doc(doc)
     target_path = File.join(Docs.store_path, doc.path)
-    URI.open "https://downloads.devdocs.io/#{doc.path}.tar.gz" do |file|
-      FileUtils.mkpath(target_path)
-      file.close
-      tar = UnixUtils.gunzip(file.path)
-      dir = UnixUtils.untar(tar)
-      FileUtils.rm(tar)
-      FileUtils.rm_rf(target_path)
-      FileUtils.mv(dir, target_path)
-      FileUtils.rm(file.path)
+
+    if options[:rclone]
+      require 'tmpdir'
+      Dir.mktmpdir do |dir|
+        system("rclone copy devdocs:devdocs-downloads/#{doc.path}.tar.gz #{dir}")
+        tar_gz_path = File.join(dir, "#{File.basename(doc.path)}.tar.gz")
+        raise "rclone did not download #{doc.path}.tar.gz (not found on remote?)" unless File.exist?(tar_gz_path)
+        extract_doc(tar_gz_path, target_path)
+      end
+    else
+      URI.open "https://downloads.devdocs.io/#{doc.path}.tar.gz" do |file|
+        file.close
+        extract_doc(file.path, target_path)
+        FileUtils.rm(file.path)
+      end
     end
+  end
+
+  def extract_doc(tar_gz_path, target_path)
+    FileUtils.mkpath(target_path)
+    tar = UnixUtils.gunzip(tar_gz_path)
+    dir = UnixUtils.untar(tar)
+    FileUtils.rm(tar)
+    FileUtils.rm_rf(target_path)
+    FileUtils.mv(dir, target_path)
   end
 
   def package_doc(doc)

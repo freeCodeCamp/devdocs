@@ -1,0 +1,16 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/ruby:4",
+  "postAttachCommand": "bundle exec rackup",
+  "postCreateCommand": "bundle install",
+  "mounts": [
+    "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  }
+}

@@ -3,10 +3,11 @@ module Docs
     class CleanHtmlFilter < Filter
 
       def call
+        doc.css('.fastapi-conf-rail').remove
         doc.css('.headerlink').remove
 
         if root_page?
-          doc.css('#sponsors ~ p', '#sponsors').remove
+          doc.css('.fastapi-sponsors', '#keystone-sponsor', '#gold-sponsors', '#silver-sponsors', '#sponsors', '.fastapi-opinions__mark').remove
         end
 
         doc.css('.tabbed-set').each do |node|

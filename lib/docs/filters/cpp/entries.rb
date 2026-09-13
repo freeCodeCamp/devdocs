@@ -1,7 +1,7 @@
 module Docs
   class Cpp
     class EntriesFilter < Docs::EntriesFilter
-      @@duplicate_names = []
+      @@canonical_pages = []
 
       REPLACE_NAMES = {
         'Error directive' => '#error directive',
@@ -65,18 +65,34 @@ module Docs
         REPLACE_NAMES[name] || name
       end
 
-      # Avoid duplicate pages, these duplicate page are the same page for
-      # multiple functions that are organized in the same page because provide
-      # similar behavior but have different name.
+      # Avoid duplicate pages: cppreference serves the same wiki page under
+      # several URLs (redirects), and since the scraper stores pages under the
+      # requested URL rather than the effective one, each alias would be stored
+      # as a separate copy of the same document.
+      #
+      # Deduplicate on the canonical wiki page name taken from the "Retrieved
+      # from" footer, not on the entry name -- unrelated pages legitimately
+      # share a name (e.g. std::erase_if for every container, std::move in both
+      # <algorithm> and <utility>) and keying on the name silently dropped them.
       def entries
-        entries = []
+        return [] if duplicate_page?
+        super
+      end
 
-        if !(@@duplicate_names.include?(name))
-          @@duplicate_names.push(name)
-          entries << default_entry if root_page? || include_default_entry?
-          entries.concat(additional_entries)
-          build_entries(entries)
-        end
+      def duplicate_page?
+        page = canonical_page
+        return false if page.nil?
+        return true if @@canonical_pages.include?(page)
+
+        @@canonical_pages.push(page)
+        false
+      end
+
+      # e.g. "cpp/container/unordered_map/erase_if", from the printfooter link
+      # to /mwiki/index.php?title=<page>&oldid=<revision>
+      def canonical_page
+        href = at_css('.printfooter a').try(:[], 'href')
+        href && href[/[?&]title=([^&]+)/, 1]
       end
 
     end

@@ -26,6 +26,8 @@ module Docs
         return "C keywords" if slug =~ /keyword/
 
         type = at_css('.t-navbar > div:nth-child(4) > :first-child').try(:content)
+        return 'Language' if type.nil? && subpath.start_with?('language/')
+
         type.strip!
         type.remove! ' library'
         type.remove! ' utilities'
