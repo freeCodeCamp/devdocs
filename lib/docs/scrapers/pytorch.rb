@@ -1,7 +1,4 @@
 module Docs
-  # Requires downloading the documents to local disk first.
-  # The rendered HTML lives in the "site" branch of https://github.com/pytorch/docs,
-  # one directory per version; see docs/file-scrapers.md for the commands.
   class Pytorch < FileScraper
     self.name = 'PyTorch'
     self.slug = 'pytorch'
@@ -111,6 +108,29 @@ module Docs
 
     def get_latest_version(opts)
       get_latest_github_release('pytorch', 'pytorch', opts)
+    end
+
+    private
+
+    # There is no documentation archive, the files have to be taken from the
+    # repository hosting https://docs.pytorch.org.
+    def download_source
+      require 'tmpdir'
+
+      Dir.mktmpdir do |directory|
+        repository = File.join(directory, 'docs')
+
+        instrument 'info.doc', msg: %(Cloning the PyTorch #{self.class.version} documentation...)
+        # The "site" branch holds the rendered documentation of every version,
+        # of which only the one being scraped is checked out.
+        system('git', 'clone', '--branch', 'site', '--depth', '1', '--filter=blob:none', '--sparse',
+               'https://github.com/pytorch/docs', repository)
+        system('git', '-C', repository, 'sparse-checkout', 'set', self.class.version)
+
+        instrument 'info.doc', msg: %(Moving the documentation files to "#{source_directory}"...)
+        FileUtils.mkpath(File.dirname(source_directory))
+        FileUtils.mv(File.join(repository, self.class.version), source_directory)
+      end
     end
   end
 end
