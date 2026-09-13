@@ -5,6 +5,12 @@ on:
     branches:
       - main
 
+# A deploy only ever ships the tip of main, so a run that a newer push has
+# already superseded is of no use.
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     name: Deploy to Heroku
