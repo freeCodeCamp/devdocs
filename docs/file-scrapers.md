@@ -67,7 +67,7 @@ mv man7.org/linux/man-pages/ docs/man/
 
 ## OpenJDK
 Search 'Openjdk' in https://www.debian.org/distrib/packages, find the `openjdk-$VERSION-doc` package,
-download it, extract it with `dpkg -x $PACKAGE ./` and move `./usr/share/doc/openjdk-16-jre-headless/api/`
+download it, extract it with `dpkg -x $PACKAGE ./` and move `./usr/share/doc/openjdk-$VERSION-jre-headless/api/`
 to `path/to/devdocs/docs/openjdk~$VERSION`
 
 ```sh
@@ -82,7 +82,7 @@ If you use or have access to a Debian-based GNU/Linux distribution you can run t
 apt download openjdk-$VERSION-doc
 dpkg -x $PACKAGE ./
 # previous command makes a directory called 'usr' in the current directory
-mv ./usr/share/doc/openjdk-16-jre-headless/api/ docs/openjdk~$VERSION
+mv ./usr/share/doc/openjdk-$VERSION-jre-headless/api/ docs/openjdk~$VERSION
 ```
 
 ## R
