@@ -231,9 +231,13 @@ app.views.EntryPage = class EntryPage extends app.View {
       this.showTransientNotice("noOriginalLink");
       return;
     }
-    navigator.clipboard.writeText(link.href + location.hash).catch(() =>
-      this.showTransientNotice("copyFailed"),
-    );
+    if (!navigator.clipboard) {
+      this.showTransientNotice("copyFailed");
+      return;
+    }
+    navigator.clipboard
+      .writeText(link.href + location.hash)
+      .catch(() => this.showTransientNotice("copyFailed"));
   }
 
   onAltO() {
