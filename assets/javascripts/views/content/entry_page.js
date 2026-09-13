@@ -218,8 +218,15 @@ app.views.EntryPage = class EntryPage extends app.View {
     }
   }
 
+  originalLink() {
+    // The attribution is appended last but may be followed by other elements,
+    // so match on the last attribution rather than on its sibling position.
+    const links = this.findAll("._attribution ._attribution-link");
+    return links[links.length - 1];
+  }
+
   onAltC() {
-    const link = this.find("._attribution:last-child ._attribution-link");
+    const link = this.originalLink();
     if (!link) {
       this.showTransientNotice("noOriginalLink");
       return;
@@ -230,7 +237,7 @@ app.views.EntryPage = class EntryPage extends app.View {
   }
 
   onAltO() {
-    const link = this.find("._attribution:last-child ._attribution-link");
+    const link = this.originalLink();
     if (!link) {
       this.showTransientNotice("noOriginalLink");
       return;
