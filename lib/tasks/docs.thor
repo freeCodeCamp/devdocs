@@ -77,8 +77,10 @@ class DocsCLI < Thor
   option :debug, type: :boolean
   option :force, type: :boolean
   option :package, type: :boolean
+  option :jobs, type: :numeric, default: 1, aliases: '-j', desc: 'Number of processes used to parse the pages (file scrapers only)'
   def generate(name)
     Docs.rescue_errors = true
+    Docs.jobs = options[:jobs]
     Docs.install_report :store if options[:verbose]
     Docs.install_report :scraper if options[:debug]
     Docs.install_report :progress_bar, :doc, :image, :requester if $stdout.tty?
@@ -116,6 +118,7 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   ensure
     Docs.rescue_errors = false
+    Docs.jobs = 1
   end
 
   desc 'manifest', 'Create the manifest'
