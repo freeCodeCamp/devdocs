@@ -2,7 +2,7 @@ module Docs
   class Jest < UrlScraper
     include MultipleBaseUrls
     self.type = 'simple'
-    self.release = '29.0.1'
+    self.release = '30.5.0'
 
     self.base_urls = [
       'https://jestjs.io/docs/',

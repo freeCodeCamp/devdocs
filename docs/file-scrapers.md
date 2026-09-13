@@ -2,20 +2,11 @@
 
 This lists the docs that use `FileScraper` and instructions for building some of them.
 
+Most scrapers fetch their documents themselves — see `download_source` in
+`lib/docs/core/scrapers/file_scraper.rb`. The sections below cover the ones that
+still need the documents to be built or assembled by hand.
+
 If you open a PR to update one of these docs, please add/fix the instructions.
-
-## Dart
-
-Click the “API docs” link under the “Stable channel” header on
-https://www.dartlang.org/tools/sdk/archive. Rename the expanded ZIP to `dart~2`
-and put it in `docs/`
-
-Or run the following commands in your terminal:
-
-```sh
-curl https://storage.googleapis.com/dart-archive/channels/stable/release/$RELEASE/api-docs/dartdocs-gen-api.zip > dartApi.zip; \
-unzip dartApi.zip; mv gen-dartdocs docs/dart~$VERSION
-```
 
 ## date-fns
 
@@ -26,87 +17,6 @@ git checkout v2.29.2
 yarn install
 node scripts/build/docs.js
 ls tmp/docs.json
-```
-
-## Django
-
-Go to https://docs.djangoproject.com/, select the version from the
-bubble in the bottom-right corner, then download the HTML version from the sidebar.
-
-```sh
-mkdir --parent docs/django\~$VERSION/; \
-curl https://media.djangoproject.com/docs/django-docs-$VERSION-en.zip | \
-bsdtar --extract --file - --directory=docs/django\~$VERSION/
-```
-
-## Elisp
-
-Go to https://www.gnu.org/software/emacs/manual/elisp.html, download the HTML tarball and extract its content in `docs/elisp` or run the following command:
-
-```sh
-mkdir docs/elisp \
-&& curl curl https://www.gnu.org/software/emacs/manual/elisp.html_node.tar.gz | \
-tar --extract --gzip --strip-components=1 --directory=docs/elisp
-```
-
-## Erlang
-
-Go to https://www.erlang.org/downloads and download the HTML documentation file.
-
-```ah
-mkdir --parent docs/erlang\~$VERSION/; \
-curl -L https://github.com/erlang/otp/releases/download/OTP-$RELEASE/otp_doc_html_$RELEASE.tar.gz | \
-bsdtar --extract --file - --directory=docs/erlang\~$VERSION/
-```
-
-## es-toolkit
-
-```sh
-git clone --branch v$RELEASE https://github.com/toss/es-toolkit docs/es_toolkit
-```
-
-## Gnu
-
-### Bash
-Go to https://www.gnu.org/software/bash/manual/, download the HTML tar file (with one web page per node) and extract its content in `docs/bash` or run the following command:
-
-```sh
-mkdir docs/bash \
-&& curl https://www.gnu.org/software/bash/manual/bash.html_node.tar.gz | \
-tar --extract --gzip --directory=docs/bash
-```
-
-### GCC
-Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of GCC Manual and GCC CPP manual or run the following commands to download the tarballs:
-
-```sh
-# GCC manual
-mkdir docs/gcc~${VERSION}; \
-curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/gcc-html.tar.gz | \
-tar --extract --gzip --strip-components=1 --directory=docs/gcc~${VERSION}
-
-# GCC CPP manual
-mkdir docs/gcc~${VERSION}_cpp; \
-curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/cpp-html.tar.gz | \
-tar --extract --gzip --strip-components=1 --directory=docs/gcc~${VERSION}_cpp
-```
-
-### GNU Fortran
-Go to https://gcc.gnu.org/onlinedocs/ and download the HTML tarball of Fortran manual or run the following commands to download the tarball:
-
-```sh
-mkdir docs/gnu_fortran~$VERSION; \
-curl https://gcc.gnu.org/onlinedocs/gcc-$RELEASE/gfortran-html.tar.gz | \
-tar --extract --gzip --strip-components=1 --directory=docs/gnu_fortran~$VERSION
-```
-
-## GNU Make
-Go to https://www.gnu.org/software/make/manual/, download the HTML tarball and extract its content in `docs/gnu_make` or run the following command:
-
-```sh
-mkdir docs/gnu_make \
-&& curl https://www.gnu.org/software/make/manual/make.html_node.tar.gz | \
-tar --extract --gzip --strip-components=1 --directory=docs/gnu_make
 ```
 
 ## Gnuplot
@@ -155,26 +65,9 @@ wget --recursive --no-parent https://man7.org/linux/man-pages/
 mv man7.org/linux/man-pages/ docs/man/
 ```
 
-## NumPy
-
-```sh
-mkdir --parent docs/numpy~$VERSION/; \
-curl https://numpy.org/doc/$VERSION/numpy-html.zip | \
-bsdtar --extract --file=- --directory=docs/numpy~$VERSION/
-```
-
-## OpenGL
-
-```sh
-cd docs/
-git clone https://github.com/KhronosGroup/OpenGL-Refpages.git
-ln -s OpenGL-Refpages/gl4/html/ opengl~4
-ln -s OpenGL-Refpages/gl2.1/xhtml/ opengl~2.1
-```
-
 ## OpenJDK
 Search 'Openjdk' in https://www.debian.org/distrib/packages, find the `openjdk-$VERSION-doc` package,
-download it, extract it with `dpkg -x $PACKAGE ./` and move `./usr/share/doc/openjdk-16-jre-headless/api/`
+download it, extract it with `dpkg -x $PACKAGE ./` and move `./usr/share/doc/openjdk-$VERSION-jre-headless/api/`
 to `path/to/devdocs/docs/openjdk~$VERSION`
 
 ```sh
@@ -189,42 +82,7 @@ If you use or have access to a Debian-based GNU/Linux distribution you can run t
 apt download openjdk-$VERSION-doc
 dpkg -x $PACKAGE ./
 # previous command makes a directory called 'usr' in the current directory
-mv ./usr/share/doc/openjdk-16-jre-headless/api/ docs/openjdk~$VERSION
-```
-
-## Pandas
-
-From the home directory; `devdocs`, execute below:
-
-```sh
-curl https://pandas.pydata.org/docs/pandas.zip -o tmp.zip && unzip tmp.zip -d docs/pandas~3 && rm tmp.zip
-```
-
-
-## PHP
-Click the link under the "Many HTML files" column on https://www.php.net/download-docs.php, extract the tarball, change its name to `php` and put it in `docs/`.
-
-Or run the following commands in your terminal:
-
-```sh
-curl https://www.php.net/distributions/manual/php_manual_en.tar.gz | tar xz; mv php-chunked-xhtml/ docs/php/
-```
-## Python 3.6+
-
-```sh
-mkdir docs/python~$VERSION
-cd docs/python~$VERSION
-curl -L https://docs.python.org/$VERSION/archives/python-$RELEASE-docs-html.tar.bz2 | \
-tar xj --strip-components=1
-```
-
-## Python < 3.6
-
-```sh
-mkdir docs/python~$VERSION
-cd docs/python~$VERSION
-curl -L https://docs.python.org/ftp/python/doc/$RELEASE/python-$RELEASE-docs-html.tar.bz2 | \
-tar xj --strip-components=1
+mv ./usr/share/doc/openjdk-$VERSION-jre-headless/api/ docs/openjdk~$VERSION
 ```
 
 ## R
@@ -258,7 +116,6 @@ done
 
 ## RDoc
 
-### Nokogiri
 ### Ruby / Minitest
 
 ```sh
@@ -306,34 +163,9 @@ to worry about cleaning or removing a new Ruby installation.
 
 ## Scala
 
-See `lib/docs/scrapers/scala.rb`
+For Scala 2 there is nothing to do — the scraper downloads and extracts the API
+documentation into `docs/scala~$VERSION` automatically when it's missing.
 
-## SQLite
-
-Download the docs from https://sqlite.org/download.html, unzip it, and rename
-it to `docs/sqlite`
-
-```sh
-curl https://sqlite.org/2022/sqlite-doc-3400000.zip | bsdtar --extract --file - --directory=docs/sqlite/ --strip-components=1
-```
-
-## Three.js
-Download the docs from https://github.com/mrdoob/three.js/tree/dev/files or run the following commands in your terminal:
-Make sure to set the version per the release tag (e.g. r160). Note that the r prefix is already included, only the version number is needed.
-
-```sh
-curl https://codeload.github.com/mrdoob/three.js/tar.gz/refs/tags/r${VERSION} > threejs.tar.gz
-tar -xzf threejs.tar.gz
-mkdir -p docs/threejs~${VERSION}
-mv three.js-r${VERSION}/list.json tmp/list.json
-mv three.js-r${VERSION}/docs/* docs/threejs~${VERSION}/
-
-rm -rf three.js-r${VERSION}/
-rm threejs.tar.gz
-```
-
-## PowerShell
-
-```sh
-curl -L 'https://github.com/MicrosoftDocs/PowerShell-Docs/archive/refs/heads/main.zip' | bsdtar --extract --file - --directory=docs/powershell/ --strip-components=2
-```
+Scala 3 has no official documentation download
+(see https://contributors.scala-lang.org/t/5537) and has to be built by hand;
+see the comment in `lib/docs/scrapers/scala.rb`.

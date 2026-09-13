@@ -31,5 +31,15 @@ module Docs
     def get_latest_version(opts)
       self.class.release
     end
+
+    private
+
+    # The reference pages sit in a differently named directory per version
+    SUBDIRECTORIES = { '4' => 'gl4/html', '2.1' => 'gl2.1/xhtml' }
+
+    def download_source
+      download_and_extract('https://github.com/KhronosGroup/OpenGL-Refpages/archive/refs/heads/main.tar.gz',
+                           "OpenGL-Refpages-main/#{SUBDIRECTORIES.fetch(self.class.version)}")
+    end
   end
 end

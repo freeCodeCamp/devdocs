@@ -48,3 +48,19 @@ test("URL search hash preserves encoded literal plus signs in the query", () => 
 
   assert.equal(search.getHashValue(), "operator+");
 });
+
+test("scoped external search includes the documentation name", () => {
+  let popupUrl;
+  context.$.popup = (url) => {
+    popupUrl = url;
+  };
+
+  const search = Object.create(context.app.views.Search.prototype);
+  search.value = "status";
+  search.scope = { name: () => "Git" };
+  search.reset = () => {};
+
+  search.externalSearch("https://www.google.com/search?q=");
+
+  assert.equal(popupUrl, "https://www.google.com/search?q=Git%20status");
+});

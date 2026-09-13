@@ -128,5 +128,11 @@ module Docs
       doc = fetch_doc('https://docs.djangoproject.com/', opts)
       doc.at_css('#doc-versions > li.current > button > strong').content
     end
+
+    private
+
+    def download_source
+      download_and_extract("https://media.djangoproject.com/docs/django-docs-#{self.class.version}-en.zip")
+    end
   end
 end
