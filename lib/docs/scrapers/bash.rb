@@ -20,5 +20,11 @@ module Docs
       body = fetch('https://www.gnu.org/software/bash/manual/html_node/index.html', opts)
       body.scan(/, Version ([0-9.]+)/)[0][0][0...-1]
     end
+
+    private
+
+    def download_source
+      download_and_extract('https://www.gnu.org/software/bash/manual/bash.html_node.tar.gz')
+    end
   end
 end
