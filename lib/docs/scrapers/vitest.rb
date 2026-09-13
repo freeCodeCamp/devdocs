@@ -21,6 +21,11 @@ module Docs
     html_filters.push 'vitest/entries', 'vite/clean_html'
 
     version do
+      self.release = '5.0.0'
+      self.base_url = 'https://vitest.dev/'
+    end
+
+    version '4' do
       self.release = '4.1.0'
       self.base_url = 'https://vitest.dev/'
     end
