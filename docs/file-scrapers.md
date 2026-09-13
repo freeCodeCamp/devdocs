@@ -227,6 +227,19 @@ curl -L https://docs.python.org/ftp/python/doc/$RELEASE/python-$RELEASE-docs-htm
 tar xj --strip-components=1
 ```
 
+## PyTorch
+
+The rendered documentation is published in the `site` branch of
+https://github.com/pytorch/docs, with one directory per version.
+
+```sh
+git clone --branch site --depth 1 --filter=blob:none --sparse \
+https://github.com/pytorch/docs.git /tmp/pytorch-docs; \
+git -C /tmp/pytorch-docs sparse-checkout set $VERSION; \
+mv /tmp/pytorch-docs/$VERSION docs/pytorch~$VERSION; \
+rm -rf /tmp/pytorch-docs
+```
+
 ## R
 
 ```bash

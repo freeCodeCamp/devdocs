@@ -1,8 +1,12 @@
 module Docs
-  class Pytorch < UrlScraper
+  # Requires downloading the documents to local disk first.
+  # The rendered HTML lives in the "site" branch of https://github.com/pytorch/docs,
+  # one directory per version; see docs/file-scrapers.md for the commands.
+  class Pytorch < FileScraper
     self.name = 'PyTorch'
     self.slug = 'pytorch'
     self.type = 'sphinx'
+    self.root_path = 'index.html'
     self.links = {
       home: 'https://pytorch.org/',
       code: 'https://github.com/pytorch/pytorch'
@@ -11,7 +15,13 @@ module Docs
     html_filters.push 'pytorch/entries', 'pytorch/clean_html', 'sphinx/clean_html'
 
     options[:skip] = ['cpp_index.html', 'deploy.html', 'packages.html', 'py-modindex.html', 'genindex.html']
-    options[:skip_patterns] = [/\Acommunity/, /\A_modules/, /\Anotes/, /\Aorg\/pytorch\//]
+    options[:skip_patterns] = [
+      /.*(?<!\.html)\z/, # non-HTML files, e.g. the .md sources shipped next to each page
+      /\Acommunity/,
+      /\A_modules/,
+      /\Anotes/,
+      /\Aorg\/pytorch\//
+    ]
     options[:max_image_size] = 1_000_000
 
     options[:attribution] = <<-HTML
