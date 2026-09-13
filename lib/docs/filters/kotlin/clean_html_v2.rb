@@ -47,13 +47,17 @@ module Docs
 
         # Reverse document order so nested widgets are collapsed before their ancestors.
         css('.platform-hinted').reverse_each do |node|
-          variants = node.element_children.select { |child| child.matches?('.sourceset-dependent-content') }
+          variants = node.element_children.select { |child| sourceset_content?(child) }
           next if variants.empty?
 
           groups = {}
           variants.each do |variant|
+            # Pull the version out first so it is part of neither the key nor the kept copy.
+            since = since_nodes(variant)
+            source = [platform(variant), since_version(since)]
+            since.each(&:remove)
+
             key = variant_key(variant)
-            source = [platform(variant), since_version(variant)]
             if (group = groups[key])
               group[:sources] << source
               variant.remove
@@ -63,7 +67,6 @@ module Docs
           end
 
           groups.each_value do |group|
-            since_nodes(group[:node]).each(&:remove)
             label = platform_label(group[:sources], all)
             group[:node].add_previous_sibling(label) if label
             group[:node].replace(group[:node].children)
@@ -73,27 +76,30 @@ module Docs
         end
       end
 
+      # Node#matches? re-evaluates the selector against the whole document, which
+      # dominates the scrape on the larger package indexes.
+      def sourceset_content?(node)
+        node['class'].to_s.split.include?('sourceset-dependent-content')
+      end
+
       def platform(node)
         node['data-togglable'].to_s.split('/').last
       end
 
+      MODIFIER = %r{<span class="token keyword">(?:expect|actual)\s*</span>}
+
       # Two variants are the same declaration when they only differ in their
-      # expect/actual modifier and in the Kotlin version they were introduced in.
+      # expect/actual modifier; the version has already been removed by the caller.
       def variant_key(variant)
-        copy = variant.dup
-        since_nodes(copy).each(&:remove)
-        copy.css('.token.keyword').each do |node|
-          node.remove if %w(expect actual).include?(node.content.strip)
-        end
-        copy.inner_html
+        variant.inner_html.gsub(MODIFIER, '')
       end
 
       def since_nodes(node)
         node.css('.kdoc-tag, .inline-comment').select { |child| child.content.match?(SINCE) }
       end
 
-      def since_version(variant)
-        since_nodes(variant).first&.content&.split(SINCE)&.last&.squish.presence
+      def since_version(since)
+        since.first&.content&.split(SINCE)&.last&.squish.presence
       end
 
       def platform_label(sources, all)
