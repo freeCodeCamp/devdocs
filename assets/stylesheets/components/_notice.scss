@@ -18,6 +18,8 @@
   ~ ._container { padding-bottom: 2.5rem; }
 }
 
+._notice-transient { z-index: calc(var(--noticeZ) + 1); }
+
 ._notice-text {
   display: table-cell;
   vertical-align: middle;

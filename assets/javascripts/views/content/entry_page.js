@@ -23,6 +23,7 @@ app.views.EntryPage = class EntryPage extends app.View {
 
   deactivate() {
     if (super.deactivate(...arguments)) {
+      this.hideTransientNotice();
       this.empty();
       this.entry = null;
     }
@@ -250,14 +251,21 @@ app.views.EntryPage = class EntryPage extends app.View {
   }
 
   showTransientNotice(type) {
-    if (this.transientNotice) {
-      clearTimeout(this.transientNoticeTimer);
-      this.transientNotice.deactivate();
-    }
+    this.hideTransientNotice();
     this.transientNotice = new app.views.Notice(type);
-    this.transientNoticeTimer = setTimeout(() => {
-      this.transientNotice.deactivate();
-      this.transientNotice = null;
-    }, 3000);
+    // Persistent notices (single doc, disabled doc) share the same bounds and
+    // z-index, so raise this one to keep it visible while it's shown.
+    this.transientNotice.addClass("_notice-transient");
+    this.transientNoticeTimer = this.delay(this.hideTransientNotice, 3000);
+  }
+
+  hideTransientNotice() {
+    if (!this.transientNotice) {
+      return;
+    }
+    clearTimeout(this.transientNoticeTimer);
+    this.transientNotice.deactivate();
+    this.transientNotice = null;
+    this.transientNoticeTimer = null;
   }
 };
