@@ -4,7 +4,7 @@ module Docs
       def call
         @doc = at_css('main#content article', 'article') || doc
 
-        css('.breadcrumbs', '.copy-page-split', '.copyButton',
+        css('.anchor-link', '.breadcrumbs', '.copy-page-split', '.copyButton',
             '.docNodeKindIcon', '.header-anchor', 'a > svg',
             'nav[aria-label="Breadcrumb"]',
             'nav[aria-label="Previous and next page"]').remove
