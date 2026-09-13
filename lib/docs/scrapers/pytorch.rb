@@ -19,6 +19,11 @@ module Docs
     PyTorch has a BSD-style license, as found in the <a href="https://github.com/pytorch/pytorch/blob/main/LICENSE">LICENSE</a> file.
     HTML
 
+    version '2.14' do
+      self.release = '2.14'
+      self.base_url = "https://docs.pytorch.org/docs/#{release}/"
+    end
+
     version '2.13' do
       self.release = '2.13'
       self.base_url = "https://docs.pytorch.org/docs/#{release}/"
