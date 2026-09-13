@@ -10,26 +10,25 @@ module Docs
         "Build encyclopedia"
       end
 
+      # Pages that document something other than rules, keyed by what they
+      # document. Every other page lists its rules under a "Rules" heading.
+      SPECIAL_PAGE_TYPES = {
+        'functions' => 'Function',
+        'make-variables' => 'Make Variable',
+        'common-definitions' => 'Common Definition',
+      }
+
       def additional_entries
-        entries = []
+        type = SPECIAL_PAGE_TYPES[subpath]
 
-        special_page_types = {
-          'functions' => 'Function',
-          'make-variables' => 'Make Variable',
-          'common-definitions' => 'Common Definition',
-        }
-        page_type = special_page_types[subpath]
-        unless page_type.nil?
-          # only first ul
-          at_css('.devsite-article-body > ul').css('li > a').each do |node|
-            entries << [node.content.strip, node['href'].sub('#', ''), page_type]
-          end
-        end
-        css('h2#rules + ul > li > a').each do |node|
-          entries << [node.content.strip, node['href'].sub('#', ''), "Rule"]
-        end
+        # Both kinds of page open with a bullet list linking to each of the
+        # things they document, which is the only listing they have.
+        list = type ? at_css('ul') : at_css('h2#rules + ul')
+        return [] if list.nil?
 
-        entries
+        list.css('> li > a').map do |node|
+          [node.content.strip, node['href'].sub('#', ''), type || 'Rule']
+        end
       end
 
     end
