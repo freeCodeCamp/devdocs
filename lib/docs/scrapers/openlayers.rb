@@ -3,7 +3,7 @@ module Docs
     self.name = 'OpenLayers'
     self.type = 'openlayers'
     self.slug = 'openlayers'
-    self.release = '10.8.0'
+    self.release = '10.10.0'
     self.base_url = "https://openlayers.org/en/latest/apidoc/"
     self.links = {
       home: 'https://openlayers.org/',
