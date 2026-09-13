@@ -222,7 +222,7 @@ class SpritesCLI < Thor
     scss_erb_files.each do |erb_path|
       scss_path = erb_path.gsub('.erb', '')
       File.open(scss_path, 'w') do |f|
-        f.write(ERB.new(File.open(erb_path).read).result)
+        f.write(ERB.new(File.read(erb_path)).result)
         logger.info("Compiling #{erb_path} to #{scss_path}")
       end
     end
