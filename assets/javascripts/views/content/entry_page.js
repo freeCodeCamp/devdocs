@@ -236,9 +236,14 @@ app.views.EntryPage = class EntryPage extends app.View {
       this.showTransientNotice("copyFailed");
       return;
     }
-    navigator.clipboard
-      .writeText(link.href + location.hash)
-      .catch(() => this.showTransientNotice("copyFailed"));
+    navigator.clipboard.writeText(link.href + location.hash).catch(() => {
+      // The rejection may arrive after the user navigated away. This view is
+      // reused across entries, so only report the failure while the page that
+      // was copied from is still the one on screen.
+      if (this.activated && link.isConnected) {
+        this.showTransientNotice("copyFailed");
+      }
+    });
   }
 
   onAltO() {
