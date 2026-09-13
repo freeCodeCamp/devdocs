@@ -1,6 +1,15 @@
 class DocsCLI < Thor
   include Thor::Actions
 
+  # Packages are compressed with zstd, those created before the switch to it
+  # are still gzipped.
+  PACKAGE_EXTENSIONS = %w(tar.zst tar.gz).freeze
+
+  # Packaging happens once whereas the packages are downloaded over and over,
+  # which makes the slowest compression level worth its time.
+  ZSTD_COMPRESSION_LEVEL = 19
+  CHUNK_SIZE = 1024 * 1024
+
   def self.to_s
     'Docs'
   end
@@ -15,8 +24,7 @@ class DocsCLI < Thor
   option :packaged, type: :boolean
   def list
     if options[:packaged]
-      slugs = Dir[File.join(Docs.store_path, '*.tar.gz')].map { |f| File.basename(f, '.tar.gz') }
-      names = find_docs_by_slugs(slugs).map do |doc|
+      names = find_docs_by_slugs(packaged_slugs).map do |doc|
         name = if doc.version?
           "#{doc.superclass.to_s.demodulize.underscore}@#{doc.version}"
         else
@@ -161,7 +169,7 @@ class DocsCLI < Thor
 
   desc 'clean', 'Delete documentation packages and cached responses'
   def clean
-    File.delete(*Dir[File.join Docs.store_path, '*.tar.gz'])
+    File.delete(*packaged_paths)
     Docs::ResponseCache.clean
     puts 'Done'
   end
@@ -172,8 +180,7 @@ class DocsCLI < Thor
   option :rclone, type: :boolean
   def upload(*names)
     if options[:packaged]
-      slugs = Dir[File.join(Docs.store_path, '*.tar.gz')].map { |f| File.basename(f, '.tar.gz') }
-      docs = find_docs_by_slugs(slugs)
+      docs = find_docs_by_slugs(packaged_slugs)
     else
       docs = find_docs(names)
     end
@@ -187,7 +194,7 @@ class DocsCLI < Thor
         return
       end
 
-      unless File.exist?(File.join(Docs.store_path, "#{doc.path}.tar.gz"))
+      if package_path(doc).nil?
         puts "ERROR: package for '#{doc.slug}' documentation not found. Run 'thor docs:package #{doc.slug}' to create it."
         return
       end
@@ -216,7 +223,7 @@ class DocsCLI < Thor
     puts '[S3 bundle] Begin uploading.'
 
     docs.each do |doc|
-      filename = "#{doc.path}.tar.gz"
+      filename = File.basename(package_path(doc))
       puts "[S3 bundle] Uploading #{filename}..."
       cmd = "aws s3 cp #{File.join(Docs.store_path, filename)} s3://devdocs-downloads/#{filename} --profile devdocs"
       cmd << ' --dryrun' if options[:dryrun]
@@ -382,23 +389,35 @@ class DocsCLI < Thor
     if options[:rclone]
       require 'tmpdir'
       Dir.mktmpdir do |dir|
-        system("rclone copy devdocs:devdocs-downloads/#{doc.path}.tar.gz #{dir}")
-        tar_gz_path = File.join(dir, "#{File.basename(doc.path)}.tar.gz")
-        raise "rclone did not download #{doc.path}.tar.gz (not found on remote?)" unless File.exist?(tar_gz_path)
-        extract_doc(tar_gz_path, target_path)
+        extension = PACKAGE_EXTENSIONS.find do |ext|
+          system("rclone copy devdocs:devdocs-downloads/#{doc.path}.#{ext} #{dir}")
+          File.exist?(File.join(dir, "#{File.basename(doc.path)}.#{ext}"))
+        end
+        raise "rclone did not download #{doc.path} (not found on remote?)" if extension.nil?
+        extract_doc(File.join(dir, "#{File.basename(doc.path)}.#{extension}"), target_path, extension)
       end
     else
-      URI.open "https://downloads.devdocs.io/#{doc.path}.tar.gz" do |file|
-        file.close
-        extract_doc(file.path, target_path)
-        FileUtils.rm(file.path)
+      extension = PACKAGE_EXTENSIONS.find do |ext|
+        begin
+          URI.open "https://downloads.devdocs.io/#{doc.path}.#{ext}" do |file|
+            file.close
+            extract_doc(file.path, target_path, ext)
+            FileUtils.rm(file.path)
+          end
+          true
+        rescue OpenURI::HTTPError => error
+          # Packages missing from the bucket are reported as "403 Forbidden".
+          raise unless %w(403 404).include?(error.io.status.first)
+          false
+        end
       end
+      raise "#{doc.path} not found on downloads.devdocs.io" if extension.nil?
     end
   end
 
-  def extract_doc(tar_gz_path, target_path)
+  def extract_doc(archive_path, target_path, extension)
     FileUtils.mkpath(target_path)
-    tar = UnixUtils.gunzip(tar_gz_path)
+    tar = extension == 'tar.zst' ? decompress_zstd(archive_path) : UnixUtils.gunzip(archive_path)
     dir = UnixUtils.untar(tar)
     FileUtils.rm(tar)
     FileUtils.rm_rf(target_path)
@@ -410,12 +429,54 @@ class DocsCLI < Thor
 
     if File.exist?(path)
       tar = UnixUtils.tar(path)
-      gzip = UnixUtils.gzip(tar)
-      FileUtils.mv(gzip, "#{path}.tar.gz")
+      FileUtils.mv(compress_zstd(tar), "#{path}.tar.zst")
       FileUtils.rm(tar)
     else
       puts %(ERROR: can't find "#{doc.name}" documentation files.)
     end
+  end
+
+  def packaged_paths
+    Dir[File.join(Docs.store_path, "*.{#{PACKAGE_EXTENSIONS.join(',')}}")]
+  end
+
+  def packaged_slugs
+    packaged_paths.map { |path| File.basename(path).sub(/\.#{Regexp.union(PACKAGE_EXTENSIONS)}\z/, '') }.uniq
+  end
+
+  def package_path(doc)
+    PACKAGE_EXTENSIONS.lazy.map { |extension| File.join(Docs.store_path, "#{doc.path}.#{extension}") }.find { |path| File.exist?(path) }
+  end
+
+  def compress_zstd(path)
+    require 'zstd-ruby'
+    stream = Zstd::StreamingCompress.new(level: ZSTD_COMPRESSION_LEVEL)
+
+    write_tmp_file(path) do |input, output|
+      output.write(stream.compress(input.read(CHUNK_SIZE))) until input.eof?
+      output.write(stream.finish)
+    end
+  end
+
+  def decompress_zstd(path)
+    require 'zstd-ruby'
+    stream = Zstd::StreamingDecompress.new
+
+    write_tmp_file(path) do |input, output|
+      output.write(stream.decompress(input.read(CHUNK_SIZE))) until input.eof?
+    end
+  end
+
+  # The packages are read and written chunk by chunk rather than at once,
+  # as they are hundreds of megabytes big.
+  def write_tmp_file(path)
+    target = UnixUtils.tmp_path(path)
+
+    File.open(target, 'wb') do |output|
+      File.open(path, 'rb') { |input| yield(input, output) }
+    end
+
+    target
   end
 
   def generate_manifest
