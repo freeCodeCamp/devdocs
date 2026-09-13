@@ -26,6 +26,11 @@ class ImagesFilterTest < Minitest::Spec
     end.to_blob
   end
 
+  # A 64x64 four-colour GIF89a; lossless WebP compresses it well below the GIF.
+  def gif_data
+    Base64.decode64('R0lGODlhQABAAPEAAB6Q///XANwUPC6LVywAAAAAQABAAAAC/4SPCcHtH4SctIqBs95D+QOFjUVO3Jl9nyiWJYqqHhu6JHzKCg3ZFs7RJXgPXwW4ESKIDiMFqVGCmAynCYqRGqhV6wXb0XIjXnBYOvZ+sdoFV21up8tg+ZvOFt+tcT0VXufHBJiHtufUZ/iHB2W3yBeoOMiI5DgJWag0h9koSETYKflJCWQ5ylnpyQOaKrpKimP6ilqqSsNa63oLCyO7Sxtry4IbrDvMGyPcgpyjXMMc5NwDnSRdRB1l3YSdoj3CneXdBdwrTkaebLyM3qz+zB7tPg1fLX9Nn22/jd+t/80fzt84RJE0HTKSyOAjgpmEbGIYSuEliK0knqKYy+IsjCvFNP7iWE7gOZDpPB4DeMbkOpLtVL5jGc/lPJj1ZN6jmc/mPpz9dP7jiaEAADs=')
+  end
+
   # Splices an acTL chunk before IDAT to mimic an animated PNG.
   def apng_data
     data = png_data
@@ -176,11 +181,29 @@ class ImagesFilterTest < Minitest::Spec
     end
   end
 
-  context "with a non-PNG image" do
+  context "with a GIF image" do
+    it "converts it to WebP" do
+      @body = IMG_BODY
+      data = gif_data
+      stub_request make_response(body: data, mime_type: 'image/gif', content_length: data.bytesize)
+      src = filter_output.at_css('img')['src']
+      assert src.start_with?('data:image/webp;base64,'), src[0, 40]
+      webp = image_from(src)
+      assert_equal 'RIFF', webp.byteslice(0, 4)
+      assert_equal 'WEBP', webp.byteslice(8, 4)
+      assert_operator webp.bytesize, :<, data.bytesize
+    end
+
+    it "recognizes the GIF87a signature" do
+      assert Docs::ImagesFilter.convert_to_webp(gif_data.sub('GIF89a', 'GIF87a'))
+    end
+  end
+
+  context "with an image we can't convert" do
     it "is left untouched" do
       @body = IMG_BODY
-      stub_request make_response(body: 'imgdata', mime_type: 'image/gif', content_length: 7)
-      expected = "data:image/gif;base64,#{Base64.strict_encode64('imgdata')}"
+      stub_request make_response(body: 'imgdata', mime_type: 'image/jpeg', content_length: 7)
+      expected = "data:image/jpeg;base64,#{Base64.strict_encode64('imgdata')}"
       assert_equal expected, filter_output.at_css('img')['src']
     end
   end

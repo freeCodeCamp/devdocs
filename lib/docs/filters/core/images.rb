@@ -10,19 +10,23 @@ module Docs
     DEFAULT_MAX_SIZE = 120_000 # 120 kilobytes
 
     PNG_SIGNATURE = "\x89PNG\r\n\x1a\n".b
+    GIF_SIGNATURES = ['GIF87a'.b, 'GIF89a'.b].freeze
     CWEBP_COMMAND = %w(cwebp -quiet -lossless -z 9 -m 6 -metadata none -o - -- -).freeze
+    GIF2WEBP_COMMAND = %w(gif2webp -quiet -m 6 -metadata none -o - -- -).freeze
 
     def self.optimize_image_data(data)
       @image_optim ||= ImageOptim.new
       @image_optim.optimize_image_data(data)
     end
 
-    # Losslessly re-encodes a PNG as WebP, which is usually 10-50% smaller.
-    # Returns nil when the data isn't a PNG we can convert, when cwebp isn't
-    # available, or when the result would be bigger than the original.
+    # Losslessly re-encodes a PNG or GIF as WebP, which is usually smaller
+    # (10-50% for PNGs, considerably more for GIFs). Returns nil when the data
+    # isn't an image we can convert, when the encoder isn't available, or when
+    # the result would be bigger than the original.
     def self.convert_to_webp(data)
-      return unless png?(data)
-      webp = IO.popen(CWEBP_COMMAND, 'r+b', err: File::NULL) do |io|
+      command = webp_command(data)
+      return unless command
+      webp = IO.popen(command, 'r+b', err: File::NULL) do |io|
         io.write(data)
         io.close_write
         io.read
@@ -32,11 +36,28 @@ module Docs
       nil
     end
 
+    def self.webp_command(data)
+      if png?(data)
+        CWEBP_COMMAND
+      elsif gif?(data)
+        # unlike cwebp, gif2webp keeps every frame of an animation
+        GIF2WEBP_COMMAND
+      end
+    end
+
     def self.png?(data)
-      return false unless data.byteslice(0, PNG_SIGNATURE.bytesize)&.b == PNG_SIGNATURE
+      return false unless starts_with?(data, PNG_SIGNATURE)
       # cwebp silently keeps the first frame of an animated PNG
       idat = data.index('IDAT'.b)
       idat.nil? || !data.byteslice(0, idat).include?('acTL'.b)
+    end
+
+    def self.gif?(data)
+      GIF_SIGNATURES.any? { |signature| starts_with?(data, signature) }
+    end
+
+    def self.starts_with?(data, signature)
+      data.byteslice(0, signature.bytesize)&.b == signature
     end
 
     def self.cache
