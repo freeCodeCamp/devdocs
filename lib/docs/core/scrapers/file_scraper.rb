@@ -38,7 +38,7 @@ module Docs
 
       instrument 'info.doc', msg: %(Extracting the documentation files to "#{source_directory}"...)
       case url
-      when /\.zip\z/
+      when /\.zip\z/, /\.jar\z/
         directory = UnixUtils.unzip(archive)
       when /\.tar\.gz\z/, /\.tgz\z/
         tarball = UnixUtils.gunzip(archive)

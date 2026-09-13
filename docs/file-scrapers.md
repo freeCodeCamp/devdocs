@@ -160,12 +160,3 @@ tar -xf ruby.tar; cd ruby-$RELEASE; ./configure && make html; mv .ext/html path/
 
 To generate the htmls file you have to run `make` command but it does not install Ruby in your system, only generates html files so you have not
 to worry about cleaning or removing a new Ruby installation.
-
-## Scala
-
-For Scala 2 there is nothing to do — the scraper downloads and extracts the API
-documentation into `docs/scala~$VERSION` automatically when it's missing.
-
-Scala 3 has no official documentation download
-(see https://contributors.scala-lang.org/t/5537) and has to be built by hand;
-see the comment in `lib/docs/scrapers/scala.rb`.
