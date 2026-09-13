@@ -11,7 +11,14 @@ module Docs
 
     PNG_SIGNATURE = "\x89PNG\r\n\x1a\n".b
     GIF_SIGNATURES = ['GIF87a'.b, 'GIF89a'.b].freeze
-    CWEBP_COMMAND = %w(cwebp -quiet -lossless -z 9 -m 6 -metadata none -o - -- -).freeze
+    JPEG_SIGNATURE = "\xff\xd8\xff".b
+
+    # WebP q=80 is roughly equivalent to JPEG q=90, and -sharp_yuv keeps the
+    # edges of the screenshots and diagrams documentation is full of crisp.
+    JPEG_QUALITY = 80
+
+    CWEBP_LOSSLESS_COMMAND = %w(cwebp -quiet -lossless -z 9 -m 6 -metadata none -o - -- -).freeze
+    CWEBP_LOSSY_COMMAND = %W(cwebp -quiet -q #{JPEG_QUALITY} -m 6 -sharp_yuv -metadata none -o - -- -).freeze
     GIF2WEBP_COMMAND = %w(gif2webp -quiet -m 6 -metadata none -o - -- -).freeze
 
     def self.optimize_image_data(data)
@@ -19,10 +26,10 @@ module Docs
       @image_optim.optimize_image_data(data)
     end
 
-    # Losslessly re-encodes a PNG or GIF as WebP, which is usually smaller
-    # (10-50% for PNGs, considerably more for GIFs). Returns nil when the data
-    # isn't an image we can convert, when the encoder isn't available, or when
-    # the result would be bigger than the original.
+    # Re-encodes a PNG or GIF as lossless WebP and a JPEG as lossy WebP, all of
+    # which are usually smaller. Returns nil when the data isn't an image we can
+    # convert, when the encoder isn't available, or when the result would be
+    # bigger than the original.
     def self.convert_to_webp(data)
       command = webp_command(data)
       return unless command
@@ -38,10 +45,12 @@ module Docs
 
     def self.webp_command(data)
       if png?(data)
-        CWEBP_COMMAND
+        CWEBP_LOSSLESS_COMMAND
       elsif gif?(data)
         # unlike cwebp, gif2webp keeps every frame of an animation
         GIF2WEBP_COMMAND
+      elsif starts_with?(data, JPEG_SIGNATURE)
+        CWEBP_LOSSY_COMMAND
       end
     end
 
