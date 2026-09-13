@@ -52,6 +52,8 @@ In addition to the [publicly-documented commands](https://github.com/freeCodeCam
 
   Generates packages for one or more documentations. Those packages are intended to be uploaded to DevDocs's S3 bundle zone by maintainers via the `thor docs:upload` command, and downloaded by users via the `thor docs:download` command.
 
+  Packages are `.tar.zst` files. Documentations packaged before the switch to zstd are still published as `.tar.gz`, which `thor docs:download` falls back to; they turn into `.tar.zst` as they are re-packaged and re-uploaded. Their `.tar.gz` must be kept on the bundle zone for as long as DevDocs installations predating the switch are to be supported.
+
   Versions can be specified as such: `thor docs:package rails@5.2 node@10\ LTS`.
 
   Packages can also be automatically generated during the scraping process by passing the `--package` option to `thor docs:generate`.

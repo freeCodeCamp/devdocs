@@ -312,6 +312,7 @@ GEM
     webrick (1.9.2)
     yajl-ruby (1.4.3)
     zeitwerk (2.7.5)
+    zstd-ruby (2.0.9)
 
 PLATFORMS
   aarch64-linux
@@ -363,6 +364,7 @@ DEPENDENCIES
   unix_utils
   webrick (~> 1.9)
   yajl-ruby
+  zstd-ruby
 
 CHECKSUMS
   actionpack (8.1.3) sha256=af998cae4d47c5d581a2cc363b5c77eb718b7c4b45748d81b1887b25621c29a3
@@ -506,6 +508,7 @@ CHECKSUMS
   webrick (1.9.2) sha256=beb4a15fc474defed24a3bda4ffd88a490d517c9e4e6118c3edce59e45864131
   yajl-ruby (1.4.3) sha256=8c974d9c11ae07b0a3b6d26efea8407269b02e4138118fbe3ef0d2ec9724d1d2
   zeitwerk (2.7.5) sha256=d8da92128c09ea6ec62c949011b00ed4a20242b255293dd66bf41545398f73dd
+  zstd-ruby (2.0.9) sha256=d6e7ffb61f3b93947c3a38afe2669e11acc8e8bbf15f55dc14dd03604c0d1083
 
 RUBY VERSION
   ruby 4.0.6
