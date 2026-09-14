@@ -528,13 +528,17 @@ export class DB {
    * @param {number} mtime The build to read it for; one cached for an earlier
    *   build is passed over, and overwritten when the doc is fetched again.
    * @param {(index?: unknown) => void} fn Called with the index, or with
-   *   nothing when there isn't a usable one.
+   *   nothing when there isn't a usable one. Never before `loadIndex` returns;
+   *   Doc#load and its callers rely on it.
    */
   loadIndex(doc, mtime, fn) {
     this.indexes("readonly", (store) => {
       const req = store?.get(doc.slug);
       if (!req) {
-        fn(this.importIndex(doc, mtime));
+        // `db` runs its callback there and then when IndexedDB is off, and
+        // Docs#load can't be called back before `Doc#load` has returned.
+        const index = this.importIndex(doc, mtime);
+        setTimeout(() => fn(index), 0);
         return;
       }
 
