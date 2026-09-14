@@ -252,12 +252,8 @@ class McpTest < Minitest::Spec
     end
 
     it 'returns error for missing search index in devdocs_search' do
-      args = { 'slug' => 'css', 'query' => 'test' }
-      response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
-      if response.key?('error')
-        assert_equal(-32603, response['error']['code'])
-        assert_includes response['error']['message'].downcase, 'search index'
-      end
+      message = tool_error('devdocs_search', { 'slug' => 'css', 'query' => 'test' })
+      assert_includes message.downcase, 'search index'
     end
 
     it 'returns error for a docset whose pages are not downloaded' do
