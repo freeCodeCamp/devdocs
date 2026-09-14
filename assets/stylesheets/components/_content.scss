@@ -288,6 +288,7 @@
       flex: 0 0 auto;
   margin: .5rem 0;
   padding: .25rem 0;
+  white-space: nowrap;
   @extend %box;
 
   ._btn-link {
@@ -443,8 +444,10 @@
 }
 
 ._file-btn {
+  display: inline-block;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 
   > input {
     position: absolute;

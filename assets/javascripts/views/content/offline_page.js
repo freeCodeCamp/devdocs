@@ -77,7 +77,9 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   onClick(event) {
     let el = $.eventTarget(event);
     let action = el.getAttribute("data-action");
-    if (action) {
+    if (action === "export") {
+      this.exportDoc(this.docByEl(el), el);
+    } else if (action) {
       const doc = this.docByEl(el);
       if (action === "update") {
         action = "install";
@@ -102,6 +104,8 @@ app.views.OfflinePage = class OfflinePage extends app.View {
       }
     } else if (el.hasAttribute("data-enable-persistence")) {
       this.requestPersistence();
+    } else if (el.hasAttribute("data-export-docs")) {
+      this.exportDocs(app.docs.all());
     }
   }
 
@@ -149,6 +153,104 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   onChange(event) {
     if (event.target.name === "autoUpdate") {
       app.settings.set("manualUpdate", !event.target.checked);
+    } else if (event.target.name === "importDocs") {
+      this.importDocs(event.target);
+    }
+  }
+
+  backup() {
+    return this._backup || (this._backup = new app.OfflineBackup());
+  }
+
+  // Exports `docs` into a single file. Returns false when another backup is
+  // already running, in which case `onDone` is never called.
+  exportDocs(docs, onDone) {
+    if (this.backingUp) {
+      return false;
+    }
+    this.backingUp = true;
+    const backup = this.backup();
+
+    const done = (html, isError, success) => {
+      this.backingUp = false;
+      if (!this.activated) {
+        return;
+      }
+      this.setBackupStatus(html, isError);
+      if (onDone) {
+        onDone(success);
+      }
+    };
+
+    backup.export(
+      docs,
+      (doc, i, total) =>
+        this.setBackupStatus(
+          this.tmpl("backupProgress", "Exporting", doc, i, total),
+        ),
+      (blob, count) => {
+        $.download(blob, backup.filename(docs));
+        done(this.tmpl("backupExported", count), false, true);
+      },
+      () => done(this.tmpl("backupError", "empty"), true, false),
+    );
+
+    return true;
+  }
+
+  exportDoc(doc, el) {
+    const started = this.exportDocs([doc], (success) =>
+      success ? this.onInstallSuccess(doc) : this.onInstallError(doc),
+    );
+    if (started) {
+      el.parentNode.innerHTML = "Exporting\u2026";
+    }
+  }
+
+  importDocs(input) {
+    if (this.backingUp) {
+      return;
+    }
+    this.backingUp = true;
+    const file = input.files[0];
+    input.value = ""; // so that picking the same file again fires a change event
+
+    this.backup().import(
+      file,
+      (doc, i, total) =>
+        this.setBackupStatus(
+          this.tmpl("backupProgress", "Importing", doc, i, total),
+        ),
+      (result) => {
+        this.backingUp = false;
+        if (!this.activated) {
+          return;
+        }
+        this.setBackupStatus(
+          this.tmpl("backupImported", result),
+          result.failed.length > 0,
+        );
+        // Newly enabled docs have no index in memory; reboot to load them.
+        // Otherwise just refresh the rows that changed, to keep the message.
+        if (result.enabled > 0) {
+          this.delay(() => app.reboot(), 2000);
+        } else {
+          for (var doc of result.docs) {
+            this.onInstallSuccess(doc);
+          }
+        }
+      },
+      (reason) => {
+        this.backingUp = false;
+        this.setBackupStatus(this.tmpl("backupError", reason), true);
+      },
+    );
+  }
+
+  setBackupStatus(html, isError) {
+    const el = this.find("#_offline-backup-status");
+    if (el) {
+      el.innerHTML = `<p class="_note${isError ? " _note-red" : ""}">${html}`;
     }
   }
 
