@@ -449,13 +449,21 @@
   overflow: hidden;
   cursor: pointer;
 
+  // The input is hidden with opacity rather than visibility so that it stays
+  // in the focus order; the label shows the focus ring on its behalf.
+  &:focus-within {
+    outline: 1px dotted;
+    outline: -webkit-focus-ring-color auto 5px;
+  }
+
   > input {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    visibility: hidden;
+    opacity: 0;
+    cursor: pointer;
   }
 }
 
