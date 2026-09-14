@@ -26,6 +26,9 @@ app.views.OfflinePage = class OfflinePage extends app.View {
         this.html(this.tmpl("offlineError", app.db.reason, app.db.error));
       } else {
         this.checkPersistence((hasPersistence, isPersistent) => {
+          if (!this.activated) {
+            return;
+          }
           let html = "";
           for (var doc of app.docs.all()) {
             html += this.renderDoc(doc, statuses[doc.slug]);
@@ -170,6 +173,9 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   }
 
   onPersistenceRequestCompleted(success, exception) {
+    if (!this.activated) {
+      return;
+    }
     const note = this.find("#_offline-persistence-note");
     if (!note) {
       return;
