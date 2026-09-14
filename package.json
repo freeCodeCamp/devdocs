@@ -2,7 +2,7 @@
   "name": "devdocs",
   "private": true,
   "scripts": {
-    "test": "node --test test/assets/",
+    "test": "node --test test/assets/*_test.js",
     "typecheck": "tsc -p tsconfig.json && tsc -p test/assets/tsconfig.json"
   },
   "devDependencies": {
