@@ -18,7 +18,6 @@ group :app do
   gem 'image_optim'
   gem 'rack'
   gem 'rss'
-  gem 'sinatra-contrib'
   gem 'sinatra'
   gem 'sprockets-helpers'
   gem 'sprockets'
@@ -33,6 +32,7 @@ end
 group :development do
   gem 'better_errors'
   gem 'pry-byebug'
+  gem 'sinatra-contrib'
 end
 
 group :docs do

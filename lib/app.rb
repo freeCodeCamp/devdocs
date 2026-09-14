@@ -28,7 +28,6 @@ end
 
 class App < Sinatra::Application
   Bundler.require environment
-  require 'sinatra/cookies'
   require 'tilt/erubi'
   require 'active_support/notifications'
 
@@ -154,11 +153,10 @@ class App < Sinatra::Application
   end
 
   helpers do
-    include Sinatra::Cookies
     include Sprockets::Helpers
 
     def memoized_cookies
-      @memoized_cookies ||= cookies.to_hash
+      @memoized_cookies ||= request.cookies
     end
 
     def canonical_origin
