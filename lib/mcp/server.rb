@@ -218,25 +218,40 @@ module Mcp
 
     def self.html_to_text(html)
       doc = Nokogiri::HTML::DocumentFragment.parse(html)
-      text_parts = []
-      collect_text(doc, text_parts)
-      text_parts.join.squeeze(' ').gsub(/\n\s*\n/, "\n").strip
+      segments = []
+      collect_text(doc, segments, false)
+      # Collapse whitespace outside <pre> only; code samples keep their
+      # indentation and blank lines verbatim.
+      segments.map { |segment|
+        segment[:pre] ? segment[:text] : segment[:text].squeeze(' ').gsub(/\n\s*\n/, "\n")
+      }.join.strip
     end
 
     # Walks the tree in document order, wrapping the text of each block element
     # in newlines. Nokogiri's #traverse is post-order, which emitted a block's
     # separator only after its text and ran the text before it into the block.
-    def self.collect_text(node, text_parts)
+    # Text is collected into runs of equal preformattedness so that the
+    # whitespace collapsing above can skip the preformatted ones.
+    def self.collect_text(node, segments, preformatted)
       node.children.each do |child|
         if child.text?
-          text_parts << child.text
+          append_text(segments, child.text, preformatted)
         elsif block_element?(child.name)
-          text_parts << "\n"
-          collect_text(child, text_parts)
-          text_parts << "\n"
+          append_text(segments, "\n", preformatted)
+          collect_text(child, segments, preformatted || child.name.casecmp('pre').zero?)
+          append_text(segments, "\n", preformatted)
         else
-          collect_text(child, text_parts)
+          collect_text(child, segments, preformatted)
         end
+      end
+    end
+
+    def self.append_text(segments, text, preformatted)
+      last = segments.last
+      if last && last[:pre] == preformatted
+        last[:text] << text
+      else
+        segments << { pre: preformatted, text: +text }
       end
     end
 

@@ -192,6 +192,12 @@ class McpTest < Minitest::Spec
       assert_equal "Options are:\none\ntwo", result['content'].first['text']
     end
 
+    it 'keeps the indentation of preformatted code' do
+      args = { 'slug' => 'mcp_fixture', 'path' => 'array/code' }
+      result = rpc('tools/call', { 'name' => 'devdocs_get_page', 'arguments' => args })['result']
+      assert_includes result['content'].first['text'], "def push(x)\n  items << x\nend"
+    end
+
     it 'returns error for invalid slug in search (path traversal protection)' do
       args = { 'slug' => '../../../etc/passwd', 'query' => 'test' }
       response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
