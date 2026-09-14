@@ -99,11 +99,11 @@ app.OfflineBackup = class OfflineBackup {
     const skipped = [];
 
     for (var entry of entries) {
-      var doc = entry?.db && this.findDoc(entry.slug);
+      var doc = this.isValidEntry(entry) && this.findDoc(entry.slug);
       if (doc) {
         queue.push([doc, entry]);
       } else {
-        skipped.push(entry?.slug || "?");
+        skipped.push(typeof entry?.slug === "string" ? entry.slug : "?");
       }
     }
 
@@ -127,10 +127,10 @@ app.OfflineBackup = class OfflineBackup {
       }
 
       const [doc, entry] = item;
-      const mtime = entry.mtime || doc.mtime;
+      const mtime = entry.mtime;
       onProgress(doc, i, total);
 
-      if (entry.index) {
+      if (this.isValidIndex(entry.index)) {
         // Keyed by the backup's mtime so that Doc#_getCache discards it when
         // the documentation has been updated since the backup was made.
         app.localStorage.set(doc.slug, [mtime, entry.index]);
@@ -152,6 +152,29 @@ app.OfflineBackup = class OfflineBackup {
     };
 
     next();
+  }
+
+  // Storing a doc clears whatever was installed before it, so an entry that
+  // isn't usable has to be rejected rather than wipe a working installation.
+  // The index page is what DB#checkForCorruptedDocs looks for.
+  isValidEntry(entry) {
+    return (
+      entry != null &&
+      typeof entry.slug === "string" &&
+      Number.isSafeInteger(entry.mtime) &&
+      entry.mtime > 0 &&
+      entry.db?.constructor === Object &&
+      typeof entry.db.index === "string" &&
+      entry.db.index.length > 0
+    );
+  }
+
+  isValidIndex(index) {
+    return (
+      index?.constructor === Object &&
+      Array.isArray(index.entries) &&
+      Array.isArray(index.types)
+    );
   }
 
   findDoc(slug) {
