@@ -1,7 +1,14 @@
 // @ts-check
 
+/**
+ * The notices shown above the content: a bar of explanatory text.
+ *
+ * @param {string} text
+ * @returns {string}
+ */
 const notice = (text) => `<p class="_notice-text">${text}</p>`;
 
+/** @param {any} doc @returns {string} */
 app.templates.singleDocNotice = (doc) =>
   notice(` You're browsing the ${doc.fullName} documentation. To browse all docs, go to
 <a href="//${app.config.production_host}" target="_top">${app.config.production_host}</a> (or press <code>esc</code>). `);

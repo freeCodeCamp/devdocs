@@ -1,5 +1,11 @@
 // @ts-check
 
+/**
+ * @param {any[]} docs Every doc, in the order they are listed.
+ * @param {boolean} hasPersistence Whether the browser exposes the storage API.
+ * @param {boolean} isPersistent Whether storage has already been made persistent.
+ * @returns {string}
+ */
 app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
 <h1 class="_lined-heading">Offline Documentation</h1>
 
@@ -49,12 +55,27 @@ app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
 </dl>\
 `;
 
+/**
+ * @param {string} action What is being done, e.g. "Exporting".
+ * @param {any} doc
+ * @param {number} i The doc's position, one-based.
+ * @param {number} total
+ * @returns {string}
+ */
 app.templates.backupProgress = (action, doc, i, total) =>
   `${action} ${doc.fullName}\u2026 (${i}/${total})`;
 
+/**
+ * @param {number} count
+ * @returns {string}
+ */
 app.templates.backupExported = (count) =>
   `Exported ${count} ${pluralizeDocs(count)}.`;
 
+/**
+ * @param {ImportSummary} result
+ * @returns {string}
+ */
 app.templates.backupImported = function (result) {
   let html = `<strong>Imported ${result.docs.length} ${pluralizeDocs(
     result.docs.length
@@ -74,6 +95,10 @@ app.templates.backupImported = function (result) {
   return html;
 };
 
+/**
+ * @param {string} reason Why the export or import couldn't be done.
+ * @returns {string}
+ */
 app.templates.backupError = function (reason) {
   switch (reason) {
     case "empty":
@@ -87,11 +112,23 @@ app.templates.backupError = function (reason) {
   }
 };
 
+/**
+ * @param {number} count
+ * @returns {string}
+ */
 var pluralizeDocs = (count) =>
   count === 1 ? "documentation" : "documentations";
 
+/**
+ * @param {string[]} slugs Escaped, since they come from an imported file.
+ * @returns {string}
+ */
 var listSlugs = (slugs) => slugs.map((slug) => $.escape(slug)).join(", ");
 
+/**
+ * @param {any} [exception] The error the browser reported, when there was one.
+ * @returns {string}
+ */
 app.templates.persistenceError = function (exception) {
   const reason = exception
     ? `<code class="_label">${exception.name}: ${exception.message}</code>`
@@ -100,6 +137,14 @@ app.templates.persistenceError = function (exception) {
   return `<p class="_note _note-red"><strong>Persistent storage was denied by your browser.</strong> ${reason}`;
 };
 
+/**
+ * The warning that the browser may evict the offline data, with a way to ask
+ * for persistent storage. Empty once storage is already persistent.
+ *
+ * @param {boolean} hasPersistence Whether the browser exposes the storage API.
+ * @param {boolean} isPersistent
+ * @returns {string}
+ */
 var offlinePersistenceNote = function (hasPersistence, isPersistent) {
   if (isPersistent) {
     return "";
@@ -135,6 +180,13 @@ The current tab will continue to function even when you go offline (provided you
   }
 };
 
+/**
+ * One row of the offline page: a doc, its size, and what can be done with it.
+ *
+ * @param {any} doc
+ * @param {Record<string, InstallStatus>} status Install statuses by slug.
+ * @returns {string}
+ */
 app.templates.offlineDoc = function (doc, status) {
   const outdated = doc.isOutdated(status);
 

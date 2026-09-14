@@ -1,5 +1,13 @@
 // @ts-check
 
+/**
+ * The breadcrumb above the content: the doc, then the type, then the entry.
+ *
+ * @param {any} doc
+ * @param {any} [type]
+ * @param {any} [entry]
+ * @returns {string}
+ */
 app.templates.path = function (doc, type, entry) {
   const arrow = '<svg class="_path-arrow"><use xlink:href="#icon-dir"/></svg>';
   let html = `<a href="${doc.fullPath()}" class="_path-item _icon-${

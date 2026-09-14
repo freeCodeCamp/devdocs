@@ -1,9 +1,28 @@
 // @ts-check
 
+/**
+ * How a sidebar row is rendered.
+ *
+ * @typedef {object} SidebarOptions
+ * @property {boolean} [disabled] Render the doc as disabled, with an Enable button.
+ * @property {boolean} [fullName] Include the version in the doc's name.
+ * @property {boolean} [checked] Tick the row's checkbox.
+ * @property {boolean} [open] Render a versioned doc expanded.
+ * @property {number} [count] How many docs the heading covers.
+ */
+
 const { templates } = app;
 
+/** The disclosure triangle shown on a sidebar row that can be expanded. */
 const arrow = '<svg class="_list-arrow"><use xlink:href="#icon-dir"/></svg>';
 
+/**
+ * A doc's row in the sidebar.
+ *
+ * @param {any} doc
+ * @param {SidebarOptions} [options]
+ * @returns {string}
+ */
 templates.sidebarDoc = function (doc, options) {
   if (options == null) {
     options = {};
@@ -26,6 +45,12 @@ templates.sidebarDoc = function (doc, options) {
   return link + "</span></a>";
 };
 
+/**
+ * A type's row, with the number of entries it holds.
+ *
+ * @param {any} type
+ * @returns {string}
+ */
 templates.sidebarType = (type) =>
   `<a href="${type.fullPath()}" class="_list-item _list-dir" data-slug="${
     type.slug
@@ -33,11 +58,24 @@ templates.sidebarType = (type) =>
     type.count
   }</span><span class="_list-text">${$.escape(type.name)}</span></a>`;
 
+/**
+ * An entry's row.
+ *
+ * @param {any} entry
+ * @returns {string}
+ */
 templates.sidebarEntry = (entry) =>
   `<a href="${entry.fullPath()}" class="_list-item _list-hover" tabindex="-1">${$.escape(
     entry.name,
   )}</a>`;
 
+/**
+ * A search result: like an entry's row, plus the doc it belongs to and a way
+ * to reveal it in the list or enable its doc.
+ *
+ * @param {any} entry
+ * @returns {string}
+ */
 templates.sidebarResult = function (entry) {
   let addons =
     entry.isIndex() && app.disabledDocs.contains(entry.doc)
@@ -53,6 +91,12 @@ templates.sidebarResult = function (entry) {
   )}</span></a>`;
 };
 
+/**
+ * Shown when a search matched nothing, with a pointer to the preferences
+ * when some docs are disabled.
+ *
+ * @returns {string}
+ */
 templates.sidebarNoResults = function () {
   let html = ' <div class="_list-note">No results.</div> ';
   if (!app.isSingleDoc() && !app.disabledDocs.isEmpty()) {
@@ -63,9 +107,22 @@ templates.sidebarNoResults = function () {
   return html;
 };
 
+/**
+ * The row that loads the next page of a long list.
+ *
+ * @param {number} count How many entries are left.
+ * @returns {string}
+ */
 templates.sidebarPageLink = (count) =>
   `<span role="link" class="_list-item _list-pagelink">Show more\u2026 (${count})</span>`;
 
+/**
+ * A doc's row in the picker, with a checkbox.
+ *
+ * @param {any} doc
+ * @param {SidebarOptions} [options]
+ * @returns {string}
+ */
 templates.sidebarLabel = function (doc, options) {
   if (options == null) {
     options = {};
@@ -81,6 +138,14 @@ templates.sidebarLabel = function (doc, options) {
   return label + `><span class="_list-text">${doc.fullName}</span></label>`;
 };
 
+/**
+ * A doc that has several versions, as an expandable row.
+ *
+ * @param {any} doc
+ * @param {string} versions The rendered rows for each version.
+ * @param {SidebarOptions} [options]
+ * @returns {string}
+ */
 templates.sidebarVersionedDoc = function (doc, versions, options) {
   if (options == null) {
     options = {};
@@ -95,12 +160,29 @@ templates.sidebarVersionedDoc = function (doc, versions, options) {
   );
 };
 
+/**
+ * The heading above the disabled docs.
+ *
+ * @param {SidebarOptions} options
+ * @returns {string}
+ */
 templates.sidebarDisabled = (options) =>
   `<h6 class="_list-title">${arrow}Disabled (${options.count}) <a href="/settings" class="_list-title-link" tabindex="-1">Customize</a></h6>`;
 
+/**
+ * @param {string} html The rendered disabled docs.
+ * @returns {string}
+ */
 templates.sidebarDisabledList = (html) =>
   `<div class="_disabled-list">${html}</div>`;
 
+/**
+ * A disabled doc that has several versions.
+ *
+ * @param {any} doc
+ * @param {string} versions The rendered rows for each version.
+ * @returns {string}
+ */
 templates.sidebarDisabledVersionedDoc = (doc, versions) =>
   `<a class="_list-item _list-dir _icon-${doc.icon} _list-disabled" data-slug="${doc.slug_without_version}" tabindex="-1">${arrow}${doc.name}</a><div class="_list _list-sub">${versions}</div>`;
 

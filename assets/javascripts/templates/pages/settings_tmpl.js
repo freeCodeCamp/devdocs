@@ -1,5 +1,12 @@
 // @ts-check
 
+/**
+ * One radio button in the theme picker.
+ *
+ * @param {{ label: string, value: string }} option
+ * @param {Record<string, any>} settings The user's current preferences.
+ * @returns {string}
+ */
 const themeOption = ({ label, value }, settings) => `\
 <label class="_settings-label _theme-label">
   <input type="radio" name="theme" value="${value}"${
@@ -9,6 +16,10 @@ const themeOption = ({ label, value }, settings) => `\
 </label>\
 `;
 
+/**
+ * @param {Record<string, any>} settings The user's current preferences.
+ * @returns {string}
+ */
 app.templates.settingsPage = (settings) => `\
 <h1 class="_lined-heading">Preferences</h1>
 

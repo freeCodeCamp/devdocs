@@ -1,5 +1,14 @@
 // @ts-check
 
+/**
+ * The error shown in place of the content: a title, an explanation and some
+ * ways out.
+ *
+ * @param {string} title
+ * @param {string} [text]
+ * @param {string} [links]
+ * @returns {string}
+ */
 const error = function (title, text, links) {
   if (text == null) {
     text = "";
@@ -41,6 +50,11 @@ app.templates.bootError = () =>
 If you keep seeing this, you're likely behind a proxy or firewall that blocks cross-domain requests. `,
   );
 
+/**
+ * @param {string} reason Why offline mode is unavailable.
+ * @param {any} [exception] The error the browser reported, when there was one.
+ * @returns {string}
+ */
 app.templates.offlineError = function (reason, exception) {
   if (reason === "cookie_blocked") {
     return error(" Cookies must be enabled to use offline mode. ");
