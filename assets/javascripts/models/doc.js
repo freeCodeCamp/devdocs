@@ -1,6 +1,8 @@
 app.models.Doc = class Doc extends app.Model {
   // Attributes: name, slug, type, version, release, db_size, mtime, links
 
+  static NUMBERED_VERSION_RGX = /^\d+(\.\d+)*$/;
+
   constructor() {
     super(...arguments);
     this.reset(this);
@@ -190,6 +192,53 @@ app.models.Doc = class Doc extends app.Model {
     app.db.version(this, (value) =>
       callback({ installed: !!value, mtime: value }),
     );
+  }
+
+  // Whether the doc holds a numbered version of its documentation (e.g. "3.9"),
+  // as opposed to a variant (e.g. "10 LTS" or "Python"), which can't be
+  // ordered. An empty version means the doc holds the latest version
+  // (e.g. `angular`), whereas docs without a version aren't versioned at all.
+  hasNumberedVersion() {
+    return (
+      this.version === "" || Doc.NUMBERED_VERSION_RGX.test(this.version || "")
+    );
+  }
+
+  // Compares numbered versions (e.g. "3.9" is older than "3.12").
+  // An empty version means the latest version and is newer than any other.
+  isNewerVersionThan(other) {
+    if (this.version === "" || other.version === "") {
+      return this.version === "" && other.version !== "";
+    }
+    const version = this.version.split(".");
+    const otherVersion = other.version.split(".");
+    for (let i = 0; i < Math.max(version.length, otherVersion.length); i++) {
+      const diff =
+        (parseInt(version[i], 10) || 0) - (parseInt(otherVersion[i], 10) || 0);
+      if (diff !== 0) {
+        return diff > 0;
+      }
+    }
+    return false;
+  }
+
+  // Returns the doc holding the latest version of the same documentation among
+  // `docs`, or the doc itself when there is none.
+  findLatestVersion(docs) {
+    let latest = this;
+    if (!this.hasNumberedVersion()) {
+      return latest;
+    }
+    for (var doc of docs) {
+      if (
+        doc.name === this.name &&
+        doc.hasNumberedVersion() &&
+        doc.isNewerVersionThan(latest)
+      ) {
+        latest = doc;
+      }
+    }
+    return latest;
   }
 
   isOutdated(status) {
