@@ -16,12 +16,12 @@ group :app do
   gem 'dartsass-sprockets'
   gem 'image_optim_pack', platforms: :ruby
   gem 'image_optim'
+  gem 'puma'
   gem 'rack'
   gem 'rss'
   gem 'sinatra'
   gem 'sprockets-helpers'
   gem 'sprockets'
-  gem 'thin'
 end
 
 group :production do
