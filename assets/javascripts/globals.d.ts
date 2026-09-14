@@ -12,6 +12,14 @@
  * The types themselves live in JSDoc next to the code that implements them.
  */
 
+// --- Globals defined by assigning to `this` at the top level ---
+
+/** lib/util.js — queries one element, and carries the DOM helpers. */
+declare var $: DollarQuery & DollarHelpers;
+
+/** lib/util.js — queries every matching element. */
+declare var $$: DollarQueryAll;
+
 // --- Vendored libraries (assets/javascripts/vendor) ---
 
 /** Cookies.js — github.com/ScottHamper/Cookies */

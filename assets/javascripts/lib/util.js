@@ -1,17 +1,117 @@
+// @ts-check
+
+/**
+ * `$` is the app's DOM helper: calling it queries a single element, and it
+ * carries the traversal, event, manipulation and scrolling helpers used
+ * throughout the app as properties.
+ *
+ * The signatures below are the source of truth for the global, which is
+ * declared in globals.d.ts. The implementations are contextually typed by
+ * them, so they don't repeat the annotations.
+ *
+ * @callback DollarQuery
+ * @param {string} selector
+ * @param {ParentNode} [el] The root to search under. Defaults to `document`.
+ * @returns {any} The first match, or `undefined` if the selector is invalid.
+ *   Typed loosely because callers immediately reach for element-specific
+ *   properties.
+ */
+
+/**
+ * @callback DollarQueryAll
+ * @param {string} selector
+ * @param {ParentNode} [el] The root to search under. Defaults to `document`.
+ * @returns {NodeListOf<any>} All matches, or `undefined` if the selector is invalid.
+ */
+
+/**
+ * Anything `$.append` and friends accept as content.
+ *
+ * @typedef {string | Node | ArrayLike<Node>} DollarContent
+ */
+
+/**
+ * @typedef {object} DollarScrollOptions
+ * @property {number} [margin] Extra space above the target, for `"top"`.
+ * @property {number} [topGap] Gap above the target as a multiple of its height, for `"continuous"`.
+ * @property {number} [bottomGap] Gap below the target as a multiple of its height, for `"continuous"`.
+ */
+
+/**
+ * The helpers hanging off `$`.
+ *
+ * @typedef {object} DollarHelpers
+ *
+ * @property {(id: string) => any} id Looks an element up by id.
+ * @property {(parent: Node, el: any) => boolean | undefined} hasChild Whether `el` is `parent` or a descendant of it.
+ * @property {(el: any, parent?: Node) => any} closestLink The nearest `<a>` ancestor, stopping at `parent`.
+ *
+ * @property {(el: EventTarget, event: string, callback: (event: any) => void, useCapture?: boolean) => void} on Accepts several space-separated event names.
+ * @property {(el: EventTarget, event: string, callback: (event: any) => void, useCapture?: boolean) => void} off Accepts several space-separated event names.
+ * @property {(el: EventTarget, type: string, canBubble?: boolean, cancelable?: boolean) => void} trigger Dispatches a synthetic event.
+ * @property {(el: EventTarget) => void} click Dispatches a synthetic click.
+ * @property {(event: Event) => void} stopEvent Prevents the default and stops propagation, immediately.
+ * @property {(event: Event) => any} eventTarget The event target, resolving an SVG `<use>` to the element that referenced it.
+ *
+ * @property {(el: Element, value: DollarContent) => void} append
+ * @property {(el: Element, value: DollarContent) => void} prepend
+ * @property {(el: Element, value: DollarContent) => void} before
+ * @property {(el: Element, value: DollarContent) => void} after
+ * @property {(value: any) => void} remove Detaches the node, or every node in the collection.
+ * @property {(el: Node) => void} empty Removes every child.
+ * @property {(el: Element, fn: (el: any) => void) => void} batchUpdate Runs `fn` with the element off the DOM, to avoid reflows.
+ *
+ * @property {(el: Element) => DOMRect} rect
+ * @property {(el: any, container?: Element) => { top: number, left: number }} offset Offset relative to `container`, which defaults to the body.
+ * @property {(el: any) => any} scrollParent The nearest scrollable ancestor.
+ * @property {(el: any, parent?: any, position?: "top" | "center" | "continuous", options?: DollarScrollOptions) => void} scrollTo
+ * @property {(el: any, parent?: any, ...args: any[]) => void} scrollToWithImageLock Like `scrollTo`, but holds the position while nearby images load.
+ * @property {(el: any, fn: () => void) => void} lockScroll Runs `fn` while holding the element's position relative to the window.
+ * @property {(el: any) => void} openDetailsAncestors Expands every `<details>` the element is inside.
+ * @property {(el: Element, end: number) => void} smoothScroll Animates `scrollTop` towards `end`.
+ *
+ * @property {(object: any) => any[]} makeArray
+ * @property {(array: any[], object: any) => boolean} arrayDelete Removes the first occurrence; reports whether it was there.
+ * @property {(object: any) => boolean} isCollection Whether the value is an array or a live DOM collection.
+ * @property {(string: string) => string} escape Escapes HTML-significant characters.
+ * @property {(string: string) => string} escapeRegexp
+ * @property {(string: string) => string} urlDecode Decodes a form-encoded component, where `+` means a space.
+ * @property {(string: string) => string} urlDecodeFragment Decodes a hash fragment, where `+` is literal.
+ * @property {(string: string) => string} classify Turns `snake_case` into `CamelCase`.
+ *
+ * @property {() => void} noop
+ * @property {(blob: Blob, filename: string) => void} download Saves the blob to the user's downloads.
+ * @property {(value: string | { href: string }) => void} popup Opens a URL in a new tab, without leaking the opener.
+ * @property {() => boolean} isMac
+ * @property {() => boolean} isIE
+ * @property {() => boolean} isChromeForAndroid
+ * @property {() => boolean} isAndroid
+ * @property {() => boolean} isIOS
+ * @property {() => boolean} overlayScrollbarsEnabled Whether the OS draws scrollbars as an overlay.
+ * @property {(el: Element, options?: { className?: string, delay?: number }) => void} highlight Adds a class, then removes it after a delay.
+ */
+
 //
 // Traversing
 //
 
 let smoothDistance, smoothDuration, smoothEnd, smoothStart;
-this.$ = function (selector, el) {
-  if (el == null) {
-    el = document;
-  }
-  try {
-    return el.querySelector(selector);
-  } catch (error) {}
-};
+// The helpers are attached to `$` below, so the function on its own doesn't
+// yet satisfy the type the global is declared with.
+this.$ = /** @type {DollarQuery & DollarHelpers} */ (
+  /** @type {DollarQuery} */ (
+    function (selector, el) {
+      if (el == null) {
+        el = document;
+      }
+      try {
+        return el.querySelector(selector);
+      } catch (error) {}
+    }
+  )
+);
 
+/** @type {DollarQueryAll} */
 this.$$ = function (selector, el) {
   if (el == null) {
     el = document;
@@ -105,12 +205,19 @@ $.stopEvent = function (event) {
   event.stopImmediatePropagation();
 };
 
-$.eventTarget = (event) => event.target.correspondingUseElement || event.target;
+$.eventTarget = function (event) {
+  const target = /** @type {any} */ (event.target);
+  return target.correspondingUseElement || target;
+};
 
 //
 // Manipulation
 //
 
+/**
+ * @param {DollarContent} value
+ * @returns {DocumentFragment}
+ */
 const buildFragment = function (value) {
   const fragment = document.createDocumentFragment();
 
@@ -119,7 +226,7 @@ const buildFragment = function (value) {
       fragment.appendChild(child);
     }
   } else {
-    fragment.innerHTML = value;
+    /** @type {any} */ (fragment).innerHTML = value;
   }
 
   return fragment;
@@ -132,20 +239,20 @@ $.append = function (el, value) {
     if ($.isCollection(value)) {
       value = buildFragment(value);
     }
-    el.appendChild(value);
+    el.appendChild(/** @type {Node} */ (value));
   }
 };
 
 $.prepend = function (el, value) {
   if (!el.firstChild) {
-    $.append(value);
+    $.append(el, value);
   } else if (typeof value === "string") {
     el.insertAdjacentHTML("afterbegin", value);
   } else {
     if ($.isCollection(value)) {
       value = buildFragment(value);
     }
-    el.insertBefore(value, el.firstChild);
+    el.insertBefore(/** @type {Node} */ (value), el.firstChild);
   }
 };
 
@@ -154,7 +261,7 @@ $.before = function (el, value) {
     value = buildFragment(value);
   }
 
-  el.parentNode.insertBefore(value, el);
+  el.parentNode.insertBefore(/** @type {Node} */ (value), el);
 };
 
 $.after = function (el, value) {
@@ -163,9 +270,9 @@ $.after = function (el, value) {
   }
 
   if (el.nextSibling) {
-    el.parentNode.insertBefore(value, el.nextSibling);
+    el.parentNode.insertBefore(/** @type {Node} */ (value), el.nextSibling);
   } else {
-    el.parentNode.appendChild(value);
+    el.parentNode.appendChild(/** @type {Node} */ (value));
   }
 };
 
@@ -177,8 +284,9 @@ $.remove = function (value) {
       }
     }
   } else {
-    if (value.parentNode != null) {
-      value.parentNode.removeChild(value);
+    const node = /** @type {Node} */ (value);
+    if (node.parentNode != null) {
+      node.parentNode.removeChild(node);
     }
   }
 };
@@ -454,12 +562,12 @@ $.urlDecode = (string) => decodeURIComponent(string.replace(/\+/g, "%20"));
 $.urlDecodeFragment = (string) => decodeURIComponent(string);
 
 $.classify = function (string) {
-  string = string.split("_");
-  for (let i = 0; i < string.length; i++) {
-    var substr = string[i];
-    string[i] = substr[0].toUpperCase() + substr.slice(1);
+  const parts = string.split("_");
+  for (let i = 0; i < parts.length; i++) {
+    var substr = parts[i];
+    parts[i] = substr[0].toUpperCase() + substr.slice(1);
   }
-  return string.join("");
+  return parts.join("");
 };
 
 //
@@ -483,13 +591,13 @@ $.download = function (blob, filename) {
 
 $.popup = function (value) {
   try {
-    window.open(value.href || value, "_blank", "noopener");
+    window.open(/** @type {any} */ (value).href || value, "_blank", "noopener");
   } catch (error) {
     const win = window.open();
     if (win.opener) {
       win.opener = null;
     }
-    win.location = value.href || value;
+    win.location = /** @type {any} */ (value).href || value;
   }
 };
 
