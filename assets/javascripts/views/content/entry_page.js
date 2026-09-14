@@ -144,7 +144,7 @@ class EntryPage extends app.View {
     super.empty();
   }
 
-  /** @returns {any} The views/pages class this doc needs, if it has one. */
+  /** @returns {typeof BasePage | undefined} The views/pages class this doc needs. */
   subViewClass() {
     // doc.type is optional (e.g. the Q documentation has none).
     const type = this.entry.doc.type;
@@ -255,11 +255,13 @@ class EntryPage extends app.View {
     }
   }
 
-  /** @returns {any} The link to the entry on the documentation's own site. */
+  /** @returns {HTMLAnchorElement | undefined} The link to the entry on the documentation's own site. */
   originalLink() {
     // The attribution is appended last but may be followed by other elements,
     // so match on the last attribution rather than on its sibling position.
-    const links = this.findAll("._attribution ._attribution-link");
+    const links = /** @type {NodeListOf<HTMLAnchorElement>} */ (
+      this.findAll("._attribution ._attribution-link")
+    );
     return links[links.length - 1];
   }
 

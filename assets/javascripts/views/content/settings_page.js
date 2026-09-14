@@ -103,7 +103,7 @@ class SettingsPage extends app.View {
    * Replaces the preferences with the contents of a file.
    *
    * @param {File} file
-   * @param {any} input The file field, reset once the import is done.
+   * @param {HTMLInputElement} input The file field, reset once the import is done.
    */
   import(file, input) {
     if (!file || file.type !== "application/json") {

@@ -86,7 +86,7 @@ class OfflinePage extends app.View {
 
   /**
    * @param {Doc} doc
-   * @returns {any} The doc's row.
+   * @returns {HTMLElement} The doc's row.
    */
   docEl(doc) {
     return this.find(`[data-slug='${doc.slug}']`);
@@ -249,7 +249,7 @@ class OfflinePage extends app.View {
     }
   }
 
-  /** @param {any} input The file field the backup was chosen with. */
+  /** @param {HTMLInputElement} input The file field the backup was chosen with. */
   importDocs(input) {
     const file = input.files[0];
     input.value = ""; // so that picking the same file again fires a change event

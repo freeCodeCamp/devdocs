@@ -53,7 +53,7 @@ class Content extends app.View {
       .on("bootError", () => this.onBootError());
   }
 
-  /** @param {unknown} view The page to show, replacing whatever is there. */
+  /** @param {View} view The page to show, replacing whatever is there. */
   show(view) {
     this.hideLoading();
     if (view !== this.view) {

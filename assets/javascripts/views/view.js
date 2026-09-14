@@ -1,6 +1,13 @@
 // @ts-check
 
 /**
+ * Anything a view's manipulation helpers accept as content: markup, a node, a
+ * collection of them, or another view.
+ *
+ * @typedef {DollarContent | View} ViewContent
+ */
+
+/**
  * A DOM event as a view handler reads it.
  *
  * lib.dom types `Event#target` as a bare `EventTarget`, which carries none of
@@ -228,39 +235,39 @@ class View extends Events {
     );
   }
 
-  /** @param {any} value Markup, a node, or another view. */
+  /** @param {ViewContent} value */
   append(value) {
-    $.append(this.el, value.el || value);
+    $.append(this.el, contentOf(value));
   }
 
-  /** @param {any} value The node or view to append this one to. */
+  /** @param {View | HTMLElement} value The element or view to append this one to. */
   appendTo(value) {
-    $.append(value.el || value, this.el);
+    $.append(nodeOf(value), this.el);
   }
 
-  /** @param {any} value Markup, a node, or another view. */
+  /** @param {ViewContent} value */
   prepend(value) {
-    $.prepend(this.el, value.el || value);
+    $.prepend(this.el, contentOf(value));
   }
 
-  /** @param {any} value The node or view to prepend this one to. */
+  /** @param {View | HTMLElement} value The element or view to prepend this one to. */
   prependTo(value) {
-    $.prepend(value.el || value, this.el);
+    $.prepend(nodeOf(value), this.el);
   }
 
-  /** @param {any} value Markup, a node, or another view, inserted before this one. */
+  /** @param {ViewContent} value Inserted before this view. */
   before(value) {
-    $.before(this.el, value.el || value);
+    $.before(this.el, contentOf(value));
   }
 
-  /** @param {any} value Markup, a node, or another view, inserted after this one. */
+  /** @param {ViewContent} value Inserted after this view. */
   after(value) {
-    $.after(this.el, value.el || value);
+    $.after(this.el, contentOf(value));
   }
 
-  /** @param {any} value The node or view to detach. */
+  /** @param {View | HTMLElement} value The element or view to detach. */
   remove(value) {
-    $.remove(value.el || value);
+    $.remove(nodeOf(value));
   }
 
   /** Removes every child, then re-resolves the `elements` statics. */
@@ -272,7 +279,7 @@ class View extends Events {
   /**
    * Replaces the view's contents.
    *
-   * @param {unknown} value Markup, a node, or another view.
+   * @param {ViewContent} value
    */
   html(value) {
     this.empty();
@@ -427,6 +434,20 @@ class View extends Events {
     $.remove(this.el);
   }
 }
+
+/**
+ * Unwraps a view into its element, leaving markup and nodes alone.
+ *
+ * @param {ViewContent} value
+ * @returns {DollarContent}
+ */
+const contentOf = (value) => (value instanceof View ? value.el : value);
+
+/**
+ * @param {View | HTMLElement} value
+ * @returns {HTMLElement}
+ */
+const nodeOf = (value) => (value instanceof View ? value.el : value);
 
 // Registered on `app` so that the rest of the code can reach it; declared at
 // the top level so that subclasses extend a type rather than `any`.

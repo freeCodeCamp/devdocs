@@ -85,24 +85,27 @@ class PaginatedList extends app.View {
    * Extends the list in the direction the link points, holding the scroll
    * position so that the rows under the pointer don't move.
    *
-   * @param {any} link
+   * @param {HTMLElement} link
    */
   paginate(link) {
-    $.lockScroll(link.nextSibling || link.previousSibling, () => {
-      $.batchUpdate(this.el, () => {
-        if (link.nextSibling) {
-          this.paginatePrev();
-        } else {
-          this.paginateNext();
-        }
-      });
-    });
+    $.lockScroll(
+      /** @type {HTMLElement} */ (link.nextSibling || link.previousSibling),
+      () => {
+        $.batchUpdate(this.el, () => {
+          if (link.nextSibling) {
+            this.paginatePrev();
+          } else {
+            this.paginateNext();
+          }
+        });
+      },
+    );
   }
 
   /** Appends the page after the current one. */
   paginateNext() {
     if (this.el.lastChild) {
-      this.remove(this.el.lastChild);
+      this.remove(/** @type {HTMLElement} */ (this.el.lastChild));
     } // remove link
     if (this.page >= 2) {
       this.hideTopPage();
@@ -116,7 +119,7 @@ class PaginatedList extends app.View {
 
   /** Prepends the page before the current one. */
   paginatePrev() {
-    this.remove(this.el.firstChild); // remove link
+    this.remove(/** @type {HTMLElement} */ (this.el.firstChild)); // remove link
     this.hideBottomPage();
     this.page--;
     this.prepend(this.renderPage(this.page - 1)); // previous page is offset by one
@@ -148,7 +151,7 @@ class PaginatedList extends app.View {
     const n =
       this.page <= 2 ? PaginatedList.PER_PAGE : PaginatedList.PER_PAGE + 1; // remove link
     for (let i = 0, end = n; i < end; i++) {
-      this.remove(this.el.firstChild);
+      this.remove(/** @type {HTMLElement} */ (this.el.firstChild));
     }
     this.prepend(this.renderPrevLink(this.page));
   }
@@ -160,7 +163,7 @@ class PaginatedList extends app.View {
         ? this.data.length % PaginatedList.PER_PAGE || PaginatedList.PER_PAGE
         : PaginatedList.PER_PAGE + 1; // remove link
     for (let i = 0, end = n; i < end; i++) {
-      this.remove(this.el.lastChild);
+      this.remove(/** @type {HTMLElement} */ (this.el.lastChild));
     }
     this.append(this.renderNextLink(this.page - 1));
   }

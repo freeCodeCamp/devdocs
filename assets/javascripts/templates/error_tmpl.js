@@ -52,7 +52,7 @@ If you keep seeing this, you're likely behind a proxy or firewall that blocks cr
 
 /**
  * @param {string} reason Why offline mode is unavailable.
- * @param {any} [exception] The error the browser reported, when there was one.
+ * @param {Error} [exception] The error the browser reported, when there was one.
  * @returns {string}
  */
 app.templates.offlineError = function (reason, exception) {

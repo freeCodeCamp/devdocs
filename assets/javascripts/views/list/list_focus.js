@@ -63,7 +63,7 @@ class ListFocus extends app.View {
     }
   }
 
-  /** @returns {any} The focused row, or the selected one when nothing is focused. */
+  /** @returns {HTMLElement | undefined} The focused row, or the selected one when nothing is focused. */
   getCursor() {
     return (
       this.findByClass(this.statics().activeClass) ||
@@ -197,9 +197,9 @@ class ListFocus extends app.View {
       !cursor.classList.contains(app.views.ListFold.activeClass) &&
       cursor.parentNode !== this.el
     ) {
-      const prev = cursor.parentNode.previousSibling;
+      const prev = asElement(asElement(cursor.parentNode)?.previousSibling ?? null);
       if (prev && prev.classList.contains(app.views.ListFold.targetClass)) {
-        this.focusOnNextFrame(cursor.parentNode.previousSibling);
+        this.focusOnNextFrame(prev);
       }
     }
   }
@@ -216,7 +216,7 @@ class ListFocus extends app.View {
   onSuperEnter() {
     const cursor = this.getCursor();
     if (cursor) {
-      $.popup(cursor);
+      $.popup(/** @type {HTMLAnchorElement} */ (cursor));
     }
   }
 

@@ -14,8 +14,8 @@ class Results extends app.View {
   static routes = { after: "afterRoute" };
 
   /**
-   * @param {any} sidebar
-   * @param {any} search
+   * @param {Sidebar} sidebar
+   * @param {Search} search
    */
   constructor(sidebar, search) {
     super();

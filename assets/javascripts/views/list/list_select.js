@@ -48,7 +48,7 @@ class ListSelect extends app.View {
     this.selectByHref(location.pathname + location.hash);
   }
 
-  /** @returns {any} The selected row, or `undefined`. */
+  /** @returns {HTMLElement | undefined} The selected row. */
   getSelection() {
     return this.findByClass(this.statics().activeClass);
   }

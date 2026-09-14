@@ -54,7 +54,7 @@ class ListFold extends app.View {
     }
   }
 
-  /** @returns {any} The focused row, or the selected one. */
+  /** @returns {HTMLElement | undefined} The focused row, or the selected one. */
   getCursor() {
     return (
       this.findByClass(app.views.ListFocus.activeClass) ||

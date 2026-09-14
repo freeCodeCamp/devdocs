@@ -82,9 +82,9 @@ class DocPicker extends app.View {
    * Pulls the other versions of a doc out of the list, so that they can be
    * grouped under it.
    *
-   * @param {any[]} originalDocs The docs still to be rendered.
-   * @param {any} version The doc whose siblings to collect.
-   * @returns {[any[], any[]]} What is left to render, and the versions found.
+   * @param {Doc[]} originalDocs The docs still to be rendered.
+   * @param {Doc} version The doc whose siblings to collect.
+   * @returns {[Doc[], Doc[]]} What is left to render, and the versions found.
    */
   extractVersions(originalDocs, version) {
     const docs = [];

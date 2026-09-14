@@ -126,7 +126,7 @@ var pluralizeDocs = (count) =>
 var listSlugs = (slugs) => slugs.map((slug) => $.escape(slug)).join(", ");
 
 /**
- * @param {any} [exception] The error the browser reported, when there was one.
+ * @param {Error} [exception] The error the browser reported, when there was one.
  * @returns {string}
  */
 app.templates.persistenceError = function (exception) {
