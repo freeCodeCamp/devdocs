@@ -15,7 +15,7 @@ class SupportTablesPage extends BasePage {
 
     let el = event.target;
     while (el.tagName !== "TABLE") {
-      el = el.parentNode;
+      el = el.parentElement;
     }
     el.classList.add("show-all");
   }

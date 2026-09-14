@@ -180,7 +180,7 @@ class OfflinePage extends app.View {
     }
   }
 
-  /** @param {ViewEvent} event */
+  /** @param {ViewInputEvent} event */
   onChange(event) {
     if (event.target.name === "autoUpdate") {
       app.settings.set("manualUpdate", !event.target.checked);

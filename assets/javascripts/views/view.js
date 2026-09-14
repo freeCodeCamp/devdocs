@@ -3,20 +3,23 @@
 /**
  * A DOM event as a view handler reads it.
  *
- * The event's own members stay precisely typed; the target is left loose,
- * because handlers reach for properties that lib.dom only declares on the
- * specific element types the handler happens to be bound to.
+ * lib.dom types `Event#target` as a bare `EventTarget`, which carries none of
+ * the element properties a handler reads. The handlers here are bound to
+ * elements, so the target is narrowed to one; the form variants narrow it
+ * further, for the handlers bound to a field.
  *
- * @typedef {Event & { target: any, currentTarget: any }} ViewEvent
- * @typedef {MouseEvent & { target: any, currentTarget: any }} ViewMouseEvent
- * @typedef {KeyboardEvent & { target: any, currentTarget: any }} ViewKeyboardEvent
+ * @typedef {Event & { target: HTMLElement, currentTarget: HTMLElement }} ViewEvent
+ * @typedef {MouseEvent & { target: HTMLElement, currentTarget: HTMLElement }} ViewMouseEvent
+ * @typedef {KeyboardEvent & { target: HTMLElement, currentTarget: HTMLElement }} ViewKeyboardEvent
+ * @typedef {Event & { target: HTMLInputElement, currentTarget: HTMLElement }} ViewInputEvent
  */
 
 /**
  * The static configuration a view subclass declares.
  *
- * The index signature covers the statics each subclass adds of its own — class
- * names, titles, and so on — which would otherwise have to be listed here.
+ * The statics below `shortcuts` are the ones subclasses add of their own and
+ * read back through `statics()`, which is why they are listed here rather than
+ * on each subclass.
  *
  * @typedef {{
  *   el?: string | Element | Document,
@@ -27,7 +30,14 @@
  *   events?: Record<string, string>,
  *   routes?: Record<string, string>,
  *   shortcuts?: Record<string, string>,
- *   [key: string]: any,
+ *   activeClass?: string,
+ *   targetClass?: string,
+ *   handleClass?: string,
+ *   itemClass?: string,
+ *   loadingClass?: string,
+ *   errorClass?: string,
+ *   defaultOptions?: Record<string, any>,
+ *   titles?: Record<string, string>,
  * }} ViewStatics
  */
 
@@ -41,11 +51,12 @@
  */
 class View extends Events {
   /**
-   * The element the view is bound to. Usually an element, but a view can bind
-   * to the document (see views/layout/document.js) or to a form, so it is
-   * left untyped rather than narrowed at every call site.
+   * The element the view is bound to.
    *
-   * @type {any}
+   * A view can also bind to the document (see views/layout/document.js); such
+   * a view reaches for `document` directly rather than through `el`.
+   *
+   * @type {HTMLElement}
    */
   el;
 
@@ -64,7 +75,7 @@ class View extends Events {
     }
     this.refreshElements();
     // `init` is an optional hook, defined on the subclass's prototype.
-    const self = /** @type {any} */ (this);
+    const self = /** @type {{ init?: () => void }} */ (this);
     if (typeof self.init === "function") {
       self.init();
       this.refreshElements();
@@ -78,7 +89,7 @@ class View extends Events {
    * @returns {ViewStatics}
    */
   statics() {
-    return /** @type {any} */ (this.constructor);
+    return /** @type {ViewStatics} */ (this.constructor);
   }
 
   /** Finds or builds the element, and applies the static attributes to it. */
@@ -89,7 +100,8 @@ class View extends Events {
         typeof statics.el === "string"
           ? $(statics.el)
           : statics.el
-            ? statics.el
+            ? // A view may bind to the document; see the note on `el`.
+              /** @type {HTMLElement} */ (/** @type {unknown} */ (statics.el))
             : document.createElement(statics.tagName || "div");
     }
 
@@ -107,7 +119,7 @@ class View extends Events {
     if (statics.elements) {
       for (var name in statics.elements) {
         var selector = statics.elements[name];
-        /** @type {any} */ (this)[name] = this.find(selector);
+        /** @type {Record<string, unknown>} */ (this)[name] = this.find(selector);
       }
     }
   }
@@ -308,24 +320,24 @@ class View extends Events {
     if (statics.events) {
       for (name in statics.events) {
         method = statics.events[name];
-        /** @type {any} */ (this)[method] = /** @type {any} */ (this)[method].bind(this);
-        this.onDOM(name, /** @type {any} */ (this)[method]);
+        /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method] = /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method].bind(this);
+        this.onDOM(name, /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method]);
       }
     }
 
     if (statics.routes) {
       for (name in statics.routes) {
         method = statics.routes[name];
-        /** @type {any} */ (this)[method] = /** @type {any} */ (this)[method].bind(this);
-        app.router.on(name, /** @type {any} */ (this)[method]);
+        /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method] = /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method].bind(this);
+        app.router.on(name, /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method]);
       }
     }
 
     if (statics.shortcuts) {
       for (name in statics.shortcuts) {
         method = statics.shortcuts[name];
-        /** @type {any} */ (this)[method] = /** @type {any} */ (this)[method].bind(this);
-        app.shortcuts.on(name, /** @type {any} */ (this)[method]);
+        /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method] = /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method].bind(this);
+        app.shortcuts.on(name, /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method]);
       }
     }
   }
@@ -337,21 +349,21 @@ class View extends Events {
     if (statics.events) {
       for (name in statics.events) {
         method = statics.events[name];
-        this.offDOM(name, /** @type {any} */ (this)[method]);
+        this.offDOM(name, /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method]);
       }
     }
 
     if (statics.routes) {
       for (name in statics.routes) {
         method = statics.routes[name];
-        app.router.off(name, /** @type {any} */ (this)[method]);
+        app.router.off(name, /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method]);
       }
     }
 
     if (statics.shortcuts) {
       for (name in statics.shortcuts) {
         method = statics.shortcuts[name];
-        app.shortcuts.off(name, /** @type {any} */ (this)[method]);
+        app.shortcuts.off(name, /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method]);
       }
     }
   }

@@ -87,7 +87,7 @@ class Results extends app.View {
 
   /** Follows the first result. */
   openFirst() {
-    this.el.firstElementChild?.click();
+    /** @type {HTMLElement | null} */ (this.el.firstElementChild)?.click();
   }
 
   /** @param {Doc} doc The doc that was just enabled from a result. */

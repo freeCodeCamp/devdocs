@@ -145,7 +145,7 @@ class DocPicker extends app.View {
           if (prev.classList.contains(app.views.ListFold.activeClass)) {
             prev = $.makeArray($$("input", prev.nextElementSibling)).pop();
           }
-          this.delay(() => prev.focus());
+          this.delay(() => /** @type {HTMLElement} */ (prev).focus());
         } else {
           if (!target.classList.contains(app.views.ListFold.activeClass)) {
             this.listFold.open(target);

@@ -75,7 +75,10 @@ class SettingsPage extends app.View {
     app.settings.set("spaceScroll", enable ? 1 : 0);
   }
 
-  /** @param {number} value In seconds. */
+  /**
+   * @param {string | number} value In seconds. Comes straight off the field,
+   *   so it is a string; the store keeps it as one and the reader coerces.
+   */
   setScrollTimeout(value) {
     return app.settings.set("spaceTimeout", value);
   }
@@ -125,7 +128,7 @@ class SettingsPage extends app.View {
     reader.readAsText(file);
   }
 
-  /** @param {ViewEvent} event */
+  /** @param {ViewInputEvent} event */
   onChange(event) {
     const input = event.target;
     switch (input.name) {

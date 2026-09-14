@@ -76,7 +76,7 @@ class Search extends app.View {
     this.input.focus();
   }
 
-  /** @param {ViewEvent} event */
+  /** @param {Event} event */
   onWindowFocus(event) {
     if (event.target === window) {
       return this.autoFocus();
@@ -100,7 +100,7 @@ class Search extends app.View {
     if (force || !this.input.value) {
       this.scope.reset();
     }
-    this.el.reset();
+    /** @type {HTMLFormElement} */ (this.el).reset();
     this.onInput();
     this.autoFocus();
   }

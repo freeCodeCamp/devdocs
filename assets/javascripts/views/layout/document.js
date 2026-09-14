@@ -72,7 +72,7 @@ class AppDocument extends app.View {
    * tab was in the background, e.g. after the device was rotated.
    */
   onVisibilityChange() {
-    if (this.el.visibilityState !== "visible") {
+    if (document.visibilityState !== "visible") {
       return;
     }
     this.delay(() => {
