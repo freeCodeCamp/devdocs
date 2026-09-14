@@ -49,8 +49,12 @@ self.addEventListener('fetch', event => {
         url.pathname.endsWith('/index.json') &&
         response.ok
       ) {
-        const cache = await caches.open(cacheName);
-        cache.put(event.request, response.clone());
+        <%# waitUntil rather than await: the response goes back without %>
+        <%# waiting on the write, but the worker stays alive until it lands. %>
+        const copy = response.clone();
+        event.waitUntil(
+          caches.open(cacheName).then(cache => cache.put(event.request, copy)),
+        );
       }
 
       return response;
