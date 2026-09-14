@@ -105,6 +105,8 @@ export class SettingsStore {
    *
    * What is already stored wins, being the newer of the two. Cookies with a
    * single leading underscore belong to the analytics vendors, not to us.
+   * Nothing is expired unless the write lands, or a browser that won't take
+   * the settings would be left with no copy of them at all.
    *
    * Remove once the app has had a release or two to empty the jar out.
    */
@@ -119,6 +121,7 @@ export class SettingsStore {
     }
 
     const settings = this.dump();
+    const names = [];
 
     for (var cookie of document.cookie.split(/;\s?/)) {
       if (cookie[0] === "_") {
@@ -131,10 +134,20 @@ export class SettingsStore {
       if (key !== "analyticsConsentAsked" && !(key in settings)) {
         settings[key] = decode(value || "");
       }
-      expireCookie(name);
+      names.push(name);
     }
 
-    this.storage.set(SettingsStore.KEY, settings);
+    if (!names.length) {
+      return;
+    }
+
+    // The jar is the only copy until the write lands, and LocalStorageStore
+    // reports a write it couldn't make rather than throwing.
+    if (!this.storage.set(SettingsStore.KEY, settings)) {
+      return;
+    }
+
+    names.forEach(expireCookie);
   }
 }
 

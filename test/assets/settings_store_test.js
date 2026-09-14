@@ -133,3 +133,22 @@ test("reports a write that doesn't stick", () => {
     SettingsStore.onBlocked = onBlocked;
   }
 });
+
+test("leaves the cookies alone when the migration can't be written", () => {
+  reset();
+  document.cookie = "docs=css/javascript";
+  document.cookie = "theme=dark";
+
+  storageWritable = false;
+  new SettingsStore();
+
+  assert.equal(document.cookie, "docs=css/javascript; theme=dark");
+
+  // And a later boot, with storage writable again, still finds them.
+  storageWritable = true;
+  assert.deepEqual(new SettingsStore().dump(), {
+    docs: "css/javascript",
+    theme: "dark",
+  });
+  assert.equal(document.cookie, "");
+});
