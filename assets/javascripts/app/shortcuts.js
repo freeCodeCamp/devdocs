@@ -1,3 +1,5 @@
+// @ts-check
+
 app.Shortcuts = class Shortcuts extends Events {
   constructor() {
     super();

@@ -1,3 +1,5 @@
+// @ts-check
+
 app.UpdateChecker = class UpdateChecker {
   constructor() {
     this.lastCheck = Date.now();

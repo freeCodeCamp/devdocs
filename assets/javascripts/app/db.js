@@ -1,10 +1,13 @@
+// @ts-check
+
 app.DB = class DB {
   static NAME = "docs";
   static VERSION = 15;
 
   constructor() {
     this.versionMultipler = $.isIE() ? 1e5 : 1e9;
-    this.useIndexedDB = this.useIndexedDB();
+    // Replaces the method of the same name with the answer it gives.
+    /** @type {any} */ (this).useIndexedDB = this.useIndexedDB();
     this.callbacks = [];
   }
 
@@ -78,7 +81,7 @@ app.DB = class DB {
 
   fail(reason, error) {
     this.cachedDocs = null;
-    this.useIndexedDB = false;
+    /** @type {any} */ (this).useIndexedDB = false;
     if (!this.reason) {
       this.reason = reason;
     }
@@ -109,11 +112,13 @@ app.DB = class DB {
   onVersionError() {
     const req = indexedDB.open(DB.NAME);
     req.onsuccess = (event) => {
-      return this.handleVersionMismatch(event.target.result.version);
+      return this.handleVersionMismatch(
+        /** @type {IDBRequest<IDBDatabase>} */ (event.target).result.version,
+      );
     };
-    req.onerror = function (event) {
+    req.onerror = (event) => {
       event.preventDefault();
-      return this.fail("cant_open", error);
+      return this.fail("cant_open", req.error);
     };
   }
 

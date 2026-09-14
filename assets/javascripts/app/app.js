@@ -94,10 +94,10 @@ class App extends Events {
   previousErrorHandler;
 
   /**
-   * The most recent IndexedDB transaction, tracked by app/db.js so that a
-   * hung transaction can be detected.
+   * The stores and mode of the most recent IndexedDB transaction, tracked by
+   * app/db.js so that a hung transaction can be reported.
    *
-   * @type {number | undefined}
+   * @type {[string | string[], IDBTransactionMode] | undefined}
    */
   lastIDBTransaction;
 

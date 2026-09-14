@@ -1,3 +1,5 @@
+// @ts-check
+
 app.Settings = class Settings {
   static PREFERENCE_KEYS = [
     "hideDisabled",
@@ -63,7 +65,7 @@ app.Settings = class Settings {
     this.cache[key] =
       (left = this.store.get(key)) != null
         ? left
-        : this.constructor.defaults[key];
+        : /** @type {any} */ (this.constructor).defaults[key];
     if (key === "theme" && this.cache[key] === "auto" && !this.darkModeQuery) {
       return (this.cache[key] = "default");
     } else {
@@ -91,7 +93,10 @@ app.Settings = class Settings {
   }
 
   getDocs() {
-    return this.store.get("docs")?.split("/") || app.config.default_docs;
+    return (
+      /** @type {string | undefined} */ (this.store.get("docs"))?.split("/") ||
+      app.config.default_docs
+    );
   }
 
   setDocs(docs) {
@@ -99,7 +104,7 @@ app.Settings = class Settings {
   }
 
   getTips() {
-    return this.store.get("tips")?.split("/") || [];
+    return /** @type {string | undefined} */ (this.store.get("tips"))?.split("/") || [];
   }
 
   setTips(tips) {
@@ -109,7 +114,9 @@ app.Settings = class Settings {
   setLayout(name, enable) {
     this.toggleLayout(name, enable);
 
-    const layout = (this.store.get("layout") || "").split(" ");
+    const layout = /** @type {string} */ (
+      this.store.get("layout") || ""
+    ).split(" ");
     $.arrayDelete(layout, "");
 
     if (enable) {
@@ -128,7 +135,9 @@ app.Settings = class Settings {
   }
 
   hasLayout(name) {
-    const layout = (this.store.get("layout") || "").split(" ");
+    const layout = /** @type {string} */ (
+      this.store.get("layout") || ""
+    ).split(" ");
     return layout.includes(name);
   }
 

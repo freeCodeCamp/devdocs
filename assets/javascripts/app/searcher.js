@@ -1,3 +1,5 @@
+// @ts-check
+
 //
 // Match functions
 //
@@ -204,7 +206,7 @@ app.Searcher = class Searcher extends Events {
   }
 
   setup() {
-    query = this.query = this.constructor.normalizeQuery(this.query);
+    query = this.query = /** @type {any} */ (this.constructor).normalizeQuery(this.query);
     queryLength = query.length;
     this.dataLength = this.data.length;
     this.matchers = [exactMatch];

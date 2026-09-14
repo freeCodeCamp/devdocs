@@ -1,3 +1,5 @@
+// @ts-check
+
 app.ServiceWorker = class ServiceWorker extends Events {
   static isEnabled() {
     return !!navigator.serviceWorker && app.config.service_worker_enabled;

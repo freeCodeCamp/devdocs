@@ -1,3 +1,5 @@
+// @ts-check
+
 // Exports the offline data (the pages stored in IndexedDB and the index files
 // cached in localStorage) to a JSON file, and imports it back — either to
 // restore a backup after the browser evicted the data, or to move the
@@ -75,7 +77,7 @@ app.OfflineBackup = class OfflineBackup {
     reader.onload = () => {
       const data = (() => {
         try {
-          return JSON.parse(reader.result);
+          return JSON.parse(/** @type {string} */ (reader.result));
         } catch (error) {}
       })();
 

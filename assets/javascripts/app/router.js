@@ -1,3 +1,5 @@
+// @ts-check
+
 app.Router = class Router extends Events {
   static routes = [
     ["*", "before"],
@@ -15,7 +17,7 @@ app.Router = class Router extends Events {
 
   constructor() {
     super();
-    for (var [path, method] of this.constructor.routes) {
+    for (var [path, method] of /** @type {any} */ (this.constructor).routes) {
       page(path, this[method].bind(this));
     }
     this.setInitialPath();
