@@ -1,4 +1,11 @@
-app.views.DocPicker = class DocPicker extends app.View {
+// @ts-check
+
+/**
+ * The checklist of every available doc, shown in the preferences.
+ *
+ * Docs that come in several versions are grouped under one expandable row.
+ */
+class DocPicker extends app.View {
   static className = "_list _list-picker";
 
   static events = {
@@ -6,26 +13,30 @@ app.views.DocPicker = class DocPicker extends app.View {
     mouseup: "onMouseUp",
   };
 
+  /** @inheritdoc */
   init() {
     this.addSubview((this.listFold = new app.views.ListFold(this.el)));
   }
 
+  /** Also renders the list and starts tracking the focus. */
   activate() {
-    if (super.activate(...arguments)) {
+    if (super.activate()) {
       this.render();
       this.onDOMFocus = this.onDOMFocus.bind(this);
       $.on(this.el, "focus", this.onDOMFocus, true);
     }
   }
 
+  /** Also empties the list and stops tracking the focus. */
   deactivate() {
-    if (super.deactivate(...arguments)) {
+    if (super.deactivate()) {
       this.empty();
       $.off(this.el, "focus", this.onDOMFocus, true);
       this.focusEl = null;
     }
   }
 
+  /** Rebuilds the list and puts the focus on the first checkbox. */
   render() {
     let doc;
     let html = this.tmpl("docPickerHeader");
@@ -53,6 +64,10 @@ app.views.DocPicker = class DocPicker extends app.View {
     requestAnimationFrame(() => this.findByTag("input")?.focus());
   }
 
+  /**
+   * @param {Doc[]} docs Every version of one doc.
+   * @returns {string}
+   */
   renderVersions(docs) {
     let html = "";
     for (var doc of docs) {
@@ -63,6 +78,14 @@ app.views.DocPicker = class DocPicker extends app.View {
     return html;
   }
 
+  /**
+   * Pulls the other versions of a doc out of the list, so that they can be
+   * grouped under it.
+   *
+   * @param {Doc[]} originalDocs The docs still to be rendered.
+   * @param {Doc} version The doc whose siblings to collect.
+   * @returns {[Doc[], Doc[]]} What is left to render, and the versions found.
+   */
   extractVersions(originalDocs, version) {
     const docs = [];
     const versions = [version];
@@ -72,25 +95,34 @@ app.views.DocPicker = class DocPicker extends app.View {
     return [docs, versions];
   }
 
+  /** Also collapses every expanded doc. */
   empty() {
     this.resetClass();
-    super.empty(...arguments);
+    super.empty();
   }
 
+  /** @returns {string[]} The slugs the user has ticked. */
   getSelectedDocs() {
-    return [...this.findAllByTag("input")]
+    return [
+      .../** @type {HTMLCollectionOf<HTMLInputElement>} */ (
+        this.findAllByTag("input")
+      ),
+    ]
       .filter((input) => input?.checked)
       .map((input) => input.name);
   }
 
+  /** Notes that the pointer is driving, so the focus isn't stolen. */
   onMouseDown() {
     this.mouseDown = Date.now();
   }
 
+  /** Clears the flag set by `onMouseDown`. */
   onMouseUp() {
     this.mouseUp = Date.now();
   }
 
+  /** @param {ViewEvent} event */
   onDOMFocus(event) {
     const { target } = event;
     if (target.tagName === "INPUT") {
@@ -98,7 +130,7 @@ app.views.DocPicker = class DocPicker extends app.View {
         (!this.mouseDown || !(Date.now() < this.mouseDown + 100)) &&
         (!this.mouseUp || !(Date.now() < this.mouseUp + 100))
       ) {
-        $.scrollTo(target.parentNode, null, "continuous");
+        $.scrollTo(target.parentElement, null, "continuous");
       }
     } else if (target.classList.contains(app.views.ListFold.targetClass)) {
       target.blur();
@@ -117,7 +149,7 @@ app.views.DocPicker = class DocPicker extends app.View {
           if (prev.classList.contains(app.views.ListFold.activeClass)) {
             prev = $.makeArray($$("input", prev.nextElementSibling)).pop();
           }
-          this.delay(() => prev.focus());
+          this.delay(() => /** @type {HTMLElement} */ (prev).focus());
         } else {
           if (!target.classList.contains(app.views.ListFold.activeClass)) {
             this.listFold.open(target);
@@ -128,4 +160,8 @@ app.views.DocPicker = class DocPicker extends app.View {
     }
     this.focusEl = target;
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.DocPicker = DocPicker;

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    // TypeScript 7 enables strict by default; the assets adopt types
+    // incrementally, so keep the looser checks for now.
+    "strict": false,
+    // Each file opts in with a `// @ts-check` comment.
+    "checkJs": false,
+    "noEmit": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"]
+  },
+  "include": ["assets/javascripts/**/*.js", "assets/javascripts/**/*.d.ts"],
+  "exclude": ["assets/javascripts/vendor"]
+}

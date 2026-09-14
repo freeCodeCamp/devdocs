@@ -1,3 +1,5 @@
+// @ts-check
+
 app.templates.aboutPage = function () {
   let doc;
   const all_docs = app.docs.all().concat(...(app.disabledDocs.all() || []));

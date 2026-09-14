@@ -1,4 +1,12 @@
-app.views.Settings = class Settings extends app.View {
+// @ts-check
+
+/**
+ * The preferences panel.
+ *
+ * Saving uninstalls the docs the user turned off and reloads the app, since
+ * the offline database's schema is derived from the enabled docs.
+ */
+class SettingsView extends View {
   static SIDEBAR_HIDDEN_LAYOUT = "_sidebar-hidden";
 
   static el = "._settings";
@@ -18,33 +26,44 @@ app.views.Settings = class Settings extends app.View {
 
   static shortcuts = { enter: "onEnter" };
 
+  /** @inheritdoc */
   init() {
     this.addSubview((this.docPicker = new app.views.DocPicker()));
   }
 
+  /** Also renders the panel and forces the sidebar to show. */
   activate() {
-    if (super.activate(...arguments)) {
+    if (super.activate()) {
       this.render();
-      document.body.classList.remove(Settings.SIDEBAR_HIDDEN_LAYOUT);
+      document.body.classList.remove(SettingsView.SIDEBAR_HIDDEN_LAYOUT);
     }
   }
 
+  /** Also puts the sidebar back the way the user had it. */
   deactivate() {
-    if (super.deactivate(...arguments)) {
+    if (super.deactivate()) {
       this.resetClass();
       this.docPicker.detach();
-      if (app.settings.hasLayout(Settings.SIDEBAR_HIDDEN_LAYOUT)) {
-        document.body.classList.add(Settings.SIDEBAR_HIDDEN_LAYOUT);
+      if (app.settings.hasLayout(SettingsView.SIDEBAR_HIDDEN_LAYOUT)) {
+        document.body.classList.add(SettingsView.SIDEBAR_HIDDEN_LAYOUT);
       }
     }
   }
 
+  /** Puts the doc picker in the sidebar and slides the panel in. */
   render() {
     this.docPicker.appendTo(this.sidebar);
     this.refreshElements();
     this.addClass("_in");
   }
 
+  /**
+   * Applies the chosen docs and reloads. Does nothing while a save is
+   * already running.
+   *
+   * @param {{ import?: boolean }} [options] Pass `import` when the docs were
+   *   just replaced by an import, so the picker isn't read back.
+   */
   save(options) {
     if (options == null) {
       options = {};
@@ -79,24 +98,29 @@ app.views.Settings = class Settings extends app.View {
     }
   }
 
+  /** Marks the panel as having unsaved changes. */
   onChange() {
     this.addClass("_dirty");
   }
 
+  /** Saves on Enter. */
   onEnter() {
     this.save();
   }
 
+  /** @param {ViewEvent} event */
   onSubmit(event) {
     event.preventDefault();
     this.save();
   }
 
+  /** Saves after the preferences were replaced by an import. */
   onImport() {
     this.addClass("_dirty");
     this.save({ import: true });
   }
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     if (event.which !== 1) {
       return;
@@ -106,4 +130,8 @@ app.views.Settings = class Settings extends app.View {
       app.router.show("/");
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Settings = SettingsView;

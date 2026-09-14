@@ -1,10 +1,39 @@
+// @ts-check
+
+/**
+ * The instance side of the store, so that the constructor can be declared as a
+ * global in globals.d.ts.
+ *
+ * @typedef {object} LocalStorageStore
+ * @property {(key: string) => unknown} get
+ * @property {(key: string, value: unknown) => boolean | undefined} set
+ * @property {(key: string) => boolean | undefined} del
+ * @property {() => boolean | undefined} reset
+ */
+
+/**
+ * A JSON-encoded wrapper around `localStorage`.
+ *
+ * Every method swallows the exceptions the browser throws when storage is
+ * unavailable (private browsing, blocked cookies, quota exhausted) and reports
+ * failure by returning `undefined`.
+ */
 this.LocalStorageStore = class LocalStorageStore {
+  /**
+   * @param {string} key
+   * @returns {unknown} The stored value, or `undefined` if it is missing or unreadable.
+   */
   get(key) {
     try {
       return JSON.parse(localStorage.getItem(key));
     } catch (error) {}
   }
 
+  /**
+   * @param {string} key
+   * @param {unknown} value
+   * @returns {boolean | undefined} `true` when stored, `undefined` when it failed.
+   */
   set(key, value) {
     try {
       localStorage.setItem(key, JSON.stringify(value));
@@ -12,6 +41,10 @@ this.LocalStorageStore = class LocalStorageStore {
     } catch (error) {}
   }
 
+  /**
+   * @param {string} key
+   * @returns {boolean | undefined} `true` when removed, `undefined` when it failed.
+   */
   del(key) {
     try {
       localStorage.removeItem(key);
@@ -19,6 +52,9 @@ this.LocalStorageStore = class LocalStorageStore {
     } catch (error) {}
   }
 
+  /**
+   * @returns {boolean | undefined} `true` when cleared, `undefined` when it failed.
+   */
   reset() {
     try {
       localStorage.clear();

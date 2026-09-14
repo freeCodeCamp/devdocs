@@ -1,3 +1,5 @@
+// @ts-check
+
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const test = require("node:test");
@@ -6,6 +8,7 @@ const vm = require("node:vm");
 const context = {
   app: {
     config: { search_param: "q" },
+    /** @type {{ replaceHash: (hash?: string) => void }} */
     router: { replaceHash: () => {} },
     views: {},
     View: class {},

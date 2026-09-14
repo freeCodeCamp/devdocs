@@ -1,0 +1,12 @@
+{
+  // The asset tests run under Node, so they need its globals rather than the
+  // browser ones the assets themselves are checked against.
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "node16",
+    "moduleResolution": "node16",
+    "lib": ["ES2022"],
+    "types": ["node"]
+  },
+  "include": ["*.js"]
+}

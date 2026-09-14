@@ -1,6 +1,13 @@
-app.views.RootPage = class RootPage extends app.View {
+// @ts-check
+
+/**
+ * The app's index: the introduction, or the splash screen once the user has
+ * dismissed it.
+ */
+class RootPage extends app.View {
   static events = { click: "onClick" };
 
+  /** @inheritdoc */
   init() {
     if (!this.isHidden()) {
       this.setHidden(false);
@@ -8,6 +15,7 @@ app.views.RootPage = class RootPage extends app.View {
     this.render();
   }
 
+  /** Shows whichever of the introduction and the splash belongs here. */
   render() {
     this.empty();
 
@@ -22,25 +30,34 @@ app.views.RootPage = class RootPage extends app.View {
     this.append(this.tmpl(tmpl));
   }
 
+  /** Dismisses the introduction for good. */
   hideIntro() {
     this.setHidden(true);
     this.render();
   }
 
+  /** @param {boolean} value */
   setHidden(value) {
     app.settings.set("hideIntro", value);
   }
 
+  /** @returns {boolean} Whether the introduction has been dismissed. */
   isHidden() {
-    return app.isSingleDoc() || app.settings.get("hideIntro");
+    return app.isSingleDoc() || !!app.settings.get("hideIntro");
   }
 
+  /** @inheritdoc */
   onRoute() {}
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     if ($.eventTarget(event).hasAttribute("data-hide-intro")) {
       $.stopEvent(event);
       this.hideIntro();
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.RootPage = RootPage;

@@ -1,3 +1,13 @@
+// @ts-check
+
+/**
+ * The notification shown in the corner. Links inside `html` are given the
+ * notification's own link class.
+ *
+ * @param {string} title
+ * @param {string} html
+ * @returns {string}
+ */
 const notif = function (title, html) {
   html = html.replace(/<a /g, '<a class="_notif-link" ');
   return ` <h5 class="_notif-title">${title}</h5>
@@ -6,6 +16,13 @@ ${html}
 `;
 };
 
+/**
+ * A notification whose body is a single paragraph.
+ *
+ * @param {string} title
+ * @param {string} message
+ * @returns {string}
+ */
 const textNotif = (title, message) =>
   notif(title, `<p class="_notif-text">${message}`);
 
@@ -47,6 +64,10 @@ app.templates.notifImportInvalid = () =>
     " The file you selected is invalid. ",
   );
 
+/**
+ * @param {unknown[]} news
+ * @returns {string}
+ */
 app.templates.notifNews = (news) =>
   notif(
     "Changelog",
@@ -55,6 +76,11 @@ app.templates.notifNews = (news) =>
     })}</div>`,
   );
 
+/**
+ * @param {Doc[]} docs Enabled docs with a new release.
+ * @param {unknown[]} disabledDocs Disabled docs with a new release.
+ * @returns {string}
+ */
 app.templates.notifUpdates = function (docs, disabledDocs) {
   let doc;
   let html = '<div class="_notif-content _notif-news">';

@@ -1,6 +1,20 @@
+// @ts-check
+
 //= require app/searcher
 
-app.models.Entry = class Entry extends app.Model {
+// An entry's own properties are declared in globals.d.ts, for the reason
+// given in models/doc.js.
+
+/** One searchable page, or a heading within one. */
+class Entry extends Model {
+  /**
+   * Expands a searchable string with its alias, if it has one, so that both
+   * spellings match.
+   *
+   * @param {string} string
+   * @returns {string | string[]} Both spellings when an alias applies,
+   *   otherwise the string unchanged.
+   */
   static applyAliases(string) {
     const aliases = app.config.docs_aliases;
     if (aliases.hasOwnProperty(string)) {
@@ -18,12 +32,17 @@ app.models.Entry = class Entry extends app.Model {
     return string;
   }
 
-  // Attributes: name, type, path
-  constructor() {
-    super(...arguments);
+  /** @param {Record<string, unknown>} [attributes] Copied onto the entry by Model. */
+  constructor(attributes) {
+    super(attributes);
     this.text = Entry.applyAliases(app.Searcher.normalizeString(this.name));
   }
 
+  /**
+   * Makes the entry findable under another name as well.
+   *
+   * @param {string} name
+   */
   addAlias(name) {
     const text = Entry.applyAliases(app.Searcher.normalizeString(name));
     if (!Array.isArray(this.text)) {
@@ -34,22 +53,27 @@ app.models.Entry = class Entry extends app.Model {
     this.text.push(...(Array.isArray(text) ? text : [text]));
   }
 
+  /** @returns {string} The app path for the entry's page. */
   fullPath() {
     return this.doc.fullPath(this.isIndex() ? "" : this.path);
   }
 
+  /** @returns {string} The path the page is stored under offline, without the hash. */
   dbPath() {
     return this.path.replace(/#.*/, "");
   }
 
+  /** @returns {string} The app path of the entry's HTML file. */
   filePath() {
     return this.doc.fullPath(this._filePath());
   }
 
+  /** @returns {string} Where the entry's HTML is served from. */
   fileUrl() {
     return this.doc.fileUrl(this._filePath());
   }
 
+  /** @returns {string} The entry's path as a `.html` filename, without the hash. */
   _filePath() {
     let result = this.path.replace(/#.*/, "");
     if (result.slice(-5) !== ".html") {
@@ -58,15 +82,29 @@ app.models.Entry = class Entry extends app.Model {
     return result;
   }
 
+  /** @returns {boolean} Whether the entry stands for the doc itself. */
   isIndex() {
     return this.path === "index";
   }
 
+  /** @returns {Type | undefined} The entry's type. */
   getType() {
     return this.doc.types.findBy("name", this.type);
   }
 
+  /**
+   * Reads the entry's page out of the offline database.
+   *
+   * @param {(html: string) => void} onSuccess
+   * @param {() => void} onError
+   * @returns {{ abort: () => void } | undefined} The pending request, when it
+   *   went to the network.
+   */
   loadFile(onSuccess, onError) {
     return app.db.load(this, onSuccess, onError);
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.models.Entry = Entry;

@@ -1,10 +1,36 @@
-app.models.Doc = class Doc extends app.Model {
-  // Attributes: name, slug, type, version, release, db_size, mtime, links
+// @ts-check
 
+/**
+ * How a doc's index and database are fetched.
+ *
+ * @typedef {object} DocLoadOptions
+ * @property {boolean} [readCache] Use the cached index instead of fetching, when it is current.
+ * @property {boolean} [writeCache] Cache the fetched index.
+ */
+
+/**
+ * Whether a doc's database is stored offline, and how old the copy is.
+ *
+ * @typedef {object} InstallStatus
+ * @property {boolean} installed
+ * @property {number | false} [mtime] The `mtime` the stored copy was built
+ *   from, or `false` when it isn't installed.
+ */
+
+// A doc's own properties are declared in globals.d.ts: Model copies the
+// manifest attributes on, so a field declaration here would run after
+// `super()` and blank them out again.
+
+/** One version of one documentation set. */
+class Doc extends Model {
   static NUMBERED_VERSION_RGX = /^\d+(\.\d+)*$/;
 
-  constructor() {
-    super(...arguments);
+  /**
+   * @param {Record<string, unknown>} [attributes] Copied onto the doc by Model;
+   *   the derived attributes are then worked out from them.
+   */
+  constructor(attributes) {
+    super(attributes);
     this.reset(this);
     this.slug_without_version = this.slug.split("~")[0];
     this.fullName = `${this.name}` + (this.version ? ` ${this.version}` : "");
@@ -15,25 +41,39 @@ app.models.Doc = class Doc extends app.Model {
     this.text = this.toEntry().text;
   }
 
+  /**
+   * Reloads the entries and types from freshly fetched index data.
+   *
+   * @param {{ entries?: unknown, types?: unknown }} data Freshly fetched index
+   *   data, or the doc itself when its attributes carry the index.
+   */
   reset(data) {
     this.resetEntries(data.entries);
     this.resetTypes(data.types);
   }
 
+  /** @param {unknown} [entries] */
   resetEntries(entries) {
-    this.entries = new app.collections.Entries(entries);
+    this.entries = new app.collections.Entries(
+      /** @type {unknown[]} */ (entries),
+    );
     this.entries.each((entry) => {
       return (entry.doc = this);
     });
   }
 
+  /** @param {unknown} [types] */
   resetTypes(types) {
-    this.types = new app.collections.Types(types);
+    this.types = new app.collections.Types(/** @type {unknown[]} */ (types));
     this.types.each((type) => {
       return (type.doc = this);
     });
   }
 
+  /**
+   * @param {string} [path] Relative to the doc.
+   * @returns {string} The app path for the page.
+   */
   fullPath(path) {
     if (path == null) {
       path = "";
@@ -44,20 +84,32 @@ app.models.Doc = class Doc extends app.Model {
     return `/${this.slug}${path}`;
   }
 
+  /**
+   * @param {string} [path]
+   * @returns {string} Where the page's HTML is served from.
+   */
   fileUrl(path) {
     return `${app.config.docs_origin}${this.fullPath(path)}?${this.mtime}`;
   }
 
+  /** @returns {string} Where the doc's offline database is served from. */
   dbUrl() {
     return `${app.config.docs_origin}/${this.slug}/${app.config.db_filename}?${this.mtime}`;
   }
 
+  /** @returns {string} Where the doc's entry index is served from. */
   indexUrl() {
     return `${app.config.docs_origin}/${this.slug}/${
       app.config.index_filename
     }?${this.mtime}`;
   }
 
+  /**
+   * The entry standing for the doc itself, so that it can be searched for
+   * by name. Built once and reused.
+   *
+   * @returns {Entry}
+   */
   toEntry() {
     if (this.entry) {
       return this.entry;
@@ -73,6 +125,11 @@ app.models.Doc = class Doc extends app.Model {
     return this.entry;
   }
 
+  /**
+   * @param {string} path
+   * @param {string} [hash] Preferred over `path` alone when it matches an entry.
+   * @returns {Entry | undefined}
+   */
   findEntryByPathAndHash(path, hash) {
     const entry = hash && this.entries.findBy("path", `${path}#${hash}`);
     if (entry) {
@@ -84,6 +141,13 @@ app.models.Doc = class Doc extends app.Model {
     }
   }
 
+  /**
+   * Fetches the doc's entry index, or reads it from the cache.
+   *
+   * @param {() => void} onSuccess
+   * @param {() => void} onError
+   * @param {DocLoadOptions} [options]
+   */
   load(onSuccess, onError, options) {
     if (options == null) {
       options = {};
@@ -107,10 +171,15 @@ app.models.Doc = class Doc extends app.Model {
     });
   }
 
+  /** Drops the cached index. */
   clearCache() {
     app.localStorage.del(this.slug);
   }
 
+  /**
+   * @param {() => void} onSuccess Called asynchronously, to match the network path.
+   * @returns {boolean | undefined} `true` when the cache was used.
+   */
   _loadFromCache(onSuccess) {
     const data = this._getCache();
     if (!data) {
@@ -126,6 +195,7 @@ app.models.Doc = class Doc extends app.Model {
     return true;
   }
 
+  /** @returns {unknown} The cached index, or `undefined` when it is missing or stale. */
   _getCache() {
     const data = app.localStorage.get(this.slug);
     if (!data) {
@@ -140,10 +210,19 @@ app.models.Doc = class Doc extends app.Model {
     }
   }
 
+  /** @param {unknown} data */
   _setCache(data) {
     app.localStorage.set(this.slug, [this.mtime, data]);
   }
 
+  /**
+   * Downloads the doc's database and stores it offline. Does nothing while an
+   * install or uninstall is already running.
+   *
+   * @param {() => void} onSuccess
+   * @param {() => void} onError
+   * @param {(event: ProgressEvent) => void} [onProgress]
+   */
   install(onSuccess, onError, onProgress) {
     if (this.installing) {
       return;
@@ -169,6 +248,12 @@ app.models.Doc = class Doc extends app.Model {
     });
   }
 
+  /**
+   * Removes the doc's offline database.
+   *
+   * @param {() => void} onSuccess
+   * @param {() => void} onError
+   */
   uninstall(onSuccess, onError) {
     if (this.installing) {
       return;
@@ -188,24 +273,34 @@ app.models.Doc = class Doc extends app.Model {
     app.db.unstore(this, success, error);
   }
 
+  /** @param {(status: InstallStatus) => void} callback */
   getInstallStatus(callback) {
     app.db.version(this, (value) =>
       callback({ installed: !!value, mtime: value }),
     );
   }
 
-  // Whether the doc holds a numbered version of its documentation (e.g. "3.9"),
-  // as opposed to a variant (e.g. "10 LTS" or "Python"), which can't be
-  // ordered. An empty version means the doc holds the latest version
-  // (e.g. `angular`), whereas docs without a version aren't versioned at all.
+  /**
+   * Whether the doc holds a numbered version of its documentation (e.g. "3.9"),
+   * as opposed to a variant (e.g. "10 LTS" or "Python"), which can't be
+   * ordered. An empty version means the doc holds the latest version
+   * (e.g. `angular`), whereas docs without a version aren't versioned at all.
+   *
+   * @returns {boolean}
+   */
   hasNumberedVersion() {
     return (
       this.version === "" || Doc.NUMBERED_VERSION_RGX.test(this.version || "")
     );
   }
 
-  // Compares numbered versions (e.g. "3.9" is older than "3.12").
-  // An empty version means the latest version and is newer than any other.
+  /**
+   * Compares numbered versions (e.g. "3.9" is older than "3.12").
+   * An empty version means the latest version and is newer than any other.
+   *
+   * @param {Doc} other
+   * @returns {boolean}
+   */
   isNewerVersionThan(other) {
     if (this.version === "" || other.version === "") {
       return this.version === "" && other.version !== "";
@@ -222,9 +317,13 @@ app.models.Doc = class Doc extends app.Model {
     return false;
   }
 
-  // Returns the doc holding the latest version of the same documentation among
-  // `docs`, or the doc itself when there is none.
+  /**
+   * @param {Doc[]} docs
+   * @returns {unknown} The doc holding the latest version of the same
+   *   documentation among `docs`, or the doc itself when there is none.
+   */
   findLatestVersion(docs) {
+    /** @type {Doc} */
     let latest = this;
     if (!this.hasNumberedVersion()) {
       return latest;
@@ -241,6 +340,10 @@ app.models.Doc = class Doc extends app.Model {
     return latest;
   }
 
+  /**
+   * @param {InstallStatus | undefined} status
+   * @returns {boolean} Whether the offline copy is older than the served one.
+   */
   isOutdated(status) {
     if (!status) {
       return false;
@@ -248,4 +351,8 @@ app.models.Doc = class Doc extends app.Model {
     const isInstalled = status.installed || app.settings.get("autoInstall");
     return isInstalled && this.mtime !== status.mtime;
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.models.Doc = Doc;

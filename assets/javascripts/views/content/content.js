@@ -1,4 +1,14 @@
-app.views.Content = class Content extends app.View {
+// @ts-check
+
+/**
+ * The pane holding whichever page is being shown.
+ *
+ * Owns one instance of each page view and swaps between them as the route
+ * changes. Scroll positions are remembered per history entry and restored on
+ * the way back, which is why the app turns the browser's own scroll
+ * restoration off (see lib/page.js).
+ */
+class Content extends app.View {
   static el = "._content";
   static loadingClass = "_content-loading";
 
@@ -19,9 +29,10 @@ app.views.Content = class Content extends app.View {
     after: "afterRoute",
   };
 
+  /** @inheritdoc */
   init() {
     this.scrollEl = app.isMobile()
-      ? document.scrollingElement || document.body
+      ? /** @type {HTMLElement} */ (document.scrollingElement) || document.body
       : this.el;
     this.scrollMap = {};
     this.scrollStack = [];
@@ -42,6 +53,7 @@ app.views.Content = class Content extends app.View {
       .on("bootError", () => this.onBootError());
   }
 
+  /** @param {View} view The page to show, replacing whatever is there. */
   show(view) {
     this.hideLoading();
     if (view !== this.view) {
@@ -53,22 +65,27 @@ app.views.Content = class Content extends app.View {
     }
   }
 
+  /** Marks the pane as waiting for a page. */
   showLoading() {
-    this.addClass(this.constructor.loadingClass);
+    this.addClass(this.statics().loadingClass);
   }
 
+  /** @returns {boolean} */
   isLoading() {
-    return this.el.classList.contains(this.constructor.loadingClass);
+    return this.el.classList.contains(this.statics().loadingClass);
   }
 
+  /** Clears the loading state. */
   hideLoading() {
-    this.removeClass(this.constructor.loadingClass);
+    this.removeClass(this.statics().loadingClass);
   }
 
+  /** @param {number} [value] The offset to jump to. Defaults to the top. */
   scrollTo(value) {
     this.scrollEl.scrollTop = value || 0;
   }
 
+  /** @param {number} value The offset to animate to. */
   smoothScrollTo(value) {
     if (app.settings.get("fastScroll")) {
       this.scrollTo(value);
@@ -77,41 +94,49 @@ app.views.Content = class Content extends app.View {
     }
   }
 
+  /** @param {number} n How far to scroll, in pixels. */
   scrollBy(n) {
     this.smoothScrollTo(this.scrollEl.scrollTop + n);
   }
 
+  /** Scrolls to the top of the page. */
   scrollToTop() {
     this.smoothScrollTo(0);
   }
 
+  /** Scrolls to the bottom of the page. */
   scrollToBottom() {
     this.smoothScrollTo(this.scrollEl.scrollHeight);
   }
 
+  /** Scrolls up by a small step. */
   scrollStepUp() {
     this.scrollBy(-80);
   }
 
+  /** Scrolls down by a small step. */
   scrollStepDown() {
     this.scrollBy(80);
   }
 
+  /** Scrolls up by most of a viewport. */
   scrollPageUp() {
     this.scrollBy(40 - this.scrollEl.clientHeight);
   }
 
+  /** Scrolls down by most of a viewport. */
   scrollPageDown() {
     this.scrollBy(this.scrollEl.clientHeight - 40);
   }
 
+  /** Brings the element named by the URL hash into view. */
   scrollToTarget() {
     let el;
     if (
       this.routeCtx.hash &&
       (el = this.findTargetByHash(this.routeCtx.hash))
     ) {
-      $.scrollToWithImageLock(el, this.scrollEl, "top", {
+      $.scrollToWithImageLock(/** @type {HTMLElement} */ (el), this.scrollEl, "top", {
         margin: this.scrollEl === this.el ? 0 : $.offset(this.el).top,
       });
       $.openDetailsAncestors(el);
@@ -121,15 +146,18 @@ app.views.Content = class Content extends app.View {
     }
   }
 
+  /** Shows the first page once the docs have loaded. */
   onReady() {
     this.hideLoading();
   }
 
+  /** Shows the boot error in place of a page. */
   onBootError() {
     this.hideLoading();
     this.html(this.tmpl("bootError"));
   }
 
+  /** Marks the pane as waiting while an entry's page is fetched. */
   onEntryLoading() {
     this.showLoading();
     if (this.scrollToTargetTimeout) {
@@ -138,6 +166,7 @@ app.views.Content = class Content extends app.View {
     }
   }
 
+  /** Clears the loading state once the entry has arrived. */
   onEntryLoaded() {
     this.hideLoading();
     if (this.scrollToTargetTimeout) {
@@ -147,6 +176,7 @@ app.views.Content = class Content extends app.View {
     this.scrollToTarget();
   }
 
+  /** @param {Context} context */
   beforeRoute(context) {
     this.cacheScrollPosition(context);
 
@@ -163,6 +193,12 @@ app.views.Content = class Content extends app.View {
     this.scrollToTargetTimeout = this.delay(this.scrollToTarget);
   }
 
+  /**
+   * Records where the page being left was scrolled to, against its history
+   * entry, so that going back restores it.
+   *
+   * @param {Context} context
+   */
   cacheScrollPosition(context) {
     if (!this.routeCtx || this.routeCtx.hash) {
       return;
@@ -191,6 +227,10 @@ app.views.Content = class Content extends app.View {
     this.scrollMap[this.routeCtx.state.id] = this.scrollEl.scrollTop;
   }
 
+  /**
+   * @param {string} route
+   * @param {unknown} context
+   */
   afterRoute(route, context) {
     if (route !== "entry" && route !== "type") {
       resetFavicon();
@@ -224,6 +264,7 @@ app.views.Content = class Content extends app.View {
     );
   }
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     const link = $.closestLink($.eventTarget(event), this.el);
     if (link && this.isExternalUrl(link.getAttribute("href"))) {
@@ -232,6 +273,11 @@ app.views.Content = class Content extends app.View {
     }
   }
 
+  /**
+   * Lets the browser's own find-in-page through.
+   *
+   * @param {ViewKeyboardEvent} event
+   */
   onAltF(event) {
     if (
       !document.activeElement ||
@@ -242,6 +288,10 @@ app.views.Content = class Content extends app.View {
     }
   }
 
+  /**
+   * @param {string} hash Including the leading `#`.
+   * @returns {unknown} The element the hash points at, or `undefined`.
+   */
   findTargetByHash(hash) {
     let el = (() => {
       try {
@@ -258,7 +308,15 @@ app.views.Content = class Content extends app.View {
     return el;
   }
 
+  /**
+   * @param {string} url
+   * @returns {boolean} Whether the URL leaves the app.
+   */
   isExternalUrl(url) {
     return url?.startsWith("http:") || url?.startsWith("https:");
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Content = Content;

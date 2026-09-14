@@ -1,10 +1,17 @@
+// @ts-check
+
 //= require views/misc/notif
 
-app.views.Updates = class Updates extends app.views.Notif {
+/**
+ * The notification listing the docs that gained a new release since the
+ * user last saw it.
+ */
+class Updates extends Notif {
   static className = "_notif _notif-news";
 
   static defautOptions = { autoHide: 30000 };
 
+  /** @inheritdoc */
   init0() {
     this.lastUpdateTime = this.getLastUpdateTime();
     this.updatedDocs = this.getUpdatedDocs();
@@ -15,12 +22,14 @@ app.views.Updates = class Updates extends app.views.Notif {
     this.markAllAsRead();
   }
 
+  /** @inheritdoc */
   render() {
     this.html(
       app.templates.notifUpdates(this.updatedDocs, this.updatedDisabledDocs),
     );
   }
 
+  /** @returns {Doc[]} Enabled docs built since the last time updates were shown. */
   getUpdatedDocs() {
     if (!this.lastUpdateTime) {
       return [];
@@ -30,6 +39,10 @@ app.views.Updates = class Updates extends app.views.Notif {
     );
   }
 
+  /**
+   * @returns {Doc[]} Disabled docs built since then, but only where another
+   *   version of the same doc is enabled.
+   */
   getUpdatedDisabledDocs() {
     if (!this.lastUpdateTime) {
       return [];
@@ -46,10 +59,12 @@ app.views.Updates = class Updates extends app.views.Notif {
     return result;
   }
 
+  /** @returns {number} When updates were last shown, as a Unix timestamp. */
   getLastUpdateTime() {
     return app.settings.get("version");
   }
 
+  /** Records that the user has seen the current set of releases. */
   markAllAsRead() {
     app.settings.set(
       "version",
@@ -58,4 +73,8 @@ app.views.Updates = class Updates extends app.views.Notif {
         : Math.floor(Date.now() / 1000),
     );
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Updates = Updates;

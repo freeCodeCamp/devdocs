@@ -1,8 +1,12 @@
+// @ts-check
+
 //= require views/pages/base
 
-app.views.RdocPage = class RdocPage extends app.views.BasePage {
+/** The RDoc pages' "Show source" toggles. */
+class RdocPage extends BasePage {
   static events = { click: "onClick" };
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     if (!event.target.classList.contains("method-click-advice")) {
       return;
@@ -18,4 +22,8 @@ app.views.RdocPage = class RdocPage extends app.views.BasePage {
     source.style.display = isShown ? "none" : "block";
     return (event.target.textContent = isShown ? "Show source" : "Hide source");
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.RdocPage = RdocPage;

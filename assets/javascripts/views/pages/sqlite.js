@@ -1,8 +1,12 @@
+// @ts-check
+
 //= require views/pages/base
 
-app.views.SqlitePage = class SqlitePage extends app.views.BasePage {
+/** The SQLite pages' show/hide toggles. */
+class SqlitePage extends BasePage {
   static events = { click: "onClick" };
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     const id = event.target.getAttribute("data-toggle");
     if (!id) {
@@ -21,4 +25,8 @@ app.views.SqlitePage = class SqlitePage extends app.views.BasePage {
       event.target.textContent = "show";
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.SqlitePage = SqlitePage;

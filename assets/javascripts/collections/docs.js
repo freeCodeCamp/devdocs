@@ -1,4 +1,9 @@
-app.collections.Docs = class Docs extends app.Collection {
+// @ts-check
+
+/** Every doc the app knows about, enabled or not. *
+ * @extends {Collection<Doc>}
+ */
+class Docs extends Collection {
   static model = "Doc";
   static NORMALIZE_VERSION_RGX = /\.(\d)$/;
   static NORMALIZE_VERSION_SUB = ".0$1";
@@ -7,11 +12,20 @@ app.collections.Docs = class Docs extends app.Collection {
   // It's not pretty but I didn't want to import a promise library only for this.
   static CONCURRENCY = 3;
 
+  /**
+   * @param {string} slug With or without a version.
+   * @returns {Doc | undefined}
+   */
   findBySlug(slug) {
     return (
       this.findBy("slug", slug) || this.findBy("slug_without_version", slug)
     );
   }
+  /**
+   * Orders by name, then by version with the newest first. Sorts in place.
+   *
+   * @returns {unknown[]}
+   */
   sort() {
     return this.models.sort((a, b) => {
       if (a.name === b.name) {
@@ -37,6 +51,14 @@ app.collections.Docs = class Docs extends app.Collection {
       }
     });
   }
+  /**
+   * Loads every doc's index, `CONCURRENCY` at a time. `onError` is called at
+   * most once, with the first failure.
+   *
+   * @param {() => void} onComplete
+   * @param {((args: unknown[]) => void) | null} onError
+   * @param {DocLoadOptions} [options]
+   */
   load(onComplete, onError, options) {
     let i = 0;
 
@@ -62,12 +84,18 @@ app.collections.Docs = class Docs extends app.Collection {
     }
   }
 
+  /** Drops every doc's cached index. */
   clearCache() {
     for (var doc of this.models) {
       doc.clearCache();
     }
   }
 
+  /**
+   * Removes every doc's offline database, one at a time.
+   *
+   * @param {() => void} callback
+   */
   uninstall(callback) {
     let i = 0;
     var next = () => {
@@ -80,18 +108,24 @@ app.collections.Docs = class Docs extends app.Collection {
     next();
   }
 
+  /** @param {(statuses: Record<string, InstallStatus> | false) => void} callback */
   getInstallStatuses(callback) {
-    app.db.versions(this.models, (statuses) => {
-      if (statuses) {
-        for (var key in statuses) {
-          var value = statuses[key];
-          statuses[key] = { installed: !!value, mtime: value };
-        }
+    app.db.versions(this.models, (versions) => {
+      if (!versions) {
+        callback(false);
+        return;
+      }
+      /** @type {Record<string, InstallStatus>} */
+      const statuses = {};
+      for (var key in versions) {
+        var value = versions[key];
+        statuses[key] = { installed: !!value, mtime: value };
       }
       callback(statuses);
     });
   }
 
+  /** @param {(count: number) => void} callback Given the number of outdated docs. */
   checkForUpdates(callback) {
     this.getInstallStatuses((statuses) => {
       let i = 0;
@@ -107,6 +141,7 @@ app.collections.Docs = class Docs extends app.Collection {
     });
   }
 
+  /** Reinstalls every doc whose offline copy is out of date. */
   updateInBackground() {
     this.getInstallStatuses((statuses) => {
       if (!statuses) {
@@ -121,4 +156,8 @@ app.collections.Docs = class Docs extends app.Collection {
       }
     });
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.collections.Docs = Docs;

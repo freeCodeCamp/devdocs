@@ -1,4 +1,4 @@
-name: Ruby tests
+name: Tests
 
 on:
   pull_request:
@@ -7,6 +7,7 @@ on:
 
 jobs:
   test:
+    name: Ruby tests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -16,3 +17,19 @@ jobs:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run tests
       run: bundle exec rake
+
+  assets:
+    name: Asset typecheck and tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+    - name: Set up Node
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version-file: .tool-versions
+        cache: npm
+    - run: npm ci
+    - name: Typecheck the assets
+      run: npm run typecheck
+    - name: Run the asset tests
+      run: npm test

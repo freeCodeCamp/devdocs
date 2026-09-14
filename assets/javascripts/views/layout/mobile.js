@@ -1,4 +1,10 @@
-app.views.Mobile = class Mobile extends app.View {
+// @ts-check
+
+/**
+ * The phone layout: one pane at a time, with a toggle between the sidebar and
+ * the content, and tabs for the doc picker and the preferences.
+ */
+class Mobile extends app.View {
   static className = "_mobile";
 
   static elements = {
@@ -12,6 +18,11 @@ app.views.Mobile = class Mobile extends app.View {
 
   static routes = { after: "afterRoute" };
 
+  /**
+   * @returns {boolean} Whether to use the phone layout. The user agent is
+   *   consulted as well as the viewport, because some devices report a
+   *   desktop-sized width.
+   */
   static detect() {
     if (Cookies.get("override-mobile-detect") != null) {
       return JSON.parse(Cookies.get("override-mobile-detect"));
@@ -33,6 +44,7 @@ app.views.Mobile = class Mobile extends app.View {
     }
   }
 
+  /** @returns {boolean} Whether the app is running inside an Android webview. */
   static detectAndroidWebview() {
     try {
       return /(Android).*( Version\/.\.. ).*(Chrome)/.test(navigator.userAgent);
@@ -41,10 +53,12 @@ app.views.Mobile = class Mobile extends app.View {
     }
   }
 
+  /** Binds to the document element, which carries the layout classes. */
   constructor() {
     super(document.documentElement);
   }
 
+  /** @inheritdoc */
   init() {
     $.on($("._search"), "touchend", () => this.onTapSearch());
 
@@ -75,6 +89,7 @@ app.views.Mobile = class Mobile extends app.View {
     this.activate();
   }
 
+  /** Brings the sidebar into view. */
   showSidebar() {
     if (this.isSidebarShown()) {
       window.scrollTo(0, 0);
@@ -101,6 +116,7 @@ app.views.Mobile = class Mobile extends app.View {
     }
   }
 
+  /** Puts the content back in view. */
   hideSidebar() {
     if (!this.isSidebarShown()) {
       return;
@@ -111,18 +127,22 @@ app.views.Mobile = class Mobile extends app.View {
     window.scrollTo(0, this.contentTop || 0);
   }
 
+  /** @returns {boolean} */
   isSidebarShown() {
     return this.sidebar.style.display !== "none";
   }
 
+  /** Goes back, or up to the doc's index. */
   onClickBack() {
     return history.back();
   }
 
+  /** Goes forward. */
   onClickForward() {
     return history.forward();
   }
 
+  /** Swaps between the sidebar and the content. */
   onClickToggleSidebar() {
     if (this.isSidebarShown()) {
       this.hideSidebar();
@@ -131,16 +151,19 @@ app.views.Mobile = class Mobile extends app.View {
     }
   }
 
+  /** @param {ViewMouseEvent} event */
   onClickDocPickerTab(event) {
     $.stopEvent(event);
     this.showDocPicker();
   }
 
+  /** @param {ViewMouseEvent} event */
   onClickSettingsTab(event) {
     $.stopEvent(event);
     this.showSettings();
   }
 
+  /** Switches the preferences panel to the doc picker. */
   showDocPicker() {
     window.scrollTo(0, 0);
     this.docPickerTab.classList.add("active");
@@ -149,6 +172,7 @@ app.views.Mobile = class Mobile extends app.View {
     this.content.style.display = "none";
   }
 
+  /** Switches the preferences panel to the settings. */
   showSettings() {
     window.scrollTo(0, 0);
     this.docPickerTab.classList.remove("active");
@@ -157,14 +181,17 @@ app.views.Mobile = class Mobile extends app.View {
     this.content.style.display = "block";
   }
 
+  /** Reveals the sidebar when the search field is tapped. */
   onTapSearch() {
     return window.scrollTo(0, 0);
   }
 
+  /** Leaves the sidebar. */
   onEscape() {
     return this.hideSidebar();
   }
 
+  /** @param {string} route */
   afterRoute(route) {
     this.hideSidebar();
 
@@ -186,4 +213,8 @@ app.views.Mobile = class Mobile extends app.View {
       this.forward.setAttribute("disabled", "disabled");
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Mobile = Mobile;

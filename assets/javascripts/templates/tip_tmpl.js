@@ -1,3 +1,5 @@
+// @ts-check
+
 app.templates.tipKeyNav = () => `\
 <p class="_notif-text">
   <strong>ProTip</strong>
