@@ -219,16 +219,25 @@ module Mcp
     def self.html_to_text(html)
       doc = Nokogiri::HTML::DocumentFragment.parse(html)
       text_parts = []
+      collect_text(doc, text_parts)
+      text_parts.join.squeeze(' ').gsub(/\n\s*\n/, "\n").strip
+    end
 
-      doc.traverse do |node|
-        if node.text?
-          text_parts << node.text
-        elsif block_element?(node.name)
-          text_parts << "\n" if text_parts.last != "\n"
+    # Walks the tree in document order, wrapping the text of each block element
+    # in newlines. Nokogiri's #traverse is post-order, which emitted a block's
+    # separator only after its text and ran the text before it into the block.
+    def self.collect_text(node, text_parts)
+      node.children.each do |child|
+        if child.text?
+          text_parts << child.text
+        elsif block_element?(child.name)
+          text_parts << "\n"
+          collect_text(child, text_parts)
+          text_parts << "\n"
+        else
+          collect_text(child, text_parts)
         end
       end
-
-      text_parts.join.squeeze(' ').gsub(/\n\s*\n/, "\n").strip
     end
 
     def self.block_element?(tag_name)

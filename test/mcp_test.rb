@@ -186,6 +186,12 @@ class McpTest < Minitest::Spec
       refute_includes text, 'barA thing.'
     end
 
+    it 'separates text preceding a block element from the block' do
+      args = { 'slug' => 'mcp_fixture', 'path' => 'array/blocks' }
+      result = rpc('tools/call', { 'name' => 'devdocs_get_page', 'arguments' => args })['result']
+      assert_equal "Options are:\none\ntwo", result['content'].first['text']
+    end
+
     it 'returns error for invalid slug in search (path traversal protection)' do
       args = { 'slug' => '../../../etc/passwd', 'query' => 'test' }
       response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
