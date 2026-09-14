@@ -7,7 +7,7 @@ WORKDIR /devdocs
 
 COPY . /devdocs
 
-RUN apk --update add nodejs build-base libstdc++ libarchive-tools git zlib-dev libcurl && \
+RUN apk --update add nodejs build-base libstdc++ libarchive-tools git zlib-dev libcurl libwebp-tools && \
     gem install bundler && \
     bundle config set path.system true && \
     bundle config set without 'test' && \

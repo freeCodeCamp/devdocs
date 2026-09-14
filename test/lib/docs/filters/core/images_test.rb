@@ -1,6 +1,7 @@
 require_relative '../../../../test_helper'
 require_relative '../../../../../lib/docs'
 require 'ostruct'
+require 'chunky_png'
 
 class ImagesFilterTest < Minitest::Spec
   include FilterTestHelper
@@ -16,6 +17,29 @@ class ImagesFilterTest < Minitest::Spec
 
   def make_response(success: true, mime_type: 'image/png', content_length: 100, body: 'imgdata', code: 200)
     OpenStruct.new(success?: success, mime_type: mime_type, content_length: content_length, body: body, code: code)
+  end
+
+  # A small gradient; lossless WebP compresses it well below the PNG.
+  def png_data
+    ChunkyPNG::Image.new(64, 64).tap do |image|
+      64.times { |x| 64.times { |y| image[x, y] = ChunkyPNG::Color.rgb(x * 4, y * 4, 128) } }
+    end.to_blob
+  end
+
+  def fixture(name)
+    File.binread(File.expand_path("../../../../files/#{name}", __dir__))
+  end
+
+  # Splices an acTL chunk before IDAT to mimic an animated PNG.
+  def apng_data
+    data = png_data
+    offset = data.index('IDAT'.b) - 4
+    chunk = [8].pack('N') + 'acTL' + "\0" * 8 + [0].pack('N')
+    data.byteslice(0, offset) + chunk + data.byteslice(offset..-1)
+  end
+
+  def image_from(src)
+    Base64.decode64(src.sub(/\Adata:[^,]+,/, ''))
   end
 
   def stub_request(response)
@@ -117,6 +141,88 @@ class ImagesFilterTest < Minitest::Spec
       @body = IMG_BODY
       dont_allow(Docs::Request).run
       assert_equal IMG_SRC, filter_output.at_css('img')['src']
+    end
+  end
+
+  context "with a PNG image" do
+    it "converts it to WebP" do
+      @body = IMG_BODY
+      data = png_data
+      stub_request make_response(body: data, content_length: data.bytesize)
+      src = filter_output.at_css('img')['src']
+      assert src.start_with?('data:image/webp;base64,'), src[0, 40]
+      webp = image_from(src)
+      assert_equal 'RIFF', webp.byteslice(0, 4)
+      assert_equal 'WEBP', webp.byteslice(8, 4)
+      assert_operator webp.bytesize, :<, data.bytesize
+    end
+
+    it "checks the converted size, not the PNG size, against max_image_size" do
+      @body = IMG_BODY
+      data = png_data
+      # no Content-Length header (chunked response): only the second check applies
+      context[:max_image_size] = data.bytesize - 1
+      stub_request make_response(body: data, content_length: 0)
+      assert filter_output.at_css('img')['src'].start_with?('data:image/webp;base64,')
+    end
+
+    it "keeps the PNG when the conversion doesn't pay off" do
+      @body = IMG_BODY
+      data = png_data
+      stub_request make_response(body: data, content_length: data.bytesize)
+      stub(Docs::ImagesFilter).convert_to_webp(data) { nil }
+      expected = "data:image/png;base64,#{Base64.strict_encode64(data)}"
+      assert_equal expected, filter_output.at_css('img')['src']
+    end
+
+    it "skips animated PNGs" do
+      assert_nil Docs::ImagesFilter.convert_to_webp(apng_data)
+    end
+  end
+
+  context "with a GIF image" do
+    it "converts it to WebP" do
+      @body = IMG_BODY
+      data = fixture('image.gif')
+      stub_request make_response(body: data, mime_type: 'image/gif', content_length: data.bytesize)
+      src = filter_output.at_css('img')['src']
+      assert src.start_with?('data:image/webp;base64,'), src[0, 40]
+      webp = image_from(src)
+      assert_equal 'RIFF', webp.byteslice(0, 4)
+      assert_equal 'WEBP', webp.byteslice(8, 4)
+      assert_operator webp.bytesize, :<, data.bytesize
+    end
+
+    it "recognizes the GIF87a signature" do
+      assert Docs::ImagesFilter.convert_to_webp(fixture('image.gif').sub('GIF89a', 'GIF87a'))
+    end
+  end
+
+  context "with a JPEG image" do
+    it "converts it to WebP" do
+      @body = IMG_BODY
+      data = fixture('image.jpg')
+      stub_request make_response(body: data, mime_type: 'image/jpeg', content_length: data.bytesize)
+      src = filter_output.at_css('img')['src']
+      assert src.start_with?('data:image/webp;base64,'), src[0, 40]
+      webp = image_from(src)
+      assert_equal 'RIFF', webp.byteslice(0, 4)
+      assert_equal 'WEBP', webp.byteslice(8, 4)
+      assert_operator webp.bytesize, :<, data.bytesize
+    end
+
+    it "encodes it lossily" do
+      assert_equal Docs::ImagesFilter::CWEBP_LOSSY_COMMAND,
+                   Docs::ImagesFilter.webp_command(fixture('image.jpg'))
+    end
+  end
+
+  context "with an image we can't convert" do
+    it "is left untouched" do
+      @body = IMG_BODY
+      stub_request make_response(body: 'imgdata', mime_type: 'image/bmp', content_length: 7)
+      expected = "data:image/bmp;base64,#{Base64.strict_encode64('imgdata')}"
+      assert_equal expected, filter_output.at_css('img')['src']
     end
   end
 

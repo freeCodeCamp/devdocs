@@ -56,7 +56,7 @@ class App < Sinatra::Application
                         .sort
                         .freeze
 
-    set :assets_compile, %w(*.png docs.json vendor.js unsupported.js application.css application-dark.css) + js_modules
+    set :assets_compile, %w(sprites/docs.webp sprites/docs@2x.webp docs.json vendor.js unsupported.js application.css application-dark.css) + js_modules
 
     require 'json'
     set :docs_prefix, 'docs'
@@ -267,8 +267,8 @@ class App < Sinatra::Application
         javascript_path('vendor'),
         javascript_path('unsupported'),
         stylesheet_path('application'),
-        image_path('sprites/docs.png'),
-        image_path('sprites/docs@2x.png'),
+        image_path('sprites/docs.webp'),
+        image_path('sprites/docs@2x.webp'),
       ].compact
     end
 

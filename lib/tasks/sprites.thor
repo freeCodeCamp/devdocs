@@ -7,14 +7,18 @@ class SpritesCLI < Thor
     require 'docs'
     require 'chunky_png'
     require 'fileutils'
-    require 'image_optim'
     require 'terminal-table'
     super
   end
 
+  # cwebp re-encodes the pixels from scratch, so the PNG ChunkyPNG hands it is
+  # only a carrier: it goes in through a pipe at the cheapest compression and
+  # never reaches the disk.
+  CWEBP_COMMAND = %w(cwebp -quiet -lossless -metadata none).freeze
+
   desc 'generate [--remove-public-icons] [--disable-optimization] [--verbose]', 'Generate the documentation icon spritesheets'
   option :remove_public_icons, type: :boolean, desc: 'Remove public/icons after generating the spritesheets'
-  option :disable_optimization, type: :boolean, desc: 'Disable optimizing the spritesheets with OptiPNG'
+  option :disable_optimization, type: :boolean, desc: "Encode the spritesheets at cwebp's fastest setting instead of its smallest"
   option :verbose, type: :boolean
   def generate
     items = get_items
@@ -40,11 +44,6 @@ class SpritesCLI < Thor
 
     generate_spritesheet(16, items_with_icons) {|item| item[:icon_16]}
     generate_spritesheet(32, items_with_icons) {|item| item[:icon_32]}
-
-    unless options[:disable_optimization]
-      optimize_spritesheet(get_output_path(16))
-      optimize_spritesheet(get_output_path(32))
-    end
 
     # Add Mongoose's icon details to docs without custom icons
     default_item = items_with_icons.find {|item| item[:type] == 'mongoose'}
@@ -173,12 +172,20 @@ class SpritesCLI < Thor
     end
 
     FileUtils.mkdir_p(File.dirname(output_path))
-    spritesheet.save(output_path)
+    save_spritesheet(spritesheet, output_path)
   end
 
-  def optimize_spritesheet(path)
-    logger.info("Optimizing spritesheet at #{path}")
-    image_optim.optimize_image!(path)
+  def save_spritesheet(spritesheet, path)
+    # -z 9 is the smallest (and slowest) lossless setting, -z 0 the fastest
+    command = [*CWEBP_COMMAND, '-z', options[:disable_optimization] ? '0' : '9', '-o', path, '--', '-']
+
+    begin
+      IO.popen(command, 'wb') {|io| io.write(spritesheet.to_blob(:fast_rgba))}
+    rescue SystemCallError
+      raise "Generating the spritesheets requires cwebp, install libwebp (Debian/Ubuntu: webp, Alpine: libwebp-tools)"
+    end
+
+    raise "cwebp failed to write #{path}" unless $?.success?
   end
 
   def save_manifest(items, icons_per_row, path)
@@ -213,7 +220,7 @@ class SpritesCLI < Thor
   end
 
   def get_output_path(size)
-    "assets/images/sprites/docs#{size == 32 ? '@2x' : ''}.png"
+    "assets/images/sprites/docs#{size == 32 ? '@2x' : ''}.webp"
   end
 
   def compile_scss_erb
@@ -222,29 +229,17 @@ class SpritesCLI < Thor
     scss_erb_files.each do |erb_path|
       scss_path = erb_path.gsub('.erb', '')
       File.open(scss_path, 'w') do |f|
-        f.write(ERB.new(File.read(erb_path)).result)
+        f.write(ERB.new(File.read(erb_path)).result(erb_binding))
         logger.info("Compiling #{erb_path} to #{scss_path}")
       end
     end
   end
 
-  def image_optim
-    @image_optim ||= ImageOptim.new(
-      :config_paths => [],
-      :advpng => false,
-      :gifsicle => false,
-      :jhead => false,
-      :jpegoptim => false,
-      :jpegrecompress => false,
-      :jpegtran => false,
-      :pngcrush => false,
-      :pngout => false,
-      :pngquant => false,
-      :svgo => false,
-      :optipng => {
-        :level => 7,
-      },
-    )
+  # The templates are compiled without the app loaded, so whatever they need
+  # has to come from here rather than from `App`.
+  def erb_binding
+    environment = (ENV['APP_ENV'] || ENV['RACK_ENV'] || 'development').to_sym
+    binding
   end
 
   def logger
