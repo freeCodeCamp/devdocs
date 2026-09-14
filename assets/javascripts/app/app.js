@@ -199,30 +199,32 @@ class App extends Events {
     }
 
     const allDocs = this.docs.all().concat(this.disabledDocs.all());
-    let needsSaving;
+    // The same version can supersede several enabled docs, so it's only loaded
+    // once, e.g. when both CMake 3.9 and CMake 3.10 are enabled.
+    const migrations = new Map();
 
-    for (var outdated of this.docs.all().slice()) {
-      var latest = outdated.findLatestVersion(allDocs);
+    for (const outdated of this.docs.all()) {
+      const latest = outdated.findLatestVersion(allDocs);
       if (latest === outdated) {
         continue;
       }
+      if (!migrations.has(latest)) {
+        migrations.set(latest, []);
+      }
+      migrations.get(latest).push(outdated);
+    }
 
-      // Saving drops the offline data of the doc that is disabled, so the
-      // index of its latest version has to load before the swap is made.
-      const loaded = await new Promise((resolve) =>
-        latest.load(
-          () => resolve(true),
-          () => resolve(false),
-          { readCache: true, writeCache: true },
-        ),
-      );
+    const loaded = await this.loadLatestVersions([...migrations.keys()]);
+    let needsSaving;
 
-      if (!loaded) {
+    for (const [latest, outdatedDocs] of migrations) {
+      if (!loaded.has(latest)) {
         continue;
       }
-
-      this.docs.remove(outdated);
-      this.disabledDocs.add(outdated);
+      for (const outdated of outdatedDocs) {
+        this.docs.remove(outdated);
+        this.disabledDocs.add(outdated);
+      }
       if (!this.docs.contains(latest)) {
         this.disabledDocs.remove(latest);
         this.docs.add(latest);
@@ -234,6 +236,39 @@ class App extends Events {
       this.docs.sort();
       this.saveDocs();
     }
+  }
+
+  // Saving drops the offline data of the docs that are disabled, so the index
+  // of their latest version has to load before they are replaced. Loads no
+  // more docs at once than Docs#load does.
+  async loadLatestVersions(docs) {
+    const loaded = new Set();
+    let i = 0;
+
+    const next = async () => {
+      while (i < docs.length) {
+        const doc = docs[i++];
+        const success = await new Promise((resolve) =>
+          doc.load(
+            () => resolve(true),
+            () => resolve(false),
+            { readCache: true, writeCache: true },
+          ),
+        );
+        if (success) {
+          loaded.add(doc);
+        }
+      }
+    };
+
+    await Promise.all(
+      Array.from(
+        { length: Math.min(docs.length, app.collections.Docs.CONCURRENCY) },
+        next,
+      ),
+    );
+
+    return loaded;
   }
 
   enableDoc(doc, _onSuccess, onError) {

@@ -99,6 +99,7 @@ test("variants of a documentation aren't versions", () => {
 
 // The index of the latest version has to load for a doc to be replaced.
 app.models.Doc.prototype.load = function (onSuccess, onError) {
+  app.loads.push(this.slug);
   if (app.loadFails) {
     onError();
   } else {
@@ -121,6 +122,7 @@ const migrate = async (enabled, allDocs, autoLatestVersion = true) => {
     app.saved = true;
   };
   app.saved = false;
+  app.loads = [];
   await app.migrateToLatestVersions();
   // Spread the array so that it's created in this realm, not the VM's.
   return [...app.docs.all().map((doc) => doc.slug)];
@@ -139,6 +141,13 @@ test("outdated docs are disabled when their latest version is already enabled", 
   assert.deepEqual(await migrate(["cmake~3.9", "cmake~3.12"], CMAKE), [
     "cmake~3.12",
   ]);
+});
+
+test("the version superseding several docs is only loaded once", async () => {
+  assert.deepEqual(await migrate(["cmake~3.9", "cmake~3.10"], CMAKE), [
+    "cmake~3.12",
+  ]);
+  assert.deepEqual([...app.loads], ["cmake~3.12"]);
 });
 
 test("a doc whose latest version fails to load isn't replaced", async () => {
