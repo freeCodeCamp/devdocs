@@ -45,6 +45,9 @@
     ahead of the module graph. The import map rewrites each module's relative
     imports onto its digested URL; it has to come before any module loads. %>
 <%= javascript_tag 'vendor' %>
+<%# Classic script: tells a browser too old for import maps why nothing loaded,
+    which the module graph can't do from inside itself. %>
+<%= javascript_tag 'unsupported' %>
 <script type="importmap" nonce="devdocs"><%= import_map_json %></script>
 <%= module_preload_tags 'docs.js' %>
 <% unless App.production? %>

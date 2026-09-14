@@ -46,15 +46,17 @@ class App < Sinatra::Application
     set :assets_path, File.join(public_folder, assets_prefix)
     set :assets_manifest_path, File.join(assets_path, 'manifest.json')
     # Every ES module in the app, by the logical path the import map keys on.
-    # The vendored libraries are concatenated into vendor.js instead, and the
-    # debug module is only served outside production.
+    # The vendored libraries are concatenated into vendor.js, and unsupported.js
+    # guards the module graph from outside it, so neither is a module; the debug
+    # module is only served outside production.
     set :js_modules, Dir.glob('**/*.js{,.erb}', base: root.join('assets', 'javascripts'))
-                        .reject { |path| path.start_with?('vendor/') || path == 'vendor.js' }
+                        .reject { |path| path.start_with?('vendor/') ||
+                                         %w(vendor.js unsupported.js).include?(path) }
                         .map { |path| path.delete_suffix('.erb') }
                         .sort
                         .freeze
 
-    set :assets_compile, %w(*.png docs.json vendor.js application.css application-dark.css) + js_modules
+    set :assets_compile, %w(*.png docs.json vendor.js unsupported.js application.css application-dark.css) + js_modules
 
     require 'json'
     set :docs_prefix, 'docs'
@@ -263,6 +265,7 @@ class App < Sinatra::Application
       @@service_worker_asset_urls ||= [
         *mapped_js_modules.map { |logical| javascript_path(logical) },
         javascript_path('vendor'),
+        javascript_path('unsupported'),
         stylesheet_path('application'),
         image_path('sprites/docs.png'),
         image_path('sprites/docs@2x.png'),

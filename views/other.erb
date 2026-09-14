@@ -20,6 +20,9 @@
 <%# Single-doc pages read their one doc off the body, so they skip docs.js
     and the whole catalog with it. %>
 <%= javascript_tag 'vendor' %>
+<%# Classic script: tells a browser too old for import maps why nothing loaded,
+    which the module graph can't do from inside itself. %>
+<%= javascript_tag 'unsupported' %>
 <script type="importmap" nonce="devdocs"><%= import_map_json %></script>
 <%= module_preload_tags %>
 <% unless App.production? %>

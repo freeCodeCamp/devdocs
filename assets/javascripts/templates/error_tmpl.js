@@ -95,9 +95,9 @@ export const unsupportedBrowser = `\
   <p class="_fail-text">DevDocs is an API documentation browser which supports the following browsers:
   <ul class="_fail-list">
     <li>Recent versions of Firefox, Chrome, or Opera
-    <li>Safari 11.1+
-    <li>Edge 17+
-    <li>iOS 11.3+
+    <li>Safari 16.4+
+    <li>Edge 89+
+    <li>iOS 16.4+
   </ul>
   <p class="_fail-text">
     If you're unable to upgrade, we apologize.
