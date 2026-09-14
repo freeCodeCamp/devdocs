@@ -52,9 +52,9 @@ app.Router = class Router extends Events {
   }
 
   /**
-   * @param {any} context
-   * @param {() => any} next
-   * @returns {any} A path to redirect to, or nothing when the route handled it.
+   * @param {unknown} context
+   * @param {() => unknown} next
+   * @returns {unknown} A path to redirect to, or nothing when the route handled it.
    */
   before(context, next) {
     const previousContext = this.context;
@@ -72,8 +72,8 @@ app.Router = class Router extends Events {
 
   /**
    * @param {any} context
-   * @param {() => any} next
-   * @returns {any} A path to redirect to, or nothing when the route handled it.
+   * @param {() => unknown} next
+   * @returns {unknown} A path to redirect to, or nothing when the route handled it.
    */
   doc(context, next) {
     let doc;
@@ -93,8 +93,8 @@ app.Router = class Router extends Events {
 
   /**
    * @param {any} context
-   * @param {() => any} next
-   * @returns {any} A path to redirect to, or nothing when the route handled it.
+   * @param {() => unknown} next
+   * @returns {unknown} A path to redirect to, or nothing when the route handled it.
    */
   type(context, next) {
     const doc = app.docs.findBySlug(context.params.doc);
@@ -112,8 +112,8 @@ app.Router = class Router extends Events {
 
   /**
    * @param {any} context
-   * @param {() => any} next
-   * @returns {any} A path to redirect to, or nothing when the route handled it.
+   * @param {() => unknown} next
+   * @returns {unknown} A path to redirect to, or nothing when the route handled it.
    */
   entry(context, next) {
     const doc = app.docs.findBySlug(context.params.doc);
@@ -212,7 +212,7 @@ app.Router = class Router extends Events {
     this.triggerRoute("page");
   }
 
-  /** @param {any} context */
+  /** @param {unknown} context */
   notFound(context) {
     this.triggerRoute("notFound");
   }

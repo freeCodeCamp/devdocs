@@ -59,7 +59,7 @@ app.views.SidebarHover = class SidebarHover extends app.View {
 
   /**
    * @param {any} el
-   * @returns {any} A copy of the row, positioned over the original.
+   * @returns {unknown} A copy of the row, positioned over the original.
    */
   makeClone(el) {
     const clone = el.cloneNode(true);

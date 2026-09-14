@@ -5,8 +5,8 @@
  * global in globals.d.ts.
  *
  * @typedef {object} LocalStorageStore
- * @property {(key: string) => any} get
- * @property {(key: string, value: any) => boolean | undefined} set
+ * @property {(key: string) => unknown} get
+ * @property {(key: string, value: unknown) => boolean | undefined} set
  * @property {(key: string) => boolean | undefined} del
  * @property {() => boolean | undefined} reset
  */
@@ -21,7 +21,7 @@
 this.LocalStorageStore = class LocalStorageStore {
   /**
    * @param {string} key
-   * @returns {any} The stored value, or `undefined` if it is missing or unreadable.
+   * @returns {unknown} The stored value, or `undefined` if it is missing or unreadable.
    */
   get(key) {
     try {
@@ -31,7 +31,7 @@ this.LocalStorageStore = class LocalStorageStore {
 
   /**
    * @param {string} key
-   * @param {any} value
+   * @param {unknown} value
    * @returns {boolean | undefined} `true` when stored, `undefined` when it failed.
    */
   set(key, value) {

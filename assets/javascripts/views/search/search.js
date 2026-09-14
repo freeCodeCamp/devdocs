@@ -83,7 +83,7 @@ app.views.Search = class Search extends app.View {
     }
   }
 
-  /** @returns {any} The doc the search is scoped to, or `undefined`. */
+  /** @returns {unknown} The doc the search is scoped to, or `undefined`. */
   getScopeDoc() {
     if (this.scope.isActive()) {
       return this.scope.getScope();
@@ -198,7 +198,7 @@ app.views.Search = class Search extends app.View {
     this.externalSearch("https://duckduckgo.com/?t=devdocs&q=");
   }
 
-  /** @param {any[]} results One batch of matches. */
+  /** @param {unknown[]} results One batch of matches. */
   onResults(results) {
     if (results.length) {
       this.hasResults = true;

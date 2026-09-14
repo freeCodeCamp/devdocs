@@ -10,11 +10,11 @@
  * @property {string} [dataType] `"json"` (the default), `"html"`, or a MIME type.
  * @property {number} [timeout] Seconds before the request is aborted. Defaults to 30.
  * @property {string} [contentType]
- * @property {any} [context] `this` for the `success` and `error` callbacks.
- * @property {Record<string, any> | string | null} [data] Serialized into the query string for GET, into the body otherwise.
+ * @property {unknown} [context] `this` for the `success` and `error` callbacks.
+ * @property {Record<string, unknown> | string | null} [data] Serialized into the query string for GET, into the body otherwise.
  * @property {Record<string, string>} [headers]
  * @property {(event: ProgressEvent) => void} [progress]
- * @property {(response: any, xhr: XMLHttpRequest, options: AjaxOptions) => void} [success]
+ * @property {(response: unknown, xhr: XMLHttpRequest, options: AjaxOptions) => void} [success]
  * @property {(type: AjaxErrorType, xhr: XMLHttpRequest, options: AjaxOptions) => void} [error]
  */
 
@@ -28,7 +28,7 @@ const MIME_TYPES = {
  * A small XMLHttpRequest wrapper.
  *
  * @param {AjaxOptions} options Merged over `ajax.defaults`. Mutated in place.
- * @returns {{ abort: () => void } | any} A handle to abort the request when
+ * @returns {{ abort: () => void } | unknown} A handle to abort the request when
  *   `async`, otherwise the parsed response.
  */
 function ajax(options) {
@@ -67,11 +67,11 @@ function ajax(options) {
 
     if (options.type === "GET") {
       options.url +=
-        "?" + serializeParams(/** @type {Record<string, any>} */ (options.data));
+        "?" + serializeParams(/** @type {Record<string, unknown>} */ (options.data));
       options.data = null;
     } else {
       options.data = serializeParams(
-        /** @type {Record<string, any>} */ (options.data),
+        /** @type {Record<string, unknown>} */ (options.data),
       );
     }
   }
@@ -163,7 +163,7 @@ function ajax(options) {
   }
 
   /**
-   * @param {any} response
+   * @param {unknown} response
    * @param {XMLHttpRequest} xhr
    * @param {AjaxOptions} options
    */
@@ -203,7 +203,7 @@ function ajax(options) {
   /**
    * @param {XMLHttpRequest} xhr
    * @param {AjaxOptions} options
-   * @returns {any} `undefined` when a JSON response fails to parse.
+   * @returns {unknown} `undefined` when a JSON response fails to parse.
    */
   function parseResponse(xhr, options) {
     if (options.dataType === "json") {
@@ -215,7 +215,7 @@ function ajax(options) {
 
   /**
    * @param {string} json
-   * @returns {any} `undefined` when parsing fails.
+   * @returns {unknown} `undefined` when parsing fails.
    */
   function parseJSON(json) {
     try {

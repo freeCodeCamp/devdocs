@@ -7,7 +7,7 @@
  * several of them separated by spaces. Every event is re-emitted as `all` with
  * the original name prepended to the arguments.
  *
- * @typedef {(...args: any[]) => void} EventCallback
+ * @typedef {(...args: unknown[]) => void} EventCallback
  */
 class Events {
   /**
@@ -20,7 +20,7 @@ class Events {
   /**
    * The event being dispatched, while `trigger` is running.
    *
-   * @type {{ name: string, args: any[] } | null}
+   * @type {{ name: string, args: unknown[] } | null}
    */
   eventInProgress;
 
@@ -67,7 +67,7 @@ class Events {
 
   /**
    * @param {string} event A single event name.
-   * @param {...any} args Passed on to each callback.
+   * @param {...unknown} args Passed on to each callback.
    * @returns {this}
    */
   trigger(event, ...args) {

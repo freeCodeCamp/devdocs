@@ -12,7 +12,7 @@ app.collections.Docs = class Docs extends app.Collection {
 
   /**
    * @param {string} slug With or without a version.
-   * @returns {any} The doc, or `undefined`.
+   * @returns {unknown} The doc, or `undefined`.
    */
   findBySlug(slug) {
     return (
@@ -22,7 +22,7 @@ app.collections.Docs = class Docs extends app.Collection {
   /**
    * Orders by name, then by version with the newest first. Sorts in place.
    *
-   * @returns {any[]}
+   * @returns {unknown[]}
    */
   sort() {
     return this.models.sort((a, b) => {
@@ -54,7 +54,7 @@ app.collections.Docs = class Docs extends app.Collection {
    * most once, with the first failure.
    *
    * @param {() => void} onComplete
-   * @param {((args: any[]) => void) | null} onError
+   * @param {((args: unknown[]) => void) | null} onError
    * @param {DocLoadOptions} [options]
    */
   load(onComplete, onError, options) {

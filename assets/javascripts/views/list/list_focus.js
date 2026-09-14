@@ -64,7 +64,7 @@ app.views.ListFocus = class ListFocus extends app.View {
 
   /**
    * @param {any} cursor
-   * @returns {any} The row after `cursor`, descending into expanded sub-lists.
+   * @returns {unknown} The row after `cursor`, descending into expanded sub-lists.
    */
   findNext(cursor) {
     const next = cursor.nextSibling;
@@ -93,7 +93,7 @@ app.views.ListFocus = class ListFocus extends app.View {
 
   /**
    * @param {any} cursor
-   * @returns {any} The first row of the sub-list under `cursor`.
+   * @returns {unknown} The first row of the sub-list under `cursor`.
    */
   findFirst(cursor) {
     const first = cursor.firstChild;
@@ -112,7 +112,7 @@ app.views.ListFocus = class ListFocus extends app.View {
 
   /**
    * @param {any} cursor
-   * @returns {any} The row before `cursor`, descending into expanded sub-lists.
+   * @returns {unknown} The row before `cursor`, descending into expanded sub-lists.
    */
   findPrev(cursor) {
     const prev = cursor.previousSibling;
@@ -141,7 +141,7 @@ app.views.ListFocus = class ListFocus extends app.View {
 
   /**
    * @param {any} cursor
-   * @returns {any} The last row of the sub-list under `cursor`.
+   * @returns {unknown} The last row of the sub-list under `cursor`.
    */
   findLast(cursor) {
     const last = cursor.lastChild;

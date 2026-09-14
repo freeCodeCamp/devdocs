@@ -12,7 +12,7 @@ app.views.Path = class Path extends app.View {
 
   static routes = { after: "afterRoute" };
 
-  /** @param {...any} args The doc, then optionally the type and the entry. */
+  /** @param {...unknown} args The doc, then optionally the type and the entry. */
   render(...args) {
     this.html(this.tmpl("path", ...args));
     this.show();

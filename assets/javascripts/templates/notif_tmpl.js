@@ -65,7 +65,7 @@ app.templates.notifImportInvalid = () =>
   );
 
 /**
- * @param {any[]} news
+ * @param {unknown[]} news
  * @returns {string}
  */
 app.templates.notifNews = (news) =>
@@ -77,8 +77,8 @@ app.templates.notifNews = (news) =>
   );
 
 /**
- * @param {any[]} docs Enabled docs with a new release.
- * @param {any[]} disabledDocs Disabled docs with a new release.
+ * @param {unknown[]} docs Enabled docs with a new release.
+ * @param {unknown[]} disabledDocs Disabled docs with a new release.
  * @returns {string}
  */
 app.templates.notifUpdates = function (docs, disabledDocs) {

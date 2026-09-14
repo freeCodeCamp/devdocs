@@ -197,7 +197,7 @@ app.Settings = class Settings {
   /**
    * Replaces the user's preferences with `data`, dropping any it omits.
    *
-   * @param {Record<string, any>} data
+   * @param {Record<string, unknown>} data
    */
   import(data) {
     let key, value;

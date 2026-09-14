@@ -8,7 +8,7 @@
  * field declaration would run after `super()` and blank the value out.
  */
 class Model {
-  /** @param {Record<string, any>} [attributes] */
+  /** @param {Record<string, unknown>} [attributes] */
   constructor(attributes) {
     for (var key in attributes) {
       var value = attributes[key];

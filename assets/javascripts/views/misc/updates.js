@@ -29,7 +29,7 @@ app.views.Updates = class Updates extends app.views.Notif {
     );
   }
 
-  /** @returns {any[]} Enabled docs built since the last time updates were shown. */
+  /** @returns {unknown[]} Enabled docs built since the last time updates were shown. */
   getUpdatedDocs() {
     if (!this.lastUpdateTime) {
       return [];
@@ -40,7 +40,7 @@ app.views.Updates = class Updates extends app.views.Notif {
   }
 
   /**
-   * @returns {any[]} Disabled docs built since then, but only where another
+   * @returns {unknown[]} Disabled docs built since then, but only where another
    *   version of the same doc is enabled.
    */
   getUpdatedDisabledDocs() {

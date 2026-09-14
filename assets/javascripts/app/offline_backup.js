@@ -4,7 +4,7 @@
  * What an import ended up doing.
  *
  * @typedef {object} ImportSummary
- * @property {any[]} docs The docs that were stored.
+ * @property {unknown[]} docs The docs that were stored.
  * @property {string[]} skipped Slugs in the file that this app doesn't know, or that were unusable.
  * @property {any[]} failed Docs whose store failed.
  * @property {number} enabled How many of the docs weren't enabled before.
@@ -35,8 +35,8 @@ app.OfflineBackup = class OfflineBackup {
    * Calls back with a Blob containing every installed doc among `docs`, and
    * the number of docs it holds. Docs that aren't installed are skipped.
    *
-   * @param {any[]} docs
-   * @param {(doc: any, i: number, total: number) => void} onProgress
+   * @param {unknown[]} docs
+   * @param {(doc: unknown, i: number, total: number) => void} onProgress
    * @param {(blob: Blob, count: number) => void} onSuccess
    * @param {(reason: string) => void} onError
    */
@@ -81,8 +81,8 @@ app.OfflineBackup = class OfflineBackup {
 
   /**
    * @param {any} doc
-   * @param {{ mtime: number, data: any }} result The doc's stored database.
-   * @returns {any} One entry of the backup's `docs` array.
+   * @param {{ mtime: number, data: unknown }} result The doc's stored database.
+   * @returns {unknown} One entry of the backup's `docs` array.
    */
   serializeDoc(doc, result) {
     const entry = { slug: doc.slug, mtime: result.mtime, db: result.data };
@@ -99,7 +99,7 @@ app.OfflineBackup = class OfflineBackup {
    * Reads a backup file and stores the docs it holds.
    *
    * @param {File | null} file
-   * @param {(doc: any, i: number, total: number) => void} onProgress
+   * @param {(doc: unknown, i: number, total: number) => void} onProgress
    * @param {(summary: ImportSummary) => void} onSuccess
    * @param {(reason: string, skipped?: string[]) => void} onError
    */
@@ -136,7 +136,7 @@ app.OfflineBackup = class OfflineBackup {
    * Stores each valid entry, one at a time.
    *
    * @param {any[]} entries
-   * @param {(doc: any, i: number, total: number) => void} onProgress
+   * @param {(doc: unknown, i: number, total: number) => void} onProgress
    * @param {(summary: ImportSummary) => void} onSuccess
    * @param {(reason: string, skipped?: string[]) => void} onError
    */
@@ -233,7 +233,7 @@ app.OfflineBackup = class OfflineBackup {
 
   /**
    * @param {string} slug
-   * @returns {any} The doc, enabled or not, or `undefined`.
+   * @returns {unknown} The doc, enabled or not, or `undefined`.
    */
   findDoc(slug) {
     return (
@@ -246,7 +246,7 @@ app.OfflineBackup = class OfflineBackup {
    * schema bump triggers DB#onUpgradeNeeded, which only creates stores for the
    * enabled docs.
    *
-   * @param {any[]} docs
+   * @param {unknown[]} docs
    * @returns {number} How many docs weren't enabled before.
    */
   enableDocs(docs) {

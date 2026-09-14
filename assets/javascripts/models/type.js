@@ -13,12 +13,12 @@ app.models.Type = class Type extends app.Model {
     return `/${this.doc.slug}-${this.slug}/`;
   }
 
-  /** @returns {any[]} Every entry of this type in the doc. */
+  /** @returns {unknown[]} Every entry of this type in the doc. */
   entries() {
     return this.doc.entries.findAllBy("type", this.name);
   }
 
-  /** @returns {any} An entry standing for the type's page, so that it can be searched for. */
+  /** @returns {unknown} An entry standing for the type's page, so that it can be searched for. */
   toEntry() {
     return new app.models.Entry({
       doc: this.doc,

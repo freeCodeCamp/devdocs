@@ -4,7 +4,7 @@
  * One radio button in the theme picker.
  *
  * @param {{ label: string, value: string }} option
- * @param {Record<string, any>} settings The user's current preferences.
+ * @param {Record<string, unknown>} settings The user's current preferences.
  * @returns {string}
  */
 const themeOption = ({ label, value }, settings) => `\
@@ -17,7 +17,7 @@ const themeOption = ({ label, value }, settings) => `\
 `;
 
 /**
- * @param {Record<string, any>} settings The user's current preferences.
+ * @param {Record<string, unknown>} settings The user's current preferences.
  * @returns {string}
  */
 app.templates.settingsPage = (settings) => `\

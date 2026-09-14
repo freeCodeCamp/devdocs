@@ -11,7 +11,7 @@ app.views.Notice = class Notice extends app.View {
 
   /**
    * @param {string} type Names the template to render.
-   * @param {...any} args Passed on to the template.
+   * @param {...unknown} args Passed on to the template.
    */
   constructor(type, ...args) {
     super();

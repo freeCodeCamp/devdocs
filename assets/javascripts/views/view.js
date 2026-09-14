@@ -164,7 +164,7 @@ class View extends Events {
 
   /**
    * @param {string} name
-   * @returns {any} The first match, or `undefined`.
+   * @returns {unknown} The first match, or `undefined`.
    */
   findByClass(name) {
     return this.findAllByClass(name)[0];
@@ -172,7 +172,7 @@ class View extends Events {
 
   /**
    * @param {string} name
-   * @returns {any} The last match, or `undefined`.
+   * @returns {unknown} The last match, or `undefined`.
    */
   findLastByClass(name) {
     const all = this.findAllByClass(name);
@@ -197,7 +197,7 @@ class View extends Events {
 
   /**
    * @param {string} tag
-   * @returns {any} The last match, or `undefined`.
+   * @returns {unknown} The last match, or `undefined`.
    */
   findLastByTag(tag) {
     const all = this.findAllByTag(tag);
@@ -256,7 +256,7 @@ class View extends Events {
   /**
    * Replaces the view's contents.
    *
-   * @param {any} value Markup, a node, or another view.
+   * @param {unknown} value Markup, a node, or another view.
    */
   html(value) {
     this.empty();
@@ -266,7 +266,7 @@ class View extends Events {
   /**
    * Renders one of `app.templates`.
    *
-   * @param {...any} args The template name, then its arguments.
+   * @param {...unknown} args The template name, then its arguments.
    * @returns {string}
    */
   tmpl(...args) {
@@ -287,7 +287,7 @@ class View extends Events {
 
   /**
    * @param {string} event One or more event names, separated by spaces.
-   * @param {(event: any) => void} callback
+   * @param {(event: unknown) => void} callback
    */
   onDOM(event, callback) {
     $.on(this.el, event, callback);
@@ -295,7 +295,7 @@ class View extends Events {
 
   /**
    * @param {string} event One or more event names, separated by spaces.
-   * @param {(event: any) => void} callback
+   * @param {(event: unknown) => void} callback
    */
   offDOM(event, callback) {
     $.off(this.el, event, callback);
@@ -359,7 +359,7 @@ class View extends Events {
   /**
    * Registers a view to be activated and deactivated along with this one.
    *
-   * @param {any} view
+   * @param {unknown} view
    * @returns {number} The number of subviews.
    */
   addSubview(view) {

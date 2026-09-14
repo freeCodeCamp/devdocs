@@ -45,14 +45,14 @@ app.models.Doc = class Doc extends app.Model {
   /**
    * Reloads the entries and types from freshly fetched index data.
    *
-   * @param {{ entries?: any[], types?: any[] }} data
+   * @param {{ entries?: unknown[], types?: unknown[] }} data
    */
   reset(data) {
     this.resetEntries(data.entries);
     this.resetTypes(data.types);
   }
 
-  /** @param {any[]} [entries] */
+  /** @param {unknown[]} [entries] */
   resetEntries(entries) {
     this.entries = new app.collections.Entries(entries);
     this.entries.each((entry) => {
@@ -60,7 +60,7 @@ app.models.Doc = class Doc extends app.Model {
     });
   }
 
-  /** @param {any[]} [types] */
+  /** @param {unknown[]} [types] */
   resetTypes(types) {
     this.types = new app.collections.Types(types);
     this.types.each((type) => {
@@ -126,7 +126,7 @@ app.models.Doc = class Doc extends app.Model {
   /**
    * @param {string} path
    * @param {string} [hash] Preferred over `path` alone when it matches an entry.
-   * @returns {any} The entry, or `undefined`.
+   * @returns {unknown} The entry, or `undefined`.
    */
   findEntryByPathAndHash(path, hash) {
     const entry = hash && this.entries.findBy("path", `${path}#${hash}`);
@@ -193,7 +193,7 @@ app.models.Doc = class Doc extends app.Model {
     return true;
   }
 
-  /** @returns {any} The cached index, or `undefined` when it is missing or stale. */
+  /** @returns {unknown} The cached index, or `undefined` when it is missing or stale. */
   _getCache() {
     const data = app.localStorage.get(this.slug);
     if (!data) {
@@ -208,7 +208,7 @@ app.models.Doc = class Doc extends app.Model {
     }
   }
 
-  /** @param {any} data */
+  /** @param {unknown} data */
   _setCache(data) {
     app.localStorage.set(this.slug, [this.mtime, data]);
   }
@@ -317,7 +317,7 @@ app.models.Doc = class Doc extends app.Model {
 
   /**
    * @param {any[]} docs
-   * @returns {any} The doc holding the latest version of the same
+   * @returns {unknown} The doc holding the latest version of the same
    *   documentation among `docs`, or the doc itself when there is none.
    */
   findLatestVersion(docs) {

@@ -50,7 +50,7 @@ app.views.TypeList = class TypeList extends app.View {
     }
   }
 
-  /** @returns {any} */
+  /** @returns {unknown} */
   render() {
     let html = "";
     for (var group of this.doc.types.groups()) {

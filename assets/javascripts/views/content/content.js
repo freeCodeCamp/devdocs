@@ -53,7 +53,7 @@ app.views.Content = class Content extends app.View {
       .on("bootError", () => this.onBootError());
   }
 
-  /** @param {any} view The page to show, replacing whatever is there. */
+  /** @param {unknown} view The page to show, replacing whatever is there. */
   show(view) {
     this.hideLoading();
     if (view !== this.view) {
@@ -229,7 +229,7 @@ app.views.Content = class Content extends app.View {
 
   /**
    * @param {string} route
-   * @param {any} context
+   * @param {unknown} context
    */
   afterRoute(route, context) {
     if (route !== "entry" && route !== "type") {
@@ -290,7 +290,7 @@ app.views.Content = class Content extends app.View {
 
   /**
    * @param {string} hash Including the leading `#`.
-   * @returns {any} The element the hash points at, or `undefined`.
+   * @returns {unknown} The element the hash points at, or `undefined`.
    */
   findTargetByHash(hash) {
     let el = (() => {

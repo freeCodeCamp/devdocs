@@ -189,7 +189,7 @@ app.DB = class DB {
 
   /**
    * @param {IDBDatabase} db
-   * @returns {any} The error a known-broken implementation throws, if any.
+   * @returns {unknown} The error a known-broken implementation throws, if any.
    */
   buggyIDB(db) {
     if (this.checkedBuggyIDB) {
@@ -258,7 +258,7 @@ app.DB = class DB {
    * @param {Record<string, string>} data The doc's pages, by path.
    * @param {number} mtime
    * @param {() => void} onSuccess
-   * @param {(error?: any) => void} onError
+   * @param {(error?: unknown) => void} onError
    * @param {boolean} [_retry] Internal: whether a failure may bump the schema and try again.
    */
   store(doc, data, mtime, onSuccess, onError, _retry) {
@@ -329,7 +329,7 @@ app.DB = class DB {
    *
    * @param {any} doc
    * @param {() => void} onSuccess
-   * @param {(error?: any) => void} onError
+   * @param {(error?: unknown) => void} onError
    * @param {boolean} [_retry] Internal: whether a failure may bump the schema and try again.
    */
   unstore(doc, onSuccess, onError, _retry) {
@@ -380,7 +380,7 @@ app.DB = class DB {
    * Reads the doc's stored pages, for a backup.
    *
    * @param {any} doc
-   * @param {(result: { mtime: number, data: any } | null) => void} callback
+   * @param {(result: { mtime: number, data: unknown } | null) => void} callback
    */
   dump(doc, callback) {
     this.db((db) => {
@@ -529,7 +529,7 @@ app.DB = class DB {
    * Reads an entry's page, from the offline store when it is there and from
    * the network otherwise.
    *
-   * @param {any} entry
+   * @param {unknown} entry
    * @param {(html: string) => void} onSuccess
    * @param {() => void} onError
    */

@@ -29,8 +29,8 @@
  *
  * @callback PageCallback
  * @param {Context} context
- * @param {() => any} next
- * @returns {any}
+ * @param {() => unknown} next
+ * @returns {unknown}
  */
 
 /**
@@ -238,7 +238,7 @@ class Context {
    * The route's captured parameters, by name for named ones and by position
    * for the rest. Set by `Route#middleware` when the route matches.
    *
-   * @type {any}
+   * @type {unknown}
    */
   params;
 
@@ -317,7 +317,7 @@ class Route {
   middleware(fn) {
     return (context, next) => {
       // Named captures are set as string keys alongside the positional ones.
-      /** @type {any} */
+      /** @type {unknown} */
       let params = [];
       if (this.match(context.pathname, params)) {
         context.params = params;

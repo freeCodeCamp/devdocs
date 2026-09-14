@@ -90,7 +90,7 @@ app.models.Entry = class Entry extends app.Model {
     return this.path === "index";
   }
 
-  /** @returns {any} The entry's type, or `undefined`. */
+  /** @returns {unknown} The entry's type, or `undefined`. */
   getType() {
     return this.doc.types.findBy("name", this.type);
   }

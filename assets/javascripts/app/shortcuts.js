@@ -34,12 +34,12 @@ app.Shortcuts = class Shortcuts extends Events {
     $.off(document, "keypress", this.onKeypress);
   }
 
-  /** @returns {any} Whether the arrow keys scroll rather than move the selection. */
+  /** @returns {unknown} Whether the arrow keys scroll rather than move the selection. */
   swapArrowKeysBehavior() {
     return app.settings.get("arrowScroll");
   }
 
-  /** @returns {any} How far space scrolls, as a fraction of the viewport. */
+  /** @returns {unknown} How far space scrolls, as a fraction of the viewport. */
   spaceScroll() {
     return app.settings.get("spaceScroll");
   }
@@ -100,7 +100,7 @@ app.Shortcuts = class Shortcuts extends Events {
   /**
    * @param {ShortcutEvent} event
    * @param {boolean} [_force]
-   * @returns {any} `false` to swallow the event; anything else lets it through.
+   * @returns {unknown} `false` to swallow the event; anything else lets it through.
    */
   handleKeydownEvent(event, _force) {
     if (
@@ -191,7 +191,7 @@ app.Shortcuts = class Shortcuts extends Events {
    * Handles Ctrl/Cmd chords.
    *
    * @param {ShortcutEvent} event
-   * @returns {any} `false` to swallow the event; anything else lets it through.
+   * @returns {unknown} `false` to swallow the event; anything else lets it through.
    */
   handleKeydownSuperEvent(event) {
     switch (event.which) {
@@ -224,7 +224,7 @@ app.Shortcuts = class Shortcuts extends Events {
   /**
    * @param {ShortcutEvent} event
    * @param {boolean} [_force]
-   * @returns {any} `false` to swallow the event; anything else lets it through.
+   * @returns {unknown} `false` to swallow the event; anything else lets it through.
    */
   handleKeydownShiftEvent(event, _force) {
     if (
@@ -262,7 +262,7 @@ app.Shortcuts = class Shortcuts extends Events {
   /**
    * @param {ShortcutEvent} event
    * @param {boolean} [_force]
-   * @returns {any} `false` to swallow the event; anything else lets it through.
+   * @returns {unknown} `false` to swallow the event; anything else lets it through.
    */
   handleKeydownAltEvent(event, _force) {
     if (
@@ -319,7 +319,7 @@ app.Shortcuts = class Shortcuts extends Events {
 
   /**
    * @param {ShortcutEvent} event
-   * @returns {any} `false` to swallow the event; anything else lets it through.
+   * @returns {unknown} `false` to swallow the event; anything else lets it through.
    */
   handleKeypressEvent(event) {
     if (event.which === 63 && !event.target.value) {

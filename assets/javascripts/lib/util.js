@@ -42,12 +42,12 @@
  *
  * @typedef {object} DollarHelpers
  *
- * @property {(id: string) => any} id Looks an element up by id.
+ * @property {(id: string) => unknown} id Looks an element up by id.
  * @property {(parent: Node, el: any) => boolean | undefined} hasChild Whether `el` is `parent` or a descendant of it.
  * @property {(el: any, parent?: Node) => any} closestLink The nearest `<a>` ancestor, stopping at `parent`.
  *
  * @property {(el: EventTarget, event: string, callback: (event: any) => void, useCapture?: boolean) => void} on Accepts several space-separated event names.
- * @property {(el: EventTarget, event: string, callback: (event: any) => void, useCapture?: boolean) => void} off Accepts several space-separated event names.
+ * @property {(el: EventTarget, event: string, callback: (event: unknown) => void, useCapture?: boolean) => void} off Accepts several space-separated event names.
  * @property {(el: EventTarget, type: string, canBubble?: boolean, cancelable?: boolean) => void} trigger Dispatches a synthetic event.
  * @property {(el: EventTarget) => void} click Dispatches a synthetic click.
  * @property {(event: Event) => void} stopEvent Prevents the default and stops propagation, immediately.
@@ -57,21 +57,21 @@
  * @property {(el: Element, value: DollarContent) => void} prepend
  * @property {(el: Element, value: DollarContent) => void} before
  * @property {(el: Element, value: DollarContent) => void} after
- * @property {(value: any) => void} remove Detaches the node, or every node in the collection.
+ * @property {(value: unknown) => void} remove Detaches the node, or every node in the collection.
  * @property {(el: Node) => void} empty Removes every child.
- * @property {(el: Element, fn: (el: any) => void) => void} batchUpdate Runs `fn` with the element off the DOM, to avoid reflows.
+ * @property {(el: Element, fn: (el: unknown) => void) => void} batchUpdate Runs `fn` with the element off the DOM, to avoid reflows.
  *
  * @property {(el: Element) => DOMRect} rect
  * @property {(el: any, container?: Element) => { top: number, left: number }} offset Offset relative to `container`, which defaults to the body.
  * @property {(el: any) => any} scrollParent The nearest scrollable ancestor.
  * @property {(el: any, parent?: any, position?: "top" | "center" | "continuous", options?: DollarScrollOptions) => void} scrollTo
- * @property {(el: any, parent?: any, ...args: any[]) => void} scrollToWithImageLock Like `scrollTo`, but holds the position while nearby images load.
+ * @property {(el: unknown, parent?: any, ...args: any[]) => void} scrollToWithImageLock Like `scrollTo`, but holds the position while nearby images load.
  * @property {(el: any, fn: () => void) => void} lockScroll Runs `fn` while holding the element's position relative to the window.
  * @property {(el: any) => void} openDetailsAncestors Expands every `<details>` the element is inside.
  * @property {(el: Element, end: number) => void} smoothScroll Animates `scrollTop` towards `end`.
  *
- * @property {(object: any) => any[]} makeArray
- * @property {(array: any[], object: any) => boolean} arrayDelete Removes the first occurrence; reports whether it was there.
+ * @property {(object: unknown) => any[]} makeArray
+ * @property {(array: unknown[], object: unknown) => boolean} arrayDelete Removes the first occurrence; reports whether it was there.
  * @property {(object: any) => boolean} isCollection Whether the value is an array or a live DOM collection.
  * @property {(string: string) => string} escape Escapes HTML-significant characters.
  * @property {(string: string) => string} escapeRegexp

@@ -8,7 +8,7 @@
  * the class directly.
  */
 class Collection {
-  /** @param {any[]} [objects] Models, attribute objects, or other collections. */
+  /** @param {unknown[]} [objects] Models, attribute objects, or other collections. */
   constructor(objects) {
     if (objects == null) {
       objects = [];
@@ -28,7 +28,7 @@ class Collection {
   /**
    * Replaces the contents.
    *
-   * @param {any[]} [objects]
+   * @param {unknown[]} [objects]
    */
   reset(objects) {
     if (objects == null) {
@@ -45,7 +45,7 @@ class Collection {
    * Appends a model, an array of them, another collection's models, or an
    * attribute object to build a model from.
    *
-   * @param {any} object
+   * @param {unknown} object
    */
   add(object) {
     if (object instanceof app.Model) {
@@ -62,7 +62,7 @@ class Collection {
   }
 
   /**
-   * @param {any} model
+   * @param {unknown} model
    */
   remove(model) {
     this.models.splice(this.models.indexOf(model), 1);
@@ -79,7 +79,7 @@ class Collection {
   }
 
   /**
-   * @param {(model: any) => void} fn
+   * @param {(model: unknown) => void} fn
    */
   each(fn) {
     for (var model of this.models) {
@@ -90,14 +90,14 @@ class Collection {
   /**
    * The underlying array, not a copy.
    *
-   * @returns {any[]}
+   * @returns {unknown[]}
    */
   all() {
     return this.models;
   }
 
   /**
-   * @param {any} model
+   * @param {unknown} model
    * @returns {boolean}
    */
   contains(model) {
@@ -106,7 +106,7 @@ class Collection {
 
   /**
    * @param {string} attr
-   * @param {any} value
+   * @param {unknown} value
    * @returns {any} The first match, or `undefined`.
    */
   findBy(attr, value) {
@@ -115,8 +115,8 @@ class Collection {
 
   /**
    * @param {string} attr
-   * @param {any} value
-   * @returns {any[]}
+   * @param {unknown} value
+   * @returns {unknown[]}
    */
   findAllBy(attr, value) {
     return this.models.filter((model) => model[attr] === value);
@@ -124,7 +124,7 @@ class Collection {
 
   /**
    * @param {string} attr
-   * @param {any} value
+   * @param {unknown} value
    * @returns {number}
    */
   countAllBy(attr, value) {

@@ -44,7 +44,7 @@ app.views.Results = class Results extends app.View {
   }
 
   /**
-   * @param {any[]} entries One batch of matches.
+   * @param {unknown[]} entries One batch of matches.
    * @param {{ initialResults?: boolean, urlSearch?: boolean }} flags
    *   `initialResults` marks the first batch of a search; `urlSearch` means
    *   the query came from the URL, so the first result is opened rather than

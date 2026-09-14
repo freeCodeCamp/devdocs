@@ -19,7 +19,7 @@ app.views.SettingsPage = class SettingsPage extends app.View {
     this.html(this.tmpl("settingsPage", this.currentSettings()));
   }
 
-  /** @returns {Record<string, any>} The values the form should show. */
+  /** @returns {Record<string, unknown>} The values the form should show. */
   currentSettings() {
     const settings = {};
     settings.theme = app.settings.get("theme");
@@ -166,7 +166,7 @@ app.views.SettingsPage = class SettingsPage extends app.View {
     }
   }
 
-  /** @param {any} context */
+  /** @param {unknown} context */
   onRoute(context) {
     this.render();
   }

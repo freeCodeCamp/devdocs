@@ -1,7 +1,7 @@
 // @ts-check
 
 /**
- * @param {any[]} docs Every doc, in the order they are listed.
+ * @param {unknown[]} docs Every doc, in the order they are listed.
  * @param {boolean} hasPersistence Whether the browser exposes the storage API.
  * @param {boolean} isPersistent Whether storage has already been made persistent.
  * @returns {string}

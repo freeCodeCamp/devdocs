@@ -222,7 +222,7 @@ app.Searcher = class Searcher extends Events {
   /**
    * Starts a search, abandoning whatever was running.
    *
-   * @param {any[]} data The objects to search.
+   * @param {unknown[]} data The objects to search.
    * @param {string} attr The attribute to match against; a string or an array of them.
    * @param {string} q
    */
@@ -373,7 +373,7 @@ app.Searcher = class Searcher extends Events {
   /**
    * Files a match under its rounded score.
    *
-   * @param {any} object
+   * @param {unknown} object
    * @param {number} score
    */
   addResult(object, score) {
@@ -384,7 +384,7 @@ app.Searcher = class Searcher extends Events {
     this.totalResults++;
   }
 
-  /** @returns {any[]} The best matches so far, highest score first. */
+  /** @returns {unknown[]} The best matches so far, highest score first. */
   getResults() {
     const results = [];
     for (let j = this.scoreMap.length - 1; j >= 0; j--) {
@@ -404,7 +404,7 @@ app.Searcher = class Searcher extends Events {
     }
   }
 
-  /** @param {any[]} results */
+  /** @param {unknown[]} results */
   triggerResults(results) {
     this.trigger("results", results);
   }

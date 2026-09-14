@@ -11,7 +11,7 @@ app.collections.Types = class Types extends app.Collection {
    * Splits the types into guides, regular types and appendices, in that
    * order, dropping any group that ends up empty.
    *
-   * @returns {any[][]}
+   * @returns {unknown[][]}
    */
   groups() {
     const result = [];

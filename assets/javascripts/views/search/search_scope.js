@@ -39,7 +39,7 @@ app.views.SearchScope = class SearchScope extends app.View {
     this.searcher.on("results", (results) => this.onResults(results));
   }
 
-  /** @returns {any} The doc the search is scoped to, or the app when it isn't scoped. */
+  /** @returns {unknown} The doc the search is scoped to, or the app when it isn't scoped. */
   getScope() {
     return this.doc || app;
   }
@@ -82,7 +82,7 @@ app.views.SearchScope = class SearchScope extends app.View {
     }
   }
 
-  /** @param {any[]} results */
+  /** @param {unknown[]} results */
   onResults(results) {
     const doc = results[0];
     if (!doc) {

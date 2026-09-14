@@ -51,7 +51,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   }
 
   /**
-   * @param {any} doc
+   * @param {unknown} doc
    * @param {Record<string, InstallStatus>} status Install statuses by slug.
    */
   renderDoc(doc, status) {
@@ -74,7 +74,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
 
   /**
    * @param {any} el A node inside a row.
-   * @returns {any} The row's doc, or `undefined`.
+   * @returns {unknown} The row's doc, or `undefined`.
    */
   docByEl(el) {
     let slug;
@@ -92,7 +92,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
     return this.find(`[data-slug='${doc.slug}']`);
   }
 
-  /** @param {any} context */
+  /** @param {unknown} context */
   onRoute(context) {
     this.render();
   }
@@ -151,7 +151,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
     });
   }
 
-  /** @param {any} doc */
+  /** @param {unknown} doc */
   onInstallError(doc) {
     if (!this.activated) {
       return;
@@ -163,7 +163,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   }
 
   /**
-   * @param {any} doc
+   * @param {unknown} doc
    * @param {ProgressEvent} event
    */
   onInstallProgress(doc, event) {
@@ -197,7 +197,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   // Exports `docs` into a single file. Returns false when another backup is
   // already running, in which case `onDone` is never called.
   /**
-   * @param {any[]} docs
+   * @param {unknown[]} docs
    * @param {(success: boolean) => void} [onDone]
    * @returns {boolean} Whether the export started; it doesn't while one is
    *   already running.
@@ -237,7 +237,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   }
 
   /**
-   * @param {any} doc
+   * @param {unknown} doc
    * @param {any} el The doc's row.
    */
   exportDoc(doc, el) {
@@ -330,7 +330,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
 
   /**
    * @param {boolean} success
-   * @param {any} [exception]
+   * @param {unknown} [exception]
    */
   onPersistenceRequestCompleted(success, exception) {
     if (!this.activated) {

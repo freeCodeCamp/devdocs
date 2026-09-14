@@ -89,7 +89,7 @@ app.views.Sidebar = class Sidebar extends app.View {
     return this.removeClass("no-hover");
   }
 
-  /** @param {any} view The view to show below the search field. */
+  /** @param {unknown} view The view to show below the search field. */
   showView(view) {
     if (this.view !== view) {
       if (this.hover != null) {
@@ -139,7 +139,7 @@ app.views.Sidebar = class Sidebar extends app.View {
 
   /**
    * @param {any} newDoc The doc the search is now scoped to, if any.
-   * @param {any} previousDoc The doc it was scoped to before, if any.
+   * @param {unknown} previousDoc The doc it was scoped to before, if any.
    */
   onScopeChange(newDoc, previousDoc) {
     if (previousDoc) {

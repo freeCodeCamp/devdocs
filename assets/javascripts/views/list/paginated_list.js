@@ -9,7 +9,7 @@
 app.views.PaginatedList = class PaginatedList extends app.View {
   static PER_PAGE = app.config.max_results;
 
-  /** @param {any[]} data Every row, rendered a page at a time. */
+  /** @param {unknown[]} data Every row, rendered a page at a time. */
   constructor(data) {
     super();
     this.data = data;
@@ -128,7 +128,7 @@ app.views.PaginatedList = class PaginatedList extends app.View {
   /**
    * Renders whichever page holds `object`.
    *
-   * @param {any} object A row of `data`.
+   * @param {unknown} object A row of `data`.
    */
   paginateTo(object) {
     const index = this.data.indexOf(object);

@@ -8,8 +8,8 @@
  * lists are built.
  *
  * @param {string} name The key under `app.templates`.
- * @param {any} [value] The template's first argument, or an array of them.
- * @param {...any} args Passed on after `value`.
+ * @param {unknown} [value] The template's first argument, or an array of them.
+ * @param {...unknown} args Passed on after `value`.
  * @returns {string} The rendered HTML.
  */
 app.templates.render = function (name, value, ...args) {

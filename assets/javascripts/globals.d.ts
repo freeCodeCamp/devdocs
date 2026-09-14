@@ -33,13 +33,13 @@ declare var resetAnalytics: () => void;
 declare var app: App;
 
 /** lib/favicon.js — swaps the favicon for the doc's icon. */
-declare var setFaviconForDoc: (doc: any) => void;
+declare var setFaviconForDoc: (doc: unknown) => void;
 
 /** lib/favicon.js — restores the default favicon. */
 declare var resetFavicon: () => void;
 
 /** debug.js — prints the view tree, with each view's activation state. */
-declare var viewTree: (view?: any, level?: number, visited?: any[]) => void;
+declare var viewTree: (view?: unknown, level?: number, visited?: unknown[]) => void;
 
 // --- Vendored libraries (assets/javascripts/vendor) ---
 
@@ -102,10 +102,10 @@ interface View {
 // --- Analytics, loaded at runtime by tracking.js ---
 
 /** Google Analytics, once analytics.js has loaded. */
-declare var ga: (...args: any[]) => void;
+declare var ga: (...args: unknown[]) => void;
 
 /** Gauges' command queue. */
-declare var _gauges: any[] | undefined;
+declare var _gauges: unknown[] | undefined;
 
 // --- Augmentations ---
 
@@ -117,7 +117,7 @@ interface Window {
   supportsMathML?: boolean;
 
   /** Gauges' command queue. */
-  _gauges?: any[];
+  _gauges?: unknown[];
 }
 
 interface Navigator {

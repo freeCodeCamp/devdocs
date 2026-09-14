@@ -7,7 +7,7 @@ app.views.EntryList = class EntryList extends app.views.PaginatedList {
   static tagName = "div";
   static className = "_list _list-sub";
 
-  /** @param {any[]} entries */
+  /** @param {unknown[]} entries */
   constructor(entries) {
     super(...arguments);
     this.entries = entries;
@@ -22,7 +22,7 @@ app.views.EntryList = class EntryList extends app.views.PaginatedList {
   }
 
   /**
-   * @param {any[]} entries One page of entries.
+   * @param {unknown[]} entries One page of entries.
    * @returns {string}
    */
   render(entries) {

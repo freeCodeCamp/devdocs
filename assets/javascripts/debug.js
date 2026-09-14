@@ -83,7 +83,7 @@ app.Searcher = class TimingSearcher extends app.Searcher {
  *
  * @param {any} [view] Defaults to the root view.
  * @param {number} [level] The current depth, used for indentation.
- * @param {any[]} [visited] The views already printed, so that the shared ones
+ * @param {unknown[]} [visited] The views already printed, so that the shared ones
  *   aren't walked twice.
  */
 this.viewTree = function (view, level, visited) {

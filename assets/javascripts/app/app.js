@@ -26,7 +26,7 @@
 /**
  * A doc as it appears in the manifest, before it becomes an `app.models.Doc`.
  *
- * @typedef {Record<string, any>} DocData
+ * @typedef {Record<string, unknown>} DocData
  */
 
 /**
@@ -97,7 +97,7 @@ class App extends Events {
   /**
    * The `window.onerror` handler that was installed before ours, if any.
    *
-   * @type {any}
+   * @type {unknown}
    */
   previousErrorHandler;
 
@@ -363,7 +363,7 @@ class App extends Events {
    * more docs at once than Docs#load does.
    *
    * @param {any[]} docs
-   * @returns {Promise<Set<any>>} The docs whose index loaded.
+   * @returns {Promise<Set<unknown>>} The docs whose index loaded.
    */
   async loadLatestVersions(docs) {
     const loaded = new Set();
@@ -506,7 +506,7 @@ class App extends Events {
     document.documentElement.classList.remove("_booting");
   }
 
-  /** @param {...any} args */
+  /** @param {...unknown} args */
   onBootError(...args) {
     this.trigger("bootError");
     this.hideLoadingScreen();
@@ -525,8 +525,8 @@ class App extends Events {
    * Warns the user that cookies are blocked, so preferences won't stick. Once.
    *
    * @param {string} key
-   * @param {any} value What was written.
-   * @param {any} actual What was read back.
+   * @param {unknown} value What was written.
+   * @param {unknown} actual What was read back.
    */
   onCookieBlocked(key, value, actual) {
     if (this.cookieBlocked) {
@@ -587,7 +587,7 @@ Please check your browser extensions/addons. `);
   }
 
   /**
-   * @param {any} error
+   * @param {unknown} error
    * @param {string} [file] Where the error came from.
    * @returns {boolean} Whether the error came from the app rather than an
    *   external script.
