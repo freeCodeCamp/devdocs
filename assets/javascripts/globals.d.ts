@@ -20,6 +20,24 @@ declare var $: DollarQuery & DollarHelpers;
 /** lib/util.js — queries every matching element. */
 declare var $$: DollarQueryAll;
 
+/** lib/local_storage_store.js — a JSON-encoded wrapper around localStorage. */
+declare var LocalStorageStore: new () => LocalStorageStore;
+
+/** lib/page.js — the router. */
+declare var page: PageFn & PageHelpers;
+
+/** lib/page.js — expires the analytics cookies. */
+declare var resetAnalytics: () => void;
+
+/** app/app.js — the application singleton. */
+declare var app: App;
+
+/** lib/favicon.js — swaps the favicon for the doc's icon. */
+declare var setFaviconForDoc: (doc: any) => void;
+
+/** lib/favicon.js — restores the default favicon. */
+declare var resetFavicon: () => void;
+
 // --- Vendored libraries (assets/javascripts/vendor) ---
 
 /** Cookies.js — github.com/ScottHamper/Cookies */
@@ -54,6 +72,16 @@ declare const Prism: {
 };
 
 // --- Augmentations ---
+
+interface Window {
+  /** Present when running inside Electron. */
+  readonly process?: { versions?: Record<string, string> };
+}
+
+interface Navigator {
+  /** Global Privacy Control. Not in lib.dom yet. */
+  readonly globalPrivacyControl?: boolean;
+}
 
 interface XMLHttpRequest {
   /** Set by lib/ajax.js so that the timeout can be cleared when it settles. */

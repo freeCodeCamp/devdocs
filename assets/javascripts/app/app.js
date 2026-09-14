@@ -1,12 +1,107 @@
+// @ts-check
+
+/**
+ * The build-time configuration, rendered into the page by app/config.js.erb.
+ *
+ * @typedef {object} AppConfig
+ * @property {string} db_filename
+ * @property {string[]} default_docs Slugs enabled for a first-time visitor.
+ * @property {Record<string, string>} docs_aliases Alternative spellings, by the name they resolve to.
+ * @property {string} docs_origin Where the documentation files are served from.
+ * @property {string} env
+ * @property {number} history_cache_size
+ * @property {string} index_filename
+ * @property {number} max_results
+ * @property {string} production_host
+ * @property {string} search_param The query parameter a search is read from.
+ * @property {string} sentry_dsn
+ * @property {number} version Cache-busting stamp for the offline data.
+ * @property {string} release
+ * @property {string} mathml_stylesheet
+ * @property {string} favicon_spritesheet
+ * @property {string} service_worker_path
+ * @property {boolean} service_worker_enabled
+ */
+
+/**
+ * A doc as it appears in the manifest, before it becomes an `app.models.Doc`.
+ *
+ * @typedef {Record<string, any>} DocData
+ */
+
+/**
+ * The application singleton, and the namespace everything else registers into.
+ *
+ * The registries below are keyed by name and populated by the files that
+ * define their members, so they are typed as plain records rather than
+ * enumerating 37 view classes.
+ */
 class App extends Events {
+  // Kept so that isInjectionError can tell whether an extension replaced the
+  // globals out from under us.
   _$ = $;
   _$$ = $$;
   _page = page;
+
+  /** @type {Record<string, any>} */
   collections = {};
+  /** @type {Record<string, any>} */
   models = {};
+  /** @type {Record<string, any>} */
   templates = {};
+  /** @type {Record<string, any>} */
   views = {};
 
+  /** Set by app/config.js.erb. @type {AppConfig} */
+  config;
+
+  /**
+   * The manifest of every available doc, set by docs.js.erb. Deleted once the
+   * docs have been read into the collections.
+   *
+   * @type {DocData[] | undefined}
+   */
+  DOCS;
+
+  /**
+   * In single-doc mode, the one doc being shown, read off the body. Deleted
+   * once it has been read.
+   *
+   * @type {DocData | undefined}
+   */
+  DOC;
+
+  // The classes registered by the rest of app/, collections/, models/ and
+  // views/. They're constructors rather than instances.
+  /** @type {any} */ DB;
+  /** @type {any} */ OfflineBackup;
+  /** @type {any} */ Router;
+  /** @type {any} */ Searcher;
+  /** @type {any} */ SynchronousSearcher;
+  /** @type {any} */ ServiceWorker;
+  /** @type {any} */ Settings;
+  /** @type {any} */ Shortcuts;
+  /** @type {any} */ UpdateChecker;
+  /** @type {any} */ Collection;
+  /** @type {any} */ Model;
+  /** @type {any} */ View;
+
+  /**
+   * The `window.onerror` handler that was installed before ours, if any.
+   *
+   * @type {any}
+   */
+  previousErrorHandler;
+
+  /**
+   * The most recent IndexedDB transaction, tracked by app/db.js so that a
+   * hung transaction can be detected.
+   *
+   * @type {number | undefined}
+   */
+  lastIDBTransaction;
+
+  /** Wires up the app and boots it. Called once the document is ready. */
   init() {
     try {
       this.initErrorTracking();
@@ -316,9 +411,9 @@ class App extends Events {
 
   reboot() {
     if (location.pathname !== "/" && location.pathname !== "/settings") {
-      window.location = `/#${location.pathname}`;
+      window.location = /** @type {any} */ (`/#${location.pathname}`);
     } else {
-      window.location = "/";
+      window.location = /** @type {any} */ ("/");
     }
   }
 
@@ -341,7 +436,7 @@ class App extends Events {
     if (this.serviceWorker != null) {
       this.serviceWorker.update();
     }
-    window.location = "/";
+    window.location = /** @type {any} */ ("/");
   }
 
   showTip(tip) {
@@ -392,9 +487,9 @@ class App extends Events {
     if (this.cookieBlocked) {
       return;
     }
-    if (this.isInjectionError(...args)) {
+    if (this.isInjectionError()) {
       this.onInjectionError();
-    } else if (this.isAppError(...args)) {
+    } else if (this.isAppError(args[0], args[1])) {
       if (typeof this.previousErrorHandler === "function") {
         this.previousErrorHandler(...args);
       }

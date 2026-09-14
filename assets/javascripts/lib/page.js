@@ -4,22 +4,90 @@
  * Copyright 2012 TJ Holowaychuk <tj@vision-media.ca>
  */
 
+// @ts-check
+
+/**
+ * The history entry behind a navigation. Stored in `history.state`, so it
+ * survives reloads and has to stay JSON-serializable.
+ *
+ * @typedef {object} PageState
+ * @property {number} [id] Incrementing, so that the initial and last entries can be recognized.
+ * @property {number} [sessionId] Identifies the page load; a mismatch means the state outlived its session.
+ * @property {string} [path]
+ */
+
+/**
+ * A named capture in a route pattern.
+ *
+ * @typedef {object} RouteKey
+ * @property {string} name
+ * @property {boolean} optional
+ */
+
+/**
+ * A route callback. Calling `next` passes the context on to the route after it.
+ *
+ * @callback PageCallback
+ * @param {Context} context
+ * @param {() => any} next
+ * @returns {any}
+ */
+
+/**
+ * `page` is the router. Its behaviour depends on what it is handed:
+ *
+ *   - `page(fn)` registers `fn` for every path,
+ *   - `page(path, fn)` registers `fn` for one route,
+ *   - `page(path, state)` navigates, and
+ *   - `page(options)` starts the router.
+ *
+ * The signatures below are the source of truth for the global, which is
+ * declared in globals.d.ts.
+ *
+ * @callback PageFn
+ * @param {string | RegExp | PageCallback | object} [value]
+ * @param {PageCallback | PageState} [fn]
+ * @returns {void}
+ */
+
+/**
+ * @typedef {object} PageHelpers
+ * @property {(options?: object) => void} start Begins listening for clicks and history changes.
+ * @property {() => void} stop
+ * @property {(path: string, state?: PageState) => Context | undefined} show Navigates, pushing a history entry.
+ * @property {(path: string, state?: PageState, skipDispatch?: boolean, init?: boolean) => Context} replace Navigates, replacing the current history entry.
+ * @property {(context: Context) => any} dispatch Runs the context through the registered routes.
+ * @property {() => boolean} canGoBack
+ * @property {() => boolean} canGoForward
+ * @property {(fn: () => void) => void} track Registers an analytics callback, run on every navigation once consent is given.
+ */
+
 let running = false;
+
+/** @type {PageState | null} */
 let currentState = null;
+
+/** @type {PageCallback[]} */
 const callbacks = [];
 
-this.page = function (value, fn) {
-  if (typeof value === "function") {
-    page("*", value);
-  } else if (typeof fn === "function") {
-    const route = new Route(value);
-    callbacks.push(route.middleware(fn));
-  } else if (typeof value === "string") {
-    page.show(value, fn);
-  } else {
-    page.start(value);
-  }
-};
+// The helpers are attached to `page` below, so the function on its own doesn't
+// yet satisfy the type the global is declared with.
+this.page = /** @type {PageFn & PageHelpers} */ (
+  /** @type {PageFn} */ (
+    function (value, fn) {
+      if (typeof value === "function") {
+        page("*", /** @type {PageCallback} */ (value));
+      } else if (typeof fn === "function") {
+        const route = new Route(/** @type {string | RegExp | string[]} */ (value));
+        callbacks.push(route.middleware(fn));
+      } else if (typeof value === "string") {
+        page.show(value, /** @type {PageState} */ (fn));
+      } else {
+        page.start(value);
+      }
+    }
+  )
+);
 
 page.start = function (options) {
   if (options == null) {
@@ -118,22 +186,72 @@ class Context {
    */
   static initialPath = currentPath();
 
+  /**
+   * Whether the state is the first of the session.
+   *
+   * @param {PageState} state
+   * @returns {boolean}
+   */
   static isInitialState(state) {
     return state.id === 0;
   }
 
+  /**
+   * Whether the state is the most recent one created.
+   *
+   * @param {PageState} state
+   * @returns {boolean}
+   */
   static isLastState(state) {
     return state.id === Context.stateId - 1;
   }
 
+  /**
+   * Whether a popstate is the browser restoring the path the document loaded with.
+   *
+   * @param {PageState} state
+   * @returns {boolean}
+   */
   static isInitialPopState(state) {
     return state.path === Context.initialPath && Context.stateId === 1;
   }
 
+  /**
+   * Whether the state was created by this page load.
+   *
+   * @param {PageState} state
+   * @returns {boolean}
+   */
   static isSameSession(state) {
     return state.sessionId === Context.sessionId;
   }
 
+  /**
+   * Whether this context is the one the document was loaded with, rather than
+   * a later navigation. Set by `page.replace`.
+   *
+   * @type {boolean | undefined}
+   */
+  init;
+
+  /**
+   * The route's captured parameters, by name for named ones and by position
+   * for the rest. Set by `Route#middleware` when the route matches.
+   *
+   * @type {any}
+   */
+  params;
+
+  /** The query string, without the leading `?`. @type {string | undefined} */
+  query;
+
+  /** The hash fragment, without the leading `#`. @type {string | undefined} */
+  hash;
+
+  /**
+   * @param {string} [path] Defaults to `"/"`.
+   * @param {PageState} [state]
+   */
   constructor(path, state) {
     if (path == null) {
       path = "/";
@@ -172,18 +290,32 @@ class Context {
   }
 }
 
+/** A single route: a path pattern, and the parameter names it captures. */
 class Route {
+  /**
+   * @param {string | RegExp | string[]} path
+   * @param {object} [options] Unused; kept for call-site compatibility.
+   */
   constructor(path, options) {
     this.path = path;
     if (options == null) {
       options = {};
     }
+    /** @type {RouteKey[]} */
     this.keys = [];
     this.regexp = pathToRegexp(this.path, this.keys);
   }
 
+  /**
+   * Wraps `fn` so that it only runs when the route matches.
+   *
+   * @param {PageCallback} fn
+   * @returns {PageCallback}
+   */
   middleware(fn) {
     return (context, next) => {
+      // Named captures are set as string keys alongside the positional ones.
+      /** @type {any} */
       let params = [];
       if (this.match(context.pathname, params)) {
         context.params = params;
@@ -194,6 +326,11 @@ class Route {
     };
   }
 
+  /**
+   * @param {string} path
+   * @param {any} params Filled in with the captured parameters.
+   * @returns {boolean | undefined} `undefined` when the route doesn't match.
+   */
   match(path, params) {
     const matchData = this.regexp.exec(path);
     if (!matchData) {
@@ -217,6 +354,13 @@ class Route {
   }
 }
 
+/**
+ * Compiles a path pattern into a regexp, collecting the named captures.
+ *
+ * @param {string | RegExp | string[]} path
+ * @param {RouteKey[]} keys Filled in with one entry per named capture.
+ * @returns {RegExp}
+ */
 var pathToRegexp = function (path, keys) {
   if (path instanceof RegExp) {
     return path;
@@ -257,6 +401,7 @@ var pathToRegexp = function (path, keys) {
   return new RegExp(`^${path}$`);
 };
 
+/** @type {(this: Window, ev: PopStateEvent) => any} */
 var onpopstate = function (event) {
   if (!event.state || Context.isInitialPopState(event.state)) {
     return;
@@ -269,6 +414,7 @@ var onpopstate = function (event) {
   }
 };
 
+/** @type {(this: Window, ev: PointerEvent) => any} */
 var onclick = function (event) {
   try {
     if (
@@ -309,21 +455,27 @@ var onclick = function (event) {
   }
 };
 
+/** @param {string} url */
 var isSameOrigin = (url) =>
   url.startsWith(`${location.protocol}//${location.hostname}`);
 
+/** Points the canonical link at the current path. */
 var updateCanonicalLink = function () {
-  if (!this.canonicalLink) {
-    this.canonicalLink = document.head.querySelector('link[rel="canonical"]');
+  // Cached on the global, which is what `this` is in the concatenated bundle.
+  const self = /** @type {any} */ (this);
+  if (!self.canonicalLink) {
+    self.canonicalLink = document.head.querySelector('link[rel="canonical"]');
   }
-  return this.canonicalLink.setAttribute(
+  return self.canonicalLink.setAttribute(
     "href",
     `https://${location.host}${location.pathname}`,
   );
 };
 
+/** @type {Array<() => void>} */
 const trackers = [];
 
+/** @param {() => void} fn */
 page.track = function (fn) {
   trackers.push(fn);
 };
@@ -344,7 +496,7 @@ var track = function () {
 
   if (consentGiven === "1") {
     for (var tracker of trackers) {
-      tracker.call();
+      tracker.call(undefined);
     }
   } else if (consentGiven === undefined && consentAsked === undefined) {
     // Only ask for consent once per browser session
@@ -354,6 +506,7 @@ var track = function () {
   }
 };
 
+/** Expires the analytics cookies, which are the ones prefixed with a single `_`. */
 this.resetAnalytics = function () {
   for (var cookie of document.cookie.split(/;\s?/)) {
     var name = cookie.split("=")[0];

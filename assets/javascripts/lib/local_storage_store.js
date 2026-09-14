@@ -1,6 +1,17 @@
 // @ts-check
 
 /**
+ * The instance side of the store, so that the constructor can be declared as a
+ * global in globals.d.ts.
+ *
+ * @typedef {object} LocalStorageStore
+ * @property {(key: string) => any} get
+ * @property {(key: string, value: any) => boolean | undefined} set
+ * @property {(key: string) => boolean | undefined} del
+ * @property {() => boolean | undefined} reset
+ */
+
+/**
  * A JSON-encoded wrapper around `localStorage`.
  *
  * Every method swallows the exceptions the browser throws when storage is
