@@ -1,0 +1,13 @@
+{
+  // The tests run under Node but import the browser modules, so they need both
+  // sets of globals, plus globals.d.ts for the shapes it merges into the
+  // models and views.
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["node"]
+  },
+  "include": ["*.js", "fixtures/*.js", "../../assets/javascripts/globals.d.ts"]
+}

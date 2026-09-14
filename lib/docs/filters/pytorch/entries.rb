@@ -2,6 +2,9 @@ module Docs
   class Pytorch
     class EntriesFilter < Docs::EntriesFilter
       def get_breadcrumbs
+        breadcrumbs = schema_breadcrumbs
+        return breadcrumbs unless breadcrumbs.empty?
+
         breadcrumbs = if at_css('.pytorch-breadcrumbs')
           css('.pytorch-breadcrumbs > li').map { |node|
             node.content.delete_suffix(' >').strip
@@ -26,15 +29,19 @@ module Docs
       end
 
       def get_type
-        if at_css('.pytorch-breadcrumbs')
-          get_breadcrumbs[1]
+        breadcrumbs = get_breadcrumbs
+
+        if schema_breadcrumbs.any?
+          breadcrumbs.size > 2 ? breadcrumbs[-2] : breadcrumbs[-1]
+        elsif at_css('.pytorch-breadcrumbs')
+          breadcrumbs[1]
         else
-          get_breadcrumbs.size > 2 ? get_breadcrumbs[2] : get_breadcrumbs[1]
+          breadcrumbs.size > 2 ? breadcrumbs[2] : breadcrumbs[1]
         end
       end
 
       def include_default_entry?
-        !get_breadcrumbs.nil? && get_breadcrumbs.size >= 2
+        schema_breadcrumbs.any? || get_breadcrumbs.size >= 2
       end
 
       def additional_entries
@@ -60,6 +67,22 @@ module Docs
         end
 
         entries
+      end
+
+      private
+
+      def schema_breadcrumbs
+        @schema_breadcrumbs ||= css(
+          '[itemtype="https://schema.org/BreadcrumbList"] [itemprop="itemListElement"]'
+        ).filter_map do |node|
+          name = node.at_css('[itemprop="name"]')
+          next unless name
+
+          text = Nokogiri::HTML.fragment(name['content'] || name.content).text.strip
+          dangling_text = node.text.strip.delete_suffix('">') if name['content']
+          text = "#{text} #{dangling_text}" if dangling_text.present?
+          text
+        end.reject(&:empty?)
       end
     end
   end

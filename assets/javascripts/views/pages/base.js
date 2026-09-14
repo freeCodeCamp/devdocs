@@ -1,22 +1,44 @@
-app.views.BasePage = class BasePage extends app.View {
+// @ts-check
+
+import { $ } from "../../lib/util.js";
+import { View } from "../view.js";
+/** @import { Entry } from "../../models/entry.js" */
+
+/**
+ * The base for the per-doc page views: docs whose pages need something done to
+ * them once rendered.
+ *
+ * Syntax highlighting is spread over animation frames, so that a page with a
+ * lot of code doesn't block scrolling while it is painted.
+ */
+export class BasePage extends View {
+  /**
+   * @param {HTMLElement} el
+   * @param {Entry} entry
+   */
   constructor(el, entry) {
     super(el);
     this.entry = entry;
   }
 
+  /** Also drops the code blocks left to highlight. */
   deactivate() {
-    if (super.deactivate(...arguments)) {
-      return (this.highlightNodes = []);
+    if (super.deactivate()) {
+      this.highlightNodes = [];
     }
   }
 
+  /**
+   * @param {string} content
+   * @param {boolean} [fromCache]
+   */
   render(content, fromCache) {
     if (fromCache == null) {
       fromCache = false;
     }
     this.highlightNodes = [];
     this.previousTiming = null;
-    if (!this.constructor.className) {
+    if (!this.statics().className) {
       this.addClass(`_${this.entry.doc.type}`);
     }
     this.html(content);
@@ -32,6 +54,7 @@ app.views.BasePage = class BasePage extends app.View {
     }
   }
 
+  /** Collects the code blocks and starts painting them. */
   highlightCode() {
     for (var el of this.findAll("pre[data-language]")) {
       var language = el.getAttribute("data-language");
@@ -40,6 +63,11 @@ app.views.BasePage = class BasePage extends app.View {
     }
   }
 
+  /**
+   * Highlights as many code blocks as fit in the frame, then yields.
+   *
+   * @param {number} [timing] When the current frame started.
+   */
   paintCode(timing) {
     if (this.previousTiming) {
       if (Math.round(1000 / (timing - this.previousTiming)) > 50) {
@@ -70,4 +98,4 @@ app.views.BasePage = class BasePage extends app.View {
     }
     this.previousTiming = timing;
   }
-};
+}

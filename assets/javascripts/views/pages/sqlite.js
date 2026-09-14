@@ -1,8 +1,13 @@
-//= require views/pages/base
+// @ts-check
 
-app.views.SqlitePage = class SqlitePage extends app.views.BasePage {
+import { $ } from "../../lib/util.js";
+import { BasePage } from "./base.js";
+
+/** The SQLite pages' show/hide toggles. */
+export class SqlitePage extends BasePage {
   static events = { click: "onClick" };
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     const id = event.target.getAttribute("data-toggle");
     if (!id) {
@@ -21,4 +26,4 @@ app.views.SqlitePage = class SqlitePage extends app.views.BasePage {
       event.target.textContent = "show";
     }
   }
-};
+}

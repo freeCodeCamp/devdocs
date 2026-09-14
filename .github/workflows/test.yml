@@ -1,4 +1,4 @@
-name: Ruby tests
+name: Tests
 
 on:
   pull_request:
@@ -7,12 +7,31 @@ on:
 
 jobs:
   test:
+    name: Ruby tests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+    - name: Install libwebp tools
+      run: sudo apt-get update && sudo apt-get install -y webp
     - name: Set up Ruby
       uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run tests
       run: bundle exec rake
+
+  assets:
+    name: Asset typecheck and tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+    - name: Set up Node
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version-file: .tool-versions
+        cache: npm
+    - run: npm ci
+    - name: Typecheck the assets
+      run: npm run typecheck
+    - name: Run the asset tests
+      run: npm test

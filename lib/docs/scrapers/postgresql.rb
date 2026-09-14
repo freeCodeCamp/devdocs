@@ -1,5 +1,5 @@
 module Docs
-  class Postgresql < UrlScraper
+  class Postgresql < FileScraper
     include FixInternalUrlsBehavior
 
     self.name = 'PostgreSQL'
@@ -17,7 +17,6 @@ module Docs
     options[:title] = false
     options[:root_title] = 'PostgreSQL'
     options[:follow_links] = ->(filter) { filter.initial_page? }
-    options[:rate_limit] = 200
 
     options[:skip] = %w(
       index.html
@@ -57,42 +56,42 @@ module Docs
     HTML
 
     version '18' do
-      self.release = '18.3'
+      self.release = '18.6'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
     version '17' do
-      self.release = '17.5'
+      self.release = '17.11'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
     version '16' do
-      self.release = '16.1'
+      self.release = '16.15'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
     version '15' do
-      self.release = '15.4'
+      self.release = '15.19'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
     version '14' do
-      self.release = '14.5'
+      self.release = '14.24'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
     version '13' do
-      self.release = '13.4'
+      self.release = '13.23'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
     version '12' do
-      self.release = '12.1'
+      self.release = '12.22'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
     version '11' do
-      self.release = '11.6'
+      self.release = '11.22'
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
@@ -126,6 +125,22 @@ module Docs
       doc = fetch_doc('https://www.postgresql.org/docs/current/index.html', opts)
       label = doc.at_css('#pgContentWrap h1.title').content
       label.scan(/([0-9.]+)/)[0][0]
+    end
+
+    private
+
+    def archive_url
+      release = self.class.release
+      # 17 dropped the prebuilt documentation from the source tarball in favour
+      # of an archive of its own.
+      suffix = '-docs' if release.to_i >= 17
+      "https://ftp.postgresql.org/pub/source/v#{release}/postgresql-#{release}#{suffix}.tar.gz"
+    end
+
+    def download_source
+      # Either archive ships the documentation prebuilt, as a flat directory of
+      # one HTML file per page.
+      download_and_extract(archive_url, "postgresql-#{self.class.release}/doc/src/sgml/html")
     end
   end
 end

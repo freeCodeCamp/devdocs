@@ -1,40 +1,28 @@
-const assert = require("node:assert/strict");
-const fs = require("node:fs");
-const test = require("node:test");
-const vm = require("node:vm");
+// @ts-check
 
-const context = {
-  app: {
-    config: { search_param: "q" },
-    router: { replaceHash: () => {} },
-    views: {},
-    View: class {},
-  },
-  location: { hash: "" },
-  $: {
-    urlDecodeFragment: decodeURIComponent,
-  },
-};
+import assert from "node:assert/strict";
+import test from "node:test";
 
-vm.createContext(context);
+import { app } from "../../assets/javascripts/app/app.js";
+import { $ } from "../../assets/javascripts/lib/util.js";
+import { Search } from "../../assets/javascripts/views/search/search.js";
+import { SearchScope } from "../../assets/javascripts/views/search/search_scope.js";
 
-for (const file of [
-  "assets/javascripts/views/search/search_scope.js",
-  "assets/javascripts/views/search/search.js",
-]) {
-  vm.runInContext(fs.readFileSync(file, "utf8"), context, {
-    filename: file,
-  });
-}
+// The views are built through `Object.create` rather than constructed: the
+// base View constructor resolves its selectors against a real document, and
+// the methods under test only read statics and globals.
+const build = (Klass) => Object.create(Klass.prototype);
 
 test("URL search hash preserves plus signs in a scoped C++ query", () => {
-  context.location.hash = "#q=c++%20std::min";
+  location.hash = "#q=c++%20std::min";
 
-  const scope = new context.app.views.SearchScope();
+  const scope = build(SearchScope);
   let replacedHash;
-  context.app.router.replaceHash = (hash) => {
-    replacedHash = hash;
-  };
+  app.router = /** @type {any} */ ({
+    replaceHash: (hash) => {
+      replacedHash = hash;
+    },
+  });
 
   assert.equal(scope.getHashValue(), "c++");
   assert.equal(scope.extractHashValue(), "c++");
@@ -42,9 +30,23 @@ test("URL search hash preserves plus signs in a scoped C++ query", () => {
 });
 
 test("URL search hash preserves encoded literal plus signs in the query", () => {
-  context.location.hash = "#q=operator%2B";
+  location.hash = "#q=operator%2B";
 
-  const search = new context.app.views.Search();
+  assert.equal(build(Search).getHashValue(), "operator+");
+});
 
-  assert.equal(search.getHashValue(), "operator+");
+test("scoped external search includes the documentation name", () => {
+  let popupUrl;
+  $.popup = (url) => {
+    popupUrl = url;
+  };
+
+  const search = build(Search);
+  search.value = "status";
+  search.scope = { name: () => "Git" };
+  search.reset = () => {};
+
+  search.externalSearch("https://www.google.com/search?q=");
+
+  assert.equal(popupUrl, "https://www.google.com/search?q=Git%20status");
 });

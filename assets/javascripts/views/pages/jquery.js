@@ -1,8 +1,19 @@
-//= require views/pages/base
+// @ts-check
 
-app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
+import { $ } from "../../lib/util.js";
+import { BasePage } from "./base.js";
+
+/**
+ * The jQuery docs' runnable examples, each rendered into its own iframe.
+ *
+ * The example's source is rewritten first: its relative URLs are pointed at
+ * the API site, and a prefilter is injected that aborts any request that would
+ * leave it, since they can't work from inside DevDocs.
+ */
+export class JqueryPage extends BasePage {
   static demoClassName = "_jquery-demo";
 
+  /** @inheritdoc */
   afterRender() {
     // Prevent jQuery Mobile's demo iframes from scrolling the page
     for (var iframe of this.findAllByTag("iframe")) {
@@ -14,11 +25,13 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
     return this.runExamples();
   }
 
+  /** @param {ViewEvent} event */
   onIframeLoaded(event) {
     event.target.style.display = "";
     $.off(event.target, "load", this.onIframeLoaded);
   }
 
+  /** Renders every example on the page. */
   runExamples() {
     for (var el of this.findAllByClass("entry-example")) {
       try {
@@ -27,18 +40,21 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
     }
   }
 
+  /** @param {HTMLElement} el The example's container. */
   runExample(el) {
     const source = el.getElementsByClassName("syntaxhighlighter")[0];
     if (!source || source.innerHTML.indexOf("!doctype") === -1) {
       return;
     }
 
-    let iframe = el.getElementsByClassName(JqueryPage.demoClassName)[0];
+    let iframe = /** @type {HTMLIFrameElement} */ (
+      el.getElementsByClassName(JqueryPage.demoClassName)[0]
+    );
     if (!iframe) {
       iframe = document.createElement("iframe");
       iframe.className = JqueryPage.demoClassName;
       iframe.width = "100%";
-      iframe.height = 200;
+      iframe.height = "200";
       el.appendChild(iframe);
     }
 
@@ -47,6 +63,10 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
     doc.close();
   }
 
+  /**
+   * @param {string} source
+   * @returns {string} The example's HTML, fixed up to run inside the app.
+   */
   fixIframeSource(source) {
     source = source.replace(
       '"/resources/',
@@ -72,4 +92,4 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
     );
     return source.replace(/<script>/gi, '<script nonce="devdocs">');
   }
-};
+}

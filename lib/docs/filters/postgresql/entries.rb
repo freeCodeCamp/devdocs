@@ -104,12 +104,18 @@ module Docs
           entries.concat get_custom_entries('.table td:first-child > p:first-child > code.function')
         else
           if type && type.start_with?('Functions')
-            entries.concat get_custom_entries('> .table td:first-child > code.literal:first-child')
-            entries.concat get_custom_entries('> .table td:first-child > code.function:first-child')
-            entries.concat get_custom_entries('> .table td:first-child > code:not(.literal):first-child + code.literal')
-            entries.concat get_custom_entries('> .table td:first-child > p:first-child > code.literal:first-child')
-            entries.concat get_custom_entries('> .table td:first-child > p > code.function:first-child')
-            entries.concat get_custom_entries('> .table td:first-child > p > code:not(.literal):first-child + code.literal')
+            entries.concat get_function_table_entries('code.literal:first-child')
+            entries.concat get_function_table_entries('code.function:first-child')
+            entries.concat get_function_table_entries('code:not(.literal):first-child + code.literal')
+            entries.concat get_function_table_entries('p:first-child > code.literal:first-child')
+            entries.concat get_function_table_entries('p > code.function:first-child')
+            entries.concat get_function_table_entries('p > code:not(.literal):first-child + code.literal')
+            # Since 13, the tables have a single column holding one
+            # .func_signature paragraph per signature, next to the description
+            # and example paragraphs.
+            entries.concat get_custom_entries('td.func_table_entry > p.func_signature > code.function:first-child')
+            entries.concat get_custom_entries('td.func_table_entry > p.func_signature > code.literal:first-child')
+            entries.concat get_custom_entries('td.func_table_entry > p.func_signature > code:not(.literal):not(.function):first-child + code.literal')
             if slug == 'functions-comparison' && !at_css('#FUNCTIONS-COMPARISON-PRED-TABLE') # before 9.6
               entries.concat %w(IS NULL BETWEEN DISTINCT\ FROM).map { |name| ["#{self.name}: #{name}"] }
             end
@@ -198,13 +204,25 @@ module Docs
         end
       end
 
-      def get_custom_entries(selector)
-        css(selector).each_with_object([]) do |node, entries|
+      # Function and operator tables sit at the top level of the page or, since
+      # 12, one section deep. Tables nested deeper are something else, e.g. the
+      # regular expression atom/quantifier/escape tables of functions-matching.
+      FUNCTION_TABLE_SCOPES = ['> .table', '> .sect2 > .table']
+
+      def get_function_table_entries(selector)
+        get_custom_entries(*FUNCTION_TABLE_SCOPES.map do |scope|
+          "#{scope} td:first-child:not(.func_table_entry) > #{selector}"
+        end)
+      end
+
+      def get_custom_entries(*selectors)
+        css(*selectors).each_with_object([]) do |node, entries|
           name = node.content
           name.remove! %r{\(.*?\)}m
           name.remove! %r{\[.*?\]}m
           name.squeeze! ' '
           name.remove! %r{\([^\)]*\z} # bug fix: json_populate_record
+          name.strip!
           name = '||' if name.include? ' || '
           id = name.gsub(/[^a-zA-Z0-9\-_]/) { |char| char.ord }
           id = id.parameterize

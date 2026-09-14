@@ -7,14 +7,14 @@ WORKDIR /devdocs
 
 COPY . /devdocs
 
-RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev libcurl && \
+RUN apk --update add nodejs build-base libstdc++ libarchive-tools git zlib-dev libcurl libwebp-tools && \
     gem install bundler && \
     bundle config set path.system true && \
     bundle config set without 'test' && \
     bundle install && \
     thor docs:download --all && \
     thor assets:compile && \
-    apk del gzip build-base git zlib-dev && \
+    apk del libarchive-tools build-base git zlib-dev && \
     rm -rf /var/cache/apk/* /tmp ~/.gem /root/.bundle/cache \
     /usr/local/bundle/cache /usr/lib/node_modules
 

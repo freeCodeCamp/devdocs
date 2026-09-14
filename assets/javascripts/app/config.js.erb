@@ -1,4 +1,7 @@
-app.config = {
+// @ts-check
+
+/** @type {import('./config.js').AppConfig} */
+export const config = {
   db_filename: 'db.json',
   default_docs: <%= App.default_docs.to_json %>,
   docs_aliases: <%= App.docs_aliases.to_json %>,
@@ -13,7 +16,7 @@ app.config = {
   version: <%= Time.now.to_i %>,
   release: <%= Time.now.utc.httpdate.to_json %>,
   mathml_stylesheet: '/mathml.css',
-  favicon_spritesheet: '<%= image_path('sprites/docs.png') %>',
+  favicon_spritesheet: '<%= image_path('sprites/docs.webp') %>',
   service_worker_path: '/service-worker.js',
   service_worker_enabled: <%= App.environment == :production || ENV['ENABLE_SERVICE_WORKER'] == 'true' %>,
 }

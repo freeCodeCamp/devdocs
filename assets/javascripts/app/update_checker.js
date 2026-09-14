@@ -1,4 +1,13 @@
-app.UpdateChecker = class UpdateChecker {
+// @ts-check
+
+import { app } from "./app.js";
+import { ajax } from "../lib/ajax.js";
+import { $ } from "../lib/util.js";
+import { Notif } from "../views/misc/notif.js";
+
+/** Watches for new builds of the app and new versions of the installed docs. */
+export class UpdateChecker {
+  /** Starts watching for new builds and checks the docs once. */
   constructor() {
     this.lastCheck = Date.now();
 
@@ -10,6 +19,10 @@ app.UpdateChecker = class UpdateChecker {
     setTimeout(() => this.checkDocs(), 0);
   }
 
+  /**
+   * Checks whether a new build of the app is available, by asking the service
+   * worker to update or, without one, by re-requesting the app bundle.
+   */
   check() {
     if (app.serviceWorker) {
       app.serviceWorker.update();
@@ -26,10 +39,12 @@ app.UpdateChecker = class UpdateChecker {
     }
   }
 
+  /** Offers the user a reload. */
   onUpdateReady() {
-    new app.views.Notif("UpdateReady", { autoHide: null });
+    new Notif("UpdateReady", { autoHide: null });
   }
 
+  /** Updates the installed docs, or offers to when updates are manual. */
   checkDocs() {
     if (!app.settings.get("manualUpdate")) {
       app.docs.updateInBackground();
@@ -42,14 +57,16 @@ app.UpdateChecker = class UpdateChecker {
     }
   }
 
+  /** Offers the user a doc update. */
   onDocsUpdateReady() {
-    new app.views.Notif("UpdateDocs", { autoHide: null });
+    new Notif("UpdateDocs", { autoHide: null });
   }
 
+  /** Re-checks when the tab is focused, at most every six hours. */
   onFocus() {
     if (Date.now() - this.lastCheck > 21600e3) {
       this.lastCheck = Date.now();
       this.check();
     }
   }
-};
+}

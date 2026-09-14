@@ -3,30 +3,22 @@ ruby '4.0.6'
 
 gem 'activesupport', require: false
 gem 'html-pipeline', '~> 2.14'
-gem 'ostruct'
 gem 'nokogiri'
-gem 'pry-byebug'
 gem 'rake'
 gem 'terminal-table'
 gem 'thor'
 gem 'typhoeus'
-gem 'yajl-ruby', require: false
 
 group :app do
-  gem 'browser'
   gem 'chunky_png'
   gem 'erubi'
   gem 'dartsass-sprockets'
-  gem 'image_optim_pack', platforms: :ruby
-  gem 'image_optim'
-  gem 'rack-ssl-enforcer'
+  gem 'puma'
   gem 'rack'
   gem 'rss'
-  gem 'sinatra-contrib'
   gem 'sinatra'
   gem 'sprockets-helpers'
   gem 'sprockets'
-  gem 'thin'
 end
 
 group :production do
@@ -36,17 +28,21 @@ end
 
 group :development do
   gem 'better_errors'
+  gem 'pry-byebug'
+  gem 'sinatra-contrib'
 end
 
 group :docs do
-  gem 'progress_bar', require: false
+  gem 'image_optim_pack', platforms: :ruby
+  gem 'image_optim'
+  gem 'kramdown'
+  gem 'kramdown-parser-gfm'
   gem 'redcarpet'
-  gem 'tty-pager', require: false
-  gem 'unix_utils', require: false
 end
 
 group :test do
   gem 'minitest'
+  gem 'ostruct'
   gem 'rack-test', require: false
   gem 'rr', require: false
   gem 'simplecov', require: false

@@ -1,4 +1,23 @@
-app.views.Sidebar = class Sidebar extends app.View {
+// @ts-check
+
+import { app } from "../../app/app.js";
+import { $ } from "../../lib/util.js";
+import { Search } from "../search/search.js";
+import { DocList } from "./doc_list.js";
+import { Results } from "./results.js";
+import { SidebarHover } from "./sidebar_hover.js";
+import { View } from "../view.js";
+/** @import { Context } from "../../lib/page.js" */
+/** @import { Doc } from "../../models/doc.js" */
+
+/**
+ * The sidebar: the search field, and below it either the doc list or the
+ * search results.
+ *
+ * Swapping between the two keeps the doc list's scroll position, so that
+ * clearing a search puts the user back where they were.
+ */
+export class Sidebar extends View {
   static el = "._sidebar";
 
   static events = {
@@ -14,21 +33,25 @@ app.views.Sidebar = class Sidebar extends app.View {
     escape: "onEscape",
   };
 
+  /** @inheritdoc */
   init() {
     if (!app.isMobile()) {
-      this.addSubview((this.hover = new app.views.SidebarHover(this.el)));
+      this.addSubview((this.hover = new SidebarHover(this.el)));
     }
-    this.addSubview((this.search = new app.views.Search()));
+    this.addSubview((this.search = new Search()));
 
     this.search
       .on("searching", () => this.onSearching())
       .on("clear", () => this.onSearchClear())
       .scope.on("change", (newDoc, previousDoc) =>
-        this.onScopeChange((newDoc, previousDoc)),
+        this.onScopeChange(
+          /** @type {Doc} */ (newDoc),
+          /** @type {Doc} */ (previousDoc),
+        ),
       );
 
-    this.results = new app.views.Results(this, this.search);
-    this.docList = new app.views.DocList();
+    this.results = new Results(this, this.search);
+    this.docList = new DocList();
 
     app.on("ready", () => this.onReady());
 
@@ -38,14 +61,20 @@ app.views.Sidebar = class Sidebar extends app.View {
     );
   }
 
+  /** Slides the sidebar away, on the layouts where it overlays the content. */
   hide() {
     this.removeClass("show");
   }
 
+  /** Slides the sidebar back in. */
   display() {
     this.addClass("show");
   }
 
+  /**
+   * @param {{ forceNoHover?: boolean }} [options] Pass `forceNoHover: false`
+   *   to let the sidebar reopen on hover again.
+   */
   resetDisplay(options) {
     if (options == null) {
       options = {};
@@ -62,15 +91,18 @@ app.views.Sidebar = class Sidebar extends app.View {
     }
   }
 
+  /** Re-enables hover once the pointer moves again. */
   resetHoverOnMouseMove() {
     $.off(window, "mousemove", this.resetHoverOnMouseMove);
     return requestAnimationFrame(() => this.resetHover());
   }
 
+  /** Re-enables opening the sidebar on hover. */
   resetHover() {
     return this.removeClass("no-hover");
   }
 
+  /** @param {unknown} view The view to show below the search field. */
   showView(view) {
     if (this.view !== view) {
       if (this.hover != null) {
@@ -87,19 +119,23 @@ app.views.Sidebar = class Sidebar extends app.View {
     }
   }
 
+  /** Shows whichever of the doc list and the results belongs on screen. */
   render() {
     this.html(this.view);
   }
 
+  /** Swaps the doc list in, restoring where it was scrolled to. */
   showDocList() {
     this.showView(this.docList);
   }
 
+  /** Swaps the results in, remembering where the doc list was scrolled to. */
   showResults() {
     this.display();
     this.showView(this.results);
   }
 
+  /** Clears the search and returns the doc list to the entry being read. */
   reset() {
     this.display();
     this.showDocList();
@@ -107,12 +143,17 @@ app.views.Sidebar = class Sidebar extends app.View {
     this.search.reset();
   }
 
+  /** Renders once the docs have loaded. */
   onReady() {
     this.view = this.docList;
     this.render();
     this.view.activate();
   }
 
+  /**
+   * @param {Doc} [newDoc] The doc the search is now scoped to.
+   * @param {Doc} [previousDoc] The doc it was scoped to before.
+   */
   onScopeChange(newDoc, previousDoc) {
     if (previousDoc) {
       this.docList.closeDoc(previousDoc);
@@ -124,12 +165,14 @@ app.views.Sidebar = class Sidebar extends app.View {
     }
   }
 
+  /** Remembers where the doc list is scrolled to. */
   saveScrollPosition() {
     if (this.view === this.docList) {
       this.scrollTop = this.el.scrollTop;
     }
   }
 
+  /** Puts the doc list back where it was. */
   restoreScrollPosition() {
     if (this.view === this.docList && this.scrollTop) {
       this.el.scrollTop = this.scrollTop;
@@ -139,19 +182,23 @@ app.views.Sidebar = class Sidebar extends app.View {
     }
   }
 
+  /** Scrolls the sidebar to the top. */
   scrollToTop() {
     this.el.scrollTop = 0;
   }
 
+  /** Swaps in the results. */
   onSearching() {
     this.showResults();
   }
 
+  /** Swaps the doc list back in. */
   onSearchClear() {
     this.resetDisplay();
     this.showDocList();
   }
 
+  /** @param {ViewEvent} event */
   onFocus(event) {
     this.display();
     if (event.target !== this.el) {
@@ -159,10 +206,12 @@ app.views.Sidebar = class Sidebar extends app.View {
     }
   }
 
+  /** Keeps the selected row in view. */
   onSelect() {
     this.resetDisplay();
   }
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     if (event.which !== 1) {
       return;
@@ -173,12 +222,14 @@ app.views.Sidebar = class Sidebar extends app.View {
     }
   }
 
+  /** Returns the doc list to the entry being read. */
   onAltR() {
     this.reset();
     this.docList.reset({ revealCurrent: true });
     this.display();
   }
 
+  /** Clears the search. */
   onEscape() {
     const doc = this.search.getScopeDoc();
     this.reset();
@@ -190,11 +241,16 @@ app.views.Sidebar = class Sidebar extends app.View {
     }
   }
 
+  /** Rebuilds after a doc was enabled from a result. */
   onDocEnabled() {
     this.docList.onEnabled();
     this.reset();
   }
 
+  /**
+   * @param {string} name
+   * @param {Context} context
+   */
   afterRoute(name, context) {
     if (
       (app.shortcuts.eventInProgress != null
@@ -208,4 +264,4 @@ app.views.Sidebar = class Sidebar extends app.View {
     }
     this.resetDisplay();
   }
-};
+}

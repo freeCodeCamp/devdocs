@@ -1,6 +1,13 @@
+// @ts-check
+
 //
 // Match functions
 //
+
+import { config } from "./config.js";
+import { Events } from "../lib/events.js";
+import { $ } from "../lib/util.js";
+/** @import { Model } from "../models/model.js" */
 
 let fuzzyRegexp,
   i,
@@ -145,11 +152,26 @@ function scoreFuzzyMatch() {
 // Searchers
 //
 
-app.Searcher = class Searcher extends Events {
+/**
+ * @typedef {object} SearcherOptions
+ * @property {number} [max_results]
+ * @property {number} [fuzzy_min_length] Shortest query that is also matched fuzzily.
+ */
+
+/**
+ * Scores every candidate against a query and emits the best matches.
+ *
+ * The work is spread over chunks with a timeout between them so that typing
+ * stays responsive, and results are emitted as they are found: `results` may
+ * fire several times before `end`. The match functions above run against
+ * module-level state rather than arguments, which is what keeps the inner
+ * loop cheap.
+ */
+export class Searcher extends Events {
   static CHUNK_SIZE = 20000;
 
   static DEFAULTS = {
-    max_results: app.config.max_results,
+    max_results: config.max_results,
     fuzzy_min_length: 3,
   };
 
@@ -166,6 +188,13 @@ app.Searcher = class Searcher extends Events {
   static ELLIPSIS = "...";
   static STRING = "string";
 
+  /**
+   * Reduces a string to the form matches are made against: lowercased, with
+   * separators collapsed to dots and decoration stripped.
+   *
+   * @param {string} string
+   * @returns {string}
+   */
   static normalizeString(string) {
     return string
       .toLowerCase()
@@ -178,16 +207,31 @@ app.Searcher = class Searcher extends Events {
       .replace(Searcher.WHITESPACE_REGEXP, Searcher.EMPTY_STRING);
   }
 
+  /**
+   * Like `normalizeString`, but keeps a trailing separator meaningful.
+   *
+   * @param {string} string
+   * @returns {string}
+   */
   static normalizeQuery(string) {
     string = this.normalizeString(string);
     return string.replace(Searcher.EOS_SEPARATORS_REGEXP, "$1.");
   }
 
+  /** @param {SearcherOptions} [options] */
   constructor(options) {
     super();
     this.options = { ...Searcher.DEFAULTS, ...(options || {}) };
   }
 
+  /**
+   * Starts a search, abandoning whatever was running.
+   *
+   * @param {Model[]} data The models to search. They flow back out through
+   *   the `results` event unchanged.
+   * @param {string} attr The attribute to match against; a string or an array of them.
+   * @param {string} q
+   */
   find(data, attr, q) {
     this.kill();
 
@@ -203,8 +247,9 @@ app.Searcher = class Searcher extends Events {
     }
   }
 
+  /** Prepares the module-level state the match functions read. */
   setup() {
-    query = this.query = this.constructor.normalizeQuery(this.query);
+    query = this.query = Searcher.normalizeQuery(this.query);
     queryLength = query.length;
     this.dataLength = this.data.length;
     this.matchers = [exactMatch];
@@ -212,6 +257,7 @@ app.Searcher = class Searcher extends Events {
     this.setupFuzzy();
   }
 
+  /** Adds the fuzzy matcher, for queries long enough to warrant it. */
   setupFuzzy() {
     if (queryLength >= this.options.fuzzy_min_length) {
       fuzzyRegexp = this.queryToFuzzyRegexp(query);
@@ -221,10 +267,12 @@ app.Searcher = class Searcher extends Events {
     }
   }
 
+  /** @returns {boolean} Whether the query is worth running. */
   isValid() {
     return queryLength > 0 && query !== SEPARATOR;
   }
 
+  /** Emits a final empty result set if nothing matched, then `end`. */
   end() {
     if (!this.totalResults) {
       this.triggerResults([]);
@@ -233,6 +281,7 @@ app.Searcher = class Searcher extends Events {
     this.free();
   }
 
+  /** Abandons a search in progress. */
   kill() {
     if (this.timeout) {
       clearTimeout(this.timeout);
@@ -240,6 +289,7 @@ app.Searcher = class Searcher extends Events {
     }
   }
 
+  /** Drops the references the search held, so the data can be collected. */
   free() {
     this.data = null;
     this.attr = null;
@@ -253,6 +303,7 @@ app.Searcher = class Searcher extends Events {
     this.timeout = null;
   }
 
+  /** Runs the next matcher over the data, or ends the search. */
   match() {
     if (!this.foundEnough() && (this.matcher = this.matchers.shift())) {
       this.setupMatcher();
@@ -262,11 +313,13 @@ app.Searcher = class Searcher extends Events {
     }
   }
 
+  /** Resets the per-matcher state: the cursor and the score buckets. */
   setupMatcher() {
     this.cursor = 0;
     this.scoreMap = new Array(101);
   }
 
+  /** Runs one chunk, then either schedules the next or moves to the next matcher. */
   matchChunks() {
     this.matchChunk();
 
@@ -278,31 +331,39 @@ app.Searcher = class Searcher extends Events {
     }
   }
 
+  /** Scores `chunkSize()` candidates, advancing the cursor. */
   matchChunk() {
     ({ matcher } = this);
     for (let j = 0, end = this.chunkSize(); j < end; j++) {
-      value = this.data[this.cursor][this.attr];
-      if (value.split) {
-        // string
+      const model = this.data[this.cursor];
+      // The attribute is named at run time, and holds either the model's
+      // searchable string or every spelling of it.
+      const attribute = /** @type {string | string[]} */ (
+        /** @type {Record<string, unknown>} */ (/** @type {unknown} */ (model))[
+          this.attr
+        ]
+      );
+      if (typeof attribute === "string") {
+        value = attribute;
         valueLength = value.length;
         if ((score = matcher())) {
-          this.addResult(this.data[this.cursor], score);
+          this.addResult(model, score);
         }
       } else {
-        // array
         score = 0;
-        for (value of Array.from(this.data[this.cursor][this.attr])) {
+        for (value of attribute) {
           valueLength = value.length;
           score = Math.max(score, matcher() || 0);
         }
         if (score > 0) {
-          this.addResult(this.data[this.cursor], score);
+          this.addResult(model, score);
         }
       }
       this.cursor++;
     }
   }
 
+  /** @returns {number} How many candidates are left in this chunk. */
   chunkSize() {
     if (this.cursor + Searcher.CHUNK_SIZE > this.dataLength) {
       return this.dataLength % Searcher.CHUNK_SIZE;
@@ -311,14 +372,22 @@ app.Searcher = class Searcher extends Events {
     }
   }
 
+  /** @returns {boolean} Whether enough perfect matches were found to stop early. */
   scoredEnough() {
     return this.scoreMap[100]?.length >= this.options.max_results;
   }
 
+  /** @returns {boolean} Whether enough matches were found overall. */
   foundEnough() {
     return this.totalResults >= this.options.max_results;
   }
 
+  /**
+   * Files a match under its rounded score.
+   *
+   * @param {Model} object
+   * @param {number} score
+   */
   addResult(object, score) {
     let name;
     (
@@ -327,6 +396,7 @@ app.Searcher = class Searcher extends Events {
     this.totalResults++;
   }
 
+  /** @returns {unknown[]} The best matches so far, highest score first. */
   getResults() {
     const results = [];
     for (let j = this.scoreMap.length - 1; j >= 0; j--) {
@@ -338,6 +408,7 @@ app.Searcher = class Searcher extends Events {
     return results.slice(0, this.options.max_results);
   }
 
+  /** Emits the matches found so far, if there are any. */
   sendResults() {
     const results = this.getResults();
     if (results.length) {
@@ -345,14 +416,25 @@ app.Searcher = class Searcher extends Events {
     }
   }
 
+  /** @param {unknown[]} results */
   triggerResults(results) {
     this.trigger("results", results);
   }
 
+  /**
+   * Yields to the event loop between chunks.
+   *
+   * @param {() => void} fn
+   * @returns {ReturnType<typeof setTimeout> | void} The timeout handle, when there is one.
+   */
   delay(fn) {
     return (this.timeout = setTimeout(fn, 1));
   }
 
+  /**
+   * @param {string} string
+   * @returns {RegExp} A regexp matching the characters in order, e.g. `abc` to `/a.*?b.*?c/`.
+   */
   queryToFuzzyRegexp(string) {
     const chars = string.split("");
     for (i = 0; i < chars.length; i++) {
@@ -361,9 +443,14 @@ app.Searcher = class Searcher extends Events {
     }
     return new RegExp(chars.join(".*?")); // abc -> /a.*?b.*?c.*?/
   }
-};
+}
 
-app.SynchronousSearcher = class SynchronousSearcher extends app.Searcher {
+/**
+ * A searcher that runs to completion without yielding, and emits its results
+ * once at the end. Used where the caller needs an answer before continuing.
+ */
+export class SynchronousSearcher extends Searcher {
+  /** Collects each matcher's results, instead of emitting them as it goes. */
   match() {
     if (this.matcher) {
       if (!this.allResults) {
@@ -371,26 +458,34 @@ app.SynchronousSearcher = class SynchronousSearcher extends app.Searcher {
       }
       this.allResults.push(...this.getResults());
     }
-    return super.match(...arguments);
+    return super.match();
   }
 
+  /** @inheritdoc */
   free() {
     this.allResults = null;
-    return super.free(...arguments);
+    return super.free();
   }
 
+  /** Emits every result collected, then ends. */
   end() {
     this.sendResults(true);
-    return super.end(...arguments);
+    return super.end();
   }
 
+  /** @param {boolean} [end] Results are only emitted once, at the end. */
   sendResults(end) {
     if (end && this.allResults?.length) {
       return this.triggerResults(this.allResults);
     }
   }
 
+  /**
+   * Runs `fn` straight away, so the search never yields.
+   *
+   * @param {() => void} fn
+   */
   delay(fn) {
     return fn();
   }
-};
+}

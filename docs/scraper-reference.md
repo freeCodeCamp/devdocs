@@ -87,7 +87,7 @@ Each scraper has two [filter](https://github.com/freeCodeCamp/devdocs/blob/main/
 
 HTML filters are executed first and manipulate a parsed version of the document (a [Nokogiri](http://nokogiri.org/Nokogiri/XML/Node.html) node object), whereas text filters manipulate the document as a string. This separation avoids parsing the document multiple times.
 
-Filter stacks are like sorted sets. They can modified using the following methods:
+Filter stacks are like sorted sets. They can be modified using the following methods:
 
 ```ruby
 push(*names)                 # append one or more filters at the end
@@ -109,6 +109,7 @@ Default `html_filters`:
 
 Default `text_filters`:
 
+* [`ImagesFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/images.rb) — downloads and inlines images as data URIs, optimizing them and re-encoding PNGs and GIFs as lossless WebP and JPEGs as lossy WebP
 * [`InnerHtmlFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/inner_html.rb) — converts the document to a string
 * [`CleanTextFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/clean_text.rb) — removes empty nodes
 * [`AttributionFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/attribution.rb) — appends the license info and link to the original document
@@ -189,7 +190,7 @@ More information about how filters work is available on the [Filter Reference](.
 
 ### Processing responses before filters
 
-These methods are runned before filter stacks, and can directly process responses.
+These methods are run before filter stacks, and can directly process responses.
 
 * `process_response?(response)`
 
@@ -204,7 +205,7 @@ These methods are runned before filter stacks, and can directly process response
 
   Parse HTTP/File response, and convert to a Nokogiri document by default.
 
-  Overrides this method if you want to modified HTML source code before Nokogiri.
+  Overrides this method if you want to modify HTML source code before Nokogiri.
 It is useful to preserve whitespaces of code segments within non-pre blocks, because Nokogiri may delete them.
 
   Example: [lib/docs/scrapers/go.rb](../lib/docs/scrapers/go.rb)
@@ -284,7 +285,7 @@ To make life easier, there are a few utility methods that you can use in `get_la
 
   Returns the contents of the requested file in the default branch of the given repository.
 
-  Example: [lib/docs/scrapers/minitest.rb](../lib/docs/scrapers/minitest.rb)
+  Example: [lib/docs/scrapers/rdoc/minitest.rb](../lib/docs/scrapers/rdoc/minitest.rb)
 * `get_latest_github_commit_date(owner, repo, opts)`
 
     Returns the date of the most recent commit in the default branch of the given repository.

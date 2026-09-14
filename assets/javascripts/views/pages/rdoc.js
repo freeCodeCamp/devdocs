@@ -1,8 +1,13 @@
-//= require views/pages/base
+// @ts-check
 
-app.views.RdocPage = class RdocPage extends app.views.BasePage {
+import { $ } from "../../lib/util.js";
+import { BasePage } from "./base.js";
+
+/** The RDoc pages' "Show source" toggles. */
+export class RdocPage extends BasePage {
   static events = { click: "onClick" };
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     if (!event.target.classList.contains("method-click-advice")) {
       return;
@@ -18,4 +23,4 @@ app.views.RdocPage = class RdocPage extends app.views.BasePage {
     source.style.display = isShown ? "none" : "block";
     return (event.target.textContent = isShown ? "Show source" : "Hide source");
   }
-};
+}

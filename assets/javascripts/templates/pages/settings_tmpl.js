@@ -1,3 +1,12 @@
+// @ts-check
+
+/**
+ * One radio button in the theme picker.
+ *
+ * @param {{ label: string, value: string }} option
+ * @param {Record<string, unknown>} settings The user's current preferences.
+ * @returns {string}
+ */
 const themeOption = ({ label, value }, settings) => `\
 <label class="_settings-label _theme-label">
   <input type="radio" name="theme" value="${value}"${
@@ -7,7 +16,11 @@ const themeOption = ({ label, value }, settings) => `\
 </label>\
 `;
 
-app.templates.settingsPage = (settings) => `\
+/**
+ * @param {Record<string, unknown>} settings The user's current preferences.
+ * @returns {string}
+ */
+export const settingsPage = (settings) => `\
 <h1 class="_lined-heading">Preferences</h1>
 
 <div class="_settings-fieldset">
@@ -59,6 +72,12 @@ app.templates.settingsPage = (settings) => `\
         settings.autoInstall ? " checked" : ""
       }>Automatically download documentation for offline use
       <small>Only enable this when bandwidth isn't a concern to you.</small>
+    </label>
+    <label class="_settings-label">
+      <input type="checkbox" form="settings" name="autoLatestVersion" value="_auto-latest-version"${
+        settings.autoLatestVersion ? " checked" : ""
+      }>Automatically switch to the latest version of a documentation
+      <small>With this checked, enabling e.g. CMake 3.9 switches to CMake 3.10 once it becomes available.</small>
     </label>
     <label class="_settings-label _hide-in-development">
       <input type="checkbox" form="settings" name="analyticsConsent"${

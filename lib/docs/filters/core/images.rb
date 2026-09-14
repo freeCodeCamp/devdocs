@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'base64'
-require 'image_optim'
 
 module Docs
   class ImagesFilter < Filter
@@ -9,9 +8,67 @@ module Docs
 
     DEFAULT_MAX_SIZE = 120_000 # 120 kilobytes
 
+    PNG_SIGNATURE = "\x89PNG\r\n\x1a\n".b
+    GIF_SIGNATURES = ['GIF87a'.b, 'GIF89a'.b].freeze
+    JPEG_SIGNATURE = "\xff\xd8\xff".b
+
+    # WebP q=80 is roughly equivalent to JPEG q=90, and -sharp_yuv keeps the
+    # edges of the screenshots and diagrams documentation is full of crisp.
+    JPEG_QUALITY = 80
+
+    CWEBP_LOSSLESS_COMMAND = %w(cwebp -quiet -lossless -z 9 -m 6 -metadata none -o - -- -).freeze
+    CWEBP_LOSSY_COMMAND = %W(cwebp -quiet -q #{JPEG_QUALITY} -m 6 -sharp_yuv -metadata none -o - -- -).freeze
+    GIF2WEBP_COMMAND = %w(gif2webp -quiet -m 6 -metadata none -o - -- -).freeze
+
+    # image_optim belongs to the docs bundle group, which the app leaves out;
+    # `Bundler.require :default, :docs` in docs.rb loads it for the scrapers,
+    # which are the only ones optimizing anything.
     def self.optimize_image_data(data)
       @image_optim ||= ImageOptim.new
       @image_optim.optimize_image_data(data)
+    end
+
+    # Re-encodes a PNG or GIF as lossless WebP and a JPEG as lossy WebP, all of
+    # which are usually smaller. Returns nil when the data isn't an image we can
+    # convert, when the encoder isn't available, or when the result would be
+    # bigger than the original.
+    def self.convert_to_webp(data)
+      command = webp_command(data)
+      return unless command
+      webp = IO.popen(command, 'r+b', err: File::NULL) do |io|
+        io.write(data)
+        io.close_write
+        io.read
+      end
+      webp if $?.success? && !webp.empty? && webp.bytesize < data.bytesize
+    rescue SystemCallError
+      nil
+    end
+
+    def self.webp_command(data)
+      if png?(data)
+        CWEBP_LOSSLESS_COMMAND
+      elsif gif?(data)
+        # unlike cwebp, gif2webp keeps every frame of an animation
+        GIF2WEBP_COMMAND
+      elsif starts_with?(data, JPEG_SIGNATURE)
+        CWEBP_LOSSY_COMMAND
+      end
+    end
+
+    def self.png?(data)
+      return false unless starts_with?(data, PNG_SIGNATURE)
+      # cwebp silently keeps the first frame of an animated PNG
+      idat = data.index('IDAT'.b)
+      idat.nil? || !data.byteslice(0, idat).include?('acTL'.b)
+    end
+
+    def self.gif?(data)
+      GIF_SIGNATURES.any? { |signature| starts_with?(data, signature) }
+    end
+
+    def self.starts_with?(data, signature)
+      data.byteslice(0, signature.bytesize)&.b == signature
     end
 
     def self.cache
@@ -56,9 +113,15 @@ module Docs
             end
 
             image = response.body
+            mime_type = response.mime_type
 
             unless context[:optimize_images] == false
               image = self.class.optimize_image_data(image) || image
+            end
+
+            if webp = self.class.convert_to_webp(image)
+              image = webp
+              mime_type = 'image/webp'
             end
 
             size = image.bytesize
@@ -69,7 +132,7 @@ module Docs
             end
 
             image = Base64.strict_encode64(image)
-            image.prepend "data:#{response.mime_type};base64,"
+            image.prepend "data:#{mime_type};base64,"
             node['src'] = self.class.cache[src] = image
           end
         rescue => exception

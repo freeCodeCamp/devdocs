@@ -47,6 +47,7 @@ complete -c devdocs -n '__fish_seen_subcommand_from list upload' -l packaged -d 
 
 complete -c devdocs -n '__fish_seen_subcommand_from generate' -l all -d 'Generate all documentations'
 complete -c devdocs -n '__fish_seen_subcommand_from generate' -l force -d 'Skip the confirmation prompt'
+complete -c devdocs -n '__fish_seen_subcommand_from generate' -s j -l jobs -r -d 'Number of processes used to parse the pages'
 complete -c devdocs -n '__fish_seen_subcommand_from generate' -l package -d 'Package the documentation afterwards'
 
 complete -c devdocs -n '__fish_seen_subcommand_from download' -l all -d 'Download all documentations'

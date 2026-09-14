@@ -11,9 +11,15 @@ module Docs
       end
 
       def other
-        @doc = at_css('#docContent')
+        # The documentation files hold their content in <body>, which fragment
+        # parsing drops. Wrap it back in an element, otherwise the "> x"
+        # selectors of the entries filter have nothing to match against.
+        container = Nokogiri::XML::Node.new('div', doc.document)
+        container.children = doc.children
+        doc.add_child(container)
+        @doc = container
 
-        css('.navheader', 'hr', '.navfooter a[accesskey="H"]', '.navfooter').remove
+        css('title', 'meta', '.navheader', 'hr', '.navfooter a[accesskey="H"]', '.navfooter').remove
 
         unless at_css('h1')
           at_css('.refnamediv h2, .titlepage h2').name = 'h1'

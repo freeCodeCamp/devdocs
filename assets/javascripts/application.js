@@ -1,35 +1,20 @@
-//= require_tree ./vendor
+// @ts-check
 
-//= require lib/license
-//= require_tree ./lib
+import { app } from "./app/app.js";
+import "./tracking.js";
 
-//= require app/app
-//= require app/config
-//= require_tree ./app
+/*
+ * Copyright 2013-2026 Thibaut Courouble and other contributors
+ *
+ * This source code is licensed under the terms of the Mozilla
+ * Public License, v. 2.0, a copy of which may be obtained at:
+ * http://mozilla.org/MPL/2.0/
+ */
 
-//= require collections/collection
-//= require_tree ./collections
+// The entry module. Everything else is reached through imports from here; the
+// import map pins each module to its content-digested URL, so the whole graph
+// is fetched from immutable, individually cacheable files.
 
-//= require models/model
-//= require_tree ./models
-
-//= require views/view
-//= require_tree ./views
-
-//= require_tree ./templates
-
-//= link_tree ../images/sprites
-
-//= require tracking
-
-var init = function () {
-  document.removeEventListener("DOMContentLoaded", init, false);
-
-  if (document.body) {
-    return app.init();
-  } else {
-    return setTimeout(init, 42);
-  }
-};
-
-document.addEventListener("DOMContentLoaded", init, false);
+// Module scripts are deferred, so the document has been parsed by the time
+// this runs and `document.body` is always there.
+app.init();

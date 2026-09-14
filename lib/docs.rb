@@ -31,6 +31,10 @@ module Docs
   mattr_accessor :rescue_errors
   self.rescue_errors = false
 
+  # Number of processes used to parse the pages of a file scraper.
+  mattr_accessor :jobs
+  self.jobs = 1
+
   class DocNotFound < NameError; end
   class SetupError < StandardError; end
 

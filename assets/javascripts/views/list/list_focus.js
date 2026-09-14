@@ -1,4 +1,28 @@
-app.views.ListFocus = class ListFocus extends app.View {
+// @ts-check
+
+import { $ } from "../../lib/util.js";
+import { ListFold } from "./list_fold.js";
+import { ListSelect } from "./list_select.js";
+import { View } from "../view.js";
+
+/**
+ * The lists are built entirely from elements, so the sibling and parent walks
+ * below only ever reach one.
+ *
+ * @param {ChildNode | ParentNode | null} node
+ * @returns {HTMLElement | null}
+ */
+const asElement = (node) => /** @type {HTMLElement | null} */ (node);
+
+/**
+ * Keyboard navigation through a list.
+ *
+ * The focused row carries `activeClass`; moving the focus emits `focus` and
+ * `blur` on the rows. The focus starts from the selected row when nothing is
+ * focused yet, and stepping past the end of a page clicks its pagination link
+ * so that the next page is rendered first.
+ */
+export class ListFocus extends View {
   static activeClass = "focus";
 
   static events = { click: "onClick" };
@@ -12,41 +36,52 @@ app.views.ListFocus = class ListFocus extends app.View {
     escape: "blur",
   };
 
+  /** @param {HTMLElement} [el] The list to navigate. */
   constructor(el) {
     super(el);
     this.focusOnNextFrame = (el) => requestAnimationFrame(() => this.focus(el));
   }
 
+  /**
+   * @param {HTMLElement} el The row to focus.
+   * @param {{ silent?: boolean }} [options] Pass `silent` to move without emitting `focus`.
+   */
   focus(el, options) {
     if (options == null) {
       options = {};
     }
-    if (el && !el.classList.contains(this.constructor.activeClass)) {
+    if (el && !el.classList.contains(this.statics().activeClass)) {
       this.blur();
-      el.classList.add(this.constructor.activeClass);
+      el.classList.add(this.statics().activeClass);
       if (options.silent !== true) {
         $.trigger(el, "focus");
       }
     }
   }
 
+  /** Clears the focus. */
   blur() {
     const cursor = this.getCursor();
     if (cursor) {
-      cursor.classList.remove(this.constructor.activeClass);
+      cursor.classList.remove(this.statics().activeClass);
       $.trigger(cursor, "blur");
     }
   }
 
+  /** @returns {HTMLElement | undefined} The focused row, or the selected one when nothing is focused. */
   getCursor() {
     return (
-      this.findByClass(this.constructor.activeClass) ||
-      this.findByClass(app.views.ListSelect.activeClass)
+      this.findByClass(this.statics().activeClass) ||
+      this.findByClass(ListSelect.activeClass)
     );
   }
 
+  /**
+   * @param {HTMLElement | null} cursor
+   * @returns {HTMLElement | null | undefined} The row after `cursor`, descending into expanded sub-lists.
+   */
   findNext(cursor) {
-    const next = cursor.nextSibling;
+    const next = asElement(cursor.nextSibling);
     if (next) {
       if (next.tagName === "A") {
         return next;
@@ -66,12 +101,16 @@ app.views.ListFocus = class ListFocus extends app.View {
         return this.findNext(next);
       }
     } else if (cursor.parentNode !== this.el) {
-      return this.findNext(cursor.parentNode);
+      return this.findNext(asElement(cursor.parentNode));
     }
   }
 
+  /**
+   * @param {HTMLElement | null} cursor
+   * @returns {HTMLElement | null | undefined} The first row of the sub-list under `cursor`.
+   */
   findFirst(cursor) {
-    const first = cursor.firstChild;
+    const first = asElement(cursor.firstChild);
     if (!first) {
       return;
     }
@@ -85,8 +124,12 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /**
+   * @param {HTMLElement | null} cursor
+   * @returns {HTMLElement | null | undefined} The row before `cursor`, descending into expanded sub-lists.
+   */
   findPrev(cursor) {
-    const prev = cursor.previousSibling;
+    const prev = asElement(cursor.previousSibling);
     if (prev) {
       if (prev.tagName === "A") {
         return prev;
@@ -96,7 +139,7 @@ app.views.ListFocus = class ListFocus extends app.View {
         return this.findPrev(cursor);
       } else if (prev.tagName === "DIV") {
         // sub-list
-        if (prev.previousSibling.className.includes("open")) {
+        if (asElement(prev.previousSibling)?.className.includes("open")) {
           return this.findLast(prev) || this.findPrev(prev);
         } else {
           return this.findPrev(prev);
@@ -106,12 +149,16 @@ app.views.ListFocus = class ListFocus extends app.View {
         return this.findPrev(prev);
       }
     } else if (cursor.parentNode !== this.el) {
-      return this.findPrev(cursor.parentNode);
+      return this.findPrev(asElement(cursor.parentNode));
     }
   }
 
+  /**
+   * @param {HTMLElement | null} cursor
+   * @returns {HTMLElement | null | undefined} The last row of the sub-list under `cursor`.
+   */
   findLast(cursor) {
-    const last = cursor.lastChild;
+    const last = asElement(cursor.lastChild);
     if (!last) {
       return;
     }
@@ -127,6 +174,7 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /** Moves the focus down one row. */
   onDown() {
     const cursor = this.getCursor();
     if (cursor) {
@@ -136,6 +184,7 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /** Moves the focus up one row. */
   onUp() {
     const cursor = this.getCursor();
     if (cursor) {
@@ -145,20 +194,22 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /** Moves the focus out to the row the current sub-list hangs off. */
   onLeft() {
     const cursor = this.getCursor();
     if (
       cursor &&
-      !cursor.classList.contains(app.views.ListFold.activeClass) &&
+      !cursor.classList.contains(ListFold.activeClass) &&
       cursor.parentNode !== this.el
     ) {
-      const prev = cursor.parentNode.previousSibling;
-      if (prev && prev.classList.contains(app.views.ListFold.targetClass)) {
-        this.focusOnNextFrame(cursor.parentNode.previousSibling);
+      const prev = asElement(asElement(cursor.parentNode)?.previousSibling ?? null);
+      if (prev && prev.classList.contains(ListFold.targetClass)) {
+        this.focusOnNextFrame(prev);
       }
     }
   }
 
+  /** Follows the focused row. */
   onEnter() {
     const cursor = this.getCursor();
     if (cursor) {
@@ -166,13 +217,15 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /** Opens the focused row outside the app. */
   onSuperEnter() {
     const cursor = this.getCursor();
     if (cursor) {
-      $.popup(cursor);
+      $.popup(/** @type {HTMLAnchorElement} */ (cursor));
     }
   }
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     if (event.which !== 1 || event.metaKey || event.ctrlKey) {
       return;
@@ -182,4 +235,4 @@ app.views.ListFocus = class ListFocus extends app.View {
       this.focus(target, { silent: true });
     }
   }
-};
+}

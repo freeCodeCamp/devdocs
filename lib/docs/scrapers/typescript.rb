@@ -38,10 +38,6 @@ module Docs
       self.base_url = 'https://www.typescriptlang.org/'
     end
 
-    version '5.1' do
-      self.release = '5.1.3'
-    end
-
     def get_latest_version(opts)
       get_latest_github_release('Microsoft', 'TypeScript', opts)
     end

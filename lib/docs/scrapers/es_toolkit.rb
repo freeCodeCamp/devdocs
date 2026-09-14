@@ -5,9 +5,9 @@ module Docs
     self.type = "simple"
     self.links = {
       code: "https://github.com/toss/es-toolkit",
-      home: "https://es-toolkit.slash.page",
+      home: "https://es-toolkit.dev",
     }
-    self.release = '1.45.1'
+    self.release = '1.52.0'
 
     options[:attribution] = <<-HTML
       &copy; 2024-2026, Viva Republica<br>
@@ -18,25 +18,36 @@ module Docs
       get_github_tags("toss", "es-toolkit", opts).first["name"][1..]
     end
 
+    # The reference lives under docs/reference for the main entry points and
+    # under docs/<namespace>/reference for the secondary ones. Translations
+    # (docs/ja, docs/ko, docs/zh_hans) are deliberately left out.
+    NAMESPACES = %w[compat fp iterator server types]
+
+    # Namespaces whose capitalized name isn't just #capitalize.
+    NAMESPACE_NAMES = {"fp" => "FP"}
+
     def build_pages(&block)
       internal("docs/intro.md", path: "index", &block)
       Dir.chdir(source_directory) do
-        Dir["docs/reference/**/*.md"]
+        Dir["docs/reference/**/*.md", *NAMESPACES.map { "docs/#{_1}/reference/**/*.md" }]
       end.each { internal(_1, &block) }
     end
 
     protected
 
     def internal(filename, path: nil, &block)
-      path ||= filename[%r{docs/reference/(.*/.*).md$}, 1]
+      # docs/reference/array/chunk.md         => array/chunk
+      # docs/compat/reference/array/chunk.md  => compat/array/chunk
+      # docs/fp/reference/chunk.md            => fp/chunk
+      path ||= filename.sub(%r{\Adocs/}, "").sub("reference/", "").sub(/\.md\z/, "")
 
       # calculate name/type
       if path != "index"
-        name = filename[%r{([^/]+).md$}, 1]
+        name = File.basename(path)
         type = path.split("/")[0..-2]
-        type = type.map(&:capitalize).join(" ")
-        # really bad way to sort
-        type = type.gsub(/^(Compat|Error)\b/, "\u2063\\1") #  U+2063 INVISIBLE SEPARATOR
+        type = type.map { NAMESPACE_NAMES[_1] || _1.capitalize }.join(" ")
+        # really bad way to sort: keep the main reference on top
+        type = type.gsub(/^(Compat|Error|FP|Iterator|Server|Types)\b/, "\u2063\\1") #  U+2063 INVISIBLE SEPARATOR
       else
         name = type = nil
       end

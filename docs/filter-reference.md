@@ -82,6 +82,7 @@ The `call` method must return either `doc` or `html`, depending on the type of f
 * [`InnerHtmlFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/inner_html.rb) — converts the document to a string
 * [`CleanTextFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/clean_text.rb) — removes empty nodes
 * [`AttributionFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/attribution.rb) — appends the license info and link to the original document
+* [`ImagesFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/images.rb) — downloads and inlines images as data URIs, optimizing them and re-encoding PNGs and GIFs as lossless WebP and JPEGs as lossy WebP
 * [`TitleFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/title.rb) — prepends the document with a title (disabled by default)
 * [`EntriesFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/entries.rb) — abstract filter for extracting the page's metadata
 

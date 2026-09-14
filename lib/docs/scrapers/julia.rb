@@ -11,6 +11,17 @@ module Docs
       Licensed under the MIT License.
     HTML
 
+    version '1.13' do
+      self.release = '1.13.0'
+      self.base_url = "https://docs.julialang.org/en/v#{version}/"
+      self.type = 'julia'
+
+      html_filters.push 'julia/entries', 'julia/clean_html'
+
+      options[:container] = '.docs-main'
+      options[:only_patterns] = [/\Amanual\//, /\Abase\//, /\Astdlib\//]
+    end
+
     version '1.12' do
       self.release = '1.12.6'
       self.base_url = "https://docs.julialang.org/en/v#{version}/"

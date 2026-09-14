@@ -45,7 +45,7 @@ docker run --name devdocs -d -p 9292:9292 devdocs
 
 DevDocs is made of two pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
-DevDocs requires Ruby 4.0.6 (defined in [`Gemfile`](./Gemfile)), libcurl, and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). On Arch Linux run `pacman -S ruby ruby-bundler ruby-erb ruby-irb`.
+DevDocs requires Ruby 4.0.6 (defined in [`Gemfile`](./Gemfile)), libcurl, bsdtar (included in macOS, the `libarchive-tools` package on Debian and Alpine), and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). On Arch Linux run `pacman -S ruby ruby-bundler ruby-erb ruby-irb`.
 
 Once you have these installed, run the following commands:
 
@@ -91,11 +91,14 @@ Another driving factor is performance and the fact that everything happens in th
 DevDocs being a developer tool, the browser requirements are high:
 
 * Recent versions of Firefox, Chrome, or Opera
-* Safari 11.1+
-* Edge 17+
-* iOS 11.3+
+* Safari 16.4+
+* Edge 89+
+* iOS 16.4+
 
-This allows the code to take advantage of the latest DOM and HTML5 APIs and make developing DevDocs a lot more fun!
+The app is served as ES modules resolved through an import map, which is the
+newest thing it relies on and what sets the versions above. This allows the code
+to take advantage of the latest DOM and HTML5 APIs and make developing DevDocs a
+lot more fun!
 
 ## Scraper
 

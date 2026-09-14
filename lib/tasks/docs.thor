@@ -34,10 +34,7 @@ class DocsCLI < Thor
       end
     end
 
-    output = names.join("\n")
-
-    require 'tty-pager'
-    TTY::Pager.new.page(output)
+    puts names.join("\n")
   end
 
   desc 'outdated [--verbose] [doc]...', 'Check for outdated documentations'
@@ -77,13 +74,13 @@ class DocsCLI < Thor
   option :debug, type: :boolean
   option :force, type: :boolean
   option :package, type: :boolean
+  option :jobs, type: :numeric, default: 1, aliases: '-j', desc: 'Number of processes used to parse the pages (file scrapers only)'
   def generate(name)
     Docs.rescue_errors = true
+    Docs.jobs = options[:jobs]
     Docs.install_report :store if options[:verbose]
     Docs.install_report :scraper if options[:debug]
     Docs.install_report :progress_bar, :doc, :image, :requester if $stdout.tty?
-
-    require 'unix_utils' if options[:package]
 
     doc = find_doc(name)
 
@@ -116,6 +113,7 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   ensure
     Docs.rescue_errors = false
+    Docs.jobs = 1
   end
 
   desc 'manifest', 'Create the manifest'
@@ -130,7 +128,6 @@ class DocsCLI < Thor
   option :all, type: :boolean
   option :rclone, type: :boolean
   def download(*names)
-    require 'unix_utils'
     docs = if options[:default]
       Docs.defaults
     elsif options[:installed]
@@ -150,7 +147,6 @@ class DocsCLI < Thor
 
   desc 'package <doc> <doc@version>...', 'Create documentation packages'
   def package(*names)
-    require 'unix_utils'
     docs = find_docs(names)
     assert_docs(docs)
     docs.each(&method(:package_doc))
@@ -397,22 +393,14 @@ class DocsCLI < Thor
   end
 
   def extract_doc(tar_gz_path, target_path)
-    FileUtils.mkpath(target_path)
-    tar = UnixUtils.gunzip(tar_gz_path)
-    dir = UnixUtils.untar(tar)
-    FileUtils.rm(tar)
-    FileUtils.rm_rf(target_path)
-    FileUtils.mv(dir, target_path)
+    Docs::Archive.unpack(tar_gz_path, target_path)
   end
 
   def package_doc(doc)
     path = File.join Docs.store_path, doc.path
 
     if File.exist?(path)
-      tar = UnixUtils.tar(path)
-      gzip = UnixUtils.gzip(tar)
-      FileUtils.mv(gzip, "#{path}.tar.gz")
-      FileUtils.rm(tar)
+      Docs::Archive.pack(path, "#{path}.tar.gz")
     else
       puts %(ERROR: can't find "#{doc.name}" documentation files.)
     end

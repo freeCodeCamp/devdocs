@@ -28,6 +28,9 @@ module Docs
 
       # Formats the title of the page
       def format_title
+        # The root page is named after the sbt module the artifact is built from
+        at_css('h1')&.content = 'Scala 3' if root_page?
+
         cover_header = at_css('.cover-header')
         return if cover_header.nil?
 
@@ -47,8 +50,11 @@ module Docs
         type = types[type_id.to_sym]
         name = CGI.escapeHTML cover_header.at_css('h1').text
 
-        # Add the package name
-        package = at_css('.breadcrumbs a:nth-of-type(3)').text
+        # Add the package name, which is the second to last breadcrumb
+        breadcrumbs = css('.breadcrumbs a')
+        package = breadcrumbs.length > 2 ? breadcrumbs[-2].text : ''
+        # Package pages are already named after their full path
+        package = '' if name.start_with?("#{package}.")
         package = package + '.' unless name.empty? || package.empty?
 
         # Replace the title
@@ -210,7 +216,7 @@ module Docs
         css('.documentableList > *').each do |element|
           element.parent = doc
         end
-        at_css('.membersList').remove
+        at_css('.membersList')&.remove
 
         # Remove useless classes
         css('.header, .groupHeader, .cover, .documentableName').each do |element|

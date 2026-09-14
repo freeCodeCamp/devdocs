@@ -20,7 +20,7 @@ module Docs
     HTML
 
     version do
-      self.release = "2.16.1"
+      self.release = "2.21.0"
       self.base_url = "https://www.tensorflow.org/api_docs/python/tf"
     end
 

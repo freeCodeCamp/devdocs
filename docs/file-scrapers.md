@@ -67,7 +67,7 @@ mv man7.org/linux/man-pages/ docs/man/
 
 ## OpenJDK
 Search 'Openjdk' in https://www.debian.org/distrib/packages, find the `openjdk-$VERSION-doc` package,
-download it, extract it with `dpkg -x $PACKAGE ./` and move `./usr/share/doc/openjdk-16-jre-headless/api/`
+download it, extract it with `dpkg -x $PACKAGE ./` and move `./usr/share/doc/openjdk-$VERSION-jre-headless/api/`
 to `path/to/devdocs/docs/openjdk~$VERSION`
 
 ```sh
@@ -82,7 +82,7 @@ If you use or have access to a Debian-based GNU/Linux distribution you can run t
 apt download openjdk-$VERSION-doc
 dpkg -x $PACKAGE ./
 # previous command makes a directory called 'usr' in the current directory
-mv ./usr/share/doc/openjdk-16-jre-headless/api/ docs/openjdk~$VERSION
+mv ./usr/share/doc/openjdk-$VERSION-jre-headless/api/ docs/openjdk~$VERSION
 ```
 
 ## R
@@ -116,7 +116,6 @@ done
 
 ## RDoc
 
-### Nokogiri
 ### Ruby / Minitest
 
 ```sh
@@ -161,12 +160,3 @@ tar -xf ruby.tar; cd ruby-$RELEASE; ./configure && make html; mv .ext/html path/
 
 To generate the htmls file you have to run `make` command but it does not install Ruby in your system, only generates html files so you have not
 to worry about cleaning or removing a new Ruby installation.
-
-## Scala
-
-For Scala 2 there is nothing to do — the scraper downloads and extracts the API
-documentation into `docs/scala~$VERSION` automatically when it's missing.
-
-Scala 3 has no official documentation download
-(see https://contributors.scala-lang.org/t/5537) and has to be built by hand;
-see the comment in `lib/docs/scrapers/scala.rb`.

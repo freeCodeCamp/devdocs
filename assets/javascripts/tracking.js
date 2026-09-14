@@ -1,5 +1,15 @@
+// @ts-check
+
+// Loads the analytics vendors, but only in production and only once the user
+// has consented. Without consent, whatever they left behind is cleared out.
+// The snippets below are the vendors' own bootstraps, kept as they ship them.
+
+import { app } from "./app/app.js";
+import { config } from "./app/config.js";
+import { page, resetAnalytics } from "./lib/page.js";
+
 try {
-  if (app.config.env === "production") {
+  if (config.env === "production") {
     if (Cookies.get("analyticsConsent") === "1") {
       (function (i, s, o, g, r, a, m) {
         i["GoogleAnalyticsObject"] = r;
@@ -8,7 +18,7 @@ try {
           function () {
             (i[r].q = i[r].q || []).push(arguments);
           }),
-          (i[r].l = 1 * new Date());
+          (i[r].l = new Date().getTime());
         (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
         a.async = 1;
         a.src = g;
@@ -36,7 +46,7 @@ try {
         else
           (function () {
             var _gauges = _gauges || [];
-            !(function () {
+            (function () {
               var a = document.createElement("script");
               (a.type = "text/javascript"),
                 (a.async = !0),

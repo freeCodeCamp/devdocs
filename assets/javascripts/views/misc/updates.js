@@ -1,10 +1,21 @@
-//= require views/misc/notif
+// @ts-check
 
-app.views.Updates = class Updates extends app.views.Notif {
+import { app } from "../../app/app.js";
+import { config } from "../../app/config.js";
+import { notifUpdates } from "../../templates/notif_tmpl.js";
+import { Notif } from "./notif.js";
+/** @import { Doc } from "../../models/doc.js" */
+
+/**
+ * The notification listing the docs that gained a new release since the
+ * user last saw it.
+ */
+export class Updates extends Notif {
   static className = "_notif _notif-news";
 
   static defautOptions = { autoHide: 30000 };
 
+  /** @inheritdoc */
   init0() {
     this.lastUpdateTime = this.getLastUpdateTime();
     this.updatedDocs = this.getUpdatedDocs();
@@ -15,12 +26,14 @@ app.views.Updates = class Updates extends app.views.Notif {
     this.markAllAsRead();
   }
 
+  /** @inheritdoc */
   render() {
     this.html(
-      app.templates.notifUpdates(this.updatedDocs, this.updatedDisabledDocs),
+      notifUpdates(this.updatedDocs, this.updatedDisabledDocs),
     );
   }
 
+  /** @returns {Doc[]} Enabled docs built since the last time updates were shown. */
   getUpdatedDocs() {
     if (!this.lastUpdateTime) {
       return [];
@@ -30,6 +43,10 @@ app.views.Updates = class Updates extends app.views.Notif {
     );
   }
 
+  /**
+   * @returns {Doc[]} Disabled docs built since then, but only where another
+   *   version of the same doc is enabled.
+   */
   getUpdatedDisabledDocs() {
     if (!this.lastUpdateTime) {
       return [];
@@ -46,16 +63,18 @@ app.views.Updates = class Updates extends app.views.Notif {
     return result;
   }
 
+  /** @returns {number} When updates were last shown, as a Unix timestamp. */
   getLastUpdateTime() {
     return app.settings.get("version");
   }
 
+  /** Records that the user has seen the current set of releases. */
   markAllAsRead() {
     app.settings.set(
       "version",
-      app.config.env === "production"
-        ? app.config.version
+      config.env === "production"
+        ? config.version
         : Math.floor(Date.now() / 1000),
     );
   }
-};
+}
