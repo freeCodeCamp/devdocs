@@ -190,6 +190,7 @@ export class App extends Events {
     delete this.DOCS;
     this.migrateDocs();
     await this.migrateToLatestVersions();
+    this.db.migrateIndexes();
     this.docs.load(this.start.bind(this), this.onBootError.bind(this), {
       readCache: true,
       writeCache: true,

@@ -160,67 +160,53 @@ export class Doc extends Model {
     if (options == null) {
       options = {};
     }
-    if (options.readCache && this._loadFromCache(onSuccess)) {
+
+    const fromNetwork = () => {
+      ajax({
+        url: this.indexUrl(),
+        success: (data) => {
+          this.reset(data);
+          onSuccess();
+          if (options.writeCache) {
+            this._setCache(data);
+          }
+        },
+        error: onError,
+      });
+    };
+
+    if (!options.readCache) {
+      fromNetwork();
       return;
     }
 
-    const callback = (data) => {
-      this.reset(data);
-      onSuccess();
-      if (options.writeCache) {
-        this._setCache(data);
+    this._getCache((data) => {
+      if (data) {
+        this.reset(data);
+        onSuccess();
+      } else {
+        fromNetwork();
       }
-    };
-
-    return ajax({
-      url: this.indexUrl(),
-      success: callback,
-      error: onError,
     });
   }
 
   /** Drops the cached index. */
   clearCache() {
-    app.localStorage.del(this.slug);
+    app.db.deleteIndex(this);
   }
 
   /**
-   * @param {() => void} onSuccess Called asynchronously, to match the network path.
-   * @returns {boolean | undefined} `true` when the cache was used.
+   * @param {(index?: unknown) => void} fn Called with the cached index, or with
+   *   nothing when it is missing or stale. A hit is always asynchronous, and a
+   *   miss leads to the network, so `load` never calls back synchronously.
    */
-  _loadFromCache(onSuccess) {
-    const data = this._getCache();
-    if (!data) {
-      return;
-    }
-
-    const callback = () => {
-      this.reset(data);
-      onSuccess();
-    };
-
-    setTimeout(callback, 0);
-    return true;
-  }
-
-  /** @returns {unknown} The cached index, or `undefined` when it is missing or stale. */
-  _getCache() {
-    const data = app.localStorage.get(this.slug);
-    if (!data) {
-      return;
-    }
-
-    if (data[0] === this.mtime) {
-      return data[1];
-    } else {
-      this.clearCache();
-      return;
-    }
+  _getCache(fn) {
+    app.db.loadIndex(this, this.mtime, fn);
   }
 
   /** @param {unknown} data */
   _setCache(data) {
-    app.localStorage.set(this.slug, [this.mtime, data]);
+    app.db.storeIndex(this, this.mtime, data);
   }
 
   /**
