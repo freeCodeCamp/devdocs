@@ -557,9 +557,19 @@ export class DB {
    * @param {Doc} doc
    * @param {number} mtime The build the index was fetched for.
    * @param {unknown} index
+   * @param {() => void} [fn] Called once the write has been committed, and not
+   *   at all when there was nowhere to write it.
    */
-  storeIndex(doc, mtime, index) {
-    this.indexes("readwrite", (store) => store?.put([mtime, index], doc.slug));
+  storeIndex(doc, mtime, index, fn) {
+    this.indexes("readwrite", (store) => {
+      if (!store) {
+        return;
+      }
+      store.put([mtime, index], doc.slug);
+      if (fn) {
+        store.transaction.oncomplete = fn;
+      }
+    });
   }
 
   /** @param {Doc} doc */
@@ -589,12 +599,16 @@ export class DB {
       return;
     }
 
-    app.localStorage.del(doc.slug);
     if (cached[0] !== mtime) {
+      app.localStorage.del(doc.slug);
       return;
     }
 
-    this.storeIndex(doc, mtime, cached[1]);
+    // localStorage holds the only copy until the write lands, and there may be
+    // nowhere to write it yet: a database that predates the indexes store only
+    // queues its schema bump when it first misses it, and a browser without
+    // IndexedDB never has one.
+    this.storeIndex(doc, mtime, cached[1], () => app.localStorage.del(doc.slug));
     return cached[1];
   }
 

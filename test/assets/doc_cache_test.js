@@ -126,12 +126,41 @@ test("an index left in localStorage is taken in on the read that wants it", () =
   const db = new DB();
   /** @type {unknown[]} */
   const puts = [];
+  /** @type {any} */
+  const transaction = {};
   db.indexes = (mode, fn) =>
-    fn(/** @type {any} */ ({ put: (value, key) => puts.push([key, value]) }));
+    fn(
+      /** @type {any} */ ({
+        put: (value, key) => puts.push([key, value]),
+        transaction,
+      }),
+    );
 
   assert.equal(db.importIndex(newDoc(), 42), INDEX, "the doc's own index");
   assert.deepEqual(puts, [["css", [42, INDEX]]], "moved into the database");
-  assert.deepEqual(stored, { html: [7, INDEX] }, "and out of localStorage");
+  assert.deepEqual(
+    stored,
+    { css: [42, INDEX], html: [7, INDEX] },
+    "and kept until the write is committed",
+  );
+
+  transaction.oncomplete();
+  assert.deepEqual(stored, { html: [7, INDEX] }, "and dropped once it is");
+});
+
+test("an index left in localStorage is kept when there is nowhere to put it", () => {
+  const stored = { css: [42, INDEX] };
+  app.localStorage = /** @type {any} */ ({
+    get: (/** @type {string} */ key) => stored[key],
+    del: (/** @type {string} */ key) => delete stored[key],
+  });
+
+  // No store: no IndexedDB at all, or a database that has yet to be given one.
+  const db = new DB();
+  db.indexes = (mode, fn) => fn(undefined);
+
+  assert.equal(db.importIndex(newDoc(), 42), INDEX);
+  assert.deepEqual(stored, { css: [42, INDEX] }, "the only copy is kept");
 });
 
 test("an index left over from an earlier build is dropped, not taken in", () => {
