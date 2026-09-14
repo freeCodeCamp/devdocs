@@ -1,5 +1,9 @@
 // @ts-check
 
+/**
+ * The breadcrumb above the content. Rebuilt on every route, and hidden on
+ * pages that aren't part of a doc.
+ */
 app.views.Path = class Path extends app.View {
   static className = "_path";
   static attributes = { role: "complementary" };
@@ -8,23 +12,32 @@ app.views.Path = class Path extends app.View {
 
   static routes = { after: "afterRoute" };
 
+  /** @param {...any} args The doc, then optionally the type and the entry. */
   render(...args) {
     this.html(this.tmpl("path", ...args));
     this.show();
   }
 
+  /** Puts the breadcrumb above the content, if it isn't there already. */
   show() {
     if (!this.el.parentNode) {
       this.prependTo(app.el);
     }
   }
 
+  /** Takes it off the page. */
   hide() {
     if (this.el.parentNode) {
       $.remove(this.el);
     }
   }
 
+  /**
+   * Notes that the next route came from the breadcrumb, so that the sidebar
+   * can be reset to match.
+   *
+   * @param {ViewMouseEvent} event
+   */
   onClick(event) {
     const link = $.closestLink(event.target, this.el);
     if (link) {
@@ -32,6 +45,10 @@ app.views.Path = class Path extends app.View {
     }
   }
 
+  /**
+   * @param {string} route
+   * @param {any} context
+   */
   afterRoute(route, context) {
     if (context.type) {
       this.render(context.doc, context.type);

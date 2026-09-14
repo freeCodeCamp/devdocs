@@ -1,5 +1,12 @@
 // @ts-check
 
+/**
+ * The root view, bound to the document itself.
+ *
+ * Owns the menu, the sidebar, the content and the preferences panel, and
+ * handles the shortcuts and the `data-behavior` links that aren't tied to any
+ * one of them.
+ */
 app.views.Document = class Document extends app.View {
   static el = document;
 
@@ -15,6 +22,7 @@ app.views.Document = class Document extends app.View {
 
   static routes = { after: "afterRoute" };
 
+  /** @inheritdoc */
   init() {
     this.menu = new app.views.Menu();
     this.sidebar = new app.views.Sidebar();
@@ -39,12 +47,14 @@ app.views.Document = class Document extends app.View {
     this.activate();
   }
 
+  /** @param {string} [title] Prefixed to the app's name, or omitted for the app's name alone. */
   setTitle(title) {
     return (this.el.title = title
       ? `${title} — DevDocs`
       : "DevDocs API Documentation");
   }
 
+  /** @param {string} route */
   afterRoute(route) {
     if (route === "settings") {
       if (this.settings != null) {
@@ -57,6 +67,10 @@ app.views.Document = class Document extends app.View {
     }
   }
 
+  /**
+   * Reloads when the viewport crossed the phone-layout threshold while the
+   * tab was in the background, e.g. after the device was rotated.
+   */
   onVisibilityChange() {
     if (this.el.visibilityState !== "visible") {
       return;
@@ -68,14 +82,17 @@ app.views.Document = class Document extends app.View {
     }, 300);
   }
 
+  /** Opens the keyboard shortcuts. */
   onHelp() {
     app.router.show("/help#shortcuts");
   }
 
+  /** Opens the preferences. */
   onPreferences() {
     app.router.show("/settings");
   }
 
+  /** Goes up to the doc's index, or to the app's index. */
   onEscape() {
     const path =
       !app.isSingleDoc() || location.pathname === app.doc.fullPath()
@@ -85,14 +102,21 @@ app.views.Document = class Document extends app.View {
     app.router.show(path);
   }
 
+  /** Goes back. */
   onBack() {
     history.back();
   }
 
+  /** Goes forward. */
   onForward() {
     history.forward();
   }
 
+  /**
+   * Runs the `data-behavior` the click landed on, if any.
+   *
+   * @param {ViewMouseEvent} event
+   */
   onClick(event) {
     const target = $.eventTarget(event);
     if (!target.hasAttribute("data-behavior")) {

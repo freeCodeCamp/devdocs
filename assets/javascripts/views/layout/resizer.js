@@ -1,5 +1,12 @@
 // @ts-check
 
+/**
+ * The handle between the sidebar and the content.
+ *
+ * Dragged with the HTML5 drag-and-drop API, which is why the width is only
+ * saved on `dragend`; `dragover` fires far too often to write to storage, so
+ * the live resize is throttled to one animation frame.
+ */
 app.views.Resizer = class Resizer extends app.View {
   static className = "_resizer";
 
@@ -11,15 +18,22 @@ app.views.Resizer = class Resizer extends app.View {
   static MIN = 260;
   static MAX = 600;
 
+  /** @returns {boolean} Whether the browser supports dragging and isn't a phone. */
   static isSupported() {
     return "ondragstart" in document.createElement("div") && !app.isMobile();
   }
 
+  /** @inheritdoc */
   init() {
     this.el.setAttribute("draggable", "true");
     this.appendTo($("._app"));
   }
 
+  /**
+   * @param {number} value The sidebar's new width, as a page coordinate.
+   *   Clamped between `MIN` and `MAX`.
+   * @param {boolean} save Whether to remember the width.
+   */
   resize(value, save) {
     value -= app.el.offsetLeft;
     if (!(value > 0)) {
@@ -33,6 +47,7 @@ app.views.Resizer = class Resizer extends app.View {
     }
   }
 
+  /** @param {DragEvent} event */
   onDragStart(event) {
     event.dataTransfer.effectAllowed = "link";
     event.dataTransfer.setData("Text", "");
@@ -40,6 +55,7 @@ app.views.Resizer = class Resizer extends app.View {
     $.on(window, "dragover", this.onDrag);
   }
 
+  /** @param {DragEvent} event */
   onDrag(event) {
     const value = event.pageX;
     if (!(value > 0)) {
@@ -55,6 +71,7 @@ app.views.Resizer = class Resizer extends app.View {
     });
   }
 
+  /** @param {DragEvent} event */
   onDragEnd(event) {
     if (this.rafPending) {
       cancelAnimationFrame(this.rafPending);

@@ -1,5 +1,11 @@
 // @ts-check
 
+/**
+ * The preferences panel.
+ *
+ * Saving uninstalls the docs the user turned off and reloads the app, since
+ * the offline database's schema is derived from the enabled docs.
+ */
 app.views.Settings = class Settings extends app.View {
   static SIDEBAR_HIDDEN_LAYOUT = "_sidebar-hidden";
 
@@ -20,6 +26,7 @@ app.views.Settings = class Settings extends app.View {
 
   static shortcuts = { enter: "onEnter" };
 
+  /** @inheritdoc */
   init() {
     this.addSubview((this.docPicker = new app.views.DocPicker()));
   }
@@ -41,12 +48,20 @@ app.views.Settings = class Settings extends app.View {
     }
   }
 
+  /** Puts the doc picker in the sidebar and slides the panel in. */
   render() {
     this.docPicker.appendTo(this.sidebar);
     this.refreshElements();
     this.addClass("_in");
   }
 
+  /**
+   * Applies the chosen docs and reloads. Does nothing while a save is
+   * already running.
+   *
+   * @param {{ import?: boolean }} [options] Pass `import` when the docs were
+   *   just replaced by an import, so the picker isn't read back.
+   */
   save(options) {
     if (options == null) {
       options = {};
@@ -81,24 +96,29 @@ app.views.Settings = class Settings extends app.View {
     }
   }
 
+  /** Marks the panel as having unsaved changes. */
   onChange() {
     this.addClass("_dirty");
   }
 
+  /** Saves on Enter. */
   onEnter() {
     this.save();
   }
 
+  /** @param {ViewEvent} event */
   onSubmit(event) {
     event.preventDefault();
     this.save();
   }
 
+  /** Saves after the preferences were replaced by an import. */
   onImport() {
     this.addClass("_dirty");
     this.save({ import: true });
   }
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     if (event.which !== 1) {
       return;

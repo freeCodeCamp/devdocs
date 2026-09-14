@@ -1,15 +1,22 @@
 // @ts-check
 
+/** The header menu, opened by the toggle and closed by a click anywhere else. */
 app.views.Menu = class Menu extends app.View {
   static el = "._menu";
   static activeClass = "active";
 
   static events = { click: "onClick" };
 
+  /** @inheritdoc */
   init() {
     $.on(document.body, "click", (event) => this.onGlobalClick(event));
   }
 
+  /**
+   * Drops the focus ring after following a link.
+   *
+   * @param {ViewMouseEvent} event
+   */
   onClick(event) {
     const target = $.eventTarget(event);
     if (target.tagName === "A") {
@@ -17,6 +24,7 @@ app.views.Menu = class Menu extends app.View {
     }
   }
 
+  /** @param {ViewMouseEvent} event */
   onGlobalClick(event) {
     if (event.which !== 1) {
       return;
