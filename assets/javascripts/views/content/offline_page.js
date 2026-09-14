@@ -154,7 +154,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
       navigator.storage
         .persisted()
         .then((persisted) => callback(true, persisted))
-        .catch(() => callback(false, persisted));
+        .catch(() => callback(false, false));
     } else {
       callback(false, false);
     }

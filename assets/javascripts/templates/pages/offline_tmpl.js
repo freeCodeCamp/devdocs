@@ -23,7 +23,6 @@ app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
     ${docs}
   </table>
 </div>
-</div>
 <div id="_offline-persistence-note">
   ${offlinePersistenceNote(hasPersistence, isPersistent)}
 </div>
@@ -55,7 +54,7 @@ var offlinePersistenceNote = function (hasPersistence, isPersistent) {
 
   if (hasPersistence) {
     html +=
-      ' <button type="button" class ="_btn-link _bold" data-enable-persistence>Enable persistent storage</button>.';
+      ' <button type="button" class="_btn-link _bold" data-enable-persistence>Enable persistent storage</button>.';
   } else {
     html +=
       " Load this page before going offline to make sure the data is still there.";
