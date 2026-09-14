@@ -106,7 +106,7 @@ app.models.Doc.prototype.load = function (onSuccess, onError) {
   }
 };
 
-const migrate = (enabled, allDocs, autoLatestVersion = true) => {
+const migrate = async (enabled, allDocs, autoLatestVersion = true) => {
   app.settings = {
     get: (key) => (key === "autoLatestVersion" ? autoLatestVersion : undefined),
   };
@@ -121,45 +121,42 @@ const migrate = (enabled, allDocs, autoLatestVersion = true) => {
     app.saved = true;
   };
   app.saved = false;
-  app.booted = false;
-  app.migrateToLatestVersions(() => {
-    app.booted = true;
-  });
+  await app.migrateToLatestVersions();
   // Spread the array so that it's created in this realm, not the VM's.
   return [...app.docs.all().map((doc) => doc.slug)];
 };
 
-test("enabled docs are migrated to their latest version at boot", () => {
-  assert.deepEqual(migrate(["cmake~3.9", "bash"], [...CMAKE, ...BASH]), [
+test("enabled docs are migrated to their latest version at boot", async () => {
+  assert.deepEqual(await migrate(["cmake~3.9", "bash"], [...CMAKE, ...BASH]), [
     "bash",
     "cmake~3.12",
   ]);
   assert.equal(app.saved, true);
-  assert.equal(app.booted, true);
   assert.equal(app.disabledDocs.findBy("slug", "cmake~3.9").slug, "cmake~3.9");
 });
 
-test("outdated docs are disabled when their latest version is already enabled", () => {
-  assert.deepEqual(migrate(["cmake~3.9", "cmake~3.12"], CMAKE), ["cmake~3.12"]);
+test("outdated docs are disabled when their latest version is already enabled", async () => {
+  assert.deepEqual(await migrate(["cmake~3.9", "cmake~3.12"], CMAKE), [
+    "cmake~3.12",
+  ]);
 });
 
-test("a doc whose latest version fails to load isn't replaced", () => {
+test("a doc whose latest version fails to load isn't replaced", async () => {
   app.loadFails = true;
   try {
-    assert.deepEqual(migrate(["cmake~3.9"], CMAKE), ["cmake~3.9"]);
+    assert.deepEqual(await migrate(["cmake~3.9"], CMAKE), ["cmake~3.9"]);
     assert.equal(app.saved, false);
-    assert.equal(app.booted, true);
   } finally {
     app.loadFails = false;
   }
 });
 
-test("docs are left alone without the preference or a newer version", () => {
-  assert.deepEqual(migrate(["cmake~3.9"], CMAKE, false), ["cmake~3.9"]);
+test("docs are left alone without the preference or a newer version", async () => {
+  assert.deepEqual(await migrate(["cmake~3.9"], CMAKE, false), ["cmake~3.9"]);
   assert.equal(app.saved, false);
 
   assert.deepEqual(
-    migrate(["cmake~3.12", "node~10_lts"], [...CMAKE, ...NODE]),
+    await migrate(["cmake~3.12", "node~10_lts"], [...CMAKE, ...NODE]),
     ["cmake~3.12", "node~10_lts"],
   );
   assert.equal(app.saved, false);

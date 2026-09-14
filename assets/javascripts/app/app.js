@@ -117,19 +117,18 @@ class App extends Events {
     delete this.DOC;
   }
 
-  bootAll() {
+  async bootAll() {
     const docs = this.settings.getDocs();
     for (var doc of this.DOCS) {
       (docs.includes(doc.slug) ? this.docs : this.disabledDocs).add(doc);
     }
-    this.migrateDocs();
-    this.migrateToLatestVersions(() => {
-      this.docs.load(this.start.bind(this), this.onBootError.bind(this), {
-        readCache: true,
-        writeCache: true,
-      });
-    });
     delete this.DOCS;
+    this.migrateDocs();
+    await this.migrateToLatestVersions();
+    this.docs.load(this.start.bind(this), this.onBootError.bind(this), {
+      readCache: true,
+      writeCache: true,
+    });
   }
 
   start() {
@@ -193,55 +192,48 @@ class App extends Events {
   }
 
   // With the "latest version" preference enabled, replace the enabled docs for
-  // which a newer version is available with that version. A doc is only
-  // replaced once the index of its latest version has loaded, because saving
-  // drops the offline data of the doc that is disabled.
-  migrateToLatestVersions(callback) {
+  // which a newer version is available with that version.
+  async migrateToLatestVersions() {
     if (!this.settings.get("autoLatestVersion")) {
-      callback();
       return;
     }
 
     const allDocs = this.docs.all().concat(this.disabledDocs.all());
-    const migrations = [];
-
-    for (var doc of this.docs.all()) {
-      var latest = doc.findLatestVersion(allDocs);
-      if (latest !== doc) {
-        migrations.push([doc, latest]);
-      }
-    }
-
-    let i = 0;
     let needsSaving;
 
-    var next = () => {
-      if (i === migrations.length) {
-        if (needsSaving) {
-          this.docs.sort();
-          this.saveDocs();
-        }
-        callback();
-        return;
+    for (var outdated of this.docs.all().slice()) {
+      var latest = outdated.findLatestVersion(allDocs);
+      if (latest === outdated) {
+        continue;
       }
 
-      const [outdated, latest] = migrations[i++];
+      // Saving drops the offline data of the doc that is disabled, so the
+      // index of its latest version has to load before the swap is made.
+      const loaded = await new Promise((resolve) =>
+        latest.load(
+          () => resolve(true),
+          () => resolve(false),
+          { readCache: true, writeCache: true },
+        ),
+      );
 
-      const onSuccess = () => {
-        this.docs.remove(outdated);
-        this.disabledDocs.add(outdated);
-        if (!this.docs.contains(latest)) {
-          this.disabledDocs.remove(latest);
-          this.docs.add(latest);
-        }
-        needsSaving = true;
-        next();
-      };
+      if (!loaded) {
+        continue;
+      }
 
-      latest.load(onSuccess, next, { readCache: true, writeCache: true });
-    };
+      this.docs.remove(outdated);
+      this.disabledDocs.add(outdated);
+      if (!this.docs.contains(latest)) {
+        this.disabledDocs.remove(latest);
+        this.docs.add(latest);
+      }
+      needsSaving = true;
+    }
 
-    next();
+    if (needsSaving) {
+      this.docs.sort();
+      this.saveDocs();
+    }
   }
 
   enableDoc(doc, _onSuccess, onError) {
