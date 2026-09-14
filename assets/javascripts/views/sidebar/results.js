@@ -38,7 +38,12 @@ class Results extends app.View {
     this.addSubview((this.listSelect = new app.views.ListSelect(this.el)));
 
     this.search
-      .on("results", (entries, flags) => this.onResults(entries, flags))
+      .on("results", (entries, flags) =>
+        this.onResults(
+          /** @type {Entry[]} */ (entries),
+          /** @type {{ initialResults?: boolean, urlSearch?: boolean }} */ (flags),
+        ),
+      )
       .on("noresults", () => this.onNoResults())
       .on("clear", () => this.onClear());
   }

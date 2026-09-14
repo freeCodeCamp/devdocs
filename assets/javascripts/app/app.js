@@ -1,6 +1,14 @@
 // @ts-check
 
 /**
+ * An empty registry, to be filled in by the files that define its members.
+ *
+ * @template T
+ * @returns {T}
+ */
+const empty = () => /** @type {T} */ (/** @type {unknown} */ ({}));
+
+/**
  * The build-time configuration, rendered into the page by app/config.js.erb.
  *
  * @typedef {object} AppConfig
@@ -44,9 +52,9 @@ class App extends Events {
   _page = page;
 
   /** @type {{ Docs: typeof Docs, Entries: typeof Entries, Types: typeof Types }} */
-  collections = /** @type {any} */ ({});
+  collections = empty();
   /** @type {{ Doc: typeof Doc, Entry: typeof Entry, Type: typeof Type }} */
-  models = /** @type {any} */ ({});
+  models = empty();
   /**
    * Templates are either a function of their arguments or plain markup. Most
    * are reached by name through `render`, so the registry stays open-ended;
@@ -59,7 +67,7 @@ class App extends Events {
    *   notifUpdates: (docs: Doc[], disabledDocs: Doc[]) => string,
    * }}
    */
-  templates = /** @type {any} */ ({});
+  templates = empty();
   /**
    * @type {{
    *   BasePage: typeof BasePage,
@@ -101,7 +109,7 @@ class App extends Events {
    *   Updates: typeof Updates,
    * }}
    */
-  views = /** @type {any} */ ({});
+  views = empty();
 
   /** Set by app/config.js.erb. @type {AppConfig} */
   config;

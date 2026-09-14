@@ -4,7 +4,7 @@
  * A key event whose target is read loosely: the handlers check for form-field
  * properties that only some elements have.
  *
- * @typedef {KeyboardEvent & { target: any }} ShortcutEvent
+ * @typedef {KeyboardEvent & { target: HTMLElement & Partial<HTMLInputElement> }} ShortcutEvent
  */
 
 /**

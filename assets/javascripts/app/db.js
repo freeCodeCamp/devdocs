@@ -1,6 +1,16 @@
 // @ts-check
 
 /**
+ * `DB#useIndexedDB` is a method that the instance shadows with the boolean it
+ * returned, so the write needs a view of the instance that expects the value.
+ *
+ * @param {DB} db
+ * @returns {{ useIndexedDB: boolean }}
+ */
+const useIndexedDBOf = (db) =>
+  /** @type {{ useIndexedDB: boolean }} */ (/** @type {unknown} */ (db));
+
+/**
  * An IndexedDB event, whose target is the request or transaction that raised
  * it. lib.dom types `Event#target` as a bare `EventTarget`.
  *
@@ -38,8 +48,8 @@ class DB {
   /** Probes for IndexedDB support and prepares the callback queue. */
   constructor() {
     this.versionMultipler = $.isIE() ? 1e5 : 1e9;
-    // Replaces the method of the same name with the answer it gives.
-    /** @type {any} */ (this).useIndexedDB = this.useIndexedDB();
+    // Shadows the method of the same name with the answer it gives.
+    useIndexedDBOf(this).useIndexedDB = this.useIndexedDB();
     this.callbacks = [];
   }
 
@@ -135,7 +145,7 @@ class DB {
    */
   fail(reason, error) {
     this.cachedDocs = null;
-    /** @type {any} */ (this).useIndexedDB = false;
+    useIndexedDBOf(this).useIndexedDB = false;
     if (!this.reason) {
       this.reason = reason;
     }

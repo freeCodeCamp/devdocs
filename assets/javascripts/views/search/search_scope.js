@@ -36,7 +36,9 @@ class SearchScope extends app.View {
       fuzzy_min_length: 2,
       max_results: 1,
     });
-    this.searcher.on("results", (results) => this.onResults(results));
+    this.searcher.on("results", (results) =>
+      this.onResults(/** @type {Doc[]} */ (results)),
+    );
   }
 
   /** @returns {Doc | App} The doc the search is scoped to, or the app when it isn't scoped. */

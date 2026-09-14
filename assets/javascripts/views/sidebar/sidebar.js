@@ -34,7 +34,10 @@ class Sidebar extends app.View {
       .on("searching", () => this.onSearching())
       .on("clear", () => this.onSearchClear())
       .scope.on("change", (newDoc, previousDoc) =>
-        this.onScopeChange(newDoc, previousDoc),
+        this.onScopeChange(
+          /** @type {Doc} */ (newDoc),
+          /** @type {Doc} */ (previousDoc),
+        ),
       );
 
     this.results = new app.views.Results(this, this.search);

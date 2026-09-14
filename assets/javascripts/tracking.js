@@ -14,7 +14,7 @@ try {
           function () {
             (i[r].q = i[r].q || []).push(arguments);
           }),
-          (i[r].l = 1 * /** @type {any} */ (new Date()));
+          (i[r].l = new Date().getTime());
         (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
         a.async = 1;
         a.src = g;

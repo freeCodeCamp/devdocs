@@ -222,8 +222,8 @@ class Searcher extends Events {
   /**
    * Starts a search, abandoning whatever was running.
    *
-   * @param {any[]} data The objects to search. Their type flows back out
-   *   through the `results` event, which is why it isn't narrowed here.
+   * @param {Model[]} data The models to search. They flow back out through
+   *   the `results` event unchanged.
    * @param {string} attr The attribute to match against; a string or an array of them.
    * @param {string} q
    */
@@ -330,22 +330,28 @@ class Searcher extends Events {
   matchChunk() {
     ({ matcher } = this);
     for (let j = 0, end = this.chunkSize(); j < end; j++) {
-      value = this.data[this.cursor][this.attr];
-      if (value.split) {
-        // string
+      const model = this.data[this.cursor];
+      // The attribute is named at run time, and holds either the model's
+      // searchable string or every spelling of it.
+      const attribute = /** @type {string | string[]} */ (
+        /** @type {Record<string, unknown>} */ (/** @type {unknown} */ (model))[
+          this.attr
+        ]
+      );
+      if (typeof attribute === "string") {
+        value = attribute;
         valueLength = value.length;
         if ((score = matcher())) {
-          this.addResult(this.data[this.cursor], score);
+          this.addResult(model, score);
         }
       } else {
-        // array
         score = 0;
-        for (value of Array.from(this.data[this.cursor][this.attr])) {
+        for (value of attribute) {
           valueLength = value.length;
           score = Math.max(score, matcher() || 0);
         }
         if (score > 0) {
-          this.addResult(this.data[this.cursor], score);
+          this.addResult(model, score);
         }
       }
       this.cursor++;
@@ -374,7 +380,7 @@ class Searcher extends Events {
   /**
    * Files a match under its rounded score.
    *
-   * @param {unknown} object
+   * @param {Model} object
    * @param {number} score
    */
   addResult(object, score) {

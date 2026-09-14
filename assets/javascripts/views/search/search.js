@@ -41,7 +41,7 @@ class Search extends app.View {
 
     this.searcher = new app.Searcher();
     this.searcher
-      .on("results", (results) => this.onResults(results))
+      .on("results", (results) => this.onResults(/** @type {Entry[]} */ (results)))
       .on("end", () => this.onEnd());
 
     this.scope.on("change", () => this.onScopeChange());

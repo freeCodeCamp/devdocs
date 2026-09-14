@@ -10,7 +10,7 @@
  * Listeners know the shape of the event they subscribed to, which the
  * emitter itself has no way to express, so the arguments stay untyped.
  *
- * @typedef {(...args: any[]) => void} EventCallback
+ * @typedef {(...args: unknown[]) => void} EventCallback
  */
 class Events {
   /**
