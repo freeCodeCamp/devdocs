@@ -244,7 +244,7 @@ class Searcher extends Events {
 
   /** Prepares the module-level state the match functions read. */
   setup() {
-    query = this.query = /** @type {any} */ (this.constructor).normalizeQuery(this.query);
+    query = this.query = Searcher.normalizeQuery(this.query);
     queryLength = query.length;
     this.dataLength = this.data.length;
     this.matchers = [exactMatch];

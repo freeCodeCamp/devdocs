@@ -24,7 +24,12 @@ class Collection {
    * @returns {new (attributes?: Record<string, unknown>) => T}
    */
   model() {
-    return app.models[/** @type {any} */ (this.constructor).model];
+    const { model } = /** @type {{ model: keyof App["models"] }} */ (
+      /** @type {unknown} */ (this.constructor)
+    );
+    return /** @type {new (attributes?: Record<string, unknown>) => T} */ (
+      /** @type {unknown} */ (app.models[model])
+    );
   }
 
   /**

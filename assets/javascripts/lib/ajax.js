@@ -77,14 +77,14 @@ function ajax(options) {
   }
 
   /**
-   * @param {Record<string, any>} params
+   * @param {Record<string, unknown>} params
    * @returns {string}
    */
   function serializeParams(params) {
     return Object.entries(params)
       .map(
         ([key, value]) =>
-          `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+          `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`,
       )
       .join("&");
   }

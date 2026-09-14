@@ -34,12 +34,12 @@ class Shortcuts extends Events {
     $.off(document, "keypress", this.onKeypress);
   }
 
-  /** @returns {unknown} Whether the arrow keys scroll rather than move the selection. */
+  /** @returns {boolean} Whether the arrow keys scroll rather than move the selection. */
   swapArrowKeysBehavior() {
     return app.settings.get("arrowScroll");
   }
 
-  /** @returns {unknown} How far space scrolls, as a fraction of the viewport. */
+  /** @returns {number} How far space scrolls, as a fraction of the viewport. */
   spaceScroll() {
     return app.settings.get("spaceScroll");
   }
@@ -50,7 +50,7 @@ class Shortcuts extends Events {
     return (this.showTip = null);
   }
 
-  /** @returns {any} How long after typing space stops scrolling, in seconds. */
+  /** @returns {number | string} How long after typing space stops scrolling, in seconds. */
   spaceTimeout() {
     return app.settings.get("spaceTimeout");
   }
@@ -136,7 +136,7 @@ class Shortcuts extends Events {
           event.target.type === "search" &&
           this.spaceScroll() &&
           (!this.lastKeypress ||
-            this.lastKeypress < Date.now() - this.spaceTimeout() * 1000)
+            this.lastKeypress < Date.now() - Number(this.spaceTimeout()) * 1000)
         ) {
           this.trigger("pageDown");
           return false;

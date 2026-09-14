@@ -64,7 +64,7 @@ class SettingsPage extends app.View {
 
   /** @param {boolean} enable Clears the analytics cookies when turned off. */
   toggleAnalyticsConsent(enable) {
-    app.settings.set("analyticsConsent", enable ? "1" : "0");
+    app.settings.set("analyticsConsent", enable ? 1 : 0);
     if (!enable) {
       resetAnalytics();
     }
@@ -84,7 +84,7 @@ class SettingsPage extends app.View {
   }
 
   /**
-   * @param {string} name
+   * @param {keyof SettingsValues} name
    * @param {boolean} enable
    */
   toggle(name, enable) {
@@ -154,7 +154,10 @@ class SettingsPage extends app.View {
         this.setScrollTimeout(input.value);
         break;
       default:
-        this.toggle(input.name, input.checked);
+        this.toggle(
+          /** @type {keyof SettingsValues} */ (input.name),
+          input.checked,
+        );
     }
   }
 

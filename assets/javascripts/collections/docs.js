@@ -110,12 +110,16 @@ class Docs extends Collection {
 
   /** @param {(statuses: Record<string, InstallStatus> | false) => void} callback */
   getInstallStatuses(callback) {
-    app.db.versions(this.models, (statuses) => {
-      if (statuses) {
-        for (var key in statuses) {
-          var value = statuses[key];
-          statuses[key] = { installed: !!value, mtime: value };
-        }
+    app.db.versions(this.models, (versions) => {
+      if (!versions) {
+        callback(false);
+        return;
+      }
+      /** @type {Record<string, InstallStatus>} */
+      const statuses = {};
+      for (var key in versions) {
+        var value = versions[key];
+        statuses[key] = { installed: !!value, mtime: value };
       }
       callback(statuses);
     });

@@ -289,11 +289,12 @@ class View extends Events {
   /**
    * Renders one of `app.templates`.
    *
-   * @param {...unknown} args The template name, then its arguments.
+   * @param {string} name
+   * @param {...unknown} args The template's own arguments.
    * @returns {string}
    */
-  tmpl(...args) {
-    return app.templates.render(...args);
+  tmpl(name, ...args) {
+    return app.templates.render(name, ...args);
   }
 
   /**

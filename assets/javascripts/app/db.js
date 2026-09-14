@@ -4,7 +4,7 @@
  * An IndexedDB event, whose target is the request or transaction that raised
  * it. lib.dom types `Event#target` as a bare `EventTarget`.
  *
- * @typedef {Event & { target: any }} IDBEvent
+ * @typedef {Event & { target: IDBRequest }} IDBEvent
  */
 
 /**
@@ -66,8 +66,10 @@ class DB {
         DB.NAME,
         DB.VERSION * this.versionMultipler + this.userVersion(),
       );
-      req.onsuccess = (event) => this.onOpenSuccess(event);
-      req.onerror = (event) => this.onOpenError(event);
+      req.onsuccess = (event) =>
+      this.onOpenSuccess(/** @type {IDBEvent} */ (event));
+      req.onerror = (event) =>
+      this.onOpenError(/** @type {IDBEvent} */ (event));
       req.onupgradeneeded = (event) => this.onUpgradeNeeded(event);
     } catch (error) {
       this.fail("exception", error);
@@ -82,7 +84,8 @@ class DB {
    */
   onOpenSuccess(event) {
     let error;
-    const db = /** @type {IDBEvent} */ (event).target.result;
+    const db = /** @type {IDBEvent} */ (/** @type {unknown} */ (event)).target
+      .result;
 
     if (db.objectStoreNames.length === 0) {
       try {
@@ -128,7 +131,7 @@ class DB {
    * Turns IndexedDB off for the rest of the session and drains the queue.
    *
    * @param {string} reason
-   * @param {any} [error]
+   * @param {unknown} [error]
    */
   fail(reason, error) {
     this.cachedDocs = null;
@@ -146,9 +149,12 @@ class DB {
     }
     this.runCallbacks();
     if (error && reason === "cant_open") {
-      Raven.captureMessage(`${error.name}: ${error.message}`, {
+      const { name, message } = /** @type {{ name?: string, message?: string }} */ (
+        error
+      );
+      Raven.captureMessage(`${name}: ${message}`, {
         level: "warning",
-        fingerprint: [error.name],
+        fingerprint: [name],
       });
     }
   }
@@ -223,7 +229,8 @@ class DB {
    * @param {IDBVersionChangeEvent} event
    */
   onUpgradeNeeded(event) {
-    const db = /** @type {IDBEvent} */ (event).target.result;
+    const db = /** @type {IDBEvent} */ (/** @type {unknown} */ (event)).target
+      .result;
     if (!db) {
       return;
     }
@@ -472,7 +479,7 @@ class DB {
 
   /**
    * @param {Doc[]} docs
-   * @param {(versions: Record<string, any> | false) => void} fn
+   * @param {(versions: Record<string, number | false> | false) => void} fn
    */
   versions(docs, fn) {
     const versions = this.cachedVersions(docs);
@@ -512,7 +519,7 @@ class DB {
 
   /**
    * @param {Doc[]} docs
-   * @returns {Record<string, any> | undefined} `undefined` when the cache isn't loaded yet.
+   * @returns {Record<string, number | false> | undefined} `undefined` when the cache isn't loaded yet.
    */
   cachedVersions(docs) {
     if (!this.cachedDocs) {
@@ -678,7 +685,11 @@ class DB {
       for (var doc of docs) {
         txn.objectStore(doc).get("index").onsuccess = (event) => {
           if (!/** @type {IDBEvent} */ (event).target.result) {
-            this.corruptedDocs.push(/** @type {IDBEvent} */ (event).target.source.name);
+            this.corruptedDocs.push(
+              /** @type {IDBObjectStore} */ (
+                /** @type {IDBEvent} */ (event).target.source
+              ).name,
+            );
           }
         };
       }

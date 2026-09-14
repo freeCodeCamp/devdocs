@@ -47,8 +47,19 @@ class App extends Events {
   collections = /** @type {any} */ ({});
   /** @type {{ Doc: typeof Doc, Entry: typeof Entry, Type: typeof Type }} */
   models = /** @type {any} */ ({});
-  /** @type {Record<string, any>} */
-  templates = {};
+  /**
+   * Templates are either a function of their arguments or plain markup. Most
+   * are reached by name through `render`, so the registry stays open-ended;
+   * the few that are called directly are named here so they stay callable.
+   *
+   * @type {Record<string, ((...args: unknown[]) => string) | string> & {
+   *   render: (name: string, value?: unknown, ...args: unknown[]) => string,
+   *   newsList: (news: unknown[], options?: { years?: boolean }) => string,
+   *   notifNews: (news: unknown[]) => string,
+   *   notifUpdates: (docs: Doc[], disabledDocs: Doc[]) => string,
+   * }}
+   */
+  templates = /** @type {any} */ ({});
   /**
    * @type {{
    *   BasePage: typeof BasePage,
@@ -197,7 +208,9 @@ class App extends Events {
     if (this.isSupportedBrowser()) {
       return true;
     }
-    document.body.innerHTML = app.templates.unsupportedBrowser;
+    document.body.innerHTML = /** @type {string} */ (
+      app.templates.unsupportedBrowser
+    );
     this.hideLoadingScreen();
     return false;
   }
@@ -402,7 +415,7 @@ class App extends Events {
    * of their latest version has to load before they are replaced. Loads no
    * more docs at once than Docs#load does.
    *
-   * @param {any[]} docs
+   * @param {Doc[]} docs
    * @returns {Promise<Set<unknown>>} The docs whose index loaded.
    */
   async loadLatestVersions(docs) {
@@ -491,9 +504,9 @@ class App extends Events {
   /** Reloads the app, keeping the current path. */
   reboot() {
     if (location.pathname !== "/" && location.pathname !== "/settings") {
-      window.location = /** @type {any} */ (`/#${location.pathname}`);
+      window.location.href = `/#${location.pathname}`;
     } else {
-      window.location = /** @type {any} */ ("/");
+      window.location.href = "/";
     }
   }
 
@@ -518,7 +531,7 @@ class App extends Events {
     if (this.serviceWorker != null) {
       this.serviceWorker.update();
     }
-    window.location = /** @type {any} */ ("/");
+    window.location.href = "/";
   }
 
   /**
@@ -580,14 +593,14 @@ class App extends Events {
     });
   }
 
-  /** @param {...any} args The `window.onerror` arguments. */
+  /** @param {...unknown} args The `window.onerror` arguments. */
   onWindowError(...args) {
     if (this.cookieBlocked) {
       return;
     }
     if (this.isInjectionError()) {
       this.onInjectionError();
-    } else if (this.isAppError(args[0], args[1])) {
+    } else if (this.isAppError(args[0], /** @type {string} */ (args[1]))) {
       if (typeof this.previousErrorHandler === "function") {
         this.previousErrorHandler(...args);
       }

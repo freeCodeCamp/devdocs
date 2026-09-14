@@ -1,6 +1,37 @@
 // @ts-check
 
 /**
+ * What each setting holds. Values round-trip through cookies as strings, so
+ * the numeric ones are parsed back out on read and the boolean ones are stored
+ * as `1` or absent.
+ *
+ * @typedef {object} SettingsValues
+ * @property {number} count How many times the user has visited.
+ * @property {boolean} hideDisabled
+ * @property {boolean} hideIntro
+ * @property {number} news When the changelog was last read, as a Unix timestamp.
+ * @property {boolean} manualUpdate
+ * @property {number} schema The offline database's schema version.
+ * @property {boolean | number} analyticsConsent Stored as 1 or 0.
+ * @property {string} theme `"auto"`, `"dark"` or `"default"`.
+ * @property {number} spaceScroll How far space scrolls, as a fraction of the viewport.
+ * @property {number | string} spaceTimeout How long after typing space stops
+ *   scrolling, in seconds. Not an integer, so it comes back as a string.
+ * @property {boolean} noDocSpecificIcon
+ * @property {boolean} autoLatestVersion
+ * @property {number} version The build the user last saw.
+ * @property {boolean} fastScroll
+ * @property {boolean} arrowScroll
+ * @property {boolean} noAutofocus
+ * @property {boolean} autoInstall
+ * @property {number} dark Legacy; replaced by `theme`.
+ * @property {string} docs The enabled slugs, separated by `/`.
+ * @property {string} tips The tips already shown, separated by `/`.
+ * @property {string} layout The layout classes, separated by spaces.
+ * @property {number} size The sidebar's width, in pixels.
+ */
+
+/**
  * The user's preferences, stored in cookies so that the server can read them.
  *
  * `PREFERENCE_KEYS` are the ones the user controls and that a backup carries;
@@ -68,32 +99,38 @@ class Settings {
   /**
    * Reads a setting, falling back to its default. Cached after the first read.
    *
-   * @param {string} key
-   * @returns {any}
+   * @template {keyof SettingsValues} K
+   * @param {K} key
+   * @returns {SettingsValues[K]}
    */
   get(key) {
+    // The store and the defaults are both keyed by name but hold mixed types,
+    // so the value is narrowed to the one this key stands for on the way out.
+    const cache = /** @type {Record<string, unknown>} */ (this.cache);
+    const cast = (/** @type {unknown} */ value) =>
+      /** @type {SettingsValues[K]} */ (value);
+
     let left;
-    if (this.cache.hasOwnProperty(key)) {
-      return this.cache[key];
+    if (cache.hasOwnProperty(key)) {
+      return cast(cache[key]);
     }
-    this.cache[key] =
-      (left = this.store.get(key)) != null
-        ? left
-        : /** @type {any} */ (this.constructor).defaults[key];
-    if (key === "theme" && this.cache[key] === "auto" && !this.darkModeQuery) {
-      return (this.cache[key] = "default");
+    cache[key] =
+      (left = this.store.get(key)) != null ? left : Settings.defaults[key];
+    if (key === "theme" && cache[key] === "auto" && !this.darkModeQuery) {
+      return cast((cache[key] = "default"));
     } else {
-      return this.cache[key];
+      return cast(cache[key]);
     }
   }
 
   /**
-   * @param {string} key
-   * @param {string | number | boolean} value
+   * @template {keyof SettingsValues} K
+   * @param {K} key
+   * @param {SettingsValues[K]} value
    */
   set(key, value) {
-    this.store.set(key, value);
-    delete this.cache[key];
+    this.store.set(key, /** @type {string | number | boolean} */ (value));
+    delete (/** @type {Record<string, unknown>} */ (this.cache))[key];
     if (key === "theme") {
       this.setTheme(/** @type {string} */ (value));
     }
@@ -102,7 +139,7 @@ class Settings {
   /** @param {string} key */
   del(key) {
     this.store.del(key);
-    delete this.cache[key];
+    delete (/** @type {Record<string, unknown>} */ (this.cache))[key];
   }
 
   /** @returns {boolean | undefined} Whether the user has ever chosen a set of docs. */

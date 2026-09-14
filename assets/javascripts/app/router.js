@@ -25,7 +25,7 @@ class Router extends Events {
   /** Registers every route with `page` and normalizes the initial path. */
   constructor() {
     super();
-    for (var [path, method] of /** @type {any} */ (this.constructor).routes) {
+    for (var [path, method] of Router.routes) {
       page(path, this[method].bind(this));
     }
     this.setInitialPath();

@@ -8,7 +8,7 @@
  * @property {string} slug
  * @property {number} mtime The build the stored pages came from.
  * @property {Record<string, string>} db The doc's pages, by path.
- * @property {any} [index] The doc's entry index, when the backup carried it.
+ * @property {unknown} [index] The doc's entry index, when the backup carried it.
  */
 
 /**

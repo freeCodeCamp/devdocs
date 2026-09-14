@@ -15,7 +15,7 @@
 app.templates.render = function (name, value, ...args) {
   const template = app.templates[name];
 
-  if (Array.isArray(value)) {
+  if (Array.isArray(value) && typeof template === "function") {
     let result = "";
     for (var val of value) {
       result += template(val, ...args);

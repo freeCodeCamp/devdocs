@@ -29,7 +29,7 @@ class Updates extends Notif {
     );
   }
 
-  /** @returns {unknown[]} Enabled docs built since the last time updates were shown. */
+  /** @returns {Doc[]} Enabled docs built since the last time updates were shown. */
   getUpdatedDocs() {
     if (!this.lastUpdateTime) {
       return [];
@@ -40,7 +40,7 @@ class Updates extends Notif {
   }
 
   /**
-   * @returns {unknown[]} Disabled docs built since then, but only where another
+   * @returns {Doc[]} Disabled docs built since then, but only where another
    *   version of the same doc is enabled.
    */
   getUpdatedDisabledDocs() {
