@@ -41,7 +41,6 @@ end
 group :docs do
   gem 'progress_bar', require: false
   gem 'redcarpet'
-  gem 'tty-pager', require: false
 end
 
 group :test do

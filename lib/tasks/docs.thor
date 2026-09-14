@@ -34,10 +34,7 @@ class DocsCLI < Thor
       end
     end
 
-    output = names.join("\n")
-
-    require 'tty-pager'
-    TTY::Pager.new.page(output)
+    puts names.join("\n")
   end
 
   desc 'outdated [--verbose] [doc]...', 'Check for outdated documentations'
