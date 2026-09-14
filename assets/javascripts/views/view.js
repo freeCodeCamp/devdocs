@@ -1,6 +1,18 @@
 // @ts-check
 
 /**
+ * A DOM event as a view handler reads it.
+ *
+ * The event's own members stay precisely typed; the target is left loose,
+ * because handlers reach for properties that lib.dom only declares on the
+ * specific element types the handler happens to be bound to.
+ *
+ * @typedef {Event & { target: any, currentTarget: any }} ViewEvent
+ * @typedef {MouseEvent & { target: any, currentTarget: any }} ViewMouseEvent
+ * @typedef {KeyboardEvent & { target: any, currentTarget: any }} ViewKeyboardEvent
+ */
+
+/**
  * The static configuration a view subclass declares.
  *
  * The index signature covers the statics each subclass adds of its own — class
@@ -100,18 +112,25 @@ class View extends Events {
     }
   }
 
+  /** @param {string} name */
   addClass(name) {
     this.el.classList.add(name);
   }
 
+  /** @param {string} name */
   removeClass(name) {
     this.el.classList.remove(name);
   }
 
+  /** @param {string} name */
   toggleClass(name) {
     this.el.classList.toggle(name);
   }
 
+  /**
+   * @param {string} name
+   * @returns {boolean}
+   */
   hasClass(name) {
     return this.el.classList.contains(name);
   }
@@ -127,99 +146,162 @@ class View extends Events {
     }
   }
 
+  /**
+   * @param {string} selector
+   * @returns {any} The first match inside the view, or `undefined`.
+   */
   find(selector) {
     return $(selector, this.el);
   }
 
+  /**
+   * @param {string} selector
+   * @returns {NodeListOf<any>} Every match inside the view.
+   */
   findAll(selector) {
     return $$(selector, this.el);
   }
 
+  /**
+   * @param {string} name
+   * @returns {any} The first match, or `undefined`.
+   */
   findByClass(name) {
     return this.findAllByClass(name)[0];
   }
 
   /**
    * @param {string} name
-   * @returns {Element | undefined}
+   * @returns {any} The last match, or `undefined`.
    */
   findLastByClass(name) {
     const all = this.findAllByClass(name);
     return all[all.length - 1];
   }
 
+  /**
+   * @param {string} name
+   * @returns {HTMLCollectionOf<any>} A live collection.
+   */
   findAllByClass(name) {
     return this.el.getElementsByClassName(name);
   }
 
+  /**
+   * @param {string} tag
+   * @returns {any} The first match, or `undefined`.
+   */
   findByTag(tag) {
     return this.findAllByTag(tag)[0];
   }
 
+  /**
+   * @param {string} tag
+   * @returns {any} The last match, or `undefined`.
+   */
   findLastByTag(tag) {
     const all = this.findAllByTag(tag);
     return all[all.length - 1];
   }
 
+  /**
+   * @param {string} tag
+   * @returns {HTMLCollectionOf<any>} A live collection.
+   */
   findAllByTag(tag) {
     return this.el.getElementsByTagName(tag);
   }
 
+  /** @param {any} value Markup, a node, or another view. */
   append(value) {
     $.append(this.el, value.el || value);
   }
 
+  /** @param {any} value The node or view to append this one to. */
   appendTo(value) {
     $.append(value.el || value, this.el);
   }
 
+  /** @param {any} value Markup, a node, or another view. */
   prepend(value) {
     $.prepend(this.el, value.el || value);
   }
 
+  /** @param {any} value The node or view to prepend this one to. */
   prependTo(value) {
     $.prepend(value.el || value, this.el);
   }
 
+  /** @param {any} value Markup, a node, or another view, inserted before this one. */
   before(value) {
     $.before(this.el, value.el || value);
   }
 
+  /** @param {any} value Markup, a node, or another view, inserted after this one. */
   after(value) {
     $.after(this.el, value.el || value);
   }
 
+  /** @param {any} value The node or view to detach. */
   remove(value) {
     $.remove(value.el || value);
   }
 
+  /** Removes every child, then re-resolves the `elements` statics. */
   empty() {
     $.empty(this.el);
     this.refreshElements();
   }
 
+  /**
+   * Replaces the view's contents.
+   *
+   * @param {any} value Markup, a node, or another view.
+   */
   html(value) {
     this.empty();
     this.append(value);
   }
 
+  /**
+   * Renders one of `app.templates`.
+   *
+   * @param {...any} args The template name, then its arguments.
+   * @returns {string}
+   */
   tmpl(...args) {
     return app.templates.render(...args);
   }
 
+  /**
+   * Runs `fn` bound to the view, later.
+   *
+   * @param {Function} fn
+   * @param {...any} args Arguments for `fn`, optionally followed by a delay in milliseconds.
+   * @returns {any} The timeout handle.
+   */
   delay(fn, ...args) {
     const delay = typeof args[args.length - 1] === "number" ? args.pop() : 0;
     return setTimeout(fn.bind(this, ...args), delay);
   }
 
+  /**
+   * @param {string} event One or more event names, separated by spaces.
+   * @param {(event: any) => void} callback
+   */
   onDOM(event, callback) {
     $.on(this.el, event, callback);
   }
 
+  /**
+   * @param {string} event One or more event names, separated by spaces.
+   * @param {(event: any) => void} callback
+   */
   offDOM(event, callback) {
     $.off(this.el, event, callback);
   }
 
+  /** Binds the DOM events, routes and shortcuts named in the statics. */
   bindEvents() {
     let method, name;
     const statics = this.statics();
@@ -248,6 +330,7 @@ class View extends Events {
     }
   }
 
+  /** Unbinds what `bindEvents` bound. */
   unbindEvents() {
     let method, name;
     const statics = this.statics();
@@ -273,6 +356,12 @@ class View extends Events {
     }
   }
 
+  /**
+   * Registers a view to be activated and deactivated along with this one.
+   *
+   * @param {any} view
+   * @returns {number} The number of subviews.
+   */
   addSubview(view) {
     return (this.subviews || (this.subviews = [])).push(view);
   }
@@ -315,6 +404,7 @@ class View extends Events {
     return true;
   }
 
+  /** Deactivates the view and takes its element out of the document. */
   detach() {
     this.deactivate();
     $.remove(this.el);

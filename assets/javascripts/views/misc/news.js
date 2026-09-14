@@ -2,11 +2,13 @@
 
 //= require views/misc/notif
 
+/** The notification listing the changelog entries the user hasn't seen. */
 app.views.News = class News extends app.views.Notif {
   static className = "_notif _notif-news";
 
   static defaultOptions = { autoHide: 30000 };
 
+  /** @inheritdoc */
   init0() {
     this.unreadNews = this.getUnreadNews();
     if (this.unreadNews.length) {
@@ -15,10 +17,12 @@ app.views.News = class News extends app.views.Notif {
     this.markAllAsRead();
   }
 
+  /** @inheritdoc */
   render() {
     this.html(app.templates.notifNews(this.unreadNews));
   }
 
+  /** @returns {any[]} Entries published since the user last saw the changelog. */
   getUnreadNews() {
     const time = this.getLastReadTime();
     if (!time) {
@@ -35,14 +39,17 @@ app.views.News = class News extends app.views.Notif {
     return result;
   }
 
+  /** @returns {number} When the newest entry was published, in milliseconds. */
   getLastNewsTime() {
     return new Date(app.news[0][0]).getTime();
   }
 
+  /** @returns {number} When the user last saw the changelog, in milliseconds. */
   getLastReadTime() {
     return app.settings.get("news");
   }
 
+  /** Records that the user has seen every entry. */
   markAllAsRead() {
     app.settings.set("news", this.getLastNewsTime());
   }
