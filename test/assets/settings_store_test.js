@@ -32,17 +32,13 @@ const jar = new Map();
 Object.defineProperty(document, "cookie", {
   get: () => [...jar].map(([key, value]) => `${key}=${value}`).join("; "),
   set: (/** @type {string} */ string) => {
-    const [pair, ...attributes] = string.split(";");
+    const pair = string.split(";")[0];
     const separator = pair.indexOf("=");
-    const key = pair.slice(0, separator);
-    const expires = attributes
-      .map((attribute) => attribute.trim())
-      .find((attribute) => /^expires=/i.test(attribute));
-
-    if (expires && new Date(expires.slice(8)) <= new Date()) {
-      jar.delete(key);
+    // The only expiry anything writes is the epoch, which deletes.
+    if (/;\s*expires=/i.test(string)) {
+      jar.delete(pair.slice(0, separator));
     } else {
-      jar.set(key, pair.slice(separator + 1));
+      jar.set(pair.slice(0, separator), pair.slice(separator + 1));
     }
   },
   configurable: true,
@@ -96,54 +92,27 @@ test("sees what another store has written", () => {
 
 test("takes in the settings left in cookies, and expires them", () => {
   reset();
+  // What is stored already wins over the cookie of the same name; the vendors'
+  // own cookies aren't ours to take; the session-only one doesn't become
+  // permanent; and a value keeps its spaces rather than its escapes.
+  new SettingsStore().set("theme", "dark");
   document.cookie = "docs=css/javascript";
   document.cookie = "size=320";
-
-  const store = new SettingsStore();
-
-  assert.equal(store.get("docs"), "css/javascript");
-  assert.equal(store.get("size"), 320);
-  assert.equal(document.cookie, "", "the cookies should be gone");
-});
-
-test("decodes a cookie value rather than storing its escapes", () => {
-  reset();
   document.cookie = "layout=_max-width%20_sidebar-hidden";
-
-  assert.equal(
-    new SettingsStore().get("layout"),
-    "_max-width _sidebar-hidden",
-  );
-});
-
-test("keeps the stored value when a cookie of the same name is left over", () => {
-  reset();
-  new SettingsStore().set("theme", "dark");
   document.cookie = "theme=default";
-
-  assert.equal(new SettingsStore().get("theme"), "dark");
-  assert.equal(document.cookie, "");
-});
-
-test("leaves the analytics vendors' own cookies alone", () => {
-  reset();
+  document.cookie = "analyticsConsentAsked=1";
   document.cookie = "_ga=GA1.2.3";
 
   const store = new SettingsStore();
 
-  assert.deepEqual(store.dump(), {});
+  assert.deepEqual(store.dump(), {
+    theme: "dark",
+    docs: "css/javascript",
+    size: "320",
+    layout: "_max-width _sidebar-hidden",
+  });
+  assert.equal(store.get("size"), 320, "and integers still parse");
   assert.equal(document.cookie, "_ga=GA1.2.3");
-});
-
-test("drops the consent-asked cookie rather than making it permanent", () => {
-  reset();
-  document.cookie = "analyticsConsentAsked=1";
-  document.cookie = "analyticsConsent=1";
-
-  const store = new SettingsStore();
-
-  assert.deepEqual(store.dump(), { analyticsConsent: "1" });
-  assert.equal(document.cookie, "");
 });
 
 test("reports a write that doesn't stick", () => {

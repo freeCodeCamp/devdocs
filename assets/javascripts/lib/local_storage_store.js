@@ -8,7 +8,6 @@
  * @property {(key: string) => unknown} get
  * @property {(key: string, value: unknown) => boolean | undefined} set
  * @property {(key: string) => boolean | undefined} del
- * @property {() => string[]} keys
  * @property {() => boolean | undefined} reset
  */
 
@@ -51,17 +50,6 @@ export const LocalStorageStore = class LocalStorageStore {
       localStorage.removeItem(key);
       return true;
     } catch (error) {}
-  }
-
-  /**
-   * @returns {string[]} Every key, or an empty list when storage is unreadable.
-   */
-  keys() {
-    try {
-      return Object.keys(localStorage);
-    } catch (error) {
-      return [];
-    }
   }
 
   /**

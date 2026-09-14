@@ -25,8 +25,6 @@ export class SettingsStore {
   /** The localStorage key everything is stored under. */
   static KEY = "settings";
 
-  static INT = /^\d+$/;
-
   /**
    * Hook called when a value read back after a write doesn't match what was
    * written. Replaced by the app at boot; a no-op by default.
@@ -36,16 +34,6 @@ export class SettingsStore {
    * @param {SettingValue} actual The value that was read back.
    */
   static onBlocked(key, value, actual) {}
-
-  /**
-   * @param {SettingValue} value
-   * @returns {SettingValue} `value`, as a number when it is all digits.
-   */
-  static parse(value) {
-    return value != null && SettingsStore.INT.test(String(value))
-      ? parseInt(String(value), 10)
-      : value;
-  }
 
   /** Opens the store and takes in whatever is still in cookies. */
   constructor() {
@@ -58,7 +46,7 @@ export class SettingsStore {
    * @returns {SettingValue} The stored value, as a number when it is all digits.
    */
   get(key) {
-    return SettingsStore.parse(this.dump()[key]);
+    return parse(this.dump()[key]);
   }
 
   /**
@@ -76,11 +64,11 @@ export class SettingsStore {
     if (value === true) {
       value = 1;
     }
-    value = SettingsStore.parse(value);
+    value = parse(value);
 
     const settings = this.dump();
     settings[key] = "" + value;
-    this.write(settings);
+    this.storage.set(SettingsStore.KEY, settings);
 
     const actual = this.get(key);
     if (actual !== value) {
@@ -92,7 +80,7 @@ export class SettingsStore {
   del(key) {
     const settings = this.dump();
     delete settings[key];
-    this.write(settings);
+    this.storage.set(SettingsStore.KEY, settings);
   }
 
   /** Clears every setting. */
@@ -111,45 +99,60 @@ export class SettingsStore {
       : {};
   }
 
-  /** @param {Record<string, string>} settings */
-  write(settings) {
-    this.storage.set(SettingsStore.KEY, settings);
-  }
-
   /**
    * Takes in the settings an earlier version of the app left in cookies, and
    * expires them. Does nothing once they are gone.
    *
    * What is already stored wins, being the newer of the two. Cookies with a
    * single leading underscore belong to the analytics vendors, not to us.
+   *
+   * Remove once the app has had a release or two to empty the jar out.
    */
   migrate() {
-    const settings = this.dump();
-    let found = false;
-
     // Reading document.cookie throws where cookies are turned off entirely.
     try {
-      for (var cookie of document.cookie.split(/;\s?/)) {
-        if (!cookie || cookie[0] === "_") {
-          continue;
-        }
-        const [name, value] = cookie.split("=");
-        const key = decode(name);
-
-        // analyticsConsentAsked was a session cookie, and is sessionStorage now.
-        if (key !== "analyticsConsentAsked" && !(key in settings)) {
-          settings[key] = decode(value || "");
-          found = true;
-        }
-        document.cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+      if (!document.cookie) {
+        return;
       }
-    } catch (error) {}
-
-    if (found) {
-      this.write(settings);
+    } catch (error) {
+      return;
     }
+
+    const settings = this.dump();
+
+    for (var cookie of document.cookie.split(/;\s?/)) {
+      if (cookie[0] === "_") {
+        continue;
+      }
+      const [name, value] = cookie.split("=");
+      const key = decode(name);
+
+      // analyticsConsentAsked was a session cookie, and is sessionStorage now.
+      if (key !== "analyticsConsentAsked" && !(key in settings)) {
+        settings[key] = decode(value || "");
+      }
+      expireCookie(name);
+    }
+
+    this.storage.set(SettingsStore.KEY, settings);
   }
 }
+
+/**
+ * Expires a cookie, whoever set it.
+ *
+ * @param {string} name
+ */
+export const expireCookie = (name) => {
+  document.cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+};
+
+/**
+ * @param {SettingValue} value
+ * @returns {SettingValue} `value`, as a number when it is all digits.
+ */
+const parse = (value) =>
+  typeof value === "string" && /^\d+$/.test(value) ? parseInt(value, 10) : value;
 
 /**
  * @param {string} value

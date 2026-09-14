@@ -4,7 +4,6 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { app } from "../../assets/javascripts/app/app.js";
-import { LocalStorageStore } from "../../assets/javascripts/lib/local_storage_store.js";
 import { DB } from "../../assets/javascripts/app/db.js";
 import { Doc } from "../../assets/javascripts/models/doc.js";
 
@@ -34,6 +33,10 @@ Object.defineProperty(globalThis, "XMLHttpRequest", {
   configurable: true,
 });
 
+test.beforeEach(() => {
+  requests.length = 0;
+});
+
 /** The index a doc loads, kept minimal: the shape is all Doc#reset touches. */
 const INDEX = { entries: [], types: [] };
 
@@ -60,7 +63,6 @@ const stubStore = (cached) => {
 const newDoc = () => new Doc({ name: "CSS", slug: "css", mtime: 42 });
 
 test("a cached index is used instead of the network", async () => {
-  requests.length = 0;
   const calls = stubStore(INDEX);
   const doc = newDoc();
 
@@ -76,7 +78,6 @@ test("a cached index is used instead of the network", async () => {
 });
 
 test("a miss falls through to the network, and stores what it fetched", async () => {
-  requests.length = 0;
   const calls = stubStore(undefined);
   const doc = newDoc();
 
@@ -99,7 +100,6 @@ test("a miss falls through to the network, and stores what it fetched", async ()
 });
 
 test("the cache is left alone when the caller doesn't ask for it", async () => {
-  requests.length = 0;
   const calls = stubStore(INDEX);
   const doc = newDoc();
 
@@ -116,65 +116,34 @@ test("the cache is left alone when the caller doesn't ask for it", async () => {
   assert.deepEqual(calls.written, [], "and nothing should have been written");
 });
 
-test("a doc drops its cached index when it is cleared", () => {
-  const calls = stubStore(INDEX);
-  newDoc().clearCache();
-  assert.deepEqual(calls.written, [["css", null]]);
-});
-
-// Items are own properties of a real Storage, and its methods live on the
-// prototype, which is what makes Object.keys() return the keys and nothing
-// else.
-class FakeStorage {
-  constructor(/** @type {Record<string, string>} */ entries) {
-    Object.assign(this, entries);
-  }
-  getItem(/** @type {string} */ key) {
-    return Object.prototype.hasOwnProperty.call(this, key) ? this[key] : null;
-  }
-  setItem(/** @type {string} */ key, /** @type {string} */ value) {
-    this[key] = String(value);
-  }
-  removeItem(/** @type {string} */ key) {
-    delete this[key];
-  }
-  clear() {
-    for (const key of Object.keys(this)) delete this[key];
-  }
-}
-
-test("the indexes an older app cached in localStorage are taken in", () => {
-  const stored = new FakeStorage({
-    settings: '{"docs":"css"}',
-    "override-mobile-detect": "true",
-    css: '[42,{"entries":[]}]',
-    html: '[7,{"entries":[]}]',
-    junk: '"not an index"',
+test("an index left in localStorage is taken in on the read that wants it", () => {
+  const stored = { css: [42, INDEX], html: [7, INDEX] };
+  app.localStorage = /** @type {any} */ ({
+    get: (/** @type {string} */ key) => stored[key],
+    del: (/** @type {string} */ key) => delete stored[key],
   });
 
-  Object.defineProperty(globalThis, "localStorage", {
-    value: stored,
-    writable: true,
-    configurable: true,
-  });
-
-  app.localStorage = new LocalStorageStore();
   const db = new DB();
   /** @type {unknown[]} */
   const puts = [];
-  db.db = (fn) => fn(/** @type {any} */ ({}));
-  db.indexesStore = () =>
-    /** @type {any} */ ({ put: (value, key) => puts.push([key, value]) });
+  db.indexes = (mode, fn) =>
+    fn(/** @type {any} */ ({ put: (value, key) => puts.push([key, value]) }));
 
-  db.migrateIndexes();
+  assert.equal(db.importIndex(newDoc(), 42), INDEX, "the doc's own index");
+  assert.deepEqual(puts, [["css", [42, INDEX]]], "moved into the database");
+  assert.deepEqual(stored, { html: [7, INDEX] }, "and out of localStorage");
+});
 
-  assert.deepEqual(puts, [
-    ["css", [42, { entries: [] }]],
-    ["html", [7, { entries: [] }]],
-  ]);
-  assert.deepEqual(
-    Object.keys(stored),
-    ["settings", "override-mobile-detect"],
-    "everything else should have been cleared out",
-  );
+test("an index left over from an earlier build is dropped, not taken in", () => {
+  const stored = { css: [7, INDEX] };
+  app.localStorage = /** @type {any} */ ({
+    get: (/** @type {string} */ key) => stored[key],
+    del: (/** @type {string} */ key) => delete stored[key],
+  });
+
+  const db = new DB();
+  db.indexes = () => assert.fail("nothing should be stored");
+
+  assert.equal(db.importIndex(newDoc(), 42), undefined);
+  assert.deepEqual(stored, {});
 });

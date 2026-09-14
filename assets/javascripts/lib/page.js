@@ -1,6 +1,6 @@
 import { app } from "../app/app.js";
 import { config } from "../app/config.js";
-import { settingsStore } from "./settings_store.js";
+import { expireCookie, settingsStore } from "./settings_store.js";
 import { $ } from "./util.js";
 import { Notif } from "../views/misc/notif.js";
 
@@ -562,7 +562,7 @@ export const resetAnalytics = function () {
   for (var cookie of document.cookie.split(/;\s?/)) {
     var name = cookie.split("=")[0];
     if (name[0] === "_" && name[1] !== "_") {
-      document.cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+      expireCookie(name);
     }
   }
 };

@@ -156,11 +156,7 @@ export class Doc extends Model {
    * @param {() => void} onError
    * @param {DocLoadOptions} [options]
    */
-  load(onSuccess, onError, options) {
-    if (options == null) {
-      options = {};
-    }
-
+  load(onSuccess, onError, options = {}) {
     const fromNetwork = () => {
       ajax({
         url: this.indexUrl(),
@@ -168,7 +164,7 @@ export class Doc extends Model {
           this.reset(data);
           onSuccess();
           if (options.writeCache) {
-            this._setCache(data);
+            app.db.storeIndex(this, this.mtime, data);
           }
         },
         error: onError,
@@ -180,7 +176,9 @@ export class Doc extends Model {
       return;
     }
 
-    this._getCache((data) => {
+    // A cache hit calls back asynchronously and a miss goes to the network, so
+    // `onSuccess` never runs before this returns.
+    app.db.loadIndex(this, this.mtime, (data) => {
       if (data) {
         this.reset(data);
         onSuccess();
@@ -188,25 +186,6 @@ export class Doc extends Model {
         fromNetwork();
       }
     });
-  }
-
-  /** Drops the cached index. */
-  clearCache() {
-    app.db.deleteIndex(this);
-  }
-
-  /**
-   * @param {(index?: unknown) => void} fn Called with the cached index, or with
-   *   nothing when it is missing or stale. A hit is always asynchronous, and a
-   *   miss leads to the network, so `load` never calls back synchronously.
-   */
-  _getCache(fn) {
-    app.db.loadIndex(this, this.mtime, fn);
-  }
-
-  /** @param {unknown} data */
-  _setCache(data) {
-    app.db.storeIndex(this, this.mtime, data);
   }
 
   /**

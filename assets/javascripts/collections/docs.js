@@ -93,13 +93,6 @@ export class Docs extends Collection {
     }
   }
 
-  /** Drops every doc's cached index. */
-  clearCache() {
-    for (var doc of this.models) {
-      doc.clearCache();
-    }
-  }
-
   /**
    * Removes every doc's offline database, one at a time.
    *

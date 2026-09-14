@@ -34,6 +34,8 @@ self.addEventListener('fetch', event => {
     const cachedResponse = await caches.match(event.request);
     if (cachedResponse) return cachedResponse;
 
+    const url = new URL(event.request.url);
+
     try {
       const response = await fetch(event.request);
 
@@ -42,7 +44,6 @@ self.addEventListener('fetch', event => {
       <%# enabled docs into this file at request time. index.json is served %>
       <%# from the docs CDN (a different origin in production), which sends CORS %>
       <%# headers, so the response is inspectable and cacheable — no origin check. %>
-      const url = new URL(event.request.url);
       if (
         event.request.method === 'GET' &&
         url.pathname.endsWith('/index.json') &&
@@ -54,8 +55,6 @@ self.addEventListener('fetch', event => {
 
       return response;
     } catch (err) {
-      const url = new URL(event.request.url);
-
       const pathname = url.pathname;
       const filename = pathname.substr(1 + pathname.lastIndexOf('/')).split(/\#|\?/g)[0];
       const extensions = ['.html', '.css', '.js', '.json', '.png', '.ico', '.svg', '.xml'];
