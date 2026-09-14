@@ -156,71 +156,36 @@ export class Doc extends Model {
    * @param {() => void} onError
    * @param {DocLoadOptions} [options]
    */
-  load(onSuccess, onError, options) {
-    if (options == null) {
-      options = {};
-    }
-    if (options.readCache && this._loadFromCache(onSuccess)) {
+  load(onSuccess, onError, options = {}) {
+    const fromNetwork = () => {
+      ajax({
+        url: this.indexUrl(),
+        success: (data) => {
+          this.reset(data);
+          onSuccess();
+          if (options.writeCache) {
+            app.db.storeIndex(this, this.mtime, data);
+          }
+        },
+        error: onError,
+      });
+    };
+
+    if (!options.readCache) {
+      fromNetwork();
       return;
     }
 
-    const callback = (data) => {
-      this.reset(data);
-      onSuccess();
-      if (options.writeCache) {
-        this._setCache(data);
+    // A cache hit calls back asynchronously and a miss goes to the network, so
+    // `onSuccess` never runs before this returns.
+    app.db.loadIndex(this, this.mtime, (data) => {
+      if (data) {
+        this.reset(data);
+        onSuccess();
+      } else {
+        fromNetwork();
       }
-    };
-
-    return ajax({
-      url: this.indexUrl(),
-      success: callback,
-      error: onError,
     });
-  }
-
-  /** Drops the cached index. */
-  clearCache() {
-    app.localStorage.del(this.slug);
-  }
-
-  /**
-   * @param {() => void} onSuccess Called asynchronously, to match the network path.
-   * @returns {boolean | undefined} `true` when the cache was used.
-   */
-  _loadFromCache(onSuccess) {
-    const data = this._getCache();
-    if (!data) {
-      return;
-    }
-
-    const callback = () => {
-      this.reset(data);
-      onSuccess();
-    };
-
-    setTimeout(callback, 0);
-    return true;
-  }
-
-  /** @returns {unknown} The cached index, or `undefined` when it is missing or stale. */
-  _getCache() {
-    const data = app.localStorage.get(this.slug);
-    if (!data) {
-      return;
-    }
-
-    if (data[0] === this.mtime) {
-      return data[1];
-    } else {
-      this.clearCache();
-      return;
-    }
-  }
-
-  /** @param {unknown} data */
-  _setCache(data) {
-    app.localStorage.set(this.slug, [this.mtime, data]);
   }
 
   /**

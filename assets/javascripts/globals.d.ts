@@ -16,24 +16,6 @@ export {};
 declare global {
   // --- Vendored libraries (assets/javascripts/vendor) ---
 
-  /** Cookies.js — github.com/ScottHamper/Cookies */
-  const Cookies: {
-    (key: string): string | undefined;
-    (key: string, value: string, options?: CookieOptions): typeof Cookies;
-    get(key: string): string | undefined;
-    set(key: string, value: string, options?: CookieOptions): typeof Cookies;
-    expire(key: string, options?: CookieOptions): typeof Cookies;
-    defaults: CookieOptions;
-    enabled: boolean;
-  };
-
-  interface CookieOptions {
-    path?: string;
-    domain?: string;
-    expires?: number | string | Date;
-    secure?: boolean;
-  }
-
   /** Raven.js — the Sentry browser client. Only the parts the app uses. */
   const Raven: {
     config(dsn: string, options?: Record<string, any>): typeof Raven;

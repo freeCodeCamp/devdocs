@@ -8,7 +8,6 @@ const urlsToCache = [
   '/favicon.ico',
   '/manifest.json',
   '<%= service_worker_asset_urls.join "',\n  '" %>',
-  '<%= doc_index_urls.join "',\n  '" %>',
 ];
 
 <%# Set-up the cache %>
@@ -35,12 +34,31 @@ self.addEventListener('fetch', event => {
     const cachedResponse = await caches.match(event.request);
     if (cachedResponse) return cachedResponse;
 
+    const url = new URL(event.request.url);
+
     try {
       const response = await fetch(event.request);
+
+      <%# Cache documentation index files as they are fetched, so that enabled %>
+      <%# docs stay available offline without baking the (per-user) list of %>
+      <%# enabled docs into this file at request time. index.json is served %>
+      <%# from the docs CDN (a different origin in production), which sends CORS %>
+      <%# headers, so the response is inspectable and cacheable — no origin check. %>
+      if (
+        event.request.method === 'GET' &&
+        url.pathname.endsWith('/index.json') &&
+        response.ok
+      ) {
+        <%# waitUntil rather than await: the response goes back without %>
+        <%# waiting on the write, but the worker stays alive until it lands. %>
+        const copy = response.clone();
+        event.waitUntil(
+          caches.open(cacheName).then(cache => cache.put(event.request, copy)),
+        );
+      }
+
       return response;
     } catch (err) {
-      const url = new URL(event.request.url);
-
       const pathname = url.pathname;
       const filename = pathname.substr(1 + pathname.lastIndexOf('/')).split(/\#|\?/g)[0];
       const extensions = ['.html', '.css', '.js', '.json', '.png', '.ico', '.svg', '.xml'];

@@ -1,5 +1,10 @@
 import { app } from "../app/app.js";
 import { config } from "../app/config.js";
+import {
+  SettingsStore,
+  expireCookie,
+  settingsStore,
+} from "./settings_store.js";
 import { $ } from "./util.js";
 import { Notif } from "../views/misc/notif.js";
 
@@ -527,27 +532,41 @@ var track = function () {
     return;
   }
 
-  const consentGiven = Cookies.get("analyticsConsent");
-  const consentAsked = Cookies.get("analyticsConsentAsked");
+  const consentGiven = settingsStore.get("analyticsConsent");
 
-  if (consentGiven === "1") {
+  if (consentGiven === 1) {
     for (var tracker of trackers) {
       tracker.call(undefined);
     }
-  } else if (consentGiven === undefined && consentAsked === undefined) {
-    // Only ask for consent once per browser session
-    Cookies.set("analyticsConsentAsked", "1");
-
+  } else if (consentGiven === undefined && !consentAsked()) {
     new Notif("AnalyticsConsent", { autoHide: null });
   }
 };
 
-/** Expires the analytics cookies, which are the ones prefixed with a single `_`. */
+/**
+ * @returns {boolean} Whether the user has been asked for consent already, and
+ *   marks them as asked if not. Kept in sessionStorage, so the question comes
+ *   back on the next visit but not on the next page load.
+ */
+var consentAsked = function () {
+  try {
+    if (sessionStorage.getItem(SettingsStore.ASKED_KEY)) {
+      return true;
+    }
+    sessionStorage.setItem(SettingsStore.ASKED_KEY, "1");
+  } catch (error) {}
+  return false;
+};
+
+/**
+ * Expires the analytics cookies, which are the ones the vendors set with a
+ * single leading `_`. The app has none of its own.
+ */
 export const resetAnalytics = function () {
   for (var cookie of document.cookie.split(/;\s?/)) {
     var name = cookie.split("=")[0];
     if (name[0] === "_" && name[1] !== "_") {
-      Cookies.expire(name);
+      expireCookie(name);
     }
   }
 };

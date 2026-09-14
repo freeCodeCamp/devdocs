@@ -153,10 +153,12 @@ export class AppDocument extends View {
         }
         break;
       case "accept-analytics":
-        Cookies.set("analyticsConsent", "1", { expires: 1e8 }) && app.reboot();
+        app.settings.set("analyticsConsent", 1);
+        app.reboot();
         break;
       case "decline-analytics":
-        Cookies.set("analyticsConsent", "0", { expires: 1e8 }) && app.reboot();
+        app.settings.set("analyticsConsent", 0);
+        app.reboot();
         break;
     }
   }

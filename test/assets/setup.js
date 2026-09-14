@@ -59,6 +59,7 @@ const define = (name, value) =>
 
 define("document", {
   ...element,
+  cookie: "",
   documentElement: element,
   body: element,
   createElement: () => ({ ...element }),

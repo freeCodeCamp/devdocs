@@ -50,10 +50,10 @@ export const notifQuotaExceeded = () =>
     " Unfortunately this quota can't be detected programmatically, and the database can't be opened while over the quota, so it had to be reset. ",
   );
 
-export const notifCookieBlocked = () =>
+export const notifStorageBlocked = () =>
   textNotif(
-    " Please enable cookies. ",
-    " DevDocs will not work properly if cookies are disabled. ",
+    " Please enable local storage. ",
+    " DevDocs will not work properly if local storage is disabled. ",
   );
 
 export const notifInvalidLocation = () =>

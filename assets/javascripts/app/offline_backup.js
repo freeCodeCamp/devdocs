@@ -25,8 +25,8 @@ import { app } from "./app.js";
  */
 
 /**
- * Exports the offline data (the pages stored in IndexedDB and the index files
- * cached in localStorage) to a JSON file, and imports it back — either to
+ * Exports the offline data (the pages and the index files, both in IndexedDB)
+ * to a JSON file, and imports it back — either to
  * restore a backup after the browser evicted the data, or to move the
  * documentations to another computer without downloading them again.
  */
@@ -78,15 +78,24 @@ export class OfflineBackup {
 
       onProgress(doc, i, docs.length);
       app.db.dump(doc, (result) => {
-        if (result) {
+        if (!result) {
+          setTimeout(next, 0);
+          return;
+        }
+
+        // Ship the index file too, so that the doc can be used on a computer
+        // that never downloaded it (the app falls back to the network
+        // otherwise). Asking for it by the stored mtime leaves behind one that
+        // belongs to a different build.
+        app.db.loadIndex(doc, result.mtime, (index) => {
           // Serialize each doc on its own instead of building one big object,
           // to avoid holding the whole backup in memory twice.
           chunks.push(
             (count++ === 0 ? "" : ",") +
-              JSON.stringify(this.serializeDoc(doc, result)),
+              JSON.stringify(this.serializeDoc(doc, result, index)),
           );
-        }
-        setTimeout(next, 0);
+          setTimeout(next, 0);
+        });
       });
     };
 
@@ -96,15 +105,13 @@ export class OfflineBackup {
   /**
    * @param {Doc} doc
    * @param {{ mtime: number, data: unknown }} result The doc's stored database.
+   * @param {unknown} [index] The doc's entry index, when one was cached.
    * @returns {unknown} One entry of the backup's `docs` array.
    */
-  serializeDoc(doc, result) {
+  serializeDoc(doc, result, index) {
     const entry = { slug: doc.slug, mtime: result.mtime, db: result.data };
-    const index = app.localStorage.get(doc.slug);
-    // Ship the index file too, so that the doc can be used on a computer that
-    // never downloaded it (the app falls back to the network otherwise).
-    if (index && index[0] === result.mtime) {
-      entry.index = index[1];
+    if (index !== undefined) {
+      entry.index = index;
     }
     return entry;
   }
@@ -197,9 +204,9 @@ export class OfflineBackup {
         mtime,
         () => {
           if (this.isValidIndex(entry.index)) {
-            // Keyed by the backup's mtime so that Doc#_getCache discards it
-            // when the doc has been updated since the backup was made.
-            app.localStorage.set(doc.slug, [mtime, entry.index]);
+            // Keyed by the backup's mtime so that the store discards it when
+            // the doc has been updated since the backup was made.
+            app.db.storeIndex(doc, mtime, entry.index);
           }
           imported.push(doc);
           setTimeout(next, 0);

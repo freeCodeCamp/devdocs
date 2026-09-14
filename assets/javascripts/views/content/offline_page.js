@@ -28,8 +28,8 @@ export class OfflinePage extends View {
 
   /** Rebuilds the table from the docs and their install statuses. */
   render() {
-    if (app.cookieBlocked) {
-      this.html(this.tmpl("offlineError", "cookie_blocked"));
+    if (app.storageBlocked) {
+      this.html(this.tmpl("offlineError", "storage_blocked"));
       return;
     }
 

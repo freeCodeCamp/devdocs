@@ -2,6 +2,7 @@
 
 import { app } from "../../app/app.js";
 import { page } from "../../lib/page.js";
+import { settingsStore } from "../../lib/settings_store.js";
 import { $ } from "../../lib/util.js";
 import { ListFold } from "../list/list_fold.js";
 import { ListSelect } from "../list/list_select.js";
@@ -28,11 +29,13 @@ export class Mobile extends View {
   /**
    * @returns {boolean} Whether to use the phone layout. The user agent is
    *   consulted as well as the viewport, because some devices report a
-   *   desktop-sized width.
+   *   desktop-sized width. `override-mobile-detect` settles it either way;
+   *   it is set by hand, and was a cookie before the settings moved.
    */
   static detect() {
-    if (Cookies.get("override-mobile-detect") != null) {
-      return JSON.parse(Cookies.get("override-mobile-detect"));
+    const override = settingsStore.get("override-mobile-detect");
+    if (override != null) {
+      return override !== 0 && override !== "false";
     }
     try {
       return (

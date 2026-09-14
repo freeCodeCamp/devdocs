@@ -2,13 +2,13 @@
 
 import { app } from "./app.js";
 import { config } from "./config.js";
-import { CookiesStore } from "../lib/cookies_store.js";
+import { settingsStore } from "../lib/settings_store.js";
 import { $ } from "../lib/util.js";
 
 /**
  * A setting the user turns on or off.
  *
- * It is a boolean going in, but CookiesStore writes `true` as `1` and parses
+ * It is a boolean going in, but SettingsStore writes `true` as `1` and parses
  * the digit back out on read, so it comes back as a number. A setting that was
  * never written falls back to its default, which is a real boolean. Both are
  * truthy or falsy as intended; only a strict comparison would go wrong.
@@ -47,7 +47,7 @@ import { $ } from "../lib/util.js";
  */
 
 /**
- * The user's preferences, stored in cookies so that the server can read them.
+ * The user's preferences, stored in localStorage.
  *
  * `PREFERENCE_KEYS` are the ones the user controls and that a backup carries;
  * `INTERNAL_KEYS` are the app's own bookkeeping and stay out of backups.
@@ -99,9 +99,9 @@ export class Settings {
     autoLatestVersion: false,
   };
 
-  /** Opens the cookie store and starts following the system colour scheme. */
+  /** Opens the store and starts following the system colour scheme. */
   constructor() {
-    this.store = new CookiesStore();
+    this.store = settingsStore;
     this.cache = {};
     this.autoSupported =
       window.matchMedia("(prefers-color-scheme)").media !== "not all";

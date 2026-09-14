@@ -56,8 +56,8 @@ If you keep seeing this, you're likely behind a proxy or firewall that blocks cr
  * @returns {string}
  */
 export const offlineError = function (reason, exception) {
-  if (reason === "cookie_blocked") {
-    return error(" Cookies must be enabled to use offline mode. ");
+  if (reason === "storage_blocked") {
+    return error(" Local storage must be enabled to use offline mode. ");
   }
 
   reason = (() => {

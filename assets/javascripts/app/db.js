@@ -51,6 +51,15 @@ export class DB {
   static NAME = "docs";
   static VERSION = 15;
 
+  /**
+   * The docs' entry indexes, by slug, as `[mtime, index]`. Not one store per
+   * doc: a doc's index is cached before it is enabled (see App#enableDoc), so
+   * a store of its own wouldn't exist yet. And not inside the doc's own store
+   * either, where `index` is the doc's home page and DB#store clears
+   * everything it holds on install.
+   */
+  static INDEXES_STORE = "indexes";
+
   /** Probes for IndexedDB support and prepares the callback queue. */
   constructor() {
     this.versionMultipler = $.isIE() ? 1e5 : 1e9;
@@ -240,7 +249,8 @@ export class DB {
   }
 
   /**
-   * Creates an object store per enabled doc.
+   * Creates an object store per enabled doc, plus the two the app keeps for
+   * itself: the installed docs' mtimes, and the cached entry indexes.
    *
    * @param {IDBVersionChangeEvent} event
    */
@@ -253,10 +263,12 @@ export class DB {
 
     const objectStoreNames = $.makeArray(db.objectStoreNames);
 
-    if (!$.arrayDelete(objectStoreNames, "docs")) {
-      try {
-        db.createObjectStore("docs");
-      } catch (error) {}
+    for (var store of ["docs", DB.INDEXES_STORE]) {
+      if (!$.arrayDelete(objectStoreNames, store)) {
+        try {
+          db.createObjectStore(store);
+        } catch (error) {}
+      }
     }
 
     for (var doc of app.docs.all()) {
@@ -480,6 +492,151 @@ export class DB {
         fn(false);
       };
     });
+  }
+
+  /**
+   * Runs `fn` with the indexes store, or with nothing when the database can't
+   * hand it over — unavailable, or old enough to predate the store, in which
+   * case the schema is bumped so that the next open creates it.
+   *
+   * @param {IDBTransactionMode} mode
+   * @param {(store?: IDBObjectStore) => void} fn
+   */
+  indexes(mode, fn) {
+    this.db((db) => {
+      let store;
+      if (db) {
+        try {
+          store = this.idbTransaction(db, {
+            stores: [DB.INDEXES_STORE],
+            mode,
+          }).objectStore(DB.INDEXES_STORE);
+        } catch (error) {
+          if (error?.name === "NotFoundError") {
+            this.migrate();
+          }
+        }
+      }
+      fn(store);
+    });
+  }
+
+  /**
+   * Reads a doc's cached entry index.
+   *
+   * @param {Doc} doc
+   * @param {number} mtime The build to read it for; one cached for an earlier
+   *   build is passed over, and overwritten when the doc is fetched again.
+   * @param {(index?: unknown) => void} fn Called with the index, or with
+   *   nothing when there isn't a usable one. Never before `loadIndex` returns;
+   *   Doc#load and its callers rely on it.
+   */
+  loadIndex(doc, mtime, fn) {
+    this.indexes("readonly", (store) => {
+      const req = store?.get(doc.slug);
+      if (!req) {
+        // `db` runs its callback there and then when IndexedDB is off, and
+        // Docs#load can't be called back before `Doc#load` has returned.
+        const index = this.importIndex(doc, mtime);
+        setTimeout(() => fn(index), 0);
+        return;
+      }
+
+      req.onsuccess = () => {
+        const cached = req.result;
+        fn(cached?.[0] === mtime ? cached[1] : this.importIndex(doc, mtime));
+      };
+      req.onerror = function (event) {
+        event.preventDefault();
+        fn();
+      };
+    });
+  }
+
+  /**
+   * @param {Doc} doc
+   * @param {number} mtime The build the index was fetched for.
+   * @param {unknown} index
+   * @param {() => void} [fn] Called once the write has been committed, and not
+   *   at all when there was nowhere to write it.
+   */
+  storeIndex(doc, mtime, index, fn) {
+    this.indexes("readwrite", (store) => {
+      if (!store) {
+        return;
+      }
+      store.put([mtime, index], doc.slug);
+      if (fn) {
+        store.transaction.oncomplete = fn;
+      }
+    });
+  }
+
+  /** @param {Doc} doc */
+  deleteIndex(doc) {
+    this.indexes("readwrite", (store) => store?.delete(doc.slug));
+  }
+
+  /**
+   * Drops every cached index, including any an earlier version of the app left
+   * in localStorage and hasn't been asked for yet.
+   *
+   * @param {() => void} fn Called once they are gone — and called even when the
+   *   transaction doesn't go through, so that a caller waiting to reload does.
+   */
+  clearIndexes(fn) {
+    for (var doc of app.docs.all().concat(app.disabledDocs.all())) {
+      app.localStorage.del(doc.slug);
+    }
+
+    this.indexes("readwrite", (store) => {
+      if (!store) {
+        fn();
+        return;
+      }
+
+      store.clear();
+      const txn = store.transaction;
+      const done = () => {
+        txn.oncomplete = txn.onerror = txn.onabort = null;
+        fn();
+      };
+      txn.oncomplete = done;
+      txn.onerror = txn.onabort = (event) => {
+        event.preventDefault();
+        done();
+      };
+    });
+  }
+
+  /**
+   * Moves an index an earlier version of the app cached in localStorage into
+   * the database, on the read that goes looking for it — nothing is moved for
+   * a doc that is never loaded, and nothing holds up the boot.
+   *
+   * Remove once the app has had a release or two to empty localStorage out.
+   *
+   * @param {Doc} doc
+   * @param {number} mtime
+   * @returns {unknown} The index, when localStorage held a current one.
+   */
+  importIndex(doc, mtime) {
+    const cached = app.localStorage.get(doc.slug);
+    if (!Array.isArray(cached)) {
+      return;
+    }
+
+    if (cached[0] !== mtime) {
+      app.localStorage.del(doc.slug);
+      return;
+    }
+
+    // localStorage holds the only copy until the write lands, and there may be
+    // nowhere to write it yet: a database that predates the indexes store only
+    // queues its schema bump when it first misses it, and a browser without
+    // IndexedDB never has one.
+    this.storeIndex(doc, mtime, cached[1], () => app.localStorage.del(doc.slug));
+    return cached[1];
   }
 
   /**

@@ -7,10 +7,11 @@
 import { app } from "./app/app.js";
 import { config } from "./app/config.js";
 import { page, resetAnalytics } from "./lib/page.js";
+import { settingsStore } from "./lib/settings_store.js";
 
 try {
   if (config.env === "production") {
-    if (Cookies.get("analyticsConsent") === "1") {
+    if (settingsStore.get("analyticsConsent") === 1) {
       (function (i, s, o, g, r, a, m) {
         i["GoogleAnalyticsObject"] = r;
         (i[r] =

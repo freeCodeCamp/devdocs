@@ -169,24 +169,8 @@ class App < Sinatra::Application
   helpers do
     include Sprockets::Helpers
 
-    def memoized_cookies
-      @memoized_cookies ||= request.cookies
-    end
-
     def canonical_origin
       "https://#{request.host_with_port}"
-    end
-
-    def docs
-      @docs ||= begin
-        cookie = memoized_cookies['docs']
-
-        if cookie.nil?
-          settings.default_docs
-        else
-          cookie.split('/')
-        end
-      end
     end
 
     def find_doc(slug)
@@ -195,21 +179,6 @@ class App < Sinatra::Application
           return doc if doc['slug_without_version'] == slug
         end
         nil
-      end
-    end
-
-    def user_has_docs?(slug)
-      docs.include?(slug) || begin
-        slug = "#{slug}~"
-        docs.any? { |_slug| _slug.start_with?(slug) }
-      end
-    end
-
-    def doc_index_urls
-      docs.each_with_object [] do |slug, result|
-        if doc = settings.docs[slug]
-          result << "#{settings.docs_origin}/#{slug}/index.json?#{doc['mtime']}"
-        end
       end
     end
 

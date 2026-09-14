@@ -46,7 +46,7 @@ export const offlinePage = (docs, hasPersistence, isPersistent) => `\
 <dl>
   <dt>How does this work?
   <dd>Each page is cached as a key-value pair in <a href="https://devdocs.io/dom/indexeddb_api">IndexedDB</a> (downloaded from a single file).<br>
-      The app also uses <a href="https://devdocs.io/dom/service_worker_api/using_service_workers">Service Workers</a> and <a href="https://devdocs.io/dom/web_storage_api">localStorage</a> to cache the assets and index files.
+      The index files are cached in IndexedDB as well, and the app itself by a <a href="https://devdocs.io/dom/service_worker_api/using_service_workers">Service Worker</a>.
   <dt>Can I close the tab/browser?
   <dd>${canICloseTheTab()}
   <dt>How do I move the documentations to another computer?
