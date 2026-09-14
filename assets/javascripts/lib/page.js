@@ -1,6 +1,10 @@
 import { app } from "../app/app.js";
 import { config } from "../app/config.js";
-import { expireCookie, settingsStore } from "./settings_store.js";
+import {
+  SettingsStore,
+  expireCookie,
+  settingsStore,
+} from "./settings_store.js";
 import { $ } from "./util.js";
 import { Notif } from "../views/misc/notif.js";
 
@@ -546,10 +550,10 @@ var track = function () {
  */
 var consentAsked = function () {
   try {
-    if (sessionStorage.getItem("analyticsConsentAsked")) {
+    if (sessionStorage.getItem(SettingsStore.ASKED_KEY)) {
       return true;
     }
-    sessionStorage.setItem("analyticsConsentAsked", "1");
+    sessionStorage.setItem(SettingsStore.ASKED_KEY, "1");
   } catch (error) {}
   return false;
 };

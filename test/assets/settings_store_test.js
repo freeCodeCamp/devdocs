@@ -24,6 +24,21 @@ Object.defineProperty(globalThis, "localStorage", {
   configurable: true,
 });
 
+/** @type {Map<string, string>} */
+const session = new Map();
+
+Object.defineProperty(globalThis, "sessionStorage", {
+  value: {
+    getItem: (/** @type {string} */ key) =>
+      session.has(key) ? session.get(key) : null,
+    setItem: (/** @type {string} */ key, /** @type {string} */ value) =>
+      session.set(key, String(value)),
+    removeItem: (/** @type {string} */ key) => session.delete(key),
+  },
+  writable: true,
+  configurable: true,
+});
+
 // A cookie jar the migration can read and expire: keys and values stay
 // percent-encoded, as they are on a real `document.cookie`.
 /** @type {Map<string, string>} */
@@ -48,6 +63,7 @@ Object.defineProperty(document, "cookie", {
 const reset = () => {
   jar.clear();
   storage.clear();
+  session.clear();
   storageWritable = true;
 };
 
@@ -113,6 +129,20 @@ test("takes in the settings left in cookies, and expires them", () => {
   });
   assert.equal(store.get("size"), 320, "and integers still parse");
   assert.equal(document.cookie, "_ga=GA1.2.3");
+  assert.equal(
+    sessionStorage.getItem("analyticsConsentAsked"),
+    "1",
+    "the session-only one carries over to sessionStorage",
+  );
+});
+
+test("a reset takes the once-a-session flags with it", () => {
+  reset();
+  sessionStorage.setItem("analyticsConsentAsked", "1");
+
+  new SettingsStore().reset();
+
+  assert.equal(sessionStorage.getItem("analyticsConsentAsked"), null);
 });
 
 test("reports a write that doesn't stick", () => {

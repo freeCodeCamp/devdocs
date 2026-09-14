@@ -26,6 +26,12 @@ export class SettingsStore {
   static KEY = "settings";
 
   /**
+   * The sessionStorage key the once-a-session analytics prompt is tracked by.
+   * Not a setting: it was a session cookie, and is meant to last a visit.
+   */
+  static ASKED_KEY = "analyticsConsentAsked";
+
+  /**
    * Hook called when a value read back after a write doesn't match what was
    * written. Replaced by the app at boot; a no-op by default.
    *
@@ -83,9 +89,12 @@ export class SettingsStore {
     this.storage.set(SettingsStore.KEY, settings);
   }
 
-  /** Clears every setting. */
+  /** Clears every setting, and the flags that outlive them. */
   reset() {
     this.storage.del(SettingsStore.KEY);
+    try {
+      sessionStorage.removeItem(SettingsStore.ASKED_KEY);
+    } catch (error) {}
   }
 
   /**
@@ -130,8 +139,13 @@ export class SettingsStore {
       const [name, value] = cookie.split("=");
       const key = decode(name);
 
-      // analyticsConsentAsked was a session cookie, and is sessionStorage now.
-      if (key !== "analyticsConsentAsked" && !(key in settings)) {
+      if (key === SettingsStore.ASKED_KEY) {
+        // It was a session cookie, and is sessionStorage now. Carried over, or
+        // the prompt would come back on the visit that upgrades.
+        try {
+          sessionStorage.setItem(key, "1");
+        } catch (error) {}
+      } else if (!(key in settings)) {
         settings[key] = decode(value || "");
       }
       names.push(name);
