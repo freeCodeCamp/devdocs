@@ -201,31 +201,13 @@ module Docs
     # Downloads an archive and moves it into #source_directory. Pass the
     # subdirectory holding the documents when they aren't at the archive's root.
     def download_and_extract(url, subdirectory = nil)
-      require 'unix_utils'
-
       instrument 'info.doc', msg: %(Downloading #{url}...)
-      archive = UnixUtils.curl(url)
+      archive = Archive.download(url)
 
       instrument 'info.doc', msg: %(Extracting the documentation files to "#{source_directory}"...)
-      case url
-      when /\.zip\z/, /\.jar\z/
-        directory = UnixUtils.unzip(archive)
-      when /\.tar\.gz\z/, /\.tgz\z/
-        tarball = UnixUtils.gunzip(archive)
-        directory = UnixUtils.untar(tarball)
-      when /\.tar\.bz2\z/
-        tarball = UnixUtils.bunzip2(archive)
-        directory = UnixUtils.untar(tarball)
-      else
-        raise SetupError, %(Don't know how to extract "#{url}".)
-      end
-
-      FileUtils.mkpath(File.dirname(source_directory))
-      FileUtils.mv(subdirectory ? File.join(directory, subdirectory) : directory, source_directory)
+      Archive.unpack(archive, source_directory, directory: subdirectory)
     ensure
       FileUtils.rm_f(archive) if archive
-      FileUtils.rm_f(tarball) if tarball
-      FileUtils.rm_rf(directory) if directory
     end
 
     def assert_source_directory_exists

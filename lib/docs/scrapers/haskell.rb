@@ -71,28 +71,11 @@ module Docs
       # library directories are named after a per-build hash, so the paths here
       # differ from the ones of the documentation served under docs/.
       def download_source
-        require 'unix_utils'
-
         release = self.class.release
-        url = "https://downloads.haskell.org/~ghc/#{release}/ghc-#{release}-x86_64-alpine3_22-linux.tar.xz"
-        # The directory inside the tarball uses a different triple than its name.
-        directory = "ghc-#{release}-x86_64-unknown-linux/doc/html"
-
-        instrument 'info.doc', msg: %(Downloading #{url}...)
-        archive = UnixUtils.curl(url)
-
-        instrument 'info.doc', msg: %(Extracting the documentation files to "#{source_directory}"...)
-        FileUtils.mkpath(source_directory)
-
-        # Extract the documentation directory alone: unpacking the whole
-        # distribution through download_and_extract would waste a few gigabytes,
-        # and it doesn't know about xz to begin with.
-        unless system('tar', '-xJf', archive, '-C', source_directory, '--strip-components=3', directory)
-          FileUtils.rm_rf(source_directory)
-          raise SetupError, %(Failed to extract "#{directory}" from "#{url}".)
-        end
-      ensure
-        FileUtils.rm_f(archive) if archive
+        download_and_extract(
+          "https://downloads.haskell.org/~ghc/#{release}/ghc-#{release}-x86_64-alpine3_22-linux.tar.xz",
+          # The directory inside the tarball uses a different triple than its name.
+          "ghc-#{release}-x86_64-unknown-linux/doc/html")
       end
     end
 
