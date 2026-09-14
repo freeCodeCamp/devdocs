@@ -3,6 +3,7 @@ module Mcp
   # string keys) to the appropriate MCP handler and returns a response Hash
   # ready to be serialized back to the client.
   module Server
+    INDEX_CACHE = {}
     TOOLS = [
       {
         'name' => 'devdocs_list_docsets',
@@ -268,15 +269,11 @@ module Mcp
       raise "Query cannot be empty" if query.to_s.strip.empty?
 
       validate_slug(app_settings, slug)
-      index_path = File.join(app_settings.docs_path, slug, 'index.json')
-      unless File.exist?(index_path)
-        raise "Search index not available for #{slug}. The search index is served from the CDN."
-      end
 
       offset = (args['offset'] || 0).to_i
       limit = [(args['limit'] || 50).to_i, 500].min
 
-      index = JSON.parse(File.read(index_path))
+      index = load_index(app_settings, slug)
       query_lower = query.downcase
 
       all_matches = index['entries'].select do |entry|
@@ -293,6 +290,27 @@ module Mcp
         'total' => total_count,
         'returned' => paginated.length,
       }
+    end
+
+    # Caches the parsed index of every docset searched so far. Unlike db.json,
+    # the indexes are small (16.5MB for all of the docsets here), and they would
+    # otherwise be re-parsed on every search. A re-scraped docset is picked up
+    # again by way of the mtime and the size.
+    def self.load_index(app_settings, slug)
+      index_path = File.join(app_settings.docs_path, slug, 'index.json')
+      stat = begin
+        File.stat(index_path)
+      rescue Errno::ENOENT
+        raise "Search index not available for #{slug}. The search index is served from the CDN."
+      end
+
+      stamp = [stat.mtime, stat.size]
+      cached = INDEX_CACHE[index_path]
+      return cached[:index] if cached && cached[:stamp] == stamp
+
+      index = JSON.parse(File.read(index_path))
+      INDEX_CACHE[index_path] = { stamp: stamp, index: index }
+      index
     end
 
     def self.as_text_result(request, data)

@@ -198,6 +198,22 @@ class McpTest < Minitest::Spec
       assert_includes result['content'].first['text'], "def push(x)\n  items << x\nend"
     end
 
+    it 'picks up a re-scraped search index' do
+      index_path = File.join(App.docs_path, 'mcp_fixture', 'index.json')
+      original = File.read(index_path)
+      args = { 'slug' => 'mcp_fixture', 'query' => 'upcase' }
+      begin
+        first = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })['result']
+        assert_equal 1, JSON.parse(first['content'].first['text'])['total']
+
+        File.write(index_path, JSON.generate('entries' => [], 'types' => []))
+        second = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })['result']
+        assert_equal 0, JSON.parse(second['content'].first['text'])['total']
+      ensure
+        File.write(index_path, original)
+      end
+    end
+
     it 'returns error for invalid slug in search (path traversal protection)' do
       args = { 'slug' => '../../../etc/passwd', 'query' => 'test' }
       response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
