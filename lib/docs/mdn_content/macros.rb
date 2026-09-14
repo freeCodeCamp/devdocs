@@ -75,7 +75,9 @@ module Docs
                  scanner.scan(/\s*`([^`]*)`/)
                 scanner[1]
               else
-                scanner.scan(/[^,)]+/)
+                # An argument can be left out, as in {{rfc("7002",,"3.2")}},
+                # in which case there's nothing to scan but a comma follows.
+                scanner.scan(/[^,)]+/) || ('' if scanner.match?(/,/))
               end
 
             # Anything else isn't a call, and would have the scanner stand
@@ -141,17 +143,23 @@ module Docs
       def cssxref(name, display = nil, anchor = nil)
         page = css_page(name) if documents?(CSS)
         display = display.presence || page&.short_title || name
-        slug = page ? page.slug : name.remove('()')
+        slug = page ? page.slug : css_name(name)
         link "#{DOCS}/#{CSS}#{'/Reference' if page}/#{slug}#{fragment anchor}", content_for(display, nil)
       end
 
       def css_page(name)
-        name = name.remove('()').remove(/\A<|>\z/)
+        name = css_name(name)
         CSS_SECTIONS.each do |section|
           page = @pages["#{section}#{name}"] || @pages["#{section}#{name}_value"]
           return page if page
         end
         nil
+      end
+
+      # A type is referred to as <color> and a function as calc(), neither of
+      # which is part of the name of their page.
+      def css_name(name)
+        name.remove('()').remove(/\A<|>\z/)
       end
 
       # Whether the documentation being built is the one a cross-reference

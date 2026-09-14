@@ -50,6 +50,13 @@ module Docs
 
     options[:trailing_slash] = false
 
+    # The links MDN's authors write aren't escaped, and the id of a heading is
+    # its text: a section called "Guideline 1.1 — providing text alternatives"
+    # is linked to by a fragment holding that em dash.
+    options[:fix_urls_before_parse] = ->(url) do
+      url.gsub(/[^\x21-\x7E]/) { |char| char.bytes.map { |byte| format('%%%02X', byte) }.join }
+    end
+
     options[:attribution] = <<-HTML
       &copy; 2005&ndash;2025 MDN contributors.<br>
       Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.
