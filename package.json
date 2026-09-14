@@ -1,0 +1,12 @@
+{
+  "name": "devdocs",
+  "private": true,
+  "scripts": {
+    "test": "node --test test/assets/",
+    "typecheck": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "typescript": "^7.0.2"
+  }
+}
