@@ -59,10 +59,11 @@ app.templates.backupImported = function (result) {
   )}.</strong>`;
 
   if (result.failed.length > 0) {
-    html += ` Couldn't be stored: ${result.failed.join(", ")}.`;
+    html += ` Couldn't be stored: ${listSlugs(result.failed)}.`;
   }
   if (result.skipped.length > 0) {
-    html += ` Not available anymore: ${result.skipped.join(", ")}.`;
+    // The skipped slugs come from the imported file, hence the escaping.
+    html += ` Not available anymore: ${listSlugs(result.skipped)}.`;
   }
   if (result.enabled > 0) {
     html += " Reloading\u2026";
@@ -86,6 +87,8 @@ app.templates.backupError = function (reason) {
 
 var pluralizeDocs = (count) =>
   count === 1 ? "documentation" : "documentations";
+
+var listSlugs = (slugs) => slugs.map((slug) => $.escape(slug)).join(", ");
 
 app.templates.persistenceError = function (exception) {
   const reason = exception
