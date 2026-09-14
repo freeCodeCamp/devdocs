@@ -88,6 +88,10 @@ export const helpPage = function () {
     <code class="_shortcut-code">${ctrlKey} + enter</code>
   <dd class="_shortcuts-dd">Open selection in a new tab
   <dt class="_shortcuts-dt">
+    <code class="_shortcut-code">${ctrlKey} + shift + &darr;</code>
+    <code class="_shortcut-code">${ctrlKey} + shift + &uarr;</code>
+  <dd class="_shortcuts-dd">Move selection and open it
+  <dt class="_shortcuts-dt">
     <code class="_shortcut-code">alt + r</code>
   <dd class="_shortcuts-dd">Reveal current page in sidebar
 </dl>

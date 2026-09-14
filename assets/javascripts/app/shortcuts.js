@@ -66,8 +66,12 @@ export class Shortcuts extends Events {
     }
     const result = (() => {
       if (event.ctrlKey || event.metaKey) {
-        if (!event.altKey && !event.shiftKey) {
-          return this.handleKeydownSuperEvent(event);
+        if (!event.altKey) {
+          if (event.shiftKey) {
+            return this.handleKeydownSuperShiftEvent(event);
+          } else {
+            return this.handleKeydownSuperEvent(event);
+          }
         }
       } else if (event.shiftKey) {
         if (!event.altKey) {
@@ -221,6 +225,23 @@ export class Shortcuts extends Events {
         return false;
       case 188:
         this.trigger("preferences");
+        return false;
+    }
+  }
+
+  /**
+   * Handles Ctrl/Cmd + Shift chords.
+   *
+   * @param {ShortcutEvent} event
+   * @returns {unknown} `false` to swallow the event; anything else lets it through.
+   */
+  handleKeydownSuperShiftEvent(event) {
+    switch (event.which) {
+      case 38:
+        this.trigger("superShiftUp");
+        return false;
+      case 40:
+        this.trigger("superShiftDown");
         return false;
     }
   }

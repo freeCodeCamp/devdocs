@@ -1,5 +1,6 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
 import { $ } from "../../lib/util.js";
 import { ListFold } from "./list_fold.js";
 import { ListSelect } from "./list_select.js";
@@ -33,6 +34,8 @@ export class ListFocus extends View {
     left: "onLeft",
     enter: "onEnter",
     superEnter: "onSuperEnter",
+    superShiftUp: "onSuperShiftUp",
+    superShiftDown: "onSuperShiftDown",
     escape: "blur",
   };
 
@@ -40,6 +43,8 @@ export class ListFocus extends View {
   constructor(el) {
     super(el);
     this.focusOnNextFrame = (el) => requestAnimationFrame(() => this.focus(el));
+    this.previewOnNextFrame = (el) =>
+      requestAnimationFrame(() => this.preview(el));
   }
 
   /**
@@ -56,6 +61,23 @@ export class ListFocus extends View {
       if (options.silent !== true) {
         $.trigger(el, "focus");
       }
+    }
+  }
+
+  /**
+   * Focuses a row and renders it right away, without leaving a history entry
+   * behind so that scanning through a list doesn't fill up the back button.
+   *
+   * @param {HTMLElement} el The row to focus and render.
+   */
+  preview(el) {
+    if (!el) {
+      return;
+    }
+    this.focus(el);
+    const href = el.getAttribute("href");
+    if (href && href !== location.pathname + location.hash) {
+      app.router.replace(href);
     }
   }
 
@@ -192,6 +214,22 @@ export class ListFocus extends View {
     } else {
       this.focusOnNextFrame(this.findLastByTag("a"));
     }
+  }
+
+  /** Moves the focus down one row and renders it. */
+  onSuperShiftDown() {
+    const cursor = this.getCursor();
+    this.previewOnNextFrame(
+      cursor ? this.findNext(cursor) : this.findByTag("a"),
+    );
+  }
+
+  /** Moves the focus up one row and renders it. */
+  onSuperShiftUp() {
+    const cursor = this.getCursor();
+    this.previewOnNextFrame(
+      cursor ? this.findPrev(cursor) : this.findLastByTag("a"),
+    );
   }
 
   /** Moves the focus out to the row the current sub-list hangs off. */

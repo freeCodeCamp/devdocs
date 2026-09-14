@@ -47,6 +47,15 @@ export class Router extends Events {
   }
 
   /**
+   * Navigates without leaving a history entry behind.
+   *
+   * @param {string} path
+   */
+  replace(path) {
+    page.replace(path);
+  }
+
+  /**
    * Emits the route's event, then `after`.
    *
    * @param {string} name
