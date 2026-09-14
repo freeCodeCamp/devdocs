@@ -49,6 +49,12 @@ module Mcp
     ].freeze
 
     def self.handle(request, app_settings)
+      unless request.is_a?(Hash)
+        # A batch is valid JSON-RPC, but this server takes one request at a time.
+        detail = request.is_a?(Array) ? 'batch requests are not supported' : 'expected a JSON-RPC object'
+        return error(request, -32600, "Invalid Request: #{detail}")
+      end
+
       case request['method']
       when 'initialize'
         respond(request, {
@@ -68,7 +74,8 @@ module Mcp
     end
 
     def self.error(request, code, message)
-      { 'jsonrpc' => '2.0', 'id' => request['id'], 'error' => { 'code' => code, 'message' => message } }
+      id = request.is_a?(Hash) ? request['id'] : nil
+      { 'jsonrpc' => '2.0', 'id' => id, 'error' => { 'code' => code, 'message' => message } }
     end
 
     def self.call_tool(request, app_settings)

@@ -285,6 +285,21 @@ class McpTest < Minitest::Spec
       assert_includes response['error']['message'].downcase, 'parse'
     end
 
+    it 'returns an invalid request error for a batch' do
+      post '/mcp', [{ jsonrpc: '2.0', id: 1, method: 'tools/list' }].to_json, 'CONTENT_TYPE' => 'application/json'
+      response = JSON.parse(last_response.body)
+      assert_equal(-32600, response['error']['code'])
+      assert_nil response['id']
+      assert_includes response['error']['message'].downcase, 'batch'
+    end
+
+    it 'returns an invalid request error for a non-object payload' do
+      post '/mcp', '42', 'CONTENT_TYPE' => 'application/json'
+      response = JSON.parse(last_response.body)
+      assert_equal(-32600, response['error']['code'])
+      assert_nil response['id']
+    end
+
     it 'returns a JSON-RPC error for an unsupported method' do
       response = rpc('not/a/real/method')
       assert_equal(-32601, response['error']['code'])
