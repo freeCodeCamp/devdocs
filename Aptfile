@@ -1,0 +1,3 @@
+# cwebp, which the slug build pipes the icon spritesheets through. The stack
+# ships libwebp itself, but none of its command line tools.
+webp

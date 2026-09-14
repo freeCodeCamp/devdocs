@@ -37,6 +37,11 @@ jobs:
       run: |
         heroku --version
         heroku stack:set heroku-26 --app devdocs
+        # `rake assets:precompile` needs the cwebp of the Aptfile, which the
+        # apt buildpack puts on the PATH of the ones that follow it.
+        heroku buildpacks:clear --app devdocs
+        heroku buildpacks:add heroku-community/apt --app devdocs
+        heroku buildpacks:add heroku/ruby --app devdocs
         heroku git:remote --app devdocs
         # no --force; --force should never be necessary
         git push heroku HEAD:main
