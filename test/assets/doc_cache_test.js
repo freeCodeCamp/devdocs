@@ -176,3 +176,48 @@ test("an index left over from an earlier build is dropped, not taken in", () => 
   assert.equal(db.importIndex(newDoc(), 42), undefined);
   assert.deepEqual(stored, {});
 });
+
+/** Stands in for the doc collections, which name the legacy localStorage keys. */
+const stubDocs = (...slugs) => {
+  app.docs = /** @type {any} */ ({ all: () => slugs.map((slug) => ({ slug })) });
+  app.disabledDocs = /** @type {any} */ ({ all: () => [] });
+};
+
+test("clearing the cache empties the store and what was left in localStorage", () => {
+  const stored = { css: [42, INDEX], html: [7, INDEX] };
+  app.localStorage = /** @type {any} */ ({
+    get: (/** @type {string} */ key) => stored[key],
+    del: (/** @type {string} */ key) => delete stored[key],
+  });
+  stubDocs("css", "html");
+
+  const db = new DB();
+  /** @type {any} */
+  const transaction = {};
+  let cleared = false;
+  db.indexes = (mode, fn) =>
+    fn(/** @type {any} */ ({ clear: () => (cleared = true), transaction }));
+
+  let done = false;
+  db.clearIndexes(() => (done = true));
+
+  assert.deepEqual(stored, {}, "the leftovers go");
+  assert.ok(cleared, "the store is cleared");
+  assert.equal(done, false, "and the caller waits for the transaction");
+
+  transaction.oncomplete();
+  assert.ok(done, "which it is told about");
+});
+
+test("clearing the cache calls back even with no store to clear", () => {
+  app.localStorage = /** @type {any} */ ({ del: () => {} });
+  stubDocs();
+
+  const db = new DB();
+  db.indexes = (mode, fn) => fn(undefined);
+
+  let done = false;
+  db.clearIndexes(() => (done = true));
+
+  assert.ok(done, "or a reload waiting on it would never happen");
+});

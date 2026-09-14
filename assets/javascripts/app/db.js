@@ -577,9 +577,36 @@ export class DB {
     this.indexes("readwrite", (store) => store?.delete(doc.slug));
   }
 
-  /** Drops every cached index. */
-  clearIndexes() {
-    this.indexes("readwrite", (store) => store?.clear());
+  /**
+   * Drops every cached index, including any an earlier version of the app left
+   * in localStorage and hasn't been asked for yet.
+   *
+   * @param {() => void} fn Called once they are gone — and called even when the
+   *   transaction doesn't go through, so that a caller waiting to reload does.
+   */
+  clearIndexes(fn) {
+    for (var doc of app.docs.all().concat(app.disabledDocs.all())) {
+      app.localStorage.del(doc.slug);
+    }
+
+    this.indexes("readwrite", (store) => {
+      if (!store) {
+        fn();
+        return;
+      }
+
+      store.clear();
+      const txn = store.transaction;
+      const done = () => {
+        txn.oncomplete = txn.onerror = txn.onabort = null;
+        fn();
+      };
+      txn.oncomplete = done;
+      txn.onerror = txn.onabort = (event) => {
+        event.preventDefault();
+        done();
+      };
+    });
   }
 
   /**

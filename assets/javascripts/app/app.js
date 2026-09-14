@@ -414,12 +414,13 @@ export class App extends Events {
 
   /** Drops the cached indexes and reloads the app. */
   reload() {
-    this.db.clearIndexes();
-    if (this.serviceWorker) {
-      this.serviceWorker.reload();
-    } else {
-      this.reboot();
-    }
+    this.db.clearIndexes(() => {
+      if (this.serviceWorker) {
+        this.serviceWorker.reload();
+      } else {
+        this.reboot();
+      }
+    });
   }
 
   /** Clears every trace of the app and returns to the index. */
