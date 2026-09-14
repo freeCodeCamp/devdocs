@@ -70,9 +70,6 @@ export class Shortcuts extends Events {
 
   /** @param {ShortcutEvent} event */
   onKeydown(event) {
-    if (this.buggyEvent(event)) {
-      return;
-    }
     const result = (() => {
       if (event.ctrlKey || event.metaKey) {
         if (!event.altKey) {
@@ -100,10 +97,7 @@ export class Shortcuts extends Events {
 
   /** @param {ShortcutEvent} event */
   onKeypress(event) {
-    if (
-      this.buggyEvent(event) ||
-      (event.key === "?" && document.activeElement.tagName === "INPUT")
-    ) {
+    if (event.key === "?" && document.activeElement.tagName === "INPUT") {
       return;
     }
     if (!event.ctrlKey && !event.metaKey) {
@@ -362,21 +356,6 @@ export class Shortcuts extends Events {
       return false;
     } else {
       return (this.lastKeypress = Date.now());
-    }
-  }
-
-  /**
-   * @param {ShortcutEvent} event
-   * @returns {boolean} Whether the event is one the browser reports incorrectly.
-   */
-  buggyEvent(event) {
-    try {
-      event.target;
-      event.ctrlKey;
-      event.key;
-      return false;
-    } catch (error) {
-      return true;
     }
   }
 }
