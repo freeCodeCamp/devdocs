@@ -1,5 +1,10 @@
 // @ts-check
 
+/**
+ * The checklist of every available doc, shown in the preferences.
+ *
+ * Docs that come in several versions are grouped under one expandable row.
+ */
 app.views.DocPicker = class DocPicker extends app.View {
   static className = "_list _list-picker";
 
@@ -8,6 +13,7 @@ app.views.DocPicker = class DocPicker extends app.View {
     mouseup: "onMouseUp",
   };
 
+  /** @inheritdoc */
   init() {
     this.addSubview((this.listFold = new app.views.ListFold(this.el)));
   }
@@ -28,6 +34,7 @@ app.views.DocPicker = class DocPicker extends app.View {
     }
   }
 
+  /** Rebuilds the list and puts the focus on the first checkbox. */
   render() {
     let doc;
     let html = this.tmpl("docPickerHeader");
@@ -55,6 +62,10 @@ app.views.DocPicker = class DocPicker extends app.View {
     requestAnimationFrame(() => this.findByTag("input")?.focus());
   }
 
+  /**
+   * @param {any[]} docs Every version of one doc.
+   * @returns {string}
+   */
   renderVersions(docs) {
     let html = "";
     for (var doc of docs) {
@@ -65,6 +76,14 @@ app.views.DocPicker = class DocPicker extends app.View {
     return html;
   }
 
+  /**
+   * Pulls the other versions of a doc out of the list, so that they can be
+   * grouped under it.
+   *
+   * @param {any[]} originalDocs The docs still to be rendered.
+   * @param {any} version The doc whose siblings to collect.
+   * @returns {[any[], any[]]} What is left to render, and the versions found.
+   */
   extractVersions(originalDocs, version) {
     const docs = [];
     const versions = [version];
@@ -79,20 +98,24 @@ app.views.DocPicker = class DocPicker extends app.View {
     super.empty();
   }
 
+  /** @returns {string[]} The slugs the user has ticked. */
   getSelectedDocs() {
     return [...this.findAllByTag("input")]
       .filter((input) => input?.checked)
       .map((input) => input.name);
   }
 
+  /** Notes that the pointer is driving, so the focus isn't stolen. */
   onMouseDown() {
     this.mouseDown = Date.now();
   }
 
+  /** Clears the flag set by `onMouseDown`. */
   onMouseUp() {
     this.mouseUp = Date.now();
   }
 
+  /** @param {ViewEvent} event */
   onDOMFocus(event) {
     const { target } = event;
     if (target.tagName === "INPUT") {

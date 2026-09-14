@@ -1,5 +1,11 @@
 // @ts-check
 
+/**
+ * The search results in the sidebar.
+ *
+ * Results arrive in batches as the searcher works through the entries, so
+ * only the first batch clears the list and moves the focus.
+ */
 app.views.Results = class Results extends app.View {
   static className = "_list";
 
@@ -7,6 +13,10 @@ app.views.Results = class Results extends app.View {
 
   static routes = { after: "afterRoute" };
 
+  /**
+   * @param {any} sidebar
+   * @param {any} search
+   */
   constructor(sidebar, search) {
     super();
     this.sidebar = sidebar;
@@ -21,6 +31,7 @@ app.views.Results = class Results extends app.View {
     }
   }
 
+  /** Called by the constructor once `search` is set. */
   init0() {
     this.addSubview((this.listFocus = new app.views.ListFocus(this.el)));
     this.addSubview((this.listSelect = new app.views.ListSelect(this.el)));
@@ -31,6 +42,13 @@ app.views.Results = class Results extends app.View {
       .on("clear", () => this.onClear());
   }
 
+  /**
+   * @param {any[]} entries One batch of matches.
+   * @param {{ initialResults?: boolean, urlSearch?: boolean }} flags
+   *   `initialResults` marks the first batch of a search; `urlSearch` means
+   *   the query came from the URL, so the first result is opened rather than
+   *   just focused.
+   */
   onResults(entries, flags) {
     if (flags.initialResults) {
       this.listFocus?.blur();
@@ -49,29 +67,38 @@ app.views.Results = class Results extends app.View {
     }
   }
 
+  /** Shows the empty state. */
   onNoResults() {
     this.html(this.tmpl("sidebarNoResults"));
   }
 
+  /** Empties the list. */
   onClear() {
     this.empty();
   }
 
+  /** Focuses the first result, unless on a phone. */
   focusFirst() {
     if (!app.isMobile()) {
       this.listFocus?.focusOnNextFrame(this.el.firstElementChild);
     }
   }
 
+  /** Follows the first result. */
   openFirst() {
     this.el.firstElementChild?.click();
   }
 
+  /** @param {any} doc The doc that was just enabled from a result. */
   onDocEnabled(doc) {
     app.router.show(doc.fullPath());
     return this.sidebar.onDocEnabled();
   }
 
+  /**
+   * @param {string} route
+   * @param {any} context
+   */
   afterRoute(route, context) {
     if (route === "entry") {
       this.listSelect.selectByHref(context.entry.fullPath());
@@ -80,6 +107,11 @@ app.views.Results = class Results extends app.View {
     }
   }
 
+  /**
+   * Enables the doc behind a result's Enable button.
+   *
+   * @param {ViewMouseEvent} event
+   */
   onClick(event) {
     if (event.which !== 1) {
       return;
