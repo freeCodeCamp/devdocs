@@ -3,6 +3,29 @@
 require 'bundler/setup'
 Bundler.require :app
 
+# Redirects the requests that aren't encrypted and tells the browser to stay on
+# https afterwards. (This used to be the rack-ssl-enforcer gem, which hasn't
+# been updated since 2016.)
+class HttpsRedirect
+  HSTS = 'max-age=31536000; includeSubDomains'
+
+  def initialize(app)
+    @app = app
+  end
+
+  def call(env)
+    request = Rack::Request.new(env)
+
+    unless request.scheme == 'https'
+      return [301, {'location' => request.url.sub(/\Ahttp:/, 'https:'), 'content-type' => 'text/plain'}, []]
+    end
+
+    status, headers, body = @app.call(env)
+    headers['strict-transport-security'] = HSTS
+    [status, headers, body]
+  end
+end
+
 class App < Sinatra::Application
   Bundler.require environment
   require 'sinatra/cookies'
@@ -12,7 +35,7 @@ class App < Sinatra::Application
   Rack::Mime::MIME_TYPES['.webapp'] = 'application/x-web-app-manifest+json'
 
   configure do
-    use Rack::SslEnforcer, only_environments: ['production', 'test'], hsts: true, force_secure_cookies: false
+    use HttpsRedirect if production? || test?
 
     set :sentry_dsn, ENV['SENTRY_DSN']
     set :protection, except: [:frame_options, :xss_header]
