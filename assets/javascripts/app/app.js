@@ -123,10 +123,11 @@ class App extends Events {
       (docs.includes(doc.slug) ? this.docs : this.disabledDocs).add(doc);
     }
     this.migrateDocs();
-    this.migrateToLatestVersions();
-    this.docs.load(this.start.bind(this), this.onBootError.bind(this), {
-      readCache: true,
-      writeCache: true,
+    this.migrateToLatestVersions(() => {
+      this.docs.load(this.start.bind(this), this.onBootError.bind(this), {
+        readCache: true,
+        writeCache: true,
+      });
     });
     delete this.DOCS;
   }
@@ -192,33 +193,55 @@ class App extends Events {
   }
 
   // With the "latest version" preference enabled, replace the enabled docs for
-  // which a newer version is available with that version.
-  migrateToLatestVersions() {
+  // which a newer version is available with that version. A doc is only
+  // replaced once the index of its latest version has loaded, because saving
+  // drops the offline data of the doc that is disabled.
+  migrateToLatestVersions(callback) {
     if (!this.settings.get("autoLatestVersion")) {
+      callback();
       return;
     }
 
-    let needsSaving;
     const allDocs = this.docs.all().concat(this.disabledDocs.all());
+    const migrations = [];
 
-    for (var doc of this.docs.all().slice()) {
+    for (var doc of this.docs.all()) {
       var latest = doc.findLatestVersion(allDocs);
-      if (latest === doc) {
-        continue;
+      if (latest !== doc) {
+        migrations.push([doc, latest]);
       }
-      this.docs.remove(doc);
-      this.disabledDocs.add(doc);
-      if (!this.docs.contains(latest)) {
-        this.disabledDocs.remove(latest);
-        this.docs.add(latest);
-      }
-      needsSaving = true;
     }
 
-    if (needsSaving) {
-      this.docs.sort();
-      this.saveDocs();
-    }
+    let i = 0;
+    let needsSaving;
+
+    var next = () => {
+      if (i === migrations.length) {
+        if (needsSaving) {
+          this.docs.sort();
+          this.saveDocs();
+        }
+        callback();
+        return;
+      }
+
+      const [outdated, latest] = migrations[i++];
+
+      const onSuccess = () => {
+        this.docs.remove(outdated);
+        this.disabledDocs.add(outdated);
+        if (!this.docs.contains(latest)) {
+          this.disabledDocs.remove(latest);
+          this.docs.add(latest);
+        }
+        needsSaving = true;
+        next();
+      };
+
+      latest.load(onSuccess, next, { readCache: true, writeCache: true });
+    };
+
+    next();
   }
 
   enableDoc(doc, _onSuccess, onError) {

@@ -97,6 +97,15 @@ test("variants of a documentation aren't versions", () => {
   );
 });
 
+// The index of the latest version has to load for a doc to be replaced.
+app.models.Doc.prototype.load = function (onSuccess, onError) {
+  if (app.loadFails) {
+    onError();
+  } else {
+    onSuccess();
+  }
+};
+
 const migrate = (enabled, allDocs, autoLatestVersion = true) => {
   app.settings = {
     get: (key) => (key === "autoLatestVersion" ? autoLatestVersion : undefined),
@@ -112,7 +121,10 @@ const migrate = (enabled, allDocs, autoLatestVersion = true) => {
     app.saved = true;
   };
   app.saved = false;
-  app.migrateToLatestVersions();
+  app.booted = false;
+  app.migrateToLatestVersions(() => {
+    app.booted = true;
+  });
   // Spread the array so that it's created in this realm, not the VM's.
   return [...app.docs.all().map((doc) => doc.slug)];
 };
@@ -123,11 +135,23 @@ test("enabled docs are migrated to their latest version at boot", () => {
     "cmake~3.12",
   ]);
   assert.equal(app.saved, true);
+  assert.equal(app.booted, true);
   assert.equal(app.disabledDocs.findBy("slug", "cmake~3.9").slug, "cmake~3.9");
 });
 
 test("outdated docs are disabled when their latest version is already enabled", () => {
   assert.deepEqual(migrate(["cmake~3.9", "cmake~3.12"], CMAKE), ["cmake~3.12"]);
+});
+
+test("a doc whose latest version fails to load isn't replaced", () => {
+  app.loadFails = true;
+  try {
+    assert.deepEqual(migrate(["cmake~3.9"], CMAKE), ["cmake~3.9"]);
+    assert.equal(app.saved, false);
+    assert.equal(app.booted, true);
+  } finally {
+    app.loadFails = false;
+  }
 });
 
 test("docs are left alone without the preference or a newer version", () => {
