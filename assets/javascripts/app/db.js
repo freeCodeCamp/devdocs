@@ -178,7 +178,7 @@ app.DB = class DB {
     }
   }
 
-  store(doc, data, onSuccess, onError, _retry) {
+  store(doc, data, mtime, onSuccess, onError, _retry) {
     if (_retry == null) {
       _retry = true;
     }
@@ -188,24 +188,42 @@ app.DB = class DB {
         return;
       }
 
-      const txn = this.idbTransaction(db, {
-        stores: ["docs", doc.slug],
-        mode: "readwrite",
-        ignoreError: false,
-      });
+      const retry = () => {
+        this.migrate();
+        setTimeout(() => {
+          return this.store(doc, data, mtime, onSuccess, onError, false);
+        }, 0);
+      };
+
+      let txn;
+      try {
+        txn = this.idbTransaction(db, {
+          stores: ["docs", doc.slug],
+          mode: "readwrite",
+          ignoreError: false,
+        });
+      } catch (error) {
+        // The object store doesn't exist yet, which happens when the doc was
+        // enabled while the database was being opened. Bumping the schema
+        // creates it (see onUpgradeNeeded).
+        if (error.name === "NotFoundError" && _retry) {
+          retry();
+        } else {
+          onError(error);
+        }
+        return;
+      }
+
       txn.oncomplete = () => {
         if (this.cachedDocs != null) {
-          this.cachedDocs[doc.slug] = doc.mtime;
+          this.cachedDocs[doc.slug] = mtime;
         }
         onSuccess();
       };
       txn.onerror = (event) => {
         event.preventDefault();
         if (txn.error?.name === "NotFoundError" && _retry) {
-          this.migrate();
-          setTimeout(() => {
-            return this.store(doc, data, onSuccess, onError, false);
-          }, 0);
+          retry();
         } else {
           onError(event);
         }
@@ -219,7 +237,7 @@ app.DB = class DB {
       }
 
       store = txn.objectStore("docs");
-      store.put(doc.mtime, doc.slug);
+      store.put(mtime, doc.slug);
     });
   }
 
@@ -261,6 +279,52 @@ app.DB = class DB {
 
       store = txn.objectStore(doc.slug);
       store.clear();
+    });
+  }
+
+  // Reads back everything that store() wrote for a doc: its pages and the
+  // mtime it was installed with. Calls back with null when the doc isn't
+  // installed or can't be read.
+  dump(doc, callback) {
+    this.db((db) => {
+      if (!db || !db.objectStoreNames.contains(doc.slug)) {
+        callback(null);
+        return;
+      }
+
+      const txn = this.idbTransaction(db, {
+        stores: ["docs", doc.slug],
+        mode: "readonly",
+        ignoreError: false,
+        ignoreAbort: false,
+      });
+      const data = {};
+      let failed = false;
+      let mtime = null;
+
+      txn.oncomplete = () => callback(failed || !mtime ? null : { mtime, data });
+      txn.onerror = function (event) {
+        event.preventDefault();
+        failed = true;
+      };
+      txn.onabort = function (event) {
+        event.preventDefault();
+        callback(null);
+      };
+
+      txn.objectStore("docs").get(doc.slug).onsuccess = (event) => {
+        mtime = event.target.result;
+      };
+
+      const req = txn.objectStore(doc.slug).openCursor();
+      req.onsuccess = (event) => {
+        const cursor = event.target.result;
+        if (!cursor) {
+          return;
+        }
+        data[cursor.key] = cursor.value;
+        cursor.continue();
+      };
     });
   }
 

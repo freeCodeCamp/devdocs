@@ -468,6 +468,19 @@ $.classify = function (string) {
 
 $.noop = function () {};
 
+$.download = function (blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.style.display = "none";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  // The URL has to stay alive until the browser has picked up the download.
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+};
+
 $.popup = function (value) {
   try {
     window.open(value.href || value, "_blank", "noopener");

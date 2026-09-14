@@ -67,13 +67,7 @@ app.views.SettingsPage = class SettingsPage extends app.View {
     const data = new Blob([JSON.stringify(app.settings.export())], {
       type: "application/json",
     });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(data);
-    link.download = "devdocs.json";
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    $.download(data, "devdocs.json");
   }
 
   import(file, input) {

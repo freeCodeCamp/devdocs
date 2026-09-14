@@ -155,7 +155,7 @@ app.models.Doc = class Doc extends app.Model {
 
     const success = (data) => {
       this.installing = null;
-      app.db.store(this, data, onSuccess, error);
+      app.db.store(this, data, this.mtime, onSuccess, error);
     };
 
     ajax({

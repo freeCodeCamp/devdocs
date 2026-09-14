@@ -8,7 +8,7 @@ app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
     }>Install updates automatically
   </label>
   <div class="_docs-links">
-    <button type="button" class="_btn-link" data-action-all="install">Install all</button><button type="button" class="_btn-link" data-action-all="update"><strong>Update all</strong></button><button type="button" class="_btn-link" data-action-all="uninstall">Uninstall all</button>
+    <button type="button" class="_btn-link" data-action-all="install" title="Download every enabled documentation for offline use">Install all</button><button type="button" class="_btn-link" data-action-all="update" title="Download the current version of every outdated documentation"><strong>Update all</strong></button><button type="button" class="_btn-link" data-action-all="uninstall" title="Delete the offline data of every installed documentation">Uninstall all</button><button type="button" class="_btn-link _show" data-export-docs title="Save the installed documentations to a file, to restore them later or on another computer">Export all</button><label class="_btn-link _file-btn _show" title="Restore documentations from a previously exported file">Import<input type="file" name="importDocs" accept="application/json,.json"></label>
   </div>
 </div>
 
@@ -23,6 +23,7 @@ app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
     ${docs}
   </table>
 </div>
+<div id="_offline-backup-status" role="status"></div>
 <div id="_offline-persistence-note">
   ${offlinePersistenceNote(hasPersistence, isPersistent)}
 </div>
@@ -33,6 +34,8 @@ app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
       The app also uses <a href="https://devdocs.io/dom/service_worker_api/using_service_workers">Service Workers</a> and <a href="https://devdocs.io/dom/web_storage_api">localStorage</a> to cache the assets and index files.
   <dt>Can I close the tab/browser?
   <dd>${canICloseTheTab()}
+  <dt>How do I move the documentations to another computer?
+  <dd>Export them to a file using the buttons above, copy it over, and import it there. The other computer still needs to load DevDocs once while online for the app itself to be cached.
   <dt>What if I don't update a documentation?
   <dd>You'll see outdated content and some pages will be missing or broken, because the rest of the app (including data for the search and sidebar) uses a different caching mechanism that's updated automatically.
   <dt>I found a bug, where do I report it?
@@ -43,6 +46,49 @@ app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
   <dd>You have to <a href="/settings">enable</a> them first.
 </dl>\
 `;
+
+app.templates.backupProgress = (action, doc, i, total) =>
+  `${action} ${doc.fullName}\u2026 (${i}/${total})`;
+
+app.templates.backupExported = (count) =>
+  `Exported ${count} ${pluralizeDocs(count)}.`;
+
+app.templates.backupImported = function (result) {
+  let html = `<strong>Imported ${result.docs.length} ${pluralizeDocs(
+    result.docs.length
+  )}.</strong>`;
+
+  if (result.failed.length > 0) {
+    html += ` Couldn't be stored: ${listSlugs(result.failed)}.`;
+  }
+  if (result.skipped.length > 0) {
+    // The skipped slugs come from the imported file, hence the escaping.
+    html += ` Not available anymore: ${listSlugs(result.skipped)}.`;
+  }
+  if (result.enabled > 0) {
+    html += " Reloading\u2026";
+  }
+
+  return html;
+};
+
+app.templates.backupError = function (reason) {
+  switch (reason) {
+    case "empty":
+      return "<strong>No documentation is installed.</strong> Install one before exporting.";
+    case "unknown":
+      return "<strong>Nothing to import.</strong> This file doesn't contain any documentation that DevDocs still offers.";
+    case "version":
+      return "<strong>This file was exported by a newer version of DevDocs.</strong> Reload the app and try again.";
+    default:
+      return "<strong>The file you selected is invalid.</strong> Only files exported from this page can be imported.";
+  }
+};
+
+var pluralizeDocs = (count) =>
+  count === 1 ? "documentation" : "documentations";
+
+var listSlugs = (slugs) => slugs.map((slug) => $.escape(slug)).join(", ");
 
 app.templates.persistenceError = function (exception) {
   const reason = exception
@@ -106,11 +152,11 @@ app.templates.offlineDoc = function (doc, status) {
     : outdated
       ? `\
 <td><strong>Outdated</strong></td>
-<td><button type="button" class="_btn-link _bold" data-action="update">Update</button> - <button type="button" class="_btn-link" data-action="uninstall">Uninstall</button></td>\
+<td><button type="button" class="_btn-link _bold" data-action="update">Update</button> &bull; <button type="button" class="_btn-link" data-action="uninstall">Uninstall</button> &bull; <button type="button" class="_btn-link" data-action="export">Export</button></td>\
 `
       : `\
 <td>Up&#8209;to&#8209;date</td>
-<td><button type="button" class="_btn-link" data-action="uninstall">Uninstall</button></td>\
+<td><button type="button" class="_btn-link" data-action="uninstall">Uninstall</button> &bull; <button type="button" class="_btn-link" data-action="export">Export</button></td>\
 `;
 
   return html + "</tr>";
