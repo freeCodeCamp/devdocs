@@ -229,10 +229,17 @@ class SpritesCLI < Thor
     scss_erb_files.each do |erb_path|
       scss_path = erb_path.gsub('.erb', '')
       File.open(scss_path, 'w') do |f|
-        f.write(ERB.new(File.read(erb_path)).result)
+        f.write(ERB.new(File.read(erb_path)).result(erb_binding))
         logger.info("Compiling #{erb_path} to #{scss_path}")
       end
     end
+  end
+
+  # The templates are compiled without the app loaded, so whatever they need
+  # has to come from here rather than from `App`.
+  def erb_binding
+    environment = (ENV['APP_ENV'] || ENV['RACK_ENV'] || 'development').to_sym
+    binding
   end
 
   def logger
