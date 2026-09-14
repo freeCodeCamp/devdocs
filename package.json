@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "test": "node --test test/assets/",
-    "typecheck": "tsc"
+    "typecheck": "tsc -p tsconfig.json && tsc -p test/assets/tsconfig.json"
   },
   "devDependencies": {
     "@types/node": "^24.9.2",

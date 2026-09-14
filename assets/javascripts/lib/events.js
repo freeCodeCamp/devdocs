@@ -1,4 +1,34 @@
+// @ts-check
+
+/**
+ * A minimal event emitter. Most of the app's long-lived objects extend it.
+ *
+ * Event names are free-form strings; `on`, `off` and `removeEvent` also accept
+ * several of them separated by spaces. Every event is re-emitted as `all` with
+ * the original name prepended to the arguments.
+ *
+ * @typedef {(...args: any[]) => void} EventCallback
+ */
 class Events {
+  /**
+   * Registered callbacks, keyed by event name. Created on first `on` call.
+   *
+   * @type {Record<string, EventCallback[]> | undefined}
+   */
+  _callbacks;
+
+  /**
+   * The event being dispatched, while `trigger` is running.
+   *
+   * @type {{ name: string, args: any[] } | null}
+   */
+  eventInProgress;
+
+  /**
+   * @param {string} event One or more event names, separated by spaces.
+   * @param {EventCallback} callback
+   * @returns {this}
+   */
   on(event, callback) {
     if (event.includes(" ")) {
       for (var name of event.split(" ")) {
@@ -12,6 +42,11 @@ class Events {
     return this;
   }
 
+  /**
+   * @param {string} event One or more event names, separated by spaces.
+   * @param {EventCallback} callback The same reference that was passed to `on`.
+   * @returns {this}
+   */
   off(event, callback) {
     let callbacks, index;
     if (event.includes(" ")) {
@@ -30,6 +65,11 @@ class Events {
     return this;
   }
 
+  /**
+   * @param {string} event A single event name.
+   * @param {...any} args Passed on to each callback.
+   * @returns {this}
+   */
   trigger(event, ...args) {
     this.eventInProgress = { name: event, args };
     const callbacks = this._callbacks?.[event];
@@ -47,6 +87,12 @@ class Events {
     return this;
   }
 
+  /**
+   * Removes every callback registered for the given events.
+   *
+   * @param {string} event One or more event names, separated by spaces.
+   * @returns {this}
+   */
   removeEvent(event) {
     if (this._callbacks != null) {
       for (var name of event.split(" ")) {
