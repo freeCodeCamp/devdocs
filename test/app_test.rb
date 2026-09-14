@@ -68,39 +68,24 @@ class AppTest < Minitest::Spec
   end
 
   describe "/[doc]" do
-    it "renders when the doc exists and isn't enabled" do
-      set_cookie('docs=html~5')
-      get '/html~4/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
-      assert last_response.ok?
-    end
-
-    it "renders when the doc exists, is a default doc, and all docs are enabled" do
-      set_cookie('docs=')
-      get '/css/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
-      assert last_response.ok?
-    end
-
-    it "renders when the doc exists and is enabled" do
-      set_cookie('docs=html~5')
+    it "renders when the doc exists" do
       get '/html~5/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
       assert last_response.ok?
       assert_nil last_response['Set-Cookie']
     end
 
-    it "renders when the doc exists, has no version in the path, and isn't enabled" do
-      get '/html/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
+    it "renders when the doc exists and has no versions" do
+      get '/css/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
       assert last_response.ok?
     end
 
-    it "renders when the doc exists, has no version in the path, and a version is enabled" do
-      set_cookie('docs=html~5')
+    it "renders when the doc exists and has no version in the path" do
       get '/html/', {}, 'HTTP_USER_AGENT' => MODERN_BROWSER
       assert last_response.ok?
       assert_nil last_response['Set-Cookie']
     end
 
-    it "renders when the doc exists and is enabled, and the request is from Googlebot" do
-      set_cookie('docs=html')
+    it "renders when the doc exists and the request is from Googlebot" do
       get '/html/', {}, 'HTTP_USER_AGENT' => 'Mozilla/5.0 (compatible; Googlebot/2.1; +https://www.google.com/bot.html)'
       assert last_response.ok?
     end

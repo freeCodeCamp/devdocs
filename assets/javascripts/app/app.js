@@ -9,7 +9,7 @@ import { Shortcuts } from "./shortcuts.js";
 import { UpdateChecker } from "./update_checker.js";
 import { Docs } from "../collections/docs.js";
 import { Entries } from "../collections/entries.js";
-import { CookiesStore } from "../lib/cookies_store.js";
+import { SettingsStore } from "../lib/settings_store.js";
 import { Events } from "../lib/events.js";
 import { LocalStorageStore } from "../lib/local_storage_store.js";
 import { $ } from "../lib/util.js";
@@ -166,7 +166,7 @@ export class App extends Events {
       }
       this.previousErrorHandler = onerror;
       window.onerror = this.onWindowError.bind(this);
-      CookiesStore.onBlocked = this.onCookieBlocked;
+      SettingsStore.onBlocked = this.onStorageBlocked;
     }
   }
 
@@ -477,19 +477,19 @@ export class App extends Events {
   }
 
   /**
-   * Warns the user that cookies are blocked, so preferences won't stick. Once.
+   * Warns the user that storage is blocked, so preferences won't stick. Once.
    *
    * @param {string} key
    * @param {unknown} value What was written.
    * @param {unknown} actual What was read back.
    */
-  onCookieBlocked(key, value, actual) {
-    if (this.cookieBlocked) {
+  onStorageBlocked(key, value, actual) {
+    if (this.storageBlocked) {
       return;
     }
-    this.cookieBlocked = true;
-    new Notif("CookieBlocked", { autoHide: null });
-    Raven.captureMessage(`CookieBlocked/${key}`, {
+    this.storageBlocked = true;
+    new Notif("StorageBlocked", { autoHide: null });
+    Raven.captureMessage(`StorageBlocked/${key}`, {
       level: "warning",
       extra: { value, actual },
     });
@@ -497,7 +497,7 @@ export class App extends Events {
 
   /** @param {...unknown} args The `window.onerror` arguments. */
   onWindowError(...args) {
-    if (this.cookieBlocked) {
+    if (this.storageBlocked) {
       return;
     }
     if (this.isAppError(args[0], /** @type {string} */ (args[1]))) {

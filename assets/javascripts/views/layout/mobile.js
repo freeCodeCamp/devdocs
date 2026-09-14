@@ -31,8 +31,9 @@ export class Mobile extends View {
    *   desktop-sized width.
    */
   static detect() {
-    if (Cookies.get("override-mobile-detect") != null) {
-      return JSON.parse(Cookies.get("override-mobile-detect"));
+    const override = app.localStorage.get("override-mobile-detect");
+    if (override != null) {
+      return !!override;
     }
     try {
       return (
