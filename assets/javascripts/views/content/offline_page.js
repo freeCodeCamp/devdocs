@@ -224,6 +224,12 @@ app.views.OfflinePage = class OfflinePage extends app.View {
         ),
       (result) => {
         this.backingUp = false;
+        // Newly enabled docs have no index in memory, so the session stays
+        // inconsistent until the app reboots, whether the page is still
+        // being shown or not.
+        if (result.enabled > 0) {
+          this.delay(() => app.reboot(), this.activated ? 2000 : 0);
+        }
         if (!this.activated) {
           return;
         }
@@ -231,11 +237,9 @@ app.views.OfflinePage = class OfflinePage extends app.View {
           this.tmpl("backupImported", result),
           result.failed.length > 0,
         );
-        // Newly enabled docs have no index in memory; reboot to load them.
-        // Otherwise just refresh the rows that changed, to keep the message.
-        if (result.enabled > 0) {
-          this.delay(() => app.reboot(), 2000);
-        } else {
+        // Nothing was enabled: refresh the rows that changed, which keeps
+        // the message a re-render would wipe.
+        if (result.enabled === 0) {
           for (var doc of result.docs) {
             this.onInstallSuccess(doc);
           }
