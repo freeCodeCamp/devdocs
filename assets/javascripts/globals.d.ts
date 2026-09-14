@@ -110,8 +110,11 @@ interface Doc {
   links?: Record<string, string>;
   /** From the manifest. The licence notice shown on the About page. */
   attribution?: string;
-  /** From the manifest. An alternative spelling of the doc's name. */
-  alias?: string;
+  /**
+   * From the manifest, which always emits the key and sets it to null when the
+   * doc has no alias.
+   */
+  alias: string | null;
 
   /** Derived: the slug without its version. */
   slug_without_version: string;

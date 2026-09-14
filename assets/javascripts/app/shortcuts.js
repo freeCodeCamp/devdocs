@@ -36,7 +36,7 @@ class Shortcuts extends Events {
 
   /** @returns {boolean} Whether the arrow keys scroll rather than move the selection. */
   swapArrowKeysBehavior() {
-    return app.settings.get("arrowScroll");
+    return !!app.settings.get("arrowScroll");
   }
 
   /** @returns {number} How far space scrolls, as a fraction of the viewport. */

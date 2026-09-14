@@ -43,7 +43,7 @@ class RootPage extends app.View {
 
   /** @returns {boolean} Whether the introduction has been dismissed. */
   isHidden() {
-    return app.isSingleDoc() || app.settings.get("hideIntro");
+    return app.isSingleDoc() || !!app.settings.get("hideIntro");
   }
 
   /** @inheritdoc */
