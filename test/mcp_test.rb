@@ -177,6 +177,15 @@ class McpTest < Minitest::Spec
       assert_includes result['content'].first['text'], 'Removes the last element.'
     end
 
+    it 'separates table cells and definition lists in the extracted text' do
+      args = { 'slug' => 'mcp_fixture', 'path' => 'array/table' }
+      result = rpc('tools/call', { 'name' => 'devdocs_get_page', 'arguments' => args })['result']
+      text = result['content'].first['text']
+      refute_includes text, 'NameType'
+      refute_includes text, 'fooString'
+      refute_includes text, 'barA thing.'
+    end
+
     it 'returns error for invalid slug in search (path traversal protection)' do
       args = { 'slug' => '../../../etc/passwd', 'query' => 'test' }
       response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })

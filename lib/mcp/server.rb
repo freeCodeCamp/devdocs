@@ -233,7 +233,9 @@ module Mcp
 
     def self.block_element?(tag_name)
       return false unless tag_name
-      %w(p div h1 h2 h3 h4 h5 h6 ul ol li blockquote pre br).include?(tag_name.downcase)
+      %w(p div h1 h2 h3 h4 h5 h6 ul ol li dl dt dd
+         table caption thead tbody tfoot tr th td
+         blockquote pre br).include?(tag_name.downcase)
     end
 
     def self.search_docset(app_settings, slug, query, args = {})
