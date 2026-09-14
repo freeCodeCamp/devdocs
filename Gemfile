@@ -13,8 +13,6 @@ group :app do
   gem 'chunky_png'
   gem 'erubi'
   gem 'dartsass-sprockets'
-  gem 'image_optim_pack', platforms: :ruby
-  gem 'image_optim'
   gem 'puma'
   gem 'rack'
   gem 'rss'
@@ -35,6 +33,8 @@ group :development do
 end
 
 group :docs do
+  gem 'image_optim_pack', platforms: :ruby
+  gem 'image_optim'
   gem 'kramdown'
   gem 'kramdown-parser-gfm'
   gem 'redcarpet'

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'base64'
-require 'image_optim'
 
 module Docs
   class ImagesFilter < Filter
@@ -21,6 +20,9 @@ module Docs
     CWEBP_LOSSY_COMMAND = %W(cwebp -quiet -q #{JPEG_QUALITY} -m 6 -sharp_yuv -metadata none -o - -- -).freeze
     GIF2WEBP_COMMAND = %w(gif2webp -quiet -m 6 -metadata none -o - -- -).freeze
 
+    # image_optim belongs to the docs bundle group, which the app leaves out;
+    # `Bundler.require :default, :docs` in docs.rb loads it for the scrapers,
+    # which are the only ones optimizing anything.
     def self.optimize_image_data(data)
       @image_optim ||= ImageOptim.new
       @image_optim.optimize_image_data(data)
