@@ -48,15 +48,18 @@ module Docs
 
       ADD_SUB_ENTRIES_KEYWORDS = %w(class module newtype)
 
+      TYPE_KEYWORDS = %w(class data newtype type)
+
       def additional_entries
         return [] if subpath.start_with?('users_guide')
         return [] if IGNORE_ENTRIES_PATHS.include?(subpath.split('/').last)
 
-        css('#synopsis > details > ul > li').each_with_object [] do |node, entries|
+        entry_nodes.each_with_object [] do |node, entries|
           link = node.at_css('a:not([title])')
           name = link.content
+          keyword = node.at_css('.keyword').try(:content)
 
-          if ADD_SUB_ENTRIES_KEYWORDS.include?(node.at_css('.keyword').try(:content))
+          if ADD_SUB_ENTRIES_KEYWORDS.include?(keyword)
             node.css('.subs > li').each do |sub_node|
               sub_link = sub_node.at_css('a')
               next unless sub_link['href'].start_with?('#')
@@ -66,12 +69,35 @@ module Docs
             end
           end
 
-          entries << [name, link['href'].remove('#')] if link['href'].start_with?('#') && name != self.name
+          next unless link['href'].start_with?('#') && name != self.name
+
+          # Dozens of modules export a foldr, an insert or a null. Append the
+          # type the module is built around, the way the members of a class get
+          # the class appended above, so that they stay tellable apart. The
+          # declarations of the types themselves read better without it.
+          name += " (#{module_type})" if module_type && !TYPE_KEYWORDS.include?(keyword)
+          entries << [name, link['href'].remove('#')]
         end
       end
 
       def include_default_entry?
-        subpath.start_with?('users_guide') || at_css('#synopsis > details > ul > li')
+        subpath.start_with?('users_guide') || entry_nodes.first
+      end
+
+      private
+
+      def entry_nodes
+        @entry_nodes ||= css('#synopsis > details > ul > li')
+      end
+
+      # The type a module is built around: Map for Data.Map.Strict, Text for
+      # Data.Text, PosixString for System.OsString.Posix. Haddock lists it as
+      # the first type declaration of the synopsis.
+      def module_type
+        return @module_type if defined?(@module_type)
+
+        node = entry_nodes.find { |n| TYPE_KEYWORDS.include?(n.at_css('.keyword').try(:content)) }
+        @module_type = node && node.content.squish[/\A\w+(?: family)? ([A-Z][\w.']*)/, 1]
       end
     end
   end
