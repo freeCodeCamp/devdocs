@@ -23,7 +23,7 @@ app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
     ${docs}
   </table>
 </div>
-<div id="_offline-backup-status"></div>
+<div id="_offline-backup-status" role="status"></div>
 <div id="_offline-persistence-note">
   ${offlinePersistenceNote(hasPersistence, isPersistent)}
 </div>
