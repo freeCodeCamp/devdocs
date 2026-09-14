@@ -285,6 +285,18 @@ class McpTest < Minitest::Spec
       assert_includes response['error']['message'].downcase, 'parse'
     end
 
+    it 'returns an invalid params error for tools/call without params' do
+      response = rpc('tools/call')
+      assert_equal(-32602, response['error']['code'])
+      refute_includes response['error']['message'], 'undefined method'
+    end
+
+    it 'returns an invalid params error for non-object arguments' do
+      response = rpc('tools/call', { 'name' => 'devdocs_list_docsets', 'arguments' => [] })
+      assert_equal(-32602, response['error']['code'])
+      assert_includes response['error']['message'], 'arguments'
+    end
+
     it 'returns an invalid request error for a batch' do
       post '/mcp', [{ jsonrpc: '2.0', id: 1, method: 'tools/list' }].to_json, 'CONTENT_TYPE' => 'application/json'
       response = JSON.parse(last_response.body)

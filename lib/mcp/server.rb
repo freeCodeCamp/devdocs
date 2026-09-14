@@ -80,8 +80,15 @@ module Mcp
 
     def self.call_tool(request, app_settings)
       params = request['params']
+      unless params.is_a?(Hash)
+        return error(request, -32602, 'Invalid params: expected an object naming the tool to call')
+      end
+
       tool_name = params['name']
       arguments = params['arguments'] || {}
+      unless arguments.is_a?(Hash)
+        return error(request, -32602, "Invalid params: expected arguments to be an object, got #{arguments.class}")
+      end
 
       tool_def = TOOLS.find { |t| t['name'] == tool_name }
       unless tool_def
