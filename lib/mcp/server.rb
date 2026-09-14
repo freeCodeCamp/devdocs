@@ -107,27 +107,21 @@ module Mcp
 
       case tool_name
       when 'devdocs_list_docsets'
-        result = list_docsets(app_settings, arguments)
-        as_text_result(request, result)
+        tool_result(request) { list_docsets(app_settings, arguments).to_json }
       when 'devdocs_search'
-        slug = arguments['slug']
-        query = arguments['query']
-        begin
-          result = search_docset(app_settings, slug, query, arguments)
-          as_text_result(request, result)
-        rescue => err
-          error(request, -32603, "Search failed: #{err.message}")
-        end
+        tool_result(request) { search_docset(app_settings, arguments['slug'], arguments['query'], arguments).to_json }
       when 'devdocs_get_page'
-        slug = arguments['slug']
-        path = arguments['path']
-        begin
-          text = get_page(app_settings, slug, path)
-          respond(request, { 'content' => [{ 'type' => 'text', 'text' => text }] })
-        rescue => err
-          error(request, -32603, "Page retrieval failed: #{err.message}")
-        end
+        tool_result(request) { get_page(app_settings, arguments['slug'], arguments['path']) }
       end
+    end
+
+    # Runs a tool and wraps the text it returns in a result. A tool that fails
+    # reports the reason in its result with isError, as the MCP spec asks: a
+    # protocol error is handled by the client and never reaches the model.
+    def self.tool_result(request)
+      respond(request, { 'content' => [{ 'type' => 'text', 'text' => yield }] })
+    rescue => err
+      respond(request, { 'content' => [{ 'type' => 'text', 'text' => err.message }], 'isError' => true })
     end
 
     def self.validate_arguments(arguments, schema)
@@ -327,10 +321,6 @@ module Mcp
       index = JSON.parse(File.read(index_path))
       INDEX_CACHE[index_path] = { stamp: stamp, index: index }
       index
-    end
-
-    def self.as_text_result(request, data)
-      respond(request, { 'content' => [{ 'type' => 'text', 'text' => data.to_json }] })
     end
 
     def self.respond(request, result)

@@ -26,6 +26,12 @@ class McpTest < Minitest::Spec
     post '/mcp', body.to_json, 'CONTENT_TYPE' => 'application/json'
   end
 
+  def tool_error(name, arguments)
+    result = rpc('tools/call', { 'name' => name, 'arguments' => arguments })['result']
+    assert result['isError'], 'expected the tool to report an error in its result'
+    result['content'].first['text']
+  end
+
   describe 'POST /mcp' do
     it 'accepts notifications without answering them' do
       notify('notifications/initialized')
@@ -166,11 +172,8 @@ class McpTest < Minitest::Spec
     end
 
     it 'returns error for empty search query' do
-      args = { 'slug' => 'mcp_fixture', 'query' => '' }
-      response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
-      assert response.key?('error')
-      assert_equal(-32603, response['error']['code'])
-      assert_includes response['error']['message'].downcase, 'empty'
+      message = tool_error('devdocs_search', { 'slug' => 'mcp_fixture', 'query' => '' })
+      assert_includes message.downcase, 'empty'
     end
 
     it 'paginates search results with offset and limit' do
@@ -239,19 +242,13 @@ class McpTest < Minitest::Spec
     end
 
     it 'returns error for invalid slug in search (path traversal protection)' do
-      args = { 'slug' => '../../../etc/passwd', 'query' => 'test' }
-      response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
-      assert response.key?('error'), 'should return an error for invalid slug'
-      assert_equal(-32603, response['error']['code'])
-      assert_includes response['error']['message'], 'Invalid docset slug'
+      message = tool_error('devdocs_search', { 'slug' => '../../../etc/passwd', 'query' => 'test' })
+      assert_includes message, 'Invalid docset slug'
     end
 
     it 'returns error for invalid slug in get_page (path traversal protection)' do
-      args = { 'slug' => '..\\windows\\system32', 'path' => '/test' }
-      response = rpc('tools/call', { 'name' => 'devdocs_get_page', 'arguments' => args })
-      assert response.key?('error'), 'should return an error for invalid slug'
-      assert_equal(-32603, response['error']['code'])
-      assert_includes response['error']['message'], 'Invalid docset slug'
+      message = tool_error('devdocs_get_page', { 'slug' => '..\\windows\\system32', 'path' => '/test' })
+      assert_includes message, 'Invalid docset slug'
     end
 
     it 'returns error for missing search index in devdocs_search' do
@@ -264,17 +261,13 @@ class McpTest < Minitest::Spec
     end
 
     it 'returns error for a docset whose pages are not downloaded' do
-      args = { 'slug' => 'css', 'path' => '/test' }
-      response = rpc('tools/call', { 'name' => 'devdocs_get_page', 'arguments' => args })
-      assert_equal(-32603, response['error']['code'])
-      assert_includes response['error']['message'].downcase, 'not available'
+      message = tool_error('devdocs_get_page', { 'slug' => 'css', 'path' => '/test' })
+      assert_includes message.downcase, 'not available'
     end
 
     it 'returns error for a page path escaping the docset' do
-      args = { 'slug' => 'mcp_fixture', 'path' => '../../../etc/passwd' }
-      response = rpc('tools/call', { 'name' => 'devdocs_get_page', 'arguments' => args })
-      assert_equal(-32603, response['error']['code'])
-      assert_includes response['error']['message'], 'Page not found'
+      message = tool_error('devdocs_get_page', { 'slug' => 'mcp_fixture', 'path' => '../../../etc/passwd' })
+      assert_includes message, 'Page not found'
     end
 
     it 'returns error for missing required arguments' do
