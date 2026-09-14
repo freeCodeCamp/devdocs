@@ -31,7 +31,7 @@
  * together, so that a doc being installed can force an upgrade without
  * colliding with a schema change.
  */
-app.DB = class DB {
+class DB {
   static NAME = "docs";
   static VERSION = 15;
 
@@ -775,4 +775,8 @@ app.DB = class DB {
   userVersion() {
     return app.settings.get("schema");
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.DB = DB;

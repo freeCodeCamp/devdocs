@@ -1,7 +1,7 @@
 // @ts-check
 
 /** Watches for new builds of the app and new versions of the installed docs. */
-app.UpdateChecker = class UpdateChecker {
+class UpdateChecker {
   /** Starts watching for new builds and checks the docs once. */
   constructor() {
     this.lastCheck = Date.now();
@@ -64,4 +64,8 @@ app.UpdateChecker = class UpdateChecker {
       this.check();
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.UpdateChecker = UpdateChecker;

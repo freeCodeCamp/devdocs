@@ -6,7 +6,7 @@
  * Emits `updateready` when an update is ready to take over, but only for
  * checks the user asked for.
  */
-app.ServiceWorker = class ServiceWorker extends Events {
+class AppServiceWorker extends Events {
   /** @returns {boolean} Whether the browser supports service workers and the build enables them. */
   static isEnabled() {
     return !!navigator.serviceWorker && app.config.service_worker_enabled;
@@ -91,4 +91,8 @@ app.ServiceWorker = class ServiceWorker extends Events {
       this.trigger("updateready");
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.ServiceWorker = AppServiceWorker;

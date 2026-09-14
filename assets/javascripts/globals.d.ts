@@ -77,14 +77,85 @@ declare const Prism: {
 // --- Model attributes ---
 
 /**
- * Model copies the attributes it is constructed with onto itself, so which
- * properties a model has is decided by the manifest rather than by the class.
- * Each subclass documents the attributes it relies on; this index signature is
- * what makes them reachable. Properties a subclass assigns itself keep the
- * types they are inferred with.
+ * The models' own properties.
+ *
+ * Model copies the attributes it is constructed with onto itself, so a model's
+ * properties are decided by the manifest rather than declared on the class,
+ * and a field declaration would run after `super()` and blank them out again.
+ * These interfaces merge into the classes instead.
+ *
+ * Merging suppresses the inference of `this.x = ...`, so the properties each
+ * model derives for itself are declared here too.
  */
-interface Model {
-  [attribute: string]: any;
+
+interface Doc {
+  /** From the manifest. */
+  name: string;
+  /** From the manifest. Carries the version, e.g. `html~5`. */
+  slug: string;
+  /** From the manifest. The scraper that produced the doc. */
+  type: string;
+  /**
+   * From the manifest. Absent for docs that aren't versioned at all, and empty
+   * for the doc holding the latest version.
+   */
+  version?: string;
+  /** From the manifest. The upstream version the doc was built from. */
+  release?: string;
+  /** From the manifest. When the doc was last built; also its cache key. */
+  mtime?: number;
+  /** From the manifest. The offline database's size, in bytes. */
+  db_size?: number;
+  /** From the manifest. The documentation's own home and source URLs. */
+  links?: Record<string, string>;
+  /** From the manifest. The licence notice shown on the About page. */
+  attribution?: string;
+  /** From the manifest. An alternative spelling of the doc's name. */
+  alias?: string;
+
+  /** Derived: the slug without its version. */
+  slug_without_version: string;
+  /** Derived: the name with the version appended. */
+  fullName: string;
+  /** Derived: which sprite to show. */
+  icon: string;
+  /** Derived: the version up to its first space. */
+  short_version?: string;
+  /** Derived: what the searcher matches against. */
+  text: string | string[];
+
+  /** The doc's entries, once its index has loaded. */
+  entries: Entries;
+  /** The doc's types, once its index has loaded. */
+  types: Types;
+  /** The entry standing for the doc itself, built on demand. */
+  entry?: Entry;
+  /** Set while an install or uninstall is running. */
+  installing?: boolean | null;
+}
+
+interface Entry {
+  /** From the doc's index. */
+  name: string;
+  /** From the doc's index. Relative to the doc, and may carry a hash. */
+  path: string;
+  /** From the doc's index. The name of the type the entry belongs to. */
+  type?: string;
+  /** Set by the doc when it builds its entries. */
+  doc: Doc;
+  /** Derived: what the searcher matches against. */
+  text: string | string[];
+}
+
+interface Type {
+  /** From the doc's index. */
+  name: string;
+  /** From the doc's index. */
+  slug: string;
+  /** From the doc's index. How many entries it holds. */
+  count: number;
+  /** Set by the doc when it builds its types. */
+  doc: Doc;
 }
 
 /**

@@ -1,11 +1,9 @@
 // @ts-check
 
-/**
- * A group of entries within a doc, e.g. "Methods".
- *
- * Attributes, from the doc's index: `name`, `slug`, `count`. The doc sets
- * `doc` when it builds its types.
- */
+// A type's own properties are declared in globals.d.ts, for the reason given
+// in models/doc.js.
+
+/** A group of entries within a doc, e.g. "Methods". */
 class Type extends Model {
 
   /** @returns {string} The app path for the type's page. */

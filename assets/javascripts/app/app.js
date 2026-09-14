@@ -32,9 +32,9 @@
 /**
  * The application singleton, and the namespace everything else registers into.
  *
- * The registries below are keyed by name and populated by the files that
- * define their members, so they are typed as plain records rather than
- * enumerating 37 view classes.
+ * The models and collections are registered by name from the files that define
+ * them, so their entries are listed here; the views and templates are too many
+ * to enumerate and stay open-ended.
  */
 class App extends Events {
   // Kept so that isInjectionError can tell whether an extension replaced the
@@ -43,10 +43,10 @@ class App extends Events {
   _$$ = $$;
   _page = page;
 
-  /** @type {Record<string, any>} */
-  collections = {};
-  /** @type {Record<string, any>} */
-  models = {};
+  /** @type {{ Docs: typeof Docs, Entries: typeof Entries, Types: typeof Types }} */
+  collections = /** @type {any} */ ({});
+  /** @type {{ Doc: typeof Doc, Entry: typeof Entry, Type: typeof Type }} */
+  models = /** @type {any} */ ({});
   /** @type {Record<string, any>} */
   templates = {};
   /** @type {Record<string, any>} */
@@ -73,15 +73,15 @@ class App extends Events {
 
   // The classes registered by the rest of app/, collections/, models/ and
   // views/. They're constructors rather than instances.
-  /** @type {any} */ DB;
-  /** @type {any} */ OfflineBackup;
-  /** @type {any} */ Router;
-  /** @type {any} */ Searcher;
-  /** @type {any} */ SynchronousSearcher;
-  /** @type {any} */ ServiceWorker;
-  /** @type {any} */ Settings;
-  /** @type {any} */ Shortcuts;
-  /** @type {any} */ UpdateChecker;
+  /** @type {typeof DB} */ DB;
+  /** @type {typeof OfflineBackup} */ OfflineBackup;
+  /** @type {typeof Router} */ Router;
+  /** @type {typeof Searcher} */ Searcher;
+  /** @type {typeof SynchronousSearcher} */ SynchronousSearcher;
+  /** @type {typeof AppServiceWorker} */ ServiceWorker;
+  /** @type {typeof Settings} */ Settings;
+  /** @type {typeof Shortcuts} */ Shortcuts;
+  /** @type {typeof UpdateChecker} */ UpdateChecker;
   /** @type {typeof Collection} */ Collection;
   /** @type {typeof Model} */ Model;
   /** @type {typeof View} */ View;
@@ -230,7 +230,7 @@ class App extends Events {
   async bootAll() {
     const docs = this.settings.getDocs();
     for (var doc of this.DOCS) {
-      (docs.includes(doc.slug) ? this.docs : this.disabledDocs).add(doc);
+      (docs.includes(/** @type {string} */ (doc.slug)) ? this.docs : this.disabledDocs).add(doc);
     }
     delete this.DOCS;
     this.migrateDocs();

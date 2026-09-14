@@ -13,16 +13,15 @@
  *
  * @typedef {object} InstallStatus
  * @property {boolean} installed
- * @property {number | undefined} mtime The `mtime` the stored copy was built from.
+ * @property {number | false} [mtime] The `mtime` the stored copy was built
+ *   from, or `false` when it isn't installed.
  */
 
-/**
- * One version of one documentation set.
- *
- * Attributes, from the manifest: `name`, `slug`, `type`, `version`, `release`,
- * `db_size`, `mtime`, `links`. The constructor derives `slug_without_version`,
- * `fullName`, `icon`, `short_version` and `text` from them.
- */
+// A doc's own properties are declared in globals.d.ts: Model copies the
+// manifest attributes on, so a field declaration here would run after
+// `super()` and blank them out again.
+
+/** One version of one documentation set. */
 class Doc extends Model {
   static NUMBERED_VERSION_RGX = /^\d+(\.\d+)*$/;
 

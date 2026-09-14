@@ -12,7 +12,7 @@
  *
  * Handlers return `false` to swallow the event; anything else lets it through.
  */
-app.Shortcuts = class Shortcuts extends Events {
+class Shortcuts extends Events {
   /** Starts listening for key events. */
   constructor() {
     super();
@@ -344,4 +344,8 @@ app.Shortcuts = class Shortcuts extends Events {
       return true;
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.Shortcuts = Shortcuts;

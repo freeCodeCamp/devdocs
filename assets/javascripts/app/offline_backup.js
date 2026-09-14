@@ -1,12 +1,23 @@
 // @ts-check
 
 /**
+ * One doc as it appears in a backup file. Unrelated to the Entry model: these
+ * are the records the backup's `docs` array holds.
+ *
+ * @typedef {object} BackupEntry
+ * @property {string} slug
+ * @property {number} mtime The build the stored pages came from.
+ * @property {Record<string, string>} db The doc's pages, by path.
+ * @property {any} [index] The doc's entry index, when the backup carried it.
+ */
+
+/**
  * What an import ended up doing.
  *
  * @typedef {object} ImportSummary
- * @property {unknown[]} docs The docs that were stored.
+ * @property {Doc[]} docs The docs that were stored.
  * @property {string[]} skipped Slugs in the file that this app doesn't know, or that were unusable.
- * @property {any[]} failed Docs whose store failed.
+ * @property {string[]} failed The slugs of the docs whose store failed.
  * @property {number} enabled How many of the docs weren't enabled before.
  */
 
@@ -16,7 +27,7 @@
  * restore a backup after the browser evicted the data, or to move the
  * documentations to another computer without downloading them again.
  */
-app.OfflineBackup = class OfflineBackup {
+class OfflineBackup {
   static TYPE = "devdocs-offline";
   static VERSION = 1;
   static MIME_TYPE = "application/json";
@@ -135,7 +146,7 @@ app.OfflineBackup = class OfflineBackup {
   /**
    * Stores each valid entry, one at a time.
    *
-   * @param {Entry[]} entries
+   * @param {unknown[]} entries The backup's `docs` array, not yet validated.
    * @param {(doc: unknown, i: number, total: number) => void} onProgress
    * @param {(summary: ImportSummary) => void} onSuccess
    * @param {(reason: string, skipped?: string[]) => void} onError
@@ -149,7 +160,8 @@ app.OfflineBackup = class OfflineBackup {
       if (doc) {
         queue.push([doc, entry]);
       } else {
-        skipped.push(typeof entry?.slug === "string" ? entry.slug : "?");
+        const slug = /** @type {{ slug?: unknown }} */ (entry)?.slug;
+        skipped.push(typeof slug === "string" ? slug : "?");
       }
     }
 
@@ -204,36 +216,41 @@ app.OfflineBackup = class OfflineBackup {
    * isn't usable has to be rejected rather than wipe a working installation.
    * The index page is what DB#checkForCorruptedDocs looks for.
    *
-   * @param {Entry} entry
-   * @returns {boolean}
+   * @param {unknown} entry Straight out of the file.
+   * @returns {entry is BackupEntry} Narrows the entry for the caller.
    */
   isValidEntry(entry) {
+    // Read optimistically; the checks below are what decide whether it holds.
+    const e = /** @type {BackupEntry} */ (entry);
     return (
-      entry != null &&
-      typeof entry.slug === "string" &&
-      Number.isSafeInteger(entry.mtime) &&
-      entry.mtime > 0 &&
-      entry.db?.constructor === Object &&
-      typeof entry.db.index === "string" &&
-      entry.db.index.length > 0
+      e != null &&
+      typeof e.slug === "string" &&
+      Number.isSafeInteger(e.mtime) &&
+      e.mtime > 0 &&
+      e.db?.constructor === Object &&
+      typeof e.db.index === "string" &&
+      e.db.index.length > 0
     );
   }
 
   /**
-   * @param {any} index
-   * @returns {boolean} Whether the entry carries a usable index file.
+   * @param {unknown} index
+   * @returns {index is { entries: unknown[], types: unknown[] }} Whether the
+   *   entry carries a usable index file.
    */
   isValidIndex(index) {
+    // Read optimistically; the checks below are what decide whether it holds.
+    const i = /** @type {{ entries: unknown, types: unknown }} */ (index);
     return (
-      index?.constructor === Object &&
-      Array.isArray(index.entries) &&
-      Array.isArray(index.types)
+      i?.constructor === Object &&
+      Array.isArray(i.entries) &&
+      Array.isArray(i.types)
     );
   }
 
   /**
    * @param {string} slug
-   * @returns {unknown} The doc, enabled or not, or `undefined`.
+   * @returns {Doc | undefined} The doc, enabled or not.
    */
   findDoc(slug) {
     return (
@@ -268,4 +285,8 @@ app.OfflineBackup = class OfflineBackup {
 
     return enabled;
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.OfflineBackup = OfflineBackup;

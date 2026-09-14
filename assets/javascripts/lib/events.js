@@ -7,7 +7,10 @@
  * several of them separated by spaces. Every event is re-emitted as `all` with
  * the original name prepended to the arguments.
  *
- * @typedef {(...args: unknown[]) => void} EventCallback
+ * Listeners know the shape of the event they subscribed to, which the
+ * emitter itself has no way to express, so the arguments stay untyped.
+ *
+ * @typedef {(...args: any[]) => void} EventCallback
  */
 class Events {
   /**

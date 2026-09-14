@@ -2,13 +2,10 @@
 
 //= require app/searcher
 
-/**
- * One searchable page, or a heading within one.
- *
- * Attributes, from the doc's index: `name`, `type`, `path`. The constructor
- * derives `text`, the normalized string the searcher matches against, and the
- * doc sets `doc` when it builds its entries.
- */
+// An entry's own properties are declared in globals.d.ts, for the reason
+// given in models/doc.js.
+
+/** One searchable page, or a heading within one. */
 class Entry extends Model {
   /**
    * Expands a searchable string with its alias, if it has one, so that both

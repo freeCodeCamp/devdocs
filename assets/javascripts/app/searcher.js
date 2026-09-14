@@ -162,7 +162,7 @@ function scoreFuzzyMatch() {
  * module-level state rather than arguments, which is what keeps the inner
  * loop cheap.
  */
-app.Searcher = class Searcher extends Events {
+class Searcher extends Events {
   static CHUNK_SIZE = 20000;
 
   static DEFAULTS = {
@@ -222,7 +222,8 @@ app.Searcher = class Searcher extends Events {
   /**
    * Starts a search, abandoning whatever was running.
    *
-   * @param {unknown[]} data The objects to search.
+   * @param {any[]} data The objects to search. Their type flows back out
+   *   through the `results` event, which is why it isn't narrowed here.
    * @param {string} attr The attribute to match against; a string or an array of them.
    * @param {string} q
    */
@@ -413,6 +414,7 @@ app.Searcher = class Searcher extends Events {
    * Yields to the event loop between chunks.
    *
    * @param {() => void} fn
+   * @returns {number | void} The timeout handle, when there is one.
    */
   delay(fn) {
     return (this.timeout = setTimeout(fn, 1));
@@ -430,13 +432,17 @@ app.Searcher = class Searcher extends Events {
     }
     return new RegExp(chars.join(".*?")); // abc -> /a.*?b.*?c.*?/
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.Searcher = Searcher;
 
 /**
  * A searcher that runs to completion without yielding, and emits its results
  * once at the end. Used where the caller needs an answer before continuing.
  */
-app.SynchronousSearcher = class SynchronousSearcher extends app.Searcher {
+class SynchronousSearcher extends app.Searcher {
   /** Collects each matcher's results, instead of emitting them as it goes. */
   match() {
     if (this.matcher) {
@@ -445,19 +451,19 @@ app.SynchronousSearcher = class SynchronousSearcher extends app.Searcher {
       }
       this.allResults.push(...this.getResults());
     }
-    return super.match(...arguments);
+    return super.match();
   }
 
   /** @inheritdoc */
   free() {
     this.allResults = null;
-    return super.free(...arguments);
+    return super.free();
   }
 
   /** Emits every result collected, then ends. */
   end() {
     this.sendResults(true);
-    return super.end(...arguments);
+    return super.end();
   }
 
   /** @param {boolean} [end] Results are only emitted once, at the end. */
@@ -475,4 +481,8 @@ app.SynchronousSearcher = class SynchronousSearcher extends app.Searcher {
   delay(fn) {
     return fn();
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.SynchronousSearcher = SynchronousSearcher;

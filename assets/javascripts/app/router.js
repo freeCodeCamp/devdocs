@@ -7,7 +7,7 @@
  * order. A handler either triggers its route event and returns nothing, or
  * returns a path to redirect to, or calls `next` to fall through.
  */
-app.Router = class Router extends Events {
+class Router extends Events {
   static routes = [
     ["*", "before"],
     ["/", "root"],
@@ -267,4 +267,8 @@ app.Router = class Router extends Events {
       true
     );
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.Router = Router;

@@ -6,7 +6,7 @@
  * `PREFERENCE_KEYS` are the ones the user controls and that a backup carries;
  * `INTERNAL_KEYS` are the app's own bookkeeping and stay out of backups.
  */
-app.Settings = class Settings {
+class Settings {
   static PREFERENCE_KEYS = [
     "hideDisabled",
     "hideIntro",
@@ -274,4 +274,8 @@ app.Settings = class Settings {
       document.documentElement.style.setProperty("--sidebarWidth", size + "px");
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.Settings = Settings;
