@@ -1,15 +1,20 @@
 // @ts-check
 
+import { app } from "./app.js";
+import { config } from "./config.js";
+import { Events } from "../lib/events.js";
+import { $ } from "../lib/util.js";
+
 /**
  * Registers the service worker and reports when a new one is waiting.
  *
  * Emits `updateready` when an update is ready to take over, but only for
  * checks the user asked for.
  */
-class AppServiceWorker extends Events {
+export class AppServiceWorker extends Events {
   /** @returns {boolean} Whether the browser supports service workers and the build enables them. */
   static isEnabled() {
-    return !!navigator.serviceWorker && app.config.service_worker_enabled;
+    return !!navigator.serviceWorker && config.service_worker_enabled;
   }
 
   /** Registers the worker and starts watching for updates. */
@@ -20,7 +25,7 @@ class AppServiceWorker extends Events {
     this.notifyUpdate = true;
 
     navigator.serviceWorker
-      .register(app.config.service_worker_path, { scope: "/" })
+      .register(config.service_worker_path, { scope: "/" })
       .then(
         (registration) => this.updateRegistration(registration),
         (error) => console.error("Could not register service worker:", error),
@@ -92,7 +97,3 @@ class AppServiceWorker extends Events {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.ServiceWorker = AppServiceWorker;

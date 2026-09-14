@@ -1,41 +1,20 @@
 // @ts-check
 
-//= require_tree ./vendor
+import { app } from "./app/app.js";
+import "./tracking.js";
 
-//= require lib/license
-//= require_tree ./lib
-
-//= require app/app
-//= require app/config
-//= require_tree ./app
-
-//= require collections/collection
-//= require_tree ./collections
-
-//= require models/model
-//= require_tree ./models
-
-//= require views/view
-//= require_tree ./views
-
-//= require_tree ./templates
-
-//= link_tree ../images/sprites
-
-//= require tracking
-
-/**
- * Boots the app once the document is ready, retrying until the body exists —
- * the bundle is loaded in the head, so it can run before the body is parsed.
+/*
+ * Copyright 2013-2026 Thibaut Courouble and other contributors
+ *
+ * This source code is licensed under the terms of the Mozilla
+ * Public License, v. 2.0, a copy of which may be obtained at:
+ * http://mozilla.org/MPL/2.0/
  */
-var init = function () {
-  document.removeEventListener("DOMContentLoaded", init, false);
 
-  if (document.body) {
-    return app.init();
-  } else {
-    return setTimeout(init, 42);
-  }
-};
+// The entry module. Everything else is reached through imports from here; the
+// import map pins each module to its content-digested URL, so the whole graph
+// is fetched from immutable, individually cacheable files.
 
-document.addEventListener("DOMContentLoaded", init, false);
+// Module scripts are deferred, so the document has been parsed by the time
+// this runs and `document.body` is always there.
+app.init();

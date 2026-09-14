@@ -1,9 +1,10 @@
 // @ts-check
 
-//= require views/list/paginated_list
+import { PaginatedList } from "../list/paginated_list.js";
+/** @import { Entry } from "../../models/entry.js" */
 
 /** The entries of one type, shown under it in the sidebar. */
-class EntryList extends PaginatedList {
+export class EntryList extends PaginatedList {
   static tagName = "div";
   static className = "_list _list-sub";
 
@@ -29,7 +30,3 @@ class EntryList extends PaginatedList {
     return this.tmpl("sidebarEntry", entries);
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.EntryList = EntryList;

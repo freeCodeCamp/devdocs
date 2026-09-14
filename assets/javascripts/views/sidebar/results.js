@@ -1,12 +1,23 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { $ } from "../../lib/util.js";
+import { ListFocus } from "../list/list_focus.js";
+import { ListSelect } from "../list/list_select.js";
+import { View } from "../view.js";
+/** @import { Context } from "../../lib/page.js" */
+/** @import { Doc } from "../../models/doc.js" */
+/** @import { Entry } from "../../models/entry.js" */
+/** @import { Search } from "../search/search.js" */
+/** @import { Sidebar } from "./sidebar.js" */
+
 /**
  * The search results in the sidebar.
  *
  * Results arrive in batches as the searcher works through the entries, so
  * only the first batch clears the list and moves the focus.
  */
-class Results extends app.View {
+export class Results extends View {
   static className = "_list";
 
   static events = { click: "onClick" };
@@ -34,8 +45,8 @@ class Results extends app.View {
 
   /** Called by the constructor once `search` is set. */
   init0() {
-    this.addSubview((this.listFocus = new app.views.ListFocus(this.el)));
-    this.addSubview((this.listSelect = new app.views.ListSelect(this.el)));
+    this.addSubview((this.listFocus = new ListFocus(this.el)));
+    this.addSubview((this.listSelect = new ListSelect(this.el)));
 
     this.search
       .on("results", (entries, flags) =>
@@ -132,7 +143,3 @@ class Results extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Results = Results;

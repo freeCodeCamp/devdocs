@@ -1,5 +1,11 @@
 // @ts-check
 
+import { app } from "../app/app.js";
+import { $ } from "../lib/util.js";
+/** @import { Doc } from "../models/doc.js" */
+/** @import { Entry } from "../models/entry.js" */
+/** @import { Type } from "../models/type.js" */
+
 /**
  * How a sidebar row is rendered.
  *
@@ -11,8 +17,6 @@
  * @property {number} [count] How many docs the heading covers.
  */
 
-const { templates } = app;
-
 /** The disclosure triangle shown on a sidebar row that can be expanded. */
 const arrow = '<svg class="_list-arrow"><use xlink:href="#icon-dir"/></svg>';
 
@@ -23,7 +27,7 @@ const arrow = '<svg class="_list-arrow"><use xlink:href="#icon-dir"/></svg>';
  * @param {SidebarOptions} [options]
  * @returns {string}
  */
-templates.sidebarDoc = function (doc, options) {
+export const sidebarDoc = function (doc, options) {
   if (options == null) {
     options = {};
   }
@@ -51,7 +55,7 @@ templates.sidebarDoc = function (doc, options) {
  * @param {Type} type
  * @returns {string}
  */
-templates.sidebarType = (type) =>
+export const sidebarType = (type) =>
   `<a href="${type.fullPath()}" class="_list-item _list-dir" data-slug="${
     type.slug
   }" tabindex="-1">${arrow}<span class="_list-count">${
@@ -64,7 +68,7 @@ templates.sidebarType = (type) =>
  * @param {Entry} entry
  * @returns {string}
  */
-templates.sidebarEntry = (entry) =>
+export const sidebarEntry = (entry) =>
   `<a href="${entry.fullPath()}" class="_list-item _list-hover" tabindex="-1">${$.escape(
     entry.name,
   )}</a>`;
@@ -76,7 +80,7 @@ templates.sidebarEntry = (entry) =>
  * @param {Entry} entry
  * @returns {string}
  */
-templates.sidebarResult = function (entry) {
+export const sidebarResult = function (entry) {
   let addons =
     entry.isIndex() && app.disabledDocs.contains(entry.doc)
       ? `<span class="_list-enable" data-enable="${entry.doc.slug}">Enable</span>`
@@ -97,7 +101,7 @@ templates.sidebarResult = function (entry) {
  *
  * @returns {string}
  */
-templates.sidebarNoResults = function () {
+export const sidebarNoResults = function () {
   let html = ' <div class="_list-note">No results.</div> ';
   if (!app.isSingleDoc() && !app.disabledDocs.isEmpty()) {
     html += `\
@@ -113,7 +117,7 @@ templates.sidebarNoResults = function () {
  * @param {number} count How many entries are left.
  * @returns {string}
  */
-templates.sidebarPageLink = (count) =>
+export const sidebarPageLink = (count) =>
   `<span role="link" class="_list-item _list-pagelink">Show more\u2026 (${count})</span>`;
 
 /**
@@ -123,7 +127,7 @@ templates.sidebarPageLink = (count) =>
  * @param {SidebarOptions} [options]
  * @returns {string}
  */
-templates.sidebarLabel = function (doc, options) {
+export const sidebarLabel = function (doc, options) {
   if (options == null) {
     options = {};
   }
@@ -146,7 +150,7 @@ templates.sidebarLabel = function (doc, options) {
  * @param {SidebarOptions} [options]
  * @returns {string}
  */
-templates.sidebarVersionedDoc = function (doc, versions, options) {
+export const sidebarVersionedDoc = function (doc, versions, options) {
   if (options == null) {
     options = {};
   }
@@ -166,14 +170,14 @@ templates.sidebarVersionedDoc = function (doc, versions, options) {
  * @param {SidebarOptions} options
  * @returns {string}
  */
-templates.sidebarDisabled = (options) =>
+export const sidebarDisabled = (options) =>
   `<h6 class="_list-title">${arrow}Disabled (${options.count}) <a href="/settings" class="_list-title-link" tabindex="-1">Customize</a></h6>`;
 
 /**
  * @param {string} html The rendered disabled docs.
  * @returns {string}
  */
-templates.sidebarDisabledList = (html) =>
+export const sidebarDisabledList = (html) =>
   `<div class="_disabled-list">${html}</div>`;
 
 /**
@@ -183,13 +187,13 @@ templates.sidebarDisabledList = (html) =>
  * @param {string} versions The rendered rows for each version.
  * @returns {string}
  */
-templates.sidebarDisabledVersionedDoc = (doc, versions) =>
+export const sidebarDisabledVersionedDoc = (doc, versions) =>
   `<a class="_list-item _list-dir _icon-${doc.icon} _list-disabled" data-slug="${doc.slug_without_version}" tabindex="-1">${arrow}${doc.name}</a><div class="_list _list-sub">${versions}</div>`;
 
-templates.docPickerHeader =
+export const docPickerHeader =
   '<div class="_list-picker-head"><span>Documentation</span> <span>Enable</span></div>';
 
-templates.docPickerNote = `\
+export const docPickerNote = `\
 <div class="_list-note">Tip: for faster and better search results, select only the docs you need.</div>
 <a href="https://trello.com/b/6BmTulfx/devdocs-documentation" class="_list-link" target="_blank" rel="noopener">Vote for new documentation</a>\
 `;

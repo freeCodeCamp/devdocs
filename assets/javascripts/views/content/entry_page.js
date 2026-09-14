@@ -1,5 +1,19 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { config } from "../../app/config.js";
+import { setFaviconForDoc } from "../../lib/favicon.js";
+import { $ } from "../../lib/util.js";
+import { Notice } from "../misc/notice.js";
+import { BasePage } from "../pages/base.js";
+import { HiddenPage } from "../pages/hidden.js";
+import { JqueryPage } from "../pages/jquery.js";
+import { RdocPage } from "../pages/rdoc.js";
+import { SqlitePage } from "../pages/sqlite.js";
+import { SupportTablesPage } from "../pages/support_tables.js";
+import { View } from "../view.js";
+/** @import { Context } from "../../lib/page.js" */
+
 /**
  * An entry's page.
  *
@@ -8,7 +22,14 @@
  * which is what the sub-view classes in views/pages are for. Recently viewed
  * pages are kept in memory so that going back doesn't refetch them.
  */
-class EntryPage extends app.View {
+/**
+ * The doc-type-specific page views, by the name `subViewClass` derives from
+ * the doc's type. These used to be found on the global view registry; listing
+ * them keeps the modules reachable from the import graph.
+ */
+const TYPE_PAGES = { JqueryPage, RdocPage, SqlitePage, SupportTablesPage };
+
+export class EntryPage extends View {
   static className = "_page";
   static errorClass = "_page-error";
 
@@ -73,7 +94,7 @@ class EntryPage extends app.View {
     });
 
     if (app.disabledDocs.findBy("slug", this.entry.doc.slug)) {
-      this.hiddenView = new app.views.HiddenPage(this.el, this.entry);
+      this.hiddenView = new HiddenPage(this.el, this.entry);
     }
 
     setFaviconForDoc(this.entry.doc);
@@ -108,7 +129,7 @@ class EntryPage extends app.View {
     this.polyfilledMathML = true;
     $.append(
       document.head,
-      `<link rel="stylesheet" href="${app.config.mathml_stylesheet}">`,
+      `<link rel="stylesheet" href="${config.mathml_stylesheet}">`,
     );
   }
 
@@ -148,7 +169,7 @@ class EntryPage extends app.View {
   subViewClass() {
     // doc.type is optional (e.g. the Q documentation has none).
     const type = this.entry.doc.type;
-    return (type && app.views[`${$.classify(type)}Page`]) || app.views.BasePage;
+    return (type && TYPE_PAGES[`${$.classify(type)}Page`]) || BasePage;
   }
 
   /** @returns {string} */
@@ -232,7 +253,7 @@ class EntryPage extends app.View {
     this.cacheMap[path] = this.el.innerHTML;
     this.cacheStack.push(path);
 
-    while (this.cacheStack.length > app.config.history_cache_size) {
+    while (this.cacheStack.length > config.history_cache_size) {
       delete this.cacheMap[this.cacheStack.shift()];
     }
   }
@@ -306,7 +327,7 @@ class EntryPage extends app.View {
   /** @param {string} type Names the notice template to show. */
   showTransientNotice(type) {
     this.hideTransientNotice();
-    this.transientNotice = new app.views.Notice(type);
+    this.transientNotice = new Notice(type);
     // Persistent notices (single doc, disabled doc) share the same bounds and
     // z-index, so raise this one to keep it visible while it's shown.
     this.transientNotice.addClass("_notice-transient");
@@ -324,7 +345,3 @@ class EntryPage extends app.View {
     this.transientNoticeTimer = null;
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.EntryPage = EntryPage;

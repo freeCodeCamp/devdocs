@@ -1,12 +1,16 @@
 // @ts-check
 
-// Timing instrumentation, loaded in place of the app's own bundle during
-// development. Wraps the boot sequence and the searcher in console timers, and
-// adds `viewTree()` for inspecting which views are active.
+// Timing instrumentation, loaded alongside the app during development. Wraps
+// the boot sequence and the searcher in console timers, and exposes
+// `viewTree()` on `window` for inspecting which views are active.
 
 //
 // App
 //
+
+import { app } from "./app/app.js";
+import { Searcher } from "./app/searcher.js";
+/** @import { View } from "./views/view.js" */
 
 const _init = app.init;
 app.init = function () {
@@ -28,49 +32,54 @@ app.start = function () {
 // Searcher
 //
 
-/** The searcher, with each matcher's pass timed. */
-app.Searcher = class TimingSearcher extends app.Searcher {
-  /** Opens the timing group for this query. */
-  setup() {
-    console.groupCollapsed(`Search: ${this.query}`);
-    console.time("Total");
-    return super.setup();
-  }
+// The search views import `Searcher` directly, so the timing subclass can't be
+// swapped in under them any more; the timers are patched onto the prototype.
 
-  /** Closes the previous matcher's timer before moving on. */
-  match() {
+const _setup = Searcher.prototype.setup;
+/** Opens the timing group for this query. */
+Searcher.prototype.setup = function () {
+  console.groupCollapsed(`Search: ${this.query}`);
+  console.time("Total");
+  return _setup.call(this);
+};
+
+const _match = Searcher.prototype.match;
+/** Closes the previous matcher's timer before moving on. */
+Searcher.prototype.match = function () {
+  if (this.matcher) {
+    console.timeEnd(this.matcher.name);
+  }
+  return _match.call(this);
+};
+
+const _setupMatcher = Searcher.prototype.setupMatcher;
+/** Starts a timer for the matcher about to run. */
+Searcher.prototype.setupMatcher = function () {
+  console.time(this.matcher.name);
+  return _setupMatcher.call(this);
+};
+
+const _end = Searcher.prototype.end;
+/** Reports the result count and closes the group. */
+Searcher.prototype.end = function () {
+  console.log(`Results: ${this.totalResults}`);
+  console.timeEnd("Total");
+  console.groupEnd();
+  return _end.call(this);
+};
+
+const _kill = Searcher.prototype.kill;
+/** Closes the group when a search is abandoned part-way. */
+Searcher.prototype.kill = function () {
+  if (this.timeout) {
     if (this.matcher) {
       console.timeEnd(this.matcher.name);
     }
-    return super.match();
-  }
-
-  /** Starts a timer for the matcher about to run. */
-  setupMatcher() {
-    console.time(this.matcher.name);
-    return super.setupMatcher();
-  }
-
-  /** Reports the result count and closes the group. */
-  end() {
-    console.log(`Results: ${this.totalResults}`);
-    console.timeEnd("Total");
     console.groupEnd();
-    return super.end();
+    console.timeEnd("Total");
+    console.warn("Killed");
   }
-
-  /** Closes the group when a search is abandoned part-way. */
-  kill() {
-    if (this.timeout) {
-      if (this.matcher) {
-        console.timeEnd(this.matcher.name);
-      }
-      console.groupEnd();
-      console.timeEnd("Total");
-      console.warn("Killed");
-    }
-    return super.kill();
-  }
+  return _kill.call(this);
 };
 
 //
@@ -86,7 +95,7 @@ app.Searcher = class TimingSearcher extends app.Searcher {
  * @param {unknown[]} [visited] The views already printed, so that the shared ones
  *   aren't walked twice.
  */
-this.viewTree = function (view, level, visited) {
+function viewTree(view, level, visited) {
   if (view == null) {
     view = app.document;
   }
@@ -112,15 +121,18 @@ this.viewTree = function (view, level, visited) {
     var value = view[key];
     if (key !== "view" && value) {
       if (typeof value === "object" && value.setupElement) {
-        this.viewTree(value, level + 1, visited);
+        viewTree(value, level + 1, visited);
       } else if (value.constructor.toString().match(/Object\(\)/)) {
         for (var k of Object.keys(value || {})) {
           var v = value[k];
           if (v && typeof v === "object" && v.setupElement) {
-            this.viewTree(v, level + 1, visited);
+            viewTree(v, level + 1, visited);
           }
         }
       }
     }
   }
-};
+}
+
+// Reachable from the console, where the module scope isn't.
+window.viewTree = viewTree;

@@ -1,12 +1,19 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { config } from "../../app/config.js";
+import { AppServiceWorker } from "../../app/serviceworker.js";
+import { $ } from "../../lib/util.js";
+/** @import { ImportSummary } from "../../app/offline_backup.js" */
+/** @import { Doc, InstallStatus } from "../../models/doc.js" */
+
 /**
  * @param {string} docs The rendered rows, one per doc.
  * @param {boolean} hasPersistence Whether the browser exposes the storage API.
  * @param {boolean} isPersistent Whether storage has already been made persistent.
  * @returns {string}
  */
-app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
+export const offlinePage = (docs, hasPersistence, isPersistent) => `\
 <h1 class="_lined-heading">Offline Documentation</h1>
 
 <div class="_docs-tools">
@@ -62,21 +69,21 @@ app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
  * @param {number} total
  * @returns {string}
  */
-app.templates.backupProgress = (action, doc, i, total) =>
+export const backupProgress = (action, doc, i, total) =>
   `${action} ${doc.fullName}\u2026 (${i}/${total})`;
 
 /**
  * @param {number} count
  * @returns {string}
  */
-app.templates.backupExported = (count) =>
+export const backupExported = (count) =>
   `Exported ${count} ${pluralizeDocs(count)}.`;
 
 /**
  * @param {ImportSummary} result
  * @returns {string}
  */
-app.templates.backupImported = function (result) {
+export const backupImported = function (result) {
   let html = `<strong>Imported ${result.docs.length} ${pluralizeDocs(
     result.docs.length
   )}.</strong>`;
@@ -99,7 +106,7 @@ app.templates.backupImported = function (result) {
  * @param {string} reason Why the export or import couldn't be done.
  * @returns {string}
  */
-app.templates.backupError = function (reason) {
+export const backupError = function (reason) {
   switch (reason) {
     case "empty":
       return "<strong>No documentation is installed.</strong> Install one before exporting.";
@@ -129,7 +136,7 @@ var listSlugs = (slugs) => slugs.map((slug) => $.escape(slug)).join(", ");
  * @param {Error} [exception] The error the browser reported, when there was one.
  * @returns {string}
  */
-app.templates.persistenceError = function (exception) {
+export const persistenceError = function (exception) {
   const reason = exception
     ? `<code class="_label">${exception.name}: ${exception.message}</code>`
     : "Bookmark this site and try again.";
@@ -165,12 +172,12 @@ var offlinePersistenceNote = function (hasPersistence, isPersistent) {
 };
 
 var canICloseTheTab = function () {
-  if (app.ServiceWorker.isEnabled()) {
+  if (AppServiceWorker.isEnabled()) {
     return ' Yes! Even offline, you can open a new tab, go to <a href="//devdocs.io">devdocs.io</a>, and everything will work as if you were online (provided you installed all the documentations you want to use beforehand). ';
   } else {
     let reason = "aren't available in your browser (or are disabled)";
 
-    if (app.config.env !== "production") {
+    if (config.env !== "production") {
       reason =
         "are disabled in your development instance of DevDocs (enable them by setting the <code>ENABLE_SERVICE_WORKER</code> environment variable to <code>true</code>)";
     }
@@ -187,7 +194,7 @@ The current tab will continue to function even when you go offline (provided you
  * @param {InstallStatus} status
  * @returns {string}
  */
-app.templates.offlineDoc = function (doc, status) {
+export const offlineDoc = function (doc, status) {
   const outdated = doc.isOutdated(status);
 
   let html = `\

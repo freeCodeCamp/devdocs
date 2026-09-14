@@ -1,9 +1,10 @@
 // @ts-check
 
-//= require views/pages/base
+import { $ } from "../../lib/util.js";
+import { BasePage } from "./base.js";
 
 /** The RDoc pages' "Show source" toggles. */
-class RdocPage extends BasePage {
+export class RdocPage extends BasePage {
   static events = { click: "onClick" };
 
   /** @param {ViewMouseEvent} event */
@@ -23,7 +24,3 @@ class RdocPage extends BasePage {
     return (event.target.textContent = isShown ? "Show source" : "Hide source");
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.RdocPage = RdocPage;

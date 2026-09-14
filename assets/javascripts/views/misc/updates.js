@@ -1,12 +1,16 @@
 // @ts-check
 
-//= require views/misc/notif
+import { app } from "../../app/app.js";
+import { config } from "../../app/config.js";
+import { notifUpdates } from "../../templates/notif_tmpl.js";
+import { Notif } from "./notif.js";
+/** @import { Doc } from "../../models/doc.js" */
 
 /**
  * The notification listing the docs that gained a new release since the
  * user last saw it.
  */
-class Updates extends Notif {
+export class Updates extends Notif {
   static className = "_notif _notif-news";
 
   static defautOptions = { autoHide: 30000 };
@@ -25,7 +29,7 @@ class Updates extends Notif {
   /** @inheritdoc */
   render() {
     this.html(
-      app.templates.notifUpdates(this.updatedDocs, this.updatedDisabledDocs),
+      notifUpdates(this.updatedDocs, this.updatedDisabledDocs),
     );
   }
 
@@ -68,13 +72,9 @@ class Updates extends Notif {
   markAllAsRead() {
     app.settings.set(
       "version",
-      app.config.env === "production"
-        ? app.config.version
+      config.env === "production"
+        ? config.version
         : Math.floor(Date.now() / 1000),
     );
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Updates = Updates;

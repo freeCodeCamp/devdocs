@@ -45,7 +45,18 @@ class App < Sinatra::Application
     set :assets_prefix, 'assets'
     set :assets_path, File.join(public_folder, assets_prefix)
     set :assets_manifest_path, File.join(assets_path, 'manifest.json')
-    set :assets_compile, %w(*.png docs.js docs.json application.js application.css application-dark.css)
+    # Every ES module in the app, by the logical path the import map keys on.
+    # The vendored libraries are concatenated into vendor.js, and unsupported.js
+    # guards the module graph from outside it, so neither is a module; the debug
+    # module is only served outside production.
+    set :js_modules, Dir.glob('**/*.js{,.erb}', base: root.join('assets', 'javascripts'))
+                        .reject { |path| path.start_with?('vendor/') ||
+                                         %w(vendor.js unsupported.js).include?(path) }
+                        .map { |path| path.delete_suffix('.erb') }
+                        .sort
+                        .freeze
+
+    set :assets_compile, %w(*.png docs.json vendor.js unsupported.js application.css application-dark.css) + js_modules
 
     require 'json'
     set :docs_prefix, 'docs'
@@ -106,7 +117,10 @@ class App < Sinatra::Application
       urls: %w(/assets /docs/ /images /favicon.ico /robots.txt /opensearch.xml /mathml.css /manifest.json),
       header_rules: [
         [:all,              { 'Cache-Control' => 'no-cache, max-age=0'    }],
-        ['/assets',         { 'Cache-Control' => 'public, max-age=604800' }],
+        # Every asset under /assets is content-digested, so a URL's body never
+        # changes. The import map in the (uncached) HTML is what moves a client
+        # onto a new build, all of it at once.
+        ['/assets',         { 'Cache-Control' => 'public, max-age=31536000, immutable' }],
         ['/docs',           { 'Cache-Control' => 'public, max-age=86400'  }],
         ['/images',         { 'Cache-Control' => 'public, max-age=86400'  }],
         ['/favicon.ico',    { 'Cache-Control' => 'public, max-age=86400'  }],
@@ -207,14 +221,54 @@ class App < Sinatra::Application
       request.query_string.empty? ? nil : "?#{request.query_string}"
     end
 
+    # Every module the import map has to cover. The debug module is only
+    # served outside production, where it patches the boot in console timers.
+    def mapped_js_modules
+      @mapped_js_modules ||=
+        App.production? ? App.js_modules - ['debug.js'] : App.js_modules
+    end
+
+    # The modules the app itself pulls in. docs.js is its own entry because
+    # only the full app needs the catalog, and debug.js is its own entry
+    # because it has to run before the boot it wraps.
+    def page_js_modules
+      @page_js_modules ||= mapped_js_modules - ['debug.js', 'docs.js']
+    end
+
+    # Maps every module's source URL onto its content-digested one.
+    #
+    # The modules import each other by relative path. The browser resolves
+    # those against the importing module's own (digested) URL, which yields the
+    # undigested path, and then rewrites it through this map. That keeps the
+    # source free of digests while every response stays immutable.
+    #
+    # It also makes a deploy atomic: the map ships inside the HTML, which is
+    # never cached, so a client reads one build's map and fetches that build's
+    # modules. It can't end up with half of one build and half of another.
+    def import_map_json
+      imports = mapped_js_modules.to_h do |logical|
+        ["/#{App.assets_prefix}/#{logical}", javascript_path(logical)]
+      end
+      JSON.generate(imports: imports)
+    end
+
+    # Preloads the whole graph so the browser fetches it in parallel instead of
+    # discovering one level of imports per round trip.
+    # @param extra [Array<String>] Entries this page loads on top of the app's.
+    def module_preload_tags(*extra)
+      (page_js_modules + extra)
+        .map { |logical| %(<link rel="modulepreload" href="#{javascript_path(logical)}">) }
+        .join("\n")
+    end
+
     def service_worker_asset_urls
       @@service_worker_asset_urls ||= [
-        javascript_path('application'),
+        *mapped_js_modules.map { |logical| javascript_path(logical) },
+        javascript_path('vendor'),
+        javascript_path('unsupported'),
         stylesheet_path('application'),
         image_path('sprites/docs.png'),
         image_path('sprites/docs@2x.png'),
-        asset_path('docs.js'),
-        App.production? ? nil : javascript_path('debug'),
       ].compact
     end
 

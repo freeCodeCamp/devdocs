@@ -1,9 +1,10 @@
 // @ts-check
 
-//= require views/pages/base
+import { $ } from "../../lib/util.js";
+import { BasePage } from "./base.js";
 
 /** The support tables' "show all" buttons, which expand a table in place. */
-class SupportTablesPage extends BasePage {
+export class SupportTablesPage extends BasePage {
   static events = { click: "onClick" };
 
   /** @param {ViewMouseEvent} event */
@@ -20,7 +21,3 @@ class SupportTablesPage extends BasePage {
     el.classList.add("show-all");
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.SupportTablesPage = SupportTablesPage;

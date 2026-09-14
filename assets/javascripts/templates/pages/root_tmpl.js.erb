@@ -1,7 +1,7 @@
-app.templates.splash = "<div class=\"_splash-title\">DevDocs</div>";
+export const splash = "<div class=\"_splash-title\">DevDocs</div>";
 
 <% if App.development? %>
-app.templates.intro = `\
+export const intro = `\
 <div class="_intro"><div class="_intro-message">
   <a href="#" class="_intro-hide" data-hide-intro>Stop showing this message</a>
   <h2 class="_intro-title">Hi there!</h2>
@@ -24,7 +24,7 @@ app.templates.intro = `\
 </div></div>\
 `;
 <% else %>
-app.templates.intro = `\
+export const intro = `\
 <div class="_intro"><div class="_intro-message">
   <a href="#" class="_intro-hide" data-hide-intro>Stop showing this message</a>
   <h2 class="_intro-title">Welcome!</h2>
@@ -46,7 +46,7 @@ app.templates.intro = `\
 `;
 <% end %>
 
-app.templates.mobileIntro = `\
+export const mobileIntro = `\
 <div class="_mobile-intro">
   <h2 class="_intro-title">Welcome!</h2>
   <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
@@ -62,7 +62,7 @@ app.templates.mobileIntro = `\
 </div>\
 `;
 
-app.templates.androidWarning = `\
+export const androidWarning = `\
 <div class="_mobile-intro">
   <h2 class="_intro-title">Hi there</h2>
   <p>DevDocs is running inside an Android WebView. Some features may not work properly.

@@ -1,11 +1,15 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { $ } from "../../lib/util.js";
+import { View } from "../view.js";
+
 /**
  * A persistent bar above the content, e.g. to say that the doc being read is
  * disabled. The type names the template to render: a Notice of type
  * `singleDoc` renders `app.templates.singleDocNotice`.
  */
-class Notice extends app.View {
+export class Notice extends View {
   static className = "_notice";
   static attributes = { role: "alert" };
 
@@ -51,7 +55,3 @@ class Notice extends app.View {
     $.remove(this.el);
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Notice = Notice;

@@ -1,7 +1,12 @@
 // @ts-check
 
+import { setFaviconForDoc } from "../../lib/favicon.js";
+import { View } from "../view.js";
+/** @import { Context } from "../../lib/page.js" */
+/** @import { Type } from "../../models/type.js" */
+
 /** A type's page: every entry of that type in the doc. */
-class TypePage extends app.View {
+export class TypePage extends View {
   static className = "_page";
 
   /** Also forgets which type was shown. */
@@ -29,7 +34,3 @@ class TypePage extends app.View {
     this.render(context.type);
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.TypePage = TypePage;

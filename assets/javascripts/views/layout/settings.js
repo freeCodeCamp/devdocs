@@ -1,12 +1,18 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { Docs } from "../../collections/docs.js";
+import { $ } from "../../lib/util.js";
+import { DocPicker } from "../sidebar/doc_picker.js";
+import { View } from "../view.js";
+
 /**
  * The preferences panel.
  *
  * Saving uninstalls the docs the user turned off and reloads the app, since
  * the offline database's schema is derived from the enabled docs.
  */
-class SettingsView extends View {
+export class SettingsView extends View {
   static SIDEBAR_HIDDEN_LAYOUT = "_sidebar-hidden";
 
   static el = "._settings";
@@ -28,7 +34,7 @@ class SettingsView extends View {
 
   /** @inheritdoc */
   init() {
-    this.addSubview((this.docPicker = new app.views.DocPicker()));
+    this.addSubview((this.docPicker = new DocPicker()));
   }
 
   /** Also renders the panel and forces the sidebar to show. */
@@ -80,7 +86,7 @@ class SettingsView extends View {
       }
 
       this.saveBtn.textContent = "Saving\u2026";
-      const disabledDocs = new app.collections.Docs(
+      const disabledDocs = new Docs(
         (() => {
           const result = [];
           for (var doc of app.docs.all()) {
@@ -131,7 +137,3 @@ class SettingsView extends View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Settings = SettingsView;

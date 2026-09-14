@@ -1,12 +1,18 @@
 // @ts-check
 
+import { $ } from "../../lib/util.js";
+import { EntryList } from "./entry_list.js";
+import { View } from "../view.js";
+/** @import { Doc } from "../../models/doc.js" */
+/** @import { Entry } from "../../models/entry.js" */
+
 /**
  * A doc's types, shown under it in the sidebar.
  *
  * Each type's entries are only built when the type is expanded, and thrown
  * away when it is collapsed — a doc can hold tens of thousands of entries.
  */
-class TypeList extends app.View {
+export class TypeList extends View {
   static tagName = "div";
   static className = "_list _list-sub";
 
@@ -72,7 +78,7 @@ class TypeList extends app.View {
     );
 
     if (type && !this.lists[type.slug]) {
-      this.lists[type.slug] = new app.views.EntryList(type.entries());
+      this.lists[type.slug] = new EntryList(type.entries());
       $.after(event.target, this.lists[type.slug].el);
     }
   }
@@ -106,7 +112,3 @@ class TypeList extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.TypeList = TypeList;

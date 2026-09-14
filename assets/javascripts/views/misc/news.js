@@ -1,9 +1,12 @@
 // @ts-check
 
-//= require views/misc/notif
+import { app } from "../../app/app.js";
+import { news } from "../../templates/pages/news_tmpl.js";
+import { notifNews } from "../../templates/notif_tmpl.js";
+import { Notif } from "./notif.js";
 
 /** The notification listing the changelog entries the user hasn't seen. */
-class News extends Notif {
+export class News extends Notif {
   static className = "_notif _notif-news";
 
   static defaultOptions = { autoHide: 30000 };
@@ -19,10 +22,13 @@ class News extends Notif {
 
   /** @inheritdoc */
   render() {
-    this.html(app.templates.notifNews(this.unreadNews));
+    this.html(notifNews(this.unreadNews));
   }
 
-  /** @returns {Entry[]} Entries published since the user last saw the changelog. */
+  /**
+   * @returns {Array<[string, ...string[]]>} The changelog entries published
+   *   since the user last saw it.
+   */
   getUnreadNews() {
     const time = this.getLastReadTime();
     if (!time) {
@@ -30,18 +36,18 @@ class News extends Notif {
     }
 
     const result = [];
-    for (var news of app.news) {
-      if (new Date(news[0]).getTime() <= time) {
+    for (var entry of news) {
+      if (new Date(entry[0]).getTime() <= time) {
         break;
       }
-      result.push(news);
+      result.push(entry);
     }
     return result;
   }
 
   /** @returns {number} When the newest entry was published, in milliseconds. */
   getLastNewsTime() {
-    return new Date(app.news[0][0]).getTime();
+    return new Date(news[0][0]).getTime();
   }
 
   /** @returns {number} When the user last saw the changelog, in milliseconds. */
@@ -54,7 +60,3 @@ class News extends Notif {
     app.settings.set("news", this.getLastNewsTime());
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.News = News;

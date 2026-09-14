@@ -1,5 +1,10 @@
 // @ts-check
 
+import { $ } from "../../lib/util.js";
+import { ListFold } from "./list_fold.js";
+import { ListSelect } from "./list_select.js";
+import { View } from "../view.js";
+
 /**
  * The lists are built entirely from elements, so the sibling and parent walks
  * below only ever reach one.
@@ -17,7 +22,7 @@ const asElement = (node) => /** @type {HTMLElement | null} */ (node);
  * focused yet, and stepping past the end of a page clicks its pagination link
  * so that the next page is rendered first.
  */
-class ListFocus extends app.View {
+export class ListFocus extends View {
   static activeClass = "focus";
 
   static events = { click: "onClick" };
@@ -67,7 +72,7 @@ class ListFocus extends app.View {
   getCursor() {
     return (
       this.findByClass(this.statics().activeClass) ||
-      this.findByClass(app.views.ListSelect.activeClass)
+      this.findByClass(ListSelect.activeClass)
     );
   }
 
@@ -194,11 +199,11 @@ class ListFocus extends app.View {
     const cursor = this.getCursor();
     if (
       cursor &&
-      !cursor.classList.contains(app.views.ListFold.activeClass) &&
+      !cursor.classList.contains(ListFold.activeClass) &&
       cursor.parentNode !== this.el
     ) {
       const prev = asElement(asElement(cursor.parentNode)?.previousSibling ?? null);
-      if (prev && prev.classList.contains(app.views.ListFold.targetClass)) {
+      if (prev && prev.classList.contains(ListFold.targetClass)) {
         this.focusOnNextFrame(prev);
       }
     }
@@ -231,7 +236,3 @@ class ListFocus extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.ListFocus = ListFocus;

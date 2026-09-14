@@ -11,7 +11,10 @@ class AssetsCLI < Thor
 
   desc 'compile [--clean] [--keep=<n>] [--verbose]', 'Compile all assets'
   option :clean, type: :boolean, desc: 'Clean old assets after compilation'
-  option :keep, type: :numeric, default: 0, desc: 'Number of old assets to keep'
+  # A client that loaded the page just before a deploy is still fetching that
+  # build's modules by their digested URLs, so a few builds' worth are kept
+  # rather than pulling them out from under it.
+  option :keep, type: :numeric, default: 2, desc: 'Number of old assets to keep'
   option :verbose, type: :boolean
   def compile
     load 'tasks/sprites.thor'
@@ -22,7 +25,7 @@ class AssetsCLI < Thor
   end
 
   desc 'clean [--keep=<n>] [--verbose]', 'Clean old assets'
-  option :keep, type: :numeric, default: 0, desc: 'Number of old assets to keep'
+  option :keep, type: :numeric, default: 2, desc: 'Number of old assets to keep'
   option :verbose, type: :boolean
   def clean
     manifest.clean(options[:keep])

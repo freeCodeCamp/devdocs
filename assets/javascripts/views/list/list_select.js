@@ -1,12 +1,15 @@
 // @ts-check
 
+import { $ } from "../../lib/util.js";
+import { View } from "../view.js";
+
 /**
  * The selected row of a list — the entry currently being read, which stays
  * marked as the user moves the focus around.
  *
  * Selecting and deselecting emit `select` and `deselect` on the row.
  */
-class ListSelect extends app.View {
+export class ListSelect extends View {
   static activeClass = "active";
 
   static events = { click: "onClick" };
@@ -64,7 +67,3 @@ class ListSelect extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.ListSelect = ListSelect;

@@ -1,5 +1,9 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { $ } from "../../lib/util.js";
+import { View } from "../view.js";
+
 /**
  * The handle between the sidebar and the content.
  *
@@ -7,7 +11,7 @@
  * saved on `dragend`; `dragover` fires far too often to write to storage, so
  * the live resize is throttled to one animation frame.
  */
-class Resizer extends app.View {
+export class Resizer extends View {
   static className = "_resizer";
 
   static events = {
@@ -89,7 +93,3 @@ class Resizer extends app.View {
     this.resize(value, true);
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Resizer = Resizer;

@@ -1,12 +1,16 @@
 // @ts-check
 
-//= require app/searcher
-
 // An entry's own properties are declared in globals.d.ts, for the reason
 // given in models/doc.js.
 
+import { app } from "../app/app.js";
+import { config } from "../app/config.js";
+import { Searcher } from "../app/searcher.js";
+import { Model } from "./model.js";
+/** @import { Type } from "./type.js" */
+
 /** One searchable page, or a heading within one. */
-class Entry extends Model {
+export class Entry extends Model {
   /**
    * Expands a searchable string with its alias, if it has one, so that both
    * spellings match.
@@ -16,7 +20,7 @@ class Entry extends Model {
    *   otherwise the string unchanged.
    */
   static applyAliases(string) {
-    const aliases = app.config.docs_aliases;
+    const aliases = config.docs_aliases;
     if (aliases.hasOwnProperty(string)) {
       return [string, aliases[string]];
     } else {
@@ -35,7 +39,7 @@ class Entry extends Model {
   /** @param {Record<string, unknown>} [attributes] Copied onto the entry by Model. */
   constructor(attributes) {
     super(attributes);
-    this.text = Entry.applyAliases(app.Searcher.normalizeString(this.name));
+    this.text = Entry.applyAliases(Searcher.normalizeString(this.name));
   }
 
   /**
@@ -44,7 +48,7 @@ class Entry extends Model {
    * @param {string} name
    */
   addAlias(name) {
-    const text = Entry.applyAliases(app.Searcher.normalizeString(name));
+    const text = Entry.applyAliases(Searcher.normalizeString(name));
     if (!Array.isArray(this.text)) {
       this.text = [this.text];
     }
@@ -104,7 +108,3 @@ class Entry extends Model {
     return app.db.load(this, onSuccess, onError);
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.models.Entry = Entry;

@@ -12,7 +12,7 @@
  *
  * @typedef {(...args: unknown[]) => void} EventCallback
  */
-class Events {
+export class Events {
   /**
    * Registered callbacks, keyed by event name. Created on first `on` call.
    *

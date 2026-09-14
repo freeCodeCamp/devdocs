@@ -1,5 +1,18 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { config } from "../../app/config.js";
+import { resetFavicon } from "../../lib/favicon.js";
+import { $ } from "../../lib/util.js";
+import { EntryPage } from "./entry_page.js";
+import { OfflinePage } from "./offline_page.js";
+import { RootPage } from "./root_page.js";
+import { SettingsPage } from "./settings_page.js";
+import { StaticPage } from "./static_page.js";
+import { TypePage } from "./type_page.js";
+import { View } from "../view.js";
+/** @import { Context } from "../../lib/page.js" */
+
 /**
  * The pane holding whichever page is being shown.
  *
@@ -8,7 +21,7 @@
  * the way back, which is why the app turns the browser's own scroll
  * restoration off (see lib/page.js).
  */
-class Content extends app.View {
+export class Content extends View {
   static el = "._content";
   static loadingClass = "_content-loading";
 
@@ -37,12 +50,12 @@ class Content extends app.View {
     this.scrollMap = {};
     this.scrollStack = [];
 
-    this.rootPage = new app.views.RootPage();
-    this.staticPage = new app.views.StaticPage();
-    this.settingsPage = new app.views.SettingsPage();
-    this.offlinePage = new app.views.OfflinePage();
-    this.typePage = new app.views.TypePage();
-    this.entryPage = new app.views.EntryPage();
+    this.rootPage = new RootPage();
+    this.staticPage = new StaticPage();
+    this.settingsPage = new SettingsPage();
+    this.offlinePage = new OfflinePage();
+    this.typePage = new TypePage();
+    this.entryPage = new EntryPage();
 
     this.entryPage
       .on("loading", () => this.onEntryLoading())
@@ -219,7 +232,7 @@ class Content extends app.View {
 
     if (this.scrollMap[this.routeCtx.state.id] == null) {
       this.scrollStack.push(this.routeCtx.state.id);
-      while (this.scrollStack.length > app.config.history_cache_size) {
+      while (this.scrollStack.length > config.history_cache_size) {
         delete this.scrollMap[this.scrollStack.shift()];
       }
     }
@@ -316,7 +329,3 @@ class Content extends app.View {
     return url?.startsWith("http:") || url?.startsWith("https:");
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Content = Content;

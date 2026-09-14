@@ -1,10 +1,15 @@
 // @ts-check
 
+import { $ } from "../../lib/util.js";
+import { Notice } from "../misc/notice.js";
+import { View } from "../view.js";
+/** @import { Entry } from "../../models/entry.js" */
+
 /**
  * An entry belonging to a doc that isn't enabled: shown with a notice, and
  * with its links opened outside the app.
  */
-class HiddenPage extends app.View {
+export class HiddenPage extends View {
   static events = { click: "onClick" };
 
   /**
@@ -18,7 +23,7 @@ class HiddenPage extends app.View {
 
   /** @inheritdoc */
   init() {
-    this.notice = new app.views.Notice("disabledDoc");
+    this.notice = new Notice("disabledDoc");
     this.addSubview(this.notice);
     this.activate();
   }
@@ -32,7 +37,3 @@ class HiddenPage extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.HiddenPage = HiddenPage;

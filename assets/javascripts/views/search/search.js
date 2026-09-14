@@ -1,5 +1,15 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { config } from "../../app/config.js";
+import { Searcher } from "../../app/searcher.js";
+import { $ } from "../../lib/util.js";
+import { SearchScope } from "./search_scope.js";
+import { View } from "../view.js";
+/** @import { Context } from "../../lib/page.js" */
+/** @import { Doc } from "../../models/doc.js" */
+/** @import { Entry } from "../../models/entry.js" */
+
 /**
  * The search field at the top of the sidebar.
  *
@@ -7,8 +17,8 @@
  * that a search can be linked to. Also offers handing the query to an external
  * search engine, scoped to the doc's own site where there is one.
  */
-class Search extends app.View {
-  static SEARCH_PARAM = app.config.search_param;
+export class Search extends View {
+  static SEARCH_PARAM = config.search_param;
 
   static el = "._search";
   static activeClass = "_search-active";
@@ -37,9 +47,9 @@ class Search extends app.View {
 
   /** @inheritdoc */
   init() {
-    this.addSubview((this.scope = new app.views.SearchScope(this.el)));
+    this.addSubview((this.scope = new SearchScope(this.el)));
 
-    this.searcher = new app.Searcher();
+    this.searcher = new Searcher();
     this.searcher
       .on("results", (results) => this.onResults(/** @type {Entry[]} */ (results)))
       .on("end", () => this.onEnd());
@@ -267,7 +277,3 @@ class Search extends app.View {
     } catch (error) {}
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Search = Search;

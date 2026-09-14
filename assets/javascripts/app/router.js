@@ -1,5 +1,10 @@
 // @ts-check
 
+import { app } from "./app.js";
+import { Events } from "../lib/events.js";
+import { page } from "../lib/page.js";
+/** @import { Context } from "../lib/page.js" */
+
 /**
  * Maps paths to route events.
  *
@@ -7,7 +12,7 @@
  * order. A handler either triggers its route event and returns nothing, or
  * returns a path to redirect to, or calls `next` to fall through.
  */
-class Router extends Events {
+export class Router extends Events {
   static routes = [
     ["*", "before"],
     ["/", "root"],
@@ -268,7 +273,3 @@ class Router extends Events {
     );
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.Router = Router;

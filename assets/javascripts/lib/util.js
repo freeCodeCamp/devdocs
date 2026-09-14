@@ -97,7 +97,7 @@
 let smoothDistance, smoothDuration, smoothEnd, smoothStart;
 // The helpers are attached to `$` below, so the function on its own doesn't
 // yet satisfy the type the global is declared with.
-this.$ = /** @type {DollarQuery & DollarHelpers} */ (
+export const $ = /** @type {DollarQuery & DollarHelpers} */ (
   /** @type {DollarQuery} */ (
     function (selector, el) {
       if (el == null) {
@@ -111,7 +111,7 @@ this.$ = /** @type {DollarQuery & DollarHelpers} */ (
 );
 
 /** @type {DollarQueryAll} */
-this.$$ = function (selector, el) {
+export const $$ = function (selector, el) {
   if (el == null) {
     el = document;
   }

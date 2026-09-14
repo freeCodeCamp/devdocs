@@ -18,7 +18,7 @@
  * unavailable (private browsing, blocked cookies, quota exhausted) and reports
  * failure by returning `undefined`.
  */
-this.LocalStorageStore = class LocalStorageStore {
+export const LocalStorageStore = class LocalStorageStore {
   /**
    * @param {string} key
    * @returns {unknown} The stored value, or `undefined` if it is missing or unreadable.

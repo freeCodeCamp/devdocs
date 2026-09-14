@@ -1,6 +1,7 @@
 // @ts-check
 
-//= require views/pages/base
+import { $ } from "../../lib/util.js";
+import { BasePage } from "./base.js";
 
 /**
  * The jQuery docs' runnable examples, each rendered into its own iframe.
@@ -9,7 +10,7 @@
  * the API site, and a prefilter is injected that aborts any request that would
  * leave it, since they can't work from inside DevDocs.
  */
-class JqueryPage extends BasePage {
+export class JqueryPage extends BasePage {
   static demoClassName = "_jquery-demo";
 
   /** @inheritdoc */
@@ -92,7 +93,3 @@ class JqueryPage extends BasePage {
     return source.replace(/<script>/gi, '<script nonce="devdocs">');
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.JqueryPage = JqueryPage;

@@ -1,6 +1,8 @@
 // @ts-check
 
-app.templates.tipKeyNav = () => `\
+import { app } from "../app/app.js";
+
+export const tipKeyNav = () => `\
 <p class="_notif-text">
   <strong>ProTip</strong>
   <span class="_notif-info">(click to dismiss)</span>

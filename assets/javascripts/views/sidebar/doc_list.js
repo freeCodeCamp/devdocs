@@ -1,5 +1,18 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { $ } from "../../lib/util.js";
+import { ListFocus } from "../list/list_focus.js";
+import { ListFold } from "../list/list_fold.js";
+import { ListSelect } from "../list/list_select.js";
+import { EntryList } from "./entry_list.js";
+import { TypeList } from "./type_list.js";
+import { View } from "../view.js";
+/** @import { Context } from "../../lib/page.js" */
+/** @import { Doc } from "../../models/doc.js" */
+/** @import { Entry } from "../../models/entry.js" */
+/** @import { Type } from "../../models/type.js" */
+
 /**
  * The list of docs in the sidebar.
  *
@@ -7,7 +20,7 @@
  * collapsed. Disabled docs are listed separately underneath, behind a heading
  * that can be folded away.
  */
-class DocList extends app.View {
+export class DocList extends View {
   static className = "_list";
   static attributes = { role: "navigation" };
 
@@ -28,9 +41,9 @@ class DocList extends app.View {
   init() {
     this.lists = {};
 
-    this.addSubview((this.listFocus = new app.views.ListFocus(this.el)));
-    this.addSubview((this.listFold = new app.views.ListFold(this.el)));
-    this.addSubview((this.listSelect = new app.views.ListSelect(this.el)));
+    this.addSubview((this.listFocus = new ListFocus(this.el)));
+    this.addSubview((this.listFold = new ListFold(this.el)));
+    this.addSubview((this.listSelect = new ListSelect(this.el)));
 
     app.on("ready", () => this.render());
   }
@@ -154,8 +167,8 @@ class DocList extends app.View {
 
     if (doc && !this.lists[doc.slug]) {
       this.lists[doc.slug] = doc.types.isEmpty()
-        ? new app.views.EntryList(doc.entries.all())
-        : new app.views.TypeList(doc);
+        ? new EntryList(doc.entries.all())
+        : new TypeList(doc);
       $.after(event.target, this.lists[doc.slug].el);
     }
   }
@@ -305,7 +318,3 @@ class DocList extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.DocList = DocList;

@@ -1,10 +1,15 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { $ } from "../../lib/util.js";
+import { View } from "../view.js";
+/** @import { Context } from "../../lib/page.js" */
+
 /**
  * The breadcrumb above the content. Rebuilt on every route, and hidden on
  * pages that aren't part of a doc.
  */
-class Path extends app.View {
+export class Path extends View {
   static className = "_path";
   static attributes = { role: "complementary" };
 
@@ -68,7 +73,3 @@ class Path extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Path = Path;

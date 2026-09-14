@@ -1,10 +1,19 @@
 // @ts-check
 
+import { app } from "../app/app.js";
+import { Collection } from "./collection.js";
+import { $ } from "../lib/util.js";
+import { Doc } from "../models/doc.js";
+/** @import { DocLoadOptions, InstallStatus } from "../models/doc.js" */
+
 /** Every doc the app knows about, enabled or not. *
  * @extends {Collection<Doc>}
  */
-class Docs extends Collection {
-  static model = "Doc";
+export class Docs extends Collection {
+  /** @inheritdoc */
+  model() {
+    return Doc;
+  }
   static NORMALIZE_VERSION_RGX = /\.(\d)$/;
   static NORMALIZE_VERSION_SUB = ".0$1";
 
@@ -157,7 +166,3 @@ class Docs extends Collection {
     });
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.collections.Docs = Docs;

@@ -1,119 +1,40 @@
 // @ts-check
 
-/**
- * An empty registry, to be filled in by the files that define its members.
- *
- * @template T
- * @returns {T}
- */
-const empty = () => /** @type {T} */ (/** @type {unknown} */ ({}));
+import { config } from "./config.js";
+import { DB } from "./db.js";
+import { Router } from "./router.js";
+import { AppServiceWorker } from "./serviceworker.js";
+import { Settings } from "./settings.js";
+import { Shortcuts } from "./shortcuts.js";
+import { UpdateChecker } from "./update_checker.js";
+import { Docs } from "../collections/docs.js";
+import { Entries } from "../collections/entries.js";
+import { CookiesStore } from "../lib/cookies_store.js";
+import { Events } from "../lib/events.js";
+import { LocalStorageStore } from "../lib/local_storage_store.js";
+import { $ } from "../lib/util.js";
+import { Doc } from "../models/doc.js";
+import { unsupportedBrowser } from "../templates/error_tmpl.js";
+import { AppDocument } from "../views/layout/document.js";
+import { Mobile } from "../views/layout/mobile.js";
+import { News } from "../views/misc/news.js";
+import { Notice } from "../views/misc/notice.js";
+import { Notif } from "../views/misc/notif.js";
+import { Tip } from "../views/misc/tip.js";
+import { Updates } from "../views/misc/updates.js";
 
 /**
- * The build-time configuration, rendered into the page by app/config.js.erb.
- *
- * @typedef {object} AppConfig
- * @property {string} db_filename
- * @property {string[]} default_docs Slugs enabled for a first-time visitor.
- * @property {Record<string, string>} docs_aliases Alternative spellings, by the name they resolve to.
- * @property {string} docs_origin Where the documentation files are served from.
- * @property {string} env
- * @property {number} history_cache_size
- * @property {string} index_filename
- * @property {number} max_results
- * @property {string} production_host
- * @property {string} search_param The query parameter a search is read from.
- * @property {string} sentry_dsn
- * @property {number} version Cache-busting stamp for the offline data.
- * @property {string} release
- * @property {string} mathml_stylesheet
- * @property {string} favicon_spritesheet
- * @property {string} service_worker_path
- * @property {boolean} service_worker_enabled
- */
-
-/**
- * A doc as it appears in the manifest, before it becomes an `app.models.Doc`.
+ * A doc as it appears in the manifest, before it becomes a `Doc`.
  *
  * @typedef {Record<string, unknown>} DocData
  */
 
 /**
- * The application singleton, and the namespace everything else registers into.
- *
- * The models and collections are registered by name from the files that define
- * them, so their entries are listed here; the views and templates are too many
- * to enumerate and stay open-ended.
+ * The application singleton: the live state the rest of the app reads off, and
+ * the boot sequence that builds it. Classes are imported where they are used
+ * rather than registered here.
  */
-class App extends Events {
-  // Kept so that isInjectionError can tell whether an extension replaced the
-  // globals out from under us.
-  _$ = $;
-  _$$ = $$;
-  _page = page;
-
-  /** @type {{ Docs: typeof Docs, Entries: typeof Entries, Types: typeof Types }} */
-  collections = empty();
-  /** @type {{ Doc: typeof Doc, Entry: typeof Entry, Type: typeof Type }} */
-  models = empty();
-  /**
-   * Templates are either a function of their arguments or plain markup. Most
-   * are reached by name through `render`, so the registry stays open-ended;
-   * the few that are called directly are named here so they stay callable.
-   *
-   * @type {Record<string, ((...args: unknown[]) => string) | string> & {
-   *   render: (name: string, value?: unknown, ...args: unknown[]) => string,
-   *   newsList: (news: unknown[], options?: { years?: boolean }) => string,
-   *   notifNews: (news: unknown[]) => string,
-   *   notifUpdates: (docs: Doc[], disabledDocs: Doc[]) => string,
-   * }}
-   */
-  templates = empty();
-  /**
-   * @type {{
-   *   BasePage: typeof BasePage,
-   *   Content: typeof Content,
-   *   DocList: typeof DocList,
-   *   DocPicker: typeof DocPicker,
-   *   Document: typeof AppDocument,
-   *   EntryList: typeof EntryList,
-   *   EntryPage: typeof EntryPage,
-   *   HiddenPage: typeof HiddenPage,
-   *   JqueryPage: typeof JqueryPage,
-   *   ListFocus: typeof ListFocus,
-   *   ListFold: typeof ListFold,
-   *   ListSelect: typeof ListSelect,
-   *   Menu: typeof Menu,
-   *   Mobile: typeof Mobile,
-   *   News: typeof News,
-   *   Notice: typeof Notice,
-   *   Notif: typeof Notif,
-   *   OfflinePage: typeof OfflinePage,
-   *   PaginatedList: typeof PaginatedList,
-   *   Path: typeof Path,
-   *   RdocPage: typeof RdocPage,
-   *   Resizer: typeof Resizer,
-   *   Results: typeof Results,
-   *   RootPage: typeof RootPage,
-   *   Search: typeof Search,
-   *   SearchScope: typeof SearchScope,
-   *   Settings: typeof SettingsView,
-   *   SettingsPage: typeof SettingsPage,
-   *   Sidebar: typeof Sidebar,
-   *   SidebarHover: typeof SidebarHover,
-   *   SqlitePage: typeof SqlitePage,
-   *   StaticPage: typeof StaticPage,
-   *   SupportTablesPage: typeof SupportTablesPage,
-   *   Tip: typeof Tip,
-   *   TypeList: typeof TypeList,
-   *   TypePage: typeof TypePage,
-   *   Updates: typeof Updates,
-   * }}
-   */
-  views = empty();
-
-  /** Set by app/config.js.erb. @type {AppConfig} */
-  config;
-
+export class App extends Events {
   /**
    * The manifest of every available doc, set by docs.js.erb. Deleted once the
    * docs have been read into the collections.
@@ -129,29 +50,6 @@ class App extends Events {
    * @type {DocData | undefined}
    */
   DOC;
-
-  // The classes registered by the rest of app/, collections/, models/ and
-  // views/. They're constructors rather than instances.
-  /** @type {typeof DB} */ DB;
-  /** @type {typeof OfflineBackup} */ OfflineBackup;
-  /** @type {typeof Router} */ Router;
-  /** @type {typeof Searcher} */ Searcher;
-  /** @type {typeof SynchronousSearcher} */ SynchronousSearcher;
-  /** @type {typeof AppServiceWorker} */ ServiceWorker;
-  /** @type {typeof Settings} */ Settings;
-  /** @type {typeof Shortcuts} */ Shortcuts;
-  /** @type {typeof UpdateChecker} */ UpdateChecker;
-  /** @type {typeof Collection} */ Collection;
-  /** @type {typeof Model} */ Model;
-  /** @type {typeof View} */ View;
-
-  /**
-   * The news entries, newest first, set by templates/pages/news_tmpl.js.erb.
-   * Each is a date followed by one entry per line.
-   *
-   * @type {Array<[string, ...string[]]>}
-   */
-  news;
 
   /**
    * The `window.onerror` handler that was installed before ours, if any.
@@ -179,23 +77,23 @@ class App extends Events {
 
     this.el = $("._app");
     this.localStorage = new LocalStorageStore();
-    if (app.ServiceWorker.isEnabled()) {
-      this.serviceWorker = new app.ServiceWorker();
+    if (AppServiceWorker.isEnabled()) {
+      this.serviceWorker = new AppServiceWorker();
     }
-    this.settings = new app.Settings();
-    this.db = new app.DB();
+    this.settings = new Settings();
+    this.db = new DB();
 
     this.settings.initLayout();
 
-    this.docs = new app.collections.Docs();
-    this.disabledDocs = new app.collections.Docs();
-    this.entries = new app.collections.Entries();
+    this.docs = new Docs();
+    this.disabledDocs = new Docs();
+    this.entries = new Entries();
 
-    this.router = new app.Router();
-    this.shortcuts = new app.Shortcuts();
-    this.document = new app.views.Document();
+    this.router = new Router();
+    this.shortcuts = new Shortcuts();
+    this.document = new AppDocument();
     if (this.isMobile()) {
-      this.mobile = new app.views.Mobile();
+      this.mobile = new Mobile();
     }
 
     if (document.body.hasAttribute("data-doc")) {
@@ -217,7 +115,7 @@ class App extends Events {
       return true;
     }
     document.body.innerHTML = /** @type {string} */ (
-      app.templates.unsupportedBrowser
+      unsupportedBrowser
     );
     this.hideLoadingScreen();
     return false;
@@ -229,11 +127,11 @@ class App extends Events {
     // from a domain other than our own, because things are likely to break.
     // (e.g. cross-domain requests)
     if (this.isInvalidLocation()) {
-      new app.views.Notif("InvalidLocation");
+      new Notif("InvalidLocation");
     } else {
-      if (this.config.sentry_dsn) {
-        Raven.config(this.config.sentry_dsn, {
-          release: this.config.release,
+      if (config.sentry_dsn) {
+        Raven.config(config.sentry_dsn, {
+          release: config.release,
           whitelistUrls: [/devdocs/],
           includePaths: [/devdocs/],
           ignoreErrors: [/NPObject/, /NS_ERROR/, /^null$/, /EvalError/],
@@ -244,10 +142,6 @@ class App extends Events {
           },
           shouldSendCallback: () => {
             try {
-              if (this.isInjectionError()) {
-                this.onInjectionError();
-                return false;
-              }
               if (this.isAndroidWebview()) {
                 return false;
               }
@@ -278,12 +172,12 @@ class App extends Events {
 
   /** Boots in single-doc mode, with only the doc named on the body. */
   bootOne() {
-    this.doc = new app.models.Doc(this.DOC);
+    this.doc = new Doc(this.DOC);
     this.docs.reset([this.doc]);
     this.doc.load(this.start.bind(this), this.onBootError.bind(this), {
       readCache: true,
     });
-    new app.views.Notice("singleDoc", this.doc);
+    new Notice("singleDoc", this.doc);
     delete this.DOC;
   }
 
@@ -448,7 +342,7 @@ class App extends Events {
 
     await Promise.all(
       Array.from(
-        { length: Math.min(docs.length, app.collections.Docs.CONCURRENCY) },
+        { length: Math.min(docs.length, Docs.CONCURRENCY) },
         next,
       ),
     );
@@ -502,11 +396,11 @@ class App extends Events {
     let visitCount = this.settings.get("count");
     this.settings.set("count", ++visitCount);
     if (visitCount === 5) {
-      new app.views.Notif("Share", { autoHide: null });
+      new Notif("Share", { autoHide: null });
     }
-    new app.views.News();
-    new app.views.Updates();
-    return (this.updateChecker = new app.UpdateChecker());
+    new News();
+    new Updates();
+    return (this.updateChecker = new UpdateChecker());
   }
 
   /** Reloads the app, keeping the current path. */
@@ -555,7 +449,7 @@ class App extends Events {
     if (!tips.includes(tip)) {
       tips.push(tip);
       this.settings.setTips(tips);
-      new app.views.Tip(tip);
+      new Tip(tip);
     }
   }
 
@@ -579,7 +473,7 @@ class App extends Events {
       return;
     }
     this.quotaExceeded = true;
-    new app.views.Notif("QuotaExceeded", { autoHide: null });
+    new Notif("QuotaExceeded", { autoHide: null });
   }
 
   /**
@@ -594,7 +488,7 @@ class App extends Events {
       return;
     }
     this.cookieBlocked = true;
-    new app.views.Notif("CookieBlocked", { autoHide: null });
+    new Notif("CookieBlocked", { autoHide: null });
     Raven.captureMessage(`CookieBlocked/${key}`, {
       level: "warning",
       extra: { value, actual },
@@ -606,45 +500,16 @@ class App extends Events {
     if (this.cookieBlocked) {
       return;
     }
-    if (this.isInjectionError()) {
-      this.onInjectionError();
-    } else if (this.isAppError(args[0], /** @type {string} */ (args[1]))) {
+    if (this.isAppError(args[0], /** @type {string} */ (args[1]))) {
       if (typeof this.previousErrorHandler === "function") {
         this.previousErrorHandler(...args);
       }
       this.hideLoadingScreen();
       if (!this.errorNotif) {
-        this.errorNotif = new app.views.Notif("Error");
+        this.errorNotif = new Notif("Error");
       }
       this.errorNotif.show();
     }
-  }
-
-  /** Warns that an extension has broken the page. Once. */
-  onInjectionError() {
-    if (!this.injectionError) {
-      this.injectionError = true;
-      alert(`\
-JavaScript code has been injected in the page which prevents DevDocs from running correctly.
-Please check your browser extensions/addons. `);
-      Raven.captureMessage("injection error", { level: "info" });
-    }
-  }
-
-  /**
-   * @returns {boolean} Whether something replaced the app's globals — some
-   *   browser extensions expect every page to use jQuery.
-   */
-  isInjectionError() {
-    // Some browser extensions expect the entire web to use jQuery.
-    // I gave up trying to fight back.
-    return (
-      window.$ !== app._$ ||
-      window.$$ !== app._$$ ||
-      window.page !== app._page ||
-      typeof $.empty !== "function" ||
-      typeof page.show !== "function"
-    );
   }
 
   /**
@@ -698,23 +563,23 @@ Please check your browser extensions/addons. `);
   isMobile() {
     return this._isMobile != null
       ? this._isMobile
-      : (this._isMobile = app.views.Mobile.detect());
+      : (this._isMobile = Mobile.detect());
   }
 
   /** @returns {boolean} Whether the app is inside an Android webview. Decided once. */
   isAndroidWebview() {
     return this._isAndroidWebview != null
       ? this._isAndroidWebview
-      : (this._isAndroidWebview = app.views.Mobile.detectAndroidWebview());
+      : (this._isAndroidWebview = Mobile.detectAndroidWebview());
   }
 
   /** @returns {boolean} Whether the app is being served from someone else's domain. */
   isInvalidLocation() {
     return (
-      this.config.env === "production" &&
-      !location.host.startsWith(app.config.production_host)
+      config.env === "production" &&
+      !location.host.startsWith(config.production_host)
     );
   }
 }
 
-this.app = new App();
+export const app = new App();

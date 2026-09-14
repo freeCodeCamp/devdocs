@@ -1,13 +1,17 @@
 // @ts-check
 
+import { config } from "../../app/config.js";
+import { $ } from "../../lib/util.js";
+import { View } from "../view.js";
+
 /**
  * A list too long to render at once: only a window of `PER_PAGE` rows is in
  * the document, with links at either end to extend it.
  *
  * Subclasses implement `render(dataSlice)`.
  */
-class PaginatedList extends app.View {
-  static PER_PAGE = app.config.max_results;
+export class PaginatedList extends View {
+  static PER_PAGE = config.max_results;
 
   /** @param {unknown[]} data Every row, rendered a page at a time. */
   constructor(data) {
@@ -178,7 +182,3 @@ class PaginatedList extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.PaginatedList = PaginatedList;
