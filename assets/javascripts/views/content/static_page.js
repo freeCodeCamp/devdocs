@@ -30,7 +30,7 @@ class StaticPage extends app.View {
     return this.statics().titles[this.page];
   }
 
-  /** @param {any} context */
+  /** @param {Context} context */
   onRoute(context) {
     this.render(context.page || "notFound");
   }

@@ -175,12 +175,12 @@ class DocList extends app.View {
     }
   }
 
-  /** @param {any} model The entry to mark as being read. */
+  /** @param {Doc | Entry} model The entry to mark as being read. */
   select(model) {
     this.listSelect.selectByHref(model?.fullPath());
   }
 
-  /** @param {any} model The entry to expand down to and scroll into view. */
+  /** @param {Entry} model The entry to expand down to and scroll into view. */
   reveal(model) {
     this.openDoc(model.doc);
     if (model.type) {
@@ -191,7 +191,7 @@ class DocList extends app.View {
     this.scrollTo(model);
   }
 
-  /** @param {any} model The entry to move the keyboard focus to. */
+  /** @param {Entry} model The entry to move the keyboard focus to. */
   focus(model) {
     if (this.listFocus != null) {
       this.listFocus.focus(this.find(`a[href='${model.fullPath()}']`));
@@ -232,7 +232,7 @@ class DocList extends app.View {
   /**
    * Renders as far as the entry, so that it can be revealed.
    *
-   * @param {any} model
+   * @param {Entry} model
    */
   paginateTo(model) {
     if (this.lists[model.doc.slug] != null) {
@@ -240,7 +240,7 @@ class DocList extends app.View {
     }
   }
 
-  /** @param {any} model The entry to bring into view. */
+  /** @param {Doc | Entry} model The entry to bring into view. */
   scrollTo(model) {
     $.scrollTo(this.find(`a[href='${model.fullPath()}']`), null, "top", {
       margin: app.isMobile() ? 48 : 0,
@@ -293,7 +293,7 @@ class DocList extends app.View {
 
   /**
    * @param {string} route
-   * @param {any} context
+   * @param {Context} context
    */
   afterRoute(route, context) {
     if (context.init) {

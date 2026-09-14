@@ -98,7 +98,7 @@ class Results extends app.View {
 
   /**
    * @param {string} route
-   * @param {any} context
+   * @param {Context} context
    */
   afterRoute(route, context) {
     if (route === "entry") {

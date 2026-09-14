@@ -81,7 +81,7 @@ app.Searcher = class TimingSearcher extends app.Searcher {
  * Prints the view tree under `view`, with each view coloured by whether it is
  * currently activated.
  *
- * @param {any} [view] Defaults to the root view.
+ * @param {View} [view] Defaults to the root view.
  * @param {number} [level] The current depth, used for indentation.
  * @param {unknown[]} [visited] The views already printed, so that the shared ones
  *   aren't walked twice.

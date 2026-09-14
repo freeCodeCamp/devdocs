@@ -39,19 +39,21 @@ class JqueryPage extends BasePage {
     }
   }
 
-  /** @param {any} el The example's container. */
+  /** @param {HTMLElement} el The example's container. */
   runExample(el) {
     const source = el.getElementsByClassName("syntaxhighlighter")[0];
     if (!source || source.innerHTML.indexOf("!doctype") === -1) {
       return;
     }
 
-    let iframe = el.getElementsByClassName(JqueryPage.demoClassName)[0];
+    let iframe = /** @type {HTMLIFrameElement} */ (
+      el.getElementsByClassName(JqueryPage.demoClassName)[0]
+    );
     if (!iframe) {
       iframe = document.createElement("iframe");
       iframe.className = JqueryPage.demoClassName;
       iframe.width = "100%";
-      iframe.height = 200;
+      iframe.height = "200";
       el.appendChild(iframe);
     }
 

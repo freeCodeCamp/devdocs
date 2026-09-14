@@ -225,7 +225,7 @@ class SearchScope extends app.View {
 
   /**
    * @param {string} name
-   * @param {any} context
+   * @param {Context} context
    */
   afterRoute(name, context) {
     if (!app.isSingleDoc() && context.init && context.doc) {

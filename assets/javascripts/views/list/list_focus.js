@@ -1,6 +1,15 @@
 // @ts-check
 
 /**
+ * The lists are built entirely from elements, so the sibling and parent walks
+ * below only ever reach one.
+ *
+ * @param {ChildNode | ParentNode | null} node
+ * @returns {HTMLElement | null}
+ */
+const asElement = (node) => /** @type {HTMLElement | null} */ (node);
+
+/**
  * Keyboard navigation through a list.
  *
  * The focused row carries `activeClass`; moving the focus emits `focus` and
@@ -29,7 +38,7 @@ class ListFocus extends app.View {
   }
 
   /**
-   * @param {any} el The row to focus.
+   * @param {HTMLElement} el The row to focus.
    * @param {{ silent?: boolean }} [options] Pass `silent` to move without emitting `focus`.
    */
   focus(el, options) {
@@ -63,11 +72,11 @@ class ListFocus extends app.View {
   }
 
   /**
-   * @param {any} cursor
-   * @returns {unknown} The row after `cursor`, descending into expanded sub-lists.
+   * @param {HTMLElement | null} cursor
+   * @returns {HTMLElement | null | undefined} The row after `cursor`, descending into expanded sub-lists.
    */
   findNext(cursor) {
-    const next = cursor.nextSibling;
+    const next = asElement(cursor.nextSibling);
     if (next) {
       if (next.tagName === "A") {
         return next;
@@ -87,16 +96,16 @@ class ListFocus extends app.View {
         return this.findNext(next);
       }
     } else if (cursor.parentNode !== this.el) {
-      return this.findNext(cursor.parentNode);
+      return this.findNext(asElement(cursor.parentNode));
     }
   }
 
   /**
-   * @param {any} cursor
-   * @returns {unknown} The first row of the sub-list under `cursor`.
+   * @param {HTMLElement | null} cursor
+   * @returns {HTMLElement | null | undefined} The first row of the sub-list under `cursor`.
    */
   findFirst(cursor) {
-    const first = cursor.firstChild;
+    const first = asElement(cursor.firstChild);
     if (!first) {
       return;
     }
@@ -111,11 +120,11 @@ class ListFocus extends app.View {
   }
 
   /**
-   * @param {any} cursor
-   * @returns {unknown} The row before `cursor`, descending into expanded sub-lists.
+   * @param {HTMLElement | null} cursor
+   * @returns {HTMLElement | null | undefined} The row before `cursor`, descending into expanded sub-lists.
    */
   findPrev(cursor) {
-    const prev = cursor.previousSibling;
+    const prev = asElement(cursor.previousSibling);
     if (prev) {
       if (prev.tagName === "A") {
         return prev;
@@ -125,7 +134,7 @@ class ListFocus extends app.View {
         return this.findPrev(cursor);
       } else if (prev.tagName === "DIV") {
         // sub-list
-        if (prev.previousSibling.className.includes("open")) {
+        if (asElement(prev.previousSibling)?.className.includes("open")) {
           return this.findLast(prev) || this.findPrev(prev);
         } else {
           return this.findPrev(prev);
@@ -135,16 +144,16 @@ class ListFocus extends app.View {
         return this.findPrev(prev);
       }
     } else if (cursor.parentNode !== this.el) {
-      return this.findPrev(cursor.parentNode);
+      return this.findPrev(asElement(cursor.parentNode));
     }
   }
 
   /**
-   * @param {any} cursor
-   * @returns {unknown} The last row of the sub-list under `cursor`.
+   * @param {HTMLElement | null} cursor
+   * @returns {HTMLElement | null | undefined} The last row of the sub-list under `cursor`.
    */
   findLast(cursor) {
-    const last = cursor.lastChild;
+    const last = asElement(cursor.lastChild);
     if (!last) {
       return;
     }

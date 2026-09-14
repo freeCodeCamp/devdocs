@@ -176,7 +176,7 @@ class Content extends app.View {
     this.scrollToTarget();
   }
 
-  /** @param {any} context */
+  /** @param {Context} context */
   beforeRoute(context) {
     this.cacheScrollPosition(context);
 
@@ -197,7 +197,7 @@ class Content extends app.View {
    * Records where the page being left was scrolled to, against its history
    * entry, so that going back restores it.
    *
-   * @param {any} context
+   * @param {Context} context
    */
   cacheScrollPosition(context) {
     if (!this.routeCtx || this.routeCtx.hash) {

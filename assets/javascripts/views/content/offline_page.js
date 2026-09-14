@@ -73,13 +73,13 @@ class OfflinePage extends app.View {
   }
 
   /**
-   * @param {any} el A node inside a row.
+   * @param {HTMLElement} el A node inside a row.
    * @returns {Doc | undefined} The row's doc.
    */
   docByEl(el) {
     let slug;
     while (!(slug = el.getAttribute("data-slug"))) {
-      el = el.parentNode;
+      el = el.parentElement;
     }
     return app.docs.findBy("slug", slug);
   }
@@ -238,7 +238,7 @@ class OfflinePage extends app.View {
 
   /**
    * @param {Doc} doc
-   * @param {any} el The doc's row.
+   * @param {HTMLElement} el The doc's row.
    */
   exportDoc(doc, el) {
     const started = this.exportDocs([doc], (success) =>

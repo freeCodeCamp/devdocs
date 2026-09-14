@@ -21,7 +21,7 @@ class ListFold extends app.View {
     right: "onRight",
   };
 
-  /** @param {any} el The row to expand. */
+  /** @param {HTMLElement} el The row to expand. */
   open(el) {
     if (el && !el.classList.contains(this.statics().activeClass)) {
       el.classList.add(this.statics().activeClass);
@@ -29,7 +29,7 @@ class ListFold extends app.View {
     }
   }
 
-  /** @param {any} el The row to collapse. */
+  /** @param {HTMLElement} el The row to collapse. */
   close(el) {
     if (el && el.classList.contains(this.statics().activeClass)) {
       el.classList.remove(this.statics().activeClass);
@@ -37,7 +37,7 @@ class ListFold extends app.View {
     }
   }
 
-  /** @param {any} el */
+  /** @param {HTMLElement} el */
   toggle(el) {
     if (el.classList.contains(this.statics().activeClass)) {
       this.close(el);
@@ -97,7 +97,7 @@ class ListFold extends app.View {
 
     if (el.classList.contains(this.statics().handleClass)) {
       $.stopEvent(event);
-      this.toggle(el.parentNode);
+      this.toggle(el.parentElement);
     } else if (el.classList.contains(this.statics().targetClass)) {
       if (el.hasAttribute("href")) {
         if (el.classList.contains(this.statics().activeClass)) {

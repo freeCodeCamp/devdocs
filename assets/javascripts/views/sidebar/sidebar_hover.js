@@ -20,11 +20,12 @@ class SidebarHover extends app.View {
 
   static routes = { after: "onRoute" };
 
-  /** @param {any} el The row to show in full, if it is truncated. */
+  /** @param {HTMLElement} el The row to show in full, if it is truncated. */
   show(el) {
     if (el !== this.cursor) {
       this.hide();
-      if (this.isTarget(el) && this.isTruncated(el.lastElementChild || el)) {
+      const label = /** @type {HTMLElement} */ (el.lastElementChild) || el;
+      if (this.isTarget(el) && this.isTruncated(label)) {
         this.cursor = el;
         this.clone = this.makeClone(this.cursor);
         $.append(document.body, this.clone);
@@ -58,17 +59,17 @@ class SidebarHover extends app.View {
   }
 
   /**
-   * @param {any} el
-   * @returns {unknown} A copy of the row, positioned over the original.
+   * @param {HTMLElement} el
+   * @returns {HTMLElement} A copy of the row, positioned over the original.
    */
   makeClone(el) {
-    const clone = el.cloneNode(true);
+    const clone = /** @type {HTMLElement} */ (el.cloneNode(true));
     clone.classList.add("clone");
     return clone;
   }
 
   /**
-   * @param {any} el
+   * @param {HTMLElement} el
    * @returns {boolean} Whether the row is one that can be hovered.
    */
   isTarget(el) {
@@ -76,7 +77,7 @@ class SidebarHover extends app.View {
   }
 
   /**
-   * @param {any} el
+   * @param {HTMLElement} el
    * @returns {boolean}
    */
   isSelected(el) {
@@ -84,7 +85,7 @@ class SidebarHover extends app.View {
   }
 
   /**
-   * @param {any} el
+   * @param {HTMLElement} el
    * @returns {boolean} Whether the label is clipped by its row.
    */
   isTruncated(el) {

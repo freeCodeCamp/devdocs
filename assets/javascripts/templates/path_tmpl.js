@@ -4,8 +4,8 @@
  * The breadcrumb above the content: the doc, then the type, then the entry.
  *
  * @param {Doc} doc
- * @param {any} [type]
- * @param {any} [entry]
+ * @param {Type} [type]
+ * @param {Entry} [entry]
  * @returns {string}
  */
 app.templates.path = function (doc, type, entry) {

@@ -24,7 +24,7 @@ class TypePage extends app.View {
     return `${this.type.doc.fullName} / ${this.type.name}`;
   }
 
-  /** @param {any} context */
+  /** @param {Context} context */
   onRoute(context) {
     this.render(context.type);
   }

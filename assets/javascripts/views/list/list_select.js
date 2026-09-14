@@ -18,7 +18,7 @@ class ListSelect extends app.View {
     }
   }
 
-  /** @param {any} el The row to select, deselecting whatever was selected. */
+  /** @param {HTMLElement} el The row to select, deselecting whatever was selected. */
   select(el) {
     this.deselect();
     if (el) {

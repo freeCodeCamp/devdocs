@@ -98,7 +98,7 @@ class TypeList extends app.View {
   /**
    * Renders as far as the entry, so that it can be revealed.
    *
-   * @param {any} model
+   * @param {Entry} model
    */
   paginateTo(model) {
     if (model.type) {

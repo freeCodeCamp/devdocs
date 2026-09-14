@@ -236,7 +236,7 @@ class Sidebar extends app.View {
 
   /**
    * @param {string} name
-   * @param {any} context
+   * @param {Context} context
    */
   afterRoute(name, context) {
     if (

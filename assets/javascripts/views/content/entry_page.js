@@ -165,7 +165,7 @@ class EntryPage extends app.View {
     this.abort();
   }
 
-  /** @param {any} context */
+  /** @param {Context} context */
   onRoute(context) {
     const isSameFile = context.entry.filePath() === this.entry?.filePath?.();
     this.entry = context.entry;

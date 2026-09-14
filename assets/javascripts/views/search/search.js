@@ -236,7 +236,7 @@ class Search extends app.View {
 
   /**
    * @param {string} name
-   * @param {any} context
+   * @param {Context} context
    */
   afterRoute(name, context) {
     if (app.shortcuts.eventInProgress?.name === "escape") {

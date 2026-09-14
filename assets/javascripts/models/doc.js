@@ -298,7 +298,7 @@ class Doc extends Model {
    * Compares numbered versions (e.g. "3.9" is older than "3.12").
    * An empty version means the latest version and is newer than any other.
    *
-   * @param {any} other
+   * @param {Doc} other
    * @returns {boolean}
    */
   isNewerVersionThan(other) {

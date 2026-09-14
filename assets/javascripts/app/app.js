@@ -307,7 +307,7 @@ class App extends Events {
   /**
    * Adds a doc's types and entries to the search index.
    *
-   * @param {any} doc
+   * @param {Doc} doc
    */
   initDoc(doc) {
     for (var type of doc.types.all()) {
@@ -439,7 +439,7 @@ class App extends Events {
    * Turns a doc on, loading its index and installing it when the user has
    * asked for that.
    *
-   * @param {any} doc
+   * @param {Doc} doc
    * @param {() => void} _onSuccess
    * @param {() => void} onError
    */

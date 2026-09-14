@@ -87,7 +87,7 @@ class Entry extends Model {
     return this.path === "index";
   }
 
-  /** @returns {unknown} The entry's type, or `undefined`. */
+  /** @returns {Type | undefined} The entry's type. */
   getType() {
     return this.doc.types.findBy("name", this.type);
   }
