@@ -179,8 +179,7 @@ export class SearchScope extends View {
 
   /** @param {ViewKeyboardEvent} event */
   onKeydown(event) {
-    if (event.which === 8) {
-      // backspace
+    if (event.key === "Backspace") {
       if (this.doc && this.input.selectionEnd === 0) {
         this.reset();
         $.stopEvent(event);
@@ -189,11 +188,7 @@ export class SearchScope extends View {
       if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) {
         return;
       }
-      if (
-        event.which === 9 || // tab
-        (event.which === 32 && app.isMobile())
-      ) {
-        // space
+      if (event.key === "Tab" || (event.key === " " && app.isMobile())) {
         this.doScopeSearch(event);
       }
     }

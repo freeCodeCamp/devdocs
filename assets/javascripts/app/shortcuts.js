@@ -11,6 +11,15 @@ import { $ } from "../lib/util.js";
  * @typedef {KeyboardEvent & { target: HTMLElement & Partial<HTMLInputElement> }} ShortcutEvent
  */
 
+/** The keys the `arrowScroll` setting swaps with their shifted selves. */
+const ARROW_KEYS = ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"];
+
+/** A key that types a letter or a digit, in any script. */
+const ALPHANUMERIC_KEY = /^[\p{L}\p{N}]$/u;
+
+/** A key that types a letter, in any script. */
+const LETTER_KEY = /^\p{L}$/u;
+
 /**
  * Translates key events into shortcut events.
  *
@@ -93,7 +102,7 @@ export class Shortcuts extends Events {
   onKeypress(event) {
     if (
       this.buggyEvent(event) ||
-      (event.charCode === 63 && document.activeElement.tagName === "INPUT")
+      (event.key === "?" && document.activeElement.tagName === "INPUT")
     ) {
       return;
     }
@@ -113,33 +122,29 @@ export class Shortcuts extends Events {
   handleKeydownEvent(event, _force) {
     if (
       !_force &&
-      [37, 38, 39, 40].includes(event.which) &&
+      ARROW_KEYS.includes(event.key) &&
       this.swapArrowKeysBehavior()
     ) {
       return this.handleKeydownAltEvent(event, true);
     }
 
-    if (
-      !event.target.form &&
-      ((48 <= event.which && event.which <= 57) ||
-        (65 <= event.which && event.which <= 90))
-    ) {
+    if (!event.target.form && ALPHANUMERIC_KEY.test(event.key)) {
       this.trigger("typing");
       return;
     }
 
-    switch (event.which) {
-      case 8:
+    switch (event.key) {
+      case "Backspace":
         if (!event.target.form) {
           return this.trigger("typing");
         }
         break;
-      case 13:
+      case "Enter":
         return this.trigger("enter");
-      case 27:
+      case "Escape":
         this.trigger("escape");
         return false;
-      case 32:
+      case " ":
         if (
           event.target.type === "search" &&
           this.spaceScroll() &&
@@ -150,43 +155,43 @@ export class Shortcuts extends Events {
           return false;
         }
         break;
-      case 33:
+      case "PageUp":
         return this.trigger("pageUp");
-      case 34:
+      case "PageDown":
         return this.trigger("pageDown");
-      case 35:
+      case "End":
         if (!event.target.form) {
           return this.trigger("pageBottom");
         }
         break;
-      case 36:
+      case "Home":
         if (!event.target.form) {
           return this.trigger("pageTop");
         }
         break;
-      case 37:
+      case "ArrowLeft":
         if (!event.target.value) {
           return this.trigger("left");
         }
         break;
-      case 38:
+      case "ArrowUp":
         this.trigger("up");
         if (typeof this.showTip === "function") {
           this.showTip();
         }
         return false;
-      case 39:
+      case "ArrowRight":
         if (!event.target.value) {
           return this.trigger("right");
         }
         break;
-      case 40:
+      case "ArrowDown":
         this.trigger("down");
         if (typeof this.showTip === "function") {
           this.showTip();
         }
         return false;
-      case 191:
+      case "/":
         if (!event.target.form) {
           this.trigger("typing");
           return false;
@@ -202,28 +207,28 @@ export class Shortcuts extends Events {
    * @returns {unknown} `false` to swallow the event; anything else lets it through.
    */
   handleKeydownSuperEvent(event) {
-    switch (event.which) {
-      case 13:
+    switch (event.key) {
+      case "Enter":
         return this.trigger("superEnter");
-      case 37:
+      case "ArrowLeft":
         if (this.isMac) {
           this.trigger("superLeft");
           return false;
         }
         break;
-      case 38:
+      case "ArrowUp":
         this.trigger("pageTop");
         return false;
-      case 39:
+      case "ArrowRight":
         if (this.isMac) {
           this.trigger("superRight");
           return false;
         }
         break;
-      case 40:
+      case "ArrowDown":
         this.trigger("pageBottom");
         return false;
-      case 188:
+      case ",":
         this.trigger("preferences");
         return false;
     }
@@ -236,11 +241,11 @@ export class Shortcuts extends Events {
    * @returns {unknown} `false` to swallow the event; anything else lets it through.
    */
   handleKeydownSuperShiftEvent(event) {
-    switch (event.which) {
-      case 38:
+    switch (event.key) {
+      case "ArrowUp":
         this.trigger("superShiftUp");
         return false;
-      case 40:
+      case "ArrowDown":
         this.trigger("superShiftDown");
         return false;
     }
@@ -254,28 +259,28 @@ export class Shortcuts extends Events {
   handleKeydownShiftEvent(event, _force) {
     if (
       !_force &&
-      [37, 38, 39, 40].includes(event.which) &&
+      ARROW_KEYS.includes(event.key) &&
       this.swapArrowKeysBehavior()
     ) {
       return this.handleKeydownEvent(event, true);
     }
 
-    if (!event.target.form && 65 <= event.which && event.which <= 90) {
+    if (!event.target.form && LETTER_KEY.test(event.key)) {
       this.trigger("typing");
       return;
     }
 
-    switch (event.which) {
-      case 32:
+    switch (event.key) {
+      case " ":
         this.trigger("pageUp");
         return false;
-      case 38:
+      case "ArrowUp":
         if (!getSelection()?.toString()) {
           this.trigger("altUp");
           return false;
         }
         break;
-      case 40:
+      case "ArrowDown":
         if (!getSelection()?.toString()) {
           this.trigger("altDown");
           return false;
@@ -292,51 +297,56 @@ export class Shortcuts extends Events {
   handleKeydownAltEvent(event, _force) {
     if (
       !_force &&
-      [37, 38, 39, 40].includes(event.which) &&
+      ARROW_KEYS.includes(event.key) &&
       this.swapArrowKeysBehavior()
     ) {
       return this.handleKeydownEvent(event, true);
     }
 
-    switch (event.which) {
-      case 9:
+    switch (event.key) {
+      case "Tab":
         return this.trigger("altRight", event);
-      case 37:
+      case "ArrowLeft":
         if (!this.isMac) {
           this.trigger("superLeft");
           return false;
         }
         break;
-      case 38:
+      case "ArrowUp":
         this.trigger("altUp");
         return false;
-      case 39:
+      case "ArrowRight":
         if (!this.isMac) {
           this.trigger("superRight");
           return false;
         }
         break;
-      case 40:
+      case "ArrowDown":
         this.trigger("altDown");
         return false;
-      case 67:
+    }
+
+    // Alt rewrites the character a letter key produces (alt + s is "ß" on a
+    // Mac), so the letter chords go by the key's position instead.
+    switch (event.code) {
+      case "KeyC":
         this.trigger("altC");
         return false;
-      case 68:
+      case "KeyD":
         this.trigger("altD");
         return false;
-      case 70:
+      case "KeyF":
         return this.trigger("altF", event);
-      case 71:
+      case "KeyG":
         this.trigger("altG");
         return false;
-      case 79:
+      case "KeyO":
         this.trigger("altO");
         return false;
-      case 82:
+      case "KeyR":
         this.trigger("altR");
         return false;
-      case 83:
+      case "KeyS":
         this.trigger("altS");
         return false;
     }
@@ -347,7 +357,7 @@ export class Shortcuts extends Events {
    * @returns {unknown} `false` to swallow the event; anything else lets it through.
    */
   handleKeypressEvent(event) {
-    if (event.which === 63 && !event.target.value) {
+    if (event.key === "?" && !event.target.value) {
       this.trigger("help");
       return false;
     } else {
@@ -363,7 +373,7 @@ export class Shortcuts extends Events {
     try {
       event.target;
       event.ctrlKey;
-      event.which;
+      event.key;
       return false;
     } catch (error) {
       return true;
