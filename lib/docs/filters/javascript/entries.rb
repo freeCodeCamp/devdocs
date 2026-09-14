@@ -3,14 +3,13 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       TYPES = %w(Array ArrayBuffer Atomics Boolean DataView Date Function
         Generator Intl JSON Map Math Number Object PluralRules Promise Reflect RegExp
-        Set SharedArrayBuffer SIMD String Symbol TypedArray WeakMap WeakSet)
+        Set SharedArrayBuffer String Symbol TypedArray WeakMap WeakSet)
       INTL_OBJECTS = %w(Collator DateTimeFormat NumberFormat)
 
       def get_name
         if slug.start_with? 'Global_Objects/'
           name, method, *rest = *slug.sub('Global_Objects/', '').split('/')
           name.prepend 'Intl.' if INTL_OBJECTS.include?(name)
-          name.prepend 'SIMD.' if html.include?("SIMD.#{name}")
 
           if method
             unless method == method.upcase || method == 'NaN'
@@ -21,7 +20,7 @@ module Docs
 
           if name.exclude?('.prototype')
             path = name.split('.')
-            if ((node = at_css('.syntaxbox') || at_css('code')) && node.content =~ /(?:\s|\A)[a-z\_][a-zA-Z\_]+\.#{path.last}/) ||
+            if ((node = at_css('code')) && node.content =~ /(?:\s|\A)[a-z\_][a-zA-Z\_]+\.#{path.last}/) ||
                ((node = at_css('.standard-table')) && node.content =~ /\.prototype[\[\.]#{path.last}/)
               path[-2] = path[-2][0].downcase + path[-2][1..-1]
               name = path.join('.')
@@ -59,8 +58,6 @@ module Docs
             'Errors'
           elsif INTL_OBJECTS.include?(object)
             'Intl'
-          elsif name.start_with?('SIMD')
-            'SIMD'
           elsif method || TYPES.include?(object)
             object
           else
@@ -69,34 +66,6 @@ module Docs
         else
           'Miscellaneous'
         end
-      end
-
-      def additional_entries
-        return [] unless root_page?
-        entries = []
-
-        %w(arithmetic assignment bitwise comparison logical).each do |s|
-          css("a[href^='operators/#{s}_operators#']").each do |node|
-            name = CGI::unescapeHTML(node.content.strip)
-            name.remove! %r{[a-zA-Z]}
-            name.strip!
-            entries << [name, node['href'], 'Operators']
-          end
-        end
-
-        entries.uniq
-      end
-
-      def include_default_entry?
-        node = doc.at_css '.blockIndicator, .warning'
-
-        # Can't use :first-child because #doc is a DocumentFragment
-        return true unless node && node.parent == doc && !node.previous_element
-
-        !node.content.include?('not on a standards track') &&
-        !node.content.include?('removed from the Web') &&
-        !node.content.include?('SpiderMonkey-specific feature, and will be removed') &&
-        !node.content.include?('could be removed at any time')
       end
     end
   end
