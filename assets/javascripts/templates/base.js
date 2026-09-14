@@ -5,7 +5,7 @@ import * as noticeTmpl from "./notice_tmpl.js";
 import * as notifTmpl from "./notif_tmpl.js";
 import * as aboutTmpl from "./pages/about_tmpl.js";
 import * as helpTmpl from "./pages/help_tmpl.js";
-import * as newsTmpl from "./pages/news_tmpl.js";
+import { newsList, newsPage } from "./pages/news_tmpl.js";
 import * as offlineTmpl from "./pages/offline_tmpl.js";
 import * as rootTmpl from "./pages/root_tmpl.js";
 import * as settingsTmpl from "./pages/settings_tmpl.js";
@@ -30,7 +30,8 @@ const templates = {
   ...notifTmpl,
   ...aboutTmpl,
   ...helpTmpl,
-  ...newsTmpl,
+  newsList,
+  newsPage,
   ...offlineTmpl,
   ...rootTmpl,
   ...settingsTmpl,

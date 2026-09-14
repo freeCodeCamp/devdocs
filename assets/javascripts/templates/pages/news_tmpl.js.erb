@@ -1,11 +1,9 @@
 //= depend_on news.json
 
-import { app } from "../../app/app.js";
-
 export const newsPage = () => ` <h1 class="_lined-heading">Changelog</h1>
 <p class="_note">
 For development updates, follow the project on <a href="https://github.com/freeCodeCamp/devdocs">GitHub</a>.
-<div class="_news">${newsList(app.news)}</div> `;
+<div class="_news">${newsList(news)}</div> `;
 
 export const newsList = function(news, options = {}) {
   let year = new Date().getUTCFullYear();
@@ -39,4 +37,10 @@ var newsItem = function(date, news) {
   return result;
 };
 
-app.news = <%= App.news.to_json %>
+/**
+ * The changelog, newest first. Each entry is a date followed by one line per
+ * item. Exported rather than assigned onto `app`: this module is a dependency
+ * of the app singleton, so it evaluates first and `app` would still be in its
+ * temporal dead zone.
+ */
+export const news = <%= App.news.to_json %>;

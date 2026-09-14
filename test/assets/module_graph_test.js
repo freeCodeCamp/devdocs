@@ -1,6 +1,7 @@
 // @ts-check
 
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 // The modules import each other in cycles (a view reaches the app singleton,
@@ -29,4 +30,35 @@ test("the debug module patches the app without evaluating it twice", async () =>
 
   await import("../../assets/javascripts/debug.js");
   assert.notEqual(app.init, init, "debug.js should wrap app.init");
+});
+
+// The modules rendered from ERB are replaced by fixtures under Node, so the
+// graph test above evaluates stand-ins rather than the real thing. These are
+// dependencies of the app singleton (templates/base.js pulls the templates
+// in), which means they evaluate *before* `app` is initialised — touching it
+// there throws a ReferenceError in the browser, before boot, and no fixture
+// would show it. Keep them leaves.
+test("the generated modules stay out of the app's initialisation cycle", () => {
+  const generated = [
+    "app/config.js.erb",
+    "templates/pages/news_tmpl.js.erb",
+    "templates/pages/root_tmpl.js.erb",
+  ];
+
+  for (const file of generated) {
+    const source = readFileSync(
+      new URL(`../../assets/javascripts/${file}`, import.meta.url),
+      "utf8",
+    );
+    assert.doesNotMatch(
+      source,
+      /^import\b.*app\/app\.js/m,
+      `${file} must not import the app singleton`,
+    );
+    assert.doesNotMatch(
+      source,
+      /^app\./m,
+      `${file} must not assign onto the app singleton`,
+    );
+  }
 });

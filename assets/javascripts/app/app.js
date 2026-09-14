@@ -52,14 +52,6 @@ export class App extends Events {
   DOC;
 
   /**
-   * The news entries, newest first, set by templates/pages/news_tmpl.js.erb.
-   * Each is a date followed by one entry per line.
-   *
-   * @type {Array<[string, ...string[]]>}
-   */
-  news;
-
-  /**
    * The `window.onerror` handler that was installed before ours, if any.
    *
    * @type {unknown}

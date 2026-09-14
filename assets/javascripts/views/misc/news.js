@@ -1,6 +1,7 @@
 // @ts-check
 
 import { app } from "../../app/app.js";
+import { news } from "../../templates/pages/news_tmpl.js";
 import { notifNews } from "../../templates/notif_tmpl.js";
 import { Notif } from "./notif.js";
 
@@ -35,18 +36,18 @@ export class News extends Notif {
     }
 
     const result = [];
-    for (var news of app.news) {
-      if (new Date(news[0]).getTime() <= time) {
+    for (var entry of news) {
+      if (new Date(entry[0]).getTime() <= time) {
         break;
       }
-      result.push(news);
+      result.push(entry);
     }
     return result;
   }
 
   /** @returns {number} When the newest entry was published, in milliseconds. */
   getLastNewsTime() {
-    return new Date(app.news[0][0]).getTime();
+    return new Date(news[0][0]).getTime();
   }
 
   /** @returns {number} When the user last saw the changelog, in milliseconds. */

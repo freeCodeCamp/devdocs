@@ -69,7 +69,7 @@ export const notifImportInvalid = () =>
   );
 
 /**
- * @param {Array<[string, ...string[]]>} news The entries, as `app.news` holds them.
+ * @param {Array<[string, ...string[]]>} news The entries, as news_tmpl.js exports them.
  * @returns {string}
  */
 export const notifNews = (news) =>
