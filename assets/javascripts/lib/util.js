@@ -12,16 +12,15 @@
  * @callback DollarQuery
  * @param {string} selector
  * @param {ParentNode} [el] The root to search under. Defaults to `document`.
- * @returns {any} The first match, or `undefined` if the selector is invalid.
- *   Typed loosely because callers immediately reach for element-specific
- *   properties.
+ * @returns {HTMLElement} The first match, or `undefined` if the selector is
+ *   invalid. Callers that need a more specific element narrow it themselves.
  */
 
 /**
  * @callback DollarQueryAll
  * @param {string} selector
  * @param {ParentNode} [el] The root to search under. Defaults to `document`.
- * @returns {NodeListOf<any>} All matches, or `undefined` if the selector is invalid.
+ * @returns {NodeListOf<HTMLElement>} All matches, or `undefined` if the selector is invalid.
  */
 
 /**
@@ -43,36 +42,36 @@
  * @typedef {object} DollarHelpers
  *
  * @property {(id: string) => unknown} id Looks an element up by id.
- * @property {(parent: Node, el: any) => boolean | undefined} hasChild Whether `el` is `parent` or a descendant of it.
- * @property {(el: any, parent?: Node) => any} closestLink The nearest `<a>` ancestor, stopping at `parent`.
+ * @property {(parent: Node, el: Node | null) => boolean | undefined} hasChild Whether `el` is `parent` or a descendant of it.
+ * @property {(el: Node | null, parent?: Node) => HTMLAnchorElement | undefined} closestLink The nearest `<a>` ancestor, stopping at `parent`.
  *
- * @property {(el: EventTarget, event: string, callback: (event: any) => void, useCapture?: boolean) => void} on Accepts several space-separated event names.
+ * @property {(el: EventTarget, event: string, callback: (event: never) => void, useCapture?: boolean) => void} on Accepts several space-separated event names.
  * @property {(el: EventTarget, event: string, callback: (event: unknown) => void, useCapture?: boolean) => void} off Accepts several space-separated event names.
  * @property {(el: EventTarget, type: string, canBubble?: boolean, cancelable?: boolean) => void} trigger Dispatches a synthetic event.
  * @property {(el: EventTarget) => void} click Dispatches a synthetic click.
  * @property {(event: Event) => void} stopEvent Prevents the default and stops propagation, immediately.
- * @property {(event: Event) => any} eventTarget The event target, resolving an SVG `<use>` to the element that referenced it.
+ * @property {(event: Event) => HTMLElement} eventTarget The event target, resolving an SVG `<use>` to the element that referenced it.
  *
  * @property {(el: Element, value: DollarContent) => void} append
  * @property {(el: Element, value: DollarContent) => void} prepend
  * @property {(el: Element, value: DollarContent) => void} before
  * @property {(el: Element, value: DollarContent) => void} after
- * @property {(value: unknown) => void} remove Detaches the node, or every node in the collection.
+ * @property {(value: Node | ArrayLike<Node>) => void} remove Detaches the node, or every node in the collection.
  * @property {(el: Node) => void} empty Removes every child.
  * @property {(el: Element, fn: (el: unknown) => void) => void} batchUpdate Runs `fn` with the element off the DOM, to avoid reflows.
  *
  * @property {(el: Element) => DOMRect} rect
- * @property {(el: any, container?: Element) => { top: number, left: number }} offset Offset relative to `container`, which defaults to the body.
- * @property {(el: any) => any} scrollParent The nearest scrollable ancestor.
- * @property {(el: any, parent?: any, position?: "top" | "center" | "continuous", options?: DollarScrollOptions) => void} scrollTo
- * @property {(el: unknown, parent?: any, ...args: any[]) => void} scrollToWithImageLock Like `scrollTo`, but holds the position while nearby images load.
- * @property {(el: any, fn: () => void) => void} lockScroll Runs `fn` while holding the element's position relative to the window.
- * @property {(el: any) => void} openDetailsAncestors Expands every `<details>` the element is inside.
+ * @property {(el: HTMLElement | null, container?: Element) => { top: number, left: number }} offset Offset relative to `container`, which defaults to the body.
+ * @property {(el: Node | null) => HTMLElement} scrollParent The nearest scrollable ancestor.
+ * @property {(el: HTMLElement | null, parent?: HTMLElement | null, position?: "top" | "center" | "continuous", options?: DollarScrollOptions) => void} scrollTo
+ * @property {(el: HTMLElement | null, parent?: HTMLElement | null, position?: "top" | "center" | "continuous", options?: DollarScrollOptions) => void} scrollToWithImageLock Like `scrollTo`, but holds the position while nearby images load.
+ * @property {(el: HTMLElement, fn: () => void) => void} lockScroll Runs `fn` while holding the element's position relative to the window.
+ * @property {(el: Element | null) => void} openDetailsAncestors Expands every `<details>` the element is inside.
  * @property {(el: Element, end: number) => void} smoothScroll Animates `scrollTop` towards `end`.
  *
- * @property {(object: unknown) => any[]} makeArray
+ * @property {<T>(object: ArrayLike<T> | T[]) => T[]} makeArray
  * @property {(array: unknown[], object: unknown) => boolean} arrayDelete Removes the first occurrence; reports whether it was there.
- * @property {(object: any) => boolean} isCollection Whether the value is an array or a live DOM collection.
+ * @property {(object: unknown) => boolean} isCollection Whether the value is an array or a live DOM collection.
  * @property {(string: string) => string} escape Escapes HTML-significant characters.
  * @property {(string: string) => string} escapeRegexp
  * @property {(string: string) => string} urlDecode Decodes a form-encoded component, where `+` means a space.
@@ -143,8 +142,8 @@ $.closestLink = function (el, parent) {
     parent = document.body;
   }
   while (el) {
-    if (el.tagName === "A") {
-      return el;
+    if (/** @type {Element} */ (el).tagName === "A") {
+      return /** @type {HTMLAnchorElement} */ (el);
     }
     if (el === parent) {
       return;
@@ -206,7 +205,9 @@ $.stopEvent = function (event) {
 };
 
 $.eventTarget = function (event) {
-  const target = /** @type {any} */ (event.target);
+  const target = /** @type {HTMLElement & { correspondingUseElement?: HTMLElement }} */ (
+    event.target
+  );
   return target.correspondingUseElement || target;
 };
 
@@ -222,11 +223,14 @@ const buildFragment = function (value) {
   const fragment = document.createDocumentFragment();
 
   if ($.isCollection(value)) {
-    for (var child of $.makeArray(value)) {
+    for (var child of $.makeArray(/** @type {ArrayLike<Node>} */ (value))) {
       fragment.appendChild(child);
     }
   } else {
-    /** @type {any} */ (fragment).innerHTML = value;
+    // DocumentFragment has no innerHTML; only collections reach this branch
+    // in practice (see $.before and $.after).
+    /** @type {{ innerHTML: unknown }} */ (/** @type {unknown} */ (fragment)).innerHTML =
+      value;
   }
 
   return fragment;
@@ -278,7 +282,7 @@ $.after = function (el, value) {
 
 $.remove = function (value) {
   if ($.isCollection(value)) {
-    for (var el of $.makeArray(value)) {
+    for (var el of $.makeArray(/** @type {ArrayLike<Node>} */ (value))) {
       if (el.parentNode != null) {
         el.parentNode.removeChild(el);
       }
@@ -329,7 +333,7 @@ $.offset = function (el, container) {
   while (el && el !== container) {
     top += el.offsetTop;
     left += el.offsetLeft;
-    el = el.offsetParent;
+    el = /** @type {HTMLElement} */ (el.offsetParent);
   }
 
   return {
@@ -340,14 +344,15 @@ $.offset = function (el, container) {
 
 $.scrollParent = function (el) {
   while ((el = el.parentNode) && el.nodeType === 1) {
-    if (el.scrollTop > 0) {
+    const element = /** @type {HTMLElement} */ (el);
+    if (element.scrollTop > 0) {
       break;
     }
-    if (["auto", "scroll"].includes(getComputedStyle(el)?.overflowY ?? "")) {
+    if (["auto", "scroll"].includes(getComputedStyle(element)?.overflowY ?? "")) {
       break;
     }
   }
-  return el;
+  return /** @type {HTMLElement} */ (el);
 };
 
 $.scrollTo = function (el, parent, position, options) {
@@ -375,7 +380,7 @@ $.scrollTo = function (el, parent, position, options) {
   }
 
   const { top } = $.offset(el, parent);
-  const { offsetTop } = parent.firstElementChild;
+  const { offsetTop } = /** @type {HTMLElement} */ (parent.firstElementChild);
 
   switch (position) {
     case "top":
@@ -389,9 +394,8 @@ $.scrollTo = function (el, parent, position, options) {
       var { scrollTop } = parent;
       var height = el.offsetHeight;
 
-      var lastElementOffset =
-        parent.lastElementChild.offsetTop +
-        parent.lastElementChild.offsetHeight;
+      var lastChild = /** @type {HTMLElement} */ (parent.lastElementChild);
+      var lastElementOffset = lastChild.offsetTop + lastChild.offsetHeight;
       var offsetBottom =
         lastElementOffset > 0 ? parentScrollHeight - lastElementOffset : 0;
 
@@ -465,7 +469,7 @@ $.lockScroll = function (el, fn) {
 $.openDetailsAncestors = function (el) {
   while (el) {
     if (el.tagName === "DETAILS") {
-      el.open = true;
+      /** @type {HTMLDetailsElement} */ (el).open = true;
     }
     el = el.parentElement;
   }
@@ -536,7 +540,8 @@ $.arrayDelete = function (array, object) {
 
 // Returns true if the object is an array or a collection of DOM elements.
 $.isCollection = (object) =>
-  Array.isArray(object) || typeof object?.item === "function";
+  Array.isArray(object) ||
+  typeof (/** @type {{ item?: unknown }} */ (object))?.item === "function";
 
 const ESCAPE_HTML_MAP = {
   "&": "&amp;",
@@ -589,15 +594,21 @@ $.download = function (blob, filename) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 
+/**
+ * @param {string | { href: string }} value
+ * @returns {string}
+ */
+const hrefOf = (value) => (typeof value === "string" ? value : value.href);
+
 $.popup = function (value) {
   try {
-    window.open(/** @type {any} */ (value).href || value, "_blank", "noopener");
+    window.open(hrefOf(value), "_blank", "noopener");
   } catch (error) {
     const win = window.open();
     if (win.opener) {
       win.opener = null;
     }
-    win.location = /** @type {any} */ (value).href || value;
+    win.location = /** @type {string & Location} */ (hrefOf(value));
   }
 };
 

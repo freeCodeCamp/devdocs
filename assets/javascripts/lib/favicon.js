@@ -49,7 +49,7 @@ this.setFaviconForDoc = function (doc) {
     return;
   }
 
-  const favicon = $('link[rel="icon"]');
+  const favicon = /** @type {HTMLLinkElement} */ ($('link[rel="icon"]'));
 
   if (defaultUrl === null) {
     defaultUrl = favicon.href;
@@ -122,7 +122,7 @@ this.setFaviconForDoc = function (doc) {
 /** Puts the default favicon back, if a doc replaced it. */
 this.resetFavicon = function () {
   if (defaultUrl !== null && currentSlug !== null) {
-    $('link[rel="icon"]').href = defaultUrl;
+    /** @type {HTMLLinkElement} */ ($('link[rel="icon"]')).href = defaultUrl;
     return (currentSlug = null);
   }
 };

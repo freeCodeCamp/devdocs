@@ -32,7 +32,7 @@ class Content extends app.View {
   /** @inheritdoc */
   init() {
     this.scrollEl = app.isMobile()
-      ? document.scrollingElement || document.body
+      ? /** @type {HTMLElement} */ (document.scrollingElement) || document.body
       : this.el;
     this.scrollMap = {};
     this.scrollStack = [];
@@ -136,7 +136,7 @@ class Content extends app.View {
       this.routeCtx.hash &&
       (el = this.findTargetByHash(this.routeCtx.hash))
     ) {
-      $.scrollToWithImageLock(el, this.scrollEl, "top", {
+      $.scrollToWithImageLock(/** @type {HTMLElement} */ (el), this.scrollEl, "top", {
         margin: this.scrollEl === this.el ? 0 : $.offset(this.el).top,
       });
       $.openDetailsAncestors(el);

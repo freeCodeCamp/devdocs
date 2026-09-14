@@ -160,7 +160,7 @@ class View extends Events {
 
   /**
    * @param {string} selector
-   * @returns {any} The first match inside the view, or `undefined`.
+   * @returns {HTMLElement} The first match inside the view, or `undefined`.
    */
   find(selector) {
     return $(selector, this.el);
@@ -168,7 +168,7 @@ class View extends Events {
 
   /**
    * @param {string} selector
-   * @returns {NodeListOf<any>} Every match inside the view.
+   * @returns {NodeListOf<HTMLElement>} Every match inside the view.
    */
   findAll(selector) {
     return $$(selector, this.el);
@@ -176,7 +176,7 @@ class View extends Events {
 
   /**
    * @param {string} name
-   * @returns {unknown} The first match, or `undefined`.
+   * @returns {HTMLElement | undefined} The first match.
    */
   findByClass(name) {
     return this.findAllByClass(name)[0];
@@ -184,7 +184,7 @@ class View extends Events {
 
   /**
    * @param {string} name
-   * @returns {unknown} The last match, or `undefined`.
+   * @returns {HTMLElement | undefined} The last match.
    */
   findLastByClass(name) {
     const all = this.findAllByClass(name);
@@ -193,15 +193,17 @@ class View extends Events {
 
   /**
    * @param {string} name
-   * @returns {HTMLCollectionOf<any>} A live collection.
+   * @returns {HTMLCollectionOf<HTMLElement>} A live collection.
    */
   findAllByClass(name) {
-    return this.el.getElementsByClassName(name);
+    return /** @type {HTMLCollectionOf<HTMLElement>} */ (
+      this.el.getElementsByClassName(name)
+    );
   }
 
   /**
    * @param {string} tag
-   * @returns {any} The first match, or `undefined`.
+   * @returns {HTMLElement | undefined} The first match.
    */
   findByTag(tag) {
     return this.findAllByTag(tag)[0];
@@ -209,7 +211,7 @@ class View extends Events {
 
   /**
    * @param {string} tag
-   * @returns {unknown} The last match, or `undefined`.
+   * @returns {HTMLElement | undefined} The last match.
    */
   findLastByTag(tag) {
     const all = this.findAllByTag(tag);
@@ -218,10 +220,12 @@ class View extends Events {
 
   /**
    * @param {string} tag
-   * @returns {HTMLCollectionOf<any>} A live collection.
+   * @returns {HTMLCollectionOf<HTMLElement>} A live collection.
    */
   findAllByTag(tag) {
-    return this.el.getElementsByTagName(tag);
+    return /** @type {HTMLCollectionOf<HTMLElement>} */ (
+      this.el.getElementsByTagName(tag)
+    );
   }
 
   /** @param {any} value Markup, a node, or another view. */
@@ -289,11 +293,12 @@ class View extends Events {
    * Runs `fn` bound to the view, later.
    *
    * @param {Function} fn
-   * @param {...any} args Arguments for `fn`, optionally followed by a delay in milliseconds.
-   * @returns {any} The timeout handle.
+   * @param {...unknown} args Arguments for `fn`, optionally followed by a delay in milliseconds.
+   * @returns {number} The timeout handle.
    */
   delay(fn, ...args) {
-    const delay = typeof args[args.length - 1] === "number" ? args.pop() : 0;
+    const last = args[args.length - 1];
+    const delay = typeof last === "number" ? /** @type {number} */ (args.pop()) : 0;
     return setTimeout(fn.bind(this, ...args), delay);
   }
 

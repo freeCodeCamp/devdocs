@@ -91,8 +91,8 @@ class ListFold extends app.View {
       return;
     } // ignore fabricated clicks
     let el = $.eventTarget(event);
-    if (el.parentNode.tagName.toUpperCase() === "SVG") {
-      el = el.parentNode;
+    if (el.parentElement?.tagName.toUpperCase() === "SVG") {
+      el = el.parentElement;
     }
 
     if (el.classList.contains(this.statics().handleClass)) {

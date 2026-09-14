@@ -103,7 +103,11 @@ class DocPicker extends app.View {
 
   /** @returns {string[]} The slugs the user has ticked. */
   getSelectedDocs() {
-    return [...this.findAllByTag("input")]
+    return [
+      .../** @type {HTMLCollectionOf<HTMLInputElement>} */ (
+        this.findAllByTag("input")
+      ),
+    ]
       .filter((input) => input?.checked)
       .map((input) => input.name);
   }
@@ -126,7 +130,7 @@ class DocPicker extends app.View {
         (!this.mouseDown || !(Date.now() < this.mouseDown + 100)) &&
         (!this.mouseUp || !(Date.now() < this.mouseUp + 100))
       ) {
-        $.scrollTo(target.parentNode, null, "continuous");
+        $.scrollTo(target.parentElement, null, "continuous");
       }
     } else if (target.classList.contains(app.views.ListFold.targetClass)) {
       target.blur();

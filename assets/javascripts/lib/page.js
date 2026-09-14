@@ -451,21 +451,26 @@ var onclick = function (event) {
     return;
   }
 
-  let link = $.eventTarget(event);
-  while (link && !(link.tagName === "A" || link.tagName === "a")) {
-    link = link.parentNode;
+  /** @type {HTMLElement | null} */
+  let el = $.eventTarget(event);
+  while (el && !(el.tagName === "A" || el.tagName === "a")) {
+    el = el.parentElement;
   }
 
-  if (!link) return;
+  if (!el) return;
 
   // If the `<a>` is in an SVG, its attributes are `SVGAnimatedString`s
   // instead of strings
-  let href = link.href instanceof SVGAnimatedString
-    ? new URL(link.href.baseVal, location.href).href
-    : link.href;
-  let target = link.target instanceof SVGAnimatedString
-    ? link.target.baseVal
-    : link.target;
+  const link =
+    /** @type {{ href: string | SVGAnimatedString, target: string | SVGAnimatedString }} */ (
+      /** @type {unknown} */ (el)
+    );
+  let href =
+    link.href instanceof SVGAnimatedString
+      ? new URL(link.href.baseVal, location.href).href
+      : link.href;
+  let target =
+    link.target instanceof SVGAnimatedString ? link.target.baseVal : link.target;
 
   if (!target && isSameOrigin(href)) {
     event.preventDefault();

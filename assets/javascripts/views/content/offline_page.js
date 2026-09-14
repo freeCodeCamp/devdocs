@@ -113,7 +113,7 @@ class OfflinePage extends app.View {
         this.onInstallError.bind(this, doc),
         this.onInstallProgress.bind(this, doc)
       );
-      el.parentNode.innerHTML = `${el.textContent.replace(/e$/, "")}ing…`;
+      el.parentElement.innerHTML = `${el.textContent.replace(/e$/, "")}ing…`;
     } else if (
       (action =
         el.getAttribute("data-action-all") ||
@@ -245,7 +245,7 @@ class OfflinePage extends app.View {
       success ? this.onInstallSuccess(doc) : this.onInstallError(doc),
     );
     if (started) {
-      el.parentNode.innerHTML = "Exporting\u2026";
+      el.parentElement.innerHTML = "Exporting\u2026";
     }
   }
 
