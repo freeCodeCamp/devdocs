@@ -1,7 +1,10 @@
 // @ts-check
 
+import { $ } from "../../lib/util.js";
+import { View } from "../view.js";
+
 /** The header menu, opened by the toggle and closed by a click anywhere else. */
-class Menu extends app.View {
+export class Menu extends View {
   static el = "._menu";
   static activeClass = "active";
 
@@ -40,7 +43,3 @@ class Menu extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Menu = Menu;

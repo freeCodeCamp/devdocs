@@ -1,5 +1,8 @@
 // @ts-check
 
+import { app } from "./app.js";
+/** @import { Doc } from "../models/doc.js" */
+
 /**
  * One doc as it appears in a backup file. Unrelated to the Entry model: these
  * are the records the backup's `docs` array holds.
@@ -27,7 +30,7 @@
  * restore a backup after the browser evicted the data, or to move the
  * documentations to another computer without downloading them again.
  */
-class OfflineBackup {
+export class OfflineBackup {
   static TYPE = "devdocs-offline";
   static VERSION = 1;
   static MIME_TYPE = "application/json";
@@ -286,7 +289,3 @@ class OfflineBackup {
     return enabled;
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.OfflineBackup = OfflineBackup;

@@ -1,5 +1,13 @@
 // @ts-check
 
+import { app } from "../app/app.js";
+import { config } from "../app/config.js";
+import { Entries } from "../collections/entries.js";
+import { Types } from "../collections/types.js";
+import { ajax } from "../lib/ajax.js";
+import { Entry } from "./entry.js";
+import { Model } from "./model.js";
+
 /**
  * How a doc's index and database are fetched.
  *
@@ -22,7 +30,7 @@
 // `super()` and blank them out again.
 
 /** One version of one documentation set. */
-class Doc extends Model {
+export class Doc extends Model {
   static NUMBERED_VERSION_RGX = /^\d+(\.\d+)*$/;
 
   /**
@@ -54,7 +62,7 @@ class Doc extends Model {
 
   /** @param {unknown} [entries] */
   resetEntries(entries) {
-    this.entries = new app.collections.Entries(
+    this.entries = new Entries(
       /** @type {unknown[]} */ (entries),
     );
     this.entries.each((entry) => {
@@ -64,7 +72,7 @@ class Doc extends Model {
 
   /** @param {unknown} [types] */
   resetTypes(types) {
-    this.types = new app.collections.Types(/** @type {unknown[]} */ (types));
+    this.types = new Types(/** @type {unknown[]} */ (types));
     this.types.each((type) => {
       return (type.doc = this);
     });
@@ -89,18 +97,18 @@ class Doc extends Model {
    * @returns {string} Where the page's HTML is served from.
    */
   fileUrl(path) {
-    return `${app.config.docs_origin}${this.fullPath(path)}?${this.mtime}`;
+    return `${config.docs_origin}${this.fullPath(path)}?${this.mtime}`;
   }
 
   /** @returns {string} Where the doc's offline database is served from. */
   dbUrl() {
-    return `${app.config.docs_origin}/${this.slug}/${app.config.db_filename}?${this.mtime}`;
+    return `${config.docs_origin}/${this.slug}/${config.db_filename}?${this.mtime}`;
   }
 
   /** @returns {string} Where the doc's entry index is served from. */
   indexUrl() {
-    return `${app.config.docs_origin}/${this.slug}/${
-      app.config.index_filename
+    return `${config.docs_origin}/${this.slug}/${
+      config.index_filename
     }?${this.mtime}`;
   }
 
@@ -114,7 +122,7 @@ class Doc extends Model {
     if (this.entry) {
       return this.entry;
     }
-    this.entry = new app.models.Entry({
+    this.entry = new Entry({
       doc: this,
       name: this.fullName,
       path: "index",
@@ -352,7 +360,3 @@ class Doc extends Model {
     return isInstalled && this.mtime !== status.mtime;
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.models.Doc = Doc;

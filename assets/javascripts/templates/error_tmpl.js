@@ -27,14 +27,14 @@ const error = function (title, text, links) {
 
 const back = '<a href="#" data-behavior="back" class="_error-link">Go back</a>';
 
-app.templates.notFoundPage = () =>
+export const notFoundPage = () =>
   error(
     " Page not found. ",
     " It may be missing from the source documentation or this could be a bug. ",
     back,
   );
 
-app.templates.pageLoadError = () =>
+export const pageLoadError = () =>
   error(
     " The page failed to load. ",
     ` It may be missing from the server (try reloading the app) or you could be offline (try <a href="/offline">installing the documentation for offline usage</a> when online again).<br>
@@ -43,7 +43,7 @@ If you're online and you keep seeing this, you're likely behind a proxy or firew
 &middot; <a href="#" class="_error-link" data-retry>Retry</a> `,
   );
 
-app.templates.bootError = () =>
+export const bootError = () =>
   error(
     " The app failed to load. ",
     ` Check your Internet connection and try <a href="#" data-behavior="reload">reloading</a>.<br>
@@ -55,7 +55,7 @@ If you keep seeing this, you're likely behind a proxy or firewall that blocks cr
  * @param {Error} [exception] The error the browser reported, when there was one.
  * @returns {string}
  */
-app.templates.offlineError = function (reason, exception) {
+export const offlineError = function (reason, exception) {
   if (reason === "cookie_blocked") {
     return error(" Cookies must be enabled to use offline mode. ");
   }
@@ -89,7 +89,7 @@ This could be because you're browsing in private mode or have disallowed offline
   return error("Offline mode is unavailable.", reason);
 };
 
-app.templates.unsupportedBrowser = `\
+export const unsupportedBrowser = `\
 <div class="_fail">
   <h1 class="_fail-title">Your browser is unsupported, sorry.</h1>
   <p class="_fail-text">DevDocs is an API documentation browser which supports the following browsers:

@@ -1,10 +1,17 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { page } from "../../lib/page.js";
+import { $ } from "../../lib/util.js";
+import { ListFold } from "../list/list_fold.js";
+import { ListSelect } from "../list/list_select.js";
+import { View } from "../view.js";
+
 /**
  * The phone layout: one pane at a time, with a toggle between the sidebar and
  * the content, and tabs for the doc picker and the preferences.
  */
-class Mobile extends app.View {
+export class Mobile extends View {
   static className = "_mobile";
 
   static elements = {
@@ -100,7 +107,7 @@ class Mobile extends app.View {
     this.content.style.display = "none";
     this.sidebar.style.display = "block";
 
-    const selection = this.findByClass(app.views.ListSelect.activeClass);
+    const selection = this.findByClass(ListSelect.activeClass);
     if (selection) {
       const scrollContainer =
         window.scrollY === this.body.scrollTop
@@ -110,7 +117,7 @@ class Mobile extends app.View {
     } else {
       window.scrollTo(
         0,
-        (this.findByClass(app.views.ListFold.activeClass) && this.sidebarTop) ||
+        (this.findByClass(ListFold.activeClass) && this.sidebarTop) ||
           0,
       );
     }
@@ -214,7 +221,3 @@ class Mobile extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Mobile = Mobile;

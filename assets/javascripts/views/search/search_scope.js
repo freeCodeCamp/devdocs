@@ -1,5 +1,14 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { config } from "../../app/config.js";
+import { SynchronousSearcher } from "../../app/searcher.js";
+import { $ } from "../../lib/util.js";
+import { View } from "../view.js";
+/** @import { App } from "../../app/app.js" */
+/** @import { Context } from "../../lib/page.js" */
+/** @import { Doc } from "../../models/doc.js" */
+
 /**
  * Narrowing the search to one doc.
  *
@@ -10,8 +19,8 @@
  *
  * Emits `change` with the new doc and the previous one.
  */
-class SearchScope extends app.View {
-  static SEARCH_PARAM = app.config.search_param;
+export class SearchScope extends View {
+  static SEARCH_PARAM = config.search_param;
 
   static elements = {
     input: "._search-input",
@@ -32,7 +41,7 @@ class SearchScope extends app.View {
   init() {
     this.placeholder = this.input.getAttribute("placeholder");
 
-    this.searcher = new app.SynchronousSearcher({
+    this.searcher = new SynchronousSearcher({
       fuzzy_min_length: 2,
       max_results: 1,
     });
@@ -235,7 +244,3 @@ class SearchScope extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.SearchScope = SearchScope;

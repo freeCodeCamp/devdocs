@@ -1,5 +1,9 @@
 // @ts-check
 
+import { app } from "./app.js";
+import { Events } from "../lib/events.js";
+import { $ } from "../lib/util.js";
+
 /**
  * A key event whose target is read loosely: the handlers check for form-field
  * properties that only some elements have.
@@ -12,7 +16,7 @@
  *
  * Handlers return `false` to swallow the event; anything else lets it through.
  */
-class Shortcuts extends Events {
+export class Shortcuts extends Events {
   /** Starts listening for key events. */
   constructor() {
     super();
@@ -345,7 +349,3 @@ class Shortcuts extends Events {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.Shortcuts = Shortcuts;

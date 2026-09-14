@@ -1,12 +1,15 @@
 // @ts-check
 
+import { $ } from "../../lib/util.js";
+import { View } from "../view.js";
+
 /**
  * The tooltip shown over a sidebar row whose label is too long to fit.
  *
  * Rather than styling the row itself, a copy of it is positioned over the
  * original outside the sidebar's overflow, so that it can spill past the edge.
  */
-class SidebarHover extends app.View {
+export class SidebarHover extends View {
   static itemClass = "_list-hover";
 
   static events = {
@@ -144,7 +147,3 @@ class SidebarHover extends app.View {
     this.hide();
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.SidebarHover = SidebarHover;

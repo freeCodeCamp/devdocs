@@ -1,8 +1,9 @@
 {
   "name": "devdocs",
   "private": true,
+  "type": "module",
   "scripts": {
-    "test": "node --test test/assets/*_test.js",
+    "test": "node --import ./test/assets/setup.js --test test/assets/*_test.js",
     "typecheck": "tsc -p tsconfig.json && tsc -p test/assets/tsconfig.json"
   },
   "devDependencies": {

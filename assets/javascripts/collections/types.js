@@ -1,10 +1,16 @@
 // @ts-check
 
+import { Collection } from "./collection.js";
+import { Type } from "../models/type.js";
+
 /** The types within one doc, e.g. "Methods" or "Guides". *
  * @extends {Collection<Type>}
  */
-class Types extends Collection {
-  static model = "Type";
+export class Types extends Collection {
+  /** @inheritdoc */
+  model() {
+    return Type;
+  }
   static GUIDES_RGX =
     /(^|\()(guides?|tutorials?|reference|book|getting\ started|manual|examples)($|[\):])/i;
   static APPENDIX_RGX = /appendix/i;
@@ -39,7 +45,3 @@ class Types extends Collection {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.collections.Types = Types;

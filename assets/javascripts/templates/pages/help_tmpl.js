@@ -1,11 +1,15 @@
 // @ts-check
 
-app.templates.helpPage = function () {
+import { app } from "../../app/app.js";
+import { config } from "../../app/config.js";
+import { $ } from "../../lib/util.js";
+
+export const helpPage = function () {
   const ctrlKey = $.isMac() ? "cmd" : "ctrl";
   const navKey = $.isMac() ? "cmd" : "alt";
   const arrowScroll = app.settings.get("arrowScroll");
 
-  const aliases = Object.entries(app.config.docs_aliases);
+  const aliases = Object.entries(config.docs_aliases);
   const middle = Math.ceil(aliases.length / 2);
   const aliases_one = aliases.slice(0, middle);
   const aliases_two = aliases.slice(middle);

@@ -1,7 +1,12 @@
 // @ts-check
 
+import { app } from "./app.js";
+import { ajax } from "../lib/ajax.js";
+import { $ } from "../lib/util.js";
+import { Notif } from "../views/misc/notif.js";
+
 /** Watches for new builds of the app and new versions of the installed docs. */
-class UpdateChecker {
+export class UpdateChecker {
   /** Starts watching for new builds and checks the docs once. */
   constructor() {
     this.lastCheck = Date.now();
@@ -36,7 +41,7 @@ class UpdateChecker {
 
   /** Offers the user a reload. */
   onUpdateReady() {
-    new app.views.Notif("UpdateReady", { autoHide: null });
+    new Notif("UpdateReady", { autoHide: null });
   }
 
   /** Updates the installed docs, or offers to when updates are manual. */
@@ -54,7 +59,7 @@ class UpdateChecker {
 
   /** Offers the user a doc update. */
   onDocsUpdateReady() {
-    new app.views.Notif("UpdateDocs", { autoHide: null });
+    new Notif("UpdateDocs", { autoHide: null });
   }
 
   /** Re-checks when the tab is focused, at most every six hours. */
@@ -65,7 +70,3 @@ class UpdateChecker {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.UpdateChecker = UpdateChecker;

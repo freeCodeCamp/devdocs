@@ -1,5 +1,15 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { $ } from "../../lib/util.js";
+import { Search } from "../search/search.js";
+import { DocList } from "./doc_list.js";
+import { Results } from "./results.js";
+import { SidebarHover } from "./sidebar_hover.js";
+import { View } from "../view.js";
+/** @import { Context } from "../../lib/page.js" */
+/** @import { Doc } from "../../models/doc.js" */
+
 /**
  * The sidebar: the search field, and below it either the doc list or the
  * search results.
@@ -7,7 +17,7 @@
  * Swapping between the two keeps the doc list's scroll position, so that
  * clearing a search puts the user back where they were.
  */
-class Sidebar extends app.View {
+export class Sidebar extends View {
   static el = "._sidebar";
 
   static events = {
@@ -26,9 +36,9 @@ class Sidebar extends app.View {
   /** @inheritdoc */
   init() {
     if (!app.isMobile()) {
-      this.addSubview((this.hover = new app.views.SidebarHover(this.el)));
+      this.addSubview((this.hover = new SidebarHover(this.el)));
     }
-    this.addSubview((this.search = new app.views.Search()));
+    this.addSubview((this.search = new Search()));
 
     this.search
       .on("searching", () => this.onSearching())
@@ -40,8 +50,8 @@ class Sidebar extends app.View {
         ),
       );
 
-    this.results = new app.views.Results(this, this.search);
-    this.docList = new app.views.DocList();
+    this.results = new Results(this, this.search);
+    this.docList = new DocList();
 
     app.on("ready", () => this.onReady());
 
@@ -255,7 +265,3 @@ class Sidebar extends app.View {
     this.resetDisplay();
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Sidebar = Sidebar;

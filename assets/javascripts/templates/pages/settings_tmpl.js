@@ -20,7 +20,7 @@ const themeOption = ({ label, value }, settings) => `\
  * @param {Record<string, unknown>} settings The user's current preferences.
  * @returns {string}
  */
-app.templates.settingsPage = (settings) => `\
+export const settingsPage = (settings) => `\
 <h1 class="_lined-heading">Preferences</h1>
 
 <div class="_settings-fieldset">

@@ -1,4 +1,7 @@
-app.config = {
+// @ts-check
+
+/** @type {import('./config.js').AppConfig} */
+export const config = {
   db_filename: 'db.json',
   default_docs: <%= App.default_docs.to_json %>,
   docs_aliases: <%= App.docs_aliases.to_json %>,

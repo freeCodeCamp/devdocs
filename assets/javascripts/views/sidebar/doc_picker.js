@@ -1,11 +1,17 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { $, $$ } from "../../lib/util.js";
+import { ListFold } from "../list/list_fold.js";
+import { View } from "../view.js";
+/** @import { Doc } from "../../models/doc.js" */
+
 /**
  * The checklist of every available doc, shown in the preferences.
  *
  * Docs that come in several versions are grouped under one expandable row.
  */
-class DocPicker extends app.View {
+export class DocPicker extends View {
   static className = "_list _list-picker";
 
   static events = {
@@ -15,7 +21,7 @@ class DocPicker extends app.View {
 
   /** @inheritdoc */
   init() {
-    this.addSubview((this.listFold = new app.views.ListFold(this.el)));
+    this.addSubview((this.listFold = new ListFold(this.el)));
   }
 
   /** Also renders the list and starts tracking the focus. */
@@ -132,26 +138,26 @@ class DocPicker extends app.View {
       ) {
         $.scrollTo(target.parentElement, null, "continuous");
       }
-    } else if (target.classList.contains(app.views.ListFold.targetClass)) {
+    } else if (target.classList.contains(ListFold.targetClass)) {
       target.blur();
       if (!this.mouseDown || !(Date.now() < this.mouseDown + 100)) {
         if (this.focusEl === $("input", target.nextElementSibling)) {
-          if (target.classList.contains(app.views.ListFold.activeClass)) {
+          if (target.classList.contains(ListFold.activeClass)) {
             this.listFold.close(target);
           }
           let prev = target.previousElementSibling;
           while (
             prev.tagName !== "LABEL" &&
-            !prev.classList.contains(app.views.ListFold.targetClass)
+            !prev.classList.contains(ListFold.targetClass)
           ) {
             prev = prev.previousElementSibling;
           }
-          if (prev.classList.contains(app.views.ListFold.activeClass)) {
+          if (prev.classList.contains(ListFold.activeClass)) {
             prev = $.makeArray($$("input", prev.nextElementSibling)).pop();
           }
           this.delay(() => /** @type {HTMLElement} */ (prev).focus());
         } else {
-          if (!target.classList.contains(app.views.ListFold.activeClass)) {
+          if (!target.classList.contains(ListFold.activeClass)) {
             this.listFold.open(target);
           }
           this.delay(() => $("input", target.nextElementSibling).focus());
@@ -161,7 +167,3 @@ class DocPicker extends app.View {
     this.focusEl = target;
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.DocPicker = DocPicker;

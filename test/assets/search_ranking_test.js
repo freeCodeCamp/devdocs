@@ -1,66 +1,30 @@
 // @ts-check
 
-const assert = require("node:assert/strict");
-const fs = require("node:fs");
-const test = require("node:test");
-const vm = require("node:vm");
+import assert from "node:assert/strict";
+import test from "node:test";
 
-const context = {
-  app: {
-    config: {
-      max_results: 50,
-      docs_aliases: { julia: "jl" },
-    },
-    collections: {},
-    models: {},
-  },
-  $: {
-    escapeRegexp: (string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-  },
-};
+import { config } from "../../assets/javascripts/app/config.js";
+import { SynchronousSearcher } from "../../assets/javascripts/app/searcher.js";
+import { Doc } from "../../assets/javascripts/models/doc.js";
 
-vm.createContext(context);
-
-// The files are concatenated because top-level class declarations aren't
-// shared between scripts run in the same context.
-vm.runInContext(
-  [
-    "assets/javascripts/lib/events.js",
-    "assets/javascripts/app/searcher.js",
-    "assets/javascripts/models/model.js",
-    "assets/javascripts/models/entry.js",
-    "assets/javascripts/models/doc.js",
-  ]
-    .map((file) => fs.readFileSync(file, "utf8"))
-    .join("\n"),
-  context,
-  { filename: "devdocs.js" },
-);
-
-const { app } = context;
-
-app.collections.Entries = class Entries {
-  each() {}
-};
-app.collections.Types = class Types {
-  each() {}
-};
+config.docs_aliases = { julia: "jl" };
 
 // The docs are listed in the order of the manifest, latest version first.
 const search = (query, name, versions) => {
   const entries = versions.map((version) =>
-    new app.models.Doc({
+    new Doc({
       name,
       slug: `${name.toLowerCase()}~${version}`,
       version,
     }).toEntry(),
   );
 
-  const searcher = new app.SynchronousSearcher();
+  const searcher = new SynchronousSearcher();
+  /** @type {any[]} */
   let results = [];
-  searcher.on("results", (found) => (results = found));
+  searcher.on("results", (found) => (results = /** @type {any[]} */ (found)));
   searcher.find(entries, "text", query);
-  return [...results.map((entry) => entry.name)];
+  return results.map((entry) => entry.name);
 };
 
 const JULIA = ["1.13", "1.12", "1.11", "1.10", "1.9", "1.8"];

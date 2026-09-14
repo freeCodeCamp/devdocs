@@ -1,5 +1,10 @@
 // @ts-check
 
+import { $ } from "../../lib/util.js";
+import { ListFocus } from "./list_focus.js";
+import { ListSelect } from "./list_select.js";
+import { View } from "../view.js";
+
 /**
  * Expanding and collapsing the sidebar's nested lists.
  *
@@ -9,7 +14,7 @@
  * and `close` on the row, which the lists listen for to render their contents
  * lazily.
  */
-class ListFold extends app.View {
+export class ListFold extends View {
   static targetClass = "_list-dir";
   static handleClass = "_list-arrow";
   static activeClass = "open";
@@ -57,8 +62,8 @@ class ListFold extends app.View {
   /** @returns {HTMLElement | undefined} The focused row, or the selected one. */
   getCursor() {
     return (
-      this.findByClass(app.views.ListFocus.activeClass) ||
-      this.findByClass(app.views.ListSelect.activeClass)
+      this.findByClass(ListFocus.activeClass) ||
+      this.findByClass(ListSelect.activeClass)
     );
   }
 
@@ -101,7 +106,7 @@ class ListFold extends app.View {
     } else if (el.classList.contains(this.statics().targetClass)) {
       if (el.hasAttribute("href")) {
         if (el.classList.contains(this.statics().activeClass)) {
-          if (el.classList.contains(app.views.ListSelect.activeClass)) {
+          if (el.classList.contains(ListSelect.activeClass)) {
             this.close(el);
           }
         } else {
@@ -113,7 +118,3 @@ class ListFold extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.ListFold = ListFold;

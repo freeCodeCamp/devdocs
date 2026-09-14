@@ -1,10 +1,14 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { $ } from "../../lib/util.js";
+import { View } from "../view.js";
+
 /**
  * The app's index: the introduction, or the splash screen once the user has
  * dismissed it.
  */
-class RootPage extends app.View {
+export class RootPage extends View {
   static events = { click: "onClick" };
 
   /** @inheritdoc */
@@ -57,7 +61,3 @@ class RootPage extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.RootPage = RootPage;

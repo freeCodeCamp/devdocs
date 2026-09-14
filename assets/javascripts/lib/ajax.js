@@ -32,7 +32,7 @@ const MIME_TYPES = {
  *   synchronous request returns the parsed response instead, but nothing asks
  *   for one.
  */
-function ajax(options) {
+export function ajax(options) {
   applyDefaults(options);
   serializeData(options);
 

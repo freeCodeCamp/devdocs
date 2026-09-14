@@ -1,5 +1,8 @@
 // @ts-check
 
+import { $, $$ } from "../../lib/util.js";
+import { View } from "../view.js";
+
 /**
  * @typedef {object} NotifOptions
  * @property {number | null | false} [autoHide] How long to stay up, in
@@ -13,7 +16,7 @@
  * `app.templates.notifError`. Notifications stack, each positioned below the
  * one before it.
  */
-class Notif extends app.View {
+export class Notif extends View {
   static className = "_notif";
   static activeClass = "_in";
   static attributes = { role: "alert" };
@@ -100,7 +103,3 @@ class Notif extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Notif = Notif;

@@ -6,6 +6,10 @@
     "strict": false,
     // Each file opts in with a `// @ts-check` comment.
     "checkJs": false,
+    // Modules make unused imports easy to leave behind, and they cost a
+    // request each. Unused *parameters* are left alone: the code has plenty of
+    // deliberately-ignored handler arguments.
+    "noUnusedLocals": true,
     "noEmit": true,
     "target": "ES2022",
     "module": "preserve",

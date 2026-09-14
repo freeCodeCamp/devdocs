@@ -15,7 +15,7 @@
  *
  * @typedef {string | number | undefined} CookieValue
  */
-class CookiesStore {
+export class CookiesStore {
   static INT = /^\d+$/;
 
   /**

@@ -41,8 +41,16 @@
 <body>
 <noscript class="_fail">DevDocs requires JavaScript to run.</noscript>
 <%= erb :app -%>
-<%= javascript_tag 'application' %>
-<%= javascript_tag 'docs' %><% unless App.production? %>
-<%= javascript_tag 'debug' %><% end %>
+<%# The vendored libraries assign globals, so they load as a classic script
+    ahead of the module graph. The import map rewrites each module's relative
+    imports onto its digested URL; it has to come before any module loads. %>
+<%= javascript_tag 'vendor' %>
+<script type="importmap" nonce="devdocs"><%= import_map_json %></script>
+<%= module_preload_tags 'docs.js' %>
+<% unless App.production? %>
+<script type="module" src="<%= javascript_path 'debug.js' %>"></script>
+<% end %>
+<script type="module" src="<%= javascript_path 'docs.js' %>"></script>
+<script type="module" src="<%= javascript_path 'application.js' %>"></script>
 </body>
 </html>

@@ -1,5 +1,9 @@
 // @ts-check
 
+import { $ } from "../../lib/util.js";
+import { View } from "../view.js";
+/** @import { Entry } from "../../models/entry.js" */
+
 /**
  * The base for the per-doc page views: docs whose pages need something done to
  * them once rendered.
@@ -7,7 +11,7 @@
  * Syntax highlighting is spread over animation frames, so that a page with a
  * lot of code doesn't block scrolling while it is painted.
  */
-class BasePage extends app.View {
+export class BasePage extends View {
   /**
    * @param {HTMLElement} el
    * @param {Entry} entry
@@ -95,7 +99,3 @@ class BasePage extends app.View {
     this.previousTiming = timing;
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.BasePage = BasePage;

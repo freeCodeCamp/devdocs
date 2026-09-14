@@ -1,5 +1,11 @@
 // @ts-check
 
+import { app } from "./app.js";
+import { ajax } from "../lib/ajax.js";
+import { $ } from "../lib/util.js";
+/** @import { Doc } from "../models/doc.js" */
+/** @import { Entry } from "../models/entry.js" */
+
 /**
  * `DB#useIndexedDB` is a method that the instance shadows with the boolean it
  * returned, so the write needs a view of the instance that expects the value.
@@ -41,7 +47,7 @@ const useIndexedDBOf = (db) =>
  * together, so that a doc being installed can force an upgrade without
  * colliding with a schema change.
  */
-class DB {
+export class DB {
   static NAME = "docs";
   static VERSION = 15;
 
@@ -800,7 +806,3 @@ class DB {
     return app.settings.get("schema");
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.DB = DB;

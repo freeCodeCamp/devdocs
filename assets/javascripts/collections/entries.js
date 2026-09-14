@@ -1,12 +1,14 @@
 // @ts-check
 
+import { Collection } from "./collection.js";
+import { Entry } from "../models/entry.js";
+
 /** Every searchable entry, across every enabled doc. *
  * @extends {Collection<Entry>}
  */
-class Entries extends Collection {
-  static model = "Entry";
+export class Entries extends Collection {
+  /** @inheritdoc */
+  model() {
+    return Entry;
+  }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.collections.Entries = Entries;

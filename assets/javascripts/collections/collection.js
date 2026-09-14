@@ -1,15 +1,17 @@
 // @ts-check
 
+import { Model } from "../models/model.js";
+
 /**
  * An ordered list of models.
  *
- * Subclasses name the model they hold with a static `model` property, which is
- * looked up in `app.models` so that the collection doesn't have to reference
- * the class directly, and declare which model that is with `@extends`.
+ * Subclasses return the model class they hold from `model()`, and declare
+ * which model that is with `@extends`. It is a method rather than a field so
+ * that a collection and its model can import each other.
  *
  * @template {Model} [T=Model]
  */
-class Collection {
+export class Collection {
   /** @param {unknown[]} [objects] Models, attribute objects, or other collections. */
   constructor(objects) {
     if (objects == null) {
@@ -19,17 +21,12 @@ class Collection {
   }
 
   /**
-   * The model class this collection holds.
+   * The model class this collection holds. Implemented by the subclass.
    *
    * @returns {new (attributes?: Record<string, unknown>) => T}
    */
   model() {
-    const { model } = /** @type {{ model: keyof App["models"] }} */ (
-      /** @type {unknown} */ (this.constructor)
-    );
-    return /** @type {new (attributes?: Record<string, unknown>) => T} */ (
-      /** @type {unknown} */ (app.models[model])
-    );
+    throw new Error(`${this.constructor.name} doesn't declare a model`);
   }
 
   /**
@@ -55,13 +52,13 @@ class Collection {
    * @param {T | T[] | Collection<T> | Record<string, unknown>} object
    */
   add(object) {
-    if (object instanceof app.Model) {
+    if (object instanceof Model) {
       this.models.push(object);
     } else if (object instanceof Array) {
       for (var obj of object) {
         this.add(obj);
       }
-    } else if (object instanceof app.Collection) {
+    } else if (object instanceof Collection) {
       this.models.push(...(object.all() || []));
     } else {
       this.models.push(new (this.model())(object));
@@ -144,7 +141,3 @@ class Collection {
     return i;
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that subclasses extend a type rather than `any`.
-app.Collection = Collection;

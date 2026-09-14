@@ -1,9 +1,10 @@
 // @ts-check
 
-//= require views/pages/base
+import { $ } from "../../lib/util.js";
+import { BasePage } from "./base.js";
 
 /** The SQLite pages' show/hide toggles. */
-class SqlitePage extends BasePage {
+export class SqlitePage extends BasePage {
   static events = { click: "onClick" };
 
   /** @param {ViewMouseEvent} event */
@@ -26,7 +27,3 @@ class SqlitePage extends BasePage {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.SqlitePage = SqlitePage;

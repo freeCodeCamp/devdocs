@@ -4,6 +4,11 @@
 // Match functions
 //
 
+import { config } from "./config.js";
+import { Events } from "../lib/events.js";
+import { $ } from "../lib/util.js";
+/** @import { Model } from "../models/model.js" */
+
 let fuzzyRegexp,
   i,
   index,
@@ -162,11 +167,11 @@ function scoreFuzzyMatch() {
  * module-level state rather than arguments, which is what keeps the inner
  * loop cheap.
  */
-class Searcher extends Events {
+export class Searcher extends Events {
   static CHUNK_SIZE = 20000;
 
   static DEFAULTS = {
-    max_results: app.config.max_results,
+    max_results: config.max_results,
     fuzzy_min_length: 3,
   };
 
@@ -420,7 +425,7 @@ class Searcher extends Events {
    * Yields to the event loop between chunks.
    *
    * @param {() => void} fn
-   * @returns {number | void} The timeout handle, when there is one.
+   * @returns {ReturnType<typeof setTimeout> | void} The timeout handle, when there is one.
    */
   delay(fn) {
     return (this.timeout = setTimeout(fn, 1));
@@ -440,15 +445,11 @@ class Searcher extends Events {
   }
 }
 
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.Searcher = Searcher;
-
 /**
  * A searcher that runs to completion without yielding, and emits its results
  * once at the end. Used where the caller needs an answer before continuing.
  */
-class SynchronousSearcher extends app.Searcher {
+export class SynchronousSearcher extends Searcher {
   /** Collects each matcher's results, instead of emitting them as it goes. */
   match() {
     if (this.matcher) {
@@ -488,7 +489,3 @@ class SynchronousSearcher extends app.Searcher {
     return fn();
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.SynchronousSearcher = SynchronousSearcher;

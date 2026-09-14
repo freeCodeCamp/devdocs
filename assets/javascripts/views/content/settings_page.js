@@ -1,12 +1,20 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { Settings } from "../../app/settings.js";
+import { resetAnalytics } from "../../lib/page.js";
+import { $ } from "../../lib/util.js";
+import { Notif } from "../misc/notif.js";
+import { View } from "../view.js";
+/** @import { SettingsValues } from "../../app/settings.js" */
+
 /**
  * The preferences page: every setting, plus exporting and importing them.
  *
  * Some settings take effect immediately rather than on save, because the user
  * needs to see what they do.
  */
-class SettingsPage extends app.View {
+export class SettingsPage extends View {
   static className = "_static";
 
   static events = {
@@ -33,7 +41,7 @@ class SettingsPage extends app.View {
     settings.spaceTimeout = app.settings.get("spaceTimeout");
     settings.noDocSpecificIcon = app.settings.get("noDocSpecificIcon");
     settings.autoSupported = app.settings.autoSupported;
-    for (var layout of app.Settings.LAYOUTS) {
+    for (var layout of Settings.LAYOUTS) {
       settings[layout] = app.settings.hasLayout(layout);
     }
     return settings;
@@ -107,7 +115,7 @@ class SettingsPage extends app.View {
    */
   import(file, input) {
     if (!file || file.type !== "application/json") {
-      new app.views.Notif("ImportInvalid", { autoHide: false });
+      new Notif("ImportInvalid", { autoHide: false });
       return;
     }
 
@@ -119,7 +127,7 @@ class SettingsPage extends app.View {
         } catch (error) {}
       })();
       if (!data || data.constructor !== Object) {
-        new app.views.Notif("ImportInvalid", { autoHide: false });
+        new Notif("ImportInvalid", { autoHide: false });
         return;
       }
       app.settings.import(data);
@@ -177,7 +185,3 @@ class SettingsPage extends app.View {
     this.render();
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.SettingsPage = SettingsPage;

@@ -1,5 +1,16 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { $ } from "../../lib/util.js";
+import { Content } from "../content/content.js";
+import { Menu } from "./menu.js";
+import { Mobile } from "./mobile.js";
+import { Path } from "./path.js";
+import { Resizer } from "./resizer.js";
+import { SettingsView } from "./settings.js";
+import { Sidebar } from "../sidebar/sidebar.js";
+import { View } from "../view.js";
+
 /**
  * The root view, bound to the document itself.
  *
@@ -7,7 +18,7 @@
  * handles the shortcuts and the `data-behavior` links that aren't tied to any
  * one of them.
  */
-class AppDocument extends app.View {
+export class AppDocument extends View {
   static el = document;
 
   static events = { visibilitychange: "onVisibilityChange" };
@@ -24,22 +35,22 @@ class AppDocument extends app.View {
 
   /** @inheritdoc */
   init() {
-    this.menu = new app.views.Menu();
-    this.sidebar = new app.views.Sidebar();
+    this.menu = new Menu();
+    this.sidebar = new Sidebar();
     this.addSubview(this.sidebar);
     this.addSubview(this.menu);
-    if (app.views.Resizer.isSupported()) {
-      this.resizer = new app.views.Resizer();
+    if (Resizer.isSupported()) {
+      this.resizer = new Resizer();
       this.addSubview(this.resizer);
     }
-    this.content = new app.views.Content();
+    this.content = new Content();
     this.addSubview(this.content);
     if (!app.isSingleDoc() && !app.isMobile()) {
-      this.path = new app.views.Path();
+      this.path = new Path();
       this.addSubview(this.path);
     }
     if (!app.isSingleDoc()) {
-      this.settings = new app.views.Settings();
+      this.settings = new SettingsView();
     }
 
     $.on(document.body, "click", this.onClick);
@@ -76,7 +87,7 @@ class AppDocument extends app.View {
       return;
     }
     this.delay(() => {
-      if (app.isMobile() !== app.views.Mobile.detect()) {
+      if (app.isMobile() !== Mobile.detect()) {
         location.reload();
       }
     }, 300);
@@ -150,7 +161,3 @@ class AppDocument extends app.View {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.Document = AppDocument;

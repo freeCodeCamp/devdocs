@@ -1,6 +1,8 @@
 // @ts-check
 
-app.templates.aboutPage = function () {
+import { app } from "../../app/app.js";
+
+export const aboutPage = function () {
   let doc;
   const all_docs = app.docs.all().concat(...(app.disabledDocs.all() || []));
   // de-duplicate docs by doc.name

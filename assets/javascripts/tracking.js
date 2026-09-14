@@ -4,8 +4,12 @@
 // has consented. Without consent, whatever they left behind is cleared out.
 // The snippets below are the vendors' own bootstraps, kept as they ship them.
 
+import { app } from "./app/app.js";
+import { config } from "./app/config.js";
+import { page, resetAnalytics } from "./lib/page.js";
+
 try {
-  if (app.config.env === "production") {
+  if (config.env === "production") {
     if (Cookies.get("analyticsConsent") === "1") {
       (function (i, s, o, g, r, a, m) {
         i["GoogleAnalyticsObject"] = r;

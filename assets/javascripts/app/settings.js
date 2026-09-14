@@ -1,5 +1,10 @@
 // @ts-check
 
+import { app } from "./app.js";
+import { config } from "./config.js";
+import { CookiesStore } from "../lib/cookies_store.js";
+import { $ } from "../lib/util.js";
+
 /**
  * A setting the user turns on or off.
  *
@@ -47,7 +52,7 @@
  * `PREFERENCE_KEYS` are the ones the user controls and that a backup carries;
  * `INTERNAL_KEYS` are the app's own bookkeeping and stay out of backups.
  */
-class Settings {
+export class Settings {
   static PREFERENCE_KEYS = [
     "hideDisabled",
     "hideIntro",
@@ -163,7 +168,7 @@ class Settings {
   getDocs() {
     return (
       /** @type {string | undefined} */ (this.store.get("docs"))?.split("/") ||
-      app.config.default_docs
+      config.default_docs
     );
   }
 
@@ -276,7 +281,7 @@ class Settings {
       this.del("dark");
     }
     this.setTheme(this.get("theme"));
-    for (var layout of app.Settings.LAYOUTS) {
+    for (var layout of Settings.LAYOUTS) {
       this.toggleLayout(layout, this.hasLayout(layout));
     }
     this.initSidebarWidth();
@@ -307,7 +312,7 @@ class Settings {
    */
   toggleLayout(layout, enable) {
     const { classList } = document.body;
-    // sidebar is always shown for settings; its state is updated in app.views.Settings
+    // sidebar is always shown for settings; its state is updated in SettingsView
     if (layout !== "_sidebar-hidden" || !app.router?.isSettings) {
       classList.toggle(layout, enable);
     }
@@ -322,7 +327,3 @@ class Settings {
     }
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.Settings = Settings;

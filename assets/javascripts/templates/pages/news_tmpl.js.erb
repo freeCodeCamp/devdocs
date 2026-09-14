@@ -1,11 +1,13 @@
 //= depend_on news.json
 
-app.templates.newsPage = () => ` <h1 class="_lined-heading">Changelog</h1>
+import { app } from "../../app/app.js";
+
+export const newsPage = () => ` <h1 class="_lined-heading">Changelog</h1>
 <p class="_note">
 For development updates, follow the project on <a href="https://github.com/freeCodeCamp/devdocs">GitHub</a>.
-<div class="_news">${app.templates.newsList(app.news)}</div> `;
+<div class="_news">${newsList(app.news)}</div> `;
 
-app.templates.newsList = function(news, options = {}) {
+export const newsList = function(news, options = {}) {
   let year = new Date().getUTCFullYear();
   let result = '';
 

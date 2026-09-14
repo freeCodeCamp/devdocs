@@ -1,10 +1,17 @@
 // @ts-check
 
+import { app } from "../../app/app.js";
+import { OfflineBackup } from "../../app/offline_backup.js";
+import { $ } from "../../lib/util.js";
+import { render } from "../../templates/base.js";
+import { View } from "../view.js";
+/** @import { Doc, InstallStatus } from "../../models/doc.js" */
+
 /**
  * The offline page: installing and removing each doc's database, and backing
  * the whole lot up to a file.
  */
-class OfflinePage extends app.View {
+export class OfflinePage extends View {
   static className = "_static";
 
   static events = {
@@ -55,7 +62,7 @@ class OfflinePage extends app.View {
    * @param {InstallStatus} status
    */
   renderDoc(doc, status) {
-    return app.templates.render("offlineDoc", doc, status);
+    return render("offlineDoc", doc, status);
   }
 
   /** @returns {string} */
@@ -191,7 +198,7 @@ class OfflinePage extends app.View {
 
   /** Exports every installed doc to a file. */
   backup() {
-    return this._backup || (this._backup = new app.OfflineBackup());
+    return this._backup || (this._backup = new OfflineBackup());
   }
 
   // Exports `docs` into a single file. Returns false when another backup is
@@ -345,7 +352,3 @@ class OfflinePage extends app.View {
     note.innerHTML = success ? "" : this.tmpl("persistenceError", exception);
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.OfflinePage = OfflinePage;

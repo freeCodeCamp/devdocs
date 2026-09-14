@@ -1,24 +1,16 @@
 // @ts-check
 
+import { app } from "../app/app.js";
+import { Events } from "../lib/events.js";
+import { $, $$ } from "../lib/util.js";
+import { render } from "../templates/base.js";
+/** @import { DollarContent } from "../lib/util.js" */
+
 /**
  * Anything a view's manipulation helpers accept as content: markup, a node, a
  * collection of them, or another view.
  *
  * @typedef {DollarContent | View} ViewContent
- */
-
-/**
- * A DOM event as a view handler reads it.
- *
- * lib.dom types `Event#target` as a bare `EventTarget`, which carries none of
- * the element properties a handler reads. The handlers here are bound to
- * elements, so the target is narrowed to one; the form variants narrow it
- * further, for the handlers bound to a field.
- *
- * @typedef {Event & { target: HTMLElement, currentTarget: HTMLElement }} ViewEvent
- * @typedef {MouseEvent & { target: HTMLElement, currentTarget: HTMLElement }} ViewMouseEvent
- * @typedef {KeyboardEvent & { target: HTMLElement, currentTarget: HTMLElement }} ViewKeyboardEvent
- * @typedef {Event & { target: HTMLInputElement, currentTarget: HTMLElement }} ViewInputEvent
  */
 
 /**
@@ -56,7 +48,7 @@
  * builds or finds the element, applies them, and calls `init` if the subclass
  * defines one. Bindings are only live between `activate` and `deactivate`.
  */
-class View extends Events {
+export class View extends Events {
   /**
    * The element the view is bound to.
    *
@@ -294,7 +286,7 @@ class View extends Events {
    * @returns {string}
    */
   tmpl(name, ...args) {
-    return app.templates.render(name, ...args);
+    return render(name, ...args);
   }
 
   /**
@@ -302,7 +294,7 @@ class View extends Events {
    *
    * @param {Function} fn
    * @param {...unknown} args Arguments for `fn`, optionally followed by a delay in milliseconds.
-   * @returns {number} The timeout handle.
+   * @returns {ReturnType<typeof setTimeout>} The timeout handle.
    */
   delay(fn, ...args) {
     const last = args[args.length - 1];
@@ -471,7 +463,3 @@ const contentOf = (value) => (value instanceof View ? value.el : value);
  * @returns {HTMLElement}
  */
 const nodeOf = (value) => (value instanceof View ? value.el : value);
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that subclasses extend a type rather than `any`.
-app.View = View;

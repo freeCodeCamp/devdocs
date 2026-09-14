@@ -1,5 +1,9 @@
 // @ts-check
 
+import { app } from "../app/app.js";
+import { config } from "../app/config.js";
+import { $ } from "./util.js";
+
 /**
  * The favicon the page was served with, read the first time a doc sets one.
  *
@@ -44,7 +48,7 @@ const withImage = function (url, action) {
  *
  * @param {{ slug: string }} doc
  */
-this.setFaviconForDoc = function (doc) {
+export const setFaviconForDoc = function (doc) {
   if (currentSlug === doc.slug || app.settings.get("noDocSpecificIcon")) {
     return;
   }
@@ -74,7 +78,7 @@ this.setFaviconForDoc = function (doc) {
     return;
   }
 
-  const bgUrl = app.config.favicon_spritesheet;
+  const bgUrl = config.favicon_spritesheet;
   const sourceSize = 16;
   const sourceX = Math.abs(parseInt(backgroundPositionX.slice(0, -2)));
   const sourceY = Math.abs(parseInt(backgroundPositionY.slice(0, -2)));
@@ -120,7 +124,7 @@ this.setFaviconForDoc = function (doc) {
 };
 
 /** Puts the default favicon back, if a doc replaced it. */
-this.resetFavicon = function () {
+export const resetFavicon = function () {
   if (defaultUrl !== null && currentSlug !== null) {
     /** @type {HTMLLinkElement} */ ($('link[rel="icon"]')).href = defaultUrl;
     return (currentSlug = null);

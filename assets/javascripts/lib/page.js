@@ -1,3 +1,8 @@
+import { app } from "../app/app.js";
+import { config } from "../app/config.js";
+import { $ } from "./util.js";
+import { Notif } from "../views/misc/notif.js";
+
 /*
  * Based on github.com/visionmedia/page.js
  * Licensed under the MIT license
@@ -79,7 +84,7 @@ const callbacks = [];
 
 // The helpers are attached to `page` below, so the function on its own doesn't
 // yet satisfy the type the global is declared with.
-this.page = /** @type {PageFn & PageHelpers} */ (
+export const page = /** @type {PageFn & PageHelpers} */ (
   /** @type {PageFn} */ (
     function (value, fn) {
       if (typeof value === "function") {
@@ -102,7 +107,7 @@ page.start = function (options) {
   }
   if (!running) {
     running = true;
-    // The app restores scroll positions itself (see app.views.Content), which
+    // The app restores scroll positions itself (see views/content/content.js), which
     // the browser's automatic restoration would race with and override.
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
@@ -177,7 +182,7 @@ page.canGoForward = () => !Context.isLastState(currentState);
 
 const currentPath = () => location.pathname + location.search + location.hash;
 
-class Context {
+export class Context {
   /**
    * The number of states created so far; also the ID of the next state.
    */
@@ -512,7 +517,7 @@ page.track = function (fn) {
 };
 
 var track = function () {
-  if (app.config.env !== "production") {
+  if (config.env !== "production") {
     return;
   }
   if (navigator.doNotTrack === "1") {
@@ -533,12 +538,12 @@ var track = function () {
     // Only ask for consent once per browser session
     Cookies.set("analyticsConsentAsked", "1");
 
-    new app.views.Notif("AnalyticsConsent", { autoHide: null });
+    new Notif("AnalyticsConsent", { autoHide: null });
   }
 };
 
 /** Expires the analytics cookies, which are the ones prefixed with a single `_`. */
-this.resetAnalytics = function () {
+export const resetAnalytics = function () {
   for (var cookie of document.cookie.split(/;\s?/)) {
     var name = cookie.split("=")[0];
     if (name[0] === "_" && name[1] !== "_") {

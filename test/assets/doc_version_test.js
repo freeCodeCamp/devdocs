@@ -1,47 +1,16 @@
 // @ts-check
 
-const assert = require("node:assert/strict");
-const fs = require("node:fs");
-const test = require("node:test");
-const vm = require("node:vm");
+import assert from "node:assert/strict";
+import test from "node:test";
 
-const context = {
-  $: {},
-  $$: {},
-  page: {},
-  window: { matchMedia: () => ({ media: "not all" }) },
-};
+import { app } from "../../assets/javascripts/app/app.js";
+import { Docs } from "../../assets/javascripts/collections/docs.js";
+import { Doc } from "../../assets/javascripts/models/doc.js";
 
-vm.createContext(context);
-
-// The files are concatenated because top-level class declarations aren't
-// shared between scripts run in the same context.
-vm.runInContext(
-  [
-    "assets/javascripts/lib/events.js",
-    "assets/javascripts/app/app.js",
-    "assets/javascripts/models/model.js",
-    "assets/javascripts/models/doc.js",
-    "assets/javascripts/collections/collection.js",
-    "assets/javascripts/collections/docs.js",
-  ]
-    .map((file) => fs.readFileSync(file, "utf8"))
-    .join("\n"),
-  context,
-  { filename: "devdocs.js" },
+// Bookkeeping the tests hang off the singleton to observe the migration.
+const probe = /** @type {{ saved: boolean, loads: string[], loadFails: boolean }} */ (
+  /** @type {unknown} */ (app)
 );
-
-const { app } = context;
-
-app.collections.Entries = class Entries {
-  each() {}
-};
-app.collections.Types = class Types {
-  each() {}
-};
-app.models.Entry = class Entry {
-  addAlias() {}
-};
 
 const CMAKE = [
   { name: "CMake", slug: "cmake~3.12", version: "3.12" },
@@ -55,7 +24,7 @@ const NODE = [
 ];
 const BASH = [{ name: "Bash", slug: "bash" }];
 
-const newDoc = (attributes) => new app.models.Doc(attributes);
+const newDoc = (attributes) => new Doc(attributes);
 const findLatest = (slug, attributes) => {
   const docs = attributes.map(newDoc);
   return docs.find((doc) => doc.slug === slug).findLatestVersion(docs).slug;
@@ -100,34 +69,34 @@ test("variants of a documentation aren't versions", () => {
 });
 
 // The index of the latest version has to load for a doc to be replaced.
-app.models.Doc.prototype.load = function (onSuccess, onError) {
-  app.loads.push(this.slug);
-  if (app.loadFails) {
+Doc.prototype.load = function (onSuccess, onError) {
+  probe.loads.push(this.slug);
+  if (probe.loadFails) {
     onError();
   } else {
     onSuccess();
   }
+  return { abort: () => {} };
 };
 
 const migrate = async (enabled, allDocs, autoLatestVersion = true) => {
-  app.settings = {
+  app.settings = /** @type {any} */ ({
     get: (key) => (key === "autoLatestVersion" ? autoLatestVersion : undefined),
-  };
-  app.docs = new app.collections.Docs();
-  app.disabledDocs = new app.collections.Docs();
+  });
+  app.docs = new Docs();
+  app.disabledDocs = new Docs();
   for (const attributes of allDocs) {
     (enabled.includes(attributes.slug) ? app.docs : app.disabledDocs).add(
       attributes,
     );
   }
-  app.saveDocs = () => {
-    app.saved = true;
+  app.saveDocs = async () => {
+    probe.saved = true;
   };
-  app.saved = false;
-  app.loads = [];
+  probe.saved = false;
+  probe.loads = [];
   await app.migrateToLatestVersions();
-  // Spread the array so that it's created in this realm, not the VM's.
-  return [...app.docs.all().map((doc) => doc.slug)];
+  return app.docs.all().map((doc) => doc.slug);
 };
 
 test("enabled docs are migrated to their latest version at boot", async () => {
@@ -135,7 +104,7 @@ test("enabled docs are migrated to their latest version at boot", async () => {
     "bash",
     "cmake~3.12",
   ]);
-  assert.equal(app.saved, true);
+  assert.equal(probe.saved, true);
   assert.equal(app.disabledDocs.findBy("slug", "cmake~3.9").slug, "cmake~3.9");
 });
 
@@ -149,26 +118,26 @@ test("the version superseding several docs is only loaded once", async () => {
   assert.deepEqual(await migrate(["cmake~3.9", "cmake~3.10"], CMAKE), [
     "cmake~3.12",
   ]);
-  assert.deepEqual([...app.loads], ["cmake~3.12"]);
+  assert.deepEqual(probe.loads, ["cmake~3.12"]);
 });
 
 test("a doc whose latest version fails to load isn't replaced", async () => {
-  app.loadFails = true;
+  probe.loadFails = true;
   try {
     assert.deepEqual(await migrate(["cmake~3.9"], CMAKE), ["cmake~3.9"]);
-    assert.equal(app.saved, false);
+    assert.equal(probe.saved, false);
   } finally {
-    app.loadFails = false;
+    probe.loadFails = false;
   }
 });
 
 test("docs are left alone without the preference or a newer version", async () => {
   assert.deepEqual(await migrate(["cmake~3.9"], CMAKE, false), ["cmake~3.9"]);
-  assert.equal(app.saved, false);
+  assert.equal(probe.saved, false);
 
   assert.deepEqual(
     await migrate(["cmake~3.12", "node~10_lts"], [...CMAKE, ...NODE]),
     ["cmake~3.12", "node~10_lts"],
   );
-  assert.equal(app.saved, false);
+  assert.equal(probe.saved, false);
 });

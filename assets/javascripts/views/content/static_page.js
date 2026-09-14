@@ -1,7 +1,10 @@
 // @ts-check
 
+import { View } from "../view.js";
+/** @import { Context } from "../../lib/page.js" */
+
 /** The app's own pages — About, News, the user guide and the 404. */
-class StaticPage extends app.View {
+export class StaticPage extends View {
   static className = "_static";
 
   static titles = {
@@ -35,7 +38,3 @@ class StaticPage extends app.View {
     this.render(context.page || "notFound");
   }
 }
-
-// Registered on `app` so that the rest of the code can reach it; declared at
-// the top level so that it can be named in a type.
-app.views.StaticPage = StaticPage;
