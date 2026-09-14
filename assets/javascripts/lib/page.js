@@ -493,16 +493,16 @@ var onDocumentClick = function (event) {
 var isSameOrigin = (url) =>
   url.startsWith(`${location.protocol}//${location.hostname}`);
 
+/** The canonical link element, looked up once. */
+/** @type {HTMLLinkElement | null} */
+var canonicalLink = null;
+
 /** Points the canonical link at the current path. */
 var updateCanonicalLink = function () {
-  // Cached on the global, which is what `this` is in the concatenated bundle.
-  const self = /** @type {{ canonicalLink?: HTMLLinkElement }} */ (
-    /** @type {unknown} */ (this)
-  );
-  if (!self.canonicalLink) {
-    self.canonicalLink = document.head.querySelector('link[rel="canonical"]');
+  if (!canonicalLink) {
+    canonicalLink = document.head.querySelector('link[rel="canonical"]');
   }
-  return self.canonicalLink.setAttribute(
+  return canonicalLink.setAttribute(
     "href",
     `https://${location.host}${location.pathname}`,
   );

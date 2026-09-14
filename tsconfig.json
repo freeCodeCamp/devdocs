@@ -10,6 +10,9 @@
     // request each. Unused *parameters* are left alone: the code has plenty of
     // deliberately-ignored handler arguments.
     "noUnusedLocals": true,
+    // Modules are strict mode, so `this` is undefined in a plain function
+    // rather than the global object the concatenated bundle gave it.
+    "noImplicitThis": true,
     "noEmit": true,
     "target": "ES2022",
     "module": "preserve",

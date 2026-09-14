@@ -117,7 +117,7 @@ export const setFaviconForDoc = function (doc) {
         return (currentSlug = doc.slug);
       } catch (error) {
         Raven.captureException(error, { level: "info" });
-        return this.resetFavicon();
+        return resetFavicon();
       }
     }),
   );
