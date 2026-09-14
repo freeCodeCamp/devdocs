@@ -3,9 +3,7 @@ ruby '4.0.6'
 
 gem 'activesupport', require: false
 gem 'html-pipeline', '~> 2.14'
-gem 'ostruct'
 gem 'nokogiri'
-gem 'pry-byebug'
 gem 'rake'
 gem 'terminal-table'
 gem 'thor'
@@ -34,6 +32,7 @@ end
 
 group :development do
   gem 'better_errors'
+  gem 'pry-byebug'
 end
 
 group :docs do
@@ -42,6 +41,7 @@ end
 
 group :test do
   gem 'minitest'
+  gem 'ostruct'
   gem 'rack-test', require: false
   gem 'rr', require: false
   gem 'simplecov', require: false
