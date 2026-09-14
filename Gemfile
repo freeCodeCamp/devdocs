@@ -13,7 +13,6 @@ gem 'typhoeus'
 gem 'yajl-ruby', require: false
 
 group :app do
-  gem 'browser'
   gem 'chunky_png'
   gem 'erubi'
   gem 'dartsass-sprockets'

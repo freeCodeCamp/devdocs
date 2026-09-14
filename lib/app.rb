@@ -165,14 +165,6 @@ class App < Sinatra::Application
       "https://#{request.host_with_port}"
     end
 
-    def browser
-      @browser ||= Browser.new(request.user_agent)
-    end
-
-    def unsupported_browser?
-      browser.ie?
-    end
-
     def docs
       @docs ||= begin
         cookie = memoized_cookies['docs']
@@ -255,10 +247,6 @@ class App < Sinatra::Application
       end
     end
 
-  end
-
-  before do
-    halt erb :unsupported if unsupported_browser?
   end
 
   OUT_HOST = 'out.devdocs.io'.freeze
