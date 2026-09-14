@@ -130,17 +130,16 @@ app.OfflineBackup = class OfflineBackup {
       const mtime = entry.mtime;
       onProgress(doc, i, total);
 
-      if (this.isValidIndex(entry.index)) {
-        // Keyed by the backup's mtime so that Doc#_getCache discards it when
-        // the documentation has been updated since the backup was made.
-        app.localStorage.set(doc.slug, [mtime, entry.index]);
-      }
-
       app.db.store(
         doc,
         entry.db,
         mtime,
         () => {
+          if (this.isValidIndex(entry.index)) {
+            // Keyed by the backup's mtime so that Doc#_getCache discards it
+            // when the doc has been updated since the backup was made.
+            app.localStorage.set(doc.slug, [mtime, entry.index]);
+          }
           imported.push(doc);
           setTimeout(next, 0);
         },
