@@ -15,7 +15,7 @@ app.views.TypeList = class TypeList extends app.View {
     close: "onClose",
   };
 
-  /** @param {any} doc */
+  /** @param {Doc} doc */
   constructor(doc) {
     super();
     this.doc = doc;

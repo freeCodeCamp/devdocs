@@ -82,7 +82,7 @@ app.views.SearchScope = class SearchScope extends app.View {
     }
   }
 
-  /** @param {unknown[]} results */
+  /** @param {Doc[]} results */
   onResults(results) {
     const doc = results[0];
     if (!doc) {
@@ -98,7 +98,7 @@ app.views.SearchScope = class SearchScope extends app.View {
   /**
    * Scopes to the doc and shows its tag.
    *
-   * @param {any} doc
+   * @param {Doc} doc
    */
   selectDoc(doc) {
     const previousDoc = this.doc;
@@ -121,7 +121,7 @@ app.views.SearchScope = class SearchScope extends app.View {
   /**
    * Navigates to a doc that isn't enabled, keeping the rest of the query.
    *
-   * @param {any} doc
+   * @param {Doc} doc
    */
   redirectToDoc(doc) {
     const { hash } = location;

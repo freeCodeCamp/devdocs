@@ -3,7 +3,7 @@
 /**
  * A type's page: every entry of that type in the doc.
  *
- * @param {any} type
+ * @param {Type} type
  * @returns {string}
  */
 app.templates.typePage = (type) => {
@@ -17,7 +17,7 @@ app.templates.typePage = (type) => {
 /**
  * One row of a type page.
  *
- * @param {any} entry
+ * @param {Entry} entry
  * @returns {string}
  */
 app.templates.typePageEntry = (entry) => {

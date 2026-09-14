@@ -51,8 +51,8 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   }
 
   /**
-   * @param {unknown} doc
-   * @param {Record<string, InstallStatus>} status Install statuses by slug.
+   * @param {Doc} doc
+   * @param {InstallStatus} status
    */
   renderDoc(doc, status) {
     return app.templates.render("offlineDoc", doc, status);
@@ -74,7 +74,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
 
   /**
    * @param {any} el A node inside a row.
-   * @returns {unknown} The row's doc, or `undefined`.
+   * @returns {Doc | undefined} The row's doc.
    */
   docByEl(el) {
     let slug;
@@ -85,7 +85,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   }
 
   /**
-   * @param {any} doc
+   * @param {Doc} doc
    * @returns {any} The doc's row.
    */
   docEl(doc) {
@@ -133,7 +133,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
     }
   }
 
-  /** @param {any} doc */
+  /** @param {Doc} doc */
   onInstallSuccess(doc) {
     if (!this.activated) {
       return;
@@ -151,7 +151,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
     });
   }
 
-  /** @param {unknown} doc */
+  /** @param {Doc} doc */
   onInstallError(doc) {
     if (!this.activated) {
       return;
@@ -163,7 +163,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   }
 
   /**
-   * @param {unknown} doc
+   * @param {Doc} doc
    * @param {ProgressEvent} event
    */
   onInstallProgress(doc, event) {
@@ -197,7 +197,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   // Exports `docs` into a single file. Returns false when another backup is
   // already running, in which case `onDone` is never called.
   /**
-   * @param {unknown[]} docs
+   * @param {Doc[]} docs
    * @param {(success: boolean) => void} [onDone]
    * @returns {boolean} Whether the export started; it doesn't while one is
    *   already running.
@@ -237,7 +237,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   }
 
   /**
-   * @param {unknown} doc
+   * @param {Doc} doc
    * @param {any} el The doc's row.
    */
   exportDoc(doc, el) {

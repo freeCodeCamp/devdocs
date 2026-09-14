@@ -5,7 +5,9 @@
  *
  * Subclasses name the model they hold with a static `model` property, which is
  * looked up in `app.models` so that the collection doesn't have to reference
- * the class directly.
+ * the class directly, and declare which model that is with `@extends`.
+ *
+ * @template {Model} [T=Model]
  */
 class Collection {
   /** @param {unknown[]} [objects] Models, attribute objects, or other collections. */
@@ -19,7 +21,7 @@ class Collection {
   /**
    * The model class this collection holds.
    *
-   * @returns {any}
+   * @returns {new (attributes?: Record<string, unknown>) => T}
    */
   model() {
     return app.models[/** @type {any} */ (this.constructor).model];
@@ -34,10 +36,10 @@ class Collection {
     if (objects == null) {
       objects = [];
     }
-    /** @type {any[]} */
+    /** @type {T[]} */
     this.models = [];
     for (var object of objects) {
-      this.add(object);
+      this.add(/** @type {T} */ (object));
     }
   }
 
@@ -45,7 +47,7 @@ class Collection {
    * Appends a model, an array of them, another collection's models, or an
    * attribute object to build a model from.
    *
-   * @param {unknown} object
+   * @param {T | T[] | Collection<T> | Record<string, unknown>} object
    */
   add(object) {
     if (object instanceof app.Model) {
@@ -62,7 +64,7 @@ class Collection {
   }
 
   /**
-   * @param {unknown} model
+   * @param {T} model
    */
   remove(model) {
     this.models.splice(this.models.indexOf(model), 1);
@@ -79,7 +81,7 @@ class Collection {
   }
 
   /**
-   * @param {(model: unknown) => void} fn
+   * @param {(model: T) => void} fn
    */
   each(fn) {
     for (var model of this.models) {
@@ -90,14 +92,14 @@ class Collection {
   /**
    * The underlying array, not a copy.
    *
-   * @returns {unknown[]}
+   * @returns {T[]}
    */
   all() {
     return this.models;
   }
 
   /**
-   * @param {unknown} model
+   * @param {T} model
    * @returns {boolean}
    */
   contains(model) {
@@ -107,7 +109,7 @@ class Collection {
   /**
    * @param {string} attr
    * @param {unknown} value
-   * @returns {any} The first match, or `undefined`.
+   * @returns {T | undefined}
    */
   findBy(attr, value) {
     return this.models.find((model) => model[attr] === value);
@@ -116,7 +118,7 @@ class Collection {
   /**
    * @param {string} attr
    * @param {unknown} value
-   * @returns {unknown[]}
+   * @returns {T[]}
    */
   findAllBy(attr, value) {
     return this.models.filter((model) => model[attr] === value);

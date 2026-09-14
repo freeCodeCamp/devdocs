@@ -19,7 +19,7 @@ const arrow = '<svg class="_list-arrow"><use xlink:href="#icon-dir"/></svg>';
 /**
  * A doc's row in the sidebar.
  *
- * @param {any} doc
+ * @param {Doc} doc
  * @param {SidebarOptions} [options]
  * @returns {string}
  */
@@ -48,7 +48,7 @@ templates.sidebarDoc = function (doc, options) {
 /**
  * A type's row, with the number of entries it holds.
  *
- * @param {any} type
+ * @param {Type} type
  * @returns {string}
  */
 templates.sidebarType = (type) =>
@@ -61,7 +61,7 @@ templates.sidebarType = (type) =>
 /**
  * An entry's row.
  *
- * @param {any} entry
+ * @param {Entry} entry
  * @returns {string}
  */
 templates.sidebarEntry = (entry) =>
@@ -73,7 +73,7 @@ templates.sidebarEntry = (entry) =>
  * A search result: like an entry's row, plus the doc it belongs to and a way
  * to reveal it in the list or enable its doc.
  *
- * @param {any} entry
+ * @param {Entry} entry
  * @returns {string}
  */
 templates.sidebarResult = function (entry) {
@@ -119,7 +119,7 @@ templates.sidebarPageLink = (count) =>
 /**
  * A doc's row in the picker, with a checkbox.
  *
- * @param {any} doc
+ * @param {Doc} doc
  * @param {SidebarOptions} [options]
  * @returns {string}
  */
@@ -141,7 +141,7 @@ templates.sidebarLabel = function (doc, options) {
 /**
  * A doc that has several versions, as an expandable row.
  *
- * @param {any} doc
+ * @param {Doc} doc
  * @param {string} versions The rendered rows for each version.
  * @param {SidebarOptions} [options]
  * @returns {string}
@@ -179,7 +179,7 @@ templates.sidebarDisabledList = (html) =>
 /**
  * A disabled doc that has several versions.
  *
- * @param {any} doc
+ * @param {Doc} doc
  * @param {string} versions The rendered rows for each version.
  * @returns {string}
  */

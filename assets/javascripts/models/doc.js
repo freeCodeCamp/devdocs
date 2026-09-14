@@ -23,15 +23,15 @@
  * `db_size`, `mtime`, `links`. The constructor derives `slug_without_version`,
  * `fullName`, `icon`, `short_version` and `text` from them.
  */
-app.models.Doc = class Doc extends app.Model {
+class Doc extends Model {
   static NUMBERED_VERSION_RGX = /^\d+(\.\d+)*$/;
 
   /**
-   * Attributes are taken through `arguments` and copied on by Model, then the
-   * derived ones are worked out from them.
+   * @param {Record<string, unknown>} [attributes] Copied onto the doc by Model;
+   *   the derived attributes are then worked out from them.
    */
-  constructor() {
-    super(...arguments);
+  constructor(attributes) {
+    super(attributes);
     this.reset(this);
     this.slug_without_version = this.slug.split("~")[0];
     this.fullName = `${this.name}` + (this.version ? ` ${this.version}` : "");
@@ -45,24 +45,27 @@ app.models.Doc = class Doc extends app.Model {
   /**
    * Reloads the entries and types from freshly fetched index data.
    *
-   * @param {{ entries?: unknown[], types?: unknown[] }} data
+   * @param {{ entries?: unknown, types?: unknown }} data Freshly fetched index
+   *   data, or the doc itself when its attributes carry the index.
    */
   reset(data) {
     this.resetEntries(data.entries);
     this.resetTypes(data.types);
   }
 
-  /** @param {unknown[]} [entries] */
+  /** @param {unknown} [entries] */
   resetEntries(entries) {
-    this.entries = new app.collections.Entries(entries);
+    this.entries = new app.collections.Entries(
+      /** @type {unknown[]} */ (entries),
+    );
     this.entries.each((entry) => {
       return (entry.doc = this);
     });
   }
 
-  /** @param {unknown[]} [types] */
+  /** @param {unknown} [types] */
   resetTypes(types) {
-    this.types = new app.collections.Types(types);
+    this.types = new app.collections.Types(/** @type {unknown[]} */ (types));
     this.types.each((type) => {
       return (type.doc = this);
     });
@@ -106,7 +109,7 @@ app.models.Doc = class Doc extends app.Model {
    * The entry standing for the doc itself, so that it can be searched for
    * by name. Built once and reused.
    *
-   * @returns {any}
+   * @returns {Entry}
    */
   toEntry() {
     if (this.entry) {
@@ -126,7 +129,7 @@ app.models.Doc = class Doc extends app.Model {
   /**
    * @param {string} path
    * @param {string} [hash] Preferred over `path` alone when it matches an entry.
-   * @returns {unknown} The entry, or `undefined`.
+   * @returns {Entry | undefined}
    */
   findEntryByPathAndHash(path, hash) {
     const entry = hash && this.entries.findBy("path", `${path}#${hash}`);
@@ -316,11 +319,12 @@ app.models.Doc = class Doc extends app.Model {
   }
 
   /**
-   * @param {any[]} docs
+   * @param {Doc[]} docs
    * @returns {unknown} The doc holding the latest version of the same
    *   documentation among `docs`, or the doc itself when there is none.
    */
   findLatestVersion(docs) {
+    /** @type {Doc} */
     let latest = this;
     if (!this.hasNumberedVersion()) {
       return latest;
@@ -348,4 +352,8 @@ app.models.Doc = class Doc extends app.Model {
     const isInstalled = status.installed || app.settings.get("autoInstall");
     return isInstalled && this.mtime !== status.mtime;
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.models.Doc = Doc;

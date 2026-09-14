@@ -77,7 +77,7 @@ app.templates.notifNews = (news) =>
   );
 
 /**
- * @param {unknown[]} docs Enabled docs with a new release.
+ * @param {Doc[]} docs Enabled docs with a new release.
  * @param {unknown[]} disabledDocs Disabled docs with a new release.
  * @returns {string}
  */

@@ -1,7 +1,9 @@
 // @ts-check
 
-/** Every doc the app knows about, enabled or not. */
-app.collections.Docs = class Docs extends app.Collection {
+/** Every doc the app knows about, enabled or not. *
+ * @extends {Collection<Doc>}
+ */
+class Docs extends Collection {
   static model = "Doc";
   static NORMALIZE_VERSION_RGX = /\.(\d)$/;
   static NORMALIZE_VERSION_SUB = ".0$1";
@@ -12,7 +14,7 @@ app.collections.Docs = class Docs extends app.Collection {
 
   /**
    * @param {string} slug With or without a version.
-   * @returns {unknown} The doc, or `undefined`.
+   * @returns {Doc | undefined}
    */
   findBySlug(slug) {
     return (
@@ -106,7 +108,7 @@ app.collections.Docs = class Docs extends app.Collection {
     next();
   }
 
-  /** @param {(statuses: Record<string, InstallStatus> | undefined) => void} callback */
+  /** @param {(statuses: Record<string, InstallStatus> | false) => void} callback */
   getInstallStatuses(callback) {
     app.db.versions(this.models, (statuses) => {
       if (statuses) {
@@ -150,4 +152,8 @@ app.collections.Docs = class Docs extends app.Collection {
       }
     });
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.collections.Docs = Docs;

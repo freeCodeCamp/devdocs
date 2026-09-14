@@ -65,7 +65,7 @@ app.views.DocPicker = class DocPicker extends app.View {
   }
 
   /**
-   * @param {any[]} docs Every version of one doc.
+   * @param {Doc[]} docs Every version of one doc.
    * @returns {string}
    */
   renderVersions(docs) {

@@ -9,7 +9,7 @@ app.views.HiddenPage = class HiddenPage extends app.View {
 
   /**
    * @param {HTMLElement} el
-   * @param {unknown} entry
+   * @param {Entry} entry
    */
   constructor(el, entry) {
     super(el);

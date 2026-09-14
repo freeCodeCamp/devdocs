@@ -12,7 +12,7 @@ app.views.TypePage = class TypePage extends app.View {
     }
   }
 
-  /** @param {any} type */
+  /** @param {Type} type */
   render(type) {
     this.type = type;
     this.html(this.tmpl("typePage", this.type));

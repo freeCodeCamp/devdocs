@@ -238,9 +238,28 @@ class Context {
    * The route's captured parameters, by name for named ones and by position
    * for the rest. Set by `Route#middleware` when the route matches.
    *
-   * @type {unknown}
+   * An array that also carries the named captures as string keys, so it is
+   * left untyped.
+   *
+   * @type {any}
    */
   params;
+
+  /**
+   * The models the route resolved the path to, set by app/router.js.
+   *
+   * @type {any}
+   */
+  doc;
+
+  /** @type {any} */
+  entry;
+
+  /** @type {any} */
+  type;
+
+  /** The static page the route resolved to, if any. @type {string | undefined} */
+  page;
 
   /** The query string, without the leading `?`. @type {string | undefined} */
   query;

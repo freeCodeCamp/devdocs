@@ -1,7 +1,7 @@
 // @ts-check
 
 /**
- * @param {unknown[]} docs Every doc, in the order they are listed.
+ * @param {string} docs The rendered rows, one per doc.
  * @param {boolean} hasPersistence Whether the browser exposes the storage API.
  * @param {boolean} isPersistent Whether storage has already been made persistent.
  * @returns {string}
@@ -57,7 +57,7 @@ app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
 
 /**
  * @param {string} action What is being done, e.g. "Exporting".
- * @param {any} doc
+ * @param {Doc} doc
  * @param {number} i The doc's position, one-based.
  * @param {number} total
  * @returns {string}
@@ -183,8 +183,8 @@ The current tab will continue to function even when you go offline (provided you
 /**
  * One row of the offline page: a doc, its size, and what can be done with it.
  *
- * @param {any} doc
- * @param {Record<string, InstallStatus>} status Install statuses by slug.
+ * @param {Doc} doc
+ * @param {InstallStatus} status
  * @returns {string}
  */
 app.templates.offlineDoc = function (doc, status) {

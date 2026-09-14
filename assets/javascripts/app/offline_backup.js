@@ -22,7 +22,7 @@ app.OfflineBackup = class OfflineBackup {
   static MIME_TYPE = "application/json";
 
   /**
-   * @param {any[]} docs
+   * @param {Doc[]} docs
    * @returns {string} The name to save the backup under.
    */
   filename(docs) {
@@ -35,7 +35,7 @@ app.OfflineBackup = class OfflineBackup {
    * Calls back with a Blob containing every installed doc among `docs`, and
    * the number of docs it holds. Docs that aren't installed are skipped.
    *
-   * @param {unknown[]} docs
+   * @param {Doc[]} docs
    * @param {(doc: unknown, i: number, total: number) => void} onProgress
    * @param {(blob: Blob, count: number) => void} onSuccess
    * @param {(reason: string) => void} onError
@@ -80,7 +80,7 @@ app.OfflineBackup = class OfflineBackup {
   }
 
   /**
-   * @param {any} doc
+   * @param {Doc} doc
    * @param {{ mtime: number, data: unknown }} result The doc's stored database.
    * @returns {unknown} One entry of the backup's `docs` array.
    */
@@ -135,7 +135,7 @@ app.OfflineBackup = class OfflineBackup {
   /**
    * Stores each valid entry, one at a time.
    *
-   * @param {any[]} entries
+   * @param {Entry[]} entries
    * @param {(doc: unknown, i: number, total: number) => void} onProgress
    * @param {(summary: ImportSummary) => void} onSuccess
    * @param {(reason: string, skipped?: string[]) => void} onError
@@ -204,7 +204,7 @@ app.OfflineBackup = class OfflineBackup {
    * isn't usable has to be rejected rather than wipe a working installation.
    * The index page is what DB#checkForCorruptedDocs looks for.
    *
-   * @param {any} entry
+   * @param {Entry} entry
    * @returns {boolean}
    */
   isValidEntry(entry) {
@@ -246,7 +246,7 @@ app.OfflineBackup = class OfflineBackup {
    * schema bump triggers DB#onUpgradeNeeded, which only creates stores for the
    * enabled docs.
    *
-   * @param {unknown[]} docs
+   * @param {Doc[]} docs
    * @returns {number} How many docs weren't enabled before.
    */
   enableDocs(docs) {

@@ -254,7 +254,7 @@ app.DB = class DB {
   /**
    * Replaces the doc's stored pages. Whatever was there before is cleared.
    *
-   * @param {any} doc
+   * @param {Doc} doc
    * @param {Record<string, string>} data The doc's pages, by path.
    * @param {number} mtime
    * @param {() => void} onSuccess
@@ -327,7 +327,7 @@ app.DB = class DB {
   /**
    * Removes the doc's pages.
    *
-   * @param {any} doc
+   * @param {Doc} doc
    * @param {() => void} onSuccess
    * @param {(error?: unknown) => void} onError
    * @param {boolean} [_retry] Internal: whether a failure may bump the schema and try again.
@@ -379,7 +379,7 @@ app.DB = class DB {
   /**
    * Reads the doc's stored pages, for a backup.
    *
-   * @param {any} doc
+   * @param {Doc} doc
    * @param {(result: { mtime: number, data: unknown } | null) => void} callback
    */
   dump(doc, callback) {
@@ -426,7 +426,7 @@ app.DB = class DB {
   }
 
   /**
-   * @param {any} doc
+   * @param {Doc} doc
    * @param {(version: number | false) => void} fn The stored `mtime`, or `false` when it isn't installed.
    */
   version(doc, fn) {
@@ -460,7 +460,7 @@ app.DB = class DB {
   }
 
   /**
-   * @param {any} doc
+   * @param {Doc} doc
    * @returns {number | false | undefined} `undefined` when the cache isn't loaded yet.
    */
   cachedVersion(doc) {
@@ -471,8 +471,8 @@ app.DB = class DB {
   }
 
   /**
-   * @param {any[]} docs
-   * @param {(versions: Record<string, number | false> | false) => void} fn
+   * @param {Doc[]} docs
+   * @param {(versions: Record<string, any> | false) => void} fn
    */
   versions(docs, fn) {
     const versions = this.cachedVersions(docs);
@@ -511,7 +511,7 @@ app.DB = class DB {
   }
 
   /**
-   * @param {any[]} docs
+   * @param {Doc[]} docs
    * @returns {Record<string, any> | undefined} `undefined` when the cache isn't loaded yet.
    */
   cachedVersions(docs) {
@@ -529,7 +529,7 @@ app.DB = class DB {
    * Reads an entry's page, from the offline store when it is there and from
    * the network otherwise.
    *
-   * @param {unknown} entry
+   * @param {Entry} entry
    * @param {(html: string) => void} onSuccess
    * @param {() => void} onError
    */
@@ -544,7 +544,7 @@ app.DB = class DB {
   }
 
   /**
-   * @param {any} entry
+   * @param {Entry} entry
    * @param {(html: string) => void} onSuccess
    * @param {() => void} onError
    */
@@ -558,7 +558,7 @@ app.DB = class DB {
   }
 
   /**
-   * @param {any} entry
+   * @param {Entry} entry
    * @param {(html: string) => void} onSuccess
    * @param {() => void} onError Called when the page isn't stored, so the caller can fall back.
    */
@@ -707,7 +707,7 @@ app.DB = class DB {
   }
 
   /**
-   * @param {any} entry
+   * @param {Entry} entry
    * @returns {boolean} Whether the entry's doc is installed.
    */
   shouldLoadWithIDB(entry) {

@@ -207,7 +207,7 @@ app.views.DocList = class DocList extends app.View {
     }
   }
 
-  /** @param {any} doc */
+  /** @param {Doc} doc */
   openDoc(doc) {
     if (app.disabledDocs.contains(doc) && doc.version) {
       this.listFold.open(
@@ -217,12 +217,12 @@ app.views.DocList = class DocList extends app.View {
     this.listFold.open(this.find(`[data-slug='${doc.slug}']`));
   }
 
-  /** @param {any} doc */
+  /** @param {Doc} doc */
   closeDoc(doc) {
     this.listFold.close(this.find(`[data-slug='${doc.slug}']`));
   }
 
-  /** @param {any} type */
+  /** @param {Type} type */
   openType(type) {
     this.listFold.open(
       this.lists[type.doc.slug].find(`[data-slug='${type.slug}']`),

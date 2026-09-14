@@ -1,7 +1,9 @@
 // @ts-check
 
-/** The types within one doc, e.g. "Methods" or "Guides". */
-app.collections.Types = class Types extends app.Collection {
+/** The types within one doc, e.g. "Methods" or "Guides". *
+ * @extends {Collection<Type>}
+ */
+class Types extends Collection {
   static model = "Type";
   static GUIDES_RGX =
     /(^|\()(guides?|tutorials?|reference|book|getting\ started|manual|examples)($|[\):])/i;
@@ -24,7 +26,7 @@ app.collections.Types = class Types extends app.Collection {
   }
 
   /**
-   * @param {any} type
+   * @param {Type} type
    * @returns {number} The index of the group the type belongs in.
    */
   _groupFor(type) {
@@ -36,4 +38,8 @@ app.collections.Types = class Types extends app.Collection {
       return 1;
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.collections.Types = Types;

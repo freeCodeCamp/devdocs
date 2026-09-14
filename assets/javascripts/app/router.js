@@ -52,7 +52,7 @@ app.Router = class Router extends Events {
   }
 
   /**
-   * @param {unknown} context
+   * @param {Context} context
    * @param {() => unknown} next
    * @returns {unknown} A path to redirect to, or nothing when the route handled it.
    */
@@ -71,7 +71,7 @@ app.Router = class Router extends Events {
   }
 
   /**
-   * @param {any} context
+   * @param {Context} context
    * @param {() => unknown} next
    * @returns {unknown} A path to redirect to, or nothing when the route handled it.
    */
@@ -92,7 +92,7 @@ app.Router = class Router extends Events {
   }
 
   /**
-   * @param {any} context
+   * @param {Context} context
    * @param {() => unknown} next
    * @returns {unknown} A path to redirect to, or nothing when the route handled it.
    */
@@ -111,7 +111,7 @@ app.Router = class Router extends Events {
   }
 
   /**
-   * @param {any} context
+   * @param {Context} context
    * @param {() => unknown} next
    * @returns {unknown} A path to redirect to, or nothing when the route handled it.
    */
@@ -155,7 +155,7 @@ app.Router = class Router extends Events {
   }
 
   /**
-   * @param {any} context
+   * @param {Context} context
    * @returns {string | undefined} A redirect to the hash form when in single-doc mode.
    */
   settings(context) {
@@ -166,7 +166,7 @@ app.Router = class Router extends Events {
   }
 
   /**
-   * @param {any} context
+   * @param {Context} context
    * @returns {string | undefined} A redirect to the hash form when in single-doc mode.
    */
   offline(context) {
@@ -177,7 +177,7 @@ app.Router = class Router extends Events {
   }
 
   /**
-   * @param {any} context
+   * @param {Context} context
    * @returns {string | undefined} A redirect to the hash form when in single-doc mode.
    */
   about(context) {
@@ -189,7 +189,7 @@ app.Router = class Router extends Events {
   }
 
   /**
-   * @param {any} context
+   * @param {Context} context
    * @returns {string | undefined} A redirect to the hash form when in single-doc mode.
    */
   news(context) {
@@ -201,7 +201,7 @@ app.Router = class Router extends Events {
   }
 
   /**
-   * @param {any} context
+   * @param {Context} context
    * @returns {string | undefined} A redirect to the hash form when in single-doc mode.
    */
   help(context) {

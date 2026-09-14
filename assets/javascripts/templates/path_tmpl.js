@@ -3,7 +3,7 @@
 /**
  * The breadcrumb above the content: the doc, then the type, then the entry.
  *
- * @param {any} doc
+ * @param {Doc} doc
  * @param {any} [type]
  * @param {any} [entry]
  * @returns {string}

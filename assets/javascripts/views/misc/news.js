@@ -22,7 +22,7 @@ app.views.News = class News extends app.views.Notif {
     this.html(app.templates.notifNews(this.unreadNews));
   }
 
-  /** @returns {unknown[]} Entries published since the user last saw the changelog. */
+  /** @returns {Entry[]} Entries published since the user last saw the changelog. */
   getUnreadNews() {
     const time = this.getLastReadTime();
     if (!time) {

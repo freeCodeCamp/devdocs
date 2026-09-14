@@ -9,7 +9,7 @@
  * derives `text`, the normalized string the searcher matches against, and the
  * doc sets `doc` when it builds its entries.
  */
-app.models.Entry = class Entry extends app.Model {
+class Entry extends Model {
   /**
    * Expands a searchable string with its alias, if it has one, so that both
    * spellings match.
@@ -35,9 +35,9 @@ app.models.Entry = class Entry extends app.Model {
     return string;
   }
 
-  /** Attributes are taken through `arguments` and copied on by Model. */
-  constructor() {
-    super(...arguments);
+  /** @param {Record<string, unknown>} [attributes] Copied onto the entry by Model. */
+  constructor(attributes) {
+    super(attributes);
     this.text = Entry.applyAliases(app.Searcher.normalizeString(this.name));
   }
 
@@ -104,4 +104,8 @@ app.models.Entry = class Entry extends app.Model {
   loadFile(onSuccess, onError) {
     return app.db.load(this, onSuccess, onError);
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.models.Entry = Entry;

@@ -44,7 +44,7 @@ app.views.Results = class Results extends app.View {
   }
 
   /**
-   * @param {unknown[]} entries One batch of matches.
+   * @param {Entry[]} entries One batch of matches.
    * @param {{ initialResults?: boolean, urlSearch?: boolean }} flags
    *   `initialResults` marks the first batch of a search; `urlSearch` means
    *   the query came from the URL, so the first result is opened rather than
@@ -90,7 +90,7 @@ app.views.Results = class Results extends app.View {
     this.el.firstElementChild?.click();
   }
 
-  /** @param {any} doc The doc that was just enabled from a result. */
+  /** @param {Doc} doc The doc that was just enabled from a result. */
   onDocEnabled(doc) {
     app.router.show(doc.fullPath());
     return this.sidebar.onDocEnabled();

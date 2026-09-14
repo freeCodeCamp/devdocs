@@ -10,7 +10,7 @@
 app.views.BasePage = class BasePage extends app.View {
   /**
    * @param {HTMLElement} el
-   * @param {any} entry
+   * @param {Entry} entry
    */
   constructor(el, entry) {
     super(el);
