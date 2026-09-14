@@ -1,3 +1,5 @@
+// @ts-check
+
 const notice = (text) => `<p class="_notice-text">${text}</p>`;
 
 app.templates.singleDocNotice = (doc) =>

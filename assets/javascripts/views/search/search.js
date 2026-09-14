@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.Search = class Search extends app.View {
   static SEARCH_PARAM = app.config.search_param;
 
@@ -110,7 +112,7 @@ app.views.Search = class Search extends app.View {
     if (url == null) {
       url = false;
     }
-    this.addClass(this.constructor.activeClass);
+    this.addClass(this.statics().activeClass);
     this.trigger("searching");
 
     this.hasResults = null;
@@ -136,7 +138,7 @@ app.views.Search = class Search extends app.View {
   }
 
   clear() {
-    this.removeClass(this.constructor.activeClass);
+    this.removeClass(this.statics().activeClass);
     this.trigger("clear");
   }
 

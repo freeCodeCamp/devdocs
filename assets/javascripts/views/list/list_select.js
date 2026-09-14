@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.ListSelect = class ListSelect extends app.View {
   static activeClass = "active";
 
@@ -12,7 +14,7 @@ app.views.ListSelect = class ListSelect extends app.View {
   select(el) {
     this.deselect();
     if (el) {
-      el.classList.add(this.constructor.activeClass);
+      el.classList.add(this.statics().activeClass);
       $.trigger(el, "select");
     }
   }
@@ -20,7 +22,7 @@ app.views.ListSelect = class ListSelect extends app.View {
   deselect() {
     const selection = this.getSelection();
     if (selection) {
-      selection.classList.remove(this.constructor.activeClass);
+      selection.classList.remove(this.statics().activeClass);
       $.trigger(selection, "deselect");
     }
   }
@@ -36,7 +38,7 @@ app.views.ListSelect = class ListSelect extends app.View {
   }
 
   getSelection() {
-    return this.findByClass(this.constructor.activeClass);
+    return this.findByClass(this.statics().activeClass);
   }
 
   onClick(event) {

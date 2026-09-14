@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.SearchScope = class SearchScope extends app.View {
   static SEARCH_PARAM = app.config.search_param;
 

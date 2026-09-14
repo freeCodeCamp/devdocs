@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.SettingsPage = class SettingsPage extends app.View {
   static className = "_static";
 
@@ -81,7 +83,7 @@ app.views.SettingsPage = class SettingsPage extends app.View {
     reader.onloadend = function () {
       const data = (() => {
         try {
-          return JSON.parse(reader.result);
+          return JSON.parse(/** @type {string} */ (reader.result));
         } catch (error) {}
       })();
       if (!data || data.constructor !== Object) {

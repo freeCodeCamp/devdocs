@@ -1,3 +1,5 @@
+// @ts-check
+
 //= require views/misc/notif
 
 app.views.Tip = class Tip extends app.views.Notif {

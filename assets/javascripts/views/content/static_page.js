@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.StaticPage = class StaticPage extends app.View {
   static className = "_static";
 
@@ -21,7 +23,7 @@ app.views.StaticPage = class StaticPage extends app.View {
   }
 
   getTitle() {
-    return this.constructor.titles[this.page];
+    return this.statics().titles[this.page];
   }
 
   onRoute(context) {

@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.Sidebar = class Sidebar extends app.View {
   static el = "._sidebar";
 
@@ -24,7 +26,7 @@ app.views.Sidebar = class Sidebar extends app.View {
       .on("searching", () => this.onSearching())
       .on("clear", () => this.onSearchClear())
       .scope.on("change", (newDoc, previousDoc) =>
-        this.onScopeChange((newDoc, previousDoc)),
+        this.onScopeChange(newDoc, previousDoc),
       );
 
     this.results = new app.views.Results(this, this.search);

@@ -1,3 +1,5 @@
+// @ts-check
+
 try {
   if (app.config.env === "production") {
     if (Cookies.get("analyticsConsent") === "1") {
@@ -8,7 +10,7 @@ try {
           function () {
             (i[r].q = i[r].q || []).push(arguments);
           }),
-          (i[r].l = 1 * new Date());
+          (i[r].l = 1 * /** @type {any} */ (new Date()));
         (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
         a.async = 1;
         a.src = g;
@@ -36,7 +38,7 @@ try {
         else
           (function () {
             var _gauges = _gauges || [];
-            !(function () {
+            (function () {
               var a = document.createElement("script");
               (a.type = "text/javascript"),
                 (a.async = !0),

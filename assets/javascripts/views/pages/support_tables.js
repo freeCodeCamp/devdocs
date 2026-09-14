@@ -1,3 +1,5 @@
+// @ts-check
+
 //= require views/pages/base
 
 app.views.SupportTablesPage = class SupportTablesPage extends (

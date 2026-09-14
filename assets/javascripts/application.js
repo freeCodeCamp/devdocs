@@ -1,3 +1,5 @@
+// @ts-check
+
 //= require_tree ./vendor
 
 //= require lib/license

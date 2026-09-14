@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.Resizer = class Resizer extends app.View {
   static className = "_resizer";
 

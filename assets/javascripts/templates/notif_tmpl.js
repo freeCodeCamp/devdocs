@@ -1,3 +1,5 @@
+// @ts-check
+
 const notif = function (title, html) {
   html = html.replace(/<a /g, '<a class="_notif-link" ');
   return ` <h5 class="_notif-title">${title}</h5>

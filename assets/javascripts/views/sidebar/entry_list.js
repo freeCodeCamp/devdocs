@@ -1,3 +1,5 @@
+// @ts-check
+
 //= require views/list/paginated_list
 
 app.views.EntryList = class EntryList extends app.views.PaginatedList {

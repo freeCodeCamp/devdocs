@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.RootPage = class RootPage extends app.View {
   static events = { click: "onClick" };
 

@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.Settings = class Settings extends app.View {
   static SIDEBAR_HIDDEN_LAYOUT = "_sidebar-hidden";
 

@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.TypeList = class TypeList extends app.View {
   static tagName = "div";
   static className = "_list _list-sub";

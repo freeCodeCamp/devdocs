@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.DocList = class DocList extends app.View {
   static className = "_list";
   static attributes = { role: "navigation" };

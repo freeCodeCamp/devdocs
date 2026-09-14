@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.BasePage = class BasePage extends app.View {
   constructor(el, entry) {
     super(el);
@@ -16,7 +18,7 @@ app.views.BasePage = class BasePage extends app.View {
     }
     this.highlightNodes = [];
     this.previousTiming = null;
-    if (!this.constructor.className) {
+    if (!this.statics().className) {
       this.addClass(`_${this.entry.doc.type}`);
     }
     this.html(content);

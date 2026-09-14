@@ -1,3 +1,5 @@
+// @ts-check
+
 app.templates.helpPage = function () {
   const ctrlKey = $.isMac() ? "cmd" : "ctrl";
   const navKey = $.isMac() ? "cmd" : "alt";

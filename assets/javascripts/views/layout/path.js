@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.Path = class Path extends app.View {
   static className = "_path";
   static attributes = { role: "complementary" };

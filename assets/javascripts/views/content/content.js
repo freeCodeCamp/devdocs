@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.Content = class Content extends app.View {
   static el = "._content";
   static loadingClass = "_content-loading";
@@ -54,15 +56,15 @@ app.views.Content = class Content extends app.View {
   }
 
   showLoading() {
-    this.addClass(this.constructor.loadingClass);
+    this.addClass(this.statics().loadingClass);
   }
 
   isLoading() {
-    return this.el.classList.contains(this.constructor.loadingClass);
+    return this.el.classList.contains(this.statics().loadingClass);
   }
 
   hideLoading() {
-    this.removeClass(this.constructor.loadingClass);
+    this.removeClass(this.statics().loadingClass);
   }
 
   scrollTo(value) {

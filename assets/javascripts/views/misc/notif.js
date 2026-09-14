@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.Notif = class Notif extends app.View {
   static className = "_notif";
   static activeClass = "_in";
@@ -10,7 +12,7 @@ app.views.Notif = class Notif extends app.View {
   constructor(type, options) {
     super();
     this.type = type;
-    this.options = { ...this.constructor.defaultOptions, ...(options || {}) };
+    this.options = { ...this.statics().defaultOptions, ...(options || {}) };
     this.init0(); // needs this.options
     this.refreshElements();
   }
@@ -29,7 +31,7 @@ app.views.Notif = class Notif extends app.View {
       this.activate();
       this.appendTo(document.body);
       this.el.offsetWidth; // force reflow
-      this.addClass(this.constructor.activeClass);
+      this.addClass(this.statics().activeClass);
       if (this.options.autoHide) {
         this.timeout = this.delay(this.hide, this.options.autoHide);
       }

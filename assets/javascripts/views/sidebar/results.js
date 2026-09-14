@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.Results = class Results extends app.View {
   static className = "_list";
 

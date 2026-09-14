@@ -1,3 +1,5 @@
+// @ts-check
+
 const error = function (title, text, links) {
   if (text == null) {
     text = "";

@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.OfflinePage = class OfflinePage extends app.View {
   static className = "_static";
 

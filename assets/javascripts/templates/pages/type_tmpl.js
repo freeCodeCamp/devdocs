@@ -1,3 +1,5 @@
+// @ts-check
+
 app.templates.typePage = (type) => {
   return ` <h1>${type.doc.fullName} / ${type.name}</h1>
 <ul class="_entry-list">${app.templates.render(

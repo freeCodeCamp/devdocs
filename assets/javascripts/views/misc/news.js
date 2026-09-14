@@ -1,3 +1,5 @@
+// @ts-check
+
 //= require views/misc/notif
 
 app.views.News = class News extends app.views.Notif {

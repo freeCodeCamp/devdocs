@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.Mobile = class Mobile extends app.View {
   static className = "_mobile";
 

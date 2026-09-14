@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.Notice = class Notice extends app.View {
   static className = "_notice";
   static attributes = { role: "alert" };

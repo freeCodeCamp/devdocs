@@ -1,3 +1,5 @@
+// @ts-check
+
 app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
 <h1 class="_lined-heading">Offline Documentation</h1>
 

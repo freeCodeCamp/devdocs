@@ -1,3 +1,5 @@
+// @ts-check
+
 //= require views/pages/base
 
 app.views.RdocPage = class RdocPage extends app.views.BasePage {

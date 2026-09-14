@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.DocPicker = class DocPicker extends app.View {
   static className = "_list _list-picker";
 

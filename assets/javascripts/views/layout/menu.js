@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.Menu = class Menu extends app.View {
   static el = "._menu";
   static activeClass = "active";
@@ -24,9 +26,9 @@ app.views.Menu = class Menu extends app.View {
         ? event.target.hasAttribute("data-toggle-menu")
         : undefined
     ) {
-      this.toggleClass(this.constructor.activeClass);
-    } else if (this.hasClass(this.constructor.activeClass)) {
-      this.removeClass(this.constructor.activeClass);
+      this.toggleClass(this.statics().activeClass);
+    } else if (this.hasClass(this.statics().activeClass)) {
+      this.removeClass(this.statics().activeClass);
     }
   }
 };

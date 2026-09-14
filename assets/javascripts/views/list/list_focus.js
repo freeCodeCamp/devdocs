@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.ListFocus = class ListFocus extends app.View {
   static activeClass = "focus";
 
@@ -21,9 +23,9 @@ app.views.ListFocus = class ListFocus extends app.View {
     if (options == null) {
       options = {};
     }
-    if (el && !el.classList.contains(this.constructor.activeClass)) {
+    if (el && !el.classList.contains(this.statics().activeClass)) {
       this.blur();
-      el.classList.add(this.constructor.activeClass);
+      el.classList.add(this.statics().activeClass);
       if (options.silent !== true) {
         $.trigger(el, "focus");
       }
@@ -33,14 +35,14 @@ app.views.ListFocus = class ListFocus extends app.View {
   blur() {
     const cursor = this.getCursor();
     if (cursor) {
-      cursor.classList.remove(this.constructor.activeClass);
+      cursor.classList.remove(this.statics().activeClass);
       $.trigger(cursor, "blur");
     }
   }
 
   getCursor() {
     return (
-      this.findByClass(this.constructor.activeClass) ||
+      this.findByClass(this.statics().activeClass) ||
       this.findByClass(app.views.ListSelect.activeClass)
     );
   }

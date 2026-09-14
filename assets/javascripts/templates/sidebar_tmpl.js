@@ -1,3 +1,5 @@
+// @ts-check
+
 const { templates } = app;
 
 const arrow = '<svg class="_list-arrow"><use xlink:href="#icon-dir"/></svg>';

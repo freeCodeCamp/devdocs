@@ -1,3 +1,5 @@
+// @ts-check
+
 app.templates.path = function (doc, type, entry) {
   const arrow = '<svg class="_path-arrow"><use xlink:href="#icon-dir"/></svg>';
   let html = `<a href="${doc.fullPath()}" class="_path-item _icon-${

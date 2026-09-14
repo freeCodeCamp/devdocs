@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.Document = class Document extends app.View {
   static el = document;
 

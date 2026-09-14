@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.ListFold = class ListFold extends app.View {
   static targetClass = "_list-dir";
   static handleClass = "_list-arrow";
@@ -11,21 +13,21 @@ app.views.ListFold = class ListFold extends app.View {
   };
 
   open(el) {
-    if (el && !el.classList.contains(this.constructor.activeClass)) {
-      el.classList.add(this.constructor.activeClass);
+    if (el && !el.classList.contains(this.statics().activeClass)) {
+      el.classList.add(this.statics().activeClass);
       $.trigger(el, "open");
     }
   }
 
   close(el) {
-    if (el && el.classList.contains(this.constructor.activeClass)) {
-      el.classList.remove(this.constructor.activeClass);
+    if (el && el.classList.contains(this.statics().activeClass)) {
+      el.classList.remove(this.statics().activeClass);
       $.trigger(el, "close");
     }
   }
 
   toggle(el) {
-    if (el.classList.contains(this.constructor.activeClass)) {
+    if (el.classList.contains(this.statics().activeClass)) {
       this.close(el);
     } else {
       this.open(el);
@@ -34,7 +36,7 @@ app.views.ListFold = class ListFold extends app.View {
 
   reset() {
     let el;
-    while ((el = this.findByClass(this.constructor.activeClass))) {
+    while ((el = this.findByClass(this.statics().activeClass))) {
       this.close(el);
     }
   }
@@ -48,7 +50,7 @@ app.views.ListFold = class ListFold extends app.View {
 
   onLeft() {
     const cursor = this.getCursor();
-    if (cursor?.classList?.contains(this.constructor.activeClass)) {
+    if (cursor?.classList?.contains(this.statics().activeClass)) {
       this.close(cursor);
     }
   }
@@ -57,7 +59,7 @@ app.views.ListFold = class ListFold extends app.View {
     const cursor = this.getCursor();
     if (
       cursor != null
-        ? cursor.classList.contains(this.constructor.targetClass)
+        ? cursor.classList.contains(this.statics().targetClass)
         : undefined
     ) {
       this.open(cursor);
@@ -76,12 +78,12 @@ app.views.ListFold = class ListFold extends app.View {
       el = el.parentNode;
     }
 
-    if (el.classList.contains(this.constructor.handleClass)) {
+    if (el.classList.contains(this.statics().handleClass)) {
       $.stopEvent(event);
       this.toggle(el.parentNode);
-    } else if (el.classList.contains(this.constructor.targetClass)) {
+    } else if (el.classList.contains(this.statics().targetClass)) {
       if (el.hasAttribute("href")) {
-        if (el.classList.contains(this.constructor.activeClass)) {
+        if (el.classList.contains(this.statics().activeClass)) {
           if (el.classList.contains(app.views.ListSelect.activeClass)) {
             this.close(el);
           }

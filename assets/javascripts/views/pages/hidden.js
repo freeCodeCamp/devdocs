@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.HiddenPage = class HiddenPage extends app.View {
   static events = { click: "onClick" };
 

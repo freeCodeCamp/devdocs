@@ -1,3 +1,5 @@
+// @ts-check
+
 app.templates.render = function (name, value, ...args) {
   const template = app.templates[name];
 

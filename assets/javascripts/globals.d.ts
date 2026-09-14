@@ -71,11 +71,25 @@ declare const Prism: {
   highlightElement(element: Element, async?: boolean): void;
 };
 
+// --- Analytics, loaded at runtime by tracking.js ---
+
+/** Google Analytics, once analytics.js has loaded. */
+declare var ga: (...args: any[]) => void;
+
+/** Gauges' command queue. */
+declare var _gauges: any[] | undefined;
+
 // --- Augmentations ---
 
 interface Window {
   /** Present when running inside Electron. */
   readonly process?: { versions?: Record<string, string> };
+
+  /** Set by vendor/mathml.js once it has probed for MathML support. */
+  supportsMathML?: boolean;
+
+  /** Gauges' command queue. */
+  _gauges?: any[];
 }
 
 interface Navigator {

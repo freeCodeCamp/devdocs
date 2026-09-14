@@ -1,3 +1,5 @@
+// @ts-check
+
 const themeOption = ({ label, value }, settings) => `\
 <label class="_settings-label _theme-label">
   <input type="radio" name="theme" value="${value}"${

@@ -1,3 +1,5 @@
+// @ts-check
+
 //= require views/pages/base
 
 app.views.SqlitePage = class SqlitePage extends app.views.BasePage {

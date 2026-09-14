@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.TypePage = class TypePage extends app.View {
   static className = "_page";
 

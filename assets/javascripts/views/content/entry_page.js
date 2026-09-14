@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.EntryPage = class EntryPage extends app.View {
   static className = "_page";
   static errorClass = "_page-error";
@@ -172,7 +174,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     this.xhr = null;
     this.render(this.tmpl("pageLoadError"));
     this.resetClass();
-    this.addClass(this.constructor.errorClass);
+    this.addClass(this.statics().errorClass);
     if (app.serviceWorker != null) {
       app.serviceWorker.update();
     }

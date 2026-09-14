@@ -1,3 +1,5 @@
+// @ts-check
+
 app.views.SidebarHover = class SidebarHover extends app.View {
   static itemClass = "_list-hover";
 
@@ -53,7 +55,7 @@ app.views.SidebarHover = class SidebarHover extends app.View {
   }
 
   isTarget(el) {
-    return el.classList?.contains(this.constructor.itemClass);
+    return el.classList?.contains(this.statics().itemClass);
   }
 
   isSelected(el) {

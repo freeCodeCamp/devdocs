@@ -1,12 +1,14 @@
+// @ts-check
+
 app.views.PaginatedList = class PaginatedList extends app.View {
   static PER_PAGE = app.config.max_results;
 
   constructor(data) {
     super();
     this.data = data;
-    this.constructor.events = this.constructor.events || {};
-    if (this.constructor.events.click == null) {
-      this.constructor.events.click = "onClick";
+    this.statics().events = this.statics().events || {};
+    if (this.statics().events.click == null) {
+      this.statics().events.click = "onClick";
     }
   }
 
@@ -57,9 +59,9 @@ app.views.PaginatedList = class PaginatedList extends app.View {
     $.lockScroll(link.nextSibling || link.previousSibling, () => {
       $.batchUpdate(this.el, () => {
         if (link.nextSibling) {
-          this.paginatePrev(link);
+          this.paginatePrev();
         } else {
-          this.paginateNext(link);
+          this.paginateNext();
         }
       });
     });
