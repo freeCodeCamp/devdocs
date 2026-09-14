@@ -13,6 +13,7 @@
  * Handlers return `false` to swallow the event; anything else lets it through.
  */
 app.Shortcuts = class Shortcuts extends Events {
+  /** Starts listening for key events. */
   constructor() {
     super();
     this.onKeydown = this.onKeydown.bind(this);

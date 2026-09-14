@@ -11,6 +11,7 @@ app.views.ListSelect = class ListSelect extends app.View {
 
   static events = { click: "onClick" };
 
+  /** Also clears the selection. */
   deactivate() {
     if (super.deactivate()) {
       this.deselect();

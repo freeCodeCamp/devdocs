@@ -32,6 +32,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     this.cacheStack = [];
   }
 
+  /** Also abandons any page still loading. */
   deactivate() {
     if (super.deactivate()) {
       this.hideTransientNotice();
@@ -127,6 +128,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     return `<p class="_links">${links.join("")}</p>${content}`;
   }
 
+  /** Also tears down the doc's sub-view. */
   empty() {
     if (this.subview != null) {
       this.subview.deactivate();

@@ -53,6 +53,7 @@ app.views.Mobile = class Mobile extends app.View {
     }
   }
 
+  /** Binds to the document element, which carries the layout classes. */
   constructor() {
     super(document.documentElement);
   }

@@ -26,6 +26,10 @@
 app.models.Doc = class Doc extends app.Model {
   static NUMBERED_VERSION_RGX = /^\d+(\.\d+)*$/;
 
+  /**
+   * Attributes are taken through `arguments` and copied on by Model, then the
+   * derived ones are worked out from them.
+   */
   constructor() {
     super(...arguments);
     this.reset(this);

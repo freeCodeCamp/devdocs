@@ -149,6 +149,10 @@ class App extends Events {
     }
   }
 
+  /**
+   * @returns {boolean} Whether to carry on booting. Replaces the page with a
+   *   warning when the browser is too old.
+   */
   browserCheck() {
     if (this.isSupportedBrowser()) {
       return true;
@@ -158,6 +162,7 @@ class App extends Events {
     return false;
   }
 
+  /** Wires up Sentry and the global error handlers. */
   initErrorTracking() {
     // Show a warning message and don't track errors when the app is loaded
     // from a domain other than our own, because things are likely to break.
@@ -210,6 +215,7 @@ class App extends Events {
     }
   }
 
+  /** Boots in single-doc mode, with only the doc named on the body. */
   bootOne() {
     this.doc = new app.models.Doc(this.DOC);
     this.docs.reset([this.doc]);
@@ -234,6 +240,7 @@ class App extends Events {
     });
   }
 
+  /** Builds the search index from the loaded docs and starts routing. */
   start() {
     let doc;
     for (doc of this.docs.all()) {
@@ -256,6 +263,11 @@ class App extends Events {
     }, 50);
   }
 
+  /**
+   * Adds a doc's types and entries to the search index.
+   *
+   * @param {any} doc
+   */
   initDoc(doc) {
     for (var type of doc.types.all()) {
       doc.entries.add(type.toEntry());
@@ -263,6 +275,7 @@ class App extends Events {
     this.entries.add(doc.entries.all());
   }
 
+  /** Re-points enabled slugs that have since been renamed or reorganized. */
   migrateDocs() {
     let needsSaving;
     for (var slug of this.settings.getDocs()) {
@@ -374,6 +387,14 @@ class App extends Events {
     return loaded;
   }
 
+  /**
+   * Turns a doc on, loading its index and installing it when the user has
+   * asked for that.
+   *
+   * @param {any} doc
+   * @param {() => void} _onSuccess
+   * @param {() => void} onError
+   */
   enableDoc(doc, _onSuccess, onError) {
     if (this.docs.contains(doc)) {
       return;
@@ -398,6 +419,7 @@ class App extends Events {
     doc.load(onSuccess, onError, { writeCache: true });
   }
 
+  /** Stores the enabled docs and brings the offline database in line. */
   saveDocs() {
     this.settings.setDocs(this.docs.all().map((doc) => doc.slug));
     this.db.migrate();
@@ -406,6 +428,7 @@ class App extends Events {
       : undefined;
   }
 
+  /** Shows what's new since the user's last visit, and starts the update checks. */
   welcomeBack() {
     let visitCount = this.settings.get("count");
     this.settings.set("count", ++visitCount);
@@ -417,6 +440,7 @@ class App extends Events {
     return (this.updateChecker = new app.UpdateChecker());
   }
 
+  /** Reloads the app, keeping the current path. */
   reboot() {
     if (location.pathname !== "/" && location.pathname !== "/settings") {
       window.location = /** @type {any} */ (`/#${location.pathname}`);
@@ -425,6 +449,7 @@ class App extends Events {
     }
   }
 
+  /** Drops the cached indexes and reloads the app. */
   reload() {
     this.docs.clearCache();
     this.disabledDocs.clearCache();
@@ -435,6 +460,7 @@ class App extends Events {
     }
   }
 
+  /** Clears every trace of the app and returns to the index. */
   reset() {
     this.localStorage.reset();
     this.settings.reset();
@@ -447,6 +473,11 @@ class App extends Events {
     window.location = /** @type {any} */ ("/");
   }
 
+  /**
+   * Shows a tip, unless the user has already seen it.
+   *
+   * @param {string} tip
+   */
   showTip(tip) {
     if (this.isSingleDoc()) {
       return;
@@ -459,6 +490,7 @@ class App extends Events {
     }
   }
 
+  /** Takes the boot screen down. */
   hideLoadingScreen() {
     if ($.overlayScrollbarsEnabled()) {
       document.body.classList.add("_overlay-scrollbars");
@@ -466,11 +498,13 @@ class App extends Events {
     document.documentElement.classList.remove("_booting");
   }
 
+  /** @param {...any} args */
   onBootError(...args) {
     this.trigger("bootError");
     this.hideLoadingScreen();
   }
 
+  /** Warns the user that the offline database has outgrown its quota. Once. */
   onQuotaExceeded() {
     if (this.quotaExceeded) {
       return;
@@ -479,6 +513,13 @@ class App extends Events {
     new app.views.Notif("QuotaExceeded", { autoHide: null });
   }
 
+  /**
+   * Warns the user that cookies are blocked, so preferences won't stick. Once.
+   *
+   * @param {string} key
+   * @param {any} value What was written.
+   * @param {any} actual What was read back.
+   */
   onCookieBlocked(key, value, actual) {
     if (this.cookieBlocked) {
       return;
@@ -491,6 +532,7 @@ class App extends Events {
     });
   }
 
+  /** @param {...any} args The `window.onerror` arguments. */
   onWindowError(...args) {
     if (this.cookieBlocked) {
       return;
@@ -509,6 +551,7 @@ class App extends Events {
     }
   }
 
+  /** Warns that an extension has broken the page. Once. */
   onInjectionError() {
     if (!this.injectionError) {
       this.injectionError = true;
@@ -519,6 +562,10 @@ Please check your browser extensions/addons. `);
     }
   }
 
+  /**
+   * @returns {boolean} Whether something replaced the app's globals — some
+   *   browser extensions expect every page to use jQuery.
+   */
   isInjectionError() {
     // Some browser extensions expect the entire web to use jQuery.
     // I gave up trying to fight back.
@@ -531,11 +578,18 @@ Please check your browser extensions/addons. `);
     );
   }
 
+  /**
+   * @param {any} error
+   * @param {string} [file] Where the error came from.
+   * @returns {boolean} Whether the error came from the app rather than an
+   *   external script.
+   */
   isAppError(error, file) {
     // Ignore errors from external scripts.
     return file && file.includes("devdocs") && file.endsWith(".js");
   }
 
+  /** @returns {boolean} Whether the browser has everything the app needs. */
   isSupportedBrowser() {
     try {
       const features = {
@@ -566,22 +620,26 @@ Please check your browser extensions/addons. `);
     }
   }
 
+  /** @returns {boolean} Whether the app is showing one doc rather than all of them. */
   isSingleDoc() {
     return document.body.hasAttribute("data-doc");
   }
 
+  /** @returns {boolean} Whether to use the phone layout. Decided once. */
   isMobile() {
     return this._isMobile != null
       ? this._isMobile
       : (this._isMobile = app.views.Mobile.detect());
   }
 
+  /** @returns {boolean} Whether the app is inside an Android webview. Decided once. */
   isAndroidWebview() {
     return this._isAndroidWebview != null
       ? this._isAndroidWebview
       : (this._isAndroidWebview = app.views.Mobile.detectAndroidWebview());
   }
 
+  /** @returns {boolean} Whether the app is being served from someone else's domain. */
   isInvalidLocation() {
     return (
       this.config.env === "production" &&

@@ -18,6 +18,7 @@ app.views.DocPicker = class DocPicker extends app.View {
     this.addSubview((this.listFold = new app.views.ListFold(this.el)));
   }
 
+  /** Also renders the list and starts tracking the focus. */
   activate() {
     if (super.activate()) {
       this.render();
@@ -26,6 +27,7 @@ app.views.DocPicker = class DocPicker extends app.View {
     }
   }
 
+  /** Also empties the list and stops tracking the focus. */
   deactivate() {
     if (super.deactivate()) {
       this.empty();
@@ -93,6 +95,7 @@ app.views.DocPicker = class DocPicker extends app.View {
     return [docs, versions];
   }
 
+  /** Also collapses every expanded doc. */
   empty() {
     this.resetClass();
     super.empty();

@@ -35,6 +35,7 @@ app.DB = class DB {
   static NAME = "docs";
   static VERSION = 15;
 
+  /** Probes for IndexedDB support and prepares the callback queue. */
   constructor() {
     this.versionMultipler = $.isIE() ? 1e5 : 1e9;
     // Replaces the method of the same name with the answer it gives.

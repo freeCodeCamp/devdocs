@@ -12,6 +12,7 @@ app.ServiceWorker = class ServiceWorker extends Events {
     return !!navigator.serviceWorker && app.config.service_worker_enabled;
   }
 
+  /** Registers the worker and starts watching for updates. */
   constructor() {
     super();
     this.onStateChange = this.onStateChange.bind(this);

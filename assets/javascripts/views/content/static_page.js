@@ -11,6 +11,7 @@ app.views.StaticPage = class StaticPage extends app.View {
     notFound: "404",
   };
 
+  /** Also forgets which page was shown. */
   deactivate() {
     if (super.deactivate()) {
       this.empty();

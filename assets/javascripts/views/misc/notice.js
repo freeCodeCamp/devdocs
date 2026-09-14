@@ -26,12 +26,14 @@ app.views.Notice = class Notice extends app.View {
     this.activate();
   }
 
+  /** Also puts the notice on the page. */
   activate() {
     if (super.activate()) {
       this.show();
     }
   }
 
+  /** Also takes it off. */
   deactivate() {
     if (super.deactivate()) {
       this.hide();

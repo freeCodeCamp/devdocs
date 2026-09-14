@@ -1,5 +1,9 @@
 // @ts-check
 
+// Loads the analytics vendors, but only in production and only once the user
+// has consented. Without consent, whatever they left behind is cleared out.
+// The snippets below are the vendors' own bootstraps, kept as they ship them.
+
 try {
   if (app.config.env === "production") {
     if (Cookies.get("analyticsConsent") === "1") {

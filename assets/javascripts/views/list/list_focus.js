@@ -22,6 +22,7 @@ app.views.ListFocus = class ListFocus extends app.View {
     escape: "blur",
   };
 
+  /** @param {HTMLElement} [el] The list to navigate. */
   constructor(el) {
     super(el);
     this.focusOnNextFrame = (el) => requestAnimationFrame(() => this.focus(el));

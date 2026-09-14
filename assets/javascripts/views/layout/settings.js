@@ -31,6 +31,7 @@ app.views.Settings = class Settings extends app.View {
     this.addSubview((this.docPicker = new app.views.DocPicker()));
   }
 
+  /** Also renders the panel and forces the sidebar to show. */
   activate() {
     if (super.activate()) {
       this.render();
@@ -38,6 +39,7 @@ app.views.Settings = class Settings extends app.View {
     }
   }
 
+  /** Also puts the sidebar back the way the user had it. */
   deactivate() {
     if (super.deactivate()) {
       this.resetClass();

@@ -30,6 +30,7 @@ app.views.TypeList = class TypeList extends app.View {
     this.activate();
   }
 
+  /** Also activates the entry lists already built. */
   activate() {
     if (super.activate()) {
       for (var slug in this.lists) {
@@ -39,6 +40,7 @@ app.views.TypeList = class TypeList extends app.View {
     }
   }
 
+  /** Also deactivates them. */
   deactivate() {
     if (super.deactivate()) {
       for (var slug in this.lists) {

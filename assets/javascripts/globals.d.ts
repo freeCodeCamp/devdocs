@@ -38,6 +38,9 @@ declare var setFaviconForDoc: (doc: any) => void;
 /** lib/favicon.js — restores the default favicon. */
 declare var resetFavicon: () => void;
 
+/** debug.js — prints the view tree, with each view's activation state. */
+declare var viewTree: (view?: any, level?: number, visited?: any[]) => void;
+
 // --- Vendored libraries (assets/javascripts/vendor) ---
 
 /** Cookies.js — github.com/ScottHamper/Cookies */

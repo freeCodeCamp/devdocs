@@ -25,6 +25,7 @@ app.views.Results = class Results extends app.View {
     this.refreshElements();
   }
 
+  /** Also empties the list. */
   deactivate() {
     if (super.deactivate()) {
       this.empty();

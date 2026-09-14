@@ -53,6 +53,7 @@ app.Settings = class Settings {
     autoLatestVersion: false,
   };
 
+  /** Opens the cookie store and starts following the system colour scheme. */
   constructor() {
     this.store = new CookiesStore();
     this.cache = {};

@@ -35,6 +35,7 @@ app.models.Entry = class Entry extends app.Model {
     return string;
   }
 
+  /** Attributes are taken through `arguments` and copied on by Model. */
   constructor() {
     super(...arguments);
     this.text = Entry.applyAliases(app.Searcher.normalizeString(this.name));

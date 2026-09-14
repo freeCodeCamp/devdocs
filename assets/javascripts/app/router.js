@@ -22,6 +22,7 @@ app.Router = class Router extends Events {
     ["*", "notFound"],
   ];
 
+  /** Registers every route with `page` and normalizes the initial path. */
   constructor() {
     super();
     for (var [path, method] of /** @type {any} */ (this.constructor).routes) {

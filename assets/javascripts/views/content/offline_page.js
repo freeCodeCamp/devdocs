@@ -12,6 +12,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
     change: "onChange",
   };
 
+  /** Also empties the table. */
   deactivate() {
     if (super.deactivate()) {
       this.empty();

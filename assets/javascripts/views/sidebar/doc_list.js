@@ -35,6 +35,7 @@ app.views.DocList = class DocList extends app.View {
     app.on("ready", () => this.render());
   }
 
+  /** Also activates the type lists and marks the entry being read. */
   activate() {
     if (super.activate()) {
       for (var slug in this.lists) {
@@ -45,6 +46,7 @@ app.views.DocList = class DocList extends app.View {
     }
   }
 
+  /** Also deactivates the type lists. */
   deactivate() {
     if (super.deactivate()) {
       for (var slug in this.lists) {

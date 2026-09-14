@@ -17,6 +17,7 @@ app.views.BasePage = class BasePage extends app.View {
     this.entry = entry;
   }
 
+  /** Also drops the code blocks left to highlight. */
   deactivate() {
     if (super.deactivate()) {
       this.highlightNodes = [];

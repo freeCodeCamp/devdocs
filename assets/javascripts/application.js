@@ -24,6 +24,10 @@
 
 //= require tracking
 
+/**
+ * Boots the app once the document is ready, retrying until the body exists —
+ * the bundle is loaded in the head, so it can run before the body is parsed.
+ */
 var init = function () {
   document.removeEventListener("DOMContentLoaded", init, false);
 

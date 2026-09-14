@@ -2,6 +2,7 @@
 
 /** Watches for new builds of the app and new versions of the installed docs. */
 app.UpdateChecker = class UpdateChecker {
+  /** Starts watching for new builds and checks the docs once. */
   constructor() {
     this.lastCheck = Date.now();
 
