@@ -208,12 +208,13 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   }
 
   importDocs(input) {
+    const file = input.files[0];
+    input.value = ""; // so that picking the same file again fires a change event
+
     if (this.backingUp) {
       return;
     }
     this.backingUp = true;
-    const file = input.files[0];
-    input.value = ""; // so that picking the same file again fires a change event
 
     this.backup().import(
       file,
