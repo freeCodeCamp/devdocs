@@ -35,6 +35,8 @@ group :development do
 end
 
 group :docs do
+  gem 'kramdown'
+  gem 'kramdown-parser-gfm'
   gem 'redcarpet'
 end
 
