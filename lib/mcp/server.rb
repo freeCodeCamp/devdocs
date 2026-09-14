@@ -121,12 +121,9 @@ module Mcp
 
       arguments.each do |field, value|
         return "Unknown field: #{field}" unless properties.key?(field)
-        prop_schema = properties[field]
-        error_msg = validate_value(value, prop_schema)
+        error_msg = validate_value(value, properties[field])
         return error_msg if error_msg
       end
-
-      return "Additional properties not allowed" if schema['additionalProperties'] == false && arguments.keys.any? { |k| !properties.key?(k) }
 
       nil
     end
