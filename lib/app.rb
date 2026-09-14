@@ -47,7 +47,7 @@ class App < Sinatra::Application
     set :assets_manifest_path, File.join(assets_path, 'manifest.json')
     set :assets_compile, %w(*.png docs.js docs.json application.js application.css application-dark.css)
 
-    require 'yajl/json_gem'
+    require 'json'
     set :docs_prefix, 'docs'
     set :docs_origin, File.join('', docs_prefix)
     set :docs_path, File.join(public_folder, docs_prefix)

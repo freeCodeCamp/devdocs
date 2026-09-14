@@ -1,4 +1,4 @@
-require 'yajl/json_gem'
+require 'json'
 
 module Docs
   class PageDb

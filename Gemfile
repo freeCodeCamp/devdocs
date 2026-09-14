@@ -8,7 +8,6 @@ gem 'rake'
 gem 'terminal-table'
 gem 'thor'
 gem 'typhoeus'
-gem 'yajl-ruby', require: false
 
 group :app do
   gem 'chunky_png'
