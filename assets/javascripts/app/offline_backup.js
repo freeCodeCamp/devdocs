@@ -72,7 +72,7 @@ app.OfflineBackup = class OfflineBackup {
     }
 
     const reader = new FileReader();
-    reader.onloadend = () => {
+    reader.onload = () => {
       const data = (() => {
         try {
           return JSON.parse(reader.result);
