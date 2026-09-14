@@ -47,7 +47,8 @@ import { $ } from "../lib/util.js";
  */
 
 /**
- * The user's preferences, stored in cookies so that the server can read them.
+ * The user's preferences, stored in cookies so that the server can read them,
+ * and mirrored in localStorage so that they outlive the cookies.
  *
  * `PREFERENCE_KEYS` are the ones the user controls and that a backup carries;
  * `INTERNAL_KEYS` are the app's own bookkeeping and stay out of backups.
