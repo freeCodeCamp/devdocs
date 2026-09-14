@@ -199,10 +199,8 @@ class McpTest < Minitest::Spec
     it 'returns error for missing page database in devdocs_get_page' do
       args = { 'slug' => 'css', 'path' => '/test' }
       response = rpc('tools/call', { 'name' => 'devdocs_get_page', 'arguments' => args })
-      if response.key?('error')
-        assert_equal(-32603, response['error']['code'])
-        assert_includes response['error']['message'].downcase, 'database'
-      end
+      assert_equal(-32603, response['error']['code'])
+      assert_includes response['error']['message'].downcase, 'database'
     end
 
     it 'returns error for missing required arguments' do
