@@ -22,20 +22,14 @@ module Docs
       /haskell2010/,
       /ghc-/,
       /Cabal-/,
-      /Compiler-Hoopl-Internals\.html\z/i,
+      # The .Internal modules re-export what the public ones do, so they only
+      # double every entry. They also rarely declare a type of their own, which
+      # leaves their entries without the context the entries filter appends.
+      /-Internals?[-.]/,
       /Control-Exception-Base\.html\z/i,
-      /Data-Binary-Get-Internal\.html\z/i,
       /Language-Haskell-TH-Lib\.html\z/i,
       /Text-PrettyPrint\.html\z/i,
-      /Data-OldTypeable-Internal\.html\z/i,
-      /Data-Typeable-Internal\.html\z/i,
-      /GHC-IO-Encoding-Types\.html\z/i,
-      /System-Posix-Process-Internals\.html\z/i,
-      /Data-Map-Strict-Internal\.html\z/i,
-      /Data-IntMap-Internal\.html\z/i,
-      /Data-Set-Internal\.html\z/i,
-      /Data-Map-Internal\.html\z/i,
-      /Data-Sequence-Internal\.html\z/i
+      /GHC-IO-Encoding-Types\.html\z/i
     ]
 
     options[:skip] = %w(
