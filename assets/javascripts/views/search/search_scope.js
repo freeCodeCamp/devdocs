@@ -1,5 +1,15 @@
 // @ts-check
 
+/**
+ * Narrowing the search to one doc.
+ *
+ * Typing a doc's name and then space or tab turns what was typed into a tag in
+ * front of the field, and the rest of the query is then matched within that
+ * doc alone. The scope can also come from the URL hash, or from arriving on a
+ * doc's page.
+ *
+ * Emits `change` with the new doc and the previous one.
+ */
 app.views.SearchScope = class SearchScope extends app.View {
   static SEARCH_PARAM = app.config.search_param;
 
@@ -18,6 +28,7 @@ app.views.SearchScope = class SearchScope extends app.View {
 
   static HASH_RGX = new RegExp(`^#${SearchScope.SEARCH_PARAM}=(.+?) .`);
 
+  /** @inheritdoc */
   init() {
     this.placeholder = this.input.getAttribute("placeholder");
 
@@ -28,18 +39,28 @@ app.views.SearchScope = class SearchScope extends app.View {
     this.searcher.on("results", (results) => this.onResults(results));
   }
 
+  /** @returns {any} The doc the search is scoped to, or the app when it isn't scoped. */
   getScope() {
     return this.doc || app;
   }
 
+  /** @returns {boolean} Whether the search is scoped to a doc. */
   isActive() {
     return !!this.doc;
   }
 
+  /** @returns {string | undefined} The scoped doc's name. */
   name() {
     return this.doc?.name;
   }
 
+  /**
+   * Scopes to the doc `value` names, if it names one.
+   *
+   * @param {string} value
+   * @param {boolean} [searchDisabled] Also match docs that aren't enabled,
+   *   which then redirect rather than scope.
+   */
   search(value, searchDisabled) {
     if (searchDisabled == null) {
       searchDisabled = false;
@@ -53,6 +74,7 @@ app.views.SearchScope = class SearchScope extends app.View {
     }
   }
 
+  /** Applies the scope encoded in the URL hash, if there is one. */
   searchUrl() {
     const value = this.extractHashValue();
     if (value) {
@@ -60,6 +82,7 @@ app.views.SearchScope = class SearchScope extends app.View {
     }
   }
 
+  /** @param {any[]} results */
   onResults(results) {
     const doc = results[0];
     if (!doc) {
@@ -72,6 +95,11 @@ app.views.SearchScope = class SearchScope extends app.View {
     }
   }
 
+  /**
+   * Scopes to the doc and shows its tag.
+   *
+   * @param {any} doc
+   */
   selectDoc(doc) {
     const previousDoc = this.doc;
     if (doc === previousDoc) {
@@ -90,12 +118,18 @@ app.views.SearchScope = class SearchScope extends app.View {
     this.trigger("change", this.doc, previousDoc);
   }
 
+  /**
+   * Navigates to a doc that isn't enabled, keeping the rest of the query.
+   *
+   * @param {any} doc
+   */
   redirectToDoc(doc) {
     const { hash } = location;
     app.router.replaceHash("");
     location.assign(doc.fullPath() + hash);
   }
 
+  /** Drops the scope and restores the field. */
   reset() {
     if (!this.doc) {
       return;
@@ -112,6 +146,11 @@ app.views.SearchScope = class SearchScope extends app.View {
     this.trigger("change", null, previousDoc);
   }
 
+  /**
+   * Tries to scope to whatever has been typed so far.
+   *
+   * @param {ViewEvent} event
+   */
   doScopeSearch(event) {
     this.search(this.input.value.slice(0, this.input.selectionStart));
     if (this.doc) {
@@ -119,6 +158,7 @@ app.views.SearchScope = class SearchScope extends app.View {
     }
   }
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     if (event.target === this.tag) {
       this.reset();
@@ -126,6 +166,7 @@ app.views.SearchScope = class SearchScope extends app.View {
     }
   }
 
+  /** @param {ViewKeyboardEvent} event */
   onKeydown(event) {
     if (event.which === 8) {
       // backspace
@@ -147,6 +188,12 @@ app.views.SearchScope = class SearchScope extends app.View {
     }
   }
 
+  /**
+   * Chrome for Android doesn't report space in `keydown`, so the scope is
+   * applied from the text input event there instead.
+   *
+   * @param {ViewEvent & { data?: string }} event
+   */
   onTextInput(event) {
     if (!$.isChromeForAndroid()) {
       return;
@@ -156,6 +203,7 @@ app.views.SearchScope = class SearchScope extends app.View {
     }
   }
 
+  /** @returns {string | undefined} The scope in the URL hash, which is removed from it. */
   extractHashValue() {
     const value = this.getHashValue();
     if (value) {
@@ -168,12 +216,17 @@ app.views.SearchScope = class SearchScope extends app.View {
     }
   }
 
+  /** @returns {string | undefined} The scope in the URL hash, left in place. */
   getHashValue() {
     try {
       return SearchScope.HASH_RGX.exec($.urlDecodeFragment(location.hash))?.[1];
     } catch (error) {}
   }
 
+  /**
+   * @param {string} name
+   * @param {any} context
+   */
   afterRoute(name, context) {
     if (!app.isSingleDoc() && context.init && context.doc) {
       this.selectDoc(context.doc);
