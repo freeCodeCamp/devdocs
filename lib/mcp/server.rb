@@ -196,7 +196,9 @@ module Mcp
     def self.get_page(app_settings, slug, path)
       validate_slug(app_settings, slug)
       db = load_db(app_settings, slug)
-      html = db[path]
+      # Entries that share a page carry a #fragment, but db.json is keyed by the
+      # page path alone (mirrors Entry#dbPath in the client).
+      html = db[path.sub(/#.*/, '')]
       raise "Page not found: #{path}" unless html
       html_to_text(html)
     end

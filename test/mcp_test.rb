@@ -171,6 +171,12 @@ class McpTest < Minitest::Spec
       refute_includes text, '<h1>'
     end
 
+    it 'strips the fragment from the path when looking up the page' do
+      args = { 'slug' => 'mcp_fixture', 'path' => 'array/pop#shift' }
+      result = rpc('tools/call', { 'name' => 'devdocs_get_page', 'arguments' => args })['result']
+      assert_includes result['content'].first['text'], 'Removes the last element.'
+    end
+
     it 'returns error for invalid slug in search (path traversal protection)' do
       args = { 'slug' => '../../../etc/passwd', 'query' => 'test' }
       response = rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
