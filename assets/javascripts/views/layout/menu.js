@@ -1,7 +1,7 @@
 // @ts-check
 
 /** The header menu, opened by the toggle and closed by a click anywhere else. */
-app.views.Menu = class Menu extends app.View {
+class Menu extends app.View {
   static el = "._menu";
   static activeClass = "active";
 
@@ -39,4 +39,8 @@ app.views.Menu = class Menu extends app.View {
       this.removeClass(this.statics().activeClass);
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Menu = Menu;

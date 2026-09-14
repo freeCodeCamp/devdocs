@@ -6,7 +6,7 @@
  *
  * Selecting and deselecting emit `select` and `deselect` on the row.
  */
-app.views.ListSelect = class ListSelect extends app.View {
+class ListSelect extends app.View {
   static activeClass = "active";
 
   static events = { click: "onClick" };
@@ -63,4 +63,8 @@ app.views.ListSelect = class ListSelect extends app.View {
       this.select(target);
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.ListSelect = ListSelect;

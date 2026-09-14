@@ -7,7 +7,7 @@
  * that a search can be linked to. Also offers handing the query to an external
  * search engine, scoped to the doc's own site where there is one.
  */
-app.views.Search = class Search extends app.View {
+class Search extends app.View {
   static SEARCH_PARAM = app.config.search_param;
 
   static el = "._search";
@@ -83,10 +83,11 @@ app.views.Search = class Search extends app.View {
     }
   }
 
-  /** @returns {unknown} The doc the search is scoped to, or `undefined`. */
+  /** @returns {Doc | undefined} The doc the search is scoped to. */
   getScopeDoc() {
     if (this.scope.isActive()) {
-      return this.scope.getScope();
+      // isActive() is true only when the scope is a doc.
+      return /** @type {Doc} */ (this.scope.getScope());
     }
   }
 
@@ -265,4 +266,8 @@ app.views.Search = class Search extends app.View {
       return Search.HASH_RGX.exec($.urlDecodeFragment(location.hash))?.[1];
     } catch (error) {}
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Search = Search;

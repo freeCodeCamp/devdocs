@@ -6,7 +6,7 @@
  * Some settings take effect immediately rather than on save, because the user
  * needs to see what they do.
  */
-app.views.SettingsPage = class SettingsPage extends app.View {
+class SettingsPage extends app.View {
   static className = "_static";
 
   static events = {
@@ -170,4 +170,8 @@ app.views.SettingsPage = class SettingsPage extends app.View {
   onRoute(context) {
     this.render();
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.SettingsPage = SettingsPage;

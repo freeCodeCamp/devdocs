@@ -1,7 +1,7 @@
 // @ts-check
 
 /** The app's own pages — About, News, the user guide and the 404. */
-app.views.StaticPage = class StaticPage extends app.View {
+class StaticPage extends app.View {
   static className = "_static";
 
   static titles = {
@@ -34,4 +34,8 @@ app.views.StaticPage = class StaticPage extends app.View {
   onRoute(context) {
     this.render(context.page || "notFound");
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.StaticPage = StaticPage;

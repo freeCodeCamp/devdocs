@@ -5,7 +5,7 @@
  *
  * Docs that come in several versions are grouped under one expandable row.
  */
-app.views.DocPicker = class DocPicker extends app.View {
+class DocPicker extends app.View {
   static className = "_list _list-picker";
 
   static events = {
@@ -156,4 +156,8 @@ app.views.DocPicker = class DocPicker extends app.View {
     }
     this.focusEl = target;
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.DocPicker = DocPicker;

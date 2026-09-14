@@ -9,7 +9,7 @@
  * the API site, and a prefilter is injected that aborts any request that would
  * leave it, since they can't work from inside DevDocs.
  */
-app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
+class JqueryPage extends BasePage {
   static demoClassName = "_jquery-demo";
 
   /** @inheritdoc */
@@ -89,4 +89,8 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
     );
     return source.replace(/<script>/gi, '<script nonce="devdocs">');
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.JqueryPage = JqueryPage;

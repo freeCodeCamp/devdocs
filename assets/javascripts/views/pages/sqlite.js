@@ -3,7 +3,7 @@
 //= require views/pages/base
 
 /** The SQLite pages' show/hide toggles. */
-app.views.SqlitePage = class SqlitePage extends app.views.BasePage {
+class SqlitePage extends BasePage {
   static events = { click: "onClick" };
 
   /** @param {ViewMouseEvent} event */
@@ -25,4 +25,8 @@ app.views.SqlitePage = class SqlitePage extends app.views.BasePage {
       event.target.textContent = "show";
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.SqlitePage = SqlitePage;

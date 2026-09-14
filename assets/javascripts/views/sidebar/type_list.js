@@ -6,7 +6,7 @@
  * Each type's entries are only built when the type is expanded, and thrown
  * away when it is collapsed — a doc can hold tens of thousands of entries.
  */
-app.views.TypeList = class TypeList extends app.View {
+class TypeList extends app.View {
   static tagName = "div";
   static className = "_list _list-sub";
 
@@ -105,4 +105,8 @@ app.views.TypeList = class TypeList extends app.View {
       this.lists[model.getType().slug]?.paginateTo(model);
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.TypeList = TypeList;

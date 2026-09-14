@@ -4,7 +4,7 @@
  * The phone layout: one pane at a time, with a toggle between the sidebar and
  * the content, and tabs for the doc picker and the preferences.
  */
-app.views.Mobile = class Mobile extends app.View {
+class Mobile extends app.View {
   static className = "_mobile";
 
   static elements = {
@@ -213,4 +213,8 @@ app.views.Mobile = class Mobile extends app.View {
       this.forward.setAttribute("disabled", "disabled");
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Mobile = Mobile;

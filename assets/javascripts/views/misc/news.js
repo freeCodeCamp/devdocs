@@ -3,7 +3,7 @@
 //= require views/misc/notif
 
 /** The notification listing the changelog entries the user hasn't seen. */
-app.views.News = class News extends app.views.Notif {
+class News extends Notif {
   static className = "_notif _notif-news";
 
   static defaultOptions = { autoHide: 30000 };
@@ -53,4 +53,8 @@ app.views.News = class News extends app.views.Notif {
   markAllAsRead() {
     app.settings.set("news", this.getLastNewsTime());
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.News = News;

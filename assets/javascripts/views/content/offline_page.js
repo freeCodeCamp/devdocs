@@ -4,7 +4,7 @@
  * The offline page: installing and removing each doc's database, and backing
  * the whole lot up to a file.
  */
-app.views.OfflinePage = class OfflinePage extends app.View {
+class OfflinePage extends app.View {
   static className = "_static";
 
   static events = {
@@ -344,4 +344,8 @@ app.views.OfflinePage = class OfflinePage extends app.View {
     // the page would produce; the disappearing button is the confirmation.
     note.innerHTML = success ? "" : this.tmpl("persistenceError", exception);
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.OfflinePage = OfflinePage;

@@ -7,7 +7,7 @@
  * saved on `dragend`; `dragover` fires far too often to write to storage, so
  * the live resize is throttled to one animation frame.
  */
-app.views.Resizer = class Resizer extends app.View {
+class Resizer extends app.View {
   static className = "_resizer";
 
   static events = {
@@ -88,4 +88,8 @@ app.views.Resizer = class Resizer extends app.View {
     }
     this.resize(value, true);
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Resizer = Resizer;

@@ -10,7 +10,7 @@
  *
  * Emits `change` with the new doc and the previous one.
  */
-app.views.SearchScope = class SearchScope extends app.View {
+class SearchScope extends app.View {
   static SEARCH_PARAM = app.config.search_param;
 
   static elements = {
@@ -39,7 +39,7 @@ app.views.SearchScope = class SearchScope extends app.View {
     this.searcher.on("results", (results) => this.onResults(results));
   }
 
-  /** @returns {unknown} The doc the search is scoped to, or the app when it isn't scoped. */
+  /** @returns {Doc | App} The doc the search is scoped to, or the app when it isn't scoped. */
   getScope() {
     return this.doc || app;
   }
@@ -232,4 +232,8 @@ app.views.SearchScope = class SearchScope extends app.View {
       this.selectDoc(context.doc);
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.SearchScope = SearchScope;

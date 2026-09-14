@@ -5,7 +5,7 @@
  * disabled. The type names the template to render: a Notice of type
  * `singleDoc` renders `app.templates.singleDocNotice`.
  */
-app.views.Notice = class Notice extends app.View {
+class Notice extends app.View {
   static className = "_notice";
   static attributes = { role: "alert" };
 
@@ -50,4 +50,8 @@ app.views.Notice = class Notice extends app.View {
   hide() {
     $.remove(this.el);
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Notice = Notice;

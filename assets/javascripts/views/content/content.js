@@ -8,7 +8,7 @@
  * the way back, which is why the app turns the browser's own scroll
  * restoration off (see lib/page.js).
  */
-app.views.Content = class Content extends app.View {
+class Content extends app.View {
   static el = "._content";
   static loadingClass = "_content-loading";
 
@@ -315,4 +315,8 @@ app.views.Content = class Content extends app.View {
   isExternalUrl(url) {
     return url?.startsWith("http:") || url?.startsWith("https:");
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Content = Content;

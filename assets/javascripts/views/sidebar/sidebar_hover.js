@@ -6,7 +6,7 @@
  * Rather than styling the row itself, a copy of it is positioned over the
  * original outside the sidebar's overflow, so that it can spill past the edge.
  */
-app.views.SidebarHover = class SidebarHover extends app.View {
+class SidebarHover extends app.View {
   static itemClass = "_list-hover";
 
   static events = {
@@ -142,4 +142,8 @@ app.views.SidebarHover = class SidebarHover extends app.View {
   onRoute() {
     this.hide();
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.SidebarHover = SidebarHover;

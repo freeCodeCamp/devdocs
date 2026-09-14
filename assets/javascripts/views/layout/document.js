@@ -7,7 +7,7 @@
  * handles the shortcuts and the `data-behavior` links that aren't tied to any
  * one of them.
  */
-app.views.Document = class Document extends app.View {
+class AppDocument extends app.View {
   static el = document;
 
   static events = { visibilitychange: "onVisibilityChange" };
@@ -149,4 +149,8 @@ app.views.Document = class Document extends app.View {
         break;
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Document = AppDocument;

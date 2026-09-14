@@ -4,7 +4,7 @@
  * The breadcrumb above the content. Rebuilt on every route, and hidden on
  * pages that aren't part of a doc.
  */
-app.views.Path = class Path extends app.View {
+class Path extends app.View {
   static className = "_path";
   static attributes = { role: "complementary" };
 
@@ -67,4 +67,8 @@ app.views.Path = class Path extends app.View {
       app.document.sidebar.reset();
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Path = Path;

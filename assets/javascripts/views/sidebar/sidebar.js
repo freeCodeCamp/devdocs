@@ -7,7 +7,7 @@
  * Swapping between the two keeps the doc list's scroll position, so that
  * clearing a search puts the user back where they were.
  */
-app.views.Sidebar = class Sidebar extends app.View {
+class Sidebar extends app.View {
   static el = "._sidebar";
 
   static events = {
@@ -138,8 +138,8 @@ app.views.Sidebar = class Sidebar extends app.View {
   }
 
   /**
-   * @param {any} newDoc The doc the search is now scoped to, if any.
-   * @param {unknown} previousDoc The doc it was scoped to before, if any.
+   * @param {Doc} [newDoc] The doc the search is now scoped to.
+   * @param {Doc} [previousDoc] The doc it was scoped to before.
    */
   onScopeChange(newDoc, previousDoc) {
     if (previousDoc) {
@@ -251,4 +251,8 @@ app.views.Sidebar = class Sidebar extends app.View {
     }
     this.resetDisplay();
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Sidebar = Sidebar;

@@ -13,7 +13,7 @@
  * `app.templates.notifError`. Notifications stack, each positioned below the
  * one before it.
  */
-app.views.Notif = class Notif extends app.View {
+class Notif extends app.View {
   static className = "_notif";
   static activeClass = "_in";
   static attributes = { role: "alert" };
@@ -23,7 +23,8 @@ app.views.Notif = class Notif extends app.View {
   static events = { click: "onClick" };
 
   /**
-   * @param {string} type Names the template to render.
+   * @param {string} [type] Names the template to render. Omitted by the
+   *   subclasses that render their own body.
    * @param {NotifOptions} [options]
    */
   constructor(type, options) {
@@ -98,4 +99,8 @@ app.views.Notif = class Notif extends app.View {
       this.hide();
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Notif = Notif;

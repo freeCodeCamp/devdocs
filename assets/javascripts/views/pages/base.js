@@ -7,7 +7,7 @@
  * Syntax highlighting is spread over animation frames, so that a page with a
  * lot of code doesn't block scrolling while it is painted.
  */
-app.views.BasePage = class BasePage extends app.View {
+class BasePage extends app.View {
   /**
    * @param {HTMLElement} el
    * @param {Entry} entry
@@ -94,4 +94,8 @@ app.views.BasePage = class BasePage extends app.View {
     }
     this.previousTiming = timing;
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.BasePage = BasePage;

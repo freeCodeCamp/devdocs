@@ -8,7 +8,7 @@
  * focused yet, and stepping past the end of a page clicks its pagination link
  * so that the next page is rendered first.
  */
-app.views.ListFocus = class ListFocus extends app.View {
+class ListFocus extends app.View {
   static activeClass = "focus";
 
   static events = { click: "onClick" };
@@ -221,4 +221,8 @@ app.views.ListFocus = class ListFocus extends app.View {
       this.focus(target, { silent: true });
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.ListFocus = ListFocus;

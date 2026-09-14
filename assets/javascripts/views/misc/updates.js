@@ -6,7 +6,7 @@
  * The notification listing the docs that gained a new release since the
  * user last saw it.
  */
-app.views.Updates = class Updates extends app.views.Notif {
+class Updates extends Notif {
   static className = "_notif _notif-news";
 
   static defautOptions = { autoHide: 30000 };
@@ -73,4 +73,8 @@ app.views.Updates = class Updates extends app.views.Notif {
         : Math.floor(Date.now() / 1000),
     );
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Updates = Updates;

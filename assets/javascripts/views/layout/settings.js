@@ -6,7 +6,7 @@
  * Saving uninstalls the docs the user turned off and reloads the app, since
  * the offline database's schema is derived from the enabled docs.
  */
-app.views.Settings = class Settings extends app.View {
+class SettingsView extends View {
   static SIDEBAR_HIDDEN_LAYOUT = "_sidebar-hidden";
 
   static el = "._settings";
@@ -35,7 +35,7 @@ app.views.Settings = class Settings extends app.View {
   activate() {
     if (super.activate()) {
       this.render();
-      document.body.classList.remove(Settings.SIDEBAR_HIDDEN_LAYOUT);
+      document.body.classList.remove(SettingsView.SIDEBAR_HIDDEN_LAYOUT);
     }
   }
 
@@ -44,8 +44,8 @@ app.views.Settings = class Settings extends app.View {
     if (super.deactivate()) {
       this.resetClass();
       this.docPicker.detach();
-      if (app.settings.hasLayout(Settings.SIDEBAR_HIDDEN_LAYOUT)) {
-        document.body.classList.add(Settings.SIDEBAR_HIDDEN_LAYOUT);
+      if (app.settings.hasLayout(SettingsView.SIDEBAR_HIDDEN_LAYOUT)) {
+        document.body.classList.add(SettingsView.SIDEBAR_HIDDEN_LAYOUT);
       }
     }
   }
@@ -130,4 +130,8 @@ app.views.Settings = class Settings extends app.View {
       app.router.show("/");
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Settings = SettingsView;

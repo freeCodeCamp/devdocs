@@ -8,7 +8,7 @@
  * which is what the sub-view classes in views/pages are for. Recently viewed
  * pages are kept in memory so that going back doesn't refetch them.
  */
-app.views.EntryPage = class EntryPage extends app.View {
+class EntryPage extends app.View {
   static className = "_page";
   static errorClass = "_page-error";
 
@@ -314,4 +314,8 @@ app.views.EntryPage = class EntryPage extends app.View {
     this.transientNotice = null;
     this.transientNoticeTimer = null;
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.EntryPage = EntryPage;

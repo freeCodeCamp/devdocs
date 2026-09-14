@@ -7,7 +7,7 @@
  * collapsed. Disabled docs are listed separately underneath, behind a heading
  * that can be folded away.
  */
-app.views.DocList = class DocList extends app.View {
+class DocList extends app.View {
   static className = "_list";
   static attributes = { role: "navigation" };
 
@@ -304,4 +304,8 @@ app.views.DocList = class DocList extends app.View {
       this.select(context.type || context.entry);
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.DocList = DocList;

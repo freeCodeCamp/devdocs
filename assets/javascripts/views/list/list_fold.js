@@ -9,7 +9,7 @@
  * and `close` on the row, which the lists listen for to render their contents
  * lazily.
  */
-app.views.ListFold = class ListFold extends app.View {
+class ListFold extends app.View {
   static targetClass = "_list-dir";
   static handleClass = "_list-arrow";
   static activeClass = "open";
@@ -112,4 +112,8 @@ app.views.ListFold = class ListFold extends app.View {
       }
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.ListFold = ListFold;

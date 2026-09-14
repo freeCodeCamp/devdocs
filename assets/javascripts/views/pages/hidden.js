@@ -4,7 +4,7 @@
  * An entry belonging to a doc that isn't enabled: shown with a notice, and
  * with its links opened outside the app.
  */
-app.views.HiddenPage = class HiddenPage extends app.View {
+class HiddenPage extends app.View {
   static events = { click: "onClick" };
 
   /**
@@ -31,4 +31,8 @@ app.views.HiddenPage = class HiddenPage extends app.View {
       $.popup(link);
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.HiddenPage = HiddenPage;

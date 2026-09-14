@@ -6,7 +6,7 @@
  * Results arrive in batches as the searcher works through the entries, so
  * only the first batch clears the list and moves the focus.
  */
-app.views.Results = class Results extends app.View {
+class Results extends app.View {
   static className = "_list";
 
   static events = { click: "onClick" };
@@ -126,4 +126,8 @@ app.views.Results = class Results extends app.View {
       }
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.Results = Results;

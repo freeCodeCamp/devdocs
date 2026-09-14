@@ -49,8 +49,48 @@ class App extends Events {
   models = /** @type {any} */ ({});
   /** @type {Record<string, any>} */
   templates = {};
-  /** @type {Record<string, any>} */
-  views = {};
+  /**
+   * @type {{
+   *   BasePage: typeof BasePage,
+   *   Content: typeof Content,
+   *   DocList: typeof DocList,
+   *   DocPicker: typeof DocPicker,
+   *   Document: typeof AppDocument,
+   *   EntryList: typeof EntryList,
+   *   EntryPage: typeof EntryPage,
+   *   HiddenPage: typeof HiddenPage,
+   *   JqueryPage: typeof JqueryPage,
+   *   ListFocus: typeof ListFocus,
+   *   ListFold: typeof ListFold,
+   *   ListSelect: typeof ListSelect,
+   *   Menu: typeof Menu,
+   *   Mobile: typeof Mobile,
+   *   News: typeof News,
+   *   Notice: typeof Notice,
+   *   Notif: typeof Notif,
+   *   OfflinePage: typeof OfflinePage,
+   *   PaginatedList: typeof PaginatedList,
+   *   Path: typeof Path,
+   *   RdocPage: typeof RdocPage,
+   *   Resizer: typeof Resizer,
+   *   Results: typeof Results,
+   *   RootPage: typeof RootPage,
+   *   Search: typeof Search,
+   *   SearchScope: typeof SearchScope,
+   *   Settings: typeof SettingsView,
+   *   SettingsPage: typeof SettingsPage,
+   *   Sidebar: typeof Sidebar,
+   *   SidebarHover: typeof SidebarHover,
+   *   SqlitePage: typeof SqlitePage,
+   *   StaticPage: typeof StaticPage,
+   *   SupportTablesPage: typeof SupportTablesPage,
+   *   Tip: typeof Tip,
+   *   TypeList: typeof TypeList,
+   *   TypePage: typeof TypePage,
+   *   Updates: typeof Updates,
+   * }}
+   */
+  views = /** @type {any} */ ({});
 
   /** Set by app/config.js.erb. @type {AppConfig} */
   config;

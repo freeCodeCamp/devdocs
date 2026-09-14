@@ -1,7 +1,7 @@
 // @ts-check
 
 /** A type's page: every entry of that type in the doc. */
-app.views.TypePage = class TypePage extends app.View {
+class TypePage extends app.View {
   static className = "_page";
 
   /** Also forgets which type was shown. */
@@ -28,4 +28,8 @@ app.views.TypePage = class TypePage extends app.View {
   onRoute(context) {
     this.render(context.type);
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.TypePage = TypePage;

@@ -6,7 +6,7 @@
  *
  * Subclasses implement `render(dataSlice)`.
  */
-app.views.PaginatedList = class PaginatedList extends app.View {
+class PaginatedList extends app.View {
   static PER_PAGE = app.config.max_results;
 
   /** @param {unknown[]} data Every row, rendered a page at a time. */
@@ -174,4 +174,8 @@ app.views.PaginatedList = class PaginatedList extends app.View {
       this.paginate(target);
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.PaginatedList = PaginatedList;

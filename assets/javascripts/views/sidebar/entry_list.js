@@ -3,13 +3,13 @@
 //= require views/list/paginated_list
 
 /** The entries of one type, shown under it in the sidebar. */
-app.views.EntryList = class EntryList extends app.views.PaginatedList {
+class EntryList extends PaginatedList {
   static tagName = "div";
   static className = "_list _list-sub";
 
   /** @param {Entry[]} entries */
   constructor(entries) {
-    super(...arguments);
+    super(entries);
     this.entries = entries;
     this.init0(); // needs this.data from PaginatedList
     this.refreshElements();
@@ -28,4 +28,8 @@ app.views.EntryList = class EntryList extends app.views.PaginatedList {
   render(entries) {
     return this.tmpl("sidebarEntry", entries);
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that it can be named in a type.
+app.views.EntryList = EntryList;
