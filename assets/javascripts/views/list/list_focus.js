@@ -1,5 +1,13 @@
 // @ts-check
 
+/**
+ * Keyboard navigation through a list.
+ *
+ * The focused row carries `activeClass`; moving the focus emits `focus` and
+ * `blur` on the rows. The focus starts from the selected row when nothing is
+ * focused yet, and stepping past the end of a page clicks its pagination link
+ * so that the next page is rendered first.
+ */
 app.views.ListFocus = class ListFocus extends app.View {
   static activeClass = "focus";
 
@@ -19,6 +27,10 @@ app.views.ListFocus = class ListFocus extends app.View {
     this.focusOnNextFrame = (el) => requestAnimationFrame(() => this.focus(el));
   }
 
+  /**
+   * @param {any} el The row to focus.
+   * @param {{ silent?: boolean }} [options] Pass `silent` to move without emitting `focus`.
+   */
   focus(el, options) {
     if (options == null) {
       options = {};
@@ -32,6 +44,7 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /** Clears the focus. */
   blur() {
     const cursor = this.getCursor();
     if (cursor) {
@@ -40,6 +53,7 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /** @returns {any} The focused row, or the selected one when nothing is focused. */
   getCursor() {
     return (
       this.findByClass(this.statics().activeClass) ||
@@ -47,6 +61,10 @@ app.views.ListFocus = class ListFocus extends app.View {
     );
   }
 
+  /**
+   * @param {any} cursor
+   * @returns {any} The row after `cursor`, descending into expanded sub-lists.
+   */
   findNext(cursor) {
     const next = cursor.nextSibling;
     if (next) {
@@ -72,6 +90,10 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /**
+   * @param {any} cursor
+   * @returns {any} The first row of the sub-list under `cursor`.
+   */
   findFirst(cursor) {
     const first = cursor.firstChild;
     if (!first) {
@@ -87,6 +109,10 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /**
+   * @param {any} cursor
+   * @returns {any} The row before `cursor`, descending into expanded sub-lists.
+   */
   findPrev(cursor) {
     const prev = cursor.previousSibling;
     if (prev) {
@@ -112,6 +138,10 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /**
+   * @param {any} cursor
+   * @returns {any} The last row of the sub-list under `cursor`.
+   */
   findLast(cursor) {
     const last = cursor.lastChild;
     if (!last) {
@@ -129,6 +159,7 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /** Moves the focus down one row. */
   onDown() {
     const cursor = this.getCursor();
     if (cursor) {
@@ -138,6 +169,7 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /** Moves the focus up one row. */
   onUp() {
     const cursor = this.getCursor();
     if (cursor) {
@@ -147,6 +179,7 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /** Moves the focus out to the row the current sub-list hangs off. */
   onLeft() {
     const cursor = this.getCursor();
     if (
@@ -161,6 +194,7 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /** Follows the focused row. */
   onEnter() {
     const cursor = this.getCursor();
     if (cursor) {
@@ -168,6 +202,7 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /** Opens the focused row outside the app. */
   onSuperEnter() {
     const cursor = this.getCursor();
     if (cursor) {
@@ -175,6 +210,7 @@ app.views.ListFocus = class ListFocus extends app.View {
     }
   }
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     if (event.which !== 1 || event.metaKey || event.ctrlKey) {
       return;

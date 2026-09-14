@@ -1,5 +1,11 @@
 // @ts-check
 
+/**
+ * The selected row of a list — the entry currently being read, which stays
+ * marked as the user moves the focus around.
+ *
+ * Selecting and deselecting emit `select` and `deselect` on the row.
+ */
 app.views.ListSelect = class ListSelect extends app.View {
   static activeClass = "active";
 
@@ -11,6 +17,7 @@ app.views.ListSelect = class ListSelect extends app.View {
     }
   }
 
+  /** @param {any} el The row to select, deselecting whatever was selected. */
   select(el) {
     this.deselect();
     if (el) {
@@ -19,6 +26,7 @@ app.views.ListSelect = class ListSelect extends app.View {
     }
   }
 
+  /** Clears the selection. */
   deselect() {
     const selection = this.getSelection();
     if (selection) {
@@ -27,20 +35,24 @@ app.views.ListSelect = class ListSelect extends app.View {
     }
   }
 
+  /** @param {string} href */
   selectByHref(href) {
     if (this.getSelection()?.getAttribute("href") !== href) {
       this.select(this.find(`a[href='${href}']`));
     }
   }
 
+  /** Selects the row pointing at the current page. */
   selectCurrent() {
     this.selectByHref(location.pathname + location.hash);
   }
 
+  /** @returns {any} The selected row, or `undefined`. */
   getSelection() {
     return this.findByClass(this.statics().activeClass);
   }
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     if (event.which !== 1 || event.metaKey || event.ctrlKey) {
       return;

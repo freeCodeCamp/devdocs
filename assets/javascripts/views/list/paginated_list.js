@@ -1,8 +1,15 @@
 // @ts-check
 
+/**
+ * A list too long to render at once: only a window of `PER_PAGE` rows is in
+ * the document, with links at either end to extend it.
+ *
+ * Subclasses implement `render(dataSlice)`.
+ */
 app.views.PaginatedList = class PaginatedList extends app.View {
   static PER_PAGE = app.config.max_results;
 
+  /** @param {any[]} data Every row, rendered a page at a time. */
   constructor(data) {
     super();
     this.data = data;
@@ -12,6 +19,7 @@ app.views.PaginatedList = class PaginatedList extends app.View {
     }
   }
 
+  /** Renders the first page, or the whole list when it fits on one. */
   renderPaginated() {
     this.page = 0;
 
@@ -24,10 +32,15 @@ app.views.PaginatedList = class PaginatedList extends app.View {
 
   // render: (dataSlice) -> implemented by subclass
 
+  /** @returns {string} Every row. */
   renderAll() {
     return this.render(this.data);
   }
 
+  /**
+   * @param {number} page One-based.
+   * @returns {string}
+   */
   renderPage(page) {
     return this.render(
       this.data.slice(
@@ -37,24 +50,43 @@ app.views.PaginatedList = class PaginatedList extends app.View {
     );
   }
 
+  /**
+   * @param {number} count How many rows the link would add.
+   * @returns {string}
+   */
   renderPageLink(count) {
     return this.tmpl("sidebarPageLink", count);
   }
 
+  /**
+   * @param {number} page
+   * @returns {string} The link that prepends the page before `page`.
+   */
   renderPrevLink(page) {
     return this.renderPageLink((page - 1) * PaginatedList.PER_PAGE);
   }
 
+  /**
+   * @param {number} page
+   * @returns {string} The link that appends the page after `page`.
+   */
   renderNextLink(page) {
     return this.renderPageLink(
       this.data.length - page * PaginatedList.PER_PAGE,
     );
   }
 
+  /** @returns {number} */
   totalPages() {
     return Math.ceil(this.data.length / PaginatedList.PER_PAGE);
   }
 
+  /**
+   * Extends the list in the direction the link points, holding the scroll
+   * position so that the rows under the pointer don't move.
+   *
+   * @param {any} link
+   */
   paginate(link) {
     $.lockScroll(link.nextSibling || link.previousSibling, () => {
       $.batchUpdate(this.el, () => {
@@ -67,6 +99,7 @@ app.views.PaginatedList = class PaginatedList extends app.View {
     });
   }
 
+  /** Appends the page after the current one. */
   paginateNext() {
     if (this.el.lastChild) {
       this.remove(this.el.lastChild);
@@ -81,6 +114,7 @@ app.views.PaginatedList = class PaginatedList extends app.View {
     }
   }
 
+  /** Prepends the page before the current one. */
   paginatePrev() {
     this.remove(this.el.firstChild); // remove link
     this.hideBottomPage();
@@ -91,6 +125,11 @@ app.views.PaginatedList = class PaginatedList extends app.View {
     }
   }
 
+  /**
+   * Renders whichever page holds `object`.
+   *
+   * @param {any} object A row of `data`.
+   */
   paginateTo(object) {
     const index = this.data.indexOf(object);
     if (index >= PaginatedList.PER_PAGE) {
@@ -104,6 +143,7 @@ app.views.PaginatedList = class PaginatedList extends app.View {
     }
   }
 
+  /** Drops the page above the window, replacing it with a link. */
   hideTopPage() {
     const n =
       this.page <= 2 ? PaginatedList.PER_PAGE : PaginatedList.PER_PAGE + 1; // remove link
@@ -113,6 +153,7 @@ app.views.PaginatedList = class PaginatedList extends app.View {
     this.prepend(this.renderPrevLink(this.page));
   }
 
+  /** Drops the page below the window, replacing it with a link. */
   hideBottomPage() {
     const n =
       this.page === this.totalPages()
@@ -124,6 +165,7 @@ app.views.PaginatedList = class PaginatedList extends app.View {
     this.append(this.renderNextLink(this.page - 1));
   }
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     const target = $.eventTarget(event);
     if (target.tagName === "SPAN") {
