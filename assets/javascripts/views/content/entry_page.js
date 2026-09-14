@@ -1,5 +1,13 @@
 // @ts-check
 
+/**
+ * An entry's page.
+ *
+ * The HTML comes from the offline database when the doc is installed and from
+ * the network otherwise. A few docs need their own handling once rendered,
+ * which is what the sub-view classes in views/pages are for. Recently viewed
+ * pages are kept in memory so that going back doesn't refetch them.
+ */
 app.views.EntryPage = class EntryPage extends app.View {
   static className = "_page";
   static errorClass = "_page-error";
@@ -18,6 +26,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     code: "Source code",
   };
 
+  /** @inheritdoc */
   init() {
     this.cacheMap = {};
     this.cacheStack = [];
@@ -31,11 +40,17 @@ app.views.EntryPage = class EntryPage extends app.View {
     }
   }
 
+  /** Announces that a page is on its way. */
   loading() {
     this.empty();
     this.trigger("loading");
   }
 
+  /**
+   * @param {string} content The entry's HTML.
+   * @param {boolean} [fromCache] Whether it came from the in-memory cache,
+   *   in which case it has already been prepared.
+   */
   render(content, fromCache) {
     if (content == null) {
       content = "";
@@ -65,6 +80,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     this.trigger("loaded");
   }
 
+  /** Adds a copy button to each code block. */
   addCopyButtons() {
     if (!this.copyButton) {
       this.copyButton = document.createElement("button");
@@ -79,6 +95,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     }
   }
 
+  /** Loads the MathML stylesheet, for browsers that don't render it natively. */
   polyfillMathML() {
     if (
       window.supportsMathML !== false ||
@@ -94,6 +111,10 @@ app.views.EntryPage = class EntryPage extends app.View {
     );
   }
 
+  /**
+   * @param {string} content
+   * @returns {string} The HTML with the doc's own fixes applied.
+   */
   prepareContent(content) {
     if (!this.entry.isIndex() || !this.entry.doc.links) {
       return content;
@@ -121,12 +142,14 @@ app.views.EntryPage = class EntryPage extends app.View {
     super.empty();
   }
 
+  /** @returns {any} The views/pages class this doc needs, if it has one. */
   subViewClass() {
     // doc.type is optional (e.g. the Q documentation has none).
     const type = this.entry.doc.type;
     return (type && app.views[`${$.classify(type)}Page`]) || app.views.BasePage;
   }
 
+  /** @returns {string} */
   getTitle() {
     return (
       this.entry.doc.fullName +
@@ -134,11 +157,13 @@ app.views.EntryPage = class EntryPage extends app.View {
     );
   }
 
+  /** Abandons a page still in flight when the route changes. */
   beforeRoute() {
     this.cache();
     this.abort();
   }
 
+  /** @param {any} context */
   onRoute(context) {
     const isSameFile = context.entry.filePath() === this.entry?.filePath?.();
     this.entry = context.entry;
@@ -147,6 +172,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     }
   }
 
+  /** Fetches the entry's page, from the offline database or the network. */
   load() {
     this.loading();
     this.xhr = this.entry.loadFile(
@@ -155,6 +181,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     );
   }
 
+  /** Cancels the request in flight, if any. */
   abort() {
     if (this.xhr) {
       this.xhr.abort();
@@ -162,6 +189,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     }
   }
 
+  /** @param {string} response The entry's HTML. */
   onSuccess(response) {
     if (!this.activated) {
       return;
@@ -170,6 +198,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     this.render(this.prepareContent(response));
   }
 
+  /** Shows the load error in place of the page. */
   onError() {
     this.xhr = null;
     this.render(this.tmpl("pageLoadError"));
@@ -180,6 +209,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     }
   }
 
+  /** Keeps the rendered page in memory, evicting the oldest. */
   cache() {
     let path;
     if (
@@ -198,6 +228,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     }
   }
 
+  /** @returns {boolean | undefined} `true` when the page came from memory. */
   restore() {
     const path = this.entry.filePath();
     if (this.cacheMap[[path]]) {
@@ -206,6 +237,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     }
   }
 
+  /** @param {ViewMouseEvent} event */
   onClick(event) {
     const target = $.eventTarget(event);
     if (target.hasAttribute("data-retry")) {
@@ -221,6 +253,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     }
   }
 
+  /** @returns {any} The link to the entry on the documentation's own site. */
   originalLink() {
     // The attribution is appended last but may be followed by other elements,
     // so match on the last attribution rather than on its sibling position.
@@ -228,6 +261,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     return links[links.length - 1];
   }
 
+  /** Copies the original page's link. */
   onAltC() {
     const link = this.originalLink();
     if (!link) {
@@ -248,6 +282,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     });
   }
 
+  /** Opens the original page. */
   onAltO() {
     const link = this.originalLink();
     if (!link) {
@@ -257,6 +292,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     this.delay(() => $.popup(link.href + location.hash));
   }
 
+  /** @param {string} type Names the notice template to show. */
   showTransientNotice(type) {
     this.hideTransientNotice();
     this.transientNotice = new app.views.Notice(type);
@@ -266,6 +302,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     this.transientNoticeTimer = this.delay(this.hideTransientNotice, 3000);
   }
 
+  /** Takes the notice back off. */
   hideTransientNotice() {
     if (!this.transientNotice) {
       return;

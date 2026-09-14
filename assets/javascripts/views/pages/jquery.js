@@ -2,9 +2,17 @@
 
 //= require views/pages/base
 
+/**
+ * The jQuery docs' runnable examples, each rendered into its own iframe.
+ *
+ * The example's source is rewritten first: its relative URLs are pointed at
+ * the API site, and a prefilter is injected that aborts any request that would
+ * leave it, since they can't work from inside DevDocs.
+ */
 app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
   static demoClassName = "_jquery-demo";
 
+  /** @inheritdoc */
   afterRender() {
     // Prevent jQuery Mobile's demo iframes from scrolling the page
     for (var iframe of this.findAllByTag("iframe")) {
@@ -16,11 +24,13 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
     return this.runExamples();
   }
 
+  /** @param {ViewEvent} event */
   onIframeLoaded(event) {
     event.target.style.display = "";
     $.off(event.target, "load", this.onIframeLoaded);
   }
 
+  /** Renders every example on the page. */
   runExamples() {
     for (var el of this.findAllByClass("entry-example")) {
       try {
@@ -29,6 +39,7 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
     }
   }
 
+  /** @param {any} el The example's container. */
   runExample(el) {
     const source = el.getElementsByClassName("syntaxhighlighter")[0];
     if (!source || source.innerHTML.indexOf("!doctype") === -1) {
@@ -49,6 +60,10 @@ app.views.JqueryPage = class JqueryPage extends app.views.BasePage {
     doc.close();
   }
 
+  /**
+   * @param {string} source
+   * @returns {string} The example's HTML, fixed up to run inside the app.
+   */
   fixIframeSource(source) {
     source = source.replace(
       '"/resources/',

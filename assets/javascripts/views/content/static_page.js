@@ -1,5 +1,6 @@
 // @ts-check
 
+/** The app's own pages — About, News, the user guide and the 404. */
 app.views.StaticPage = class StaticPage extends app.View {
   static className = "_static";
 
@@ -17,15 +18,18 @@ app.views.StaticPage = class StaticPage extends app.View {
     }
   }
 
+  /** @param {string} page One of the keys of `titles`. */
   render(page) {
     this.page = page;
     this.html(this.tmpl(`${this.page}Page`));
   }
 
+  /** @returns {string} */
   getTitle() {
     return this.statics().titles[this.page];
   }
 
+  /** @param {any} context */
   onRoute(context) {
     this.render(context.page || "notFound");
   }

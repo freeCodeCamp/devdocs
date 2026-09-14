@@ -1,6 +1,17 @@
 // @ts-check
 
+/**
+ * The base for the per-doc page views: docs whose pages need something done to
+ * them once rendered.
+ *
+ * Syntax highlighting is spread over animation frames, so that a page with a
+ * lot of code doesn't block scrolling while it is painted.
+ */
 app.views.BasePage = class BasePage extends app.View {
+  /**
+   * @param {HTMLElement} el
+   * @param {any} entry
+   */
   constructor(el, entry) {
     super(el);
     this.entry = entry;
@@ -12,6 +23,10 @@ app.views.BasePage = class BasePage extends app.View {
     }
   }
 
+  /**
+   * @param {string} content
+   * @param {boolean} [fromCache]
+   */
   render(content, fromCache) {
     if (fromCache == null) {
       fromCache = false;
@@ -34,6 +49,7 @@ app.views.BasePage = class BasePage extends app.View {
     }
   }
 
+  /** Collects the code blocks and starts painting them. */
   highlightCode() {
     for (var el of this.findAll("pre[data-language]")) {
       var language = el.getAttribute("data-language");
@@ -42,6 +58,11 @@ app.views.BasePage = class BasePage extends app.View {
     }
   }
 
+  /**
+   * Highlights as many code blocks as fit in the frame, then yields.
+   *
+   * @param {number} [timing] When the current frame started.
+   */
   paintCode(timing) {
     if (this.previousTiming) {
       if (Math.round(1000 / (timing - this.previousTiming)) > 50) {
