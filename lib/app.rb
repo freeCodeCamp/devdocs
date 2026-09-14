@@ -344,9 +344,15 @@ class App < Sinatra::Application
   post '/mcp' do
     content_type :json
     begin
-      body = request.body.read
-      payload = JSON.parse(body)
-      Mcp::Server.handle(payload, settings).to_json
+      payload = JSON.parse(request.body.read)
+      response = Mcp::Server.handle(payload, settings)
+      if response.nil?
+        # The payload was a notification, which takes no response.
+        status 202
+        ''
+      else
+        response.to_json
+      end
     rescue JSON::ParserError => err
       error_response(nil, -32700, "Parse error: #{err.message}").to_json
     rescue => err

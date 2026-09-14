@@ -20,7 +20,31 @@ class McpTest < Minitest::Spec
     JSON.parse(last_response.body)
   end
 
+  def notify(method, params = nil)
+    body = { jsonrpc: '2.0', method: method }
+    body[:params] = params if params
+    post '/mcp', body.to_json, 'CONTENT_TYPE' => 'application/json'
+  end
+
   describe 'POST /mcp' do
+    it 'accepts notifications without answering them' do
+      notify('notifications/initialized')
+      assert_equal 202, last_response.status
+      assert_empty last_response.body
+    end
+
+    it 'does not answer a notification for an unknown method' do
+      notify('notifications/cancelled', { 'requestId' => 1 })
+      assert_equal 202, last_response.status
+      assert_empty last_response.body
+    end
+
+    it 'answers a request whose id is null' do
+      response = rpc('tools/list', nil, id: nil)
+      assert_nil response['id']
+      assert response['result'].key?('tools')
+    end
+
     it 'responds to initialize with protocol info' do
       result = rpc('initialize')['result']
       assert_equal '2024-11-05', result['protocolVersion']

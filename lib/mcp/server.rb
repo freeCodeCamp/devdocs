@@ -55,6 +55,11 @@ module Mcp
         return error(request, -32600, "Invalid Request: #{detail}")
       end
 
+      # A request without an id is a notification - notifications/initialized is
+      # sent by every client right after the handshake - and JSON-RPC 2.0 says
+      # it must not be answered, not even to report an unknown method.
+      return nil unless request.key?('id')
+
       case request['method']
       when 'initialize'
         respond(request, {
