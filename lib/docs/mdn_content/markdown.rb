@@ -1,6 +1,4 @@
 require 'cgi'
-require 'kramdown'
-require 'kramdown-parser-gfm'
 
 module Docs
   module MdnContent
@@ -9,6 +7,11 @@ module Docs
     # constructs that are specific to MDN — its definition lists, note cards
     # and code fences — are turned into what MDN makes of them afterwards, in
     # Javascript::CleanHtmlFilter.
+    #
+    # kramdown belongs to the docs bundle group, which the app leaves out, and
+    # the app loads every scraper to build its manifest. Requiring it here
+    # would break that; `Bundler.require :default, :docs` in docs.rb loads it
+    # for the scrapers, which are the only ones rendering anything.
     module Markdown
       # MDN's markdown is not typeset: replacing "..." with an ellipsis or "--"
       # with a dash would rewrite the code that's inline in the prose, starting
