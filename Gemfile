@@ -38,7 +38,6 @@ group :development do
 end
 
 group :docs do
-  gem 'progress_bar', require: false
   gem 'redcarpet'
 end
 

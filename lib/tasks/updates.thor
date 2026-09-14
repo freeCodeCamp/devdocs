@@ -11,7 +11,6 @@ class UpdatesCLI < Thor
 
   def initialize(*args)
     require 'docs'
-    require 'progress_bar'
     require 'terminal-table'
     require 'date'
     super
@@ -300,7 +299,7 @@ Maintainers can close this issue when all documentations are up-to-date. The iss
   # A utility method which ensures no progress bar is shown when stdout is not a tty
   def with_progress_bar(&block)
     return unless $stdout.tty?
-    @progress_bar ||= ::ProgressBar.new
+    @progress_bar ||= Docs::ProgressBar.new
     block.call @progress_bar
   end
 
