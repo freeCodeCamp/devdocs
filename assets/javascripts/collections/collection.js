@@ -7,7 +7,7 @@
  * looked up in `app.models` so that the collection doesn't have to reference
  * the class directly.
  */
-app.Collection = class Collection {
+class Collection {
   /** @param {any[]} [objects] Models, attribute objects, or other collections. */
   constructor(objects) {
     if (objects == null) {
@@ -136,4 +136,8 @@ app.Collection = class Collection {
     }
     return i;
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that subclasses extend a type rather than `any`.
+app.Collection = Collection;

@@ -7,8 +7,8 @@ app.views.BasePage = class BasePage extends app.View {
   }
 
   deactivate() {
-    if (super.deactivate(...arguments)) {
-      return (this.highlightNodes = []);
+    if (super.deactivate()) {
+      this.highlightNodes = [];
     }
   }
 

@@ -71,6 +71,31 @@ declare const Prism: {
   highlightElement(element: Element, async?: boolean): void;
 };
 
+// --- Model attributes ---
+
+/**
+ * Model copies the attributes it is constructed with onto itself, so which
+ * properties a model has is decided by the manifest rather than by the class.
+ * Each subclass documents the attributes it relies on; this index signature is
+ * what makes them reachable. Properties a subclass assigns itself keep the
+ * types they are inferred with.
+ */
+interface Model {
+  [attribute: string]: any;
+}
+
+/**
+ * The `elements` static maps a property name to a selector, and the base
+ * class resolves them onto the instance from inside its own constructor —
+ * before a subclass's field initializers would run, so they can't be declared
+ * as fields without being blanked out again. Views also reach into each
+ * other's properties. Declared members still take precedence, so the base
+ * class's own methods stay checked.
+ */
+interface View {
+  [property: string]: any;
+}
+
 // --- Analytics, loaded at runtime by tracking.js ---
 
 /** Google Analytics, once analytics.js has loaded. */

@@ -13,7 +13,7 @@ app.views.DocPicker = class DocPicker extends app.View {
   }
 
   activate() {
-    if (super.activate(...arguments)) {
+    if (super.activate()) {
       this.render();
       this.onDOMFocus = this.onDOMFocus.bind(this);
       $.on(this.el, "focus", this.onDOMFocus, true);
@@ -21,7 +21,7 @@ app.views.DocPicker = class DocPicker extends app.View {
   }
 
   deactivate() {
-    if (super.deactivate(...arguments)) {
+    if (super.deactivate()) {
       this.empty();
       $.off(this.el, "focus", this.onDOMFocus, true);
       this.focusEl = null;
@@ -76,7 +76,7 @@ app.views.DocPicker = class DocPicker extends app.View {
 
   empty() {
     this.resetClass();
-    super.empty(...arguments);
+    super.empty();
   }
 
   getSelectedDocs() {

@@ -17,13 +17,13 @@ app.views.Notice = class Notice extends app.View {
   }
 
   activate() {
-    if (super.activate(...arguments)) {
+    if (super.activate()) {
       this.show();
     }
   }
 
   deactivate() {
-    if (super.deactivate(...arguments)) {
+    if (super.deactivate()) {
       this.hide();
     }
   }

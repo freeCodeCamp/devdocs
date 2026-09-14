@@ -23,7 +23,7 @@ app.views.TypeList = class TypeList extends app.View {
   }
 
   activate() {
-    if (super.activate(...arguments)) {
+    if (super.activate()) {
       for (var slug in this.lists) {
         var list = this.lists[slug];
         list.activate();
@@ -32,7 +32,7 @@ app.views.TypeList = class TypeList extends app.View {
   }
 
   deactivate() {
-    if (super.deactivate(...arguments)) {
+    if (super.deactivate()) {
       for (var slug in this.lists) {
         var list = this.lists[slug];
         list.deactivate();

@@ -25,14 +25,14 @@ app.views.Settings = class Settings extends app.View {
   }
 
   activate() {
-    if (super.activate(...arguments)) {
+    if (super.activate()) {
       this.render();
       document.body.classList.remove(Settings.SIDEBAR_HIDDEN_LAYOUT);
     }
   }
 
   deactivate() {
-    if (super.deactivate(...arguments)) {
+    if (super.deactivate()) {
       this.resetClass();
       this.docPicker.detach();
       if (app.settings.hasLayout(Settings.SIDEBAR_HIDDEN_LAYOUT)) {

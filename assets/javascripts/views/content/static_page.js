@@ -11,7 +11,7 @@ app.views.StaticPage = class StaticPage extends app.View {
   };
 
   deactivate() {
-    if (super.deactivate(...arguments)) {
+    if (super.deactivate()) {
       this.empty();
       this.page = null;
     }

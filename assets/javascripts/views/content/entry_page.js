@@ -24,7 +24,7 @@ app.views.EntryPage = class EntryPage extends app.View {
   }
 
   deactivate() {
-    if (super.deactivate(...arguments)) {
+    if (super.deactivate()) {
       this.hideTransientNotice();
       this.empty();
       this.entry = null;
@@ -118,7 +118,7 @@ app.views.EntryPage = class EntryPage extends app.View {
     this.hiddenView = null;
 
     this.resetClass();
-    super.empty(...arguments);
+    super.empty();
   }
 
   subViewClass() {

@@ -16,7 +16,7 @@ app.views.Results = class Results extends app.View {
   }
 
   deactivate() {
-    if (super.deactivate(...arguments)) {
+    if (super.deactivate()) {
       this.empty();
     }
   }

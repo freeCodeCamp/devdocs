@@ -6,7 +6,7 @@ app.views.ListSelect = class ListSelect extends app.View {
   static events = { click: "onClick" };
 
   deactivate() {
-    if (super.deactivate(...arguments)) {
+    if (super.deactivate()) {
       this.deselect();
     }
   }

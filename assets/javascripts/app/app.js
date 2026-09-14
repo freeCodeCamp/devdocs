@@ -82,9 +82,9 @@ class App extends Events {
   /** @type {any} */ Settings;
   /** @type {any} */ Shortcuts;
   /** @type {any} */ UpdateChecker;
-  /** @type {any} */ Collection;
-  /** @type {any} */ Model;
-  /** @type {any} */ View;
+  /** @type {typeof Collection} */ Collection;
+  /** @type {typeof Model} */ Model;
+  /** @type {typeof View} */ View;
 
   /**
    * The news entries, newest first, set by templates/pages/news_tmpl.js.erb.

@@ -9,7 +9,7 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   };
 
   deactivate() {
-    if (super.deactivate(...arguments)) {
+    if (super.deactivate()) {
       this.empty();
     }
   }

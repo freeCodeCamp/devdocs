@@ -3,19 +3,20 @@
 /**
  * The static configuration a view subclass declares.
  *
- * @typedef {object} ViewStatics
- * @property {string | Element} [el] The element to bind to, as a selector or directly. A new one is created when absent.
- * @property {string} [tagName] The tag to create when there is no `el`. Defaults to `div`.
- * @property {string} [className] Space-separated classes to apply to the element.
- * @property {Record<string, string>} [attributes] Attributes to set on the element.
- * @property {Record<string, string>} [elements] Instance properties to look up, by selector.
- * @property {Record<string, string>} [events] Method names to bind, by DOM event.
- * @property {Record<string, string>} [routes] Method names to bind, by route event.
- * @property {Record<string, string>} [shortcuts] Method names to bind, by shortcut event.
+ * The index signature covers the statics each subclass adds of its own — class
+ * names, titles, and so on — which would otherwise have to be listed here.
  *
- * Subclasses add their own statics — class names, titles, and so on — which
- * this index signature keeps reachable without listing each of them here.
- * @property {any} [key]
+ * @typedef {{
+ *   el?: string | Element | Document,
+ *   tagName?: string,
+ *   className?: string,
+ *   attributes?: Record<string, string>,
+ *   elements?: Record<string, string>,
+ *   events?: Record<string, string>,
+ *   routes?: Record<string, string>,
+ *   shortcuts?: Record<string, string>,
+ *   [key: string]: any,
+ * }} ViewStatics
  */
 
 /**
@@ -26,7 +27,16 @@
  * builds or finds the element, applies them, and calls `init` if the subclass
  * defines one. Bindings are only live between `activate` and `deactivate`.
  */
-app.View = class View extends Events {
+class View extends Events {
+  /**
+   * The element the view is bound to. Usually an element, but a view can bind
+   * to the document (see views/layout/document.js) or to a form, so it is
+   * left untyped rather than narrowed at every call site.
+   *
+   * @type {any}
+   */
+  el;
+
   /** @param {HTMLElement} [el] The element to bind to. Built from the statics when absent. */
   constructor(el) {
     super();
@@ -267,6 +277,11 @@ app.View = class View extends Events {
     return (this.subviews || (this.subviews = [])).push(view);
   }
 
+  /**
+   * Binds the view's events, and its subviews'. Does nothing if already active.
+   *
+   * @returns {boolean | void} `true` when it went from inactive to active.
+   */
   activate() {
     if (this.activated) {
       return;
@@ -281,6 +296,11 @@ app.View = class View extends Events {
     return true;
   }
 
+  /**
+   * Unbinds the view's events, and its subviews'. Does nothing if not active.
+   *
+   * @returns {boolean | void} `true` when it went from active to inactive.
+   */
   deactivate() {
     if (!this.activated) {
       return;
@@ -299,4 +319,8 @@ app.View = class View extends Events {
     this.deactivate();
     $.remove(this.el);
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that subclasses extend a type rather than `any`.
+app.View = View;

@@ -18,7 +18,8 @@ app.views.Document = class Document extends app.View {
   init() {
     this.menu = new app.views.Menu();
     this.sidebar = new app.views.Sidebar();
-    this.addSubview(this.menu, this.addSubview(this.sidebar));
+    this.addSubview(this.sidebar);
+    this.addSubview(this.menu);
     if (app.views.Resizer.isSupported()) {
       this.resizer = new app.views.Resizer();
       this.addSubview(this.resizer);

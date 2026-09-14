@@ -7,7 +7,7 @@
  * document the ones they rely on rather than declaring them as fields — a
  * field declaration would run after `super()` and blank the value out.
  */
-app.Model = class Model {
+class Model {
   /** @param {Record<string, any>} [attributes] */
   constructor(attributes) {
     for (var key in attributes) {
@@ -15,4 +15,8 @@ app.Model = class Model {
       this[key] = value;
     }
   }
-};
+}
+
+// Registered on `app` so that the rest of the code can reach it; declared at
+// the top level so that subclasses extend a type rather than `any`.
+app.Model = Model;

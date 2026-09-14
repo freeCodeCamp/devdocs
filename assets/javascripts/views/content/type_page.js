@@ -4,7 +4,7 @@ app.views.TypePage = class TypePage extends app.View {
   static className = "_page";
 
   deactivate() {
-    if (super.deactivate(...arguments)) {
+    if (super.deactivate()) {
       this.empty();
       this.type = null;
     }
