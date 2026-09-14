@@ -199,13 +199,16 @@ module Docs
     end
 
     # Downloads an archive and moves it into #source_directory. Pass the
-    # subdirectory holding the documents when they aren't at the archive's root.
-    def download_and_extract(url, subdirectory = nil)
+    # subdirectory holding the documents when they aren't at the archive's root,
+    # and a destination to unpack somewhere else than #source_directory. Note
+    # that the destination is replaced, so the one holding the documents has to
+    # be unpacked before those nested inside it.
+    def download_and_extract(url, subdirectory = nil, destination: source_directory)
       instrument 'info.doc', msg: %(Downloading #{url}...)
       archive = Archive.download(url)
 
-      instrument 'info.doc', msg: %(Extracting the documentation files to "#{source_directory}"...)
-      Archive.unpack(archive, source_directory, directory: subdirectory)
+      instrument 'info.doc', msg: %(Extracting the documentation files to "#{destination}"...)
+      Archive.unpack(archive, destination, directory: subdirectory)
     ensure
       FileUtils.rm_f(archive) if archive
     end
