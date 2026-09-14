@@ -29,7 +29,9 @@ app.models.Entry = class Entry extends app.Model {
     if (!Array.isArray(this.text)) {
       this.text = [this.text];
     }
-    this.text.push(Array.isArray(text) ? text[1] : text);
+    // applyAliases returns both the name and its alias; keeping only the alias
+    // would make the name of an aliased doc (e.g. Julia) unsearchable.
+    this.text.push(...(Array.isArray(text) ? text : [text]));
   }
 
   fullPath() {
