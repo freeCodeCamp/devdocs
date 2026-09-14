@@ -60,6 +60,12 @@ app.templates.settingsPage = (settings) => `\
       }>Automatically download documentation for offline use
       <small>Only enable this when bandwidth isn't a concern to you.</small>
     </label>
+    <label class="_settings-label">
+      <input type="checkbox" form="settings" name="autoLatestVersion" value="_auto-latest-version"${
+        settings.autoLatestVersion ? " checked" : ""
+      }>Automatically switch to the latest version of a documentation
+      <small>With this checked, enabling e.g. CMake 3.9 switches to CMake 3.10 once it becomes available.</small>
+    </label>
     <label class="_settings-label _hide-in-development">
       <input type="checkbox" form="settings" name="analyticsConsent"${
         settings.analyticsConsent ? " checked" : ""

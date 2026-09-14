@@ -14,6 +14,7 @@ app.Settings = class Settings {
     "tips",
     "noAutofocus",
     "autoInstall",
+    "autoLatestVersion",
     "spaceScroll",
     "spaceTimeout",
     "noDocSpecificIcon",
@@ -40,6 +41,7 @@ app.Settings = class Settings {
     spaceScroll: 1,
     spaceTimeout: 0.5,
     noDocSpecificIcon: false,
+    autoLatestVersion: false,
   };
 
   constructor() {

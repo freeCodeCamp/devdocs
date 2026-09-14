@@ -17,6 +17,7 @@ app.views.SettingsPage = class SettingsPage extends app.View {
     settings.arrowScroll = app.settings.get("arrowScroll");
     settings.noAutofocus = app.settings.get("noAutofocus");
     settings.autoInstall = app.settings.get("autoInstall");
+    settings.autoLatestVersion = app.settings.get("autoLatestVersion");
     settings.analyticsConsent = app.settings.get("analyticsConsent");
     settings.spaceScroll = app.settings.get("spaceScroll");
     settings.spaceTimeout = app.settings.get("spaceTimeout");

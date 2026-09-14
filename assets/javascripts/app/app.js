@@ -123,6 +123,7 @@ class App extends Events {
       (docs.includes(doc.slug) ? this.docs : this.disabledDocs).add(doc);
     }
     this.migrateDocs();
+    this.migrateToLatestVersions();
     this.docs.load(this.start.bind(this), this.onBootError.bind(this), {
       readCache: true,
       writeCache: true,
@@ -186,6 +187,36 @@ class App extends Events {
     }
 
     if (needsSaving) {
+      this.saveDocs();
+    }
+  }
+
+  // With the "latest version" preference enabled, replace the enabled docs for
+  // which a newer version is available with that version.
+  migrateToLatestVersions() {
+    if (!this.settings.get("autoLatestVersion")) {
+      return;
+    }
+
+    let needsSaving;
+    const allDocs = this.docs.all().concat(this.disabledDocs.all());
+
+    for (var doc of this.docs.all().slice()) {
+      var latest = doc.findLatestVersion(allDocs);
+      if (latest === doc) {
+        continue;
+      }
+      this.docs.remove(doc);
+      this.disabledDocs.add(doc);
+      if (!this.docs.contains(latest)) {
+        this.disabledDocs.remove(latest);
+        this.docs.add(latest);
+      }
+      needsSaving = true;
+    }
+
+    if (needsSaving) {
+      this.docs.sort();
       this.saveDocs();
     }
   }
