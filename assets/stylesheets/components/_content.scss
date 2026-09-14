@@ -385,6 +385,7 @@
 ._bold { font-weight: var(--boldFontWeight); }
 ._note { @extend %note; }
 ._note-green { @extend %note-green; }
+._note-red { @extend %note-red; }
 ._label { @extend %label; }
 ._code { @extend %code; }
 ._highlight, ._highlight > td { background: var(--highlightBackground) !important; }

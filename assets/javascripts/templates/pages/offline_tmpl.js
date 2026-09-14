@@ -44,6 +44,14 @@ app.templates.offlinePage = (docs, hasPersistence, isPersistent) => `\
 </dl>\
 `;
 
+app.templates.persistenceError = function (exception) {
+  const reason = exception
+    ? `<code class="_label">${exception.name}: ${exception.message}</code>`
+    : "Bookmark this site and try again.";
+
+  return `<p class="_note _note-red"><strong>Persistent storage was denied by your browser.</strong> ${reason}`;
+};
+
 var offlinePersistenceNote = function (hasPersistence, isPersistent) {
   if (isPersistent) {
     return "";

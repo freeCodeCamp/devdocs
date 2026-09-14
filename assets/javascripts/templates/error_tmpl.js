@@ -73,14 +73,6 @@ This could be because you're browsing in private mode or have disallowed offline
   return error("Offline mode is unavailable.", reason);
 };
 
-app.templates.persistenceError = function (exception) {
-  const reason = exception
-    ? `<code class="_label">${exception.name}: ${exception.message}</code>`
-    : "Bookmark this site and try again.";
-
-  return error("Persistence request denied by browser.", reason);
-};
-
 app.templates.unsupportedBrowser = `\
 <div class="_fail">
   <h1 class="_fail-title">Your browser is unsupported, sorry.</h1>

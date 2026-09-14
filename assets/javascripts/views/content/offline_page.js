@@ -170,10 +170,12 @@ app.views.OfflinePage = class OfflinePage extends app.View {
   }
 
   onPersistenceRequestCompleted(success, exception) {
-    if (success) {
-      this.render();
-    } else {
-      this.html(this.tmpl("persistenceError", exception));
+    const note = this.find("#_offline-persistence-note");
+    if (!note) {
+      return;
     }
+    // Granting persistence retires the note, which is what a fresh render of
+    // the page would produce; the disappearing button is the confirmation.
+    note.innerHTML = success ? "" : this.tmpl("persistenceError", exception);
   }
 };
