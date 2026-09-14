@@ -23,6 +23,7 @@ app.views.EntryPage = class EntryPage extends app.View {
 
   deactivate() {
     if (super.deactivate(...arguments)) {
+      this.hideTransientNotice();
       this.empty();
       this.entry = null;
     }
@@ -218,20 +219,58 @@ app.views.EntryPage = class EntryPage extends app.View {
     }
   }
 
+  originalLink() {
+    // The attribution is appended last but may be followed by other elements,
+    // so match on the last attribution rather than on its sibling position.
+    const links = this.findAll("._attribution ._attribution-link");
+    return links[links.length - 1];
+  }
+
   onAltC() {
-    const link = this.find("._attribution:last-child ._attribution-link");
+    const link = this.originalLink();
     if (!link) {
+      this.showTransientNotice("noOriginalLink");
       return;
     }
-    console.log(link.href + location.hash);
-    navigator.clipboard.writeText(link.href + location.hash);
+    if (!navigator.clipboard) {
+      this.showTransientNotice("copyFailed");
+      return;
+    }
+    navigator.clipboard.writeText(link.href + location.hash).catch(() => {
+      // The rejection may arrive after the user navigated away. This view is
+      // reused across entries, so only report the failure while the page that
+      // was copied from is still the one on screen.
+      if (this.activated && link.isConnected) {
+        this.showTransientNotice("copyFailed");
+      }
+    });
   }
 
   onAltO() {
-    const link = this.find("._attribution:last-child ._attribution-link");
+    const link = this.originalLink();
     if (!link) {
+      this.showTransientNotice("noOriginalLink");
       return;
     }
     this.delay(() => $.popup(link.href + location.hash));
+  }
+
+  showTransientNotice(type) {
+    this.hideTransientNotice();
+    this.transientNotice = new app.views.Notice(type);
+    // Persistent notices (single doc, disabled doc) share the same bounds and
+    // z-index, so raise this one to keep it visible while it's shown.
+    this.transientNotice.addClass("_notice-transient");
+    this.transientNoticeTimer = this.delay(this.hideTransientNotice, 3000);
+  }
+
+  hideTransientNotice() {
+    if (!this.transientNotice) {
+      return;
+    }
+    clearTimeout(this.transientNoticeTimer);
+    this.transientNotice.deactivate();
+    this.transientNotice = null;
+    this.transientNoticeTimer = null;
   }
 };
