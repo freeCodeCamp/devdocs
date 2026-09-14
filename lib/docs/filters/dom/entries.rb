@@ -220,11 +220,9 @@ module Docs
           return value if name =~ key
         end
 
-        if spec = css('.standard-table').last
-          spec = spec.content
-          TYPE_BY_SPEC.each_pair do |key, value|
-            return value if spec.include?(key)
-          end
+        spec = specification_titles.join(' ')
+        TYPE_BY_SPEC.each_pair do |key, value|
+          return value if spec.include?(key)
         end
 
         links_text = css('a').map(&:content).join
@@ -239,47 +237,14 @@ module Docs
         end
       end
 
-      SKIP_CONTENT = [
-        'not on a standards track',
-        'removed from the Web',
-        'not on a current W3C standards track',
-        'This feature is not built into all browsers',
-        'not currently supported in any browser'
-      ]
-
-      def include_default_entry?
-        return true if type == 'Console'
-        return true unless node = doc.at_css('.overheadIndicator, .blockIndicator')
-        node = node.parent while node.parent != doc
-        return true if node.previous_element.try(:name).in?(%w(h2 h3))
-        content = node.content
-        SKIP_CONTENT.none? { |str| content.include?(str) }
+      # The specifications the page documents, which used to be read off the
+      # table MDN rendered into it.
+      def specification_titles
+        @specification_titles ||= context[:generator].specification_titles(page.browser_compat, page.spec_urls)
       end
 
-      def additional_entries
-        entries = []
-
-        if slug == 'history' || slug == 'XMLHttpRequest'
-          css('dt a[href^="https://developer.mozilla.org"]').each do |node|
-            next if node.parent.at_css('.obsolete') || node.content.include?('moz')
-            name = node.content.sub('History', 'history')
-            id = node.parent['id'] = name.parameterize
-            entries << [name, id]
-          end
-        end
-
-        if slug == 'XMLHttpRequest'
-          css('h2[id="Methods_2"] ~ h3').each do |node|
-            break if node.content == 'Non-standard methods'
-            entries << ["#{name}.#{node.content}", node['id']]
-          end
-        end
-
-        if slug == 'History_API'
-          entries << ['history.pushState()', 'The_pushState()_method']
-        end
-
-        entries
+      def page
+        context[:page]
       end
     end
   end
