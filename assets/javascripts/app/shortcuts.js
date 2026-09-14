@@ -1,5 +1,17 @@
 // @ts-check
 
+/**
+ * A key event whose target is read loosely: the handlers check for form-field
+ * properties that only some elements have.
+ *
+ * @typedef {KeyboardEvent & { target: any }} ShortcutEvent
+ */
+
+/**
+ * Translates key events into shortcut events.
+ *
+ * Handlers return `false` to swallow the event; anything else lets it through.
+ */
 app.Shortcuts = class Shortcuts extends Events {
   constructor() {
     super();
@@ -9,33 +21,40 @@ app.Shortcuts = class Shortcuts extends Events {
     this.start();
   }
 
+  /** Begins listening for key events. */
   start() {
     $.on(document, "keydown", this.onKeydown);
     $.on(document, "keypress", this.onKeypress);
   }
 
+  /** Stops listening for key events. */
   stop() {
     $.off(document, "keydown", this.onKeydown);
     $.off(document, "keypress", this.onKeypress);
   }
 
+  /** @returns {any} Whether the arrow keys scroll rather than move the selection. */
   swapArrowKeysBehavior() {
     return app.settings.get("arrowScroll");
   }
 
+  /** @returns {any} How far space scrolls, as a fraction of the viewport. */
   spaceScroll() {
     return app.settings.get("spaceScroll");
   }
 
+  /** Shows the key-navigation tip, once. */
   showTip() {
     app.showTip("KeyNav");
     return (this.showTip = null);
   }
 
+  /** @returns {any} How long after typing space stops scrolling, in seconds. */
   spaceTimeout() {
     return app.settings.get("spaceTimeout");
   }
 
+  /** @param {ShortcutEvent} event */
   onKeydown(event) {
     if (this.buggyEvent(event)) {
       return;
@@ -61,6 +80,7 @@ app.Shortcuts = class Shortcuts extends Events {
     }
   }
 
+  /** @param {ShortcutEvent} event */
   onKeypress(event) {
     if (
       this.buggyEvent(event) ||
@@ -76,6 +96,11 @@ app.Shortcuts = class Shortcuts extends Events {
     }
   }
 
+  /**
+   * @param {ShortcutEvent} event
+   * @param {boolean} [_force]
+   * @returns {any} `false` to swallow the event; anything else lets it through.
+   */
   handleKeydownEvent(event, _force) {
     if (
       !_force &&
@@ -161,6 +186,12 @@ app.Shortcuts = class Shortcuts extends Events {
     }
   }
 
+  /**
+   * Handles Ctrl/Cmd chords.
+   *
+   * @param {ShortcutEvent} event
+   * @returns {any} `false` to swallow the event; anything else lets it through.
+   */
   handleKeydownSuperEvent(event) {
     switch (event.which) {
       case 13:
@@ -189,6 +220,11 @@ app.Shortcuts = class Shortcuts extends Events {
     }
   }
 
+  /**
+   * @param {ShortcutEvent} event
+   * @param {boolean} [_force]
+   * @returns {any} `false` to swallow the event; anything else lets it through.
+   */
   handleKeydownShiftEvent(event, _force) {
     if (
       !_force &&
@@ -222,6 +258,11 @@ app.Shortcuts = class Shortcuts extends Events {
     }
   }
 
+  /**
+   * @param {ShortcutEvent} event
+   * @param {boolean} [_force]
+   * @returns {any} `false` to swallow the event; anything else lets it through.
+   */
   handleKeydownAltEvent(event, _force) {
     if (
       !_force &&
@@ -275,6 +316,10 @@ app.Shortcuts = class Shortcuts extends Events {
     }
   }
 
+  /**
+   * @param {ShortcutEvent} event
+   * @returns {any} `false` to swallow the event; anything else lets it through.
+   */
   handleKeypressEvent(event) {
     if (event.which === 63 && !event.target.value) {
       this.trigger("help");
@@ -284,6 +329,10 @@ app.Shortcuts = class Shortcuts extends Events {
     }
   }
 
+  /**
+   * @param {ShortcutEvent} event
+   * @returns {boolean} Whether the event is one the browser reports incorrectly.
+   */
   buggyEvent(event) {
     try {
       event.target;

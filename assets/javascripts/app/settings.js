@@ -1,5 +1,11 @@
 // @ts-check
 
+/**
+ * The user's preferences, stored in cookies so that the server can read them.
+ *
+ * `PREFERENCE_KEYS` are the ones the user controls and that a backup carries;
+ * `INTERNAL_KEYS` are the app's own bookkeeping and stay out of backups.
+ */
 app.Settings = class Settings {
   static PREFERENCE_KEYS = [
     "hideDisabled",
@@ -31,6 +37,7 @@ app.Settings = class Settings {
     "_text-justify-hyphenate",
   ];
 
+  /** @type {Record<string, string | number | boolean>} */
   static defaults = {
     count: 0,
     hideDisabled: false,
@@ -57,6 +64,12 @@ app.Settings = class Settings {
     }
   }
 
+  /**
+   * Reads a setting, falling back to its default. Cached after the first read.
+   *
+   * @param {string} key
+   * @returns {any}
+   */
   get(key) {
     let left;
     if (this.cache.hasOwnProperty(key)) {
@@ -73,25 +86,32 @@ app.Settings = class Settings {
     }
   }
 
+  /**
+   * @param {string} key
+   * @param {string | number | boolean} value
+   */
   set(key, value) {
     this.store.set(key, value);
     delete this.cache[key];
     if (key === "theme") {
-      this.setTheme(value);
+      this.setTheme(/** @type {string} */ (value));
     }
   }
 
+  /** @param {string} key */
   del(key) {
     this.store.del(key);
     delete this.cache[key];
   }
 
+  /** @returns {boolean | undefined} Whether the user has ever chosen a set of docs. */
   hasDocs() {
     try {
       return !!this.store.get("docs");
     } catch (error) {}
   }
 
+  /** @returns {string[]} The enabled doc slugs, or the defaults. */
   getDocs() {
     return (
       /** @type {string | undefined} */ (this.store.get("docs"))?.split("/") ||
@@ -99,18 +119,27 @@ app.Settings = class Settings {
     );
   }
 
+  /** @param {string[]} docs */
   setDocs(docs) {
     this.set("docs", docs.join("/"));
   }
 
+  /** @returns {string[]} The tips the user has already been shown. */
   getTips() {
     return /** @type {string | undefined} */ (this.store.get("tips"))?.split("/") || [];
   }
 
+  /** @param {string[]} tips */
   setTips(tips) {
     this.set("tips", tips.join("/"));
   }
 
+  /**
+   * Applies a layout class and remembers it.
+   *
+   * @param {string} name One of `LAYOUTS`.
+   * @param {boolean} enable
+   */
   setLayout(name, enable) {
     this.toggleLayout(name, enable);
 
@@ -134,6 +163,10 @@ app.Settings = class Settings {
     }
   }
 
+  /**
+   * @param {string} name
+   * @returns {boolean}
+   */
   hasLayout(name) {
     const layout = /** @type {string} */ (
       this.store.get("layout") || ""
@@ -141,14 +174,17 @@ app.Settings = class Settings {
     return layout.includes(name);
   }
 
+  /** @param {number} value The sidebar width, in pixels. */
   setSize(value) {
     this.set("size", value);
   }
 
+  /** @returns {Record<string, string>} Every stored setting, unparsed. */
   dump() {
     return this.store.dump();
   }
 
+  /** @returns {Record<string, string>} The user's preferences, without the app's own bookkeeping. */
   export() {
     const data = this.dump();
     for (var key of Settings.INTERNAL_KEYS) {
@@ -157,6 +193,11 @@ app.Settings = class Settings {
     return data;
   }
 
+  /**
+   * Replaces the user's preferences with `data`, dropping any it omits.
+   *
+   * @param {Record<string, any>} data
+   */
   import(data) {
     let key, value;
     const object = this.export();
@@ -174,11 +215,13 @@ app.Settings = class Settings {
     }
   }
 
+  /** Clears every setting. */
   reset() {
     this.store.reset();
     this.cache = {};
   }
 
+  /** Applies the stored theme and layout to the document. Runs before the first paint. */
   initLayout() {
     if (this.get("dark") === 1) {
       this.set("theme", "dark");
@@ -191,6 +234,7 @@ app.Settings = class Settings {
     this.initSidebarWidth();
   }
 
+  /** @param {string} theme `"auto"`, `"dark"` or `"default"`. */
   setTheme(theme) {
     if (theme === "auto") {
       theme = this.darkModeQuery.matches ? "dark" : "default";
@@ -201,6 +245,7 @@ app.Settings = class Settings {
     this.updateColorMeta();
   }
 
+  /** Points the `theme-color` meta at the header colour of the current theme. */
   updateColorMeta() {
     const color = getComputedStyle(document.documentElement)
       .getPropertyValue("--headerBackground")
@@ -208,6 +253,10 @@ app.Settings = class Settings {
     $("meta[name=theme-color]").setAttribute("content", color);
   }
 
+  /**
+   * @param {string} layout
+   * @param {boolean} enable
+   */
   toggleLayout(layout, enable) {
     const { classList } = document.body;
     // sidebar is always shown for settings; its state is updated in app.views.Settings
@@ -217,6 +266,7 @@ app.Settings = class Settings {
     classList.toggle("_overlay-scrollbars", $.overlayScrollbarsEnabled());
   }
 
+  /** Applies the stored sidebar width. */
   initSidebarWidth() {
     const size = this.get("size");
     if (size) {

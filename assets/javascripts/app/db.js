@@ -1,5 +1,36 @@
 // @ts-check
 
+/**
+ * An IndexedDB event, whose target is the request or transaction that raised
+ * it. lib.dom types `Event#target` as a bare `EventTarget`.
+ *
+ * @typedef {Event & { target: any }} IDBEvent
+ */
+
+/**
+ * How a transaction is opened.
+ *
+ * @typedef {object} DBTransactionOptions
+ * @property {string | string[]} stores
+ * @property {IDBTransactionMode} mode
+ * @property {boolean} [ignoreError] Set to `false` to let errors surface.
+ * @property {boolean} [ignoreAbort] Set to `false` to let aborts surface.
+ */
+
+/**
+ * The offline store: the docs' pages, kept in IndexedDB.
+ *
+ * The database is opened for the length of one batch of work and closed again,
+ * so every operation goes through `db`, which queues its callback and hands it
+ * the open database. When IndexedDB can't be used at all — private mode, a
+ * buggy implementation, an exceeded quota — `useIndexedDB` is turned off and
+ * every callback is run with no database, which makes the callers fall back to
+ * the network.
+ *
+ * The version number packs the schema version and the user's own version
+ * together, so that a doc being installed can force an upgrade without
+ * colliding with a schema change.
+ */
 app.DB = class DB {
   static NAME = "docs";
   static VERSION = 15;
@@ -11,6 +42,12 @@ app.DB = class DB {
     this.callbacks = [];
   }
 
+  /**
+   * Opens the database and runs `fn` with it, or with nothing when IndexedDB
+   * is unavailable. Callbacks queued while an open is in flight share it.
+   *
+   * @param {(db?: IDBDatabase) => void} [fn]
+   */
   db(fn) {
     if (!this.useIndexedDB) {
       return fn();
@@ -36,9 +73,15 @@ app.DB = class DB {
     }
   }
 
+  /**
+   * Runs the queued callbacks, unless the database turns out to be empty or
+   * buggy.
+   *
+   * @param {IDBEvent} event
+   */
   onOpenSuccess(event) {
     let error;
-    const db = event.target.result;
+    const db = /** @type {IDBEvent} */ (event).target.result;
 
     if (db.objectStoreNames.length === 0) {
       try {
@@ -59,10 +102,11 @@ app.DB = class DB {
     }
   }
 
+  /** @param {IDBEvent} event */
   onOpenError(event) {
     event.preventDefault();
     this.open = false;
-    const { error } = event.target;
+    const { error } = /** @type {IDBEvent} */ (event).target;
 
     switch (error.name) {
       case "QuotaExceededError":
@@ -79,6 +123,12 @@ app.DB = class DB {
     }
   }
 
+  /**
+   * Turns IndexedDB off for the rest of the session and drains the queue.
+   *
+   * @param {string} reason
+   * @param {any} [error]
+   */
   fail(reason, error) {
     this.cachedDocs = null;
     /** @type {any} */ (this).useIndexedDB = false;
@@ -102,6 +152,7 @@ app.DB = class DB {
     }
   }
 
+  /** Drops the database and tells the app, so it can warn the user. */
   onQuotaExceededError() {
     this.reset();
     this.db();
@@ -109,6 +160,7 @@ app.DB = class DB {
     Raven.captureMessage("QuotaExceededError", { level: "warning" });
   }
 
+  /** Reopens at the stored version, to tell a schema bump from a user one. */
   onVersionError() {
     const req = indexedDB.open(DB.NAME);
     req.onsuccess = (event) => {
@@ -122,6 +174,9 @@ app.DB = class DB {
     };
   }
 
+  /**
+   * @param {number} actualVersion The version the stored database is at.
+   */
   handleVersionMismatch(actualVersion) {
     if (Math.floor(actualVersion / this.versionMultipler) !== DB.VERSION) {
       this.fail("version");
@@ -131,6 +186,10 @@ app.DB = class DB {
     }
   }
 
+  /**
+   * @param {IDBDatabase} db
+   * @returns {any} The error a known-broken implementation throws, if any.
+   */
   buggyIDB(db) {
     if (this.checkedBuggyIDB) {
       return;
@@ -147,6 +206,9 @@ app.DB = class DB {
     }
   }
 
+  /**
+   * @param {IDBDatabase} [db] Omitted when the database couldn't be opened.
+   */
   runCallbacks(db) {
     let fn;
     while ((fn = this.callbacks.shift())) {
@@ -154,8 +216,13 @@ app.DB = class DB {
     }
   }
 
+  /**
+   * Creates an object store per enabled doc.
+   *
+   * @param {IDBVersionChangeEvent} event
+   */
   onUpgradeNeeded(event) {
-    const db = event.target.result;
+    const db = /** @type {IDBEvent} */ (event).target.result;
     if (!db) {
       return;
     }
@@ -183,6 +250,16 @@ app.DB = class DB {
     }
   }
 
+  /**
+   * Replaces the doc's stored pages. Whatever was there before is cleared.
+   *
+   * @param {any} doc
+   * @param {Record<string, string>} data The doc's pages, by path.
+   * @param {number} mtime
+   * @param {() => void} onSuccess
+   * @param {(error?: any) => void} onError
+   * @param {boolean} [_retry] Internal: whether a failure may bump the schema and try again.
+   */
   store(doc, data, mtime, onSuccess, onError, _retry) {
     if (_retry == null) {
       _retry = true;
@@ -246,6 +323,14 @@ app.DB = class DB {
     });
   }
 
+  /**
+   * Removes the doc's pages.
+   *
+   * @param {any} doc
+   * @param {() => void} onSuccess
+   * @param {(error?: any) => void} onError
+   * @param {boolean} [_retry] Internal: whether a failure may bump the schema and try again.
+   */
   unstore(doc, onSuccess, onError, _retry) {
     if (_retry == null) {
       _retry = true;
@@ -267,7 +352,7 @@ app.DB = class DB {
         }
         onSuccess();
       };
-      txn.onerror = function (event) {
+      txn.onerror = (event) => {
         event.preventDefault();
         if (txn.error?.name === "NotFoundError" && _retry) {
           this.migrate();
@@ -290,6 +375,12 @@ app.DB = class DB {
   // Reads back everything that store() wrote for a doc: its pages and the
   // mtime it was installed with. Calls back with null when the doc isn't
   // installed or can't be read.
+  /**
+   * Reads the doc's stored pages, for a backup.
+   *
+   * @param {any} doc
+   * @param {(result: { mtime: number, data: any } | null) => void} callback
+   */
   dump(doc, callback) {
     this.db((db) => {
       if (!db || !db.objectStoreNames.contains(doc.slug)) {
@@ -318,12 +409,12 @@ app.DB = class DB {
       };
 
       txn.objectStore("docs").get(doc.slug).onsuccess = (event) => {
-        mtime = event.target.result;
+        mtime = /** @type {IDBEvent} */ (event).target.result;
       };
 
       const req = txn.objectStore(doc.slug).openCursor();
       req.onsuccess = (event) => {
-        const cursor = event.target.result;
+        const cursor = /** @type {IDBEvent} */ (event).target.result;
         if (!cursor) {
           return;
         }
@@ -333,6 +424,10 @@ app.DB = class DB {
     });
   }
 
+  /**
+   * @param {any} doc
+   * @param {(version: number | false) => void} fn The stored `mtime`, or `false` when it isn't installed.
+   */
   version(doc, fn) {
     const version = this.cachedVersion(doc);
     if (version != null) {
@@ -363,6 +458,10 @@ app.DB = class DB {
     });
   }
 
+  /**
+   * @param {any} doc
+   * @returns {number | false | undefined} `undefined` when the cache isn't loaded yet.
+   */
   cachedVersion(doc) {
     if (!this.cachedDocs) {
       return;
@@ -370,6 +469,10 @@ app.DB = class DB {
     return this.cachedDocs[doc.slug] || false;
   }
 
+  /**
+   * @param {any[]} docs
+   * @param {(versions: Record<string, number | false> | false) => void} fn
+   */
   versions(docs, fn) {
     const versions = this.cachedVersions(docs);
     if (versions) {
@@ -406,6 +509,10 @@ app.DB = class DB {
     });
   }
 
+  /**
+   * @param {any[]} docs
+   * @returns {Record<string, any> | undefined} `undefined` when the cache isn't loaded yet.
+   */
   cachedVersions(docs) {
     if (!this.cachedDocs) {
       return;
@@ -417,6 +524,14 @@ app.DB = class DB {
     return result;
   }
 
+  /**
+   * Reads an entry's page, from the offline store when it is there and from
+   * the network otherwise.
+   *
+   * @param {any} entry
+   * @param {(html: string) => void} onSuccess
+   * @param {() => void} onError
+   */
   load(entry, onSuccess, onError) {
     if (this.shouldLoadWithIDB(entry)) {
       return this.loadWithIDB(entry, onSuccess, () =>
@@ -427,6 +542,11 @@ app.DB = class DB {
     }
   }
 
+  /**
+   * @param {any} entry
+   * @param {(html: string) => void} onSuccess
+   * @param {() => void} onError
+   */
   loadWithXHR(entry, onSuccess, onError) {
     return ajax({
       url: entry.fileUrl(),
@@ -436,6 +556,11 @@ app.DB = class DB {
     });
   }
 
+  /**
+   * @param {any} entry
+   * @param {(html: string) => void} onSuccess
+   * @param {() => void} onError Called when the page isn't stored, so the caller can fall back.
+   */
   loadWithIDB(entry, onSuccess, onError) {
     return this.db((db) => {
       if (!db) {
@@ -471,6 +596,11 @@ app.DB = class DB {
     });
   }
 
+  /**
+   * Reads every doc's stored `mtime` into memory, once per session.
+   *
+   * @param {IDBDatabase} db
+   */
   loadDocsCache(db) {
     if (this.cachedDocs) {
       return;
@@ -487,7 +617,7 @@ app.DB = class DB {
 
     const req = txn.objectStore("docs").openCursor();
     req.onsuccess = (event) => {
-      const cursor = event.target.result;
+      const cursor = /** @type {IDBEvent} */ (event).target.result;
       if (!cursor) {
         return;
       }
@@ -499,6 +629,7 @@ app.DB = class DB {
     };
   }
 
+  /** Looks for docs whose store is missing its index page, and drops them. */
   checkForCorruptedDocs() {
     this.db((db) => {
       let slug;
@@ -545,14 +676,15 @@ app.DB = class DB {
 
       for (var doc of docs) {
         txn.objectStore(doc).get("index").onsuccess = (event) => {
-          if (!event.target.result) {
-            this.corruptedDocs.push(event.target.source.name);
+          if (!/** @type {IDBEvent} */ (event).target.result) {
+            this.corruptedDocs.push(/** @type {IDBEvent} */ (event).target.source.name);
           }
         };
       }
     });
   }
 
+  /** Forgets the docs `checkForCorruptedDocs` found. */
   deleteCorruptedDocs() {
     this.db((db) => {
       let doc;
@@ -573,12 +705,21 @@ app.DB = class DB {
     });
   }
 
+  /**
+   * @param {any} entry
+   * @returns {boolean} Whether the entry's doc is installed.
+   */
   shouldLoadWithIDB(entry) {
     return (
       this.useIndexedDB && (!this.cachedDocs || this.cachedDocs[entry.doc.slug])
     );
   }
 
+  /**
+   * @param {IDBDatabase} db
+   * @param {DBTransactionOptions} options
+   * @returns {IDBTransaction}
+   */
   idbTransaction(db, options) {
     app.lastIDBTransaction = [options.stores, options.mode];
     const txn = db.transaction(options.stores, options.mode);
@@ -595,12 +736,17 @@ app.DB = class DB {
     return txn;
   }
 
+  /** Deletes the whole database. */
   reset() {
     try {
       indexedDB?.deleteDatabase(DB.NAME);
     } catch (error) {}
   }
 
+  /**
+   * @returns {boolean} Whether IndexedDB can be used at all. Replaced by its
+   *   own result in the constructor.
+   */
   useIndexedDB() {
     try {
       if (!app.isSingleDoc() && window.indexedDB) {
@@ -614,14 +760,17 @@ app.DB = class DB {
     }
   }
 
+  /** Bumps the user's schema version, forcing the next open to upgrade. */
   migrate() {
     app.settings.set("schema", this.userVersion() + 1);
   }
 
+  /** @param {number} version */
   setUserVersion(version) {
     app.settings.set("schema", version);
   }
 
+  /** @returns {number} */
   userVersion() {
     return app.settings.get("schema");
   }

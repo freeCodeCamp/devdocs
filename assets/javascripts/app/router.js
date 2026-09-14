@@ -1,5 +1,12 @@
 // @ts-check
 
+/**
+ * Maps paths to route events.
+ *
+ * Each entry in `routes` names a method, which is registered with `page` in
+ * order. A handler either triggers its route event and returns nothing, or
+ * returns a path to redirect to, or calls `next` to fall through.
+ */
 app.Router = class Router extends Events {
   static routes = [
     ["*", "before"],
@@ -23,19 +30,31 @@ app.Router = class Router extends Events {
     this.setInitialPath();
   }
 
+  /** Begins routing, dispatching the current path. */
   start() {
     page.start();
   }
 
+  /** @param {string} path */
   show(path) {
     page.show(path);
   }
 
+  /**
+   * Emits the route's event, then `after`.
+   *
+   * @param {string} name
+   */
   triggerRoute(name) {
     this.trigger(name, this.context);
     this.trigger("after", name, this.context);
   }
 
+  /**
+   * @param {any} context
+   * @param {() => any} next
+   * @returns {any} A path to redirect to, or nothing when the route handled it.
+   */
   before(context, next) {
     const previousContext = this.context;
     this.context = context;
@@ -50,6 +69,11 @@ app.Router = class Router extends Events {
     }
   }
 
+  /**
+   * @param {any} context
+   * @param {() => any} next
+   * @returns {any} A path to redirect to, or nothing when the route handled it.
+   */
   doc(context, next) {
     let doc;
     if (
@@ -66,6 +90,11 @@ app.Router = class Router extends Events {
     }
   }
 
+  /**
+   * @param {any} context
+   * @param {() => any} next
+   * @returns {any} A path to redirect to, or nothing when the route handled it.
+   */
   type(context, next) {
     const doc = app.docs.findBySlug(context.params.doc);
     const type = doc?.types?.findBy("slug", context.params.type);
@@ -80,6 +109,11 @@ app.Router = class Router extends Events {
     }
   }
 
+  /**
+   * @param {any} context
+   * @param {() => any} next
+   * @returns {any} A path to redirect to, or nothing when the route handled it.
+   */
   entry(context, next) {
     const doc = app.docs.findBySlug(context.params.doc);
     if (!doc) {
@@ -111,6 +145,7 @@ app.Router = class Router extends Events {
     return next();
   }
 
+  /** @returns {string | undefined} */
   root() {
     if (app.isSingleDoc()) {
       return "/";
@@ -118,6 +153,10 @@ app.Router = class Router extends Events {
     this.triggerRoute("root");
   }
 
+  /**
+   * @param {any} context
+   * @returns {string | undefined} A redirect to the hash form when in single-doc mode.
+   */
   settings(context) {
     if (app.isSingleDoc()) {
       return `/#/${context.path}`;
@@ -125,6 +164,10 @@ app.Router = class Router extends Events {
     this.triggerRoute("settings");
   }
 
+  /**
+   * @param {any} context
+   * @returns {string | undefined} A redirect to the hash form when in single-doc mode.
+   */
   offline(context) {
     if (app.isSingleDoc()) {
       return `/#/${context.path}`;
@@ -132,6 +175,10 @@ app.Router = class Router extends Events {
     this.triggerRoute("offline");
   }
 
+  /**
+   * @param {any} context
+   * @returns {string | undefined} A redirect to the hash form when in single-doc mode.
+   */
   about(context) {
     if (app.isSingleDoc()) {
       return `/#/${context.path}`;
@@ -140,6 +187,10 @@ app.Router = class Router extends Events {
     this.triggerRoute("page");
   }
 
+  /**
+   * @param {any} context
+   * @returns {string | undefined} A redirect to the hash form when in single-doc mode.
+   */
   news(context) {
     if (app.isSingleDoc()) {
       return `/#/${context.path}`;
@@ -148,6 +199,10 @@ app.Router = class Router extends Events {
     this.triggerRoute("page");
   }
 
+  /**
+   * @param {any} context
+   * @returns {string | undefined} A redirect to the hash form when in single-doc mode.
+   */
   help(context) {
     if (app.isSingleDoc()) {
       return `/#/${context.path}`;
@@ -156,10 +211,12 @@ app.Router = class Router extends Events {
     this.triggerRoute("page");
   }
 
+  /** @param {any} context */
   notFound(context) {
     this.triggerRoute("notFound");
   }
 
+  /** @returns {boolean} Whether the current page is the doc or app index. */
   isIndex() {
     return (
       this.context?.path === "/" ||
@@ -167,10 +224,15 @@ app.Router = class Router extends Events {
     );
   }
 
+  /** @returns {boolean} */
   isSettings() {
     return this.context?.path === "/settings";
   }
 
+  /**
+   * Normalizes the path the document was loaded with, and follows the
+   * `#/path` form that single-doc mode redirects through.
+   */
   setInitialPath() {
     // Remove superfluous forward slashes at the beginning of the path
     let path = location.pathname.replace(/^\/{2,}/g, "/");
@@ -185,12 +247,18 @@ app.Router = class Router extends Events {
     }
   }
 
+  /** @returns {string | undefined} The path encoded in the hash, if there is one. */
   getInitialPathFromHash() {
     try {
       return new RegExp("#/(.+)").exec(decodeURIComponent(location.hash))?.[1];
     } catch (error) {}
   }
 
+  /**
+   * Replaces the hash without dispatching a route.
+   *
+   * @param {string} [hash] Including the leading `#`.
+   */
   replaceHash(hash) {
     page.replace(
       location.pathname + location.search + (hash || ""),
