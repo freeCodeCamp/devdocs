@@ -3,7 +3,6 @@ module Mcp
   # string keys) to the appropriate MCP handler and returns a response Hash
   # ready to be serialized back to the client.
   module Server
-    DB_CACHE = {}
     TOOLS = [
       {
         'name' => 'devdocs_list_docsets',
@@ -195,25 +194,28 @@ module Mcp
 
     def self.get_page(app_settings, slug, path)
       validate_slug(app_settings, slug)
-      db = load_db(app_settings, slug)
-      # Entries that share a page carry a #fragment, but db.json is keyed by the
-      # page path alone (mirrors Entry#dbPath in the client).
-      html = db[path.sub(/#.*/, '')]
-      raise "Page not found: #{path}" unless html
-      html_to_text(html)
+      html_to_text(File.read(page_path(app_settings, slug, path)))
     end
 
-    def self.load_db(app_settings, slug)
-      cache_key = "#{app_settings.docs_path}:#{slug}"
-      return DB_CACHE[cache_key] if DB_CACHE.key?(cache_key)
-
-      db_path = File.join(app_settings.docs_path, slug, 'db.json')
-      unless File.exist?(db_path)
-        raise "Page database not available for #{slug}. Full content is served from the CDN."
+    # Resolves an entry path to the file its page is stored in, the same way the
+    # client does (Entry#_filePath): entries sharing a page carry a #fragment,
+    # and the path leaves out the .html extension. Reading the page beats
+    # looking it up in db.json, which would mean parsing up to 100MB of JSON.
+    def self.page_path(app_settings, slug, path)
+      docset_path = File.expand_path(File.join(app_settings.docs_path, slug))
+      unless Dir.exist?(docset_path)
+        raise "Pages not available for #{slug}. They are served from the CDN."
       end
 
-      DB_CACHE[cache_key] = JSON.parse(File.read(db_path))
-      DB_CACHE[cache_key]
+      file = path.sub(/#.*/, '')
+      file += '.html' unless file.end_with?('.html')
+      file_path = File.expand_path(File.join(docset_path, file))
+
+      # The path comes from the caller, so keep it inside the docset.
+      unless file_path.start_with?(docset_path + File::SEPARATOR) && File.file?(file_path)
+        raise "Page not found: #{path}"
+      end
+      file_path
     end
 
     def self.html_to_text(html)

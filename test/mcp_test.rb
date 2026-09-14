@@ -223,11 +223,18 @@ class McpTest < Minitest::Spec
       end
     end
 
-    it 'returns error for missing page database in devdocs_get_page' do
+    it 'returns error for a docset whose pages are not downloaded' do
       args = { 'slug' => 'css', 'path' => '/test' }
       response = rpc('tools/call', { 'name' => 'devdocs_get_page', 'arguments' => args })
       assert_equal(-32603, response['error']['code'])
-      assert_includes response['error']['message'].downcase, 'database'
+      assert_includes response['error']['message'].downcase, 'not available'
+    end
+
+    it 'returns error for a page path escaping the docset' do
+      args = { 'slug' => 'mcp_fixture', 'path' => '../../../etc/passwd' }
+      response = rpc('tools/call', { 'name' => 'devdocs_get_page', 'arguments' => args })
+      assert_equal(-32603, response['error']['code'])
+      assert_includes response['error']['message'], 'Page not found'
     end
 
     it 'returns error for missing required arguments' do
