@@ -279,10 +279,12 @@ class Context {
     this.state.path = this.path;
   }
 
+  /** Adds a history entry for this context. */
   pushState() {
     history.pushState(this.state, "", this.path);
   }
 
+  /** Replaces the current history entry with this context. */
   replaceState() {
     try {
       history.replaceState(this.state, "", this.path);

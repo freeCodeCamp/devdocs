@@ -226,6 +226,7 @@ class App extends Events {
     delete this.DOC;
   }
 
+  /** Boots with every doc in the manifest, enabled or not. */
   async bootAll() {
     const docs = this.settings.getDocs();
     for (var doc of this.DOCS) {
@@ -307,8 +308,10 @@ class App extends Events {
     }
   }
 
-  // With the "latest version" preference enabled, replace the enabled docs for
-  // which a newer version is available with that version.
+  /**
+   * With the "latest version" preference enabled, replace the enabled docs for
+   * which a newer version is available with that version.
+   */
   async migrateToLatestVersions() {
     if (!this.settings.get("autoLatestVersion")) {
       return;
@@ -354,9 +357,14 @@ class App extends Events {
     }
   }
 
-  // Saving drops the offline data of the docs that are disabled, so the index
-  // of their latest version has to load before they are replaced. Loads no
-  // more docs at once than Docs#load does.
+  /**
+   * Saving drops the offline data of the docs that are disabled, so the index
+   * of their latest version has to load before they are replaced. Loads no
+   * more docs at once than Docs#load does.
+   *
+   * @param {any[]} docs
+   * @returns {Promise<Set<any>>} The docs whose index loaded.
+   */
   async loadLatestVersions(docs) {
     const loaded = new Set();
     let i = 0;
