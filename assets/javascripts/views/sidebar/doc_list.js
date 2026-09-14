@@ -175,7 +175,7 @@ class DocList extends app.View {
     }
   }
 
-  /** @param {Doc | Entry} model The entry to mark as being read. */
+  /** @param {Doc | Entry | Type} model The model to mark as being read. */
   select(model) {
     this.listSelect.selectByHref(model?.fullPath());
   }

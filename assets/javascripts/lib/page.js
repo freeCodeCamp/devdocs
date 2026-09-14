@@ -17,6 +17,13 @@
  */
 
 /**
+ * A route's captured parameters: an array of the positional captures, which
+ * also carries the named ones as string keys.
+ *
+ * @typedef {string[] & Record<string, string>} RouteParams
+ */
+
+/**
  * A named capture in a route pattern.
  *
  * @typedef {object} RouteKey
@@ -56,7 +63,7 @@
  * @property {() => void} stop
  * @property {(path: string, state?: PageState) => Context | undefined} show Navigates, pushing a history entry.
  * @property {(path: string, state?: PageState, skipDispatch?: boolean, init?: boolean) => Context} replace Navigates, replacing the current history entry.
- * @property {(context: Context) => any} dispatch Runs the context through the registered routes.
+ * @property {(context: Context) => string | undefined} dispatch Runs the context through the registered routes, returning a redirect.
  * @property {() => boolean} canGoBack
  * @property {() => boolean} canGoForward
  * @property {(fn: () => void) => void} track Registers an analytics callback, run on every navigation once consent is given.
@@ -100,8 +107,8 @@ page.start = function (options) {
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
-    addEventListener("popstate", onpopstate);
-    addEventListener("click", onclick);
+    addEventListener("popstate", onHistoryPopState);
+    addEventListener("click", onDocumentClick);
     page.replace(currentPath(), null, null, true);
   }
 };
@@ -109,8 +116,8 @@ page.start = function (options) {
 page.stop = function () {
   if (running) {
     running = false;
-    removeEventListener("click", onclick);
-    removeEventListener("popstate", onpopstate);
+    removeEventListener("click", onDocumentClick);
+    removeEventListener("popstate", onHistoryPopState);
   }
 };
 
@@ -159,7 +166,7 @@ page.dispatch = function (context) {
   let i = 0;
   const next = function () {
     let fn = callbacks[i++];
-    return fn?.(context, next);
+    return /** @type {string | undefined} */ (fn?.(context, next));
   };
   return next();
 };
@@ -238,24 +245,21 @@ class Context {
    * The route's captured parameters, by name for named ones and by position
    * for the rest. Set by `Route#middleware` when the route matches.
    *
-   * An array that also carries the named captures as string keys, so it is
-   * left untyped.
-   *
-   * @type {any}
+   * @type {RouteParams}
    */
   params;
 
   /**
    * The models the route resolved the path to, set by app/router.js.
    *
-   * @type {any}
+   * @type {Doc}
    */
   doc;
 
-  /** @type {any} */
+  /** @type {Entry} */
   entry;
 
-  /** @type {any} */
+  /** @type {Type} */
   type;
 
   /** The static page the route resolved to, if any. @type {string | undefined} */
@@ -336,8 +340,7 @@ class Route {
   middleware(fn) {
     return (context, next) => {
       // Named captures are set as string keys alongside the positional ones.
-      /** @type {unknown} */
-      let params = [];
+      const params = /** @type {RouteParams} */ (/** @type {unknown} */ ([]));
       if (this.match(context.pathname, params)) {
         context.params = params;
         return fn(context, next);
@@ -349,7 +352,7 @@ class Route {
 
   /**
    * @param {string} path
-   * @param {any} params Filled in with the captured parameters.
+   * @param {RouteParams} params Filled in with the captured parameters.
    * @returns {boolean | undefined} `undefined` when the route doesn't match.
    */
   match(path, params) {
@@ -422,8 +425,8 @@ var pathToRegexp = function (path, keys) {
   return new RegExp(`^${path}$`);
 };
 
-/** @type {(this: Window, ev: PopStateEvent) => any} */
-var onpopstate = function (event) {
+/** @param {PopStateEvent} event */
+var onHistoryPopState = function (event) {
   if (!event.state || Context.isInitialPopState(event.state)) {
     return;
   }
@@ -435,8 +438,8 @@ var onpopstate = function (event) {
   }
 };
 
-/** @type {(this: Window, ev: PointerEvent) => any} */
-var onclick = function (event) {
+/** @param {MouseEvent} event */
+var onDocumentClick = function (event) {
   try {
     if (
       event.which !== 1 ||
@@ -488,7 +491,9 @@ var isSameOrigin = (url) =>
 /** Points the canonical link at the current path. */
 var updateCanonicalLink = function () {
   // Cached on the global, which is what `this` is in the concatenated bundle.
-  const self = /** @type {any} */ (this);
+  const self = /** @type {{ canonicalLink?: HTMLLinkElement }} */ (
+    /** @type {unknown} */ (this)
+  );
   if (!self.canonicalLink) {
     self.canonicalLink = document.head.querySelector('link[rel="canonical"]');
   }

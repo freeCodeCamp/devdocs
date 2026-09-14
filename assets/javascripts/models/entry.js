@@ -97,6 +97,8 @@ class Entry extends Model {
    *
    * @param {(html: string) => void} onSuccess
    * @param {() => void} onError
+   * @returns {{ abort: () => void } | undefined} The pending request, when it
+   *   went to the network.
    */
   loadFile(onSuccess, onError) {
     return app.db.load(this, onSuccess, onError);

@@ -174,6 +174,13 @@ class EntryPage extends app.View {
     }
   }
 
+  /**
+   * Fetches the entry's page, from the offline database or the network.
+   *
+   * @type {{ abort: () => void } | null}
+   */
+  xhr;
+
   /** Fetches the entry's page, from the offline database or the network. */
   load() {
     this.loading();

@@ -539,21 +539,24 @@ class DB {
    * @param {Entry} entry
    * @param {(html: string) => void} onSuccess
    * @param {() => void} onError
+   * @returns {{ abort: () => void } | undefined} The pending request, when it
+   *   went to the network.
    */
   load(entry, onSuccess, onError) {
     if (this.shouldLoadWithIDB(entry)) {
-      return this.loadWithIDB(entry, onSuccess, () =>
-        this.loadWithXHR(entry, onSuccess, onError)
+      this.loadWithIDB(entry, onSuccess, () =>
+        this.loadWithXHR(entry, onSuccess, onError),
       );
-    } else {
-      return this.loadWithXHR(entry, onSuccess, onError);
+      return;
     }
+    return this.loadWithXHR(entry, onSuccess, onError);
   }
 
   /**
    * @param {Entry} entry
    * @param {(html: string) => void} onSuccess
    * @param {() => void} onError
+   * @returns {{ abort: () => void }}
    */
   loadWithXHR(entry, onSuccess, onError) {
     return ajax({

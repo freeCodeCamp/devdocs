@@ -28,8 +28,9 @@ const MIME_TYPES = {
  * A small XMLHttpRequest wrapper.
  *
  * @param {AjaxOptions} options Merged over `ajax.defaults`. Mutated in place.
- * @returns {{ abort: () => void } | unknown} A handle to abort the request when
- *   `async`, otherwise the parsed response.
+ * @returns {{ abort: () => void }} A handle to abort the request. A
+ *   synchronous request returns the parsed response instead, but nothing asks
+ *   for one.
  */
 function ajax(options) {
   applyDefaults(options);
@@ -47,7 +48,7 @@ function ajax(options) {
   if (options.async) {
     return { abort: abort.bind(undefined, xhr) };
   } else {
-    return parseResponse(xhr, options);
+    return /** @type {{ abort: () => void }} */ (parseResponse(xhr, options));
   }
 
   /** @param {AjaxOptions} options */
