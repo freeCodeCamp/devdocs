@@ -1,5 +1,5 @@
 module Docs
-  class Haskell < UrlScraper
+  class Haskell < FileScraper
     self.name = 'Haskell'
     self.type = 'haskell'
     self.root_path = 'users_guide/index.html'
@@ -59,9 +59,41 @@ module Docs
     end
 
     version '9' do
-      self.release = '9.12.1'
+      self.release = '9.14.1'
       self.base_url = "https://downloads.haskell.org/~ghc/#{release}/docs/"
       options[:container] = ->(filter) {filter.subpath.start_with?('users_guide') ? '.document' : '#content'}
+
+      private
+
+      # GHC doesn't publish the documentation on its own. The HTML tree served
+      # under docs/ also ships inside every binary distribution, under doc/html,
+      # so download one of them and extract that directory alone. Note that the
+      # library directories are named after a per-build hash, so the paths here
+      # differ from the ones of the documentation served under docs/.
+      def download_source
+        require 'unix_utils'
+
+        release = self.class.release
+        url = "https://downloads.haskell.org/~ghc/#{release}/ghc-#{release}-x86_64-alpine3_22-linux.tar.xz"
+        # The directory inside the tarball uses a different triple than its name.
+        directory = "ghc-#{release}-x86_64-unknown-linux/doc/html"
+
+        instrument 'info.doc', msg: %(Downloading #{url}...)
+        archive = UnixUtils.curl(url)
+
+        instrument 'info.doc', msg: %(Extracting the documentation files to "#{source_directory}"...)
+        FileUtils.mkpath(source_directory)
+
+        # Extract the documentation directory alone: unpacking the whole
+        # distribution through download_and_extract would waste a few gigabytes,
+        # and it doesn't know about xz to begin with.
+        unless system('tar', '-xJf', archive, '-C', source_directory, '--strip-components=3', directory)
+          FileUtils.rm_rf(source_directory)
+          raise SetupError, %(Failed to extract "#{directory}" from "#{url}".)
+        end
+      ensure
+        FileUtils.rm_f(archive) if archive
+      end
     end
 
     version '8' do
