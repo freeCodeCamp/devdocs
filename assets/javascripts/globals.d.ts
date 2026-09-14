@@ -159,15 +159,102 @@ interface Type {
 }
 
 /**
- * The `elements` static maps a property name to a selector, and the base
- * class resolves them onto the instance from inside its own constructor —
- * before a subclass's field initializers would run, so they can't be declared
- * as fields without being blanked out again. Views also reach into each
- * other's properties. Declared members still take precedence, so the base
- * class's own methods stay checked.
+ * The properties the `elements` static injects.
+ *
+ * The base class resolves those selectors onto the instance from inside its
+ * own constructor, before a subclass's field initializers would run, so they
+ * can't be declared as fields without being blanked out again. These
+ * interfaces merge them into the classes instead.
+ *
+ * Merging suppresses the inference of `this.x = ...`, so each view's own
+ * properties are declared here too.
  */
-interface View {
-  [property: string]: any;
+
+/**
+ * The two base views whose subclasses supply a hook the base calls. Declaring
+ * the hook here is what lets the base reference it.
+ */
+interface PaginatedList {
+  /** Implemented by the subclass: renders one page of rows. */
+  render(data: unknown[]): string;
+  data: unknown[];
+  page: number;
+}
+
+interface BasePage {
+  /** Implemented by the subclass, when it has anything to do after rendering. */
+  afterRender?(): void;
+  entry: Entry;
+  highlightNodes: HTMLElement[];
+  nodesPerFrame: number;
+  previousTiming: number | null;
+}
+
+interface Mobile {
+  /** From `elements`. */
+  body: HTMLElement;
+  /** From `elements`. */
+  content: HTMLElement;
+  /** From `elements`. */
+  sidebar: HTMLElement;
+  /** From `elements`. */
+  docPicker: HTMLElement;
+
+  back: HTMLElement;
+  forward: HTMLElement;
+  toggleSidebar: HTMLElement;
+  docPickerTab: HTMLElement;
+  settingsTab: HTMLElement;
+  contentTop: number;
+  sidebarTop: number;
+}
+
+interface SettingsView {
+  /** From `elements`. */
+  sidebar: HTMLElement;
+  /** From `elements`. */
+  saveBtn: HTMLElement;
+  /** From `elements`. */
+  backBtn: HTMLElement;
+
+  docPicker: DocPicker;
+  saving?: boolean;
+}
+
+interface Search {
+  /** From `elements`. */
+  input: HTMLInputElement;
+  /** From `elements`. */
+  resetLink: HTMLElement;
+
+  scope: SearchScope;
+  searcher: Searcher;
+  value: string;
+  hasResults: boolean | null;
+  flags: { urlSearch?: boolean, initialResults?: boolean };
+}
+
+interface SearchScope {
+  /** From `elements`. */
+  input: HTMLInputElement;
+  /** From `elements`. */
+  tag: HTMLElement;
+
+  doc: Doc | null;
+  placeholder: string;
+  searcher: SynchronousSearcher;
+}
+
+interface DocList {
+  /** From `elements`. */
+  disabledTitle: HTMLElement;
+  /** From `elements`. */
+  disabledList: HTMLElement;
+
+  lists: Record<string, TypeList | EntryList>;
+  listFocus: ListFocus;
+  listFold: ListFold;
+  listSelect: ListSelect;
 }
 
 // --- Analytics, loaded at runtime by tracking.js ---

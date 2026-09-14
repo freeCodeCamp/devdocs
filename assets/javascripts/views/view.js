@@ -126,7 +126,7 @@ class View extends Events {
     if (statics.elements) {
       for (var name in statics.elements) {
         var selector = statics.elements[name];
-        /** @type {Record<string, unknown>} */ (this)[name] = this.find(selector);
+        elementSlots(this)[name] = this.find(selector);
       }
     }
   }
@@ -332,24 +332,24 @@ class View extends Events {
     if (statics.events) {
       for (name in statics.events) {
         method = statics.events[name];
-        /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method] = /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method].bind(this);
-        this.onDOM(name, /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method]);
+        handlerSlots(this)[method] = handlerSlots(this)[method].bind(this);
+        this.onDOM(name, handlerSlots(this)[method]);
       }
     }
 
     if (statics.routes) {
       for (name in statics.routes) {
         method = statics.routes[name];
-        /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method] = /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method].bind(this);
-        app.router.on(name, /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method]);
+        handlerSlots(this)[method] = handlerSlots(this)[method].bind(this);
+        app.router.on(name, handlerSlots(this)[method]);
       }
     }
 
     if (statics.shortcuts) {
       for (name in statics.shortcuts) {
         method = statics.shortcuts[name];
-        /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method] = /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method].bind(this);
-        app.shortcuts.on(name, /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method]);
+        handlerSlots(this)[method] = handlerSlots(this)[method].bind(this);
+        app.shortcuts.on(name, handlerSlots(this)[method]);
       }
     }
   }
@@ -361,21 +361,21 @@ class View extends Events {
     if (statics.events) {
       for (name in statics.events) {
         method = statics.events[name];
-        this.offDOM(name, /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method]);
+        this.offDOM(name, handlerSlots(this)[method]);
       }
     }
 
     if (statics.routes) {
       for (name in statics.routes) {
         method = statics.routes[name];
-        app.router.off(name, /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method]);
+        app.router.off(name, handlerSlots(this)[method]);
       }
     }
 
     if (statics.shortcuts) {
       for (name in statics.shortcuts) {
         method = statics.shortcuts[name];
-        app.shortcuts.off(name, /** @type {Record<string, (...args: unknown[]) => void>} */ (this)[method]);
+        app.shortcuts.off(name, handlerSlots(this)[method]);
       }
     }
   }
@@ -434,6 +434,28 @@ class View extends Events {
     $.remove(this.el);
   }
 }
+
+/**
+ * The `elements` static names instance properties by string, so they are
+ * written through an index rather than directly.
+ *
+ * @param {View} view
+ * @returns {Record<string, unknown>}
+ */
+const elementSlots = (view) =>
+  /** @type {Record<string, unknown>} */ (/** @type {unknown} */ (view));
+
+/**
+ * The `events`, `routes` and `shortcuts` statics name their handlers by
+ * string, so they too are reached through an index.
+ *
+ * @param {View} view
+ * @returns {Record<string, (...args: unknown[]) => void>}
+ */
+const handlerSlots = (view) =>
+  /** @type {Record<string, (...args: unknown[]) => void>} */ (
+    /** @type {unknown} */ (view)
+  );
 
 /**
  * Unwraps a view into its element, leaving markup and nodes alone.
