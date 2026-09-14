@@ -1,3 +1,5 @@
+// @ts-check
+
 /*
  * Copyright 2013-2026 Thibaut Courouble and other contributors
  *
