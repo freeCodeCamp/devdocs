@@ -222,6 +222,7 @@ module Docs
           name.remove! %r{\[.*?\]}m
           name.squeeze! ' '
           name.remove! %r{\([^\)]*\z} # bug fix: json_populate_record
+          name.strip!
           name = '||' if name.include? ' || '
           id = name.gsub(/[^a-zA-Z0-9\-_]/) { |char| char.ord }
           id = id.parameterize

@@ -1,5 +1,5 @@
 module Docs
-  class Postgresql < UrlScraper
+  class Postgresql < FileScraper
     include FixInternalUrlsBehavior
 
     self.name = 'PostgreSQL'
@@ -17,7 +17,6 @@ module Docs
     options[:title] = false
     options[:root_title] = 'PostgreSQL'
     options[:follow_links] = ->(filter) { filter.initial_page? }
-    options[:rate_limit] = 200
 
     options[:skip] = %w(
       index.html
@@ -126,6 +125,22 @@ module Docs
       doc = fetch_doc('https://www.postgresql.org/docs/current/index.html', opts)
       label = doc.at_css('#pgContentWrap h1.title').content
       label.scan(/([0-9.]+)/)[0][0]
+    end
+
+    private
+
+    def archive_url
+      release = self.class.release
+      # 17 dropped the prebuilt documentation from the source tarball in favour
+      # of an archive of its own.
+      suffix = '-docs' if release.to_i >= 17
+      "https://ftp.postgresql.org/pub/source/v#{release}/postgresql-#{release}#{suffix}.tar.gz"
+    end
+
+    def download_source
+      # Either archive ships the documentation prebuilt, as a flat directory of
+      # one HTML file per page.
+      download_and_extract(archive_url, "postgresql-#{self.class.release}/doc/src/sgml/html")
     end
   end
 end
