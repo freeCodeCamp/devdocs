@@ -141,6 +141,7 @@ class App < Sinatra::Application
 
   configure :test do
     set :docs_manifest_path, File.join(root, 'test', 'files', 'docs.json')
+    set :docs_path, File.join(root, 'test', 'files', 'docs')
   end
 
   def self.parse_docs
@@ -305,6 +306,31 @@ class App < Sinatra::Application
 
   get '/ping' do
     200
+  end
+
+  require 'mcp/server'
+
+  post '/mcp' do
+    content_type :json
+    begin
+      payload = JSON.parse(request.body.read)
+      response = Mcp::Server.handle(payload, settings)
+      if response.nil?
+        # The payload was a notification, which takes no response.
+        status 202
+        ''
+      else
+        response.to_json
+      end
+    rescue JSON::ParserError => err
+      error_response(nil, -32700, "Parse error: #{err.message}").to_json
+    rescue => err
+      error_response(nil, -32603, "Internal error: #{err.message}").to_json
+    end
+  end
+
+  def error_response(id, code, message)
+    { 'jsonrpc' => '2.0', 'id' => id, 'error' => { 'code' => code, 'message' => message } }
   end
 
   %w(docs.json application.js application.css).each do |asset|
