@@ -3,7 +3,8 @@ module Mcp
   # string keys) to the appropriate MCP handler and returns a response Hash
   # ready to be serialized back to the client.
   module Server
-    INDEX_CACHE = {}
+    DB_CACHE = {}
+    MAX_CACHE_SIZE = 50 * 1024 * 1024
     TOOLS = [
       {
         'name' => 'devdocs_list_docsets',
@@ -315,12 +316,22 @@ module Mcp
       end
 
       stamp = [stat.mtime, stat.size]
-      cached = INDEX_CACHE[index_path]
+      cached = DB_CACHE[index_path]
       return cached[:index] if cached && cached[:stamp] == stamp
 
       index = JSON.parse(File.read(index_path))
-      INDEX_CACHE[index_path] = { stamp: stamp, index: index }
+      index_size = File.size(index_path)
+
+      if cache_size + index_size > MAX_CACHE_SIZE
+        DB_CACHE.clear
+      end
+
+      DB_CACHE[index_path] = { stamp: stamp, index: index }
       index
+    end
+
+    def self.cache_size
+      DB_CACHE.values.sum { |entry| entry.is_a?(Hash) && entry[:index] ? entry[:index].to_json.bytesize : 0 }
     end
 
     def self.respond(request, result)
