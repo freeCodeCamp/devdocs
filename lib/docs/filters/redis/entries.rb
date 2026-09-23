@@ -487,7 +487,7 @@ module Docs
         "list" => "Core: List",
         "pubsub" => "Core: Pub/Sub",
         "scripting" => "Core: Scripting and Functions",
-        "server" => "Core: Server managment",
+        "server" => "Core: Server management",
         "set" => "Core: Set",
         "sorted-set" => "Core: Sorted Set",
         "stream" => "Core: Stream",

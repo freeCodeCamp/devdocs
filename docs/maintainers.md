@@ -12,7 +12,7 @@ This document is intended for [DevDocs maintainers](#list-of-maintainers).
 
 ## Updating docs
 
-The process for updating docs is as follow:
+The process for updating docs is as follows:
 
 - Follow the checklist in [CONTRIBUTING.md#updating-existing-documentations](../.github/CONTRIBUTING.md#updating-existing-documentations).
 - Commit the changes (protip: use the `thor docs:commit` command documented below).

@@ -31,7 +31,7 @@ The `call` method must return either `doc` or `html`, depending on the type of f
 
 * `doc` [Nokogiri::XML::Node]
   The Nokogiri representation of the container element.
-  See [Nokogiri's API docs](http://www.rubydoc.info/github/sparklemotion/nokogiri/Nokogiri/XML/Node) for the list of available methods.
+  See [Nokogiri's API docs](https://nokogiri.org/rdoc/Nokogiri/XML/Node.html) for the list of available methods.
 
 * `html` [String]
   The string representation of the container element.
@@ -96,7 +96,7 @@ Scrapers can have any number of custom filters but require at least the two desc
 
 The `CleanHtml` filter is tasked with cleaning the HTML markup where necessary and removing anything superfluous or nonessential. Only the core documentation should remain at the end.
 
-Nokogiri's many jQuery-like methods make it easy to search and modify elements — see the [API docs](http://www.rubydoc.info/github/sparklemotion/nokogiri/Nokogiri/XML/Node).
+Nokogiri's many jQuery-like methods make it easy to search and modify elements — see the [API docs](https://nokogiri.org/rdoc/Nokogiri/XML/Node.html).
 
 Here's an example implementation that covers the most common use-cases:
 
@@ -159,7 +159,7 @@ Each scraper must implement its own `EntriesFilter` by subclassing the [`Docs::E
 
 * `include_default_entry?` [Boolean]
   Whether to include the default entry.
-  Used when a page consists of multiple entries (returned by `additional_entries`) but doesn't have a name/type of its own, or to remove a page from the index (if it has no additional entries), in which case it won't be copied on the local filesystem and any link to it in the other pages will be broken (as explained on the [Scraper Reference](./scraper-reference.md) page, this is used to keep the `:skip` / `:skip_patterns` options to a maintainable size, or if the page includes links that can't reached from anywhere else).
+  Used when a page consists of multiple entries (returned by `additional_entries`) but doesn't have a name/type of its own, or to remove a page from the index (if it has no additional entries), in which case it won't be copied on the local filesystem and any link to it in the other pages will be broken (as explained on the [Scraper Reference](./scraper-reference.md) page, this is used to keep the `:skip` / `:skip_patterns` options to a maintainable size, or if the page includes links that can't be reached from anywhere else).
   **Default:** `true`
 
 * `additional_entries` [Array]
