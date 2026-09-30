@@ -13,7 +13,7 @@ If possible fill each section
 # Bug report
 
 <!--
-Verify this steps before writing a new issue:
+Verify these steps before writing a new issue:
 
  - Search for existing issues; it's possible someone has already encountered this bug.
 -->

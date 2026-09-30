@@ -9,7 +9,7 @@
 
 ## Overview
 
-Filters use the [HTML::Pipeline](https://github.com/jch/html-pipeline) library. They take an HTML string or [Nokogiri](http://nokogiri.org/) node as input, optionally perform modifications and/or extract information from it, and then outputs the result. Together they form a pipeline where each filter hands its output to the next filter's input. Every documentation page passes through this pipeline before being copied on the local filesystem.
+Filters use the [HTML::Pipeline](https://github.com/jch/html-pipeline) library. They take an HTML string or [Nokogiri](http://nokogiri.org/) node as input, optionally perform modifications and/or extract information from it, and then output the result. Together they form a pipeline where each filter hands its output to the next filter's input. Every documentation page passes through this pipeline before being copied on the local filesystem.
 
 Filters are subclasses of the [`Docs::Filter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/core/filter.rb) class and require a `call` method. A basic implementation looks like this:
 

@@ -19,6 +19,6 @@ Adding a documentation may look like a daunting task but once you get the hang o
 12. Add the documentation's copyright details to `options[:attribution]`. This is the data shown in the table on the [about](https://devdocs.io/about) page, and is ordered alphabetically. Please see an existing scraper for the typesetting.
 13. Ensure `thor updates:check [my_doc]` shows the correct latest version.
 
-If the documentation includes more than a few hundreds pages and is available for download, try to scrape it locally (e.g. using `FileScraper`). It'll make the development process much faster and avoids putting too much load on the source site. (It's not a problem if your scraper is coupled to your local setup, just explain how it works in your pull request.)
+If the documentation includes more than a few hundred pages and is available for download, try to scrape it locally (e.g. using `FileScraper`). It'll make the development process much faster and avoids putting too much load on the source site. (It's not a problem if your scraper is coupled to your local setup, just explain how it works in your pull request.)
 
 Finally, try to document your scraper and filters' behavior as much as possible using comments (e.g. why some URLs are ignored, HTML markup removed, metadata that way, etc.). It'll make updating the documentation much easier.
