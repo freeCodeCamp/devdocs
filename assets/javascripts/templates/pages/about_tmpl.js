@@ -64,7 +64,7 @@ export const aboutPage = function () {
 
 <p><strong>Special thanks to:</strong>
 <ul>
-  <li><a href="https://sentry.io/">Sentry</a> and <a href="https://get.gaug.es/?utm_source=devdocs&utm_medium=referral&utm_campaign=sponsorships" title="Real Time Web Analytics">Gauges</a> for offering a free account to DevDocs
+  <li><a href="https://sentry.io/">Sentry</a> for offering a free account to DevDocs
   <li><a href="https://out.devdocs.io/s/maxcdn">MaxCDN</a>, <a href="https://out.devdocs.io/s/shopify">Shopify</a>, <a href="https://out.devdocs.io/s/jetbrains">JetBrains</a> and <a href="https://out.devdocs.io/s/code-school">Code School</a> for sponsoring DevDocs in the past
   <li><a href="https://www.heroku.com">Heroku</a> and <a href="https://newrelic.com/">New Relic</a> for providing awesome free service
   <li><a href="https://www.jeremykratz.com/">Jeremy Kratz</a> for the C/C++ logo
@@ -89,7 +89,6 @@ export const aboutPage = function () {
 <ul>
   <li><a href="https://devdocs.io">devdocs.io</a> ("App") is operated by <a href="https://www.freecodecamp.org/">freeCodeCamp</a> ("We").
   <li>We do not collect personal information through the app.
-  <li>We use Google Analytics and Gauges to collect anonymous traffic information if you have given consent to this. You can change your decision in the <a href="/settings">settings</a>.
   <li>We use Sentry to collect crash data and improve the app.
   <li>The app uses local storage to store user preferences.
   <li>By using the app, you signify your acceptance of this policy. If you do not agree to this policy, please do not use the app.
