@@ -15,6 +15,7 @@ module Docs
     options[:container] = '.document > [itemprop="articleBody"]'
     options[:download_images] = false
     options[:only_patterns] = [%r{\Agetting_started/}, %r{\Aclasses/}]
+    options[:decode_and_clean_paths] = true # handle paths like @gdscript
 
     options[:attribution] = <<-HTML
       &copy; 2014&ndash;present Juan Linietsky, Ariel Manzur and the Godot community<br>
