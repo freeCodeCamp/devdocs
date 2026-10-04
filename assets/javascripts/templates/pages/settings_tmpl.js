@@ -68,12 +68,6 @@ export const settingsPage = (settings) => `\
       }>Disable autofocus of search input
     </label>
     <label class="_settings-label">
-      <input type="checkbox" form="settings" name="autoInstall" value="_auto-install"${
-        settings.autoInstall ? " checked" : ""
-      }>Automatically download documentation for offline use
-      <small>Only enable this when bandwidth isn't a concern to you.</small>
-    </label>
-    <label class="_settings-label">
       <input type="checkbox" form="settings" name="autoLatestVersion" value="_auto-latest-version"${
         settings.autoLatestVersion ? " checked" : ""
       }>Automatically switch to the latest version of a documentation

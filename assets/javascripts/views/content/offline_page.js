@@ -191,6 +191,8 @@ export class OfflinePage extends View {
   onChange(event) {
     if (event.target.name === "autoUpdate") {
       app.settings.set("manualUpdate", !event.target.checked);
+    } else if (event.target.name === "autoInstall") {
+      app.settings.set("autoInstall", event.target.checked);
     } else if (event.target.name === "importDocs") {
       this.importDocs(event.target);
     }

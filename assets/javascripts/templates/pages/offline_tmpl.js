@@ -17,11 +17,18 @@ export const offlinePage = (docs, hasPersistence, isPersistent) => `\
 <h1 class="_lined-heading">Offline Documentation</h1>
 
 <div class="_docs-tools">
-  <label>
-    <input type="checkbox" name="autoUpdate" value="1" ${
-      app.settings.get("manualUpdate") ? "" : "checked"
-    }>Install updates automatically
-  </label>
+  <div class="_docs-options">
+    <label title="Only enable this when bandwidth isn't a concern to you.">
+      <input type="checkbox" name="autoInstall" value="1" ${
+        app.settings.get("autoInstall") ? "checked" : ""
+      }>Automatically install enabled documentation for offline use
+    </label>
+    <label>
+      <input type="checkbox" name="autoUpdate" value="1" ${
+        app.settings.get("manualUpdate") ? "" : "checked"
+      }>Automatically install updates of offline documentation
+    </label>
+  </div>
   <div class="_docs-links">
     <button type="button" class="_btn-link" data-action-all="install" title="Download every enabled documentation for offline use">Install all</button><button type="button" class="_btn-link" data-action-all="update" title="Download the current version of every outdated documentation"><strong>Update all</strong></button><button type="button" class="_btn-link" data-action-all="uninstall" title="Delete the offline data of every installed documentation">Uninstall all</button><button type="button" class="_btn-link _show" data-export-docs title="Save the installed documentations to a file, to restore them later or on another computer">Export all</button><label class="_btn-link _file-btn _show" title="Restore documentations from a previously exported file">Import<input type="file" name="importDocs" accept="application/json,.json"></label>
   </div>

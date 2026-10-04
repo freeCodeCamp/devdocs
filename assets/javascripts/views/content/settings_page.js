@@ -34,7 +34,6 @@ export class SettingsPage extends View {
     settings.smoothScroll = !app.settings.get("fastScroll");
     settings.arrowScroll = app.settings.get("arrowScroll");
     settings.noAutofocus = app.settings.get("noAutofocus");
-    settings.autoInstall = app.settings.get("autoInstall");
     settings.autoLatestVersion = app.settings.get("autoLatestVersion");
     settings.analyticsConsent = app.settings.get("analyticsConsent");
     settings.spaceScroll = app.settings.get("spaceScroll");
