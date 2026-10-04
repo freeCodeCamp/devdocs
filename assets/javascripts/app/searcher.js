@@ -183,6 +183,7 @@ export class Searcher extends Events {
   static EVENT_REGEXP = /\ event$/;
   static DOT_REGEXP = /\.+/g;
   static WHITESPACE_REGEXP = /\s/g;
+  static SYMBOL_ONLY_REGEXP = /^[^\w\s.]+$/;
 
   static EMPTY_STRING = "";
   static ELLIPSIS = "...";
@@ -196,15 +197,29 @@ export class Searcher extends Events {
    * @returns {string}
    */
   static normalizeString(string) {
-    return string
+    string = string
       .toLowerCase()
       .replace(Searcher.ELLIPSIS, Searcher.EMPTY_STRING)
       .replace(Searcher.EVENT_REGEXP, Searcher.EMPTY_STRING)
-      .replace(Searcher.INFO_PARANTHESES_REGEXP, Searcher.EMPTY_STRING)
+      .replace(Searcher.INFO_PARANTHESES_REGEXP, Searcher.EMPTY_STRING);
+
+    const normalized = string
       .replace(Searcher.SEPARATORS_REGEXP, SEPARATOR)
       .replace(Searcher.DOT_REGEXP, SEPARATOR)
       .replace(Searcher.EMPTY_PARANTHESES_REGEXP, Searcher.EMPTY_STRING)
       .replace(Searcher.WHITESPACE_REGEXP, Searcher.EMPTY_STRING);
+
+    // A separator can also be an entire symbolic name, e.g. Clojure's ->.
+    // Keep it searchable without changing separators in compound names.
+    if (normalized === SEPARATOR) {
+      const symbol = string
+        .replace(Searcher.EMPTY_PARANTHESES_REGEXP, Searcher.EMPTY_STRING)
+        .trim();
+      if (Searcher.SYMBOL_ONLY_REGEXP.test(symbol)) {
+        return symbol;
+      }
+    }
+    return normalized;
   }
 
   /**
