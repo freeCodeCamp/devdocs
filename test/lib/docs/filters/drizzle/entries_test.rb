@@ -81,6 +81,25 @@ class DrizzleEntriesFilterTest < Minitest::Spec
     ], entries
   end
 
+  it "indexes the column options after the data types as the page's sections" do
+    page 'column-types', label: 'Data types', section: 'Manage schema', content: <<-HTML
+      <h3 id="integer">integer</h3>
+      <h2 id="---">---</h2>
+      <h3 id="text">text</h3>
+      <h3 id="---">---</h3>
+      <h3 id="not-null">Not null</h3>
+      <h3 id="primary-key">Primary key</h3>
+    HTML
+
+    assert_equal [
+      ['Data types', 'column-types', 'Manage schema'],
+      ['integer', 'column-types#integer', 'Data types'],
+      ['text', 'column-types#text', 'Data types'],
+      ['Data types: Not null', 'column-types#not-null', 'Manage schema'],
+      ['Data types: Primary key', 'column-types#primary-key', 'Manage schema']
+    ], entries
+  end
+
   it "names the seed generators as they are called" do
     page 'seed-functions', label: 'Generators', section: 'Seeding', content: '<h3 id="int"><code>int</code></h3>'
     assert_equal [

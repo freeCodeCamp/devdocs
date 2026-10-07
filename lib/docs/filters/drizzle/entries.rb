@@ -55,11 +55,14 @@ module Docs
       def additional_entries
         return [] if root_page? || NO_ADDITIONAL_ENTRIES_TYPES.include?(type)
 
-        content.css('h2[id], h3[id]').each_with_object([]) do |node, entries|
+        nodes = content.css('h2[id], h3[id]').to_a
+        api_nodes = slug == 'column-types' ? api_column_types(nodes) : nodes
+
+        nodes.each_with_object([]) do |node, entries|
           heading = heading_text(node)
           next if heading.empty? || heading == '---' || heading =~ NOISE_SECTION
 
-          if (api_type = API_TYPES[slug])
+          if (api_type = API_TYPES[slug]) && api_nodes.include?(node)
             heading = "funcs.#{heading}()" if slug == 'seed-functions'
             entries << [heading, node['id'], api_type]
           elsif heading.start_with?('sql`', 'sql<', 'sql.')
@@ -83,6 +86,13 @@ module Docs
 
       def nav_label
         (nav_item || content.at_css('h1')).content.strip
+      end
+
+      # The column options (default value, not null, ...) follow the data types,
+      # after the page's last separator
+      def api_column_types(nodes)
+        last_separator = nodes.rindex { |node| heading_text(node) == '---' }
+        last_separator ? nodes[0...last_separator] : nodes
       end
 
       # The template tag's backticks are typeset as a quotation mark (sql“)
