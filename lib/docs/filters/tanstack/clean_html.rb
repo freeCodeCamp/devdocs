@@ -32,6 +32,11 @@ module Docs
           flatten_code(node)
         end
 
+        css('span.border.rounded[class~="bg-gray-500/10"]').each do |node|
+          node.name = 'code'
+          node.remove_attribute('class')
+        end
+
         # Copy buttons and any "on this page" control that lived inside the prose.
         # External links, including StackBlitz, stay.
         css('button').remove

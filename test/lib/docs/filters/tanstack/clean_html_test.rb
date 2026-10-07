@@ -56,6 +56,23 @@ class TanstackCleanHtmlFilterTest < Minitest::Spec
     assert_nil filter_output.at_css('._pre-heading')
   end
 
+  it 'turns inline markdown code spans into code' do
+    @body = <<-HTML
+      <h1>Important Defaults</h1>
+      <div class="prose">
+        <h3 id="opts-from">opts.<span class="border border-gray-500/20 bg-gray-500/10 rounded px-1 py-0.5">from</span> option</h3>
+        <p>Set <span class="border border-gray-500/20 bg-gray-500/10 rounded px-1 py-0.5">staleTime</span> to <span class="font-bold">avoid</span> refetches.</p>
+      </div>
+    HTML
+
+    output = filter_output
+    codes = output.css('code')
+    assert_equal %w(from staleTime), codes.map(&:content)
+    assert codes.none? { |node| node['class'] }
+    assert_equal 'opts.from option', output.at_css('h3').content
+    assert_equal 'avoid', output.at_css('p > span').content
+  end
+
   it 'keeps a code block title that is not the language' do
     @body = <<-HTML
       <h1>Routing Concepts</h1>
