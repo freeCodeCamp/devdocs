@@ -1,7 +1,6 @@
 module Docs
   class Drizzle
     class EntriesFilter < Docs::EntriesFilter
-      # Sidebar labels that are too vague once out of their sidebar section
       NAMES = {
         'kit-overview' => 'Drizzle Kit',
         'perf-queries' => 'Query performance',
@@ -17,38 +16,29 @@ module Docs
         'upgrade-v1' => 'Upgrading to v1'
       }
 
-      # Pages documenting one API per section (a column type, a filter operator,
-      # ...), whose sections are indexed under their own name and type
+      # Pages whose sections each document one API
       API_TYPES = {
         'column-types' => 'Data types',
         'operators' => 'Filters',
         'seed-functions' => 'Seed generators'
       }
 
-      # The sidebar sections whose pages' sections aren't worth indexing: the
-      # drivers' setup steps and the upgrade guides
       NO_ADDITIONAL_ENTRIES_TYPES = ['Connect', 'Upgrade to v1.0']
 
-      # Sections every page of a kind has, which say nothing on their own
       NOISE_SECTION = /\A(?:Install(?:ation| the dependencies)?|Usage|Example|Extended example|Extended list of (?:available )?configurations|Multiple configuration files in one project|\w+ connection docs)\z/i
 
       def get_name
         label = nav_label
-        # The SingleStore documentation keeps the pages of the APIs superseded
-        # in v1 alongside their replacement, labeled "[OLD] ..."
+        # SingleStore keeps the APIs superseded in v1 as "[OLD] ..." pages
         legacy = label.delete_prefix!('[OLD] ')
-
         name = NAMES[slug] || label
-        # The drizzle-kit commands are labeled with the command alone
         name = "drizzle-kit #{name}" if slug.start_with?('drizzle-kit-')
         legacy ? "#{name} (legacy)" : name
       end
 
-      # The sidebar section, e.g. "Manage schema"
       def get_type
         return 'Other' unless nav_item
         section = nav_item.xpath('preceding-sibling::div[contains(@class, "nav-separator")][1]').first
-        # Some dialects label the upgrade guides' section "Upgrade to v1.0 RC"
         section.content.strip.delete_suffix(' RC').sub(/\Ameet drizzle\z/, 'Meet Drizzle')
       end
 
@@ -79,7 +69,6 @@ module Docs
         at_css('.documentation-content')
       end
 
-      # The page's link in the sidebar
       def nav_item
         @nav_item ||= at_css('.nav-items .nav-item--active')
       end
@@ -88,14 +77,13 @@ module Docs
         (nav_item || content.at_css('h1')).content.strip
       end
 
-      # The column options (default value, not null, ...) follow the data types,
-      # after the page's last separator
+      # Column options follow the data types, after the last separator
       def api_column_types(nodes)
         last_separator = nodes.rindex { |node| heading_text(node) == '---' }
         last_separator ? nodes[0...last_separator] : nodes
       end
 
-      # The template tag's backticks are typeset as a quotation mark (sql“)
+      # The site typesets sql`` as sql“
       def heading_text(node)
         node.content.strip.sub(/\Asql“/, 'sql``').delete_suffix(':')
       end

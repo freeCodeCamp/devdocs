@@ -10,28 +10,17 @@ module Docs
       code: 'https://github.com/drizzle-team/drizzle-orm'
     }
 
-    # The entries filter reads the sidebar, which the clean_html one removes
     html_filters.push 'drizzle/entries', 'drizzle/clean_html'
 
-    # Left out:
-    # - the "Get started" page, which links to step-by-step tutorials
-    #   (get-started/*) covering what the drivers' pages (Connect) document
-    # - the sponsors (sustainability) and the changelog (latest-releases)
-    # - the guides and tutorials, articles which every dialect lists whichever
-    #   dialect they are about
     options[:skip] = %w(get-started sustainability latest-releases guides tutorials)
     options[:skip_patterns] = [/\Aget-started\//, /\Aguides\//, /\Atutorials\//]
 
-    # https://github.com/drizzle-team/drizzle-orm/blob/main/LICENSE
     options[:attribution] = <<-HTML
       &copy; Drizzle Team<br>
       Licensed under the Apache License, Version 2.0.
     HTML
 
-    # The documentation exists in one copy per SQL dialect, picked with the
-    # website's dialect switcher: the pages, the sidebar and the code examples
-    # differ from one dialect to the other. PostgreSQL's is at the root of
-    # /docs/ and the others are in a subdirectory of it.
+    # The docs have one copy per SQL dialect, PostgreSQL's at the root
     version 'PostgreSQL' do
       self.base_url = 'https://orm.drizzle.team/docs/'
       options[:skip_patterns] += [/\A(?:mysql|sqlite|singlestore|mssql|cockroach)\//]
@@ -57,8 +46,7 @@ module Docs
       self.base_url = 'https://orm.drizzle.team/docs/cockroach/'
     end
 
-    # The website documents the 1.0 release candidates (drizzle-orm@rc), while
-    # npm's latest version is still a 0.x one.
+    # The site documents the 1.0 release candidates while npm's latest is still 0.x
     def get_latest_version(opts)
       tags = fetch_json('https://registry.npmjs.com/drizzle-orm', opts)['dist-tags']
       tags.values_at('latest', 'rc').compact.max_by { |version| Gem::Version.new(version) }
