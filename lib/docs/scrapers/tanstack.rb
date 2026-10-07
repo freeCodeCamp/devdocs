@@ -5,6 +5,10 @@ module Docs
     self.abstract = true
     self.type = 'simple'
 
+    # Container stays `body` so the sidebar is still in the document when
+    # InternalUrlsFilter queues links. The clean filter then keeps the h1 and `.prose`.
+    html_filters.push 'tanstack/entries', 'tanstack/clean_html'
+
     options[:attribution] = <<-HTML
       &copy; 2021-present Tanner Linsley<br>
       Licensed under the MIT License.

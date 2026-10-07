@@ -2,7 +2,6 @@ module Docs
   class TanstackQuery < Tanstack
     self.name = 'TanStack Query'
     self.slug = 'tanstack_query'
-    self.type = 'simple'
     self.release = '5.104.1'
     self.base_url = 'https://tanstack.com/query/latest/docs/'
     # The docs root redirects to the overview. Requesting it would store that
@@ -25,10 +24,6 @@ module Docs
     # Example galleries are StackBlitz demos. `*.md` URLs are `text/markdown`,
     # which the scraper would ignore, but skipping them avoids a request per page.
     options[:skip_patterns] = [/\.md\z/, /examples/]
-
-    # Container stays `body` so the sidebar is still in the document when
-    # InternalUrlsFilter queues links. The clean filter then keeps the h1 and `.prose`.
-    html_filters.push 'tanstack/entries', 'tanstack/clean_html'
 
     def get_latest_version(opts)
       get_npm_version('@tanstack/react-query', opts)

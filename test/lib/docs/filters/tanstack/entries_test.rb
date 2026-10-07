@@ -57,6 +57,15 @@ class TanstackEntriesFilterTest < Minitest::Spec
     assert_equal ['Queries', 'Queries: Query Basics'], entries.map(&:name)
     assert_equal 'framework/react/guides/queries#query-basics', entries.last.path
     assert entries.all? { |entry| entry.type == 'Guides' }
+
+    page 'framework/react/guides/mutations', 'framework/react/overview', <<-HTML
+      <h1>Mutations</h1>
+      <div class="prose">
+        <h2 id="further-reading">Further reading<a class="anchor-heading-link" href="#further-reading">#</a></h2>
+      </div>
+    HTML
+
+    assert_equal ['Mutations'], entries.map(&:name)
   end
 
   it 'files a flat v4 reference path under API' do

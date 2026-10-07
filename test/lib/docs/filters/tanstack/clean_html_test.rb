@@ -35,8 +35,9 @@ class TanstackCleanHtmlFilterTest < Minitest::Spec
     @body = <<-HTML
       <h1>Queries</h1>
       <div class="prose">
-        <div class="codeblock"><div>tsx</div><button>Copy</button>
-          <pre class="th-code th-code--tsx" data-language="tsx"><code><span class="th-token th-keyword">const</span> value = 1</code></pre>
+        <div class="codeblock">
+          <div><div>tsx</div><button>Copy</button></div>
+          <div><pre class="th-code th-code--tsx" data-language="tsx"><code><span class="th-token th-keyword">const</span> value = 1</code></pre></div>
         </div>
         <pre class="th-code th-code--ts" data-language="ts"><code>type Id = string</code></pre>
         <pre class="th-code th-code--js" data-language="js"><code>const n = 1</code></pre>
@@ -52,5 +53,26 @@ class TanstackCleanHtmlFilterTest < Minitest::Spec
     assert_nil pres[0].at_css('.th-token')
     assert_nil filter_output.at_css('button')
     assert_nil filter_output.at_css('.codeblock')
+    assert_nil filter_output.at_css('._pre-heading')
+  end
+
+  it 'keeps a code block title that is not the language' do
+    @body = <<-HTML
+      <h1>Routing Concepts</h1>
+      <div class="prose">
+        <div class="codeblock">
+          <div><div>src/routes/about.tsx</div><button>Copy</button></div>
+          <div><pre class="th-code th-code--tsx" data-language="tsx"><code><span class="th-token">export</span> const Route = createFileRoute('/about')()</code></pre></div>
+        </div>
+      </div>
+    HTML
+
+    heading = filter_output.at_css('._pre-heading')
+    assert_equal 'src/routes/about.tsx', heading.content
+    pre = heading.next_element
+    assert_equal 'pre', pre.name
+    assert_equal 'jsx', pre['data-language']
+    assert_equal "export const Route = createFileRoute('/about')()", pre.at_css('code').content
+    assert_nil filter_output.at_css('button')
   end
 end

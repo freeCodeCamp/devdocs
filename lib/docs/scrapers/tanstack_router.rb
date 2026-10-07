@@ -2,7 +2,6 @@ module Docs
   class TanstackRouter < Tanstack
     self.name = 'TanStack Router'
     self.slug = 'tanstack_router'
-    self.type = 'simple'
     self.release = '1.170.41'
     self.base_url = 'https://tanstack.com/router/latest/docs/'
     # Same duplicate-index problem as Query: `/docs/` redirects to `/docs/overview`.
@@ -16,8 +15,6 @@ module Docs
     # guides, ESLint, and integrations, so no extra initial paths are required.
     # Solid shows up as examples of the React router, not as its own guide.
     options[:skip_patterns] = [/\.md\z/, /examples/, %r{framework/solid}]
-
-    html_filters.push 'tanstack/entries', 'tanstack/clean_html'
 
     def get_latest_version(opts)
       get_npm_version('@tanstack/react-router', opts)

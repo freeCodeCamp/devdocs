@@ -16,7 +16,6 @@ module Docs
       }.freeze
 
       GETTING_STARTED = %w[
-        overview
         installation
         quick-start
         devtools
@@ -57,7 +56,7 @@ module Docs
 
         css('.prose h2').each_with_object([]) do |node, entries|
           text = heading_text(node)
-          next if text.empty? || text == FURTHER_READING
+          next if text.empty? || text.casecmp?(FURTHER_READING)
           next if node['id'].blank?
 
           entries << ["#{name}: #{text}", node['id']]

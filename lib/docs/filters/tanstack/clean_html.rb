@@ -51,9 +51,18 @@ module Docs
         code.content = text
         node.add_child(code)
 
-        # The language label and copy button sit in the wrapper, not in the pre.
+        # The wrapper holds the copy button and a label: the raw language, or the fence title.
         block = node.ancestors('.codeblock').first
-        block.replace(node) if block
+        return unless block
+
+        label = block.at_css('> div:first-child > div')&.content&.strip
+        block.replace(node)
+        return if label.blank? || label == language
+
+        heading = Nokogiri::XML::Node.new('div', node.document)
+        heading['class'] = '_pre-heading'
+        heading.content = label
+        node.before(heading)
       end
     end
   end
