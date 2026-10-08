@@ -114,6 +114,7 @@ Modifications made to each document include:
 * replacing all internal (scraped) URLs with their unqualified and relative counterpart
 * adding content, such as a title and link to the original document
 * ensuring correct syntax highlighting using [Prism](http://prismjs.com/)
+* converting math markup to native MathML using [KaTeX](https://katex.org/)
 
 These modifications are applied via a set of filters using the [HTML::Pipeline](https://github.com/jch/html-pipeline) library. Each scraper includes filters specific to itself, one of which is tasked with figuring out the pages' metadata.
 
