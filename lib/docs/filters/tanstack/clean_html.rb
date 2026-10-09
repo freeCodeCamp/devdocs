@@ -37,6 +37,26 @@ module Docs
           node.remove_attribute('class')
         end
 
+        css('.markdown-alert').each do |node|
+          node['class'] = '_note'
+          node.at_css('.markdown-alert-title').try(:name=, 'strong')
+        end
+
+        css('input[type="checkbox"]').each do |node|
+          node.replace(node['checked'] ? '☑' : '☐')
+        end
+
+        # Strip Tailwind classes and tab widget attributes, then unwrap the bare layout divs
+        css('*').each do |node|
+          node.remove_attribute('class') unless node['class'].try(:start_with?, '_')
+          node.remove_attribute('id') if node['id'].try(:start_with?, ':')
+          node.attributes.each_key { |name| node.remove_attribute(name) if name.start_with?('aria-', 'data-tab', 'data-content') || name == 'role' }
+        end
+
+        css('div:not([class])').each do |node|
+          node.replace(node.children)
+        end
+
         doc
       end
     end
