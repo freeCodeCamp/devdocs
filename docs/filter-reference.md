@@ -74,6 +74,7 @@ The `call` method must return either `doc` or `html`, depending on the type of f
 ## Core filters
 
 * [`ContainerFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/container.rb) — changes the root node of the document (remove everything outside)
+* [`MathFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/math.rb) — converts math markup (Sphinx/MathJax `\(...\)` and `\[...\]`, MathJax `<script type="math/tex">` and `<mjx-container>`, pre-rendered KaTeX) to native MathML using [KaTeX](https://katex.org/), which requires a JavaScript runtime such as Node.js; set `options[:math_dollars] = true` to also convert `$...$` and `$$...$$` in text
 * [`CleanHtmlFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/clean_html.rb) — removes HTML comments, `<script>`, `<style>`, etc.
 * [`NormalizeUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/normalize_urls.rb) — replaces all URLs with their fully qualified counterpart
 * [`InternalUrlsFilter`](https://github.com/freeCodeCamp/devdocs/blob/main/lib/docs/filters/core/internal_urls.rb) — detects internal URLs (the ones to scrape) and replaces them with their unqualified, relative counterpart
