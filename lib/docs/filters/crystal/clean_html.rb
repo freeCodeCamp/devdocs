@@ -12,6 +12,8 @@ module Docs
 
         css('.headerlink').remove
 
+        css('.md-icon[title="Edit this page"]').remove
+
         css('pre > code').each do |node|
           node.parent['data-language'] = 'crystal'
           node.parent['data-language'] = node['class'][/lang-(\w+)/, 1] if node['class']
