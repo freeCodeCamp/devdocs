@@ -9,6 +9,11 @@
   .warning { @extend %note, %note-red; }
   .note .label, .warning .label { font-weight: var(--boldFontWeight); }
 
+  a.source {
+    float: right;
+    font-size: .9em;
+  }
+
   .since {
 	  color: var(--textColorLight);
 	  font-weight: normal;
