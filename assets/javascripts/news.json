@@ -1,5 +1,9 @@
 [
   [
+    "2026-10-09",
+    "New documentations: <a href=\"/tanstack_query/\">TanStack Query</a>, <a href=\"/tanstack_router/\">TanStack Router</a>"
+  ],
+  [
     "2026-09-04",
     "New documentation: <a href=\"/valibot/\">Valibot</a>"
   ],
