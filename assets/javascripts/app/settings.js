@@ -26,8 +26,6 @@ import { $ } from "../lib/util.js";
  * @property {number} news When the changelog was last read, as a Unix timestamp.
  * @property {StoredFlag} manualUpdate
  * @property {number} schema The offline database's schema version.
- * @property {StoredFlag} analyticsConsent Written as 1 or 0 rather than deleted,
- *   so that consent that was refused is remembered.
  * @property {string} theme `"auto"`, `"dark"` or `"default"`.
  * @property {number} spaceScroll How far space scrolls, as a fraction of the viewport.
  * @property {number | string} spaceTimeout How long after typing space stops
@@ -59,7 +57,6 @@ export class Settings {
     "manualUpdate",
     "fastScroll",
     "arrowScroll",
-    "analyticsConsent",
     "docs",
     "dark", // legacy
     "theme",
@@ -91,7 +88,6 @@ export class Settings {
     news: 0,
     manualUpdate: false,
     schema: 1,
-    analyticsConsent: false,
     theme: "auto",
     spaceScroll: 1,
     spaceTimeout: 0.5,

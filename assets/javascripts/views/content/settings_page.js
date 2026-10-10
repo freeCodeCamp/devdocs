@@ -2,7 +2,6 @@
 
 import { app } from "../../app/app.js";
 import { Settings } from "../../app/settings.js";
-import { resetAnalytics } from "../../lib/page.js";
 import { $ } from "../../lib/util.js";
 import { Notif } from "../misc/notif.js";
 import { View } from "../view.js";
@@ -35,7 +34,6 @@ export class SettingsPage extends View {
     settings.arrowScroll = app.settings.get("arrowScroll");
     settings.noAutofocus = app.settings.get("noAutofocus");
     settings.autoLatestVersion = app.settings.get("autoLatestVersion");
-    settings.analyticsConsent = app.settings.get("analyticsConsent");
     settings.spaceScroll = app.settings.get("spaceScroll");
     settings.spaceTimeout = app.settings.get("spaceTimeout");
     settings.noDocSpecificIcon = app.settings.get("noDocSpecificIcon");
@@ -67,14 +65,6 @@ export class SettingsPage extends View {
   /** @param {boolean} enable */
   toggleSmoothScroll(enable) {
     app.settings.set("fastScroll", !enable);
-  }
-
-  /** @param {boolean} enable Clears the analytics cookies when turned off. */
-  toggleAnalyticsConsent(enable) {
-    app.settings.set("analyticsConsent", enable ? 1 : 0);
-    if (!enable) {
-      resetAnalytics();
-    }
   }
 
   /** @param {boolean} enable */
@@ -150,9 +140,6 @@ export class SettingsPage extends View {
         break;
       case "import":
         this.import(input.files[0], input);
-        break;
-      case "analyticsConsent":
-        this.toggleAnalyticsConsent(input.checked);
         break;
       case "spaceScroll":
         this.toggleSpaceScroll(input.checked);
