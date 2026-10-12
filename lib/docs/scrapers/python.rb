@@ -1,8 +1,5 @@
 module Docs
-  # TODO: switch back to FileScraper once docs.python.org rebuilds the
-  # python-3.15-docs-html.tar.bz2 archive from the final 3.15.0 release
-  # (it still contains 3.15.0rc3).
-  class Python < UrlScraper
+  class Python < FileScraper
     self.type = 'python'
     self.root_path = 'index.html'
     self.links = {
