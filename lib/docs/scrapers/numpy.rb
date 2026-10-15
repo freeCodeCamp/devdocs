@@ -8,7 +8,7 @@ module Docs
       code: 'https://github.com/numpy/numpy'
     }
 
-    html_filters.push 'numpy/entries', 'numpy/clean_html', 'sphinx/clean_html'
+    html_filters.push 'math', 'numpy/entries', 'numpy/clean_html', 'sphinx/clean_html'
 
     # .main contains more than the page's content alone, but we need something
     # that includes the navigation bar as well in order to guess the type of
