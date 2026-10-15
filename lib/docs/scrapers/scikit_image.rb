@@ -12,7 +12,7 @@ module Docs
       code: 'https://github.com/scikit-image/scikit-image'
     }
 
-    html_filters.push 'scikit_image/entries', 'sphinx/clean_html'
+    html_filters.push 'math', 'scikit_image/entries', 'sphinx/clean_html'
 
     options[:container] = 'main article'
     options[:skip] = %w(api_changes.html)

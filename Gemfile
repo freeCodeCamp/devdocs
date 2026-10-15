@@ -35,6 +35,7 @@ end
 group :docs do
   gem 'image_optim_pack', platforms: :ruby
   gem 'image_optim'
+  gem 'katex', '~> 0.11', require: false
   gem 'kramdown'
   gem 'kramdown-parser-gfm'
   gem 'redcarpet'

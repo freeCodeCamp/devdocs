@@ -10,7 +10,7 @@ module Docs
       code: 'https://github.com/pola-rs/polars'
     }
 
-    html_filters.push 'polars/entries', 'sphinx/clean_html', 'polars/clean_html'
+    html_filters.push 'math', 'polars/entries', 'sphinx/clean_html', 'polars/clean_html'
 
     # pydata-sphinx-theme keeps the page content in the article body.
     options[:container] = 'article.bd-article'

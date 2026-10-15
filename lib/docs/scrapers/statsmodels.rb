@@ -9,7 +9,7 @@ module Docs
       code: 'https://github.com/statsmodels/statsmodels/'
     }
 
-    html_filters.push 'statsmodels/entries', 'statsmodels/clean_html', 'sphinx/clean_html'
+    html_filters.push 'math', 'statsmodels/entries', 'statsmodels/clean_html', 'sphinx/clean_html'
 
     options[:skip] = %w(about.html search.html genindex.html)
     options[:skip_patterns] = [/\Arelease/, /\Adev/, /\A_modules/, /\Adatasets/]

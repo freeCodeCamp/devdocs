@@ -15,6 +15,11 @@ class CleanTextFilterTest < Minitest::Spec
     assert_equal @body, filter_output
   end
 
+  it "doesn't remove empty MathML nodes" do
+    @body = "<mspace width=\"1em\"></mspace><mtext> </mtext><mtd></mtd><mrow></mrow>"
+    assert_equal @body, filter_output
+  end
+
   it "strips leading and trailing whitespace" do
     @body = "\n\r Test \r\n"
     assert_equal 'Test', filter_output

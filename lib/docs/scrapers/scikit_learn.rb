@@ -13,7 +13,7 @@ module Docs
       code: 'https://github.com/scikit-learn/scikit-learn'
     }
 
-    html_filters.push 'scikit_learn/entries', 'scikit_learn/clean_html', 'sphinx/clean_html', 'title'
+    html_filters.push 'math', 'scikit_learn/entries', 'scikit_learn/clean_html', 'sphinx/clean_html', 'title'
 
     options[:skip] = %w(modules/generated/sklearn.experimental.enable_iterative_imputer.html
                         modules/generated/sklearn.experimental.enable_hist_gradient_boosting.html)

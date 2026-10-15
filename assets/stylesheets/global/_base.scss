@@ -149,6 +149,9 @@ table {
   max-width: 100%;
 }
 
+// No overflow rule here: a scroll container on a <math> element leaves it blank in Chrome.
+math[display="block"] { margin: 1.5em 0; }
+
 caption {
   font-weight: var(--boldFontWeight);
   padding: 0 .7em .3em;
