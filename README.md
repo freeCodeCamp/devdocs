@@ -45,7 +45,7 @@ docker run --name devdocs -d -p 9292:9292 devdocs
 
 DevDocs is made of two pieces: a Ruby scraper that generates the documentation and metadata, and a JavaScript app powered by a small Sinatra app.
 
-DevDocs requires Ruby 4.0.6 (defined in [`Gemfile`](./Gemfile)), libcurl, bsdtar (included in macOS, the `libarchive-tools` package on Debian and Alpine), and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). On Arch Linux run `pacman -S ruby ruby-bundler ruby-erb ruby-irb`.
+DevDocs requires Ruby 4.0.7 (defined in [`Gemfile`](./Gemfile)), libcurl, bsdtar (included in macOS, the `libarchive-tools` package on Debian and Alpine), and a JavaScript runtime supported by [ExecJS](https://github.com/rails/execjs#readme) (included in OS X and Windows; [Node.js](https://nodejs.org/en/) on Linux). On Arch Linux run `pacman -S ruby ruby-bundler ruby-erb ruby-irb`.
 
 Once you have these installed, run the following commands:
 
@@ -149,7 +149,7 @@ thor console:docs   # Start a REPL in the "Docs" module
 thor test:all       # Run all tests
 thor test:docs      # Run "Docs" tests
 thor test:app       # Run "App" tests
-thor test:coverage  # Run coverage report on "App" tests
+thor test:coverage  # Run coverage report for core tests
 
 # Assets
 thor assets:compile # Compile assets (not required in development mode)

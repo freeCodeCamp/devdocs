@@ -32,9 +32,15 @@ cd gnuplot-src/
 ./prepare
 ./configure
 cd docs/
-make nofigures.tex
+touch allterm-ja.h # Japanese docs aren't needed
+make allterm.h doc2tex no_figures
+./doc2tex gnuplot.doc nofigures.tex # without -figures, replaces `make nofigures.tex` (gone since 6.0)
 latex2html -html 5.0,math -split 4 -link 8 -long_titles 5 -dir $DEVDOCS_ROOT/docs/gnuplot -ascii_mode -no_auto_link nofigures.tex
 ```
+
+On Fedora, the dependencies are `dnf install gcc make autoconf automake libtool latex2html
+texlive-latex texlive-collection-latexrecommended texlive-collection-fontsrecommended
+texlive-makeindex texlive-imakeidx perl-Unicode-Collate netpbm-progs ghostscript`.
 
 To install `latex2html` on macOS: `brew install basictex latex2html`, then edit
 `/usr/local/Cellar/latex2html/2019.2/l2hconf.pm` to include the path to LaTeX:

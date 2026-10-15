@@ -157,15 +157,9 @@ class UpdatesCLI < Thor
       return
     end
 
-    logger.info('Creating a new GitHub issue')
+    title = "Documentation versions report for #{Date.today.strftime('%B %Y')}"
 
-    issue = {
-      title: "Documentation versions report for #{Date.today.strftime('%B %Y')}",
-      body: all_results_to_markdown(grouped_results, failed_results)
-    }
-    created_issue = github_post("/repos/#{UPLOAD_REPO}/issues", issue)
-
-    logger.info('Checking if the previous issue is still open')
+    logger.info('Searching for previous issues')
 
     search_params = {
       q: "Documentation versions report in:title author:#{UPLOAD_USER} is:issue repo:#{UPLOAD_REPO}",
@@ -174,7 +168,24 @@ class UpdatesCLI < Thor
     }
 
     matching_issues = github_get('/search/issues', **search_params)
-    previous_issue = matching_issues['items'].find {|item| item['number'] != created_issue['number']}
+    previous_issue = matching_issues['items'].first
+
+    # Re-use this month's issue instead of creating a new one
+    if previous_issue && previous_issue['title'] == title
+      logger.info("Commenting on this month's issue")
+      comment = {body: results_to_markdown_str(grouped_results, failed_results)}
+      created_comment = github_post("/repos/#{UPLOAD_REPO}/issues/#{previous_issue['number']}/comments", comment)
+      logger.info("Successfully uploaded the results to #{created_comment['html_url']}")
+      return
+    end
+
+    logger.info('Creating a new GitHub issue')
+
+    issue = {
+      title: title,
+      body: all_results_to_markdown(grouped_results, failed_results)
+    }
+    created_issue = github_post("/repos/#{UPLOAD_REPO}/issues", issue)
 
     if previous_issue.nil?
       logger.info('No previous issue found')
@@ -195,14 +206,18 @@ class UpdatesCLI < Thor
     end
   end
 
-  def all_results_to_markdown(grouped_results, failed_results)
+  def results_to_markdown_str(grouped_results, failed_results)
     all_results = []
     grouped_results.each do |label, results|
       all_results.push(successful_results_to_markdown(label, results))
     end
     all_results.push(failed_results_to_markdown(failed_results))
 
-    results_str = all_results.select {|result| !result.nil?}.join("\n\n")
+    all_results.select {|result| !result.nil?}.join("\n\n")
+  end
+
+  def all_results_to_markdown(grouped_results, failed_results)
+    results_str = results_to_markdown_str(grouped_results, failed_results)
     travis_str = ENV['TRAVIS'].nil? ? '' : "\n\nThis issue was created by Travis CI build [##{ENV['TRAVIS_BUILD_NUMBER']}](#{ENV['TRAVIS_BUILD_WEB_URL']})."
 
     body = <<-MARKDOWN

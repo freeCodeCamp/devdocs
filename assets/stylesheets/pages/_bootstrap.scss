@@ -17,6 +17,11 @@
   .bs-callout-danger { @extend %note-red; }
   .bs-callout > h4, .bs-callout > h5 { margin-top: .25rem; }
 
+  .bd-callout { @extend %note; }
+  .bd-callout-info { @extend %note-blue; }
+  .bd-callout-warning { @extend %note-orange; }
+  .bd-callout-danger { @extend %note-red; }
+
   .text-danger { @extend %label, %label-red; }
 
   p.bs-example {

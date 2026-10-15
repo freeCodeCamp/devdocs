@@ -1,7 +1,7 @@
 module Docs
   class Gnuplot < FileScraper
     self.type = 'gnuplot'
-    self.release = '5.4.0'
+    self.release = '6.0.5'
     self.links = {
       home: 'http://www.gnuplot.info/',
       code: 'https://sourceforge.net/projects/gnuplot/'
@@ -15,21 +15,16 @@ module Docs
 
     options[:skip] = %w(
       Copyright.html
-      External_libraries.html
-      Known_limitations.html
       Introduction.html
       About_this_document.html
-      New_features.html
-      Differences_from_version_4.html
-      Seeking_assistance.html
+      New_features_in_version_6.html
+      Seeking_assistance_Bugs.html
       Gnuplot.html
-      Deprecated_syntax.html
       Demos_Online_Examples.html
       Terminal_types.html
       Plotting_styles.html
       Commands.html
       Contents.html
-      Bugs.html
       Index.html
     )
 
