@@ -10,10 +10,23 @@ module Docs
 
     # https://github.com/twbs/bootstrap/blob/master/LICENSE
     options[:attribution] = <<-HTML
-      &copy; 2011&ndash;2023 The Bootstrap Authors<br>
+      &copy; 2011&ndash;2026 The Bootstrap Authors<br>
       Code licensed under the MIT License.<br>
       Documentation licensed under the Creative Commons Attribution License v3.0.
     HTML
+
+    version '6' do
+      self.release = '6.0.0-alpha.1'
+      self.base_url = 'https://getbootstrap.com/docs/6.0/'
+      self.root_path = 'getting-started/install/'
+
+      html_filters.push 'bootstrap/entries_v6', 'bootstrap/clean_html_v6'
+
+      options[:skip_patterns] = [
+        /\Aabout\//, /\Aexamples\//
+      ]
+
+    end
 
     version '5' do
       self.release = '5.3'
