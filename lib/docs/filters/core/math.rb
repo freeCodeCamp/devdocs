@@ -4,15 +4,20 @@ module Docs
   # Replaces Sphinx/MathJax math markup with native MathML, rendered at
   # scrape time by MathRenderer (KaTeX):
   # <span class="math">\(...\)</span> and <div class="math">\[...\]</div>
+  # Display environments such as align* are emitted without delimiters.
   class MathFilter < Filter
     TEX_DELIMITERS_RGX = /\\\((.*?)\\\)|\\\[(.*?)\\\]/m
+    TEX_ENVIRONMENT_RGX = /\A\s*\\begin\{(\w+\*?)\}.*\\end\{\1\}\s*\z/m
 
     def call
       items = css('span.math', 'div.math').filter_map do |node|
         node.css('.eqno').remove
         content = node.content
-        next unless content =~ TEX_DELIMITERS_RGX
-        [node, split(content)]
+        if content =~ TEX_DELIMITERS_RGX
+          [node, split(content)]
+        elsif content =~ TEX_ENVIRONMENT_RGX
+          [node, [[content.strip, true]]]
+        end
       end
       render(items)
       doc

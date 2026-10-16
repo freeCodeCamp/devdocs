@@ -52,6 +52,14 @@ class MathFilterTest < Minitest::Spec
       assert_match %r{\Asee <math.+</math> and <math.+</math>\z}, filter_output_string
     end
 
+    it "renders a bare environment as display math" do
+      @body = %(<div class="math notranslate nohighlight">\n\\begin{align*} a &amp;= b \\\\ c &amp;= d \\end{align*}</div>)
+      assert_equal 1, math_nodes.length
+      assert_equal 'block', math_nodes.first['display']
+      assert_equal '\begin{align*} a &= b \\\\ c &= d \end{align*}', tex_of(math_nodes.first)
+      assert_includes math_nodes.first.to_s, '<mtable'
+    end
+
     it "keeps the equation id and drops the equation number" do
       @body = '<div class="math" id="equation-foo"><span class="eqno">(1)<a class="headerlink" href="#equation-foo">¶</a></span>\[a\]</div>'
       assert_equal 'equation-foo', math_nodes.first['id']
