@@ -3,7 +3,7 @@ module Docs
     self.name = 'scikit-learn'
     self.slug = 'scikit_learn'
     self.type = 'sphinx'
-    self.release = '1.9.0'
+    self.release = '1.9.1'
     v = self.release[/\d+\.\d+/]
     self.base_url = "https://scikit-learn.org/#{v}/"
     self.root_path = 'index.html'
