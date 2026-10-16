@@ -1,12 +1,4 @@
-import { app } from "../app/app.js";
-import { config } from "../app/config.js";
-import {
-  SettingsStore,
-  expireCookie,
-  settingsStore,
-} from "./settings_store.js";
 import { $ } from "./util.js";
-import { Notif } from "../views/misc/notif.js";
 
 /*
  * Based on github.com/visionmedia/page.js
@@ -76,7 +68,6 @@ import { Notif } from "../views/misc/notif.js";
  * @property {(context: Context) => string | undefined} dispatch Runs the context through the registered routes, returning a redirect.
  * @property {() => boolean} canGoBack
  * @property {() => boolean} canGoForward
- * @property {(fn: () => void) => void} track Registers an analytics callback, run on every navigation once consent is given.
  */
 
 let running = false;
@@ -145,7 +136,6 @@ page.show = function (path, state) {
   } else {
     context.pushState();
     updateCanonicalLink();
-    track();
   }
   return context;
 };
@@ -166,9 +156,6 @@ page.replace = function (path, state, skipDispatch, init) {
   }
   context.replaceState();
   updateCanonicalLink();
-  if (!skipDispatch) {
-    track();
-  }
   return context;
 };
 
@@ -511,62 +498,4 @@ var updateCanonicalLink = function () {
     "href",
     `https://${location.host}${location.pathname}`,
   );
-};
-
-/** @type {Array<() => void>} */
-const trackers = [];
-
-/** @param {() => void} fn */
-page.track = function (fn) {
-  trackers.push(fn);
-};
-
-var track = function () {
-  if (config.env !== "production") {
-    return;
-  }
-  if (navigator.doNotTrack === "1") {
-    return;
-  }
-  if (navigator.globalPrivacyControl) {
-    return;
-  }
-
-  const consentGiven = settingsStore.get("analyticsConsent");
-
-  if (consentGiven === 1) {
-    for (var tracker of trackers) {
-      tracker.call(undefined);
-    }
-  } else if (consentGiven === undefined && !consentAsked()) {
-    new Notif("AnalyticsConsent", { autoHide: null });
-  }
-};
-
-/**
- * @returns {boolean} Whether the user has been asked for consent already, and
- *   marks them as asked if not. Kept in sessionStorage, so the question comes
- *   back on the next visit but not on the next page load.
- */
-var consentAsked = function () {
-  try {
-    if (sessionStorage.getItem(SettingsStore.ASKED_KEY)) {
-      return true;
-    }
-    sessionStorage.setItem(SettingsStore.ASKED_KEY, "1");
-  } catch (error) {}
-  return false;
-};
-
-/**
- * Expires the analytics cookies, which are the ones the vendors set with a
- * single leading `_`. The app has none of its own.
- */
-export const resetAnalytics = function () {
-  for (var cookie of document.cookie.split(/;\s?/)) {
-    var name = cookie.split("=")[0];
-    if (name[0] === "_" && name[1] !== "_") {
-      expireCookie(name);
-    }
-  }
 };
