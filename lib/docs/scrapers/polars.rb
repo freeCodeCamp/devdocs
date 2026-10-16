@@ -2,7 +2,7 @@ module Docs
   class Polars < UrlScraper
     self.name = 'Polars'
     self.type = 'sphinx'
-    self.release = '1.44.1'
+    self.release = '2.0.0'
     self.base_url = 'https://docs.pola.rs/api/python/stable/reference/'
     self.root_path = 'index.html'
     self.links = {
