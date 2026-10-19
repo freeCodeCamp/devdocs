@@ -42,6 +42,32 @@ module Docs
       ]
     end
 
+    version '13' do
+      self.release = '13.37.0'
+      self.base_url = "https://api.laravel.com/docs/#{version}.x/index.html"
+      self.base_urls = [
+        "https://laravel.com/framework/docs/#{version}.x/",
+        "https://api.laravel.com/docs/#{version}.x/",
+      ]
+
+      # Prevent infinite replacement while rewriting from unversioned url to versioned
+      options[:fix_urls] = ->(url) do
+        url.sub(
+          %r{\Ahttps://laravel\.com/framework/docs/(?!#{version}\.x/)},
+          'https://laravel.com/framework/docs/13.x/'
+        )
+      end
+    end
+
+    version '12' do
+      self.release = '12.70.0'
+      self.base_url = "https://api.laravel.com/docs/#{version}.x/index.html"
+      self.base_urls = [
+        "https://laravel.com/framework/docs/#{version}.x/",
+        "https://api.laravel.com/docs/#{version}.x/",
+      ]
+    end
+
     version '11' do
       self.release = '11.51.0'
       self.base_url = "https://api.laravel.com/docs/#{version}.x/index.html"
