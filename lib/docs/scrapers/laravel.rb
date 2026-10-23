@@ -43,7 +43,7 @@ module Docs
     end
 
     version '13' do
-      self.release = '13.37.0'
+      self.release = '13.38.0'
       self.base_url = "https://api.laravel.com/docs/#{version}.x/index.html"
       self.base_urls = [
         "https://laravel.com/framework/docs/#{version}.x/",
@@ -60,7 +60,7 @@ module Docs
     end
 
     version '12' do
-      self.release = '12.70.0'
+      self.release = '12.70.1'
       self.base_url = "https://api.laravel.com/docs/#{version}.x/index.html"
       self.base_urls = [
         "https://laravel.com/framework/docs/#{version}.x/",
