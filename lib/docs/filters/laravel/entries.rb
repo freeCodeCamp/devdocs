@@ -1,4 +1,18 @@
 module Docs
+  class EntryIndex
+    def types_as_json
+      @types.values
+        .sort_by { |type| natural_sort_key(type.name) }
+        .map(&:as_json)
+    end
+
+    def natural_sort_key(name)
+      name.downcase.scan(/\d+|\D+/).map do |part|
+        part.match?(/\A\d+\z/) ? [0, part.to_i] : [1, part]
+      end
+    end
+  end
+
   class Laravel
     class EntriesFilter < Docs::EntriesFilter
       def get_name
@@ -12,10 +26,28 @@ module Docs
       end
 
       def get_type
-        unless api_page?
-          link = at_css(".docs_sidebar li a[href='#{result[:path].split('/').last}']")
-          heading = link.ancestors('li').last.at_css('> h2')
-          return heading ? "Guides: #{heading.content.strip}" : 'Guides'
+        if docs_page? and (version.to_i > 5 or is_version_5)
+          guide_sections = css(".docs_sidebar > ul > li")
+          active_link = guide_sections.at_css("li.active a")
+
+          active_section = active_link.ancestors('li.sub--on')
+          index = guide_sections.index(active_section.first)
+
+          heading = active_section.at_css('> h2')
+
+          return heading ? "Guides: #{index} - #{heading.content.strip}" : 'Guides'
+        end
+
+        if docs_page? and (version === "4.2")
+          guide_sections = css(".docs_sidebar > ul > li")
+          active_link = guide_sections.at_css("ul > li > a[href$='#{result[:path]}']")
+
+          active_section = active_link.ancestors('li')
+          index = guide_sections.index(active_section.last)
+
+          heading = active_section.at_css('> h2')
+
+          return heading ? "Guides: #{index} - #{heading.content.strip}" : 'Guides'
         end
 
         type = slug.remove(%r{api/[1-9]?\d.[0-9x]/}).remove('Illuminate/').remove(/\/\w+?\z/).gsub('/', '\\')
@@ -47,11 +79,19 @@ module Docs
       end
 
       def api_page?
-        subpath.start_with?('/api')
+        current_url.origin.start_with?('https://api.laravel.com')
+      end
+
+      def docs_page?
+        current_url.origin.start_with?('https://laravel.com')
       end
 
       def include_default_entry?
         !subpath.end_with?('classes.html')
+      end
+
+      def is_version_5
+        version.match?(/5\.[0-8]/)
       end
     end
   end
