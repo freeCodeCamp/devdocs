@@ -1,17 +1,21 @@
 // @ts-check
 
-import { config } from "../../app/config.js";
+import { app } from "../../app/app.js";
 import { $ } from "../../lib/util.js";
 import { View } from "../view.js";
 
 /**
  * A list too long to render at once: only a window of `PER_PAGE` rows is in
- * the document, with links at either end to extend it.
+ * the document, with links at either end to extend it. The user sets
+ * `PER_PAGE`, or turns paging off with 0.
  *
  * Subclasses implement `render(dataSlice)`.
  */
 export class PaginatedList extends View {
-  static PER_PAGE = config.max_results;
+  /** @returns {number} */
+  static get PER_PAGE() {
+    return Number(app.settings.get("listPageSize")) || Infinity;
+  }
 
   /** @param {unknown[]} data Every row, rendered a page at a time. */
   constructor(data) {

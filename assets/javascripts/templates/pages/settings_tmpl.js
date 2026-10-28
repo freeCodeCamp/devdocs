@@ -85,6 +85,12 @@ export const settingsPage = (settings) => `\
       }>Disable Language-specific Doc Favicons
       <small>With this checked, we will display the default DevDocs icon for all pages.</small>
     </label>
+    <label class="_settings-label">
+      <input type="number" step="1" form="settings" name="listPageSize" min="0" value="${
+        settings.listPageSize
+      }"> Number of entries shown in the sidebar before &ldquo;Show more&hellip;&rdquo;
+      <small>0 shows all entries.</small>
+    </label>
   </div>
 </div>
 

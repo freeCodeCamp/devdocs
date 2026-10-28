@@ -33,6 +33,8 @@ import { $ } from "../lib/util.js";
  * @property {number | string} spaceTimeout How long after typing space stops
  *   scrolling, in seconds. Not an integer, so it comes back as a string.
  * @property {StoredFlag} noDocSpecificIcon
+ * @property {number} listPageSize How many entries a sidebar list shows before
+ *   "Show more…"; 0 shows them all.
  * @property {StoredFlag} autoLatestVersion
  * @property {number} version The build the user last saw.
  * @property {StoredFlag} fastScroll
@@ -72,6 +74,7 @@ export class Settings {
     "spaceScroll",
     "spaceTimeout",
     "noDocSpecificIcon",
+    "listPageSize",
   ];
 
   static INTERNAL_KEYS = ["count", "schema", "version", "news"];
@@ -97,6 +100,7 @@ export class Settings {
     spaceTimeout: 0.5,
     noDocSpecificIcon: false,
     autoLatestVersion: false,
+    listPageSize: config.max_results,
   };
 
   /** Opens the store and starts following the system colour scheme. */
