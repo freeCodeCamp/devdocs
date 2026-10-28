@@ -28,6 +28,7 @@ body {
   font-size: 1em;
   font-weight: normal;
   font-family: $baseFont;
+  font-family: var(--baseFont);
   line-height: 1.7;
   color: $textColor; // fallback to show the error message to browsers that don't support CSS variables.
   color: var(--textColor);

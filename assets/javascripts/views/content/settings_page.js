@@ -40,6 +40,8 @@ export class SettingsPage extends View {
     settings.spaceTimeout = app.settings.get("spaceTimeout");
     settings.noDocSpecificIcon = app.settings.get("noDocSpecificIcon");
     settings.listPageSize = app.settings.get("listPageSize");
+    settings.baseFont = app.settings.get("baseFont");
+    settings.monoFont = app.settings.get("monoFont");
     settings.autoSupported = app.settings.autoSupported;
     for (var layout of Settings.LAYOUTS) {
       settings[layout] = app.settings.hasLayout(layout);
@@ -160,6 +162,10 @@ export class SettingsPage extends View {
         break;
       case "spaceTimeout":
         this.setScrollTimeout(input.value);
+        break;
+      case "baseFont":
+      case "monoFont":
+        app.settings.setFont(input.name, input.value);
         break;
       case "listPageSize":
         app.settings.set("listPageSize", Math.max(0, parseInt(input.value) || 0));

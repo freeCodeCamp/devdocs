@@ -33,6 +33,8 @@ import { $ } from "../lib/util.js";
  * @property {number | string} spaceTimeout How long after typing space stops
  *   scrolling, in seconds. Not an integer, so it comes back as a string.
  * @property {StoredFlag} noDocSpecificIcon
+ * @property {string} baseFont A CSS font family list for the text; unset uses the default.
+ * @property {string} monoFont A CSS font family list for code; unset uses the default.
  * @property {number} listPageSize How many entries a sidebar list shows before
  *   "Show more…"; 0 shows them all.
  * @property {StoredFlag} autoLatestVersion
@@ -75,9 +77,13 @@ export class Settings {
     "spaceTimeout",
     "noDocSpecificIcon",
     "listPageSize",
+    "baseFont",
+    "monoFont",
   ];
 
   static INTERNAL_KEYS = ["count", "schema", "version", "news"];
+
+  static FONTS = /** @type {const} */ (["baseFont", "monoFont"]);
 
   static LAYOUTS = [
     "_max-width",
@@ -288,7 +294,41 @@ export class Settings {
     for (var layout of Settings.LAYOUTS) {
       this.toggleLayout(layout, this.hasLayout(layout));
     }
+    for (var font of Settings.FONTS) {
+      this.applyFont(font);
+    }
     this.initSidebarWidth();
+  }
+
+  /**
+   * Stores a font and applies it.
+   *
+   * @param {"baseFont" | "monoFont"} key
+   * @param {string} value A CSS font family list; empty for the default.
+   */
+  setFont(key, value) {
+    value = value.trim();
+    if (value) {
+      this.set(key, value);
+    } else {
+      this.del(key);
+    }
+    this.applyFont(key);
+  }
+
+  /**
+   * Overrides the stylesheet's font with the stored one, if any.
+   *
+   * @param {"baseFont" | "monoFont"} key
+   */
+  applyFont(key) {
+    const value = this.get(key);
+    const { style } = document.documentElement;
+    if (value) {
+      style.setProperty(`--${key}`, value);
+    } else {
+      style.removeProperty(`--${key}`);
+    }
   }
 
   /** @param {string} theme `"auto"`, `"dark"` or `"default"`. */

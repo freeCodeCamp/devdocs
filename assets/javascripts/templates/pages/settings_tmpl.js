@@ -1,5 +1,7 @@
 // @ts-check
 
+import { $ } from "../../lib/util.js";
+
 /**
  * One radio button in the theme picker.
  *
@@ -39,6 +41,23 @@ export const settingsPage = (settings) => `\
     }
     ${themeOption({ label: "Light", value: "default" }, settings)}
     ${themeOption({ label: "Dark", value: "dark" }, settings)}
+  </div>
+</div>
+
+<div class="_settings-fieldset">
+  <h2 class="_settings-legend">Fonts:</h2>
+  <div class="_settings-inputs">
+    <label class="_settings-label">
+      <input type="text" form="settings" name="baseFont" placeholder="system-ui, sans-serif" value="${$.escape(
+        String(settings.baseFont || ""),
+      )}"> Text font
+    </label>
+    <label class="_settings-label">
+      <input type="text" form="settings" name="monoFont" placeholder="ui-monospace, monospace" value="${$.escape(
+        String(settings.monoFont || ""),
+      )}"> Code font
+      <small>Any font installed on your device, as a CSS font-family list. Leave empty for the default.</small>
+    </label>
   </div>
 </div>
 
