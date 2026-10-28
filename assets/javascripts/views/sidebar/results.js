@@ -101,6 +101,23 @@ export class Results extends View {
     }
   }
 
+  /**
+   * Focuses the result last opened or focused, or else the first one.
+   *
+   * @returns {boolean} Whether there was a result to focus.
+   */
+  refocus() {
+    const el =
+      this.listFocus.getCursor() ||
+      /** @type {HTMLElement | undefined} */ (this.findByClass("_list-result"));
+    if (!el) {
+      return false;
+    }
+    this.listFocus.blur();
+    this.listFocus.focus(el);
+    return true;
+  }
+
   /** Follows the first result. */
   openFirst() {
     /** @type {HTMLElement | null} */ (this.el.firstElementChild)?.click();

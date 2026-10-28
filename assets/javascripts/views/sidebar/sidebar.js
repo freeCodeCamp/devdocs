@@ -30,6 +30,7 @@ export class Sidebar extends View {
 
   static shortcuts = {
     altR: "onAltR",
+    altSlash: "onAltSlash",
     escape: "onEscape",
   };
 
@@ -227,6 +228,21 @@ export class Sidebar extends View {
     this.reset();
     this.docList.reset({ revealCurrent: true });
     this.display();
+  }
+
+  /**
+   * Shows the search results again, e.g. after the sidebar hid itself on
+   * opening one. Searches again if they are gone.
+   */
+  onAltSlash() {
+    if (!this.search.input.value) {
+      this.display();
+      this.search.input.focus();
+    } else if (this.view === this.results && this.results.refocus()) {
+      this.display();
+    } else {
+      this.search.search();
+    }
   }
 
   /** Clears the search. */

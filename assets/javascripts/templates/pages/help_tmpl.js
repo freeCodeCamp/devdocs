@@ -94,6 +94,9 @@ export const helpPage = function () {
   <dt class="_shortcuts-dt">
     <code class="_shortcut-code">alt + r</code>
   <dd class="_shortcuts-dd">Reveal current page in sidebar
+  <dt class="_shortcuts-dt">
+    <code class="_shortcut-code">alt + /</code>
+  <dd class="_shortcuts-dd">Show search results again
 </dl>
 <h3 class="_shortcuts-title">Browsing</h3>
 <dl class="_shortcuts-dl">

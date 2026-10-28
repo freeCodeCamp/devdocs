@@ -343,6 +343,9 @@ export class Shortcuts extends Events {
       case "KeyS":
         this.trigger("altS");
         return false;
+      case "Slash":
+        this.trigger("altSlash");
+        return false;
     }
   }
 

@@ -79,6 +79,15 @@ test("the alt chords go by the key's position, not the character it types", () =
   assert.equal(triggered, true);
 });
 
+test("alt + / shows the search results again", () => {
+  const shortcuts = new Shortcuts();
+  let triggered = false;
+  shortcuts.on("altSlash", () => (triggered = true));
+
+  assert.equal(press(shortcuts, "÷", { code: "Slash", altKey: true }), true);
+  assert.equal(triggered, true);
+});
+
 test("typing a letter or a digit starts a search, whatever the script", () => {
   const shortcuts = new Shortcuts();
   let typed = 0;
