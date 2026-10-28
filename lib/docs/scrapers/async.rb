@@ -1,5 +1,6 @@
 module Docs
   class Async < UrlScraper
+    self.category = 'js/lib'
     self.type = 'async'
     self.release = '3.2.0'
     self.base_url = 'https://caolan.github.io/async/v3/'

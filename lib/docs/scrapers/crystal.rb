@@ -1,5 +1,6 @@
 module Docs
   class Crystal < UrlScraper
+    self.category = 'lang'
     include MultipleBaseUrls
     self.type = 'crystal'
     self.release = '1.21.1'

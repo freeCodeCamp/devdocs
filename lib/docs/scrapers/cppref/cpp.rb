@@ -1,5 +1,6 @@
 module Docs
   class Cpp < Cppref
+    self.category = 'c'
     self.name = 'C++'
     self.slug = 'cpp'
     self.base_url = 'https://en.cppreference.com/cpp/'

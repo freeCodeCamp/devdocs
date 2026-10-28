@@ -1,5 +1,6 @@
 module Docs
   class Kubernetes < UrlScraper
+    self.category = 'ops/container'
     self.name = 'Kubernetes'
     self.type = 'kubernetes'
     self.root_path = '/'

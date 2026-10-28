@@ -1,5 +1,6 @@
 module Docs
   class XsltXpath < Mdn
+    self.category = 'web'
     # release = '2022-09-06'
     self.name = 'XSLT & XPath'
     self.slug = 'xslt_xpath'

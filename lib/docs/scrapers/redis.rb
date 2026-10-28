@@ -1,5 +1,6 @@
 module Docs
   class Redis < UrlScraper
+    self.category = 'db'
     self.type = 'redis'
     self.release = '7.0.10'
     self.base_url = 'https://redis.io/commands'

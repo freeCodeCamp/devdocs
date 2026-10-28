@@ -1,5 +1,6 @@
 module Docs
     class Nextjs < UrlScraper
+      self.category = 'js/framework'
         self.name = 'Next.js'
         self.slug = 'nextjs'
         self.type = 'simple'

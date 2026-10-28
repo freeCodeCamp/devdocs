@@ -1,5 +1,6 @@
 module Docs
   class Zsh < UrlScraper
+    self.category = 'shell'
     self.type = 'zsh'
     self.release = '5.9.0'
     self.base_url = 'https://zsh.sourceforge.io/Doc/Release/'

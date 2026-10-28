@@ -1,5 +1,6 @@
 module Docs
   class Relay < UrlScraper
+    self.category = 'js/framework'
     self.type = 'simple'
     self.root_path = 'introduction-to-relay'
     self.links = {

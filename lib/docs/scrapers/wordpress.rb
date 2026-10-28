@@ -1,5 +1,6 @@
 module Docs
   class Wordpress < UrlScraper
+    self.category = 'php/framework'
     self.name = 'WordPress'
     self.type = 'wordpress'
     self.release = '7.0'

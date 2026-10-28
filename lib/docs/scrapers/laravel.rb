@@ -1,5 +1,6 @@
 module Docs
   class Laravel < UrlScraper
+    self.category = 'php/framework'
     self.type = 'laravel'
     self.base_url = 'https://laravel.com'
     self.links = {

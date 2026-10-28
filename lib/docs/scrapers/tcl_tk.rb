@@ -1,5 +1,6 @@
 module Docs
   class TclTk < UrlScraper
+    self.category = 'tcl'
     self.name = 'Tcl/Tk'
     self.type = 'tcl_tk'
     self.slug = 'tcl_tk'

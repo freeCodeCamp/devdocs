@@ -1,5 +1,6 @@
 module Docs
   class Astro < UrlScraper
+    self.category = 'js/framework'
     self.name = 'Astro'
     self.slug = 'astro'
     self.type = 'simple'

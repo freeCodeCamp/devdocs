@@ -1,5 +1,6 @@
 module Docs
   class Octave < UrlScraper
+    self.category = 'lang'
     self.name = 'Octave'
     self.type = 'octave'
     self.root_path = 'index.html'

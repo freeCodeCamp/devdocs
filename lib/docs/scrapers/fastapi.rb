@@ -1,5 +1,6 @@
 module Docs
   class Fastapi < UrlScraper
+    self.category = 'py/web'
     self.name = 'FastAPI'
     self.type = 'fastapi'
     self.release = '0.141.1'

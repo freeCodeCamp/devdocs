@@ -1,5 +1,6 @@
 module Docs
   class Sinon < UrlScraper
+    self.category = 'js/testing'
     self.name = 'Sinon.JS'
     self.slug = 'sinon'
     self.type = 'sinon'

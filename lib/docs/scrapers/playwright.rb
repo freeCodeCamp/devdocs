@@ -1,5 +1,6 @@
 module Docs
   class Playwright < UrlScraper
+    self.category = 'js/testing'
     self.name = 'Playwright'
     self.type = 'simple'
     self.release = '1.63.0'

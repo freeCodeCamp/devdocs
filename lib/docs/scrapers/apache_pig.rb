@@ -1,5 +1,6 @@
 module Docs
   class ApachePig < UrlScraper
+    self.category = 'db'
     self.name = 'Apache Pig'
     self.slug = 'apache_pig'
     self.type = 'simple'

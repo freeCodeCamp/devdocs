@@ -1,5 +1,6 @@
 module Docs
   class Reactivex < UrlScraper
+    self.category = 'js/lib'
     self.name = 'ReactiveX'
     self.type = 'reactivex'
     self.base_url = 'http://reactivex.io/'

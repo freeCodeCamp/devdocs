@@ -1,6 +1,7 @@
 module Docs
 
   class Fluture < Github
+    self.category = 'js/lib'
     self.name = "Fluture"
     self.slug = "fluture"
     self.type = "fluture"

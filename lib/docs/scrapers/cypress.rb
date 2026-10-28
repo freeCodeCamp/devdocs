@@ -2,6 +2,7 @@
 
 module Docs
   class Cypress < UrlScraper
+    self.category = 'js/testing'
     self.name = 'Cypress'
     self.type = 'cypress'
     self.release = '9.4.1'

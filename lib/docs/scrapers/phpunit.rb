@@ -1,5 +1,6 @@
 module Docs
   class Phpunit < UrlScraper
+    self.category = 'php/testing'
     self.name = 'PHPUnit'
     self.type = 'phpunit'
     self.root_path = 'index.html'

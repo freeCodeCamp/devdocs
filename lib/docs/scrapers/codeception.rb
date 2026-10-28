@@ -1,5 +1,6 @@
 module Docs
   class Codeception < UrlScraper
+    self.category = 'php/testing'
     self.name = 'Codeception'
     self.type = 'codeception'
     self.release = '4.1.22'

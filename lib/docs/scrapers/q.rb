@@ -1,5 +1,6 @@
 module Docs
   class Q < UrlScraper
+    self.category = 'js/lib'
     self.name = 'Q'
     self.release = '1.5.1'
     self.base_url = 'https://github.com/kriskowal/q/wiki/'

@@ -1,6 +1,7 @@
 module Docs
 
   class Hapi < UrlScraper
+    self.category = 'js/server'
     self.name = "Hapi"
     self.slug = "hapi"
     self.type = "hapi"

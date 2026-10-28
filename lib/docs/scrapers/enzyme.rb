@@ -1,5 +1,6 @@
 module Docs
   class Enzyme < UrlScraper
+    self.category = 'js/testing'
     self.type = 'simple'
     self.release = '3.11.0'
     self.base_url = 'https://enzymejs.github.io/enzyme/'

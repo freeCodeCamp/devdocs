@@ -2,6 +2,7 @@ require 'json'
 
 module Docs
   class Angular < UrlScraper
+    self.category = 'js/framework'
     self.type = 'angular'
     self.links = {
       home: 'https://angular.dev/',

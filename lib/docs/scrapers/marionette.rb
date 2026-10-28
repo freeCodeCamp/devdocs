@@ -1,5 +1,6 @@
 module Docs
   class Marionette < UrlScraper
+    self.category = 'js/framework'
     self.name = 'Marionette.js'
     self.slug = 'marionette'
     self.type = 'simple'

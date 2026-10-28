@@ -1,5 +1,6 @@
 module Docs
   class Fish < UrlScraper
+    self.category = 'shell'
     self.name = 'Fish'
     self.type = 'simple'
     self.root_path = 'index.html'

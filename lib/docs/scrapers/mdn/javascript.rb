@@ -1,5 +1,6 @@
 module Docs
   class Javascript < MdnGit
+    self.category = 'js'
     # release = '2026-09-14'
     self.name = 'JavaScript'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference'

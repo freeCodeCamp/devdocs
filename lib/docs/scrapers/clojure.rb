@@ -1,5 +1,6 @@
 module Docs
   class Clojure < UrlScraper
+    self.category = 'jvm'
     self.type = 'clojure'
     self.root_path = 'api-index.html'
     self.links = {

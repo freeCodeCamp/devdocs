@@ -1,5 +1,6 @@
 module Docs
   class Codeigniter < UrlScraper
+    self.category = 'php/framework'
     self.name = 'CodeIgniter'
     self.type = 'sphinx'
     self.root_path = 'index.html'

@@ -1,5 +1,6 @@
 module Docs
   class ReactNative < UrlScraper
+    self.category = 'js/framework'
     self.name = 'React Native'
     self.slug = 'react_native'
     self.type = 'react_native'

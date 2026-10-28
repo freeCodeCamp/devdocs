@@ -1,5 +1,6 @@
 module Docs
   class Dom < MdnGit
+    self.category = 'web'
     # release = '2026-09-14'
     self.name = 'Web APIs'
     self.slug = 'dom'

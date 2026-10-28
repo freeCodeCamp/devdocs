@@ -1,5 +1,6 @@
 module Docs
   class Drupal < UrlScraper
+    self.category = 'php/framework'
     self.type = 'drupal'
     self.base_url = 'https://api.drupal.org/api/drupal/'
     self.links = {

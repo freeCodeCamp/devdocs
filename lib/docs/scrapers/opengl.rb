@@ -1,5 +1,6 @@
 module Docs
   class Opengl < FileScraper
+    self.category = 'graphics'
     self.type = 'simple'
     self.name = 'OpenGL'
     self.root_path = 'index.php'

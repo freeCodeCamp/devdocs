@@ -1,5 +1,6 @@
 module Docs
   class Haskell < FileScraper
+    self.category = 'lang'
     self.name = 'Haskell'
     self.type = 'haskell'
     self.root_path = 'users_guide/index.html'

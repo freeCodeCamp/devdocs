@@ -1,5 +1,6 @@
 module Docs
   class Socketio < UrlScraper
+    self.category = 'js/lib'
     self.name = 'Socket.IO'
     self.slug = 'socketio'
     self.type = 'sphinx'

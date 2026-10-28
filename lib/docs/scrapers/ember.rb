@@ -2,6 +2,7 @@
 
 module Docs
   class Ember < UrlScraper
+    self.category = 'js/framework'
     include MultipleBaseUrls
 
     self.name = 'Ember.js'

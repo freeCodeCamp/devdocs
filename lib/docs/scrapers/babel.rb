@@ -1,5 +1,6 @@
 module Docs
   class Babel < UrlScraper
+    self.category = 'js/tooling'
     self.type = 'simple'
     self.base_url = 'https://babeljs.io/docs/'
     self.links = {

@@ -1,5 +1,6 @@
 module Docs
   class Grunt < UrlScraper
+    self.category = 'js/tooling'
     self.name = 'Grunt'
     self.type = 'simple'
     self.release = '1.5.0'

@@ -2,6 +2,7 @@
 
 module Docs
   class Qunit < UrlScraper
+    self.category = 'js/testing'
     self.name = 'QUnit'
     self.type = 'qunit'
     self.release = '2.26.0'

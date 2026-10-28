@@ -1,5 +1,6 @@
 module Docs
   class MomentTimezone < UrlScraper
+    self.category = 'js/lib'
     self.name = 'Moment.js Timezone'
     self.slug = 'moment_timezone'
     self.type = 'moment'

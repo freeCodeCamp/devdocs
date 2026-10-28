@@ -1,5 +1,6 @@
 module Docs
   class Man < FileScraper
+    self.category = 'tools'
     self.name = 'Linux man pages'
     self.type = 'simple'
     self.slug = 'man'

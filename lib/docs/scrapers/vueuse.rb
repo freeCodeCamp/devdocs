@@ -1,5 +1,6 @@
 module Docs
   class Vueuse < UrlScraper
+    self.category = 'js/framework'
     self.name = 'VueUse'
     self.slug = 'vueuse'
     self.type = 'vueuse'

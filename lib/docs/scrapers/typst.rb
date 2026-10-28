@@ -1,5 +1,6 @@
 module Docs
   class Typst < UrlScraper
+    self.category = 'markup'
     self.type = 'simple'
     self.release = '0.15.1'
     self.base_url = 'https://typst.app/docs/reference/'

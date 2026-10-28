@@ -1,5 +1,6 @@
 module Docs
   class Ocaml < UrlScraper
+    self.category = 'lang'
     self.name = 'OCaml'
     self.type = 'ocaml'
     self.root_path = 'index.html'

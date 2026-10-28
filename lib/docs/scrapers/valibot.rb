@@ -2,6 +2,7 @@ require 'pathname'
 
 module Docs
   class Valibot < UrlScraper
+    self.category = 'js/lib'
     self.name = 'Valibot'
     self.slug = 'valibot'
     self.type = 'simple'

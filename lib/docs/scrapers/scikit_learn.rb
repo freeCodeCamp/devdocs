@@ -1,5 +1,6 @@
 module Docs
   class ScikitLearn < UrlScraper
+    self.category = 'py/data'
     self.name = 'scikit-learn'
     self.slug = 'scikit_learn'
     self.type = 'sphinx'

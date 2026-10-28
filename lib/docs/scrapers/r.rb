@@ -1,5 +1,6 @@
 module Docs
   class R < FileScraper
+    self.category = 'lang'
     self.name = 'R'
     self.slug = 'r'
     self.type = 'simple'

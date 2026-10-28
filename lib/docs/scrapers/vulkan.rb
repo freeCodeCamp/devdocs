@@ -1,5 +1,6 @@
 module Docs
   class Vulkan < UrlScraper
+    self.category = 'graphics'
     self.name = 'Vulkan'
     self.type = 'simple'
     self.release = '1.0.59'

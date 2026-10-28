@@ -1,5 +1,6 @@
 module Docs
   class Sequelize < UrlScraper
+    self.category = 'js/server'
     include MultipleBaseUrls
 
     self.name = 'Sequelize'

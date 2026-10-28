@@ -1,5 +1,6 @@
 module Docs
   class Graphite < UrlScraper
+    self.category = 'db'
     self.type = 'graphite'
     self.release = '1.1.4'
     self.base_url = 'https://graphite.readthedocs.io/en/latest/'

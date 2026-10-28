@@ -1,5 +1,6 @@
 module Docs
   class Hammerspoon < UrlScraper
+    self.category = 'lua'
     self.type = 'hammerspoon'
     self.root_path = ''
     self.links = {

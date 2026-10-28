@@ -1,5 +1,6 @@
 module Docs
   class Composer < UrlScraper
+    self.category = 'php/lib'
     self.type = 'simple'
     self.release = '2.4.1'
     self.base_url = 'https://getcomposer.org/doc/'

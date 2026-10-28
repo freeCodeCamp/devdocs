@@ -1,5 +1,6 @@
 module Docs
   class Jsdoc < UrlScraper
+    self.category = 'js/tooling'
     self.name = 'JSDoc'
     self.type = 'simple'
     self.release = '3.6.7'

@@ -1,5 +1,6 @@
 module Docs
   class Lit < UrlScraper
+    self.category = 'js/framework'
     self.name = 'Lit'
     self.slug = 'lit'
     self.type = 'lit'

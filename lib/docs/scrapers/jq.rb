@@ -1,5 +1,6 @@
 module Docs
   class Jq < UrlScraper
+    self.category = 'tools'
     self.name = 'jq'
     self.slug = 'jq'
     self.type = 'jq'

@@ -1,5 +1,6 @@
 module Docs
   class Php < FileScraper
+    self.category = 'php'
     # Downloaded from php.net/download-docs.php
     include FixInternalUrlsBehavior
 

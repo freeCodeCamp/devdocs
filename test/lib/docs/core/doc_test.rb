@@ -26,6 +26,11 @@ class DocsDocTest < Minitest::Spec
     it "sets .type" do
       assert_equal doc.type, Class.new(doc).type
     end
+
+    it "sets .category" do
+      doc.category = 'test'
+      assert_equal 'test', Class.new(doc).category
+    end
   end
 
   describe ".name" do

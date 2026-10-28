@@ -1,5 +1,6 @@
 module Docs
   class Padrino < UrlScraper
+    self.category = 'ruby/framework'
     self.slug = 'padrino'
     self.type = 'rubydoc'
     self.release = '0.15'

@@ -1,5 +1,6 @@
 module Docs
   class Sqlite < UrlScraper
+    self.category = 'db'
     self.name = 'SQLite'
     self.type = 'sqlite'
     self.release = '3.54.0'

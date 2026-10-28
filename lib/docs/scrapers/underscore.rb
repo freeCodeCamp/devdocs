@@ -1,5 +1,6 @@
 module Docs
   class Underscore < UrlScraper
+    self.category = 'js/lib'
     self.name = 'Underscore.js'
     self.slug = 'underscore'
     self.type = 'underscore'

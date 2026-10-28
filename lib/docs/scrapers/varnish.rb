@@ -1,5 +1,6 @@
 module Docs
   class Varnish < UrlScraper
+    self.category = 'ops/server'
     self.name = 'Varnish'
     self.type = 'sphinx'
 

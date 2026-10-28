@@ -1,5 +1,6 @@
 module Docs
   class Graphviz < UrlScraper
+    self.category = 'tools'
     self.name = 'Graphviz'
     self.slug = 'graphviz'
     self.type = 'simple'

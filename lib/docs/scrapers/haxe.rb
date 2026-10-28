@@ -1,5 +1,6 @@
 module Docs
   class Haxe < UrlScraper
+    self.category = 'lang'
     self.name = 'Haxe'
     self.type = 'simple'
     self.release = '4.1.3'

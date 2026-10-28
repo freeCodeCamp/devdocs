@@ -1,5 +1,6 @@
 module Docs
   class EsToolkit < FileScraper
+    self.category = 'js/lib'
     self.name = "es-toolkit"
     self.slug = "es_toolkit"
     self.type = "simple"

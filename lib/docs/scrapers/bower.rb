@@ -1,5 +1,6 @@
 module Docs
   class Bower < UrlScraper
+    self.category = 'js/tooling'
     self.name = 'Bower'
     self.type = 'simple'
     self.release = '1.8.4'

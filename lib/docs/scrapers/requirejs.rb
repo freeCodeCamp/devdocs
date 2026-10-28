@@ -1,5 +1,6 @@
 module Docs
   class Requirejs < UrlScraper
+    self.category = 'js/tooling'
     self.name = 'RequireJS'
     self.type = 'simple'
     self.release = '2.3.5'

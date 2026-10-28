@@ -1,5 +1,6 @@
 module Docs
   class DateFns < FileScraper
+    self.category = 'js/lib'
     self.name = 'date-fns'
     self.slug = 'date_fns'
     self.type = 'simple'

@@ -21,6 +21,7 @@ module Docs
           json[:attribution] = doc.options[:attribution].strip
         end
         json[:alias] = Docs.aliases[doc.slug[/^[^~]+/, 0]]
+        json[:category] = doc.category
         result << json
       end
     end

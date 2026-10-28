@@ -1,5 +1,6 @@
 module Docs
   class Modernizr < UrlScraper
+    self.category = 'js/lib'
     self.name = 'Modernizr'
     self.type = 'modernizr'
     self.release = '3.11.3'

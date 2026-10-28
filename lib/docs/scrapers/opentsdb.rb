@@ -1,5 +1,6 @@
 module Docs
   class Opentsdb < UrlScraper
+    self.category = 'db'
     self.name = 'OpenTSDB'
     self.type = 'sphinx_simple'
     self.release = '2.3.0'

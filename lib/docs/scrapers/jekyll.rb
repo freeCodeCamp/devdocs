@@ -1,5 +1,6 @@
 module Docs
   class Jekyll < UrlScraper
+    self.category = 'ruby/framework'
     self.type = 'jekyll'
     self.base_url = 'https://jekyllrb.com/docs/'
     self.root_path = 'index.html'

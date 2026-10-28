@@ -1,5 +1,6 @@
 module Docs
   class Nix < UrlScraper
+    self.category = 'tools'
     self.type = 'simple'
     self.release = '2.11.0'
     self.base_url = 'https://nixos.org/manual/'

@@ -1,5 +1,6 @@
 module Docs
   class Love < UrlScraper
+    self.category = 'lua'
     self.name = 'LÖVE'
     self.slug = 'love'
     self.type = 'love'

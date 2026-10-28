@@ -1,5 +1,6 @@
 module Docs
   class Polars < UrlScraper
+    self.category = 'py/data'
     self.name = 'Polars'
     self.type = 'sphinx'
     self.release = '1.44.1'

@@ -1,5 +1,6 @@
 module Docs
   class Pandas < FileScraper
+    self.category = 'py/data'
     self.name = 'pandas'
     self.type = 'sphinx'
     self.root_path = 'index.html'

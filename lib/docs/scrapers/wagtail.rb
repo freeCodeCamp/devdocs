@@ -1,5 +1,6 @@
 module Docs
   class Wagtail < UrlScraper
+    self.category = 'py/web'
     self.name = 'Wagtail'
     self.type = 'sphinx'
     self.root_path = 'index.html'

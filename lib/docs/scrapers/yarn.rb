@@ -1,5 +1,6 @@
 module Docs
   class Yarn < UrlScraper
+    self.category = 'js/tooling'
     self.type = 'simple'
 
     options[:root_title] = 'Yarn'

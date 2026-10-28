@@ -1,5 +1,6 @@
 module Docs
   class Sass < UrlScraper
+    self.category = 'css/preprocessor'
     self.type = 'yard'
     self.release = '1.104.0'
     self.base_url = 'https://sass-lang.com/documentation'

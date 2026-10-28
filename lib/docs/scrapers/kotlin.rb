@@ -1,5 +1,6 @@
 module Docs
   class Kotlin < UrlScraper
+    self.category = 'jvm'
     self.type = 'kotlin'
     self.base_url = 'https://kotlinlang.org/'
     self.root_path = 'api/latest/jvm/stdlib/index.html'

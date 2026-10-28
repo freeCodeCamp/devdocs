@@ -1,5 +1,6 @@
 module Docs
   class Terraform < UrlScraper
+    self.category = 'ops/config'
     self.name = 'Terraform'
     self.type = 'terraform'
     self.release = '1.15.8'

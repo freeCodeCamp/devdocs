@@ -1,5 +1,6 @@
 module Docs
   class Threejs < UrlScraper
+    self.category = 'js/graphics'
     self.name = 'Three.js'
     self.type = 'simple'
     self.slug = 'threejs'

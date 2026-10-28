@@ -1,5 +1,6 @@
 module Docs
   class SaltStack < UrlScraper
+    self.category = 'ops/config'
     self.type = 'simple'
     self.slug = 'saltstack'
     self.release = '3003'

@@ -1,5 +1,6 @@
 module Docs
   class Gtk < UrlScraper
+    self.category = 'c/lib'
     self.name = 'GTK'
     self.slug = 'gtk'
     self.type = 'gtk'

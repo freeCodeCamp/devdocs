@@ -1,5 +1,6 @@
 module Docs
   class Webpack < UrlScraper
+    self.category = 'js/tooling'
     self.name = 'webpack'
     self.type = 'webpack'
 

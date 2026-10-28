@@ -1,5 +1,6 @@
 module Docs
   class VueRouter < UrlScraper
+    self.category = 'js/framework'
     self.name = 'Vue Router'
     self.slug = 'vue_router'
     self.type = 'simple'

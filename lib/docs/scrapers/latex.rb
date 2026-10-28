@@ -1,6 +1,7 @@
 # coding: utf-8
 module Docs
   class Latex < UrlScraper
+    self.category = 'markup'
     self.name = 'LaTeX'
     self.slug = 'latex'
     self.type = 'simple'

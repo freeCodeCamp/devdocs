@@ -1,5 +1,6 @@
 module Docs
   class ReactRouter < UrlScraper
+    self.category = 'js/framework'
     self.name = 'React Router'
     self.slug = 'react_router'
     self.type = 'simple'

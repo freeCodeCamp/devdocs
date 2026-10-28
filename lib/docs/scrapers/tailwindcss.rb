@@ -1,5 +1,6 @@
 module Docs
   class Tailwindcss < UrlScraper
+    self.category = 'css/framework'
     self.name = 'Tailwind CSS'
     self.type = 'tailwindcss'
     self.slug = 'tailwindcss'

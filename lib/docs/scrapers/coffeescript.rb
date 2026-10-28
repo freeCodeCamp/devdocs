@@ -1,5 +1,6 @@
 module Docs
   class Coffeescript < UrlScraper
+    self.category = 'js'
     self.name = 'CoffeeScript'
     self.type = 'coffeescript'
     self.links = {

@@ -1,5 +1,6 @@
 module Docs
   class PointCloudLibrary < UrlScraper
+    self.category = 'c/lib'
     self.name = 'PointCloudLibrary'
     self.type = 'point_cloud_library'
     self.slug = 'point_cloud_library'

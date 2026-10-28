@@ -1,5 +1,6 @@
 module Docs
   class Pygame < UrlScraper
+    self.category = 'py/lib'
     self.type = 'pygame'
     self.release = '2.4.0'
     self.base_url = 'https://www.pygame.org/docs/'

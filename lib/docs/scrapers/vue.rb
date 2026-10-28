@@ -1,5 +1,6 @@
 module Docs
   class Vue < UrlScraper
+    self.category = 'js/framework'
     self.name = 'Vue'
     self.slug = 'vue'
     self.type = 'vue'

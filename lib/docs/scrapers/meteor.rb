@@ -1,5 +1,6 @@
 module Docs
   class Meteor < UrlScraper
+    self.category = 'js/framework'
     include MultipleBaseUrls
 
     self.type = 'meteor'

@@ -1,5 +1,6 @@
 module Docs
   class Electron < UrlScraper
+    self.category = 'js/runtime'
     self.type = 'simple'
     self.base_url = 'https://www.electronjs.org/docs/latest'
     self.release = '20.0.0'

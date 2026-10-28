@@ -1,5 +1,6 @@
 module Docs
   class Yii < UrlScraper
+    self.category = 'php/framework'
     self.type = 'yii'
 
     options[:attribution] = <<-HTML

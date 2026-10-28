@@ -1,5 +1,6 @@
 module Docs
   class Cmake < UrlScraper
+    self.category = 'tools/build'
     self.name = 'CMake'
     self.type = 'sphinx_simple'
     self.links = {

@@ -1,5 +1,6 @@
 module Docs
   class Cyclejs < UrlScraper
+    self.category = 'js/framework'
     self.name = 'Cycle.js'
     self.slug = 'cyclejs'
     self.type = 'cyclejs'

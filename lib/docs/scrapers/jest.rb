@@ -1,5 +1,6 @@
 module Docs
   class Jest < UrlScraper
+    self.category = 'js/testing'
     include MultipleBaseUrls
     self.type = 'simple'
     self.release = '30.5.0'

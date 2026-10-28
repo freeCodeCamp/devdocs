@@ -1,5 +1,6 @@
 module Docs
   class Pug < UrlScraper
+    self.category = 'js/lib'
     self.type = 'pug'
     self.base_url = 'https://pugjs.org/'
     self.root_path = 'api/getting-started.html'

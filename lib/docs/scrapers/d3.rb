@@ -1,5 +1,6 @@
 module Docs
   class D3 < UrlScraper
+    self.category = 'js/graphics'
     self.name = 'D3.js'
     self.slug = 'd3'
     self.type = 'd3'

@@ -1,5 +1,6 @@
 module Docs
   class Cakephp < UrlScraper
+    self.category = 'php/framework'
     self.name = 'CakePHP'
     self.type = 'cakephp'
     self.root_path = 'index.html'

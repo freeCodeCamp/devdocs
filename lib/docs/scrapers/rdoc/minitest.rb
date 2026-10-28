@@ -1,5 +1,6 @@
 module Docs
   class Minitest < Rdoc
+    self.category = 'ruby/lib'
 
     self.name = 'Ruby / Minitest'
     self.slug = 'minitest'

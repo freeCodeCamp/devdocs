@@ -1,5 +1,6 @@
 module Docs
   class Pytorch < FileScraper
+    self.category = 'py/data'
     self.name = 'PyTorch'
     self.slug = 'pytorch'
     self.type = 'sphinx'

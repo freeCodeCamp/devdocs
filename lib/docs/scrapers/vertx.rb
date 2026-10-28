@@ -1,5 +1,6 @@
 module Docs
   class Vertx < UrlScraper
+    self.category = 'jvm'
     self.name = 'Vert.x'
     self.slug = 'vertx'
     self.type = 'vertx'

@@ -1,5 +1,6 @@
 module Docs
   class Knockout < UrlScraper
+    self.category = 'js/framework'
     self.name = 'Knockout.js'
     self.slug = 'knockout'
     self.type = 'knockout'

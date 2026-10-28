@@ -1,5 +1,6 @@
 module Docs
   class Liquid < UrlScraper
+    self.category = 'ruby/lib'
     self.name = 'Liquid'
     self.type = 'liquid'
     self.base_url = 'https://shopify.github.io/liquid/'

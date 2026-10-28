@@ -1,5 +1,6 @@
 module Docs
   class RabbitMq < UrlScraper
+    self.category = 'ops/server'
     self.name = 'RabbitMQ'
     self.type = 'rabbit_mq'
     self.links = {

@@ -1,5 +1,6 @@
 module Docs
   class Svg < Mdn
+    self.category = 'web'
     prepend FixInternalUrlsBehavior
     prepend FixRedirectionsBehavior
 

@@ -1,5 +1,6 @@
 module Docs
   class Chai < UrlScraper
+    self.category = 'js/testing'
     self.name = 'Chai'
     self.type = 'simple'
     self.release = '4.3.4'

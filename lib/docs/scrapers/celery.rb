@@ -1,5 +1,6 @@
 module Docs
   class Celery < UrlScraper
+    self.category = 'py/lib'
     self.name = 'Celery'
     self.type = 'celery'
     self.release = '5.6.3'

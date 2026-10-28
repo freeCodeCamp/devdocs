@@ -1,5 +1,6 @@
 module Docs
   class Vuex < UrlScraper
+    self.category = 'js/framework'
     self.type = 'simple'
     self.links = {
       home: 'https://vuex.vuejs.org',

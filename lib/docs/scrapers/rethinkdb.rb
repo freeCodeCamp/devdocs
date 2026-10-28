@@ -1,5 +1,6 @@
 module Docs
   class Rethinkdb < UrlScraper
+    self.category = 'db'
     self.name = 'RethinkDB'
     self.type = 'rethinkdb'
     self.base_url = 'https://rethinkdb.com/'

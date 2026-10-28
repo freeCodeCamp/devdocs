@@ -1,5 +1,6 @@
 module Docs
   class Gnuplot < FileScraper
+    self.category = 'tools'
     self.type = 'gnuplot'
     self.release = '6.0.5'
     self.links = {

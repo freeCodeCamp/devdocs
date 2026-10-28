@@ -1,5 +1,6 @@
 module Docs
   class Phaser < UrlScraper
+    self.category = 'js/graphics'
     self.type = 'phaser'
     self.release = '2.6.2'
     self.base_url = "http://phaser.io/docs/#{release}"

@@ -1,5 +1,6 @@
 module Docs
   class Tensorflow < UrlScraper
+    self.category = 'py/data'
     self.name = 'TensorFlow'
     self.type = 'tensorflow'
     self.root_path = '/'

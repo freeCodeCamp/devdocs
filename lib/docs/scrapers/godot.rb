@@ -1,5 +1,6 @@
 module Docs
   class Godot < UrlScraper
+    self.category = 'graphics'
     self.type = 'sphinx_simple'
     self.links = {
       home: 'https://godotengine.org/',

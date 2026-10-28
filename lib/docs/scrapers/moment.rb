@@ -1,5 +1,6 @@
 module Docs
   class Moment < UrlScraper
+    self.category = 'js/lib'
     self.name = 'Moment.js'
     self.slug = 'moment'
     self.type = 'moment'

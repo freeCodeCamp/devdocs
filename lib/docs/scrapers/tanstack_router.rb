@@ -1,5 +1,6 @@
 module Docs
   class TanstackRouter < Tanstack
+    self.category = 'js/framework'
     self.name = 'TanStack Router'
     self.slug = 'tanstack_router'
     self.release = '1.170.41'

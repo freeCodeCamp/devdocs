@@ -1,6 +1,7 @@
 module Docs
 
   class Sanctuary < UrlScraper
+    self.category = 'js/lib'
     self.name = "Sanctuary"
     self.slug = "sanctuary"
     self.type = "sanctuary"

@@ -1,5 +1,6 @@
 module Docs
   class Symfony < UrlScraper
+    self.category = 'php/framework'
     self.name = 'Symfony'
     self.slug = 'symfony'
     self.type = 'laravel'

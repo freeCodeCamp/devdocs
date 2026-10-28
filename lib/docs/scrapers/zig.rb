@@ -1,5 +1,6 @@
 module Docs
   class Zig < UrlScraper
+    self.category = 'lang'
     self.name = 'Zig'
     self.type = 'simple'
     self.release = '0.16.0'

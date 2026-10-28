@@ -1,5 +1,6 @@
 module Docs
   class Esbuild < UrlScraper
+    self.category = 'js/tooling'
     self.name = 'esbuild'
     self.slug = 'esbuild'
     self.type = 'simple'

@@ -1,5 +1,6 @@
 module Docs
   class Trio < UrlScraper
+    self.category = 'py/lib'
     self.type = 'simple'
     self.release = '0.29.0'
     self.base_url = "https://trio.readthedocs.io/en/v#{self.release}/"

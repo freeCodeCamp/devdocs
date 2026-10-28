@@ -2,6 +2,7 @@ require 'json'
 
 module Docs
   class SupportTables < Scraper
+    self.category = 'web'
     include Instrumentable
 
     self.name = 'Support Tables'

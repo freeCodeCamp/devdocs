@@ -1,5 +1,6 @@
 module Docs
   class Matplotlib < UrlScraper
+    self.category = 'py/data'
     include MultipleBaseUrls
 
     self.name = 'Matplotlib'

@@ -1,5 +1,6 @@
 module Docs
   class Groovy < UrlScraper
+    self.category = 'jvm'
     self.type = 'groovy'
     self.root_path = 'overview-summary.html'
     self.links = {

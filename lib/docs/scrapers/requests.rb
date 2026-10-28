@@ -1,5 +1,6 @@
 module Docs
   class Requests < UrlScraper
+    self.category = 'py/lib'
     self.type = 'sphinx'
     self.root_path = 'index.html'
     self.links = {

@@ -1,5 +1,6 @@
 module Docs
   class Perl < UrlScraper
+    self.category = 'lang'
     self.name = 'Perl'
     self.type = 'perl'
     self.initial_paths = ['modules.html', 'perlutil.html', 'perl.html']

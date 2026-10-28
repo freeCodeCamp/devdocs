@@ -1,5 +1,6 @@
 module Docs
   class Ruby < Rdoc
+    self.category = 'ruby'
     # Instructions:
     #   1. Download Ruby's source code
     #   2. Run "./configure && make html" (in the Ruby directory)

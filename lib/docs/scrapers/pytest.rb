@@ -1,5 +1,6 @@
 module Docs
   class Pytest < UrlScraper
+    self.category = 'py/lib'
     self.name = 'pytest'
     self.type = 'sphinx'
     self.release = '9.1.1'

@@ -1,5 +1,6 @@
 module Docs
   class Vite < UrlScraper
+    self.category = 'js/tooling'
     self.name = 'Vite'
     self.slug = 'vite'
     self.type = 'simple'

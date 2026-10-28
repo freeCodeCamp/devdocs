@@ -1,5 +1,6 @@
 module Docs
   class Node < UrlScraper
+    self.category = 'js/runtime'
     self.name = 'Node.js'
     self.slug = 'node'
     self.type = 'node'

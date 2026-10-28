@@ -1,5 +1,6 @@
 module Docs
   class Opentofu < UrlScraper
+    self.category = 'ops/config'
     self.name = 'OpenTofu'
     self.type = 'opentofu'
     self.links = {

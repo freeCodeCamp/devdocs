@@ -1,5 +1,6 @@
 module Docs
   class Numpy < FileScraper
+    self.category = 'py/data'
     self.name = 'NumPy'
     self.type = 'sphinx'
     self.root_path = 'index.html'

@@ -1,5 +1,6 @@
 module Docs
   class Qt < UrlScraper
+    self.category = 'c/lib'
     self.name = 'Qt'
     self.type = 'qt'
     self.initial_paths = %w(classes.html qmltypes.html)

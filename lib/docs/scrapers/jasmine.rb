@@ -1,5 +1,6 @@
 module Docs
   class Jasmine < UrlScraper
+    self.category = 'js/testing'
     self.type = 'jasmine'
     self.release = '4.0.0'
     self.base_url = 'https://jasmine.github.io/api/4.0/'

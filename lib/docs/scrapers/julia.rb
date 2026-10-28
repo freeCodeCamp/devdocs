@@ -1,5 +1,6 @@
 module Docs
   class Julia < UrlScraper
+    self.category = 'lang'
     self.links = {
       home: 'https://julialang.org/',
       code: 'https://github.com/JuliaLang/julia'

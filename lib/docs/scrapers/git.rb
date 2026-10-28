@@ -1,5 +1,6 @@
 module Docs
   class Git < UrlScraper
+    self.category = 'tools'
     self.type = 'git'
     self.release = '2.55.0'
     self.base_url = 'https://git-scm.com/docs'

@@ -1,5 +1,6 @@
 module Docs
   class Http < Mdn
+    self.category = 'web'
     include MultipleBaseUrls
 
     # release = '2026-06-21'

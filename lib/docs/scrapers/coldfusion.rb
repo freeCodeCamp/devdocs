@@ -1,5 +1,6 @@
 module Docs
   class Coldfusion < UrlScraper
+    self.category = 'lang'
     self.name = 'ColdFusion'
     self.slug = 'coldfusion'
     self.type = 'simple'

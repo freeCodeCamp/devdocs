@@ -1,5 +1,6 @@
 module Docs
   class D < UrlScraper
+    self.category = 'lang'
     include MultipleBaseUrls
 
     self.release = '2.095.1'

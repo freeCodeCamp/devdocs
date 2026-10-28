@@ -1,5 +1,6 @@
 module Docs
   class Dart < FileScraper
+    self.category = 'lang'
     self.type = 'dart'
     self.root_path = 'index.html'
     self.links = {

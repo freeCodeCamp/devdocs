@@ -1,5 +1,6 @@
 module Docs
   class NginxLuaModule < Github
+    self.category = 'lua'
     self.name = 'nginx / Lua Module'
     self.slug = 'nginx_lua_module'
     self.release = '0.10.28'

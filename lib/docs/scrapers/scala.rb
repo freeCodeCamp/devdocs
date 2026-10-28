@@ -1,5 +1,6 @@
 module Docs
   class Scala < FileScraper
+    self.category = 'jvm'
     self.name = 'Scala'
     self.type = 'scala'
     self.links = {

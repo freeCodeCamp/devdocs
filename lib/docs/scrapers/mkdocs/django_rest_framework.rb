@@ -1,5 +1,6 @@
 module Docs
   class DjangoRestFramework < Mkdocs
+    self.category = 'py/web'
     self.name = 'Django REST Framework'
     self.release = '3.15.2'
     self.slug = 'django_rest_framework'

@@ -1,5 +1,6 @@
 module Docs
   class Markdown < UrlScraper
+    self.category = 'markup'
     self.name = 'Markdown'
     self.type = 'simple'
     self.base_url = 'https://daringfireball.net/projects/markdown/syntax'

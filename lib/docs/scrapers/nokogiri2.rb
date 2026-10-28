@@ -1,5 +1,6 @@
 module Docs
   class Nokogiri2 < UrlScraper
+    self.category = 'ruby/lib'
     self.name = 'Nokogiri'
     self.slug = 'nokogiri'
     self.type = 'rdoc'

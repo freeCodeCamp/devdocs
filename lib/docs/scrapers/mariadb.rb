@@ -1,5 +1,6 @@
 module Docs
   class Mariadb < UrlScraper
+    self.category = 'db'
     self.name = 'MariaDB'
     self.type = 'mariadb'
     self.release = '11.0.2'

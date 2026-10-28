@@ -1,5 +1,6 @@
 module Docs
   class Bootstrap < UrlScraper
+    self.category = 'css/framework'
     self.type = 'bootstrap'
     self.links = {
       home: 'https://getbootstrap.com/',

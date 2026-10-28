@@ -1,5 +1,6 @@
 module Docs
   class Vitest < UrlScraper
+    self.category = 'js/testing'
     self.name = 'Vitest'
     self.slug = 'vitest'
     self.type = 'simple'

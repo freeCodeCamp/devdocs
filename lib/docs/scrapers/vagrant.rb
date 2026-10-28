@@ -1,5 +1,6 @@
 module Docs
   class Vagrant < UrlScraper
+    self.category = 'ops/config'
     self.name = 'Vagrant'
     self.type = 'simple'
     self.release = '2.2.0'

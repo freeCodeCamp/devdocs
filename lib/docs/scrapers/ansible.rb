@@ -1,5 +1,6 @@
 module Docs
   class Ansible < UrlScraper
+    self.category = 'ops/config'
     self.name = 'Ansible'
     self.type = 'sphinx'
     self.links = {

@@ -1,5 +1,6 @@
 module Docs
   class Css < MdnGit
+    self.category = 'css'
     # release = '2026-09-14'
     self.name = 'CSS'
     self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/CSS/Reference'

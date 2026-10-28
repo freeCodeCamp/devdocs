@@ -1,5 +1,6 @@
 module Docs
   class Django < FileScraper
+    self.category = 'py/web'
     self.name = 'Django'
     self.type = 'sphinx'
     self.root_path = 'index.html'

@@ -1,5 +1,6 @@
 module Docs
   class Svelte < UrlScraper
+    self.category = 'js/framework'
     self.name = 'Svelte'
     self.slug = 'svelte'
     self.type = 'simple'

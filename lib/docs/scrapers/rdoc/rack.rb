@@ -1,5 +1,6 @@
 module Docs
   class Rack < Rdoc
+    self.category = 'ruby/framework'
 
     self.name = 'Ruby / Rack'
     self.slug = 'rack'

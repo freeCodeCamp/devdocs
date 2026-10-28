@@ -1,5 +1,6 @@
 module Docs
   class Postgresql < FileScraper
+    self.category = 'db'
     include FixInternalUrlsBehavior
 
     self.name = 'PostgreSQL'

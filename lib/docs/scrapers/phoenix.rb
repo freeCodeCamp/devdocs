@@ -1,5 +1,6 @@
 module Docs
   class Phoenix < UrlScraper
+    self.category = 'beam'
     include MultipleBaseUrls
 
     self.type = 'elixir'

@@ -1,5 +1,6 @@
 module Docs
   class Immutable < UrlScraper
+    self.category = 'js/lib'
     self.name = 'Immutable.js'
     self.slug = 'immutable'
     self.type = 'simple'

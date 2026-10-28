@@ -1,5 +1,6 @@
 module Docs
   class Codeceptjs < UrlScraper
+    self.category = 'js/testing'
     self.name = 'CodeceptJS'
     self.type = 'simple'
     self.root_path = 'index.html'

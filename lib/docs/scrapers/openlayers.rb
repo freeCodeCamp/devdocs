@@ -1,5 +1,6 @@
 module Docs
   class Openlayers < UrlScraper
+    self.category = 'js/graphics'
     self.name = 'OpenLayers'
     self.type = 'openlayers'
     self.slug = 'openlayers'

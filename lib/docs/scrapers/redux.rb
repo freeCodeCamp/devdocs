@@ -1,5 +1,6 @@
 module Docs
   class Redux < UrlScraper
+    self.category = 'js/framework'
 
     self.type = 'simple'
     self.base_url = 'https://redux.js.org/api'

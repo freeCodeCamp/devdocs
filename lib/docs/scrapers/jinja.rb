@@ -1,5 +1,6 @@
 module Docs
   class Jinja < UrlScraper
+    self.category = 'py/web'
     self.type = 'sphinx'
     self.root_path = 'index.html'
     self.links = {

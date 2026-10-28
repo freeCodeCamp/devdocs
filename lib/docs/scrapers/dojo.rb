@@ -2,6 +2,7 @@ require 'json'
 
 module Docs
   class Dojo < UrlScraper
+    self.category = 'js/framework'
     self.type = 'dojo'
     self.release = '1.10'
     self.base_url = "http://dojotoolkit.org/api/#{release}/"

@@ -1,5 +1,6 @@
 module Docs
   class MaplibreGl < UrlScraper
+    self.category = 'js/graphics'
     self.name = 'MapLibre GL JS'
     self.slug = 'maplibre_gl'
     self.type = 'maplibre_gl'

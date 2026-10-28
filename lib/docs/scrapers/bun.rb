@@ -1,5 +1,6 @@
 module Docs
   class Bun < UrlScraper
+    self.category = 'js/runtime'
     self.name = 'Bun'
     self.type = 'simple'
     self.slug = 'bun'

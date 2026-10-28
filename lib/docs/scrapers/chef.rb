@@ -1,5 +1,6 @@
 module Docs
   class Chef < UrlScraper
+    self.category = 'ops/config'
     self.type = 'sphinx_simple'
     self.base_url = 'https://docs.chef.io'
     self.links = {

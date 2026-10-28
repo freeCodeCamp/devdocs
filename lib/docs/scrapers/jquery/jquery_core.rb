@@ -1,5 +1,6 @@
 module Docs
   class JqueryCore < Jquery
+    self.category = 'js/lib'
     self.name = 'jQuery'
     self.release = '4.0.0'
     self.base_url = 'https://api.jquery.com/'

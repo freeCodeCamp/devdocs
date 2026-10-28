@@ -1,6 +1,7 @@
 module Docs
 
   class Nushell < UrlScraper
+    self.category = 'shell'
     include MultipleBaseUrls
 
     self.name = "Nushell"

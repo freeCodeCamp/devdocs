@@ -1,5 +1,6 @@
 module Docs
   class Html < Mdn
+    self.category = 'web'
     prepend FixInternalUrlsBehavior
 
     # release = '2026-05-26'

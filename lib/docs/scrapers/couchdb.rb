@@ -1,5 +1,6 @@
 module Docs
   class Couchdb < UrlScraper
+    self.category = 'db'
     self.name = 'CouchDB'
     self.type = 'couchdb'
     self.root_path = 'index.html'

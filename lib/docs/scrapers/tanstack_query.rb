@@ -1,5 +1,6 @@
 module Docs
   class TanstackQuery < Tanstack
+    self.category = 'js/framework'
     self.name = 'TanStack Query'
     self.slug = 'tanstack_query'
     self.release = '5.104.1'

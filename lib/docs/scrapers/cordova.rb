@@ -1,5 +1,6 @@
 module Docs
   class Cordova < UrlScraper
+    self.category = 'js/framework'
     self.name = 'Cordova'
     self.type = 'cordova'
     self.root_path = 'guide/overview/index.html'

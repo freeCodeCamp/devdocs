@@ -1,5 +1,6 @@
 module Docs
   class Apache < UrlScraper
+    self.category = 'ops/server'
     self.name = 'Apache HTTP Server'
     self.slug = 'apache_http_server'
     self.type = 'apache'

@@ -2,6 +2,7 @@
 
 module Docs
   class Koa < Github
+    self.category = 'js/server'
     self.initial_paths = %w[
       error-handling
       faq

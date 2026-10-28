@@ -1,5 +1,6 @@
 module Docs
   class Bazel < FileScraper
+    self.category = 'tools/build'
     self.name = 'Bazel'
     self.type = 'bazel'
     self.root_path = 'overview'

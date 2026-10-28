@@ -1,5 +1,6 @@
 module Docs
   class Docker < UrlScraper
+    self.category = 'ops/container'
     include MultipleBaseUrls
 
     self.name = 'Docker'

@@ -1,5 +1,6 @@
 module Docs
   class Tokio < UrlScraper
+    self.category = 'rust'
     self.name = 'Tokio'
     self.type = 'tokio'
     self.root_path = 'index.html'

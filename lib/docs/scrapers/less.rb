@@ -1,5 +1,6 @@
 module Docs
   class Less < UrlScraper
+    self.category = 'css/preprocessor'
     self.type = 'simple'
     self.base_url = 'http://lesscss.org'
     self.root_path = '/features'

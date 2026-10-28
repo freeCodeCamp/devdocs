@@ -1,5 +1,6 @@
 module Docs
   class Mongoose < UrlScraper
+    self.category = 'js/server'
     self.name = 'Mongoose'
     self.type = 'simple'
     self.release = '7.4.1'

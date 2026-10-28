@@ -1,5 +1,6 @@
 module Docs
   class Duckdb < UrlScraper
+    self.category = 'db'
     self.name = 'DuckDB'
     self.type = 'duckdb'
     self.root_path = 'index.html'

@@ -1,5 +1,6 @@
 module Docs
   class Gcc < Gnu
+    self.category = 'c'
     self.name = 'GCC'
     self.slug = 'gcc'
     self.links = {

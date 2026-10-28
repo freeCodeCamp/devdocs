@@ -1,5 +1,6 @@
 module Docs
   class JqueryUi < Jquery
+    self.category = 'js/framework'
     self.name = 'jQuery UI'
     self.slug = 'jqueryui'
     self.release = '1.14.1'

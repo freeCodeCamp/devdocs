@@ -1,5 +1,6 @@
 module Docs
   class Htmx < UrlScraper
+    self.category = 'js/framework'
     self.name = 'htmx'
     self.type = 'simple'
     self.slug = 'htmx'

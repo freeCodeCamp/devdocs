@@ -1,5 +1,6 @@
 module Docs
   class Axios < UrlScraper
+    self.category = 'js/lib'
     self.type = 'simple'
     self.links = {
       home: 'hthttps://axios-http.com/',

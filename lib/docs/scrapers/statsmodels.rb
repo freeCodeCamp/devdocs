@@ -1,5 +1,6 @@
 module Docs
   class Statsmodels < UrlScraper
+    self.category = 'py/data'
     self.type = 'sphinx'
     self.release = '0.9.0'
     self.base_url = 'http://www.statsmodels.org/stable/'

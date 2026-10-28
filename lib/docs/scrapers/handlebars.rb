@@ -1,5 +1,6 @@
 module Docs
   class Handlebars < UrlScraper
+    self.category = 'js/lib'
     self.name = 'Handlebars.js'
     self.slug = 'handlebars'
     self.type = 'simple'

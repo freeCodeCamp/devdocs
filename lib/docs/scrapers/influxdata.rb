@@ -1,5 +1,6 @@
 module Docs
   class Influxdata < UrlScraper
+    self.category = 'db'
     self.name = 'InfluxData'
     self.type = 'simple'
     self.release = '1.3'

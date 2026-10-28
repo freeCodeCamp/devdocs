@@ -1,5 +1,6 @@
 module Docs
   class TensorflowCpp < Tensorflow
+    self.category = 'c/lib'
     self.name = 'TensorFlow C++'
     self.slug = 'tensorflow_cpp'
 

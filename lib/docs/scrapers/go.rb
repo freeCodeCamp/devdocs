@@ -1,5 +1,6 @@
 module Docs
   class Go < UrlScraper
+    self.category = 'lang'
     self.type = 'go'
     self.release = '1.27.0'
     self.base_url = 'https://golang.org/pkg/'

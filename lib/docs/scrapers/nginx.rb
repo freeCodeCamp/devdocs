@@ -1,5 +1,6 @@
 module Docs
   class Nginx < UrlScraper
+    self.category = 'ops/server'
     self.name = 'nginx'
     self.type = 'nginx'
     self.release = '1.31.1'

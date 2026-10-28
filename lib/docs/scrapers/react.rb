@@ -1,5 +1,6 @@
 module Docs
   class React < UrlScraper
+    self.category = 'js/framework'
 
     self.name = 'React'
     self.type = 'react'

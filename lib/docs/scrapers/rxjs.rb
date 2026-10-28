@@ -2,6 +2,7 @@ require 'json'
 
 module Docs
   class Rxjs < UrlScraper
+    self.category = 'js/lib'
     self.name = 'RxJS'
     self.type = 'rxjs'
     self.release = '7.8.1'

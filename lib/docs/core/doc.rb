@@ -7,10 +7,11 @@ module Docs
     class << self
       include Instrumentable
 
-      attr_accessor :name, :slug, :type, :release, :abstract, :links
+      attr_accessor :name, :slug, :type, :release, :abstract, :links, :category
 
       def inherited(subclass)
         subclass.type = type
+        subclass.category = category
       end
 
       def version(version = nil, &block)

@@ -1,5 +1,6 @@
 module Docs
   class I3 < UrlScraper
+    self.category = 'tools'
     self.name = 'i3'
     self.type = 'simple'
     self.slug = 'i3'

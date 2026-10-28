@@ -1,5 +1,6 @@
 module Docs
   class Lodash < UrlScraper
+    self.category = 'js/lib'
     self.name = 'lodash'
     self.slug = 'lodash'
     self.type = 'simple'

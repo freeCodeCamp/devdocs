@@ -1,5 +1,6 @@
 module Docs
   class Kubectl < UrlScraper
+    self.category = 'ops/container'
     self.name = 'Kubectl'
     self.type = 'kubectl'
     self.root_path = ''

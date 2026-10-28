@@ -1,5 +1,6 @@
 module Docs
   class GnuFortran < Gnu
+    self.category = 'lang'
     self.name = 'GNU Fortran'
     self.slug = 'gnu_fortran'
     self.links = {

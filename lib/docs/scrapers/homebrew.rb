@@ -1,5 +1,6 @@
 module Docs
   class Homebrew < UrlScraper
+    self.category = 'tools'
     # include MultipleBaseUrls
 
     self.name = 'Homebrew'

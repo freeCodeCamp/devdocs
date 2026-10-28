@@ -1,5 +1,6 @@
 module Docs
   class Typescript < UrlScraper
+    self.category = 'js'
     self.name = 'TypeScript'
     self.type = 'typescript'
 

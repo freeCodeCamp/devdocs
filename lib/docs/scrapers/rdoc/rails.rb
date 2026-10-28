@@ -1,5 +1,6 @@
 module Docs
   class Rails < Rdoc
+    self.category = 'ruby/framework'
     include FixInternalUrlsBehavior
 
     self.name = 'Ruby on Rails'

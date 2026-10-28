@@ -1,5 +1,6 @@
 module Docs
   class Elisp < FileScraper
+    self.category = 'lang'
     self.type = 'elisp'
     self.release = '31.1.50'
     self.base_url= 'https://www.gnu.org/software/emacs/manual/html_node/elisp/'

@@ -115,6 +115,9 @@ module Docs
     store_class.new(store_path)
   end
 
+  # The ecosystems a doc's category starts with, e.g. 'py' in 'py/web'.
+  CATEGORIES = %w(web css js py ruby php jvm c beam lua rust tcl lang shell db ops tools markup graphics)
+
   def self.aliases
     {
       'angular' => 'ng',

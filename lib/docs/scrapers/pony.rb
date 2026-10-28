@@ -1,5 +1,6 @@
 module Docs
   class Pony < UrlScraper
+    self.category = 'lang'
     self.type = 'simple'
     self.release = '0.38.1'
     self.base_url = 'https://stdlib.ponylang.io/'

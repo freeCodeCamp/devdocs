@@ -1,5 +1,6 @@
 module Docs
   class Prettier < UrlScraper
+    self.category = 'js/tooling'
     self.name = 'Prettier'
     self.type = 'simple'
     self.release = '3.9.6'

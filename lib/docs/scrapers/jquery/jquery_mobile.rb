@@ -1,5 +1,6 @@
 module Docs
   class JqueryMobile < Jquery
+    self.category = 'js/framework'
     self.name = 'jQuery Mobile'
     self.slug = 'jquerymobile'
     self.release = '1.4.5'

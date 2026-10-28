@@ -1,5 +1,6 @@
 module Docs
   class Angularjs < UrlScraper
+    self.category = 'js/framework'
     self.name = 'Angular.js'
     self.slug = 'angularjs'
     self.type = 'angularjs'

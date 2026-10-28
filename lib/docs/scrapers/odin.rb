@@ -1,5 +1,6 @@
 module Docs
     class Odin < UrlScraper
+      self.category = 'lang'
       include MultipleBaseUrls
       self.name = 'Odin'
       self.slug = 'odin'

@@ -1,5 +1,6 @@
 module Docs
   class Puppeteer < Github
+    self.category = 'js/testing'
     self.release = '7.1.0'
     self.base_url = "https://github.com/puppeteer/puppeteer/blob/v#{self.release}/docs/api.md"
     self.links = {

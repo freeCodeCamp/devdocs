@@ -1,5 +1,6 @@
 module Docs
   class Express < UrlScraper
+    self.category = 'js/server'
     self.name = 'Express'
     self.type = 'express'
     self.base_url = 'https://expressjs.com/en/'

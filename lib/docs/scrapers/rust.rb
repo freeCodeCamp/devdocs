@@ -2,6 +2,7 @@
 
 module Docs
   class Rust < UrlScraper
+    self.category = 'rust'
     self.type = 'rust'
     self.release = '1.98.0'
     self.base_url = 'https://doc.rust-lang.org/'

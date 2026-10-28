@@ -1,5 +1,6 @@
 module Docs
   class Elixir < UrlScraper
+    self.category = 'beam'
     include MultipleBaseUrls
 
     self.name = 'Elixir'

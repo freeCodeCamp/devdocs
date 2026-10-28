@@ -1,5 +1,6 @@
 module Docs
   class Eslint < UrlScraper
+    self.category = 'js/tooling'
     self.name = 'ESLint'
     self.type = 'simple'
     self.release = '10.4.0'

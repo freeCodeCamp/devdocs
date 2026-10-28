@@ -1,5 +1,6 @@
 module Docs
   class ScikitImage < UrlScraper
+    self.category = 'py/data'
     self.name = 'scikit-image'
     self.slug = 'scikit_image'
     self.type = 'sphinx'

@@ -1,5 +1,6 @@
 module Docs
   class Click < UrlScraper
+    self.category = 'py/lib'
     self.name = 'click'
     self.type = 'sphinx'
     self.root_path = 'index.html'

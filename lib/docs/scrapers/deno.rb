@@ -1,5 +1,6 @@
 module Docs
   class Deno < UrlScraper
+    self.category = 'js/runtime'
     self.name = 'Deno'
     self.type = 'simple'
     self.base_url = 'https://docs.deno.com/'

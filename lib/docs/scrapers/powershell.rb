@@ -1,5 +1,6 @@
 module Docs
   class Powershell < FileScraper
+    self.category = 'shell'
     self.name = 'PowerShell'
     self.type = 'simple'
     self.root_path = 'Microsoft.PowerShell.Core/Get-Help.html'

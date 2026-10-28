@@ -1,5 +1,6 @@
 module Docs
   class Leaflet < UrlScraper
+    self.category = 'js/graphics'
     self.name = 'Leaflet'
     self.type = 'simple'
     self.slug = 'leaflet'

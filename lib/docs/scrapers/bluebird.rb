@@ -1,5 +1,6 @@
 module Docs
   class Bluebird < UrlScraper
+    self.category = 'js/lib'
     self.type = 'simple'
     self.release = '3.7.2'
     self.base_url = 'http://bluebirdjs.com/docs/'

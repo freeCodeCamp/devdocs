@@ -1,5 +1,6 @@
 module Docs
   class Nim < UrlScraper
+    self.category = 'lang'
     self.type = 'simple'
     self.base_url = 'https://nim-lang.org/docs/'
     self.root_path = 'overview.html'

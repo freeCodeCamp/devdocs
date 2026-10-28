@@ -1,6 +1,7 @@
 module Docs
 
   class Joi < UrlScraper
+    self.category = 'js/lib'
     self.name = "Joi"
     self.slug = "joi"
     self.type = "joi"

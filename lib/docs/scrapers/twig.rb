@@ -1,5 +1,6 @@
 module Docs
   class Twig < UrlScraper
+    self.category = 'php/lib'
     self.type = 'sphinx'
     self.root_path = 'index.html'
     self.initial_paths = %w(extensions/index.html)

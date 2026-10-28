@@ -1,5 +1,6 @@
 module Docs
   class Backbone < UrlScraper
+    self.category = 'js/framework'
     self.name = 'Backbone.js'
     self.slug = 'backbone'
     self.type = 'underscore'

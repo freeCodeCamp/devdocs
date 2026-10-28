@@ -1,5 +1,6 @@
 module Docs
   class Lua < UrlScraper
+    self.category = 'lua'
     self.type = 'lua'
     self.root_path = 'manual.html'
     self.links = {

@@ -1,5 +1,6 @@
 module Docs
   class GnuCobol < UrlScraper
+    self.category = 'lang'
     self.name = 'GnuCOBOL'
     self.slug = 'gnu_cobol'
     self.type = 'simple'

@@ -1,5 +1,6 @@
 module Docs
   class Npm < UrlScraper
+    self.category = 'js/tooling'
     self.name = 'npm'
     self.type = 'npm'
     self.release = '10.2.5'

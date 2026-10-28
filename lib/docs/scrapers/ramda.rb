@@ -1,5 +1,6 @@
 module Docs
   class Ramda < UrlScraper
+    self.category = 'js/lib'
     self.type = 'ramda'
     self.links = {
       home: 'http://ramdajs.com/',

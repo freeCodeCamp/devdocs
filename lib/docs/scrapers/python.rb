@@ -1,5 +1,6 @@
 module Docs
   class Python < FileScraper
+    self.category = 'py'
     self.type = 'python'
     self.root_path = 'index.html'
     self.links = {

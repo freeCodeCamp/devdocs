@@ -1,5 +1,6 @@
 module Docs
   class Haproxy < UrlScraper
+    self.category = 'ops/server'
     self.name = 'HAProxy'
     self.type = 'haproxy'
     self.root_path = 'intro.html'

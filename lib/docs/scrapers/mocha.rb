@@ -1,5 +1,6 @@
 module Docs
   class Mocha < UrlScraper
+    self.category = 'js/testing'
     self.type = 'simple'
     self.release = '9.0.2'
     self.base_url = 'https://mochajs.org/'

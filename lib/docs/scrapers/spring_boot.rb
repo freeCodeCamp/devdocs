@@ -1,5 +1,6 @@
 module Docs
   class SpringBoot < UrlScraper
+    self.category = 'jvm'
     self.name = 'Spring Boot'
     self.slug = 'spring_boot'
     self.type = 'simple'

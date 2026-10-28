@@ -1,5 +1,6 @@
 module Docs
   class Erlang < FileScraper
+    self.category = 'beam'
     self.type = 'erlang'
     self.root_path = 'doc/index.html'
     self.links = {

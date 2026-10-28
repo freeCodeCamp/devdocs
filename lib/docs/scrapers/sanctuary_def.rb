@@ -1,6 +1,7 @@
 module Docs
 
   class SanctuaryDef < Github
+    self.category = 'js/lib'
     self.name = "Sanctuary Def"
     self.slug = "sanctuary_def"
     self.type = "sanctuary_def"

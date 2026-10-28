@@ -1,5 +1,6 @@
 module Docs
   class Eigen3 < UrlScraper
+    self.category = 'c/lib'
     self.name = 'Eigen3'
     self.type = 'eigen3'
     self.slug = 'eigen3'

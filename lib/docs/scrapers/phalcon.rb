@@ -1,5 +1,6 @@
 module Docs
   class Phalcon < UrlScraper
+    self.category = 'php/framework'
     self.type = 'phalcon'
     self.root_path = 'index.html'
     self.links = {

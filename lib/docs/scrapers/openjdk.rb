@@ -1,5 +1,6 @@
 module Docs
   class Openjdk < FileScraper
+    self.category = 'jvm'
 
     self.name = 'OpenJDK'
     self.type = 'openjdk'
