@@ -147,6 +147,19 @@ export const settingsPage = (settings) => `\
   </div>
 </div>
 
+<div class="_settings-fieldset">
+  <h2 class="_settings-legend">Custom CSS:</h2>
+
+  <div class="_settings-inputs">
+    <label class="_settings-label">
+      <textarea form="settings" name="customCss" class="_settings-css" rows="6" spellcheck="false" placeholder="._content { font-size: 1.125em; }">${$.escape(
+        String(settings.customCss || ""),
+      )}</textarea>
+      <small>Applied on top of DevDocs' own styles.</small>
+    </label>
+  </div>
+</div>
+
 <p class="_hide-on-mobile">
   <button type="button" class="_btn" data-action="export">Export</button>
   <label class="_btn _file-btn"><input type="file" form="settings" name="import" accept=".json">Import</label>

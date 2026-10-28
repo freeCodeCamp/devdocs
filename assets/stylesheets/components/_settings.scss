@@ -69,6 +69,16 @@
     vertical-align: top;
     margin: .25rem .375rem;
   }
+
+  > ._settings-css + small { margin-left: 0; }
+}
+
+._settings-css {
+  display: block;
+  width: 100%;
+  font-family: var(--monoFont);
+  font-size: .8125rem;
+  @extend %border-box;
 }
 
 @media (max-width: 80rem) {

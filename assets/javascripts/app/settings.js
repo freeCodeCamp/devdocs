@@ -35,6 +35,7 @@ import { $ } from "../lib/util.js";
  * @property {StoredFlag} noDocSpecificIcon
  * @property {string} baseFont A CSS font family list for the text; unset uses the default.
  * @property {string} monoFont A CSS font family list for code; unset uses the default.
+ * @property {string} customCss A stylesheet applied on top of the app's.
  * @property {number} listPageSize How many entries a sidebar list shows before
  *   "Show more…"; 0 shows them all.
  * @property {StoredFlag} autoLatestVersion
@@ -79,6 +80,7 @@ export class Settings {
     "listPageSize",
     "baseFont",
     "monoFont",
+    "customCss",
   ];
 
   static INTERNAL_KEYS = ["count", "schema", "version", "news"];
@@ -297,7 +299,34 @@ export class Settings {
     for (var font of Settings.FONTS) {
       this.applyFont(font);
     }
+    this.applyCustomCss();
     this.initSidebarWidth();
+  }
+
+  /** @param {string} value A stylesheet; empty to remove it. */
+  setCustomCss(value) {
+    if (value.trim()) {
+      this.set("customCss", value);
+    } else {
+      this.del("customCss");
+    }
+    this.applyCustomCss();
+  }
+
+  /** Puts the stored stylesheet after the app's, so that it wins. */
+  applyCustomCss() {
+    let style = document.getElementById("custom-css");
+    const value = this.get("customCss");
+    if (!value) {
+      style?.remove();
+      return;
+    }
+    if (!style) {
+      style = document.createElement("style");
+      style.id = "custom-css";
+      document.head.append(style);
+    }
+    style.textContent = value;
   }
 
   /**

@@ -20,6 +20,7 @@ export class SettingsPage extends View {
   static events = {
     click: "onClick",
     change: "onChange",
+    keydown: "onKeydown",
   };
 
   /** Rebuilds the form from the stored preferences. */
@@ -42,6 +43,7 @@ export class SettingsPage extends View {
     settings.listPageSize = app.settings.get("listPageSize");
     settings.baseFont = app.settings.get("baseFont");
     settings.monoFont = app.settings.get("monoFont");
+    settings.customCss = app.settings.get("customCss");
     settings.autoSupported = app.settings.autoSupported;
     for (var layout of Settings.LAYOUTS) {
       settings[layout] = app.settings.hasLayout(layout);
@@ -167,6 +169,9 @@ export class SettingsPage extends View {
       case "monoFont":
         app.settings.setFont(input.name, input.value);
         break;
+      case "customCss":
+        app.settings.setCustomCss(input.value);
+        break;
       case "listPageSize":
         app.settings.set("listPageSize", Math.max(0, parseInt(input.value) || 0));
         break;
@@ -175,6 +180,18 @@ export class SettingsPage extends View {
           /** @type {keyof SettingsValues} */ (input.name),
           input.checked,
         );
+    }
+  }
+
+  /**
+   * Keeps the keyboard shortcuts out of the CSS field, where Enter and the
+   * arrow keys edit the text.
+   *
+   * @param {ViewKeyboardEvent} event
+   */
+  onKeydown(event) {
+    if (event.target.tagName === "TEXTAREA") {
+      event.stopPropagation();
     }
   }
 
