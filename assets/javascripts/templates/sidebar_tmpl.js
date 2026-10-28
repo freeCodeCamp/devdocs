@@ -191,7 +191,8 @@ export const sidebarDisabledVersionedDoc = (doc, versions) =>
   `<a class="_list-item _list-dir _icon-${doc.icon} _list-disabled" data-slug="${doc.slug_without_version}" tabindex="-1">${arrow}${doc.name}</a><div class="_list _list-sub">${versions}</div>`;
 
 export const docPickerHeader =
-  '<div class="_list-picker-head"><span>Documentation</span> <label title="Enable all">Enable <input type="checkbox" class="_list-picker-all"></label></div>';
+  '<div class="_list-picker-head"><span>Documentation</span> <label title="Enable all">Enable <input type="checkbox" class="_list-picker-all"></label>' +
+  '<input type="search" class="_list-picker-filter" placeholder="Filter\u2026" aria-label="Filter documentation"></div>';
 
 export const docPickerNote = `\
 <div class="_list-note">Tip: for faster and better search results, select only the docs you need.</div>

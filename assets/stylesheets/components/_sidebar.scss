@@ -335,10 +335,12 @@
 ._list-picker {
   ._list-item { cursor: pointer; }
   ._list-sub > ._list-item { padding-left: 2.375rem; }
+  ._list-item[hidden], ._list-sub[hidden] { display: none; }
 }
 
 ._list-picker-head {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   position: -webkit-sticky;
   position: sticky;
@@ -358,6 +360,26 @@
 ._list-picker-all {
   margin: 0 0 0 .25rem;
   vertical-align: middle;
+}
+
+._list-picker-filter {
+  flex-basis: 100%;
+  margin-top: .25rem;
+  padding: 0 .5rem;
+  height: 1.75rem;
+  font-size: .875rem;
+  font-weight: normal;
+  text-transform: none;
+  color: var(--textColor);
+  background: var(--contentBackground);
+  border: 1px solid var(--searchBorder);
+  border-radius: 3px;
+
+  &:focus {
+    outline: 0;
+    border-color: var(--inputFocusBorder);
+    box-shadow: 0 0 1px var(--inputFocusBorder);
+  }
 }
 
 ._list-checkbox {

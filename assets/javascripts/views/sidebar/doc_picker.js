@@ -10,13 +10,16 @@ import { View } from "../view.js";
  * The checklist of every available doc, shown in the preferences.
  *
  * Docs that come in several versions are grouped under one expandable row.
- * The checkbox in the header ticks or clears every doc at once.
+ * The header filters the list by name, and its checkbox ticks or clears
+ * every doc the filter shows.
  */
 export class DocPicker extends View {
   static className = "_list _list-picker";
 
   static events = {
     change: "onChange",
+    input: "onInput",
+    keydown: "onKeydown",
     mousedown: "onMouseDown",
     mouseup: "onMouseUp",
   };
@@ -119,6 +122,30 @@ export class DocPicker extends View {
     ];
   }
 
+  /** @returns {HTMLInputElement[]} The checkbox of every doc the filter shows. */
+  getShownCheckboxes() {
+    return this.getCheckboxes().filter(
+      (input) => !input.closest("[hidden]"),
+    );
+  }
+
+  /**
+   * Hides the docs whose name doesn't contain the query.
+   *
+   * @param {string} query
+   */
+  filter(query) {
+    query = query.trim().toLowerCase();
+    for (const el of /** @type {HTMLElement[]} */ ([...this.el.children])) {
+      if (el.tagName === "LABEL" || el.classList.contains("_list-rdir")) {
+        el.hidden = !el.textContent.toLowerCase().includes(query);
+      } else if (el.classList.contains("_list-sub")) {
+        el.hidden = /** @type {HTMLElement} */ (el.previousElementSibling).hidden;
+      }
+    }
+    this.updateAllCheckbox();
+  }
+
   /** @returns {string[]} The slugs the user has ticked. */
   getSelectedDocs() {
     return this.getCheckboxes()
@@ -126,25 +153,52 @@ export class DocPicker extends View {
       .map((input) => input.name);
   }
 
-  /** Ticks the header checkbox when every doc is, and half-ticks it when some are. */
+  /**
+   * Ticks the header checkbox when every doc shown is, and half-ticks it when
+   * some are.
+   */
   updateAllCheckbox() {
     const all = /** @type {HTMLInputElement} */ (
       this.findByClass("_list-picker-all")
     );
-    const checked = this.getCheckboxes().filter((input) => input.checked);
-    all.checked = checked.length === this.getCheckboxes().length;
+    const shown = this.getShownCheckboxes();
+    const checked = shown.filter((input) => input.checked);
+    all.checked = shown.length > 0 && checked.length === shown.length;
     all.indeterminate = !all.checked && checked.length > 0;
   }
 
   /** @param {ViewInputEvent} event */
   onChange(event) {
     const input = event.target;
-    if (input.classList.contains("_list-picker-all")) {
-      for (const checkbox of this.getCheckboxes()) {
+    if (input.classList.contains("_list-picker-filter")) {
+      event.stopPropagation(); // filtering changes no preference
+    } else if (input.classList.contains("_list-picker-all")) {
+      for (const checkbox of this.getShownCheckboxes()) {
         checkbox.checked = input.checked;
       }
     } else {
       this.updateAllCheckbox();
+    }
+  }
+
+  /** @param {ViewInputEvent} event */
+  onInput(event) {
+    if (event.target.classList.contains("_list-picker-filter")) {
+      this.filter(event.target.value);
+    }
+  }
+
+  /**
+   * Keeps Enter in the filter from saving the preferences.
+   *
+   * @param {ViewKeyboardEvent} event
+   */
+  onKeydown(event) {
+    if (
+      event.key === "Enter" &&
+      event.target.classList.contains("_list-picker-filter")
+    ) {
+      $.stopEvent(event);
     }
   }
 
