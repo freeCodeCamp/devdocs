@@ -10,11 +10,13 @@ import { View } from "../view.js";
  * The checklist of every available doc, shown in the preferences.
  *
  * Docs that come in several versions are grouped under one expandable row.
+ * The checkbox in the header ticks or clears every doc at once.
  */
 export class DocPicker extends View {
   static className = "_list _list-picker";
 
   static events = {
+    change: "onChange",
     mousedown: "onMouseDown",
     mouseup: "onMouseUp",
   };
@@ -66,8 +68,9 @@ export class DocPicker extends View {
     }
 
     this.html(html + this.tmpl("docPickerNote"));
+    this.updateAllCheckbox();
 
-    requestAnimationFrame(() => this.findByTag("input")?.focus());
+    requestAnimationFrame(() => this.findByClass("_list-checkbox")?.focus());
   }
 
   /**
@@ -107,15 +110,42 @@ export class DocPicker extends View {
     super.empty();
   }
 
-  /** @returns {string[]} The slugs the user has ticked. */
-  getSelectedDocs() {
+  /** @returns {HTMLInputElement[]} The checkbox of every doc. */
+  getCheckboxes() {
     return [
       .../** @type {HTMLCollectionOf<HTMLInputElement>} */ (
-        this.findAllByTag("input")
+        this.findAllByClass("_list-checkbox")
       ),
-    ]
-      .filter((input) => input?.checked)
+    ];
+  }
+
+  /** @returns {string[]} The slugs the user has ticked. */
+  getSelectedDocs() {
+    return this.getCheckboxes()
+      .filter((input) => input.checked)
       .map((input) => input.name);
+  }
+
+  /** Ticks the header checkbox when every doc is, and half-ticks it when some are. */
+  updateAllCheckbox() {
+    const all = /** @type {HTMLInputElement} */ (
+      this.findByClass("_list-picker-all")
+    );
+    const checked = this.getCheckboxes().filter((input) => input.checked);
+    all.checked = checked.length === this.getCheckboxes().length;
+    all.indeterminate = !all.checked && checked.length > 0;
+  }
+
+  /** @param {ViewInputEvent} event */
+  onChange(event) {
+    const input = event.target;
+    if (input.classList.contains("_list-picker-all")) {
+      for (const checkbox of this.getCheckboxes()) {
+        checkbox.checked = input.checked;
+      }
+    } else {
+      this.updateAllCheckbox();
+    }
   }
 
   /** Notes that the pointer is driving, so the focus isn't stolen. */
