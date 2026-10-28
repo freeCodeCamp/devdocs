@@ -127,6 +127,11 @@ declare module "./models/doc.js" {
      * doc has no alias.
      */
     alias: string | null;
+    /**
+     * From the manifest. Groups the doc, e.g. `py` for Python itself and
+     * `py/web` for a Python web framework. Absent from older manifests.
+     */
+    category?: string;
 
     /** Derived: the slug without its version. */
     slug_without_version: string;

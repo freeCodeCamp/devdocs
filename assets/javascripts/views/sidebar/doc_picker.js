@@ -10,14 +10,16 @@ import { View } from "../view.js";
  * The checklist of every available doc, shown in the preferences.
  *
  * Docs that come in several versions are grouped under one expandable row.
- * The header filters the list by name, and its checkbox ticks or clears
- * every doc the filter shows.
+ * The header filters the list by name, or by category when the query starts
+ * with `#`, as clicking a doc's category badge does. Its checkbox ticks or
+ * clears every doc the filter shows.
  */
 export class DocPicker extends View {
   static className = "_list _list-picker";
 
   static events = {
     change: "onChange",
+    click: "onClick",
     input: "onInput",
     keydown: "onKeydown",
     mousedown: "onMouseDown",
@@ -66,6 +68,7 @@ export class DocPicker extends View {
       } else {
         html += this.tmpl("sidebarLabel", doc, {
           checked: app.docs.contains(doc),
+          badge: true,
         });
       }
     }
@@ -130,15 +133,24 @@ export class DocPicker extends View {
   }
 
   /**
-   * Hides the docs whose name doesn't contain the query.
+   * Hides the docs whose name doesn't contain the query, or, for a query such
+   * as `#py`, the docs outside that category and its subcategories.
    *
    * @param {string} query
    */
   filter(query) {
     query = query.trim().toLowerCase();
+    const category = query.startsWith("#") ? query.slice(1) : null;
+    const matches = (/** @type {HTMLElement} */ el) =>
+      category != null
+        ? !category ||
+          el.dataset.category === category ||
+          el.dataset.category.startsWith(category + "/")
+        : el.dataset.name.toLowerCase().includes(query);
+
     for (const el of /** @type {HTMLElement[]} */ ([...this.el.children])) {
       if (el.tagName === "LABEL" || el.classList.contains("_list-rdir")) {
-        el.hidden = !el.textContent.toLowerCase().includes(query);
+        el.hidden = !matches(el);
       } else if (el.classList.contains("_list-sub")) {
         el.hidden = /** @type {HTMLElement} */ (el.previousElementSibling).hidden;
       }
@@ -178,6 +190,24 @@ export class DocPicker extends View {
       }
     } else {
       this.updateAllCheckbox();
+    }
+  }
+
+  /**
+   * Filters by the category of the badge segment that was clicked, instead of
+   * ticking the doc or expanding its versions.
+   *
+   * @param {ViewMouseEvent} event
+   */
+  onClick(event) {
+    const query = $.eventTarget(event).getAttribute?.("data-filter");
+    if (query) {
+      $.stopEvent(event);
+      const input = /** @type {HTMLInputElement} */ (
+        this.findByClass("_list-picker-filter")
+      );
+      input.value = query;
+      this.filter(query);
     }
   }
 

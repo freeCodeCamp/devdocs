@@ -357,6 +357,52 @@
   cursor: default;
 }
 
+// A doc's category, tinted with a colour its ecosystem is known by
+// (e.g. GitHub's language colours), and readable in either theme.
+$badge-colors: (
+  web: #e34c26,
+  css: #663399,
+  js: #d4a400,
+  py: #3572a5,
+  ruby: #cc342d,
+  php: #4f5d95,
+  jvm: #b07219,
+  c: #f34b7d,
+  beam: #6e4a7e,
+  lua: #000080,
+  rust: #b7410e,
+  tcl: #a08040,
+  lang: #6b7280,
+  shell: #3fa34d,
+  db: #336791,
+  ops: #2496ed,
+  tools: #0d9488,
+  markup: #3d6117,
+  graphics: #9c27b0,
+);
+
+._list-badge {
+  float: right;
+  margin: .1875rem 1.25rem 0 .375rem;
+  padding: 0 .3125rem;
+  line-height: 1rem;
+  font-size: .6875rem;
+  font-weight: var(--boldFontWeight);
+  color: color-mix(in srgb, var(--badgeColor) 55%, var(--textColor));
+  background: color-mix(in srgb, var(--badgeColor) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--badgeColor) 40%, transparent);
+  border-radius: 3px;
+
+  > span { cursor: pointer; }
+  > span:hover { text-decoration: underline; }
+
+  ._list-rdir > & { margin-right: 1.5rem; }
+}
+
+@each $category, $color in $badge-colors {
+  ._badge-#{$category} { --badgeColor: #{$color}; }
+}
+
 ._list-picker-all {
   margin: 0 0 0 .25rem;
   vertical-align: middle;

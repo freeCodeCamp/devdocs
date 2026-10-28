@@ -15,6 +15,7 @@ import { $ } from "../lib/util.js";
  * @property {boolean} [checked] Tick the row's checkbox.
  * @property {boolean} [open] Render a versioned doc expanded.
  * @property {number} [count] How many docs the heading covers.
+ * @property {boolean} [badge] Show the doc's category.
  */
 
 /** The disclosure triangle shown on a sidebar row that can be expanded. */
@@ -121,6 +122,26 @@ export const sidebarPageLink = (count) =>
   `<span role="link" class="_list-item _list-pagelink">Show more\u2026 (${count})</span>`;
 
 /**
+ * A doc's category as a badge, e.g. `py/web`. Each segment filters the picker
+ * by the category up to it, so `py` shows all of Python and `web` only its
+ * web frameworks.
+ *
+ * @param {Doc} doc
+ * @returns {string}
+ */
+const categoryBadge = function (doc) {
+  if (!doc.category) {
+    return "";
+  }
+  const segments = doc.category.split("/");
+  const links = segments.map((segment, i) => {
+    const category = segments.slice(0, i + 1).join("/");
+    return `<span data-filter="#${category}" title="Show ${category} docs">${segment}</span>`;
+  });
+  return `<span class="_list-badge _badge-${segments[0]}">${links.join("/")}</span>`;
+};
+
+/**
  * A doc's row in the picker, with a checkbox.
  *
  * @param {Doc} doc
@@ -135,11 +156,16 @@ export const sidebarLabel = function (doc, options) {
   if (!doc.version) {
     label += ` _icon-${doc.icon}`;
   }
-  label += `"><input type="checkbox" name="${doc.slug}" class="_list-checkbox" `;
+  label += `" data-name="${$.escape(doc.fullName)}" data-category="${doc.category || ""}">`;
+  label += `<input type="checkbox" name="${doc.slug}" class="_list-checkbox" `;
   if (options.checked) {
     label += "checked";
   }
-  return label + `><span class="_list-text">${doc.fullName}</span></label>`;
+  label += ">";
+  if (options.badge) {
+    label += categoryBadge(doc);
+  }
+  return label + `<span class="_list-text">${doc.fullName}</span></label>`;
 };
 
 /**
@@ -160,7 +186,7 @@ export const sidebarVersionedDoc = function (doc, versions, options) {
   }
   return (
     html +
-    `" tabindex="0">${arrow}${doc.name}</div><div class="_list _list-sub">${versions}</div>`
+    `" tabindex="0" data-name="${$.escape(doc.name)}" data-category="${doc.category || ""}">${arrow}${categoryBadge(doc)}${doc.name}</div><div class="_list _list-sub">${versions}</div>`
   );
 };
 
@@ -192,7 +218,7 @@ export const sidebarDisabledVersionedDoc = (doc, versions) =>
 
 export const docPickerHeader =
   '<div class="_list-picker-head"><span>Documentation</span> <label title="Enable all">Enable <input type="checkbox" class="_list-picker-all"></label>' +
-  '<input type="search" class="_list-picker-filter" placeholder="Filter\u2026" aria-label="Filter documentation"></div>';
+  '<input type="search" class="_list-picker-filter" placeholder="Filter by name or #category" aria-label="Filter documentation"></div>';
 
 export const docPickerNote = `\
 <div class="_list-note">Tip: for faster and better search results, select only the docs you need.</div>
