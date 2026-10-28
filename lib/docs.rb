@@ -120,6 +120,7 @@ module Docs
       'angular' => 'ng',
       'angular.js' => 'ng',
       'backbone' => 'bb',
+      'cmake' => 'cm',
       'cpp' => 'c++',
       'coffeescript' => 'cs',
       'crystal' => 'cr',
