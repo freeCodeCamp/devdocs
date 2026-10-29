@@ -26,10 +26,10 @@ export class SettingsStore {
   static KEY = "settings";
 
   /**
-   * The sessionStorage key the once-a-session analytics prompt is tracked by.
-   * Not a setting: it was a session cookie, and is meant to last a visit.
+   * Cookies of an earlier version that aren't settings any more: the consent
+   * to analytics, and the session-only flag the consent prompt was tracked by.
    */
-  static ASKED_KEY = "analyticsConsentAsked";
+  static RETIRED_KEYS = ["analyticsConsent", "analyticsConsentAsked"];
 
   /**
    * Hook called when a value read back after a write doesn't match what was
@@ -89,12 +89,9 @@ export class SettingsStore {
     this.storage.set(SettingsStore.KEY, settings);
   }
 
-  /** Clears every setting, and the flags that outlive them. */
+  /** Clears every setting. */
   reset() {
     this.storage.del(SettingsStore.KEY);
-    try {
-      sessionStorage.removeItem(SettingsStore.ASKED_KEY);
-    } catch (error) {}
   }
 
   /**
@@ -113,9 +110,10 @@ export class SettingsStore {
    * expires them. Does nothing once they are gone.
    *
    * What is already stored wins, being the newer of the two. Cookies with a
-   * single leading underscore belong to the analytics vendors, not to us.
-   * Nothing is expired unless the write lands, or a browser that won't take
-   * the settings would be left with no copy of them at all.
+   * single leading underscore were set by the analytics vendors the app used
+   * to load; nothing looks after them any more, so they are expired outright.
+   * Nothing else is expired unless the write lands, or a browser that won't
+   * take the settings would be left with no copy of them at all.
    *
    * Remove once the app has had a release or two to empty the jar out.
    */
@@ -133,19 +131,16 @@ export class SettingsStore {
     const names = [];
 
     for (var cookie of document.cookie.split(/;\s?/)) {
-      if (cookie[0] === "_") {
+      const [name, value] = cookie.split("=");
+      if (name[0] === "_") {
+        if (name[1] !== "_") {
+          expireCookie(name);
+        }
         continue;
       }
-      const [name, value] = cookie.split("=");
       const key = decode(name);
 
-      if (key === SettingsStore.ASKED_KEY) {
-        // It was a session cookie, and is sessionStorage now. Carried over, or
-        // the prompt would come back on the visit that upgrades.
-        try {
-          sessionStorage.setItem(key, "1");
-        } catch (error) {}
-      } else if (!(key in settings)) {
+      if (!SettingsStore.RETIRED_KEYS.includes(key) && !(key in settings)) {
         settings[key] = decode(value || "");
       }
       names.push(name);
@@ -166,12 +161,15 @@ export class SettingsStore {
 }
 
 /**
- * Expires a cookie, whoever set it.
+ * Expires a cookie, whoever set it: once as the app sets them, and once for
+ * the whole domain, which is where Google Analytics put its own.
  *
  * @param {string} name
  */
-export const expireCookie = (name) => {
-  document.cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+const expireCookie = (name) => {
+  const expires = "expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = `${name}=;path=/;${expires}`;
+  document.cookie = `${name}=;path=/;domain=${location.hostname};${expires}`;
 };
 
 /**

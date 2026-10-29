@@ -1,7 +1,6 @@
 // @ts-check
 
 import { app } from "./app/app.js";
-import "./tracking.js";
 
 /*
  * Copyright 2013-2026 Thibaut Courouble and other contributors
