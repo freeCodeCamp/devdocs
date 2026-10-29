@@ -2,7 +2,7 @@ module Docs
   class Laravel
     class CleanHtmlFilter < Filter
       def call
-        if subpath.start_with?('/api')
+        if base_url.origin.start_with?('https://api.laravel.com')
           api
         else
           other
