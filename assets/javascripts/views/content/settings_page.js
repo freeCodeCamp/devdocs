@@ -62,6 +62,7 @@ export class SettingsPage extends View {
       count: packDocs(pack).length,
     }));
     settings.docPackGuideUrl = GUIDE_URL;
+    settings.docPacksOpen = !!this.packsOpen;
     for (var layout of Settings.LAYOUTS) {
       settings[layout] = app.settings.hasLayout(layout);
     }
@@ -194,7 +195,7 @@ export class SettingsPage extends View {
       this.setPackStatus(
         `Added “${pack.name}” with ${count} ${count === 1 ? "doc" : "docs"}. Reloading…`,
       );
-      window.location.reload();
+      this.reloadToPacks();
     });
   }
 
@@ -205,10 +206,7 @@ export class SettingsPage extends View {
    */
   removePack(url) {
     const pack = app.docPacks.all().find((pack) => pack.url === url);
-    if (
-      !pack ||
-      !window.confirm(`Remove “${pack.name}” and its docs from DevDocs?`)
-    ) {
+    if (!pack) {
       return;
     }
     app.docPacks.remove(url);
@@ -216,7 +214,7 @@ export class SettingsPage extends View {
     const slugs = new Set(packDocs(pack).map((doc) => doc.slug));
     app.settings.setDocs(app.settings.getDocs().filter((slug) => !slugs.has(slug)));
     new Docs(app.docs.all().filter((doc) => slugs.has(doc.slug))).uninstall(() =>
-      window.location.reload(),
+      this.reloadToPacks(),
     );
   }
 
@@ -329,13 +327,56 @@ export class SettingsPage extends View {
         break;
       case "removePack":
         $.stopEvent(event);
+        this.askToRemovePack(target);
+        break;
+      case "confirmRemovePack":
+        $.stopEvent(event);
         this.removePack(target.getAttribute("data-url"));
+        break;
+      case "cancelRemovePack":
+        $.stopEvent(event);
+        this.cancelRemovePack(target);
         break;
     }
   }
 
-  /** @param {unknown} context */
+  /**
+   * Shows the pack's "Remove …?" box in place of its Remove button. A box in
+   * the page rather than `window.confirm`, which some app shells block.
+   *
+   * @param {Element} button The pack's Remove button.
+   */
+  askToRemovePack(button) {
+    const box = /** @type {HTMLElement} */ (button.parentElement.querySelector("._doc-pack-confirm"));
+    /** @type {HTMLElement} */ (button).hidden = true;
+    box.hidden = false;
+    /** @type {HTMLElement} */ (box.querySelector('[data-action="cancelRemovePack"]')).focus();
+  }
+
+  /** @param {Element} button The box's Cancel button. */
+  cancelRemovePack(button) {
+    const pack = button.closest("._doc-pack");
+    const remove = /** @type {HTMLElement} */ (pack.querySelector('[data-action="removePack"]'));
+    /** @type {HTMLElement} */ (button.parentElement).hidden = true;
+    remove.hidden = false;
+    remove.focus();
+  }
+
+  /**
+   * Reloads the app with the doc packs section open, after a pack is added or
+   * removed.
+   */
+  reloadToPacks() {
+    history.replaceState(history.state, "", `/settings#${SettingsPage.PACKS_ID}`);
+    window.location.reload();
+  }
+
+  /** @param {import("../../lib/page.js").Context} context */
   onRoute(context) {
+    // The section is collapsed unless a link leads to it.
+    this.packsOpen = context.hash === SettingsPage.PACKS_ID;
     this.render();
   }
+
+  static PACKS_ID = "doc-packs";
 }

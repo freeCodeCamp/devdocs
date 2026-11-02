@@ -3,6 +3,7 @@
 import { app } from "../../app/app.js";
 import { $ } from "../../lib/util.js";
 import { Content } from "../content/content.js";
+import { DocMenu } from "./doc_menu.js";
 import { Menu } from "./menu.js";
 import { Mobile } from "./mobile.js";
 import { Path } from "./path.js";
@@ -39,6 +40,8 @@ export class AppDocument extends View {
     this.sidebar = new Sidebar();
     this.addSubview(this.sidebar);
     this.addSubview(this.menu);
+    this.docMenu = new DocMenu();
+    this.addSubview(this.docMenu);
     if (Resizer.isSupported()) {
       this.resizer = new Resizer();
       this.addSubview(this.resizer);

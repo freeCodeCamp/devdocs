@@ -1,5 +1,6 @@
 // @ts-check
 
+import * as docMenuTmpl from "./doc_menu_tmpl.js";
 import * as errorTmpl from "./error_tmpl.js";
 import * as noticeTmpl from "./notice_tmpl.js";
 import * as notifTmpl from "./notif_tmpl.js";
@@ -25,6 +26,7 @@ import * as tipTmpl from "./tip_tmpl.js";
  * @type {Record<string, ((...args: any[]) => string) | string>}
  */
 const templates = {
+  ...docMenuTmpl,
   ...errorTmpl,
   ...noticeTmpl,
   ...notifTmpl,

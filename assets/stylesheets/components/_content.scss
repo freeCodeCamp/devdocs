@@ -265,6 +265,8 @@
   > small { color: var(--textColorLight); }
 }
 
+._offline-add-docs { @extend %note-yellow; }
+
 ._docs-tools {
   display: -ms-flexbox;
   display: flex;

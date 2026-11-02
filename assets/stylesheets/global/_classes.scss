@@ -113,6 +113,12 @@
   border-color: var(--noteBorder);
 }
 
+// The plain note is yellow only in the light theme; this one is in both.
+%note-yellow {
+  background: var(--noteYellowBackground);
+  border-color: var(--noteYellowBorder);
+}
+
 %note-green, %label-green {
   background: var(--noteGreenBackground);
   border-color: var(--noteGreenBorder);

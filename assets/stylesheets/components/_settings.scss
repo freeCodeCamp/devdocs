@@ -86,6 +86,24 @@
   overflow-wrap: anywhere;
 }
 
+._doc-packs-summary {
+  cursor: pointer;
+  font-weight: var(--boldFontWeight);
+
+  > small { font-weight: normal; }
+  ._doc-packs[open] > & { margin-bottom: .5rem; }
+}
+
+._doc-pack-confirm {
+  @extend %note, %note-red;
+  max-width: 40rem;
+  margin: .25rem 0;
+  padding: .5rem .75rem;
+
+  > p { margin: 0 0 .5rem; }
+  > ._btn-link { margin-left: .5rem; }
+}
+
 ._doc-pack-add {
   display: flex;
   flex-wrap: wrap;

@@ -16,6 +16,8 @@ import { $ } from "../../lib/util.js";
 export const offlinePage = (docs, hasPersistence, isPersistent) => `\
 <h1 class="_lined-heading">Offline Documentation</h1>
 
+<p class="_note _offline-add-docs">Need documentation that isn't listed? <a href="/settings#doc-packs">Add documentation by link</a>: paste a doc pack's address in Preferences, enable its docs, then install them here.</p>
+
 <div class="_docs-tools">
   <div class="_docs-options">
     <label title="Only enable this when bandwidth isn't a concern to you.">

@@ -27,10 +27,26 @@ const themeOption = ({ label, value }, settings) => `\
 const docPack = ({ url, name, count }) => `\
 <div class="_settings-label _doc-pack">
   <strong>${$.escape(name)}</strong>
-  <button type="button" class="_btn-link" data-action="removePack" data-url="${$.escape(url)}">Remove</button>
+  <button type="button" class="_btn-link" data-action="removePack">Remove</button>
   <small>${count} ${count === 1 ? "doc" : "docs"} &middot; ${$.escape(url)}</small>
+  <div class="_doc-pack-confirm" role="alertdialog" aria-label="Confirm removal" hidden>
+    <p>Remove <strong>${$.escape(name)}</strong> and its ${count === 1 ? "doc" : "docs"} from DevDocs? Offline copies are deleted too.</p>
+    <button type="button" class="_btn" data-action="confirmRemovePack" data-url="${$.escape(url)}">Remove</button>
+    <button type="button" class="_btn-link" data-action="cancelRemovePack">Cancel</button>
+  </div>
 </div>\
 `;
+
+/**
+ * The line that opens the doc packs section.
+ *
+ * @param {number} count How many packs are added.
+ * @returns {string}
+ */
+const docPacksSummary = (count) =>
+  count === 0
+    ? "Add documentation by link"
+    : `Show doc packs <small>(${count} added)</small>`;
 
 /**
  * What to do when an address couldn't be added as a doc pack.
@@ -169,28 +185,6 @@ export const settingsPage = (settings) => `\
   </div>
 </div>
 
-<div class="_settings-fieldset">
-  <h2 class="_settings-legend">Doc packs:</h2>
-
-  <div class="_settings-inputs">
-    ${/** @type {{ url: string, name: string, count: number }[]} */ (
-      settings.docPacks
-    )
-      .map(docPack)
-      .join("")}
-    <div class="_settings-label _doc-pack-add">
-      <input type="url" name="packUrl" class="_doc-pack-input" placeholder="github.com/someone/their-docs" aria-label="Doc pack address" autocomplete="off" spellcheck="false">
-      <button type="button" class="_btn" data-action="addPack">Add</button>
-      <small class="_doc-pack-preview"></small>
-      <small class="_doc-pack-status" role="status"></small>
-      <div class="_doc-pack-help" role="alert"></div>
-      <small>Documentation shared by anyone as a doc pack: a Git repository or a website laid out for DevDocs. Its docs then appear in the list on the left, ready to enable. <a href="${$.escape(
-        String(settings.docPackGuideUrl),
-      )}" target="_blank" rel="noopener">What's a doc pack?</a></small>
-    </div>
-  </div>
-</div>
-
 <div class="_settings-fieldset _hide-on-mobile">
   <h2 class="_settings-legend">Scrolling:</h2>
 
@@ -236,6 +230,31 @@ export const settingsPage = (settings) => `\
       <small>Applied on top of DevDocs' own styles.</small>
     </label>
   </div>
+</div>
+
+<div class="_settings-fieldset" id="doc-packs">
+  <h2 class="_settings-legend">Doc packs:</h2>
+
+  <details class="_settings-inputs _doc-packs"${settings.docPacksOpen ? " open" : ""}>
+    <summary class="_doc-packs-summary">${docPacksSummary(
+      /** @type {unknown[]} */ (settings.docPacks).length,
+    )}</summary>
+    ${/** @type {{ url: string, name: string, count: number }[]} */ (
+        settings.docPacks
+      )
+        .map(docPack)
+        .join("")}
+      <div class="_settings-label _doc-pack-add">
+        <input type="url" name="packUrl" class="_doc-pack-input" placeholder="github.com/someone/their-docs" aria-label="Doc pack address" autocomplete="off" spellcheck="false">
+        <button type="button" class="_btn" data-action="addPack">Add</button>
+        <small class="_doc-pack-preview"></small>
+        <small class="_doc-pack-status" role="status"></small>
+        <div class="_doc-pack-help" role="alert"></div>
+        <small>Documentation shared by anyone as a doc pack: a Git repository or a website laid out for DevDocs. Its docs then appear in the list on the left, ready to enable. <a href="${$.escape(
+          String(settings.docPackGuideUrl),
+        )}" target="_blank" rel="noopener">What's a doc pack?</a></small>
+      </div>
+  </details>
 </div>
 
 <p class="_hide-on-mobile">
