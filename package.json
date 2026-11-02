@@ -3,8 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --import ./test/assets/setup.js --test test/assets/*_test.js",
-    "typecheck": "tsc -p tsconfig.json && tsc -p test/assets/tsconfig.json"
+    "test": "node --import ./test/assets/setup.js --test test/assets/*_test.js test/scripts/*_test.js",
+    "icon": "node scripts/fetch_icon.js",
+    "typecheck": "tsc -p tsconfig.json && tsc -p test/assets/tsconfig.json && tsc -p test/scripts/tsconfig.json"
   },
   "devDependencies": {
     "@types/node": "^24.9.2",
