@@ -139,6 +139,8 @@ declare module "./models/doc.js" {
     pack?: string;
     /** For a doc from a doc pack: its slug in the pack, before the pack's id was added. */
     source_slug?: string;
+    /** For a doc from a doc pack: whether the pack gave it an icon. */
+    pack_icon?: boolean;
 
     /** Derived: the category's id (see app/categories.js). */
     category: string;

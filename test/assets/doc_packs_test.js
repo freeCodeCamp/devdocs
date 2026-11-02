@@ -7,10 +7,15 @@ import { DocPacks } from "../../assets/javascripts/app/doc_packs.js";
 import {
   cleanIndex,
   DocPackError,
+  downloadIcons,
   findBuiltInDocs,
+  iconCss,
+  keepIcons,
+  MAX_ICON_BYTES,
   packDocs,
   packId,
   packUrl,
+  readIcon,
   readManifest,
 } from "../../assets/javascripts/lib/doc_packs.js";
 import { Doc } from "../../assets/javascripts/models/doc.js";
@@ -277,4 +282,89 @@ test("an address that a built-in doc comes from is recognized", () => {
   assert.deepEqual(findBuiltInDocs("https://git-scm.com/book", docs), []);
   assert.deepEqual(findBuiltInDocs("https://docs.github.com/en/pages", docs), []);
   assert.deepEqual(findBuiltInDocs("", docs), []);
+});
+
+// A 1×1 PNG: the signature is all readIcon checks.
+const PNG_BYTES = new Uint8Array([
+  0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0x0d, 0x49, 0x48, 0x44, 0x52,
+]);
+
+/** @param {Record<string, Uint8Array<ArrayBuffer>>} files */
+const fakeDownload = (files) => async (/** @type {string} */ url) =>
+  files[url]
+    ? new Response(files[url])
+    : new Response("Not found", { status: 404 });
+
+const ICON_PACK = {
+  url: PACK_URL,
+  id: "abc123",
+  name: "Icons",
+  docs: [
+    { name: "Notes", slug: "notes", icon: true },
+    { name: "Old notes", slug: "old.notes~2", icon: true },
+    { name: "Plain", slug: "plain" },
+    { name: "Missing", slug: "missing", icon: true },
+  ],
+};
+
+test("only small PNGs are kept as icons", () => {
+  assert.match(readIcon(PNG_BYTES) || "", /^data:image\/png;base64,iVBORw0KGgo/);
+  assert.equal(readIcon(new TextEncoder().encode("<svg onload=alert(1)>")), null);
+  const big = new Uint8Array(MAX_ICON_BYTES + 1);
+  big.set(PNG_BYTES);
+  assert.equal(readIcon(big), null);
+});
+
+test("icons are downloaded for the docs that say they have one", async () => {
+  const icons = await downloadIcons(
+    ICON_PACK,
+    fakeDownload({
+      [`${PACK_URL}notes/16@2x.png`]: PNG_BYTES,
+      [`${PACK_URL}old.notes~2/16@2x.png`]: PNG_BYTES,
+      [`${PACK_URL}plain/16@2x.png`]: PNG_BYTES,
+    }),
+  );
+  // "plain" doesn't say it has one, and "missing" isn't there.
+  assert.deepEqual(Object.keys(icons).sort(), ["notes", "old.notes~2"]);
+});
+
+test("a failed download leaves the doc with the plain icon", async () => {
+  const icons = await downloadIcons(ICON_PACK, async () => {
+    throw new TypeError("Failed to fetch");
+  });
+  assert.deepEqual(icons, {});
+});
+
+test("pack docs with an icon get a class and CSS of their own", async () => {
+  const pack = { ...ICON_PACK, icons: { notes: readIcon(PNG_BYTES), "old.notes~2": readIcon(PNG_BYTES) } };
+  const docs = packDocs(pack);
+  const notes = new Doc(docs.find((doc) => doc.source_slug === "notes"));
+  const old = new Doc(docs.find((doc) => doc.source_slug === "old.notes~2"));
+  const plain = new Doc(docs.find((doc) => doc.source_slug === "plain"));
+
+  assert.equal(notes.icon, `pack-notes_${pack.id}`);
+  assert.equal(old.icon, `pack-old-notes_${pack.id}`);
+  assert.equal(plain.icon, "doc-pack");
+
+  const css = iconCss([pack]);
+  assert.ok(
+    css.startsWith(`._icon-pack-notes_${pack.id}:before { background-image: url("data:image/png;base64,`),
+  );
+  assert.ok(css.includes(`._icon-pack-old-notes_${pack.id}:before`));
+  assert.doesNotMatch(css, /plain|missing/);
+});
+
+test("a stored icon that isn't a PNG data URL is ignored", () => {
+  const pack = { ...ICON_PACK, icons: { notes: 'x"); } body { display: none; } .a { b: url("' } };
+  assert.equal(iconCss([pack]), "");
+  assert.equal(new Doc(packDocs(pack)[0]).icon, "doc-pack");
+});
+
+test("an icon that fails to download again is kept", () => {
+  const old = { ...ICON_PACK, icons: { notes: readIcon(PNG_BYTES), plain: readIcon(PNG_BYTES) } };
+  /** @type {import("../../assets/javascripts/lib/doc_packs.js").StoredPack} */
+  const fresh = { ...ICON_PACK };
+  keepIcons(fresh, old);
+  // "plain" no longer says it has an icon, so its old one goes.
+  assert.deepEqual(Object.keys(fresh.icons), ["notes"]);
 });

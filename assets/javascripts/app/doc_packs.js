@@ -3,6 +3,9 @@
 import { ajax } from "../lib/ajax.js";
 import {
   DocPackError,
+  downloadIcons,
+  iconCss,
+  keepIcons,
   MANIFEST_FILENAME,
   packDocs,
   packUrl,
@@ -113,6 +116,7 @@ export class DocPacks {
         if (error) {
           return;
         }
+        keepIcons(fresh, pack);
         // Read again: the list may have changed while the request ran.
         this.save(
           this.all().map((other) => (other.url === pack.url ? fresh : other)),
@@ -139,7 +143,12 @@ export class DocPacks {
           return;
         }
         pack.fetchedAt = Date.now();
-        callback(null, pack);
+        downloadIcons(pack).then((icons) => {
+          if (Object.keys(icons).length > 0) {
+            pack.icons = icons;
+          }
+          callback(null, pack);
+        });
       },
       error: (type, xhr) => {
         if (type === "invalid") {
@@ -153,6 +162,19 @@ export class DocPacks {
         }
       },
     });
+  }
+
+  /**
+   * Adds the CSS that shows the packs' own icons. Adding or removing a pack
+   * reloads the app, so once at boot is enough.
+   */
+  showIcons() {
+    const css = iconCss(this.all());
+    if (css) {
+      const style = document.createElement("style");
+      style.textContent = css;
+      document.head.appendChild(style);
+    }
   }
 
   /**

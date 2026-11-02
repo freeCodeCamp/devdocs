@@ -81,6 +81,8 @@ export class DocPackError extends Error {
  * @property {string} name Shown in the preferences.
  * @property {Record<string, unknown>[]} docs The manifest as downloaded.
  * @property {number} [fetchedAt] When the manifest was last downloaded.
+ * @property {Record<string, string>} [icons] Docs' icons as `data:` URLs, by
+ *   their slug in the pack, so that they show offline too.
  */
 
 /**
@@ -295,7 +297,144 @@ function packDoc(raw, pack) {
     source_slug: sourceSlug,
     // One of app/categories.js' ids; anything else is "Other".
     category: isCategoryId(raw.category) ? raw.category : undefined,
+    pack_icon: isIconDataUrl(pack.icons?.[sourceSlug]) || undefined,
   };
+}
+
+/**
+ * A doc's icon, in its folder of the pack: DevDocs' own 32-pixel name, shown
+ * at 16 pixels (twice as sharp on high-resolution screens).
+ */
+export const ICON_FILENAME = "16@2x.png";
+
+/**
+ * Icons are kept in local storage, so bigger ones are skipped. A 32-pixel PNG
+ * is a few kilobytes at most.
+ */
+export const MAX_ICON_BYTES = 16 * 1024;
+
+const MAX_ICONS = 100;
+const PNG_SIGNATURE = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+const ICON_DATA_URL_RGX = /^data:image\/png;base64,[A-Za-z0-9+/]+={0,2}$/;
+
+/** @param {unknown} value */
+function isIconDataUrl(value) {
+  return typeof value === "string" && ICON_DATA_URL_RGX.test(value);
+}
+
+/**
+ * The slugs of the docs whose manifest entry says `"icon": true`.
+ *
+ * @param {StoredPack} pack
+ * @returns {string[]}
+ */
+function slugsWithIcons(pack) {
+  const slugs = (pack.docs || [])
+    .filter((raw) => raw.icon === true && typeof raw.slug === "string")
+    .map((raw) => /** @type {string} */ (raw.slug).trim())
+    .filter((slug) => SLUG_RGX.test(slug));
+  return [...new Set(slugs)].slice(0, MAX_ICONS);
+}
+
+/**
+ * Turns a downloaded icon into a `data:` URL, if it's a PNG small enough to
+ * keep.
+ *
+ * @param {Uint8Array} bytes
+ * @returns {string | null}
+ */
+export function readIcon(bytes) {
+  if (
+    bytes.length > MAX_ICON_BYTES ||
+    bytes.length < PNG_SIGNATURE.length ||
+    PNG_SIGNATURE.some((byte, i) => bytes[i] !== byte)
+  ) {
+    return null;
+  }
+  let binary = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  }
+  return `data:image/png;base64,${btoa(binary)}`;
+}
+
+/**
+ * Downloads the icons of the pack's docs that have one. An icon that's
+ * missing or unusable is left out, and its doc keeps the plain icon.
+ *
+ * @param {StoredPack} pack
+ * @param {(url: string) => Promise<Response>} [download]
+ * @returns {Promise<Record<string, string>>} The icons, by slug in the pack.
+ */
+export async function downloadIcons(pack, download = (url) => fetch(url)) {
+  /** @type {Record<string, string>} */
+  const icons = {};
+  await Promise.all(
+    slugsWithIcons(pack).map(async (slug) => {
+      try {
+        const response = await download(
+          `${pack.url}${encodeURIComponent(slug)}/${ICON_FILENAME}`,
+        );
+        if (!response.ok) return;
+        const icon = readIcon(new Uint8Array(await response.arrayBuffer()));
+        if (icon) icons[slug] = icon;
+      } catch {
+        // Offline, or the site refused: the doc keeps the plain icon.
+      }
+    }),
+  );
+  return icons;
+}
+
+/**
+ * When a manifest is downloaded again, keeps the old icons of the docs that
+ * still have one but whose icon couldn't be downloaded this time.
+ *
+ * @param {StoredPack} fresh
+ * @param {StoredPack} old
+ */
+export function keepIcons(fresh, old) {
+  for (const slug of slugsWithIcons(fresh)) {
+    const icon = old.icons?.[slug];
+    if (!fresh.icons?.[slug] && isIconDataUrl(icon)) {
+      fresh.icons = { ...fresh.icons, [slug]: icon };
+    }
+  }
+}
+
+/**
+ * The icon class of a pack doc with an icon, `_icon-<name>`. Built-in docs'
+ * names never contain a hyphen, so they can't clash; dots in slugs would
+ * end the class in a CSS selector, and slugs never contain a hyphen either.
+ *
+ * @param {string} slugWithoutVersion The doc's slug in DevDocs, with the pack's code.
+ */
+export function packIconName(slugWithoutVersion) {
+  return `pack-${slugWithoutVersion.replace(/\./g, "-")}`;
+}
+
+/**
+ * CSS that shows the packs' icons, in place of the sprite that holds DevDocs'
+ * own icons.
+ *
+ * @param {StoredPack[]} packs
+ * @returns {string}
+ */
+export function iconCss(packs) {
+  const rules = new Map();
+  for (const pack of packs) {
+    for (const doc of packDocs(pack)) {
+      if (!doc.pack_icon) continue;
+      const slug = /** @type {string} */ (doc.slug).split("~")[0];
+      const icon = pack.icons[/** @type {string} */ (doc.source_slug)];
+      rules.set(
+        slug,
+        `._icon-${packIconName(slug)}:before { background-image: url("${icon}") !important; ` +
+          "background-size: 1rem 1rem !important; background-position: 0 0 !important; }",
+      );
+    }
+  }
+  return [...rules.values()].join("\n");
 }
 
 /**

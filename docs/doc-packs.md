@@ -49,8 +49,21 @@ So the `public/docs` folder that `thor docs:generate <doc>` followed by `thor do
 - `db_size` is the size of `db.json` in bytes, shown on the offline page.
 - `category` is where DevDocs lists the doc, in the sidebar and the preferences: one of `languages`, `web`, `frameworks`, `libraries`, `testing`, `tools`, `databases`, `ai`, `services` or `other` (the default). Typing a category's name in the search box and pressing Tab searches only its docs.
 - `type` picks one of DevDocs' page styles; `simple` suits hand-written pages (section headings with bars, quotes shown as notes).
+- `icon`: `true` when the doc's folder has an icon, `<slug>/16@2x.png` (see below).
 
 A doc is shown under its own slug plus the pack's code (e.g. `/notes_mi5a07/`), so a pack can't replace a built-in doc or a doc from another pack.
+
+## Icons
+
+A doc shows a plain page icon unless its pack gives it one: a 32×32 PNG named `16@2x.png` in the doc's folder, and `"icon": true` in its entry in `docs.json`. DevDocs downloads the icons with the list of docs and keeps them in the browser, so they show offline too. Icons over 16 KB, and files that aren't PNGs, are ignored.
+
+To make one from the documented project's website:
+
+```
+npm run icon -- <slug> <website> --pack <pack folder>
+```
+
+run in a DevDocs checkout. It finds the website's icon, saves it at the right size in the doc's folder and marks the doc in `docs.json`. Add `--icon <image address>` to use a particular image instead, for example when the website only offers an SVG icon, which the script can't convert.
 
 ## Sharing a pack
 

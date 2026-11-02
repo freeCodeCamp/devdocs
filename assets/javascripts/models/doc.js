@@ -6,7 +6,7 @@ import { config } from "../app/config.js";
 import { Entries } from "../collections/entries.js";
 import { Types } from "../collections/types.js";
 import { ajax } from "../lib/ajax.js";
-import { cleanIndex } from "../lib/doc_packs.js";
+import { cleanIndex, packIconName } from "../lib/doc_packs.js";
 import { Entry } from "./entry.js";
 import { Model } from "./model.js";
 
@@ -44,9 +44,14 @@ export class Doc extends Model {
     this.reset(this);
     this.slug_without_version = this.slug.split("~")[0];
     this.fullName = `${this.name}` + (this.version ? ` ${this.version}` : "");
-    // Pack docs share one plain icon (see _icons.scss.erb): the sprite only
-    // holds DevDocs' own docs. Built-in slugs never contain a hyphen.
-    this.icon = this.pack ? "doc-pack" : this.slug_without_version;
+    // The sprite only holds DevDocs' own docs. A pack doc shows the icon from
+    // its pack (see DocPacks#showIcons), or else one plain icon shared by all
+    // (see _icons.scss.erb). Built-in slugs never contain a hyphen.
+    this.icon = this.pack
+      ? this.pack_icon
+        ? packIconName(this.slug_without_version)
+        : "doc-pack"
+      : this.slug_without_version;
     if (this.version) {
       this.short_version = this.version.split(" ")[0];
     }

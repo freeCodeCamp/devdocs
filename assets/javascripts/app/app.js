@@ -85,6 +85,7 @@ export class App extends Events {
     }
     this.settings = new Settings();
     this.docPacks = new DocPacks(this.localStorage);
+    this.docPacks.showIcons();
     this.resume = new Resume(this.localStorage);
     this.db = new DB();
 
