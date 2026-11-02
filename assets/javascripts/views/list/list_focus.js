@@ -143,6 +143,9 @@ export class ListFocus extends View {
       // pagination link
       $.click(first);
       return this.findFirst(cursor);
+    } else if (first.tagName === "H6") {
+      // a heading, e.g. a category's
+      return this.findNext(first);
     }
   }
 

@@ -24,6 +24,11 @@ declare global {
     captureMessage(message: string, options?: Record<string, any>): void;
   };
 
+  /** DOMPurify — cleans the HTML of pages from doc packs. */
+  const DOMPurify: {
+    sanitize(html: string, config?: Record<string, unknown>): string;
+  };
+
   /** Prism.js — only the parts the app uses. */
   const Prism: {
     highlightElement(element: Element, async?: boolean): void;
@@ -127,6 +132,16 @@ declare module "./models/doc.js" {
      * doc has no alias.
      */
     alias: string | null;
+
+    /** For a doc from a doc pack: the folder its files are served from. */
+    origin?: string;
+    /** For a doc from a doc pack: the pack's id (see lib/doc_packs.js). */
+    pack?: string;
+    /** For a doc from a doc pack: its slug in the pack, before the pack's id was added. */
+    source_slug?: string;
+
+    /** Derived: the category's id (see app/categories.js). */
+    category: string;
 
     /** Derived: the slug without its version. */
     slug_without_version: string;

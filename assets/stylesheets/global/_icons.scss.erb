@@ -41,3 +41,13 @@ html._theme-dark {
 
   items.join('')
  %>
+
+// Docs from doc packs have no sprite of their own: an outlined page instead,
+// in the text colour, so it suits both themes.
+._icon-doc-pack:before {
+  background-image: none !important;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1.5px currentColor;
+  opacity: .45;
+  transform: scale(.8, .9);
+}

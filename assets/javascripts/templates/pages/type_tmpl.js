@@ -12,7 +12,7 @@ import { render } from "../base.js";
  * @returns {string}
  */
 export const typePage = (type) => {
-  return ` <h1>${type.doc.fullName} / ${type.name}</h1>
+  return ` <h1>${type.doc.fullName} / ${$.escape(type.name)}</h1>
 <ul class="_entry-list">${render(
     "typePageEntry",
     type.entries(),

@@ -1,6 +1,7 @@
 // @ts-check
 
 import { app } from "../../app/app.js";
+import { groupByCategory } from "../../app/categories.js";
 import { $ } from "../../lib/util.js";
 import { ListFocus } from "../list/list_focus.js";
 import { ListFold } from "../list/list_fold.js";
@@ -69,13 +70,22 @@ export class DocList extends View {
     }
   }
 
-  /** Rebuilds the list from the enabled docs. */
+  /**
+   * Rebuilds the list from the enabled docs, under the headings of their
+   * categories when they're in more than one.
+   */
   render() {
     let html = "";
-    for (var doc of app.docs.all()) {
-      html += this.tmpl("sidebarDoc", doc, {
-        fullName: app.docs.countAllBy("name", doc.name) > 1,
-      });
+    const groups = groupByCategory(app.docs.all());
+    for (const { category, docs } of groups) {
+      if (groups.length > 1) {
+        html += this.tmpl("sidebarCategory", category);
+      }
+      for (const doc of docs) {
+        html += this.tmpl("sidebarDoc", doc, {
+          fullName: app.docs.countAllBy("name", doc.name) > 1,
+        });
+      }
     }
     this.html(html);
     if (!app.isSingleDoc() && app.disabledDocs.size() !== 0) {

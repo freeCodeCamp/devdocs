@@ -1,6 +1,7 @@
 // @ts-check
 
 import { app } from "../../app/app.js";
+import { findCategory } from "../../app/categories.js";
 import { config } from "../../app/config.js";
 import { SynchronousSearcher } from "../../app/searcher.js";
 import { $ } from "../../lib/util.js";
@@ -10,14 +11,24 @@ import { View } from "../view.js";
 /** @import { Doc } from "../../models/doc.js" */
 
 /**
- * Narrowing the search to one doc.
+ * The docs of a category, as a search scope.
  *
- * Typing a doc's name and then space or tab turns what was typed into a tag in
- * front of the field, and the rest of the query is then matched within that
- * doc alone. The scope can also come from the URL hash, or from arriving on a
- * doc's page.
+ * @typedef {object} CategoryScope
+ * @property {string} id
+ * @property {string} name
+ * @property {{ all(): import("../../models/entry.js").Entry[] }} entries
+ */
+
+/**
+ * Narrowing the search to one doc, or to the docs of one category.
  *
- * Emits `change` with the new doc and the previous one.
+ * Typing a doc's name (or a category's, such as "Databases" or "db") and then
+ * space or tab turns what was typed into a tag in front of the field, and the
+ * rest of the query is then matched within that doc or category alone. A doc
+ * scope can also come from the URL hash, or from arriving on a doc's page.
+ *
+ * Emits `change` with the new doc and the previous one; the doc is null for a
+ * category.
  */
 export class SearchScope extends View {
   static SEARCH_PARAM = config.search_param;
@@ -50,9 +61,12 @@ export class SearchScope extends View {
     );
   }
 
-  /** @returns {Doc | App} The doc the search is scoped to, or the app when it isn't scoped. */
+  /**
+   * @returns {Doc | CategoryScope | App} The doc or category the search is
+   *   scoped to, or the app when it isn't scoped.
+   */
   getScope() {
-    return this.doc || app;
+    return this.doc || this.category || app;
   }
 
   /** @returns {boolean} Whether the search is scoped to a doc. */
@@ -60,13 +74,18 @@ export class SearchScope extends View {
     return !!this.doc;
   }
 
-  /** @returns {string | undefined} The scoped doc's name. */
+  /** @returns {boolean} Whether the search is scoped to a doc or a category. */
+  isScoped() {
+    return !!(this.doc || this.category);
+  }
+
+  /** @returns {string | undefined} The scoped doc's or category's name. */
   name() {
-    return this.doc?.name;
+    return this.doc?.name || this.category?.name;
   }
 
   /**
-   * Scopes to the doc `value` names, if it names one.
+   * Scopes to the category or doc `value` names, if it names one.
    *
    * @param {string} value
    * @param {boolean} [searchDisabled] Also match docs that aren't enabled,
@@ -76,7 +95,14 @@ export class SearchScope extends View {
     if (searchDisabled == null) {
       searchDisabled = false;
     }
-    if (this.doc) {
+    if (this.isScoped()) {
+      return;
+    }
+    // A category's name, typed in full ("databases", "db"), comes before the
+    // docs, whose names it would otherwise half-match.
+    const category = findCategory(value);
+    if (category && app.docs.all().some((doc) => doc.category === category.id)) {
+      this.selectCategory(category);
       return;
     }
     this.searcher.find(app.docs.all(), "text", value);
@@ -117,8 +143,36 @@ export class SearchScope extends View {
       return;
     }
     this.doc = doc;
+    this.category = null;
+    this.showTag(doc.fullName);
+    this.trigger("change", this.doc, previousDoc);
+  }
 
-    this.tag.textContent = doc.fullName;
+  /**
+   * Scopes to the enabled docs of a category and shows its tag.
+   *
+   * @param {import("../../app/categories.js").Category} category
+   */
+  selectCategory(category) {
+    const previousDoc = this.doc;
+    const entries = app.docs
+      .all()
+      .filter((doc) => doc.category === category.id)
+      .flatMap((doc) => [doc.toEntry(), ...doc.entries.all()]);
+    this.doc = null;
+    this.category = { id: category.id, name: category.name, entries: { all: () => entries } };
+    this.showTag(category.name);
+    this.trigger("change", null, previousDoc);
+  }
+
+  /**
+   * Shows the scope's tag in front of the field, in place of what was typed
+   * to choose it.
+   *
+   * @param {string} text
+   */
+  showTag(text) {
+    this.tag.textContent = text;
     this.tag.style.display = "block";
 
     this.input.removeAttribute("placeholder");
@@ -126,7 +180,6 @@ export class SearchScope extends View {
     this.input.style.paddingLeft = this.tag.offsetWidth + 10 + "px";
 
     $.trigger(this.input, "input");
-    this.trigger("change", this.doc, previousDoc);
   }
 
   /**
@@ -142,11 +195,12 @@ export class SearchScope extends View {
 
   /** Drops the scope and restores the field. */
   reset() {
-    if (!this.doc) {
+    if (!this.isScoped()) {
       return;
     }
     const previousDoc = this.doc;
     this.doc = null;
+    this.category = null;
 
     this.tag.textContent = "";
     this.tag.style.display = "none";
@@ -164,7 +218,7 @@ export class SearchScope extends View {
    */
   doScopeSearch(event) {
     this.search(this.input.value.slice(0, this.input.selectionStart));
-    if (this.doc) {
+    if (this.isScoped()) {
       $.stopEvent(event);
     }
   }
@@ -180,11 +234,11 @@ export class SearchScope extends View {
   /** @param {ViewKeyboardEvent} event */
   onKeydown(event) {
     if (event.key === "Backspace") {
-      if (this.doc && this.input.selectionEnd === 0) {
+      if (this.isScoped() && this.input.selectionEnd === 0) {
         this.reset();
         $.stopEvent(event);
       }
-    } else if (!this.doc && this.input.value && !$.isChromeForAndroid()) {
+    } else if (!this.isScoped() && this.input.value && !$.isChromeForAndroid()) {
       if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) {
         return;
       }
@@ -204,7 +258,7 @@ export class SearchScope extends View {
     if (!$.isChromeForAndroid()) {
       return;
     }
-    if (!this.doc && this.input.value && event.data === " ") {
+    if (!this.isScoped() && this.input.value && event.data === " ") {
       this.doScopeSearch(event);
     }
   }

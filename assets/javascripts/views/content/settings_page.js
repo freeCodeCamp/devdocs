@@ -2,6 +2,15 @@
 
 import { app } from "../../app/app.js";
 import { Settings } from "../../app/settings.js";
+import { Docs } from "../../collections/docs.js";
+import {
+  FIND_PACKS_URL,
+  GUIDE_URL,
+  MANIFEST_FILENAME,
+  findBuiltInDocs,
+  packDocs,
+  packUrl,
+} from "../../lib/doc_packs.js";
 import { resetAnalytics } from "../../lib/page.js";
 import { $ } from "../../lib/util.js";
 import { Notif } from "../misc/notif.js";
@@ -20,6 +29,7 @@ export class SettingsPage extends View {
   static events = {
     click: "onClick",
     change: "onChange",
+    input: "onInput",
     keydown: "onKeydown",
   };
 
@@ -35,6 +45,7 @@ export class SettingsPage extends View {
     settings.smoothScroll = !app.settings.get("fastScroll");
     settings.arrowScroll = app.settings.get("arrowScroll");
     settings.noAutofocus = app.settings.get("noAutofocus");
+    settings.resume = !app.settings.get("noResume");
     settings.autoLatestVersion = app.settings.get("autoLatestVersion");
     settings.analyticsConsent = app.settings.get("analyticsConsent");
     settings.spaceScroll = app.settings.get("spaceScroll");
@@ -45,6 +56,12 @@ export class SettingsPage extends View {
     settings.monoFont = app.settings.get("monoFont");
     settings.customCss = app.settings.get("customCss");
     settings.autoSupported = app.settings.autoSupported;
+    settings.docPacks = app.docPacks.all().map((pack) => ({
+      url: pack.url,
+      name: pack.name,
+      count: packDocs(pack).length,
+    }));
+    settings.docPackGuideUrl = GUIDE_URL;
     for (var layout of Settings.LAYOUTS) {
       settings[layout] = app.settings.hasLayout(layout);
     }
@@ -140,10 +157,106 @@ export class SettingsPage extends View {
     reader.readAsText(file);
   }
 
+  /**
+   * Downloads the pack typed into the field and reloads, so that its docs show
+   * in the list.
+   */
+  addPack() {
+    const input = /** @type {HTMLInputElement} */ (this.find("._doc-pack-input"));
+    const button = /** @type {HTMLButtonElement} */ (this.find('[data-action="addPack"]'));
+    if (button.disabled) {
+      return;
+    }
+    button.disabled = true;
+    this.showPackHelp("");
+    this.setPackStatus("Downloading the pack…");
+
+    app.docPacks.add(input.value, (error, pack) => {
+      if (error) {
+        button.disabled = false;
+        this.setPackStatus("");
+        this.showPackHelp(
+          this.tmpl("docPackHelp", {
+            message: error.message,
+            reason: error.reason,
+            isGitHub: /^https:\/\/raw\.githubusercontent\.com\//.test(packUrl(input.value) || ""),
+            builtIn: findBuiltInDocs(
+              input.value,
+              app.docs.all().concat(app.disabledDocs.all()).filter((doc) => !doc.pack),
+            ),
+            guideUrl: GUIDE_URL,
+            findUrl: FIND_PACKS_URL,
+          }),
+        );
+        return;
+      }
+      const count = packDocs(pack).length;
+      this.setPackStatus(
+        `Added “${pack.name}” with ${count} ${count === 1 ? "doc" : "docs"}. Reloading…`,
+      );
+      window.location.reload();
+    });
+  }
+
+  /**
+   * Removes a pack, with its docs and their offline copies, and reloads.
+   *
+   * @param {string} url
+   */
+  removePack(url) {
+    const pack = app.docPacks.all().find((pack) => pack.url === url);
+    if (
+      !pack ||
+      !window.confirm(`Remove “${pack.name}” and its docs from DevDocs?`)
+    ) {
+      return;
+    }
+    app.docPacks.remove(url);
+
+    const slugs = new Set(packDocs(pack).map((doc) => doc.slug));
+    app.settings.setDocs(app.settings.getDocs().filter((slug) => !slugs.has(slug)));
+    new Docs(app.docs.all().filter((doc) => slugs.has(doc.slug))).uninstall(() =>
+      window.location.reload(),
+    );
+  }
+
+  /** @param {string} message */
+  setPackStatus(message) {
+    this.find("._doc-pack-status").textContent = message;
+  }
+
+  /** @param {string} html From the docPackHelp template, or empty to hide it. */
+  showPackHelp(html) {
+    this.find("._doc-pack-help").innerHTML = html;
+  }
+
+  /**
+   * Shows which file an address will be read from, as it's typed, so that a
+   * wrong address shows before it's tried.
+   *
+   * @param {ViewInputEvent} event
+   */
+  onInput(event) {
+    if (event.target.name !== "packUrl") {
+      return;
+    }
+    const url = packUrl(event.target.value);
+    this.find("._doc-pack-preview").textContent = url
+      ? `Reads ${url}${MANIFEST_FILENAME}`
+      : "";
+  }
+
   /** @param {ViewInputEvent} event */
   onChange(event) {
     const input = event.target;
     switch (input.name) {
+      case "resume":
+        app.settings.set("noResume", !input.checked);
+        break;
+      case "packUrl":
+        // Not a preference: it's only read when the pack is added.
+        event.stopPropagation();
+        break;
       case "theme":
         this.setTheme(input.value);
         break;
@@ -185,13 +298,20 @@ export class SettingsPage extends View {
 
   /**
    * Keeps the keyboard shortcuts out of the CSS field, where Enter and the
-   * arrow keys edit the text.
+   * arrow keys edit the text, and out of the pack address field.
    *
    * @param {ViewKeyboardEvent} event
    */
   onKeydown(event) {
     if (event.target.tagName === "TEXTAREA") {
       event.stopPropagation();
+    } else if (/** @type {HTMLInputElement} */ (event.target).name === "packUrl") {
+      // Enter adds the pack rather than saving the preferences.
+      event.stopPropagation();
+      if (event.key === "Enter") {
+        event.preventDefault();
+        this.addPack();
+      }
     }
   }
 
@@ -202,6 +322,14 @@ export class SettingsPage extends View {
       case "export":
         $.stopEvent(event);
         this.export();
+        break;
+      case "addPack":
+        $.stopEvent(event);
+        this.addPack();
+        break;
+      case "removePack":
+        $.stopEvent(event);
+        this.removePack(target.getAttribute("data-url"));
         break;
     }
   }

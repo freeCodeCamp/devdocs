@@ -47,6 +47,16 @@ export class Router extends Events {
   }
 
   /**
+   * Changes the address without showing the page; the first page shown is
+   * then that one. Used before `start`.
+   *
+   * @param {string} path
+   */
+  replacePath(path) {
+    page.replace(path, null, true);
+  }
+
+  /**
    * Navigates without leaving a history entry behind.
    *
    * @param {string} path

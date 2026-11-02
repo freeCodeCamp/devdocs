@@ -81,6 +81,38 @@
   @extend %border-box;
 }
 
+._doc-pack > small {
+  margin-left: 0;
+  overflow-wrap: anywhere;
+}
+
+._doc-pack-add {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .375rem;
+  align-items: center;
+
+  > small, > ._doc-pack-help { flex-basis: 100%; margin-left: 0; }
+  > ._doc-pack-status:empty, > ._doc-pack-preview:empty, > ._doc-pack-help:empty { display: none; }
+  > ._doc-pack-preview { overflow-wrap: anywhere; }
+}
+
+._doc-pack-help {
+  @extend %note, %note-red;
+  max-width: 40rem;
+  margin: .25rem 0;
+  padding: .5rem .75rem;
+
+  > p, > ul { margin: .25rem 0; }
+}
+
+._doc-pack-error { font-weight: var(--boldFontWeight); }
+
+._doc-pack-input {
+  flex: 1 1 14rem;
+  min-width: 0;
+}
+
 @media (max-width: 80rem) {
   ._setting-max-width { display: none; }
 }

@@ -2,6 +2,7 @@
 
 import { app } from "../../app/app.js";
 import { config } from "../../app/config.js";
+import { cleanPage } from "../../lib/doc_packs.js";
 import { setFaviconForDoc } from "../../lib/favicon.js";
 import { $ } from "../../lib/util.js";
 import { Notice } from "../misc/notice.js";
@@ -225,7 +226,9 @@ export class EntryPage extends View {
       return;
     }
     this.xhr = null;
-    this.render(this.prepareContent(response));
+    // A pack's pages come from whoever published it.
+    const content = this.entry.doc.pack ? cleanPage(response) : response;
+    this.render(this.prepareContent(content));
   }
 
   /** Shows the load error in place of the page. */

@@ -1,10 +1,12 @@
 // @ts-check
 
 import { app } from "../app/app.js";
+import { categoryOf } from "../app/categories.js";
 import { config } from "../app/config.js";
 import { Entries } from "../collections/entries.js";
 import { Types } from "../collections/types.js";
 import { ajax } from "../lib/ajax.js";
+import { cleanIndex } from "../lib/doc_packs.js";
 import { Entry } from "./entry.js";
 import { Model } from "./model.js";
 
@@ -42,11 +44,14 @@ export class Doc extends Model {
     this.reset(this);
     this.slug_without_version = this.slug.split("~")[0];
     this.fullName = `${this.name}` + (this.version ? ` ${this.version}` : "");
-    this.icon = this.slug_without_version;
+    // Pack docs share one plain icon (see _icons.scss.erb): the sprite only
+    // holds DevDocs' own docs. Built-in slugs never contain a hyphen.
+    this.icon = this.pack ? "doc-pack" : this.slug_without_version;
     if (this.version) {
       this.short_version = this.version.split(" ")[0];
     }
     this.text = this.toEntry().text;
+    this.category = categoryOf(this);
   }
 
   /**
@@ -56,6 +61,9 @@ export class Doc extends Model {
    *   data, or the doc itself when its attributes carry the index.
    */
   reset(data) {
+    if (this.pack) {
+      data = cleanIndex(data);
+    }
     this.resetEntries(data.entries);
     this.resetTypes(data.types);
   }
@@ -93,23 +101,30 @@ export class Doc extends Model {
   }
 
   /**
+   * @returns {string} The folder the doc's files are served from, ending in a
+   *   slash: DevDocs' own docs server, or the doc's pack.
+   */
+  baseUrl() {
+    return this.origin || `${config.docs_origin}/${this.slug}/`;
+  }
+
+  /**
    * @param {string} [path]
    * @returns {string} Where the page's HTML is served from.
    */
   fileUrl(path) {
-    return `${config.docs_origin}${this.fullPath(path)}?${this.mtime}`;
+    const relativePath = this.fullPath(path).slice(this.slug.length + 2);
+    return `${this.baseUrl()}${relativePath}?${this.mtime}`;
   }
 
   /** @returns {string} Where the doc's offline database is served from. */
   dbUrl() {
-    return `${config.docs_origin}/${this.slug}/${config.db_filename}?${this.mtime}`;
+    return `${this.baseUrl()}${config.db_filename}?${this.mtime}`;
   }
 
   /** @returns {string} Where the doc's entry index is served from. */
   indexUrl() {
-    return `${config.docs_origin}/${this.slug}/${
-      config.index_filename
-    }?${this.mtime}`;
+    return `${this.baseUrl()}${config.index_filename}?${this.mtime}`;
   }
 
   /**

@@ -36,6 +36,7 @@ import { $ } from "../lib/util.js";
  * @property {string} baseFont A CSS font family list for the text; unset uses the default.
  * @property {string} monoFont A CSS font family list for code; unset uses the default.
  * @property {string} customCss A stylesheet applied on top of the app's.
+ * @property {StoredFlag} noResume Don't reopen the page read last time on startup.
  * @property {number} listPageSize How many entries a sidebar list shows before
  *   "Show more…"; 0 shows them all.
  * @property {StoredFlag} autoLatestVersion
@@ -81,6 +82,7 @@ export class Settings {
     "baseFont",
     "monoFont",
     "customCss",
+    "noResume",
   ];
 
   static INTERNAL_KEYS = ["count", "schema", "version", "news"];
@@ -108,6 +110,7 @@ export class Settings {
     spaceTimeout: 0.5,
     noDocSpecificIcon: false,
     autoLatestVersion: false,
+    noResume: false,
     listPageSize: config.max_results,
   };
 

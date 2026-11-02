@@ -165,6 +165,15 @@ export const sidebarVersionedDoc = function (doc, versions, options) {
 };
 
 /**
+ * The heading of a category of docs.
+ *
+ * @param {import("../app/categories.js").Category} category
+ * @returns {string}
+ */
+export const sidebarCategory = (category) =>
+  `<h6 class="_list-category" data-category="${category.id}">${$.escape(category.name)}</h6>`;
+
+/**
  * The heading above the disabled docs.
  *
  * @param {SidebarOptions} options

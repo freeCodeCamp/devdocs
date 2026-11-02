@@ -387,6 +387,11 @@ class App < Sinatra::Application
     'webpack~2' => 'webpack'
   }
 
+  # Docs from doc packs (assets/javascripts/lib/doc_packs.js) are only known to
+  # the browser that added the pack. Their slugs end in "_" and the pack's
+  # six-character code, before any version.
+  DOC_PACK_SLUG = /\A[a-z0-9_.]+_[a-z0-9]{6}(?:~[a-z0-9_.]+)?\z/
+
   get %r{/([\w~\.%]+)(\-[\w\-]+)?(/.*)?} do |doc, type, rest|
     doc.sub! '%7E', '~'
 
@@ -424,7 +429,8 @@ class App < Sinatra::Application
       end
     end
 
-    return 404 unless @doc = find_doc(doc)
+    @doc = find_doc(doc)
+    return 404 unless @doc || doc.match?(DOC_PACK_SLUG)
 
     if rest.nil?
       redirect "/#{doc}#{type}/#{query_string_for_redirection}"
@@ -432,7 +438,9 @@ class App < Sinatra::Application
       redirect "/#{doc}#{type}#{rest[0...-1]}#{query_string_for_redirection}"
     else
       response.headers['Content-Security-Policy'] = settings.csp if settings.csp
-      erb :other
+      # A pack doc can't be shown on its own like a built-in one, so the full
+      # app boots, with the packs, and shows the page.
+      @doc ? erb(:other) : erb(:index)
     end
   end
 

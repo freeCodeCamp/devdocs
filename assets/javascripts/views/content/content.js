@@ -143,7 +143,22 @@ export class Content extends View {
   }
 
   /** Brings the element named by the URL hash into view. */
+  /**
+   * Scrolls the next page shown to `scrollTop`, once it has loaded, rather
+   * than to its top or its target. For reopening the page read last time.
+   *
+   * @param {number} scrollTop
+   */
+  restoreScroll(scrollTop) {
+    this.pendingScroll = scrollTop;
+  }
+
   scrollToTarget() {
+    if (this.pendingScroll != null) {
+      this.scrollTo(this.pendingScroll);
+      this.pendingScroll = null;
+      return;
+    }
     let el;
     if (
       this.routeCtx.hash &&

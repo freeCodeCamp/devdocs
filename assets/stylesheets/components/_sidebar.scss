@@ -98,6 +98,22 @@
   cursor: default;
 }
 
+// A category's heading, in the doc list and the doc picker.
+._list-category {
+  margin: .75rem 0 .125rem;
+  padding: 0 .75rem;
+  line-height: 1.5rem;
+  font-size: .6875rem;
+  font-weight: var(--boldFontWeight);
+  color: var(--textColorLight);
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  cursor: default;
+
+  &:first-child, ._list-picker-head + & { margin-top: .25rem; }
+  &[hidden] { display: none; }
+}
+
 ._list-title-link {
   display: none;
   float: right;

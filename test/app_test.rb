@@ -194,6 +194,26 @@ class AppTest < Minitest::Spec
       assert last_response.redirect?
       assert_equal 'https://example.org/python~2.7/foo', last_response['Location']
     end
+
+    it "renders the full app for a doc from a doc pack" do
+      get '/notes_mi5a07/git/basics'
+      assert last_response.ok?
+      refute_includes last_response.body, 'data-doc='
+
+      get '/vue_mi5a07~3/guide'
+      assert last_response.ok?
+
+      get '/notes_mi5a07-git/'
+      assert last_response.ok?
+    end
+
+    it "returns 404 for slugs that can't be from a doc pack" do
+      get '/notes_mi5a0/git/basics'
+      assert last_response.not_found?
+
+      get '/Notes_mi5a07/git/basics'
+      assert last_response.not_found?
+    end
   end
 
   describe "/docs.json" do

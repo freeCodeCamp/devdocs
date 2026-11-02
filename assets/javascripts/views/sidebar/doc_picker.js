@@ -1,6 +1,7 @@
 // @ts-check
 
 import { app } from "../../app/app.js";
+import { groupByCategory } from "../../app/categories.js";
 import { $, $$ } from "../../lib/util.js";
 import { ListFold } from "../list/list_fold.js";
 import { View } from "../view.js";
@@ -48,10 +49,32 @@ export class DocPicker extends View {
   }
 
   /** Rebuilds the list and puts the focus on the first checkbox. */
+  /** Lists every doc, grouped by category, with the versions of one doc together. */
   render() {
-    let doc;
     let html = this.tmpl("docPickerHeader");
-    let docs = app.docs.all().concat(...(app.disabledDocs.all() || []));
+    const allDocs = app.docs
+      .all()
+      .concat(...(app.disabledDocs.all() || []))
+      .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    for (const { category, docs } of groupByCategory(allDocs)) {
+      html += this.tmpl("sidebarCategory", category);
+      html += this.renderDocs(docs);
+    }
+
+    this.html(html + this.tmpl("docPickerNote"));
+    this.updateAllCheckbox();
+
+    requestAnimationFrame(() => this.findByClass("_list-checkbox")?.focus());
+  }
+
+  /**
+   * @param {Doc[]} docs
+   * @returns {string}
+   */
+  renderDocs(docs) {
+    let doc;
+    let html = "";
+    docs = [...docs];
 
     while ((doc = docs.shift())) {
       if (doc.version != null) {
@@ -69,11 +92,7 @@ export class DocPicker extends View {
         });
       }
     }
-
-    this.html(html + this.tmpl("docPickerNote"));
-    this.updateAllCheckbox();
-
-    requestAnimationFrame(() => this.findByClass("_list-checkbox")?.focus());
+    return html;
   }
 
   /**
@@ -142,6 +161,16 @@ export class DocPicker extends View {
       } else if (el.classList.contains("_list-sub")) {
         el.hidden = /** @type {HTMLElement} */ (el.previousElementSibling).hidden;
       }
+    }
+    // A category's heading shows while any of its docs does.
+    for (const heading of this.findAllByClass("_list-category")) {
+      let el = heading.nextElementSibling;
+      let shown = false;
+      while (el && !el.classList.contains("_list-category") && !shown) {
+        shown = (el.tagName === "LABEL" || el.classList.contains("_list-rdir")) && !(/** @type {HTMLElement} */ (el).hidden);
+        el = el.nextElementSibling;
+      }
+      /** @type {HTMLElement} */ (heading).hidden = !shown;
     }
     this.updateAllCheckbox();
   }

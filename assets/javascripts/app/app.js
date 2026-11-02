@@ -2,6 +2,8 @@
 
 import { config } from "./config.js";
 import { DB } from "./db.js";
+import { DocPacks } from "./doc_packs.js";
+import { Resume } from "./resume.js";
 import { Router } from "./router.js";
 import { AppServiceWorker } from "./serviceworker.js";
 import { Settings } from "./settings.js";
@@ -13,6 +15,7 @@ import { SettingsStore } from "../lib/settings_store.js";
 import { Events } from "../lib/events.js";
 import { LocalStorageStore } from "../lib/local_storage_store.js";
 import { $ } from "../lib/util.js";
+/** @import { Context } from "../lib/page.js" */
 import { Doc } from "../models/doc.js";
 import { unsupportedBrowser } from "../templates/error_tmpl.js";
 import { AppDocument } from "../views/layout/document.js";
@@ -81,6 +84,8 @@ export class App extends Events {
       this.serviceWorker = new AppServiceWorker();
     }
     this.settings = new Settings();
+    this.docPacks = new DocPacks(this.localStorage);
+    this.resume = new Resume(this.localStorage);
     this.db = new DB();
 
     this.settings.initLayout();
@@ -181,10 +186,10 @@ export class App extends Events {
     delete this.DOC;
   }
 
-  /** Boots with every doc in the manifest, enabled or not. */
+  /** Boots with every doc in the manifest and the added packs, enabled or not. */
   async bootAll() {
     const docs = this.settings.getDocs();
-    for (var doc of this.DOCS) {
+    for (var doc of this.DOCS.concat(this.docPacks.docs())) {
       (docs.includes(/** @type {string} */ (doc.slug)) ? this.docs : this.disabledDocs).add(doc);
     }
     delete this.DOCS;
@@ -209,6 +214,7 @@ export class App extends Events {
       this.initDoc(doc);
     }
     this.trigger("ready");
+    this.resumeReading();
     this.router.start();
     this.hideLoadingScreen();
     setTimeout(() => {
@@ -217,6 +223,51 @@ export class App extends Events {
       }
       return this.removeEvent("ready bootError");
     }, 50);
+  }
+
+  /**
+   * Reopens the page read last time when DevDocs starts on its home page, at
+   * the same scroll position, and from then on remembers the page being read.
+   * Runs before the router dispatches the first page.
+   */
+  resumeReading() {
+    if (this.isSingleDoc()) {
+      return;
+    }
+    const content = this.document.content;
+
+    const last = this.settings.get("noResume")
+      ? null
+      : this.resume.target(location, (slug) => !!this.docs.findBySlug(slug));
+    if (last) {
+      this.router.replacePath(last.path);
+      content.restoreScroll(last.scrollTop);
+    }
+
+    let reading = false;
+    this.router.on("after", (name, /** @type {Context} */ context) => {
+      reading = name === "entry" || name === "type";
+      if (reading) {
+        this.resume.remember(context.pathname + (context.hash ? `#${context.hash}` : ""));
+      }
+    });
+
+    // On phones the whole document scrolls, and its scroll events go to window.
+    const scroller =
+      content.scrollEl === document.scrollingElement || content.scrollEl === document.body
+        ? window
+        : content.scrollEl;
+    let timer;
+    $.on(scroller, "scroll", () => {
+      if (!reading) {
+        return;
+      }
+      clearTimeout(timer);
+      timer = setTimeout(
+        () => this.resume.rememberScroll(content.scrollEl.scrollTop),
+        Resume.SCROLL_DELAY,
+      );
+    });
   }
 
   /**
@@ -400,6 +451,7 @@ export class App extends Events {
     }
     new News();
     new Updates();
+    this.docPacks.refresh();
     return (this.updateChecker = new UpdateChecker());
   }
 
