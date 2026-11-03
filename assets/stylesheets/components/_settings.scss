@@ -94,6 +94,9 @@
   ._doc-packs[open] > & { margin-bottom: .5rem; }
 }
 
+// ._btn-link sets a display, which would show a hidden Remove button.
+._doc-pack [hidden] { display: none !important; }
+
 ._doc-pack-confirm {
   @extend %note, %note-red;
   max-width: 40rem;

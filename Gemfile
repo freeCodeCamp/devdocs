@@ -29,6 +29,7 @@ end
 group :development do
   gem 'better_errors'
   gem 'pry-byebug'
+  gem 'fiddle', platforms: :windows # reline's Windows console needs it; not bundled since Ruby 4.0
   gem 'sinatra-contrib'
 end
 

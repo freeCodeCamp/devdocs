@@ -38,7 +38,8 @@ export class DocMenu extends View {
     this.input = /** @type {HTMLInputElement} */ (this.find("._doc-menu-input"));
     this.list = /** @type {HTMLElement} */ (this.find("._doc-menu-list"));
 
-    $("._search").insertAdjacentElement("afterend", this.el);
+    // Before the search box, as in the sketch: menu, doc, search.
+    $("._search").insertAdjacentElement("beforebegin", this.el);
     $.on(document.body, "click", (event) => this.onGlobalClick(event));
   }
 
