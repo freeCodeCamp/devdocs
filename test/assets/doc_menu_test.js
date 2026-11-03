@@ -5,6 +5,7 @@ import test from "node:test";
 
 import { app } from "../../assets/javascripts/app/app.js";
 import { searchEntries } from "../../assets/javascripts/lib/doc_search.js";
+import { render } from "../../assets/javascripts/templates/base.js";
 import { docMenuResults, docMenuTypes } from "../../assets/javascripts/templates/doc_menu_tmpl.js";
 import { offlinePage } from "../../assets/javascripts/templates/pages/offline_tmpl.js";
 import { settingsPage } from "../../assets/javascripts/templates/pages/settings_tmpl.js";
@@ -29,20 +30,34 @@ test("a doc's entries are searched best match first", () => {
 
 // Pack docs' names come from whoever published the pack.
 const doc = /** @type {any} */ ({ fullName: "Notes <b>2</b>" });
-const fakeType = (name, count) => ({ name, count, fullPath: () => "/notes-guide/" });
+const fakeEntry = (name, path) => ({ name, fullPath: () => path });
 
-test("the doc menu lists the doc's sections, escaped", () => {
-  const html = docMenuTypes(doc, /** @type {any} */ ([fakeType("Guide <img src=x onerror=alert(1)>", 3)]));
-  assert.ok(html.includes('href="/notes-guide/"'));
-  assert.ok(html.includes("Guide &lt;img src=x onerror=alert(1)&gt;<small>3</small>"));
+test("the doc menu lists the doc's sections as rows that open, escaped", () => {
+  const html = docMenuTypes(doc, /** @type {any} */ ([
+    { name: "Guides", count: 9 },
+    { name: "Tags <img src=x onerror=alert(1)>", count: 3 },
+  ]));
+  assert.ok(html.includes('data-type-index="0" aria-expanded="false"'));
+  assert.ok(html.includes('data-type-index="1"'));
+  assert.ok(html.includes("<span>Guides</span><small>9</small>"));
+  assert.ok(html.includes("Tags &lt;img src=x onerror=alert(1)&gt;"));
   assert.ok(!html.includes("<img"));
+  assert.equal(html.match(/<div class="_doc-menu-entries" hidden><\/div>/g)?.length, 2);
   // $.escape also escapes slashes.
   assert.ok(docMenuTypes(doc, []).includes("Notes &lt;b&gt;2&lt;&#x2F;b&gt; has no sections"));
 });
 
+test("a section's entries are drawn one link each, as the view renders them", () => {
+  const html = render("docMenuEntry", [fakeEntry("a < b", "/notes/a"), fakeEntry("c", "/notes/c")]);
+  assert.equal(
+    html,
+    '<a href="/notes/a" class="_doc-menu-link">a &lt; b</a><a href="/notes/c" class="_doc-menu-link">c</a>',
+  );
+});
+
 test("the doc menu shows search results, or says there are none", () => {
-  const html = docMenuResults(doc, /** @type {any} */ ([{ name: "a < b", fullPath: () => "/notes/a" }]));
-  assert.ok(html.includes('<a href="/notes/a" class="_doc-menu-link" role="listitem">a &lt; b</a>'));
+  const html = docMenuResults(doc, /** @type {any} */ ([fakeEntry("a < b", "/notes/a")]));
+  assert.equal(html, '<a href="/notes/a" class="_doc-menu-link">a &lt; b</a>');
   assert.ok(docMenuResults(doc, []).includes("Nothing in Notes &lt;b&gt;2&lt;&#x2F;b&gt; matches"));
 });
 

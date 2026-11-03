@@ -267,6 +267,180 @@
 
 ._offline-add-docs { @extend %note-yellow; }
 
+//
+// Opened doc's contents menu (views/layout/doc_menu.js), pinned to the top
+// left of the page, its panel over the page.
+//
+
+._doc-menu {
+  position: absolute;
+  z-index: 1000;
+  top: .375rem;
+  left: 1.75rem;
+  max-width: calc(100% - 3.5rem);
+  font-size: .875rem;
+  pointer-events: auto;
+
+  &[hidden] { display: none; }
+
+  // On phones the window scrolls, not the page, so it stays under the header.
+  @include m.mobile {
+    position: fixed;
+    top: calc(var(--headerHeight) + .375rem);
+    left: .5rem;
+    max-width: calc(100% - 1rem);
+  }
+}
+
+// Room for the button above the page's first line.
+._has-doc-menu > ._content { padding-top: 2.75rem; }
+
+._doc-menu-btn {
+  display: flex;
+  align-items: center;
+  gap: .375rem;
+  max-width: 100%;
+  height: 2rem;
+  padding: 0 .625rem;
+  color: var(--textColor);
+  background: var(--contentBackground);
+  border: 1px solid var(--boxBorder);
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(black, .08);
+
+  &:hover, &[aria-expanded="true"] { border-color: var(--focusBorder); }
+}
+
+._doc-menu-icon:before { @extend %doc-icon; }
+
+._doc-menu-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: var(--boldFontWeight);
+}
+
+._doc-menu-caret, ._doc-menu-arrow {
+  flex: none;
+  width: .75rem;
+  height: .75rem;
+  @extend %svg-icon;
+}
+
+._doc-menu-caret { transform: rotate(90deg); }
+
+._doc-menu-panel {
+  position: absolute;
+  top: calc(100% + .25rem);
+  left: 0;
+  width: 24rem;
+  max-width: calc(100vw - 1rem);
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--contentBackground);
+  border: 1px solid var(--boxBorder);
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(black, .15);
+  @extend %border-box;
+
+  &[hidden] { display: none; }
+}
+
+._doc-menu-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .25rem .5rem;
+  padding: .5rem;
+  background: var(--sidebarBackground);
+  border-bottom: 1px solid var(--sidebarBorder);
+}
+
+._doc-menu-title {
+  flex: 1 1 6rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: var(--boldFontWeight);
+  color: var(--focusText);
+}
+
+._doc-menu-search {
+  position: relative;
+  flex: 1 1 10rem;
+  margin: 0;
+
+  > svg {
+    position: absolute;
+    top: .4375rem;
+    left: .375rem;
+    width: 1rem;
+    height: 1rem;
+    opacity: .42;
+    pointer-events: none;
+    @extend %svg-icon;
+    fill: var(--absolute);
+  }
+}
+
+._doc-menu-input {
+  width: 100%;
+  height: 1.875rem;
+  padding: 0 .5rem 0 1.75rem;
+  font-size: inherit;
+  @extend %border-box;
+}
+
+._doc-menu-list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+._doc-menu-row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  width: 100%;
+  padding: 0 .75rem;
+  line-height: 2rem;
+  text-align: left;
+  color: inherit;
+
+  > span { flex: 1 1 auto; }
+  > small { color: var(--textColorLight); }
+  &[aria-expanded="true"] > ._doc-menu-arrow { transform: rotate(90deg); }
+
+  &:hover, &:focus { color: var(--focusText); background: var(--sidebarBackground); }
+}
+
+._doc-menu-entries[hidden] { display: none; }
+
+._doc-menu-link {
+  display: block;
+  padding: 0 .75rem;
+  line-height: 2rem;
+  color: inherit;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+
+  ._doc-menu-entries > & { padding-left: 2rem; }
+
+  &:hover, &:focus {
+    color: var(--focusText);
+    text-decoration: none;
+    background: var(--sidebarBackground);
+  }
+}
+
+._doc-menu-empty {
+  margin: 0;
+  padding: .5rem .75rem;
+  color: var(--textColorLight);
+}
+
 ._docs-tools {
   display: -ms-flexbox;
   display: flex;
