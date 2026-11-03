@@ -18,7 +18,7 @@ module Docs
     html_filters.push 'firebase/entries', 'firebase/clean_html'
 
     options[:container] = '.devsite-article'
-    options[:rate_limit] = 4
+    options[:rate_limit] = 240 # per minute, i.e. 4 pages a second
     options[:skip_patterns] = [
       /\Areference\//,
       /\Asamples\//,
