@@ -51,7 +51,7 @@ const SAFE_PATH_RGX = /^[^\s"'`<>\\]+$/;
 
 /** Where to send people who want to find or make a pack. */
 export const GUIDE_URL =
-  "https://github.com/buggypather/devdocs/blob/custom-doc-packs/docs/doc-packs.md";
+  "https://github.com/buggypather/devdocs/blob/main-custom-docs/docs/doc-packs.md";
 export const FIND_PACKS_URL = "https://github.com/topics/devdocs-pack";
 
 /**
