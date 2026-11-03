@@ -73,7 +73,13 @@ Push it to a public GitHub repository and give the repository the topic `devdocs
 
 Much documentation is written in Markdown in a public GitHub repository (GitHub's own docs, for instance, which docs.github.com is built from). The [pack builder](https://github.com/buggypather/devdocs-pack-builder) turns such a folder into a pack: copy the template repository, name the repository and folder in its `pack.config.json`, and a GitHub Actions workflow builds the pack, publishes it to the copy's `pack` branch and rebuilds it every week. The address to add in DevDocs is then `github.com/<you>/<copy>/tree/pack`.
 
-It understands GitHub's Markdown extensions and alerts, front matter (titles, intros and page order) and the Liquid tags of GitHub's docs and other Jekyll sites. Check that the documentation's licence allows sharing it, and credit its authors in `attribution`.
+It understands GitHub's Markdown extensions and alerts, front matter (titles, intros and page order) and the Liquid tags of GitHub's docs and other Jekyll sites. It also reads API references made by API Documenter, as many TypeScript projects publish them: [devdocs-pack-firebase](https://github.com/buggypather/devdocs-pack-firebase) is the Firebase JavaScript SDK's reference, built that way. Check that the documentation's licence allows sharing it, and credit its authors in `attribution`.
+
+## From a website
+
+Documentation that's only published as a website needs a scraper: a small Ruby class in `lib/docs/scrapers` saying where the docs start, which pages to follow, and filters that clean each page and name its search entries (see [adding docs](./adding-docs.md) and the [scraper reference](./scraper-reference.md)). `thor docs:generate <doc>` and `thor docs:manifest` then write the pack to `public/docs`. A browser can't do this itself, since websites don't let other sites read their pages.
+
+The Firebase scraper (`lib/docs/scrapers/firebase.rb`) is an example: [devdocs-pack-firebase-guides](https://github.com/buggypather/devdocs-pack-firebase-guides) runs it every week with GitHub Actions and publishes the result to its `pack` branch. Scraping a large site takes a while and downloads a lot, so it's best done on GitHub's machines rather than your own; keep the scraper's `rate_limit` low so as not to burden the site.
 
 ## Writing a pack by hand
 
