@@ -44,14 +44,6 @@ declare global {
   type ViewKeyboardEvent = KeyboardEvent & { target: HTMLElement; currentTarget: HTMLElement };
   type ViewInputEvent = Event & { target: HTMLInputElement; currentTarget: HTMLElement };
 
-  // --- Analytics, loaded at runtime by tracking.js ---
-
-  /** Google Analytics, once analytics.js has loaded. */
-  var ga: (...args: unknown[]) => void;
-
-  /** Gauges' command queue. */
-  var _gauges: unknown[] | undefined;
-
   // --- Augmentations ---
 
   interface Window {
@@ -61,16 +53,8 @@ declare global {
     /** Set by vendor/mathml.js once it has probed for MathML support. */
     supportsMathML?: boolean;
 
-    /** Gauges' command queue. */
-    _gauges?: unknown[];
-
     /** debug.js — prints the view tree, with each view's activation state. */
     viewTree?: (view?: unknown, level?: number, visited?: unknown[]) => void;
-  }
-
-  interface Navigator {
-    /** Global Privacy Control. Not in lib.dom yet. */
-    readonly globalPrivacyControl?: boolean;
   }
 
   interface XMLHttpRequest {
