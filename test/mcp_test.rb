@@ -241,6 +241,23 @@ class McpTest < Minitest::Spec
       end
     end
 
+    it 'evicts the least recently used search indexes when the cache is full' do
+      cache = Mcp::Server::INDEX_CACHE
+      half = Mcp::Server::MAX_CACHE_SIZE / 2
+      begin
+        cache.clear
+        cache['older'] = { stamp: nil, index: nil, size: half }
+        cache['newer'] = { stamp: nil, index: nil, size: half }
+
+        args = { 'slug' => 'mcp_fixture', 'query' => 'upcase' }
+        rpc('tools/call', { 'name' => 'devdocs_search', 'arguments' => args })
+
+        assert_equal ['newer', File.join(App.docs_path, 'mcp_fixture', 'index.json')], cache.keys
+      ensure
+        cache.clear
+      end
+    end
+
     it 'returns error for invalid slug in search (path traversal protection)' do
       message = tool_error('devdocs_search', { 'slug' => '../../../etc/passwd', 'query' => 'test' })
       assert_includes message, 'Invalid docset slug'

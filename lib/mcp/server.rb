@@ -315,16 +315,17 @@ module Mcp
         raise "Search index not available for #{slug}. The search index is served from the CDN."
       end
 
+      # Re-inserting a hit moves it to the end, so the Hash stays ordered from
+      # the least to the most recently used index.
       stamp = [stat.mtime, stat.size]
-      cached = INDEX_CACHE[index_path]
-      return cached[:index] if cached && cached[:stamp] == stamp
-
-      index = JSON.parse(File.read(index_path))
-
-      if cache_size + stat.size > MAX_CACHE_SIZE
-        INDEX_CACHE.clear
+      cached = INDEX_CACHE.delete(index_path)
+      if cached && cached[:stamp] == stamp
+        INDEX_CACHE[index_path] = cached
+        return cached[:index]
       end
 
+      index = JSON.parse(File.read(index_path))
+      INDEX_CACHE.shift while INDEX_CACHE.any? && cache_size + stat.size > MAX_CACHE_SIZE
       INDEX_CACHE[index_path] = { stamp: stamp, index: index, size: stat.size }
       index
     end
