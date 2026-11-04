@@ -320,18 +320,19 @@ module Mcp
       return cached[:index] if cached && cached[:stamp] == stamp
 
       index = JSON.parse(File.read(index_path))
-      index_size = File.size(index_path)
 
-      if cache_size + index_size > MAX_CACHE_SIZE
+      if cache_size + stat.size > MAX_CACHE_SIZE
         INDEX_CACHE.clear
       end
 
-      INDEX_CACHE[index_path] = { stamp: stamp, index: index }
+      INDEX_CACHE[index_path] = { stamp: stamp, index: index, size: stat.size }
       index
     end
 
+    # The size of index.json on disk, a stand-in for the memory it takes
+    # once parsed.
     def self.cache_size
-      INDEX_CACHE.values.sum { |entry| entry.is_a?(Hash) && entry[:index] ? entry[:index].to_json.bytesize : 0 }
+      INDEX_CACHE.each_value.sum { |entry| entry[:size] }
     end
 
     def self.respond(request, result)
