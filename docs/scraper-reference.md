@@ -278,7 +278,7 @@ To make life easier, there are a few utility methods that you can use in `get_la
   Example: [lib/docs/scrapers/jsdoc.rb](../lib/docs/scrapers/jsdoc.rb)
 * `get_github_tags(owner, repo, opts)`
 
-  Returns the list of tags on the given repository ([format](https://developer.github.com/v3/repos/#list-tags)).
+  Returns the list of tags on the given repository ([format](https://docs.github.com/en/rest/git/tags#get-a-tag)).
 
   Example: [lib/docs/scrapers/liquid.rb](../lib/docs/scrapers/liquid.rb)
 * `get_github_file_contents(owner, repo, path, opts)`
@@ -298,3 +298,10 @@ To make life easier, there are a few utility methods that you can use in `get_la
   Returns the list of tags on the given repository ([format](https://docs.gitlab.com/ee/api/tags.html)).
 
   Example: [lib/docs/scrapers/gtk.rb](../lib/docs/scrapers/gtk.rb)
+
+### Codeberg methods
+* `get_codeberg_tags(owner, repo, opts)`
+
+  Returns the list of tags on the given repository ([format](https://codeberg.org/api/swagger#/repository/repoListTags)).
+
+  Example: [lib/docs/scrapers/zig.rb](../lib/docs/scrapers/zig.rb)
