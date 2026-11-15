@@ -6,14 +6,11 @@
 
 import { config } from "./config.js";
 import { Events } from "../lib/events.js";
-import { $ } from "../lib/util.js";
 /** @import { Model } from "../models/model.js" */
 
-let fuzzyRegexp,
-  i,
+let i,
   index,
   lastIndex,
-  match,
   matcher,
   matchIndex,
   matchLength,
@@ -29,10 +26,8 @@ let query =
   value =
   valueLength =
   matcher = // current match function
-  fuzzyRegexp = // query fuzzy regexp
   index = // position of the query in the string being matched
   lastIndex = // last position of the query in the string being matched
-  match = // regexp match data
   matchIndex =
   matchLength =
   score = // score for the current match
@@ -116,23 +111,43 @@ function fuzzyMatch() {
   if (valueLength <= queryLength || value.includes(query)) {
     return;
   }
-  if (!(match = fuzzyRegexp.exec(value))) {
+  if (!findFuzzyMatch(0)) {
     return;
   }
-  matchIndex = match.index;
-  matchLength = match[0].length;
   score = scoreFuzzyMatch();
-  if (
-    (match = fuzzyRegexp.exec(
-      value.slice((i = value.lastIndexOf(SEPARATOR) + 1)),
-    ))
-  ) {
-    matchIndex = i + match.index;
-    matchLength = match[0].length;
+  if (findFuzzyMatch(value.lastIndexOf(SEPARATOR) + 1)) {
     return Math.max(score, scoreFuzzyMatch());
   } else {
     return score;
   }
+}
+
+/**
+ * Finds the query's characters in order in the value, from `start` on, and
+ * points `matchIndex` and `matchLength` at them. This is the match the regexp
+ * `/a.*?b.*?c/` gives for the query `abc`: it starts at the first occurrence
+ * of the first character and takes the earliest occurrence of each next one.
+ * A forward scan finds it in linear time, whereas the regexp backtracks
+ * through every combination of positions before it gives up on a value,
+ * which can freeze the page on long queries.
+ *
+ * @param {number} start
+ * @returns {boolean} Whether all of the query's characters were found.
+ */
+function findFuzzyMatch(start) {
+  matchIndex = value.indexOf(query.charAt(0), start);
+  if (matchIndex < 0) {
+    return false;
+  }
+  index = matchIndex;
+  for (i = 1; i < queryLength; i++) {
+    index = value.indexOf(query.charAt(i), index + 1);
+    if (index < 0) {
+      return false;
+    }
+  }
+  matchLength = index - matchIndex + 1;
+  return true;
 }
 
 function scoreFuzzyMatch() {
@@ -275,10 +290,7 @@ export class Searcher extends Events {
   /** Adds the fuzzy matcher, for queries long enough to warrant it. */
   setupFuzzy() {
     if (queryLength >= this.options.fuzzy_min_length) {
-      fuzzyRegexp = this.queryToFuzzyRegexp(query);
       this.matchers.push(fuzzyMatch);
-    } else {
-      fuzzyRegexp = null;
     }
   }
 
@@ -444,19 +456,6 @@ export class Searcher extends Events {
    */
   delay(fn) {
     return (this.timeout = setTimeout(fn, 1));
-  }
-
-  /**
-   * @param {string} string
-   * @returns {RegExp} A regexp matching the characters in order, e.g. `abc` to `/a.*?b.*?c/`.
-   */
-  queryToFuzzyRegexp(string) {
-    const chars = string.split("");
-    for (i = 0; i < chars.length; i++) {
-      var char = chars[i];
-      chars[i] = $.escapeRegexp(char);
-    }
-    return new RegExp(chars.join(".*?")); // abc -> /a.*?b.*?c.*?/
   }
 }
 
