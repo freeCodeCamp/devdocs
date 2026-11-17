@@ -23,7 +23,7 @@ jobs:
     - name: Install libwebp tools
       run: sudo apt-get update && sudo apt-get install -y webp
     - name: Set up Ruby
-      uses: ruby/setup-ruby@7f797815d8adceb1c412e7abefdd1ab4abc47a5f # v1.335.0
+      uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199 # v1.338.0
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run tests
