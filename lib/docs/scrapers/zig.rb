@@ -2,7 +2,7 @@ module Docs
   class Zig < UrlScraper
     self.name = 'Zig'
     self.type = 'simple'
-    self.release = '0.16.0'
+    self.release = '0.17.1'
     self.base_url = "https://ziglang.org/documentation/#{self.release}/"
     self.links = {
       home: 'https://ziglang.org/',
