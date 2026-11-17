@@ -6,7 +6,7 @@ module Docs
     self.base_url = "https://ziglang.org/documentation/#{self.release}/"
     self.links = {
       home: 'https://ziglang.org/',
-      code: 'https://github.com/ziglang/zig'
+      code: 'https://codeberg.org/ziglang/zig'
     }
 
     html_filters.push 'zig/entries', 'zig/clean_html'
@@ -18,7 +18,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      tags = get_github_tags('ziglang', 'zig', opts)
+      tags = get_codeberg_tags('ziglang', 'zig', opts)
       tags[0]['name']
     end
   end

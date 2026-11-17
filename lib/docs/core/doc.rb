@@ -305,5 +305,9 @@ module Docs
     def get_gitlab_tags(hostname, group, project, opts)
       fetch_json("https://#{hostname}/api/v4/projects/#{group}%2F#{project}/repository/tags", opts)
     end
+
+    def get_codeberg_tags(owner, repo, opts)
+      fetch_json("https://codeberg.org/api/v1/repos/#{owner}/#{repo}/tags", opts)
+    end
   end
 end

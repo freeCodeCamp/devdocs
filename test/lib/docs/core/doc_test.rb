@@ -246,7 +246,7 @@ class DocsDocTest < Minitest::Spec
 
       it "logs an error" do
         output = capture_io { doc.store_page(store, 'id') }.first
-        
+
         assert_match "ERROR: oh no", output
       end
     end
@@ -374,7 +374,7 @@ class DocsDocTest < Minitest::Spec
 
       it "logs an error" do
         output = capture_io { doc.store_pages(store) }.first
-        
+
         assert_match "ERROR: oh no", output
       end
     end
@@ -797,6 +797,27 @@ class DocsDocTest < Minitest::Spec
       tags = [{ 'name' => 'v1.0' }]
       stub(instance).fetch_json { tags }
       assert_equal tags, instance.send(:get_gitlab_tags, 'gitlab.example.com', 'group', 'project', opts)
+    end
+  end
+
+  describe "#get_codeberg_tags" do
+    let :instance do
+      doc.new
+    end
+
+    let :opts do
+      { logger: nil }
+    end
+
+    it "fetches from the correct Codeberg tags URL" do
+      mock(instance).fetch_json('https://codeberg.org/api/v1/repos/owner/repo/tags', opts) { [] }
+      instance.send(:get_codeberg_tags, 'owner', 'repo', opts)
+    end
+
+    it "returns the tags list" do
+      tags = [{ 'name' => 'v1.0' }]
+      stub(instance).fetch_json { tags }
+      assert_equal tags, instance.send(:get_codeberg_tags, 'owner', 'repo', opts)
     end
   end
 end
