@@ -3,7 +3,7 @@ module Docs
     self.name = 'Liquid'
     self.type = 'liquid'
     self.base_url = 'https://shopify.github.io/liquid/'
-    self.release = '5.0.0'
+    self.release = '5.14.0'
     self.links = {
       home: 'https://shopify.github.io/liquid/',
       code: 'https://github.com/Shopify/liquid'
