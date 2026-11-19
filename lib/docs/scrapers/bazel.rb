@@ -19,7 +19,7 @@ module Docs
     # release of Bazel 6 was dropped when it reached its end of life, and the
     # documentation of every 6.x is gone from bazel.build along with it.
     version '9' do
-      self.release = '9.1.0'
+      self.release = '9.3.2'
       self.base_url = "https://bazel.build/versions/#{release}/reference/be/"
     end
 
