@@ -21,7 +21,7 @@ module Docs
     HTML
 
     version '3' do
-      self.release = '3.13.2'
+      self.release = '3.14.1'
       self.base_url = "https://api.dart.dev/stable/#{release}/"
 
       # dartdoc now serves each library from its directory index, leaving a
