@@ -2,7 +2,7 @@ module Docs
   class Leaflet
     class CleanHtmlFilter < Filter
       def call
-        css('#toc', '.expander', '.footer').remove
+        css('#toc', '.expander', '.footer', '.reference-versions').remove
 
         css('h1').each do |node|
           node.name = 'h2'

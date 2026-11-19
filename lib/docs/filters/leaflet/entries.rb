@@ -7,10 +7,10 @@ module Docs
         subtype = nil
 
         css('*').each do |node|
-          if node.name == 'h2' && node['id']
+          if node.name == 'h2' && (id = node['id'] || (node.parent.name == 'article' && node.parent['id']))
             type = node.content
             subtype = nil
-            entries << [type, node['id'], type]
+            entries << [type, id, type]
           elsif node.name == 'h3'
             subtype = node.content
           elsif node.name == 'tr' && node['id']
