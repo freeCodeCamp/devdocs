@@ -2,7 +2,7 @@ module Docs
   class Modernizr < UrlScraper
     self.name = 'Modernizr'
     self.type = 'modernizr'
-    self.release = '3.11.3'
+    self.release = '3.13.1'
     self.base_url = 'https://modernizr.com/docs/'
     self.links = {
       home: 'https://modernizr.com/',
