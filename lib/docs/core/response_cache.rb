@@ -142,10 +142,16 @@ module Docs
       content['encoding'] == 'base64' ? Base64.strict_decode64(text) : text.b
     end
 
+    # Header values come off the wire as binary too, and some aren't ASCII
+    # (developer.wordpress.org sends "x-olaf: ⛄"), which JSON can't encode.
     def name_value_pairs(hash)
       (hash || {}).flat_map do |name, value|
-        Array(value).map { |value| { 'name' => name.to_s, 'value' => value.to_s } }
+        Array(value).map { |value| { 'name' => text(name), 'value' => text(value) } }
       end
+    end
+
+    def text(value)
+      value.to_s.dup.force_encoding(Encoding::UTF_8).scrub
     end
 
     def header_hash(pairs)

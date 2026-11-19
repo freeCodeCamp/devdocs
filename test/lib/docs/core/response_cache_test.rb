@@ -70,6 +70,18 @@ class DocsResponseCacheTest < Minitest::Spec
         { 'name' => 'Content-Type', 'value' => 'text/html' }
     end
 
+    it "stores non-ASCII header values" do
+      response = Typhoeus::Response.new(
+        code: 200,
+        headers: { 'X-Olaf' => "\xE2\x9B\x84".b },
+        body: '<html></html>',
+        effective_url: 'http://example.com/page',
+        return_code: :ok
+      ).tap { |response| response.extend Docs::Response }
+      cache.set request, response
+      assert_equal "\u26C4", cache.get(request).headers['X-Olaf']
+    end
+
     it "base64-encodes bodies that aren't valid UTF-8" do
       response.options[:body] = "\xC3<html>".b
       cache.set request, response
