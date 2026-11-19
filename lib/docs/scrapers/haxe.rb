@@ -2,7 +2,7 @@ module Docs
   class Haxe < UrlScraper
     self.name = 'Haxe'
     self.type = 'simple'
-    self.release = '4.1.3'
+    self.release = '4.3.7'
     self.base_url = 'https://api.haxe.org/'
 
     html_filters.push 'haxe/clean_html', 'haxe/entries'
