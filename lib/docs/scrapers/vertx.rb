@@ -24,7 +24,7 @@ module Docs
     ]
 
     version '5' do
-      self.release = '5.0.0'
+      self.release = '5.2.3'
       self.base_url = "https://vertx.io/docs/"
     end
 
