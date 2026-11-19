@@ -34,7 +34,7 @@ module Docs
     HTML
 
     version '4' do
-      self.release = '4.1.5'
+      self.release = '4.7.6'
       self.base_url = 'https://codeigniter.com/user_guide/'
 
       options[:container] = '.document > div'

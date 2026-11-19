@@ -2,9 +2,9 @@ module Docs
   class Codeigniter
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('h1').content.strip
-        name.remove! "\u{00B6}"
-        name
+        name = at_css('h1').content
+        name.remove! "\u{00B6}", "\u{F0C1}" # permalink signs
+        name.strip
       end
 
       def get_type
