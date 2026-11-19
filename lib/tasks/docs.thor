@@ -236,6 +236,30 @@ class DocsCLI < Thor
     end
     puts '[S3] Done syncing.'
 
+    # Verify that the synced meta.json matches the local one, reading the
+    # bucket directly rather than through the CDN, which may serve a stale copy
+    unless options[:dryrun]
+      puts '[S3] Verifying meta.json.'
+      (docs - failed).each do |doc|
+        local = File.read(File.join(Docs.store_path, doc.path, 'meta.json'))
+        remote = if options[:rclone]
+          `rclone cat devdocs:devdocs-documents/#{doc.path}/meta.json`
+        else
+          `aws s3 cp s3://devdocs-documents/#{doc.path}/meta.json - --profile devdocs`
+        end
+
+        if $?.success? && JSON.parse(remote) == JSON.parse(local)
+          puts "[S3] #{doc.path}: release #{JSON.parse(remote)['release']} verified."
+        else
+          puts "[S3] ERROR: #{doc.path}/meta.json on S3 does not match the local file."
+          failed << doc
+        end
+      rescue JSON::ParserError
+        puts "[S3] ERROR: #{doc.path}/meta.json on S3 is not valid JSON."
+        failed << doc
+      end
+    end
+
     # Upload packages to downloads.devdocs.io (used by the "thor docs:download" command)
     puts '[S3 bundle] Begin uploading.'
 

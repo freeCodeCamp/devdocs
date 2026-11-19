@@ -82,7 +82,7 @@ In addition to the [publicly-documented commands](https://github.com/freeCodeCam
 
   **Important:** the app should always be deployed immediately after this command has finished running. Do not run this command unless you are able and ready to deploy DevDocs.
 
-  Once uploaded, the packages are deleted (packages of documentations that failed to upload are kept).
+  After syncing, the `meta.json` of each documentation is read back from S3 and compared with the local file. Once uploaded and verified, the packages are deleted (packages of documentations that failed to upload or verify are kept, and the command exits with an error).
 
   To upload all documentations that are packaged on your computer, run `thor docs:upload --packaged`.
   To test your configuration and the effect of this command without uploading anything, pass the `--dryrun` option.
