@@ -19,22 +19,22 @@ module Docs
     HTML
 
     version '4' do
-      self.release = '4.0.0'
-      self.base_url = "https://marionettejs.com/docs/v#{release}/"
+      self.release = '4.1.2'
+      self.base_url = "https://v4.marionettejs.com/docs/v#{release}/"
 
       html_filters.push 'marionette/entries_v3'
     end
 
     version '3' do
       self.release = '3.5.1'
-      self.base_url = "https://marionettejs.com/docs/v#{release}/"
+      self.base_url = "https://v4.marionettejs.com/docs/v#{release}/"
 
       html_filters.push 'marionette/entries_v3'
     end
 
     version '2' do
       self.release = '2.4.7'
-      self.base_url = "https://marionettejs.com/docs/v#{release}/"
+      self.base_url = "https://v4.marionettejs.com/docs/v#{release}/"
 
       html_filters.push 'marionette/entries_v2'
     end
