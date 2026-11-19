@@ -13,7 +13,7 @@ module Docs
     HTML
 
     version '3' do
-      self.release = '3.8.4'
+      self.release = '3.10.1'
       self.base_url = "https://scala-lang.org/api/#{release}/"
       self.root_path = 'index.html'
 
