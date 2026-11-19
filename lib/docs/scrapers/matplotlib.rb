@@ -21,11 +21,20 @@ module Docs
     HTML
 
     version do
-      self.release = '3.10.8'
+      self.release = '3.11.2'
       self.base_urls = [
         "https://matplotlib.org/stable/api/",
         "https://matplotlib.org/stable/mpl_toolkits/mplot3d/",
         "https://matplotlib.org/stable/mpl_toolkits/axes_grid/api/"
+      ]
+    end
+
+    version '3.10' do
+      self.release = '3.10.8'
+      self.base_urls = [
+        "https://matplotlib.org/#{release}/api/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/mplot3d/",
+        "https://matplotlib.org/#{release}/mpl_toolkits/axes_grid/api/"
       ]
     end
 
