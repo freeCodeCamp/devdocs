@@ -2,7 +2,7 @@ module Docs
   class Wordpress < UrlScraper
     self.name = 'WordPress'
     self.type = 'wordpress'
-    self.release = '7.0'
+    self.release = '7.1'
     self.base_url = 'https://developer.wordpress.org/reference/'
     self.initial_paths = %w(
       functions/
