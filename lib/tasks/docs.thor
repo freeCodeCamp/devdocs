@@ -215,6 +215,8 @@ class DocsCLI < Thor
       end
     end
 
+    failed = []
+
     # Sync files with S3 (used by the web app)
     puts '[S3] Begin syncing.'
     docs.each do |doc|
@@ -230,7 +232,7 @@ class DocsCLI < Thor
         cmd = "rclone sync #{File.join(Docs.store_path, doc.path)} devdocs:devdocs-documents/#{doc.path} --checksum --transfers 32 --checkers 64 --delete-after --progress"
         cmd << ' --dry-run' if options[:dryrun]
       end
-      system(cmd)
+      failed << doc unless system(cmd)
     end
     puts '[S3] Done syncing.'
 
@@ -247,9 +249,21 @@ class DocsCLI < Thor
         cmd = "rclone copy #{File.join(Docs.store_path, filename)} devdocs:devdocs-downloads/ --s3-no-check-bucket"
         cmd << ' --dry-run' if options[:dryrun]
       end
-      system(cmd)
+      failed << doc unless system(cmd)
     end
     puts '[S3 bundle] Done uploading.'
+
+    # The packages are not needed anymore once uploaded
+    unless options[:dryrun]
+      (docs - failed).each do |doc|
+        File.delete(File.join(Docs.store_path, "#{doc.path}.tar.gz"))
+      end
+    end
+
+    if failed.any?
+      puts "ERROR: upload failed for #{failed.uniq.map(&:path).join(', ')} (packages kept)."
+      exit 1
+    end
   end
 
   desc 'commit', '[private]'

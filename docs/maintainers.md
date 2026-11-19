@@ -28,13 +28,13 @@ A scraper can silently break when the upstream markup changes: the generation su
 1. Find outdated docs: `thor docs:outdated [doc]...` (or the latest [versions report](https://github.com/freeCodeCamp/devdocs/issues?q=Documentation+versions+report+is%3Aissue+author%3Adevdocs-bot+sort%3Acreated-desc)). Note that the command takes scraper names (`jquery_core`), not slugs (`jquery`).
 2. Download the published build into `tmp/baseline/<path>` (this leaves `public/docs` untouched): `thor docs:baseline --rclone jquery_core`.
 3. Bump `self.release` (and check attribution, icons and links, see [CONTRIBUTING.md](../.github/CONTRIBUTING.md#updating-existing-documentations)).
-4. Generate: `thor docs:generate jquery_core --force`.
+4. Generate and package: `thor docs:generate jquery_core --force --package` (`thor docs:upload` needs the package; `thor docs:package jquery_core` creates it afterwards).
 5. Compare: `thor docs:compare jquery_core`. It prints the number of entries, types and pages before and after, how many pages have changed content, the type counts that changed, and the entries and pages that were added or removed. It fails if entries, types or pages drop by more than 5% (`--threshold`) or if a type disappears.
 
    Also investigate if many entries are renamed. Growth is usually fine (new APIs), but check that new entries are real and not navigation/boilerplate. Spot-check a few pages in the app (`rackup`) for rendering issues.
 
 6. If the diff is explained by upstream changes, commit with `thor docs:commit <doc>`; otherwise fix the scraper/filters and go back to step 4.
-7. After all updates: `thor docs:upload --rclone <doc>...`, deploy, then `thor docs:clean` and `rm -rf tmp/baseline`.
+7. After all updates: `thor docs:upload --rclone <doc>...` (or `--packaged` for all packaged docs), deploy, then `thor docs:clean` (cached responses) and `rm -rf tmp/baseline`.
 
 Note: changes to `public/docs/docs.json` should never be committed. This file reflects which documentations have been downloaded or generated locally, which is always none on a fresh `git clone`.
 
@@ -81,6 +81,8 @@ In addition to the [publicly-documented commands](https://github.com/freeCodeCam
   For the command to work, you must have the AWS CLI configured as indicated above.
 
   **Important:** the app should always be deployed immediately after this command has finished running. Do not run this command unless you are able and ready to deploy DevDocs.
+
+  Once uploaded, the packages are deleted (packages of documentations that failed to upload are kept).
 
   To upload all documentations that are packaged on your computer, run `thor docs:upload --packaged`.
   To test your configuration and the effect of this command without uploading anything, pass the `--dryrun` option.
