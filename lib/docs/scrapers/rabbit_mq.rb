@@ -18,7 +18,7 @@ module Docs
 
     version do
       self.base_url = 'https://www.rabbitmq.com/docs'
-      self.release = '4.3.2'
+      self.release = '4.4.1'
     end
 
     def get_latest_version(opts)
