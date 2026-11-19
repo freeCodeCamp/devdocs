@@ -19,7 +19,7 @@ module Docs
     HTML
 
     version '3' do
-      self.release = '3.0.8'
+      self.release = '3.1.1'
       self.base_url = "https://pandas.pydata.org/pandas-docs/version/#{self.release}/"
 
       html_filters.push 'pandas/clean_html', 'pandas/entries'
