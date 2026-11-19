@@ -145,7 +145,7 @@ module Docs
         'language.operators.increment' => ['++', '--'],
         'language.generators.syntax' => ['yield'],
         'language.oop5.final' => ['final'],
-        'language.exceptions' => ['try', 'catch', 'finally'],
+        'control-structures.try-catch' => ['try', 'catch'],
         'language.oop5.decon' => ['__construct()', '__destruct()'],
         'language.operators.comparison' => ['==', '===', '!=', '<>', '!==', '<=>'],
         'language.oop5.abstract' => ['abstract'],

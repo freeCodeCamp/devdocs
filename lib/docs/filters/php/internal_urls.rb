@@ -11,9 +11,11 @@ module Docs
         doc
       end
 
+      SKIP_URL_PATTERN = /\.(setup|requirements|installation|configuration)\.html\z/
+
       def internal_urls
         css('.book a', '.chunklist a').inject [] do |urls, link|
-          urls << link['href'] if link.next.try(:text?) && link['href'].exclude?('ref.pdo-')
+          urls << link['href'] if link.next.try(:text?) && link['href'].exclude?('ref.pdo-') && link['href'] !~ SKIP_URL_PATTERN
           urls
         end
       end
