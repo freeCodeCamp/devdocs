@@ -30,7 +30,7 @@ module Docs
     HTML
 
     version do
-      self.release = '4.1.11'
+      self.release = '4.3.5'
       self.base_url = 'https://tailwindcss.com/docs'
 
       # Fix redirects
