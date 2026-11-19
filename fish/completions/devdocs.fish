@@ -27,8 +27,10 @@ end
 complete -c devdocs -f
 
 # Commands (the `docs:` namespace is implied)
+complete -c devdocs -n __fish_is_first_arg -a baseline -d 'Download the published documentations for docs:compare'
 complete -c devdocs -n __fish_is_first_arg -a clean -d 'Delete documentation packages and cached responses'
 complete -c devdocs -n __fish_is_first_arg -a commit -d 'Commit the generated documentations'
+complete -c devdocs -n __fish_is_first_arg -a compare -d 'Compare generated documentations with their docs:baseline'
 complete -c devdocs -n __fish_is_first_arg -a download -d 'Download documentation packages'
 complete -c devdocs -n __fish_is_first_arg -a generate -d 'Generate a documentation'
 complete -c devdocs -n __fish_is_first_arg -a list -d 'List available documentations'
@@ -40,7 +42,7 @@ complete -c devdocs -n __fish_is_first_arg -a prepare_deploy -d 'Internal task e
 complete -c devdocs -n __fish_is_first_arg -a upload -d 'Upload documentation packages'
 
 # Documentation slugs (<doc> and <doc@version>)
-complete -c devdocs -n '__fish_seen_subcommand_from commit download generate outdated package page' -a '(__devdocs_docs)' -d Documentation
+complete -c devdocs -n '__fish_seen_subcommand_from baseline commit compare download generate outdated package page' -a '(__devdocs_docs)' -d Documentation
 
 # Options
 complete -c devdocs -n '__fish_seen_subcommand_from list upload' -l packaged -d 'Restrict to packaged documentations'
@@ -53,7 +55,7 @@ complete -c devdocs -n '__fish_seen_subcommand_from generate' -l package -d 'Pac
 complete -c devdocs -n '__fish_seen_subcommand_from download' -l all -d 'Download all documentations'
 complete -c devdocs -n '__fish_seen_subcommand_from download' -l default -d 'Download the default documentations'
 complete -c devdocs -n '__fish_seen_subcommand_from download' -l installed -d 'Download the installed documentations'
-complete -c devdocs -n '__fish_seen_subcommand_from download upload' -l rclone -d 'Transfer via rclone'
+complete -c devdocs -n '__fish_seen_subcommand_from baseline download upload' -l rclone -d 'Transfer via rclone'
 
 complete -c devdocs -n '__fish_seen_subcommand_from upload' -l dryrun -d 'Do not upload anything'
 
@@ -62,3 +64,5 @@ complete -c devdocs -n '__fish_seen_subcommand_from commit' -l amend -d 'Amend t
 
 complete -c devdocs -n '__fish_seen_subcommand_from generate outdated page' -l verbose -d 'Verbose output'
 complete -c devdocs -n '__fish_seen_subcommand_from generate page' -l debug -d 'Debug output'
+
+complete -c devdocs -n '__fish_seen_subcommand_from compare' -l threshold -r -d 'Maximum drop (in %) of entries or pages before failing'

@@ -145,6 +145,32 @@ class DocsCLI < Thor
     handle_doc_not_found_error(error)
   end
 
+  desc 'baseline <doc> <doc@version>... [--rclone]', 'Download the published documentations for docs:compare'
+  option :rclone, type: :boolean
+  def baseline(*names)
+    docs = find_docs(names)
+    assert_docs(docs)
+    docs.each do |doc|
+      target_path = File.join(baseline_path, doc.path)
+      FileUtils.rm_rf(target_path)
+      download_doc(doc, target_path)
+      puts "#{doc.name}#{" #{doc.version}" if doc.version} saved to #{target_path}"
+    end
+  rescue Docs::DocNotFound => error
+    handle_doc_not_found_error(error)
+  end
+
+  desc 'compare <doc> <doc@version>... [--threshold=5]', 'Compare generated documentations with their docs:baseline'
+  option :threshold, type: :numeric, default: 5, desc: 'Maximum drop (in %) of entries or pages before failing'
+  def compare(*names)
+    docs = find_docs(names)
+    assert_docs(docs)
+    ok = docs.map { |doc| compare_doc(doc) }.all?
+    exit 1 unless ok
+  rescue Docs::DocNotFound => error
+    handle_doc_not_found_error(error)
+  end
+
   desc 'package <doc> <doc@version>...', 'Create documentation packages'
   def package(*names)
     docs = find_docs(names)
@@ -372,9 +398,7 @@ class DocsCLI < Thor
     end.map(&:join)
   end
 
-  def download_doc(doc)
-    target_path = File.join(Docs.store_path, doc.path)
-
+  def download_doc(doc, target_path = File.join(Docs.store_path, doc.path))
     if options[:rclone]
       require 'tmpdir'
       Dir.mktmpdir do |dir|
@@ -394,6 +418,77 @@ class DocsCLI < Thor
 
   def extract_doc(tar_gz_path, target_path)
     Docs::Archive.unpack(tar_gz_path, target_path)
+  end
+
+  def baseline_path
+    File.expand_path('../../tmp/baseline', __dir__)
+  end
+
+  def load_doc_build(path)
+    index = JSON.parse(File.read(File.join(path, 'index.json'), encoding: 'UTF-8'))
+    {
+      entries: index['entries'].map { |entry| "#{entry['name']} (#{entry['type']})" },
+      types: index['types'].to_h { |type| [type['name'], type['count']] },
+      pages: JSON.parse(File.read(File.join(path, 'db.json'), encoding: 'UTF-8'))
+    }
+  end
+
+  def compare_doc(doc)
+    old_path = File.join(baseline_path, doc.path)
+    new_path = File.join(Docs.store_path, doc.path)
+    puts "== #{doc.name}#{" #{doc.version}" if doc.version} (#{doc.path})"
+
+    [old_path, new_path].each do |path|
+      next if File.exist?(File.join(path, 'index.json'))
+      puts "ERROR: #{path}/index.json not found (run docs:baseline / docs:generate first)."
+      puts
+      return false
+    end
+
+    old, new = load_doc_build(old_path), load_doc_build(new_path)
+    old_types, new_types = old[:types], new[:types]
+    old_entries, new_entries = old[:entries], new[:entries]
+    old_pages, new_pages = old[:pages].keys, new[:pages].keys
+    warnings = []
+
+    percentage = ->(a, b) { a.zero? ? 0.0 : ((b - a) * 100.0 / a).round(1) }
+    puts format('%-8s %8s %8s %8s', '', 'old', 'new', 'diff %')
+    { entries: [old_entries, new_entries], types: [old_types, new_types], pages: [old_pages, new_pages] }.each do |name, (a, b)|
+      diff = percentage.(a.size, b.size)
+      puts format('%-8s %8d %8d %+8.1f', name, a.size, b.size, diff)
+      warnings << "#{name} dropped by #{-diff}%" if diff < -options[:threshold]
+    end
+
+    changed = (old_pages & new_pages).count { |page| old[:pages][page] != new[:pages][page] }
+    puts "#{changed} of #{(old_pages & new_pages).size} common pages have changed content"
+
+    removed_types = old_types.keys - new_types.keys
+    warnings << "types removed: #{removed_types.join(', ')}" if removed_types.any?
+
+    changed_types = (old_types.keys | new_types.keys).sort.select { |type| old_types[type] != new_types[type] }
+    if changed_types.any?
+      puts "\nType counts changed:"
+      changed_types.each { |type| puts format('  %-40s %5d -> %5d', type, old_types[type].to_i, new_types[type].to_i) }
+    end
+
+    limit = 50
+    { 'Entries' => [old_entries, new_entries], 'Pages' => [old_pages, new_pages] }.each do |name, (a, b)|
+      { 'removed' => ['-', a - b], 'added' => ['+', b - a] }.each do |verb, (sign, list)|
+        next if list.empty?
+        puts "\n#{name} #{verb} (#{list.size}):"
+        list.first(limit).each { |item| puts "  #{sign} #{item}" }
+        puts '  ...' if list.size > limit
+      end
+    end
+
+    puts
+    if warnings.empty?
+      puts 'OK: no large deviations'
+    else
+      warnings.each { |warning| puts "WARNING: #{warning}" }
+    end
+    puts
+    warnings.empty?
   end
 
   def package_doc(doc)

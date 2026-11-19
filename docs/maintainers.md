@@ -21,6 +21,21 @@ The process for updating docs is as follows:
 - Push to GitHub to [deploy the app](#deploying-devdocs) and verify that everything works in production.
 - Run `thor docs:clean` (documented below).
 
+### Checking an update against the previous version
+
+A scraper can silently break when the upstream markup changes: the generation succeeds, but entries or pages go missing. Before bumping a version, keep the currently published build as a baseline and compare the new build against it.
+
+1. Find outdated docs: `thor docs:outdated [doc]...` (or the latest [versions report](https://github.com/freeCodeCamp/devdocs/issues?q=Documentation+versions+report+is%3Aissue+author%3Adevdocs-bot+sort%3Acreated-desc)). Note that the command takes scraper names (`jquery_core`), not slugs (`jquery`).
+2. Download the published build into `tmp/baseline/<path>` (this leaves `public/docs` untouched): `thor docs:baseline --rclone jquery_core`.
+3. Bump `self.release` (and check attribution, icons and links, see [CONTRIBUTING.md](../.github/CONTRIBUTING.md#updating-existing-documentations)).
+4. Generate: `thor docs:generate jquery_core --force`.
+5. Compare: `thor docs:compare jquery_core`. It prints the number of entries, types and pages before and after, how many pages have changed content, the type counts that changed, and the entries and pages that were added or removed. It fails if entries, types or pages drop by more than 5% (`--threshold`) or if a type disappears.
+
+   Also investigate if many entries are renamed. Growth is usually fine (new APIs), but check that new entries are real and not navigation/boilerplate. Spot-check a few pages in the app (`rackup`) for rendering issues.
+
+6. If the diff is explained by upstream changes, commit with `thor docs:commit <doc>`; otherwise fix the scraper/filters and go back to step 4.
+7. After all updates: `thor docs:upload --rclone <doc>...`, deploy, then `thor docs:clean` and `rm -rf tmp/baseline`.
+
 Note: changes to `public/docs/docs.json` should never be committed. This file reflects which documentations have been downloaded or generated locally, which is always none on a fresh `git clone`.
 
 ## Setup requirements
