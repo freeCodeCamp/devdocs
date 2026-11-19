@@ -2,7 +2,7 @@ module Docs
   class Opentsdb
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        at_css('.section > h1').content
+        at_css('.section > h1, section > h1').content.delete_suffix('¶')
       end
 
       def get_type
@@ -18,7 +18,7 @@ module Docs
       end
 
       def breadcrumbs
-        @breakcrumbs ||= at_css('.related').css('li:not(.right) a').map(&:content).reject(&:blank?)
+        @breakcrumbs ||= at_css('.related').css('li:not(.right):not(.nav-item-this) a').map(&:content).reject(&:blank?)
       end
     end
   end

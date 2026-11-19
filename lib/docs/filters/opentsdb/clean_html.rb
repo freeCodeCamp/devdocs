@@ -2,9 +2,9 @@ module Docs
   class Opentsdb
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.documentwrapper > .bodywrapper > .body > .section')
+        @doc = at_css('.documentwrapper > .bodywrapper > .body > .section, .documentwrapper > .bodywrapper > .body > section')
 
-        css('> .section').each do |node|
+        css('> .section', '> section').each do |node|
           node.before(node.children).remove
         end
 
@@ -18,6 +18,8 @@ module Docs
           node.parent.parent.before(node)
           node.content = node.content.gsub('    ', '  ')
         end
+
+        css('.headerlink').remove
 
         css('table').remove_attr('border')
 

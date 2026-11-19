@@ -2,11 +2,11 @@ module Docs
   class Opentsdb < UrlScraper
     self.name = 'OpenTSDB'
     self.type = 'sphinx_simple'
-    self.release = '2.3.0'
-    self.base_url = 'http://opentsdb.net/docs/build/html/'
+    self.release = '2.4.1'
+    self.base_url = 'https://opentsdb.net/docs/build/html/'
     self.root_path = 'index.html'
     self.links = {
-      home: 'http://opentsdb.net/',
+      home: 'https://opentsdb.net/',
       code: 'https://github.com/OpenTSDB/opentsdb'
     }
 
