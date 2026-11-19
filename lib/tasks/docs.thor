@@ -154,7 +154,7 @@ class DocsCLI < Thor
       target_path = File.join(baseline_path, doc.path)
       FileUtils.rm_rf(target_path)
       download_doc(doc, target_path)
-      puts "#{doc.name}#{" #{doc.version}" if doc.version} saved to #{target_path}"
+      puts "#{doc.name}#{" #{doc.version}" if doc.version.present?} saved to #{target_path}"
     end
   rescue Docs::DocNotFound => error
     handle_doc_not_found_error(error)
@@ -474,7 +474,7 @@ class DocsCLI < Thor
   def compare_doc(doc)
     old_path = File.join(baseline_path, doc.path)
     new_path = File.join(Docs.store_path, doc.path)
-    puts "== #{doc.name}#{" #{doc.version}" if doc.version} (#{doc.path})"
+    puts "== #{doc.name}#{" #{doc.version}" if doc.version.present?} (#{doc.path})"
 
     [old_path, new_path].each do |path|
       next if File.exist?(File.join(path, 'index.json'))
