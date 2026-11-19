@@ -24,7 +24,7 @@ module Docs
     FILTERS = %w(phpunit/clean_html phpunit/entries title)
 
     version do
-      self.release = '13.2'
+      self.release = '13.4'
       self.base_url = "https://docs.phpunit.de/en/#{release}/"
 
       html_filters.push FILTERS
