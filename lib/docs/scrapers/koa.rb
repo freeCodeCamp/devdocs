@@ -34,9 +34,9 @@ module Docs
     HTML
 
     version do
-      self.base_url = 'https://github.com/koajs/koa/blob/v3.0.0/docs'
+      self.base_url = 'https://github.com/koajs/koa/blob/v3.3.0/docs'
       self.root_path = 'api/index.md'
-      self.release = '3.0.0'
+      self.release = '3.3.0'
       options[:fix_urls] = ->(url) do
         url.sub! 'https://koajs.com/#error-handling', self.base_url + '/error-handling.md'
         url
