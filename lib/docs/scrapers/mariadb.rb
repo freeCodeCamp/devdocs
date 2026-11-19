@@ -29,8 +29,9 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://mariadb.com/downloads/', opts)
-      doc.at_css('#version-select-community_server > option').content.split('-')[0]
+      api = 'https://downloads.mariadb.org/rest-api/mariadb/'
+      major = fetch_json(api, opts)['major_releases'].find { |r| r['release_status'] == 'Stable' }
+      fetch_json("#{api}#{major['release_id']}/", opts)['releases'].keys.max_by { |v| Gem::Version.new(v) }
     end
 
   end
