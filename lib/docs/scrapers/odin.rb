@@ -4,7 +4,7 @@ module Docs
       self.name = 'Odin'
       self.slug = 'odin'
       self.type = 'odin'
-      self.release = '2026-07'
+      self.release = '2026-11a'
       self.base_urls = [ 
         'https://odin-lang.org/',
         'https://pkg.odin-lang.org/'
@@ -41,6 +41,8 @@ module Docs
         /vendor/
       ]
       options[:trailing_slash] = false
+      # Android bindings are huge (vendor/android/java alone is 170 MB of HTML)
+      options[:skip_patterns] = [/\Avendor\/android/]
       options[:skip] = %w(
         docs/examples 
         docs/nightly
