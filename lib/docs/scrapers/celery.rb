@@ -2,7 +2,7 @@ module Docs
   class Celery < UrlScraper
     self.name = 'Celery'
     self.type = 'celery'
-    self.release = '5.6.3'
+    self.release = '5.7.0'
     self.base_url = 'https://docs.celeryq.dev/en/stable/'
     self.links = {
       home: 'https://docs.celeryq.dev',
