@@ -2,7 +2,7 @@ module Docs
   class Pytest < UrlScraper
     self.name = 'pytest'
     self.type = 'sphinx'
-    self.release = '9.1.1'
+    self.release = '9.2.0'
     self.base_url = 'https://docs.pytest.org/en/stable/'
     self.root_path = 'index.html'
     self.links = {
