@@ -21,8 +21,13 @@ module Docs
     HTML
 
     version do
-      self.release = '4.4'
+      self.release = '4.5'
       self.base_url = "https://cmake.org/cmake/help/latest/"
+    end
+
+    version '4.4' do
+      self.release = '4.4'
+      self.base_url = "https://cmake.org/cmake/help/v#{self.version}/"
     end
 
     version '3.31' do
