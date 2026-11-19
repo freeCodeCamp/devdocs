@@ -2,7 +2,7 @@ module Docs
   class TanstackQuery < Tanstack
     self.name = 'TanStack Query'
     self.slug = 'tanstack_query'
-    self.release = '5.104.1'
+    self.release = '5.108.0'
     self.base_url = 'https://tanstack.com/query/latest/docs/'
     self.root_path = 'framework/react/overview'
     self.initial_paths = %w(eslint/eslint-plugin-query)
