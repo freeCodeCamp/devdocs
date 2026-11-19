@@ -337,8 +337,9 @@ class DocsCLI < Thor
                     File.write(path, file.read)
                   end
                 end
-              rescue Net::OpenTimeout, Net::ReadTimeout => e
-                if attempts <= 3
+              rescue Net::OpenTimeout, Net::ReadTimeout, OpenURI::HTTPError => e
+                server_error = !e.is_a?(OpenURI::HTTPError) || e.io.status[0].start_with?('5')
+                if server_error && attempts <= 3
                   wait_seconds = 2**(attempts - 1)
                   puts "Docs -- Retrying #{json} in #{wait_seconds}s (#{e.class}: #{e.message})"
                   sleep(wait_seconds)
