@@ -83,3 +83,24 @@ test("fuzzy matching and exact matches keep their ordering", () => {
     "map", "my-map", "make-apple-pie",
   ]);
 });
+
+test("fuzzy matches rank by where the characters are found", () => {
+  const names = ["zazbzcz", "zzazbzc", "azbzc", "xaxxxxbxxxxc.abzc"];
+  // After a dot, at the start, at the end, in the middle.
+  assert.deepEqual(search("abc", names), [
+    "xaxxxxbxxxxc.abzc", "azbzc", "zzazbzc", "zazbzcz",
+  ]);
+});
+
+test("a long query doesn't stall on a long entry name it doesn't match", () => {
+  // Some entries list dozens of names, e.g. Spring Boot's property groups.
+  // Trying every combination of positions for the query's characters before
+  // giving up takes seconds here, and minutes on the real entries.
+  const name = Array.from(
+    { length: 40 },
+    (_, i) => `spring.datasource.hikari.property-${i}`,
+  ).join(" ");
+  const start = performance.now();
+  assert.deepEqual(search("random_split", [name]), []);
+  assert.ok(performance.now() - start < 1000);
+});
