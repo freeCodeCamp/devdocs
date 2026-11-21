@@ -144,9 +144,9 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.19.5)
     method_source (1.1.0)
-    minitest (6.0.6)
+    minitest (6.1.0)
       drb (~> 2.0)
-      prism (~> 1.5)
+      prism (>= 1.5, < 3)
     multi_json (1.21.2)
     mustermann (3.1.1)
     newrelic_rpm (10.9.1)
@@ -402,7 +402,7 @@ CHECKSUMS
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   loofah (2.25.3) sha256=545f14eef0cc2a7de80df560530d593232b7c07e515c5c4e37532d9cb5b0185c
   method_source (1.1.0) sha256=181301c9c45b731b4769bc81e8860e72f9161ad7d66dd99103c9ab84f560f5c5
-  minitest (6.0.6) sha256=153ea36d1d987a62942382b61075745042a2b3123b1cd48f4c3675af9cc7d6f1
+  minitest (6.1.0) sha256=ff373595aa8888631e8a5463986a76b3845346ae6d7fa46e139c1633d418076e
   multi_json (1.21.2) sha256=245531eaf54bdba57aba515ff08b4503505c5e09911daa89c5a561e2f85bea8e
   mustermann (3.1.1) sha256=4c6170c7234d5499c345562ba7c7dfe73e1754286dcc1abb053064d66a127198
   newrelic_rpm (10.9.1) sha256=7a2c8f0bd6c3407f7d981999d46e0d5c39c53bee9ca737f0e083d3b6dcc8f0c3
