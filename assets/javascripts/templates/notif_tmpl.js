@@ -130,11 +130,3 @@ export const notifUpdateDocs = () =>
     " Documentation updates available. ",
     ' <a href="/offline">Install them</a> as soon as possible to avoid broken pages. ',
   );
-
-export const notifAnalyticsConsent = () =>
-  textNotif(
-    " Tracking cookies ",
-    ` We would like to gather usage data about how DevDocs is used through Google Analytics and Gauges. We only collect anonymous traffic information.
-Please confirm if you accept our tracking cookies. You can always change your decision in the settings.
-<br><span class="_notif-right"><a href="#" data-behavior="accept-analytics">Accept</a> or <a href="#" data-behavior="decline-analytics">Decline</a></span> `,
-  );

@@ -24,21 +24,6 @@ Object.defineProperty(globalThis, "localStorage", {
   configurable: true,
 });
 
-/** @type {Map<string, string>} */
-const session = new Map();
-
-Object.defineProperty(globalThis, "sessionStorage", {
-  value: {
-    getItem: (/** @type {string} */ key) =>
-      session.has(key) ? session.get(key) : null,
-    setItem: (/** @type {string} */ key, /** @type {string} */ value) =>
-      session.set(key, String(value)),
-    removeItem: (/** @type {string} */ key) => session.delete(key),
-  },
-  writable: true,
-  configurable: true,
-});
-
 // A cookie jar the migration can read and expire: keys and values stay
 // percent-encoded, as they are on a real `document.cookie`.
 /** @type {Map<string, string>} */
@@ -63,7 +48,6 @@ Object.defineProperty(document, "cookie", {
 const reset = () => {
   jar.clear();
   storage.clear();
-  session.clear();
   storageWritable = true;
 };
 
@@ -108,16 +92,15 @@ test("sees what another store has written", () => {
 
 test("takes in the settings left in cookies, and expires them", () => {
   reset();
-  // What is stored already wins over the cookie of the same name; the vendors'
-  // own cookies aren't ours to take; the session-only one doesn't become
-  // permanent; and a value keeps its spaces rather than its escapes.
+  // What is stored already wins over the cookie of the same name; the retired
+  // ones aren't taken in; and a value keeps its spaces rather than its escapes.
   new SettingsStore().set("theme", "dark");
   document.cookie = "docs=css/javascript";
   document.cookie = "size=320";
   document.cookie = "layout=_max-width%20_sidebar-hidden";
   document.cookie = "theme=default";
+  document.cookie = "analyticsConsent=1";
   document.cookie = "analyticsConsentAsked=1";
-  document.cookie = "_ga=GA1.2.3";
 
   const store = new SettingsStore();
 
@@ -128,21 +111,19 @@ test("takes in the settings left in cookies, and expires them", () => {
     layout: "_max-width _sidebar-hidden",
   });
   assert.equal(store.get("size"), 320, "and integers still parse");
-  assert.equal(document.cookie, "_ga=GA1.2.3");
-  assert.equal(
-    sessionStorage.getItem("analyticsConsentAsked"),
-    "1",
-    "the session-only one carries over to sessionStorage",
-  );
+  assert.equal(document.cookie, "");
 });
 
-test("a reset takes the once-a-session flags with it", () => {
+test("expires the analytics vendors' cookies, even with nothing to migrate", () => {
   reset();
-  sessionStorage.setItem("analyticsConsentAsked", "1");
+  storageWritable = false;
+  document.cookie = "_ga=GA1.2.3";
+  document.cookie = "_gauges_unique=1";
+  document.cookie = "__Host-other=1";
 
-  new SettingsStore().reset();
+  new SettingsStore();
 
-  assert.equal(sessionStorage.getItem("analyticsConsentAsked"), null);
+  assert.equal(document.cookie, "__Host-other=1");
 });
 
 test("reports a write that doesn't stick", () => {
