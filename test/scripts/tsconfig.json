@@ -1,0 +1,11 @@
+{
+  // The icon script and its tests run under Node only.
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "lib": ["ES2022"],
+    "types": ["node"]
+  },
+  "include": ["*.js", "../../scripts/*.js"]
+}
