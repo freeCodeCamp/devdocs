@@ -18,6 +18,7 @@ module Docs
       self.release = '19.3'
       self.base_url = 'https://react.dev'
       self.initial_paths = %w(/reference/react /learn)
+      html_filters.insert_before 'clean_html', 'react/sandpack_files_react_dev'
       html_filters.push 'react/entries_react_dev', 'react/clean_html_react_dev'
 
       options[:only_patterns] = [/\A\/learn/, /\A\/reference/]
@@ -27,6 +28,7 @@ module Docs
       self.release = '18.3.1'
       self.base_url = 'https://18.react.dev'
       self.initial_paths = %w(/reference/react /learn)
+      html_filters.insert_before 'clean_html', 'react/sandpack_files_react_dev'
       html_filters.push 'react/entries_react_dev', 'react/clean_html_react_dev'
 
       options[:only_patterns] = [/\A\/learn/, /\A\/reference/]
