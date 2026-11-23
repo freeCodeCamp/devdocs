@@ -16,3 +16,4 @@ docs/**/*
 assets/stylesheets/components/_environment.scss
 assets/stylesheets/global/_icons.scss
 node_modules
+.mcp.json
