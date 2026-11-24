@@ -21,7 +21,7 @@ module Docs
     html_filters.push 'svelte/entries', 'svelte/clean_html'
 
     version do
-      self.release = '5.58.0'
+      self.release = '5.59.1'
     end
 
     version '4' do
