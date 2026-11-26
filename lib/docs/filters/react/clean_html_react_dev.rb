@@ -64,11 +64,11 @@ module Docs
           node.replace("\n")
         end
         css('pre').each do |node|
-          node['data-language'] = 'jsx'
+          node['data-language'] ||= 'jsx'
         end
 
-        # Remove styling except for callouts and images
-        css('*:not([class*=image]):not(.note)').remove_attr('class').remove_attr('style')
+        # Remove styling except for callouts, images and file names
+        css('*:not([class*=image]):not(.note):not(._pre-heading)').remove_attr('class').remove_attr('style')
 
         doc
       end
